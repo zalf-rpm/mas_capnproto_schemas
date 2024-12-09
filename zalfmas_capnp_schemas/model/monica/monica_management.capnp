@@ -11,6 +11,7 @@ using Date = import "/date.capnp".Date;
 using Common = import "/common.capnp";
 using Geo = import "/geo.capnp";
 using Crop = import "/crop.capnp";
+using Climate = import "/climate.capnp";
 
 struct ILRDates {
   sowing          @0 :Date;
@@ -115,9 +116,11 @@ struct Event {
 
     cutting                   @9;
 
-    #setValue                  @10;
+    setValue                  @10;
 
-    #saveState                 @11;
+    saveState                 @11;
+
+    weather                   @12;
   }
 
   enum PhenoStage { 
@@ -157,6 +160,14 @@ struct Event {
 }
 
 struct Params {
+  struct DailyWeather {
+    struct KV {
+      key   @0 :Climate.Element;
+      value @1 :Float64;
+    }
+    data    @0 :List(KV);
+  }
+
   struct Sowing {
     cultivar      @0 :Text;
     plantDensity  @1 :UInt16 = 0;
