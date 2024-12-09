@@ -15,6 +15,7 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
+#include <climate.capnp.h>
 #include <common.capnp.h>
 #include <crop.capnp.h>
 #include <date.capnp.h>
@@ -65,6 +66,9 @@ enum class ExternalType_e5484dc513ee11e0: uint16_t {
   MINERAL_FERTILIZATION,
   N_DEMAND_FERTILIZATION,
   CUTTING,
+  SET_VALUE,
+  SAVE_STATE,
+  WEATHER,
 };
 CAPNP_DECLARE_ENUM(ExternalType, e5484dc513ee11e0);
 CAPNP_DECLARE_SCHEMA(b2bf3a5557791bc1);
@@ -80,6 +84,8 @@ CAPNP_DECLARE_SCHEMA(db4674cbf3154bfa);
 CAPNP_DECLARE_SCHEMA(c8479e0f1798b1fc);
 CAPNP_DECLARE_SCHEMA(beb6ab7b0e6b585e);
 CAPNP_DECLARE_SCHEMA(cb20e21466098705);
+CAPNP_DECLARE_SCHEMA(a332cfe9735a304c);
+CAPNP_DECLARE_SCHEMA(a63c8017ca26718b);
 CAPNP_DECLARE_SCHEMA(c6880d1c13ec14dc);
 CAPNP_DECLARE_SCHEMA(d1bfc1c9617d9453);
 CAPNP_DECLARE_SCHEMA(846f567433b186d1);
@@ -244,6 +250,7 @@ struct Params {
   class Reader;
   class Builder;
   class Pipeline;
+  struct DailyWeather;
   struct Sowing;
   struct AutomaticSowing;
   struct Harvest;
@@ -257,6 +264,37 @@ struct Params {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(cb20e21466098705, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Params::DailyWeather {
+  DailyWeather() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  struct KV;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a332cfe9735a304c, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Params::DailyWeather::KV {
+  KV() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a63c8017ca26718b, 2, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1221,6 +1259,168 @@ private:
 class Params::Pipeline {
 public:
   typedef Params Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Params::DailyWeather::Reader {
+public:
+  typedef DailyWeather Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasData() const;
+  inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Reader getData() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Params::DailyWeather::Builder {
+public:
+  typedef DailyWeather Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasData();
+  inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Builder getData();
+  inline void setData( ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Builder initData(unsigned int size);
+  inline void adoptData(::capnp::Orphan< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>> disownData();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Params::DailyWeather::Pipeline {
+public:
+  typedef DailyWeather Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Params::DailyWeather::KV::Reader {
+public:
+  typedef KV Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::climate::Element getKey() const;
+
+  inline double getValue() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Params::DailyWeather::KV::Builder {
+public:
+  typedef KV Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::climate::Element getKey();
+  inline void setKey( ::mas::schema::climate::Element value);
+
+  inline double getValue();
+  inline void setValue(double value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Params::DailyWeather::KV::Pipeline {
+public:
+  typedef KV Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -3623,6 +3823,68 @@ inline  ::uint16_t Event::After::Builder::getDays() {
 inline void Event::After::Builder::setDays( ::uint16_t value) {
   _builder.setDataField< ::uint16_t>(
       ::capnp::bounded<2>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Params::DailyWeather::Reader::hasData() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Params::DailyWeather::Builder::hasData() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Reader Params::DailyWeather::Reader::getData() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Builder Params::DailyWeather::Builder::getData() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Params::DailyWeather::Builder::setData( ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>::Builder Params::DailyWeather::Builder::initData(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Params::DailyWeather::Builder::adoptData(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>> Params::DailyWeather::Builder::disownData() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::model::monica::Params::DailyWeather::KV,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline  ::mas::schema::climate::Element Params::DailyWeather::KV::Reader::getKey() const {
+  return _reader.getDataField< ::mas::schema::climate::Element>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::climate::Element Params::DailyWeather::KV::Builder::getKey() {
+  return _builder.getDataField< ::mas::schema::climate::Element>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Params::DailyWeather::KV::Builder::setKey( ::mas::schema::climate::Element value) {
+  _builder.setDataField< ::mas::schema::climate::Element>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline double Params::DailyWeather::KV::Reader::getValue() const {
+  return _reader.getDataField<double>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+
+inline double Params::DailyWeather::KV::Builder::getValue() {
+  return _builder.getDataField<double>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+inline void Params::DailyWeather::KV::Builder::setValue(double value) {
+  _builder.setDataField<double>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
 }
 
 inline bool Params::Sowing::Reader::hasCultivar() const {
