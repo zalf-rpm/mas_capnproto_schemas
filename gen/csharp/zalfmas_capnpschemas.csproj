@@ -15,5 +15,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\capnproto-dotnetcore\Capnp.Net.Runtime\Capnp.Net.Runtime.csproj" />
   </ItemGroup>
-
+  
 </Project>
