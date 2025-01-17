@@ -21,6 +21,13 @@ struct IP {
   attributes @0 :List(KV);
   # key value pair attributes attached to IP additional to main content
 
+  enum Type {
+    standard     @0;
+    openBracket  @1;
+    closeBracket @2;
+  }
+  type @2 :Type = standard;
+
   content @1 :AnyPointer;
   # main content of IP
 }
@@ -60,8 +67,8 @@ interface Channel(V) extends(Identifiable, Persistent) {
   }
 
   interface Reader $Cxx.name("ChanReader") {
-    read  @0 () -> Msg;
-    close @1 ();
+    read          @0 () -> Msg;
+    close         @1 ();
   }
 
   interface Writer $Cxx.name("ChanWriter") {

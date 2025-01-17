@@ -25,6 +25,13 @@ namespace schemas {
 
 CAPNP_DECLARE_SCHEMA(af0a1dc4709a5ccf);
 CAPNP_DECLARE_SCHEMA(9e9e5391e0c499e6);
+CAPNP_DECLARE_SCHEMA(f684cae29bdc484e);
+enum class Type_f684cae29bdc484e: uint16_t {
+  STANDARD,
+  OPEN_BRACKET,
+  CLOSE_BRACKET,
+};
+CAPNP_DECLARE_ENUM(Type, f684cae29bdc484e);
 CAPNP_DECLARE_SCHEMA(9c62c32b2ff2b1e8);
 CAPNP_DECLARE_SCHEMA(a8d787cae7e0b243);
 enum class CloseSemantics_a8d787cae7e0b243: uint16_t {
@@ -77,9 +84,11 @@ struct IP {
   class Builder;
   class Pipeline;
   struct KV;
+  typedef ::capnp::schemas::Type_f684cae29bdc484e Type;
+
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(af0a1dc4709a5ccf, 0, 2)
+    CAPNP_DECLARE_STRUCT_HEADER(af0a1dc4709a5ccf, 1, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -734,6 +743,8 @@ public:
   inline bool hasContent() const;
   inline ::capnp::AnyPointer::Reader getContent() const;
 
+  inline  ::mas::schema::fbp::IP::Type getType() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -772,6 +783,9 @@ public:
   inline bool hasContent();
   inline ::capnp::AnyPointer::Builder getContent();
   inline ::capnp::AnyPointer::Builder initContent();
+
+  inline  ::mas::schema::fbp::IP::Type getType();
+  inline void setType( ::mas::schema::fbp::IP::Type value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -3600,6 +3614,20 @@ inline ::capnp::AnyPointer::Builder IP::Builder::initContent() {
       ::capnp::bounded<1>() * ::capnp::POINTERS));
   result.clear();
   return result;
+}
+
+inline  ::mas::schema::fbp::IP::Type IP::Reader::getType() const {
+  return _reader.getDataField< ::mas::schema::fbp::IP::Type>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::IP::Type IP::Builder::getType() {
+  return _builder.getDataField< ::mas::schema::fbp::IP::Type>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void IP::Builder::setType( ::mas::schema::fbp::IP::Type value) {
+  _builder.setDataField< ::mas::schema::fbp::IP::Type>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
 inline bool IP::KV::Reader::hasKey() const {
