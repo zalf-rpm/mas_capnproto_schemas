@@ -315,6 +315,11 @@ struct Params {
     amount @0 :Float64;
     params @1 :Parameters;
   }
+
+  struct SaveState {
+    noOfPreviousDaysSerializedClimateData @0 :UInt64;
+    asJson                                @1 :Bool = false;
+  }
 }
 
 #interface FertilizerService extends(Common.Identifiable) {

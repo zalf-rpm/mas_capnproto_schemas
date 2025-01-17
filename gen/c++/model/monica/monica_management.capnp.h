@@ -122,6 +122,7 @@ CAPNP_DECLARE_SCHEMA(ba0c11cf818d29fd);
 CAPNP_DECLARE_SCHEMA(aa49811a4e3e2c59);
 CAPNP_DECLARE_SCHEMA(d90939a58e404ff8);
 CAPNP_DECLARE_SCHEMA(aec9e089e87f1599);
+CAPNP_DECLARE_SCHEMA(dd84803fc87ac648);
 CAPNP_DECLARE_SCHEMA(bfda1920aff38c07);
 CAPNP_DECLARE_SCHEMA(f32d7a3fdc567bdb);
 
@@ -261,6 +262,7 @@ struct Params {
   struct OrganicFertilization;
   struct Tillage;
   struct Irrigation;
+  struct SaveState;
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(cb20e21466098705, 0, 0)
@@ -563,6 +565,21 @@ struct Params::Irrigation::Parameters {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(aec9e089e87f1599, 2, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Params::SaveState {
+  SaveState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(dd84803fc87ac648, 2, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -3095,6 +3112,87 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+class Params::SaveState::Reader {
+public:
+  typedef SaveState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::uint64_t getNoOfPreviousDaysSerializedClimateData() const;
+
+  inline bool getAsJson() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Params::SaveState::Builder {
+public:
+  typedef SaveState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::uint64_t getNoOfPreviousDaysSerializedClimateData();
+  inline void setNoOfPreviousDaysSerializedClimateData( ::uint64_t value);
+
+  inline bool getAsJson();
+  inline void setAsJson(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Params::SaveState::Pipeline {
+public:
+  typedef SaveState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 #if !CAPNP_LITE
 class Service::Client
     : public virtual ::capnp::Capability::Client,
@@ -5263,6 +5361,34 @@ inline double Params::Irrigation::Parameters::Builder::getSulfateConcentration()
 inline void Params::Irrigation::Parameters::Builder::setSulfateConcentration(double value) {
   _builder.setDataField<double>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
+}
+
+inline  ::uint64_t Params::SaveState::Reader::getNoOfPreviousDaysSerializedClimateData() const {
+  return _reader.getDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::uint64_t Params::SaveState::Builder::getNoOfPreviousDaysSerializedClimateData() {
+  return _builder.getDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Params::SaveState::Builder::setNoOfPreviousDaysSerializedClimateData( ::uint64_t value) {
+  _builder.setDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Params::SaveState::Reader::getAsJson() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS);
+}
+
+inline bool Params::SaveState::Builder::getAsJson() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS);
+}
+inline void Params::SaveState::Builder::setAsJson(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS, value);
 }
 
 #if !CAPNP_LITE
