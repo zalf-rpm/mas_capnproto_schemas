@@ -4053,16 +4053,16 @@ inline ::capnp::Orphan< ::capnp::List< ::mas::schema::management::Params::Cuttin
 
 inline double Params::Cutting::Reader::getCutMaxAssimilationRatePercentage() const {
   return _reader.getDataField<double>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 4636737291354636288ull);
 }
 
 inline double Params::Cutting::Builder::getCutMaxAssimilationRatePercentage() {
   return _builder.getDataField<double>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 4636737291354636288ull);
 }
 inline void Params::Cutting::Builder::setCutMaxAssimilationRatePercentage(double value) {
   _builder.setDataField<double>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value, 4636737291354636288ull);
 }
 
 inline  ::mas::schema::management::PlantOrgan Params::Cutting::Spec::Reader::getOrgan() const {
