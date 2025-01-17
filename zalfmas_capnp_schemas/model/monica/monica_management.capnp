@@ -246,7 +246,7 @@ struct Params {
     }
 
     cuttingSpec                       @0 :List(Spec);
-    cutMaxAssimilationRatePercentage  @1 :Float64;
+    cutMaxAssimilationRatePercentage  @1 :Float64 = 100.0;
 	}
 
   struct MineralFertilization {
