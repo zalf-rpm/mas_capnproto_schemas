@@ -8,6 +8,7 @@ $Go.package("fbp");
 $Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/fbp");
 
 using Persistent = import "persistence.capnp".Persistent;
+using SturdyRef = import "persistence.capnp".SturdyRef;
 using Identifiable = import "common.capnp".Identifiable;
 
 struct IP {
@@ -100,8 +101,8 @@ interface PortCallbackRegistrar {
   # interface to register callbacks for ports
 
   interface PortCallback {
-    newInPort @0 (name :Text, readerCap :Channel(IP).Reader);
-    newOutPort @1 (name :Text, writerCap :Channel(IP).Writer);
+    newInPort @0 (name :Text, readerCap :Channel(IP).Reader, readerSR :SturdyRef);
+    newOutPort @1 (name :Text, writerCap :Channel(IP).Writer, writerSR :SturdyRef);
   }
 
   registerCallback @0 (callback :PortCallback);
