@@ -101,8 +101,8 @@ interface PortCallbackRegistrar {
   # interface to register callbacks for ports
 
   interface PortCallback {
-    newInPort @0 (name :Text, readerCap :Channel(IP).Reader, readerSR :SturdyRef);
-    newOutPort @1 (name :Text, writerCap :Channel(IP).Writer, writerSR :SturdyRef);
+    newInPort @0 (name :Text, readerCap :Channel(IP).Reader, readerSR :Text);
+    newOutPort @1 (name :Text, writerCap :Channel(IP).Writer, writerSR :Text);
   }
 
   registerCallback @0 (callback :PortCallback);

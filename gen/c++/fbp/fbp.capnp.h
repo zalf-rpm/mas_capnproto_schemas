@@ -3092,7 +3092,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasReaderSR() const;
-  inline  ::mas::schema::persistence::SturdyRef::Reader getReaderSR() const;
+  inline  ::capnp::Text::Reader getReaderSR() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -3139,11 +3139,11 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasReaderSR();
-  inline  ::mas::schema::persistence::SturdyRef::Builder getReaderSR();
-  inline void setReaderSR( ::mas::schema::persistence::SturdyRef::Reader value);
-  inline  ::mas::schema::persistence::SturdyRef::Builder initReaderSR();
-  inline void adoptReaderSR(::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value);
-  inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> disownReaderSR();
+  inline  ::capnp::Text::Builder getReaderSR();
+  inline void setReaderSR( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initReaderSR(unsigned int size);
+  inline void adoptReaderSR(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownReaderSR();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -3164,7 +3164,6 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client getReaderCap();
-  inline  ::mas::schema::persistence::SturdyRef::Pipeline getReaderSR();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -3270,7 +3269,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasWriterSR() const;
-  inline  ::mas::schema::persistence::SturdyRef::Reader getWriterSR() const;
+  inline  ::capnp::Text::Reader getWriterSR() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -3317,11 +3316,11 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasWriterSR();
-  inline  ::mas::schema::persistence::SturdyRef::Builder getWriterSR();
-  inline void setWriterSR( ::mas::schema::persistence::SturdyRef::Reader value);
-  inline  ::mas::schema::persistence::SturdyRef::Builder initWriterSR();
-  inline void adoptWriterSR(::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value);
-  inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> disownWriterSR();
+  inline  ::capnp::Text::Builder getWriterSR();
+  inline void setWriterSR( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initWriterSR(unsigned int size);
+  inline void adoptWriterSR(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownWriterSR();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -3342,7 +3341,6 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client getWriterCap();
-  inline  ::mas::schema::persistence::SturdyRef::Pipeline getWriterSR();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -5454,34 +5452,29 @@ inline bool PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::hasRe
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::mas::schema::persistence::SturdyRef::Reader PortCallbackRegistrar::PortCallback::NewInPortParams::Reader::getReaderSR() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_reader.getPointerField(
+inline  ::capnp::Text::Reader PortCallbackRegistrar::PortCallback::NewInPortParams::Reader::getReaderSR() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::persistence::SturdyRef::Builder PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::getReaderSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_builder.getPointerField(
+inline  ::capnp::Text::Builder PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::getReaderSR() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-#if !CAPNP_LITE
-inline  ::mas::schema::persistence::SturdyRef::Pipeline PortCallbackRegistrar::PortCallback::NewInPortParams::Pipeline::getReaderSR() {
-  return  ::mas::schema::persistence::SturdyRef::Pipeline(_typeless.getPointerField(2));
-}
-#endif  // !CAPNP_LITE
-inline void PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::setReaderSR( ::mas::schema::persistence::SturdyRef::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::set(_builder.getPointerField(
+inline void PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::setReaderSR( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::mas::schema::persistence::SturdyRef::Builder PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::initReaderSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+inline  ::capnp::Text::Builder PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::initReaderSR(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::adoptReaderSR(
-    ::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::disownReaderSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::Text> PortCallbackRegistrar::PortCallback::NewInPortParams::Builder::disownReaderSR() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
@@ -5566,34 +5559,29 @@ inline bool PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::hasW
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::mas::schema::persistence::SturdyRef::Reader PortCallbackRegistrar::PortCallback::NewOutPortParams::Reader::getWriterSR() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_reader.getPointerField(
+inline  ::capnp::Text::Reader PortCallbackRegistrar::PortCallback::NewOutPortParams::Reader::getWriterSR() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::persistence::SturdyRef::Builder PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::getWriterSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_builder.getPointerField(
+inline  ::capnp::Text::Builder PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::getWriterSR() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-#if !CAPNP_LITE
-inline  ::mas::schema::persistence::SturdyRef::Pipeline PortCallbackRegistrar::PortCallback::NewOutPortParams::Pipeline::getWriterSR() {
-  return  ::mas::schema::persistence::SturdyRef::Pipeline(_typeless.getPointerField(2));
-}
-#endif  // !CAPNP_LITE
-inline void PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::setWriterSR( ::mas::schema::persistence::SturdyRef::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::set(_builder.getPointerField(
+inline void PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::setWriterSR( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::mas::schema::persistence::SturdyRef::Builder PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::initWriterSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+inline  ::capnp::Text::Builder PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::initWriterSR(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::adoptWriterSR(
-    ::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::disownWriterSR() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::Text> PortCallbackRegistrar::PortCallback::NewOutPortParams::Builder::disownWriterSR() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
