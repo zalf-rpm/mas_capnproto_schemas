@@ -3124,7 +3124,7 @@ public:
 
   inline bool hasReaderCap() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client getReaderCap() const;
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client getReaderCap() const;
 #endif  // !CAPNP_LITE
 
   inline bool hasReaderSR() const;
@@ -3160,11 +3160,11 @@ public:
 
   inline bool hasReaderCap();
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client getReaderCap();
-  inline void setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client&& value);
-  inline void setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client& value);
-  inline void adoptReaderCap(::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>&& value);
-  inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader> disownReaderCap();
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client getReaderCap();
+  inline void setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client&& value);
+  inline void setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client& value);
+  inline void adoptReaderCap(::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader> disownReaderCap();
 #endif  // !CAPNP_LITE
 
   inline bool hasReaderSR();
@@ -3192,7 +3192,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client getReaderCap();
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client getReaderCap();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -3220,7 +3220,7 @@ public:
 
   inline bool hasWriterCap() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client getWriterCap() const;
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client getWriterCap() const;
 #endif  // !CAPNP_LITE
 
   inline bool hasWriterSR() const;
@@ -3256,11 +3256,11 @@ public:
 
   inline bool hasWriterCap();
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client getWriterCap();
-  inline void setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client&& value);
-  inline void setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client& value);
-  inline void adoptWriterCap(::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>&& value);
-  inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter> disownWriterCap();
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client getWriterCap();
+  inline void setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client&& value);
+  inline void setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client& value);
+  inline void adoptWriterCap(::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter> disownWriterCap();
 #endif  // !CAPNP_LITE
 
   inline bool hasWriterSR();
@@ -3288,7 +3288,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client getWriterCap();
+  inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client getWriterCap();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -5764,32 +5764,32 @@ inline bool NewPortInfo::In::Builder::hasReaderCap() {
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client NewPortInfo::In::Reader::getReaderCap() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::get(_reader.getPointerField(
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client NewPortInfo::In::Reader::getReaderCap() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client NewPortInfo::In::Builder::getReaderCap() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::get(_builder.getPointerField(
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client NewPortInfo::In::Builder::getReaderCap() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client NewPortInfo::In::Pipeline::getReaderCap() {
-  return  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client(_typeless.getPointerField(1).asCap());
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client NewPortInfo::In::Pipeline::getReaderCap() {
+  return  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client(_typeless.getPointerField(1).asCap());
 }
-inline void NewPortInfo::In::Builder::setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client&& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::set(_builder.getPointerField(
+inline void NewPortInfo::In::Builder::setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void NewPortInfo::In::Builder::setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::Client& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::set(_builder.getPointerField(
+inline void NewPortInfo::In::Builder::setReaderCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), cap);
 }
 inline void NewPortInfo::In::Builder::adoptReaderCap(
-    ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader> NewPortInfo::In::Builder::disownReaderCap() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader> NewPortInfo::In::Builder::disownReaderCap() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
@@ -5837,32 +5837,32 @@ inline bool NewPortInfo::Out::Builder::hasWriterCap() {
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client NewPortInfo::Out::Reader::getWriterCap() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::get(_reader.getPointerField(
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client NewPortInfo::Out::Reader::getWriterCap() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client NewPortInfo::Out::Builder::getWriterCap() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::get(_builder.getPointerField(
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client NewPortInfo::Out::Builder::getWriterCap() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client NewPortInfo::Out::Pipeline::getWriterCap() {
-  return  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client(_typeless.getPointerField(1).asCap());
+inline  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client NewPortInfo::Out::Pipeline::getWriterCap() {
+  return  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client(_typeless.getPointerField(1).asCap());
 }
-inline void NewPortInfo::Out::Builder::setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client&& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::set(_builder.getPointerField(
+inline void NewPortInfo::Out::Builder::setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void NewPortInfo::Out::Builder::setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::Client& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::set(_builder.getPointerField(
+inline void NewPortInfo::Out::Builder::setWriterCap( ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), cap);
 }
 inline void NewPortInfo::Out::Builder::adoptWriterCap(
-    ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter> NewPortInfo::Out::Builder::disownWriterCap() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter> NewPortInfo::Out::Builder::disownWriterCap() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE

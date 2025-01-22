@@ -103,11 +103,11 @@ struct NewPortInfo {
   name          @0 :Text;
   union {
     in :group {
-      readerCap @1 :Channel(NewPortInfo).Reader;
+      readerCap @1 :Channel(IP).Reader;
       readerSR  @2 :Text;
     }
     out :group {
-      writerCap @3 :Channel(NewPortInfo).Writer;
+      writerCap @3 :Channel(IP).Writer;
       writerSR  @4 :Text;
     }
   }
