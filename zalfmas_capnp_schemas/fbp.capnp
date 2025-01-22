@@ -97,6 +97,23 @@ interface Channel(V) extends(Identifiable, Persistent) {
   # wait for empty buffer or kill channel right away
 }
 
+
+struct NewPortInfo {
+  # data for a component which port has been connected
+  name          @0 :Text;
+  union {
+    in :group {
+      readerCap @1 :Channel(IP).Reader;
+      readerSR  @2 :Text;
+    }
+    out :group {
+      writerCap @3 :Channel(IP).Writer;
+      writerSR  @4 :Text;
+    }
+  }
+}
+
+
 interface PortCallbackRegistrar {
   # interface to register callbacks for ports
 
