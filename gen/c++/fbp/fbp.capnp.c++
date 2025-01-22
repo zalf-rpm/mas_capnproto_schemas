@@ -1565,7 +1565,7 @@ static const ::capnp::_::AlignedData<61> b_e2504747001bffa4 = {
       1,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   3,   0,   1,   0,
      16,   0,   0,   0,   0,   0,   0,   0,
-    207,  92, 154, 112, 196,  29,  10, 175,
+    158,  99, 144,  66,  73, 174, 220, 162,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      17,   0,   0,   0,   0,   0,   0,   0,
@@ -1590,7 +1590,7 @@ static const ::capnp::_::RawSchema* const d_e2504747001bffa4[] = {
 static const uint16_t m_e2504747001bffa4[] = {0, 1};
 static const uint16_t i_e2504747001bffa4[] = {0, 1};
 KJ_CONSTEXPR(const) ::capnp::_::RawBrandedSchema::Dependency bd_e2504747001bffa4[] = {
-  { 16777216,  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanReader::_capnpPrivate::brand() },
+  { 16777216,  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanReader::_capnpPrivate::brand() },
 };
 const ::capnp::_::RawSchema s_e2504747001bffa4 = {
   0xe2504747001bffa4, b_e2504747001bffa4.words, 61, d_e2504747001bffa4, m_e2504747001bffa4,
@@ -1644,7 +1644,7 @@ static const ::capnp::_::AlignedData<61> b_ca6c63c734ff5a14 = {
       1,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   3,   0,   1,   0,
      16,   0,   0,   0,   0,   0,   0,   0,
-    207,  92, 154, 112, 196,  29,  10, 175,
+    158,  99, 144,  66,  73, 174, 220, 162,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      17,   0,   0,   0,   0,   0,   0,   0,
@@ -1669,7 +1669,7 @@ static const ::capnp::_::RawSchema* const d_ca6c63c734ff5a14[] = {
 static const uint16_t m_ca6c63c734ff5a14[] = {0, 1};
 static const uint16_t i_ca6c63c734ff5a14[] = {0, 1};
 KJ_CONSTEXPR(const) ::capnp::_::RawBrandedSchema::Dependency bd_ca6c63c734ff5a14[] = {
-  { 16777216,  ::mas::schema::fbp::Channel< ::mas::schema::fbp::IP>::ChanWriter::_capnpPrivate::brand() },
+  { 16777216,  ::mas::schema::fbp::Channel< ::mas::schema::fbp::NewPortInfo>::ChanWriter::_capnpPrivate::brand() },
 };
 const ::capnp::_::RawSchema s_ca6c63c734ff5a14 = {
   0xca6c63c734ff5a14, b_ca6c63c734ff5a14.words, 61, d_ca6c63c734ff5a14, m_ca6c63c734ff5a14,
