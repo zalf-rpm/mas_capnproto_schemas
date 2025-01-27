@@ -102,14 +102,10 @@ struct NewPortInfo {
   # data for a component which port has been connected
   name          @0 :Text;
   union {
-    in :group {
-      readerCap @1 :Channel(IP).Reader;
-      readerSR  @2 :Text;
-    }
-    out :group {
-      writerCap @3 :Channel(IP).Writer;
-      writerSR  @4 :Text;
-    }
+    inPortReaderCap     @1 :Channel(IP).Reader;
+    inPortReaderSR      @2 :Text;
+    outPortWriterCap    @3 :Channel(IP).Writer;
+    outPortWriterSR     @4 :Text;
   }
 }
 
