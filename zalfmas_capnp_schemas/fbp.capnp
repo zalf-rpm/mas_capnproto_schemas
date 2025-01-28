@@ -10,6 +10,7 @@ $Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/fbp"
 using Persistent = import "persistence.capnp".Persistent;
 using SturdyRef = import "persistence.capnp".SturdyRef;
 using Identifiable = import "common.capnp".Identifiable;
+using Value = import "common.capnp".Value;
 
 struct IP {
   # an FBP information packet
@@ -31,6 +32,10 @@ struct IP {
 
   content @1 :AnyPointer;
   # main content of IP
+}
+
+struct IIP {
+  content @0 :Value;
 }
 
 interface Channel(V) extends(Identifiable, Persistent) {
@@ -109,3 +114,11 @@ struct NewPortInfo {
   }
 }
 
+interface Component extends(Identifiable) {
+  # interface to manage remote FBP components
+
+  start @0 (configIipReaderSr :Text) -> (success :Bool);
+
+  stop  @1 () -> (success :Bool);
+
+}
