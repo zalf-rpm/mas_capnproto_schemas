@@ -110,6 +110,7 @@ struct StructuredText::Structure {
     NONE,
     JSON,
     XML,
+    TOML,
   };
 
   struct _capnpPrivate {
@@ -525,6 +526,9 @@ public:
   inline bool isXml() const;
   inline  ::capnp::Void getXml() const;
 
+  inline bool isToml() const;
+  inline  ::capnp::Void getToml() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -565,6 +569,10 @@ public:
   inline bool isXml();
   inline  ::capnp::Void getXml();
   inline void setXml( ::capnp::Void value = ::capnp::VOID);
+
+  inline bool isToml();
+  inline  ::capnp::Void getToml();
+  inline void setToml( ::capnp::Void value = ::capnp::VOID);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1344,6 +1352,32 @@ inline  ::capnp::Void StructuredText::Structure::Builder::getXml() {
 inline void StructuredText::Structure::Builder::setXml( ::capnp::Void value) {
   _builder.setDataField<StructuredText::Structure::Which>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::XML);
+  _builder.setDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool StructuredText::Structure::Reader::isToml() const {
+  return which() == StructuredText::Structure::TOML;
+}
+inline bool StructuredText::Structure::Builder::isToml() {
+  return which() == StructuredText::Structure::TOML;
+}
+inline  ::capnp::Void StructuredText::Structure::Reader::getToml() const {
+  KJ_IREQUIRE((which() == StructuredText::Structure::TOML),
+              "Must check which() before get()ing a union member.");
+  return _reader.getDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::capnp::Void StructuredText::Structure::Builder::getToml() {
+  KJ_IREQUIRE((which() == StructuredText::Structure::TOML),
+              "Must check which() before get()ing a union member.");
+  return _builder.getDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void StructuredText::Structure::Builder::setToml( ::capnp::Void value) {
+  _builder.setDataField<StructuredText::Structure::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::TOML);
   _builder.setDataField< ::capnp::Void>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
