@@ -914,7 +914,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasContent() const;
-  inline  ::mas::schema::common::Value::Reader getContent() const;
+  inline ::capnp::AnyPointer::Reader getContent() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -945,11 +945,8 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasContent();
-  inline  ::mas::schema::common::Value::Builder getContent();
-  inline void setContent( ::mas::schema::common::Value::Reader value);
-  inline  ::mas::schema::common::Value::Builder initContent();
-  inline void adoptContent(::capnp::Orphan< ::mas::schema::common::Value>&& value);
-  inline ::capnp::Orphan< ::mas::schema::common::Value> disownContent();
+  inline ::capnp::AnyPointer::Builder getContent();
+  inline ::capnp::AnyPointer::Builder initContent();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -969,7 +966,6 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::common::Value::Pipeline getContent();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -3697,35 +3693,19 @@ inline bool IIP::Builder::hasContent() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::mas::schema::common::Value::Reader IIP::Reader::getContent() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::get(_reader.getPointerField(
+inline ::capnp::AnyPointer::Reader IIP::Reader::getContent() const {
+  return ::capnp::AnyPointer::Reader(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Value::Builder IIP::Builder::getContent() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::get(_builder.getPointerField(
+inline ::capnp::AnyPointer::Builder IIP::Builder::getContent() {
+  return ::capnp::AnyPointer::Builder(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-#if !CAPNP_LITE
-inline  ::mas::schema::common::Value::Pipeline IIP::Pipeline::getContent() {
-  return  ::mas::schema::common::Value::Pipeline(_typeless.getPointerField(0));
-}
-#endif  // !CAPNP_LITE
-inline void IIP::Builder::setContent( ::mas::schema::common::Value::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::mas::schema::common::Value::Builder IIP::Builder::initContent() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::init(_builder.getPointerField(
+inline ::capnp::AnyPointer::Builder IIP::Builder::initContent() {
+  auto result = ::capnp::AnyPointer::Builder(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void IIP::Builder::adoptContent(
-    ::capnp::Orphan< ::mas::schema::common::Value>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::mas::schema::common::Value> IIP::Builder::disownContent() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Value>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
+  result.clear();
+  return result;
 }
 
 #if !CAPNP_LITE

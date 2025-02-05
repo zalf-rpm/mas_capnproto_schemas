@@ -35,7 +35,8 @@ struct IP {
 }
 
 struct IIP {
-  content @0 :Value;
+  content @0 :AnyPointer;
+  # might often be a common.Value or common.StructuredText
 }
 
 interface Channel(V) extends(Identifiable, Persistent) {

@@ -29,6 +29,7 @@ struct StructuredText {
     none    @1 :Void; # just normal text
     json    @2 :Void; # it's JSON
     xml     @3 :Void; # it's XML
+    toml    @4 :Void; # it's TOML
   }
 }
 
