@@ -103,7 +103,6 @@ interface Channel(V) extends(Identifiable, Persistent) {
   # wait for empty buffer or kill channel right away
 }
 
-
 struct NewPortInfo {
   # data for a component which port has been connected
   name          @0 :Text;
@@ -115,11 +114,31 @@ struct NewPortInfo {
   }
 }
 
+struct PortInfos {
+  # information for component to connect to in/out ports
+
+  struct NameAndSR {
+    name        @0 :Text;
+    union {
+        sr      @1 :Text;           # for single ports
+        srs     @2 :List(Text);     # for array ports
+    }
+  }
+
+  inPorts  @0 :List(NameAndSR);
+  # reader sturdy refs for the IN ports
+
+  outPorts @1 :List(NameAndSR);
+  # writer sturdy refs for the OUT ports
+}
+
 interface Component extends(Identifiable) {
   # interface to manage remote FBP components
 
-  start @0 (configIipReaderSr :Text) -> (success :Bool);
+  start @0 (portInfosReaderSr :Text) -> (success :Bool);
+  # start component with a sturdy ref to a reader of PortInfos
+  # the component will use the port infos to connect to the channels
 
   stop  @1 () -> (success :Bool);
-
+  # stop the component
 }

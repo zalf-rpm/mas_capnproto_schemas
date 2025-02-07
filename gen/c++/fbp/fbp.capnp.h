@@ -63,6 +63,8 @@ CAPNP_DECLARE_SCHEMA(c0fc6e5a3fcb3206);
 CAPNP_DECLARE_SCHEMA(95d8ad01c1113d9c);
 CAPNP_DECLARE_SCHEMA(cc079ad60f1363b7);
 CAPNP_DECLARE_SCHEMA(a2dcae494290639e);
+CAPNP_DECLARE_SCHEMA(ece0efa9a922d4a8);
+CAPNP_DECLARE_SCHEMA(8a4d34c4b5eb1545);
 CAPNP_DECLARE_SCHEMA(d717ff7d6815a6b0);
 CAPNP_DECLARE_SCHEMA(f5b257d7fba7ed60);
 CAPNP_DECLARE_SCHEMA(da58608ec3b1dfa6);
@@ -616,6 +618,41 @@ struct NewPortInfo {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(a2dcae494290639e, 1, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct PortInfos {
+  PortInfos() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  struct NameAndSR;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(ece0efa9a922d4a8, 0, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct PortInfos::NameAndSR {
+  NameAndSR() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  enum Which: uint16_t {
+    SR,
+    SRS,
+  };
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8a4d34c4b5eb1545, 1, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -3156,6 +3193,205 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+class PortInfos::Reader {
+public:
+  typedef PortInfos Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasInPorts() const;
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader getInPorts() const;
+
+  inline bool hasOutPorts() const;
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader getOutPorts() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class PortInfos::Builder {
+public:
+  typedef PortInfos Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasInPorts();
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder getInPorts();
+  inline void setInPorts( ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder initInPorts(unsigned int size);
+  inline void adoptInPorts(::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>> disownInPorts();
+
+  inline bool hasOutPorts();
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder getOutPorts();
+  inline void setOutPorts( ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder initOutPorts(unsigned int size);
+  inline void adoptOutPorts(::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>> disownOutPorts();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class PortInfos::Pipeline {
+public:
+  typedef PortInfos Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class PortInfos::NameAndSR::Reader {
+public:
+  typedef NameAndSR Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline Which which() const;
+  inline bool hasName() const;
+  inline  ::capnp::Text::Reader getName() const;
+
+  inline bool isSr() const;
+  inline bool hasSr() const;
+  inline  ::capnp::Text::Reader getSr() const;
+
+  inline bool isSrs() const;
+  inline bool hasSrs() const;
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getSrs() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class PortInfos::NameAndSR::Builder {
+public:
+  typedef NameAndSR Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline Which which();
+  inline bool hasName();
+  inline  ::capnp::Text::Builder getName();
+  inline void setName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initName(unsigned int size);
+  inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownName();
+
+  inline bool isSr();
+  inline bool hasSr();
+  inline  ::capnp::Text::Builder getSr();
+  inline void setSr( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSr(unsigned int size);
+  inline void adoptSr(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSr();
+
+  inline bool isSrs();
+  inline bool hasSrs();
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getSrs();
+  inline void setSrs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
+  inline void setSrs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initSrs(unsigned int size);
+  inline void adoptSrs(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownSrs();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class PortInfos::NameAndSR::Pipeline {
+public:
+  typedef NameAndSR Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 #if !CAPNP_LITE
 class Component::Client
     : public virtual ::capnp::Capability::Client,
@@ -5550,6 +5786,231 @@ inline ::capnp::Orphan< ::capnp::Text> NewPortInfo::Builder::disownOutPortWriter
   KJ_IREQUIRE((which() == NewPortInfo::OUT_PORT_WRITER_S_R),
               "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool PortInfos::Reader::hasInPorts() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool PortInfos::Builder::hasInPorts() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader PortInfos::Reader::getInPorts() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder PortInfos::Builder::getInPorts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void PortInfos::Builder::setInPorts( ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder PortInfos::Builder::initInPorts(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void PortInfos::Builder::adoptInPorts(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>> PortInfos::Builder::disownInPorts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool PortInfos::Reader::hasOutPorts() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool PortInfos::Builder::hasOutPorts() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader PortInfos::Reader::getOutPorts() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder PortInfos::Builder::getOutPorts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void PortInfos::Builder::setOutPorts( ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>::Builder PortInfos::Builder::initOutPorts(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void PortInfos::Builder::adoptOutPorts(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>> PortInfos::Builder::disownOutPorts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::PortInfos::NameAndSR,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline  ::mas::schema::fbp::PortInfos::NameAndSR::Which PortInfos::NameAndSR::Reader::which() const {
+  return _reader.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline  ::mas::schema::fbp::PortInfos::NameAndSR::Which PortInfos::NameAndSR::Builder::which() {
+  return _builder.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool PortInfos::NameAndSR::Reader::hasName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool PortInfos::NameAndSR::Builder::hasName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader PortInfos::NameAndSR::Reader::getName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder PortInfos::NameAndSR::Builder::getName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void PortInfos::NameAndSR::Builder::setName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder PortInfos::NameAndSR::Builder::initName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void PortInfos::NameAndSR::Builder::adoptName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> PortInfos::NameAndSR::Builder::disownName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool PortInfos::NameAndSR::Reader::isSr() const {
+  return which() == PortInfos::NameAndSR::SR;
+}
+inline bool PortInfos::NameAndSR::Builder::isSr() {
+  return which() == PortInfos::NameAndSR::SR;
+}
+inline bool PortInfos::NameAndSR::Reader::hasSr() const {
+  if (which() != PortInfos::NameAndSR::SR) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool PortInfos::NameAndSR::Builder::hasSr() {
+  if (which() != PortInfos::NameAndSR::SR) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader PortInfos::NameAndSR::Reader::getSr() const {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SR),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder PortInfos::NameAndSR::Builder::getSr() {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SR),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void PortInfos::NameAndSR::Builder::setSr( ::capnp::Text::Reader value) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SR);
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder PortInfos::NameAndSR::Builder::initSr(unsigned int size) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SR);
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void PortInfos::NameAndSR::Builder::adoptSr(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SR);
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> PortInfos::NameAndSR::Builder::disownSr() {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SR),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool PortInfos::NameAndSR::Reader::isSrs() const {
+  return which() == PortInfos::NameAndSR::SRS;
+}
+inline bool PortInfos::NameAndSR::Builder::isSrs() {
+  return which() == PortInfos::NameAndSR::SRS;
+}
+inline bool PortInfos::NameAndSR::Reader::hasSrs() const {
+  if (which() != PortInfos::NameAndSR::SRS) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool PortInfos::NameAndSR::Builder::hasSrs() {
+  if (which() != PortInfos::NameAndSR::SRS) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader PortInfos::NameAndSR::Reader::getSrs() const {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SRS),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder PortInfos::NameAndSR::Builder::getSrs() {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SRS),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void PortInfos::NameAndSR::Builder::setSrs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SRS);
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline void PortInfos::NameAndSR::Builder::setSrs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SRS);
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder PortInfos::NameAndSR::Builder::initSrs(unsigned int size) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SRS);
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void PortInfos::NameAndSR::Builder::adoptSrs(
+    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
+  _builder.setDataField<PortInfos::NameAndSR::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, PortInfos::NameAndSR::SRS);
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> PortInfos::NameAndSR::Builder::disownSrs() {
+  KJ_IREQUIRE((which() == PortInfos::NameAndSR::SRS),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
