@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zalfmas-capnp-schemas"
-version = "0.1.11"
+version = "0.1.12"
 description = ""
 authors = ["Michael Berg-Mohnicke <michael.berg@zalf.de>"]
 readme = "README.md"
