@@ -3470,8 +3470,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasConfigIipReaderSr() const;
-  inline  ::capnp::Text::Reader getConfigIipReaderSr() const;
+  inline bool hasPortInfosReaderSr() const;
+  inline  ::capnp::Text::Reader getPortInfosReaderSr() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -3501,12 +3501,12 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline bool hasConfigIipReaderSr();
-  inline  ::capnp::Text::Builder getConfigIipReaderSr();
-  inline void setConfigIipReaderSr( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initConfigIipReaderSr(unsigned int size);
-  inline void adoptConfigIipReaderSr(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownConfigIipReaderSr();
+  inline bool hasPortInfosReaderSr();
+  inline  ::capnp::Text::Builder getPortInfosReaderSr();
+  inline void setPortInfosReaderSr( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initPortInfosReaderSr(unsigned int size);
+  inline void adoptPortInfosReaderSr(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownPortInfosReaderSr();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -6038,36 +6038,36 @@ inline  ::mas::schema::fbp::Component::Client& Component::Client::operator=(Clie
 }
 
 #endif  // !CAPNP_LITE
-inline bool Component::StartParams::Reader::hasConfigIipReaderSr() const {
+inline bool Component::StartParams::Reader::hasPortInfosReaderSr() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Component::StartParams::Builder::hasConfigIipReaderSr() {
+inline bool Component::StartParams::Builder::hasPortInfosReaderSr() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Component::StartParams::Reader::getConfigIipReaderSr() const {
+inline  ::capnp::Text::Reader Component::StartParams::Reader::getPortInfosReaderSr() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Component::StartParams::Builder::getConfigIipReaderSr() {
+inline  ::capnp::Text::Builder Component::StartParams::Builder::getPortInfosReaderSr() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Component::StartParams::Builder::setConfigIipReaderSr( ::capnp::Text::Reader value) {
+inline void Component::StartParams::Builder::setPortInfosReaderSr( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Component::StartParams::Builder::initConfigIipReaderSr(unsigned int size) {
+inline  ::capnp::Text::Builder Component::StartParams::Builder::initPortInfosReaderSr(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Component::StartParams::Builder::adoptConfigIipReaderSr(
+inline void Component::StartParams::Builder::adoptPortInfosReaderSr(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Component::StartParams::Builder::disownConfigIipReaderSr() {
+inline ::capnp::Orphan< ::capnp::Text> Component::StartParams::Builder::disownPortInfosReaderSr() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
