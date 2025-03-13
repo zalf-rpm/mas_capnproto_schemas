@@ -82,11 +82,15 @@ interface Registrar extends(Identifiable) {
     xDomain     @3 :CrossDomainRestore;
   }
 
-  interface Unregister {
+  interface UnregisterCapability {
     unregister @0 () -> (success :Bool);
   }
 
-  register @0 RegParams -> (unreg :Unregister, reregSR :Persistence.SturdyRef);
+  interface ReregisterCapability extends(Persistence.Persistent) {
+    reregister @0 () -> (success :Bool);
+  }
+
+  register @0 RegParams -> (unreg :UnregisterCapability, reregSR :Persistence.SturdyRef);
   # register the given identifiable capability with the given name
   # under the given categoryId which must match one of the supported categories
   # if categoryId or name are null, nothing is registered
