@@ -48,12 +48,6 @@
       "base_path": "model/monica"
     }
   },
-  "capnpc": {
-    "csharp": "csharp",
-    "c++": "c++",
-    "go": "go",
-    "java": "java"
-  },
   "presets": {
     "common": ["common.capnp", "date.capnp"],
     "mgmt": [ "monica_management.capnp", "management.capnp"]

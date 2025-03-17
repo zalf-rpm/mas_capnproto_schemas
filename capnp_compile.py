@@ -30,7 +30,6 @@ class CompilerConfig:
     """Configuration for the Cap'n Proto compiler."""
 
     schemas: Dict[str, SchemaConfig]
-    capnpc: Dict[str, str]
     paths: PathsConfig
     presets: Dict[str, List[str]]
 
@@ -63,7 +62,6 @@ def load_config(config_path: Path) -> CompilerConfig:
 
         return CompilerConfig(
             schemas=schemas,
-            capnpc=config_data.get("capnpc", {}),
             paths=paths,
             presets=config_data.get("presets", {}),
         )
@@ -76,7 +74,6 @@ def compile_schema(
     schema: str,
     lang: str,
     capnp_bin: str,
-    capnpc_lang: str,
     schema_config: SchemaConfig,
     config: CompilerConfig,
 ) -> None:
@@ -105,7 +102,7 @@ def compile_schema(
         "compile",
         f"-I{schema_dir}",
         f"--src-prefix={src_prefix}",
-        f"-o{capnpc_lang}:{output_dir}",
+        f"-o{lang}:{output_dir}",
         f"{full_schema_path}",
     ]
 
@@ -194,27 +191,26 @@ def main() -> None:
 
         # Get compiler paths
         capnp_bin = "capnp"
-        capnpc_lang = config.capnpc.get(lang, lang)
 
         # Check compiler paths
         capnp_path = find_executable_path(capnp_bin)
-        capnpc_path = find_executable_path(f"capnpc-{capnpc_lang}")
+        capnpc_path = find_executable_path(f"capnpc-{lang}")
 
         if not capnp_path:
             print(f"Error: Could not locate '{capnp_bin}' executable")
             continue
 
         if not capnpc_path:
-            print(f"Error: Could not locate 'capnpc-{capnpc_lang}' executable")
+            print(f"Error: Could not locate 'capnpc-{lang}' executable")
             continue
 
         print(f"Using capnp at: {capnp_path}")
-        print(f"Using capnpc-{capnpc_lang} at: {capnpc_path}")
+        print(f"Using capnpc-{lang} at: {capnpc_path}")
 
         # Compile schemas
         for file in valid_files:
             schema_config = config.schemas[file]
-            compile_schema(file, lang, capnp_bin, capnpc_lang, schema_config, config)
+            compile_schema(file, lang, capnp_bin, schema_config, config)
 
 
 if __name__ == "__main__":
