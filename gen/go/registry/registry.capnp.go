@@ -2569,32 +2569,32 @@ func (p Registrar_RegParams_Future) XDomain() Registrar_CrossDomainRestore_Futur
 	return Registrar_CrossDomainRestore_Future{Future: p.Future.Field(3, nil)}
 }
 
-type Registrar_Unregister capnp.Client
+type Registrar_UnregisterCapability capnp.Client
 
-// Registrar_Unregister_TypeID is the unique identifier for the type Registrar_Unregister.
-const Registrar_Unregister_TypeID = 0xc7597e4462528489
+// Registrar_UnregisterCapability_TypeID is the unique identifier for the type Registrar_UnregisterCapability.
+const Registrar_UnregisterCapability_TypeID = 0x9846f8829716925a
 
-func (c Registrar_Unregister) Unregister(ctx context.Context, params func(Registrar_Unregister_unregister_Params) error) (Registrar_Unregister_unregister_Results_Future, capnp.ReleaseFunc) {
+func (c Registrar_UnregisterCapability) Unregister(ctx context.Context, params func(Registrar_UnregisterCapability_unregister_Params) error) (Registrar_UnregisterCapability_unregister_Results_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
 		Method: capnp.Method{
-			InterfaceID:   0xc7597e4462528489,
+			InterfaceID:   0x9846f8829716925a,
 			MethodID:      0,
-			InterfaceName: "registry.capnp:Registrar.Unregister",
+			InterfaceName: "registry.capnp:Registrar.UnregisterCapability",
 			MethodName:    "unregister",
 		},
 	}
 	if params != nil {
 		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(Registrar_Unregister_unregister_Params(s)) }
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Registrar_UnregisterCapability_unregister_Params(s)) }
 	}
 
 	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return Registrar_Unregister_unregister_Results_Future{Future: ans.Future()}, release
+	return Registrar_UnregisterCapability_unregister_Results_Future{Future: ans.Future()}, release
 
 }
 
-func (c Registrar_Unregister) WaitStreaming() error {
+func (c Registrar_UnregisterCapability) WaitStreaming() error {
 	return capnp.Client(c).WaitStreaming()
 }
 
@@ -2602,14 +2602,14 @@ func (c Registrar_Unregister) WaitStreaming() error {
 // purposes.  Its format should not be depended on: in particular, it
 // should not be used to compare clients.  Use IsSame to compare clients
 // for equality.
-func (c Registrar_Unregister) String() string {
-	return "Registrar_Unregister(" + capnp.Client(c).String() + ")"
+func (c Registrar_UnregisterCapability) String() string {
+	return "Registrar_UnregisterCapability(" + capnp.Client(c).String() + ")"
 }
 
 // AddRef creates a new Client that refers to the same capability as c.
 // If c is nil or has resolved to null, then AddRef returns nil.
-func (c Registrar_Unregister) AddRef() Registrar_Unregister {
-	return Registrar_Unregister(capnp.Client(c).AddRef())
+func (c Registrar_UnregisterCapability) AddRef() Registrar_UnregisterCapability {
+	return Registrar_UnregisterCapability(capnp.Client(c).AddRef())
 }
 
 // Release releases a capability reference.  If this is the last
@@ -2618,28 +2618,28 @@ func (c Registrar_Unregister) AddRef() Registrar_Unregister {
 //
 // Release will panic if c has already been released, but not if c is
 // nil or resolved to null.
-func (c Registrar_Unregister) Release() {
+func (c Registrar_UnregisterCapability) Release() {
 	capnp.Client(c).Release()
 }
 
 // Resolve blocks until the capability is fully resolved or the Context
 // expires.
-func (c Registrar_Unregister) Resolve(ctx context.Context) error {
+func (c Registrar_UnregisterCapability) Resolve(ctx context.Context) error {
 	return capnp.Client(c).Resolve(ctx)
 }
 
-func (c Registrar_Unregister) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (c Registrar_UnregisterCapability) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Client(c).EncodeAsPtr(seg)
 }
 
-func (Registrar_Unregister) DecodeFromPtr(p capnp.Ptr) Registrar_Unregister {
-	return Registrar_Unregister(capnp.Client{}.DecodeFromPtr(p))
+func (Registrar_UnregisterCapability) DecodeFromPtr(p capnp.Ptr) Registrar_UnregisterCapability {
+	return Registrar_UnregisterCapability(capnp.Client{}.DecodeFromPtr(p))
 }
 
 // IsValid reports whether c is a valid reference to a capability.
 // A reference is invalid if it is nil, has resolved to null, or has
 // been released.
-func (c Registrar_Unregister) IsValid() bool {
+func (c Registrar_UnregisterCapability) IsValid() bool {
 	return capnp.Client(c).IsValid()
 }
 
@@ -2647,7 +2647,7 @@ func (c Registrar_Unregister) IsValid() bool {
 // same call to NewClient.  This can return false negatives if c or other
 // are not fully resolved: use Resolve if this is an issue.  If either
 // c or other are released, then IsSame panics.
-func (c Registrar_Unregister) IsSame(other Registrar_Unregister) bool {
+func (c Registrar_UnregisterCapability) IsSame(other Registrar_UnregisterCapability) bool {
 	return capnp.Client(c).IsSame(capnp.Client(other))
 }
 
@@ -2655,216 +2655,548 @@ func (c Registrar_Unregister) IsSame(other Registrar_Unregister) bool {
 // this client. This affects all future calls, but not calls already
 // waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
 // which is also the default.
-func (c Registrar_Unregister) SetFlowLimiter(lim fc.FlowLimiter) {
+func (c Registrar_UnregisterCapability) SetFlowLimiter(lim fc.FlowLimiter) {
 	capnp.Client(c).SetFlowLimiter(lim)
 }
 
 // Get the current flowcontrol.FlowLimiter used to manage flow control
 // for this client.
-func (c Registrar_Unregister) GetFlowLimiter() fc.FlowLimiter {
+func (c Registrar_UnregisterCapability) GetFlowLimiter() fc.FlowLimiter {
 	return capnp.Client(c).GetFlowLimiter()
 }
 
-// A Registrar_Unregister_Server is a Registrar_Unregister with a local implementation.
-type Registrar_Unregister_Server interface {
-	Unregister(context.Context, Registrar_Unregister_unregister) error
+// A Registrar_UnregisterCapability_Server is a Registrar_UnregisterCapability with a local implementation.
+type Registrar_UnregisterCapability_Server interface {
+	Unregister(context.Context, Registrar_UnregisterCapability_unregister) error
 }
 
-// Registrar_Unregister_NewServer creates a new Server from an implementation of Registrar_Unregister_Server.
-func Registrar_Unregister_NewServer(s Registrar_Unregister_Server) *server.Server {
+// Registrar_UnregisterCapability_NewServer creates a new Server from an implementation of Registrar_UnregisterCapability_Server.
+func Registrar_UnregisterCapability_NewServer(s Registrar_UnregisterCapability_Server) *server.Server {
 	c, _ := s.(server.Shutdowner)
-	return server.New(Registrar_Unregister_Methods(nil, s), s, c)
+	return server.New(Registrar_UnregisterCapability_Methods(nil, s), s, c)
 }
 
-// Registrar_Unregister_ServerToClient creates a new Client from an implementation of Registrar_Unregister_Server.
+// Registrar_UnregisterCapability_ServerToClient creates a new Client from an implementation of Registrar_UnregisterCapability_Server.
 // The caller is responsible for calling Release on the returned Client.
-func Registrar_Unregister_ServerToClient(s Registrar_Unregister_Server) Registrar_Unregister {
-	return Registrar_Unregister(capnp.NewClient(Registrar_Unregister_NewServer(s)))
+func Registrar_UnregisterCapability_ServerToClient(s Registrar_UnregisterCapability_Server) Registrar_UnregisterCapability {
+	return Registrar_UnregisterCapability(capnp.NewClient(Registrar_UnregisterCapability_NewServer(s)))
 }
 
-// Registrar_Unregister_Methods appends Methods to a slice that invoke the methods on s.
+// Registrar_UnregisterCapability_Methods appends Methods to a slice that invoke the methods on s.
 // This can be used to create a more complicated Server.
-func Registrar_Unregister_Methods(methods []server.Method, s Registrar_Unregister_Server) []server.Method {
+func Registrar_UnregisterCapability_Methods(methods []server.Method, s Registrar_UnregisterCapability_Server) []server.Method {
 	if cap(methods) == 0 {
 		methods = make([]server.Method, 0, 1)
 	}
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xc7597e4462528489,
+			InterfaceID:   0x9846f8829716925a,
 			MethodID:      0,
-			InterfaceName: "registry.capnp:Registrar.Unregister",
+			InterfaceName: "registry.capnp:Registrar.UnregisterCapability",
 			MethodName:    "unregister",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.Unregister(ctx, Registrar_Unregister_unregister{call})
+			return s.Unregister(ctx, Registrar_UnregisterCapability_unregister{call})
 		},
 	})
 
 	return methods
 }
 
-// Registrar_Unregister_unregister holds the state for a server call to Registrar_Unregister.unregister.
+// Registrar_UnregisterCapability_unregister holds the state for a server call to Registrar_UnregisterCapability.unregister.
 // See server.Call for documentation.
-type Registrar_Unregister_unregister struct {
+type Registrar_UnregisterCapability_unregister struct {
 	*server.Call
 }
 
 // Args returns the call's arguments.
-func (c Registrar_Unregister_unregister) Args() Registrar_Unregister_unregister_Params {
-	return Registrar_Unregister_unregister_Params(c.Call.Args())
+func (c Registrar_UnregisterCapability_unregister) Args() Registrar_UnregisterCapability_unregister_Params {
+	return Registrar_UnregisterCapability_unregister_Params(c.Call.Args())
 }
 
 // AllocResults allocates the results struct.
-func (c Registrar_Unregister_unregister) AllocResults() (Registrar_Unregister_unregister_Results, error) {
+func (c Registrar_UnregisterCapability_unregister) AllocResults() (Registrar_UnregisterCapability_unregister_Results, error) {
 	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Registrar_Unregister_unregister_Results(r), err
+	return Registrar_UnregisterCapability_unregister_Results(r), err
 }
 
-// Registrar_Unregister_List is a list of Registrar_Unregister.
-type Registrar_Unregister_List = capnp.CapList[Registrar_Unregister]
+// Registrar_UnregisterCapability_List is a list of Registrar_UnregisterCapability.
+type Registrar_UnregisterCapability_List = capnp.CapList[Registrar_UnregisterCapability]
 
-// NewRegistrar_Unregister_List creates a new list of Registrar_Unregister.
-func NewRegistrar_Unregister_List(s *capnp.Segment, sz int32) (Registrar_Unregister_List, error) {
+// NewRegistrar_UnregisterCapability_List creates a new list of Registrar_UnregisterCapability.
+func NewRegistrar_UnregisterCapability_List(s *capnp.Segment, sz int32) (Registrar_UnregisterCapability_List, error) {
 	l, err := capnp.NewPointerList(s, sz)
-	return capnp.CapList[Registrar_Unregister](l), err
+	return capnp.CapList[Registrar_UnregisterCapability](l), err
 }
 
-type Registrar_Unregister_unregister_Params capnp.Struct
+type Registrar_UnregisterCapability_unregister_Params capnp.Struct
 
-// Registrar_Unregister_unregister_Params_TypeID is the unique identifier for the type Registrar_Unregister_unregister_Params.
-const Registrar_Unregister_unregister_Params_TypeID = 0xd023a1df5e372a7e
+// Registrar_UnregisterCapability_unregister_Params_TypeID is the unique identifier for the type Registrar_UnregisterCapability_unregister_Params.
+const Registrar_UnregisterCapability_unregister_Params_TypeID = 0x92080763dc871479
 
-func NewRegistrar_Unregister_unregister_Params(s *capnp.Segment) (Registrar_Unregister_unregister_Params, error) {
+func NewRegistrar_UnregisterCapability_unregister_Params(s *capnp.Segment) (Registrar_UnregisterCapability_unregister_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Registrar_Unregister_unregister_Params(st), err
+	return Registrar_UnregisterCapability_unregister_Params(st), err
 }
 
-func NewRootRegistrar_Unregister_unregister_Params(s *capnp.Segment) (Registrar_Unregister_unregister_Params, error) {
+func NewRootRegistrar_UnregisterCapability_unregister_Params(s *capnp.Segment) (Registrar_UnregisterCapability_unregister_Params, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Registrar_Unregister_unregister_Params(st), err
+	return Registrar_UnregisterCapability_unregister_Params(st), err
 }
 
-func ReadRootRegistrar_Unregister_unregister_Params(msg *capnp.Message) (Registrar_Unregister_unregister_Params, error) {
+func ReadRootRegistrar_UnregisterCapability_unregister_Params(msg *capnp.Message) (Registrar_UnregisterCapability_unregister_Params, error) {
 	root, err := msg.Root()
-	return Registrar_Unregister_unregister_Params(root.Struct()), err
+	return Registrar_UnregisterCapability_unregister_Params(root.Struct()), err
 }
 
-func (s Registrar_Unregister_unregister_Params) String() string {
-	str, _ := text.Marshal(0xd023a1df5e372a7e, capnp.Struct(s))
+func (s Registrar_UnregisterCapability_unregister_Params) String() string {
+	str, _ := text.Marshal(0x92080763dc871479, capnp.Struct(s))
 	return str
 }
 
-func (s Registrar_Unregister_unregister_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s Registrar_UnregisterCapability_unregister_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (Registrar_Unregister_unregister_Params) DecodeFromPtr(p capnp.Ptr) Registrar_Unregister_unregister_Params {
-	return Registrar_Unregister_unregister_Params(capnp.Struct{}.DecodeFromPtr(p))
+func (Registrar_UnregisterCapability_unregister_Params) DecodeFromPtr(p capnp.Ptr) Registrar_UnregisterCapability_unregister_Params {
+	return Registrar_UnregisterCapability_unregister_Params(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s Registrar_Unregister_unregister_Params) ToPtr() capnp.Ptr {
+func (s Registrar_UnregisterCapability_unregister_Params) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s Registrar_Unregister_unregister_Params) IsValid() bool {
+func (s Registrar_UnregisterCapability_unregister_Params) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s Registrar_Unregister_unregister_Params) Message() *capnp.Message {
+func (s Registrar_UnregisterCapability_unregister_Params) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s Registrar_Unregister_unregister_Params) Segment() *capnp.Segment {
+func (s Registrar_UnregisterCapability_unregister_Params) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
 
-// Registrar_Unregister_unregister_Params_List is a list of Registrar_Unregister_unregister_Params.
-type Registrar_Unregister_unregister_Params_List = capnp.StructList[Registrar_Unregister_unregister_Params]
+// Registrar_UnregisterCapability_unregister_Params_List is a list of Registrar_UnregisterCapability_unregister_Params.
+type Registrar_UnregisterCapability_unregister_Params_List = capnp.StructList[Registrar_UnregisterCapability_unregister_Params]
 
-// NewRegistrar_Unregister_unregister_Params creates a new list of Registrar_Unregister_unregister_Params.
-func NewRegistrar_Unregister_unregister_Params_List(s *capnp.Segment, sz int32) (Registrar_Unregister_unregister_Params_List, error) {
+// NewRegistrar_UnregisterCapability_unregister_Params creates a new list of Registrar_UnregisterCapability_unregister_Params.
+func NewRegistrar_UnregisterCapability_unregister_Params_List(s *capnp.Segment, sz int32) (Registrar_UnregisterCapability_unregister_Params_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[Registrar_Unregister_unregister_Params](l), err
+	return capnp.StructList[Registrar_UnregisterCapability_unregister_Params](l), err
 }
 
-// Registrar_Unregister_unregister_Params_Future is a wrapper for a Registrar_Unregister_unregister_Params promised by a client call.
-type Registrar_Unregister_unregister_Params_Future struct{ *capnp.Future }
+// Registrar_UnregisterCapability_unregister_Params_Future is a wrapper for a Registrar_UnregisterCapability_unregister_Params promised by a client call.
+type Registrar_UnregisterCapability_unregister_Params_Future struct{ *capnp.Future }
 
-func (f Registrar_Unregister_unregister_Params_Future) Struct() (Registrar_Unregister_unregister_Params, error) {
+func (f Registrar_UnregisterCapability_unregister_Params_Future) Struct() (Registrar_UnregisterCapability_unregister_Params, error) {
 	p, err := f.Future.Ptr()
-	return Registrar_Unregister_unregister_Params(p.Struct()), err
+	return Registrar_UnregisterCapability_unregister_Params(p.Struct()), err
 }
 
-type Registrar_Unregister_unregister_Results capnp.Struct
+type Registrar_UnregisterCapability_unregister_Results capnp.Struct
 
-// Registrar_Unregister_unregister_Results_TypeID is the unique identifier for the type Registrar_Unregister_unregister_Results.
-const Registrar_Unregister_unregister_Results_TypeID = 0xa19166b9981b0854
+// Registrar_UnregisterCapability_unregister_Results_TypeID is the unique identifier for the type Registrar_UnregisterCapability_unregister_Results.
+const Registrar_UnregisterCapability_unregister_Results_TypeID = 0x8e5199f7b0768f03
 
-func NewRegistrar_Unregister_unregister_Results(s *capnp.Segment) (Registrar_Unregister_unregister_Results, error) {
+func NewRegistrar_UnregisterCapability_unregister_Results(s *capnp.Segment) (Registrar_UnregisterCapability_unregister_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Registrar_Unregister_unregister_Results(st), err
+	return Registrar_UnregisterCapability_unregister_Results(st), err
 }
 
-func NewRootRegistrar_Unregister_unregister_Results(s *capnp.Segment) (Registrar_Unregister_unregister_Results, error) {
+func NewRootRegistrar_UnregisterCapability_unregister_Results(s *capnp.Segment) (Registrar_UnregisterCapability_unregister_Results, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Registrar_Unregister_unregister_Results(st), err
+	return Registrar_UnregisterCapability_unregister_Results(st), err
 }
 
-func ReadRootRegistrar_Unregister_unregister_Results(msg *capnp.Message) (Registrar_Unregister_unregister_Results, error) {
+func ReadRootRegistrar_UnregisterCapability_unregister_Results(msg *capnp.Message) (Registrar_UnregisterCapability_unregister_Results, error) {
 	root, err := msg.Root()
-	return Registrar_Unregister_unregister_Results(root.Struct()), err
+	return Registrar_UnregisterCapability_unregister_Results(root.Struct()), err
 }
 
-func (s Registrar_Unregister_unregister_Results) String() string {
-	str, _ := text.Marshal(0xa19166b9981b0854, capnp.Struct(s))
+func (s Registrar_UnregisterCapability_unregister_Results) String() string {
+	str, _ := text.Marshal(0x8e5199f7b0768f03, capnp.Struct(s))
 	return str
 }
 
-func (s Registrar_Unregister_unregister_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s Registrar_UnregisterCapability_unregister_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (Registrar_Unregister_unregister_Results) DecodeFromPtr(p capnp.Ptr) Registrar_Unregister_unregister_Results {
-	return Registrar_Unregister_unregister_Results(capnp.Struct{}.DecodeFromPtr(p))
+func (Registrar_UnregisterCapability_unregister_Results) DecodeFromPtr(p capnp.Ptr) Registrar_UnregisterCapability_unregister_Results {
+	return Registrar_UnregisterCapability_unregister_Results(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s Registrar_Unregister_unregister_Results) ToPtr() capnp.Ptr {
+func (s Registrar_UnregisterCapability_unregister_Results) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s Registrar_Unregister_unregister_Results) IsValid() bool {
+func (s Registrar_UnregisterCapability_unregister_Results) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s Registrar_Unregister_unregister_Results) Message() *capnp.Message {
+func (s Registrar_UnregisterCapability_unregister_Results) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s Registrar_Unregister_unregister_Results) Segment() *capnp.Segment {
+func (s Registrar_UnregisterCapability_unregister_Results) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-func (s Registrar_Unregister_unregister_Results) Success() bool {
+func (s Registrar_UnregisterCapability_unregister_Results) Success() bool {
 	return capnp.Struct(s).Bit(0)
 }
 
-func (s Registrar_Unregister_unregister_Results) SetSuccess(v bool) {
+func (s Registrar_UnregisterCapability_unregister_Results) SetSuccess(v bool) {
 	capnp.Struct(s).SetBit(0, v)
 }
 
-// Registrar_Unregister_unregister_Results_List is a list of Registrar_Unregister_unregister_Results.
-type Registrar_Unregister_unregister_Results_List = capnp.StructList[Registrar_Unregister_unregister_Results]
+// Registrar_UnregisterCapability_unregister_Results_List is a list of Registrar_UnregisterCapability_unregister_Results.
+type Registrar_UnregisterCapability_unregister_Results_List = capnp.StructList[Registrar_UnregisterCapability_unregister_Results]
 
-// NewRegistrar_Unregister_unregister_Results creates a new list of Registrar_Unregister_unregister_Results.
-func NewRegistrar_Unregister_unregister_Results_List(s *capnp.Segment, sz int32) (Registrar_Unregister_unregister_Results_List, error) {
+// NewRegistrar_UnregisterCapability_unregister_Results creates a new list of Registrar_UnregisterCapability_unregister_Results.
+func NewRegistrar_UnregisterCapability_unregister_Results_List(s *capnp.Segment, sz int32) (Registrar_UnregisterCapability_unregister_Results_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
-	return capnp.StructList[Registrar_Unregister_unregister_Results](l), err
+	return capnp.StructList[Registrar_UnregisterCapability_unregister_Results](l), err
 }
 
-// Registrar_Unregister_unregister_Results_Future is a wrapper for a Registrar_Unregister_unregister_Results promised by a client call.
-type Registrar_Unregister_unregister_Results_Future struct{ *capnp.Future }
+// Registrar_UnregisterCapability_unregister_Results_Future is a wrapper for a Registrar_UnregisterCapability_unregister_Results promised by a client call.
+type Registrar_UnregisterCapability_unregister_Results_Future struct{ *capnp.Future }
 
-func (f Registrar_Unregister_unregister_Results_Future) Struct() (Registrar_Unregister_unregister_Results, error) {
+func (f Registrar_UnregisterCapability_unregister_Results_Future) Struct() (Registrar_UnregisterCapability_unregister_Results, error) {
 	p, err := f.Future.Ptr()
-	return Registrar_Unregister_unregister_Results(p.Struct()), err
+	return Registrar_UnregisterCapability_unregister_Results(p.Struct()), err
+}
+
+type Registrar_ReregisterCapability capnp.Client
+
+// Registrar_ReregisterCapability_TypeID is the unique identifier for the type Registrar_ReregisterCapability.
+const Registrar_ReregisterCapability_TypeID = 0xfbcf34bcf62e574d
+
+func (c Registrar_ReregisterCapability) Reregister(ctx context.Context, params func(Registrar_ReregisterCapability_reregister_Params) error) (Registrar_ReregisterCapability_reregister_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xfbcf34bcf62e574d,
+			MethodID:      0,
+			InterfaceName: "registry.capnp:Registrar.ReregisterCapability",
+			MethodName:    "reregister",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Registrar_ReregisterCapability_reregister_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Registrar_ReregisterCapability_reregister_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Registrar_ReregisterCapability) Save(ctx context.Context, params func(persistence.Persistent_SaveParams) error) (persistence.Persistent_SaveResults_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(persistence.Persistent_SaveParams(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return persistence.Persistent_SaveResults_Future{Future: ans.Future()}, release
+
+}
+
+func (c Registrar_ReregisterCapability) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c Registrar_ReregisterCapability) String() string {
+	return "Registrar_ReregisterCapability(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c Registrar_ReregisterCapability) AddRef() Registrar_ReregisterCapability {
+	return Registrar_ReregisterCapability(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c Registrar_ReregisterCapability) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c Registrar_ReregisterCapability) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c Registrar_ReregisterCapability) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (Registrar_ReregisterCapability) DecodeFromPtr(p capnp.Ptr) Registrar_ReregisterCapability {
+	return Registrar_ReregisterCapability(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c Registrar_ReregisterCapability) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c Registrar_ReregisterCapability) IsSame(other Registrar_ReregisterCapability) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c Registrar_ReregisterCapability) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c Registrar_ReregisterCapability) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A Registrar_ReregisterCapability_Server is a Registrar_ReregisterCapability with a local implementation.
+type Registrar_ReregisterCapability_Server interface {
+	Reregister(context.Context, Registrar_ReregisterCapability_reregister) error
+
+	Save(context.Context, persistence.Persistent_save) error
+}
+
+// Registrar_ReregisterCapability_NewServer creates a new Server from an implementation of Registrar_ReregisterCapability_Server.
+func Registrar_ReregisterCapability_NewServer(s Registrar_ReregisterCapability_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(Registrar_ReregisterCapability_Methods(nil, s), s, c)
+}
+
+// Registrar_ReregisterCapability_ServerToClient creates a new Client from an implementation of Registrar_ReregisterCapability_Server.
+// The caller is responsible for calling Release on the returned Client.
+func Registrar_ReregisterCapability_ServerToClient(s Registrar_ReregisterCapability_Server) Registrar_ReregisterCapability {
+	return Registrar_ReregisterCapability(capnp.NewClient(Registrar_ReregisterCapability_NewServer(s)))
+}
+
+// Registrar_ReregisterCapability_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func Registrar_ReregisterCapability_Methods(methods []server.Method, s Registrar_ReregisterCapability_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 2)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xfbcf34bcf62e574d,
+			MethodID:      0,
+			InterfaceName: "registry.capnp:Registrar.ReregisterCapability",
+			MethodName:    "reregister",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Reregister(ctx, Registrar_ReregisterCapability_reregister{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Save(ctx, persistence.Persistent_save{call})
+		},
+	})
+
+	return methods
+}
+
+// Registrar_ReregisterCapability_reregister holds the state for a server call to Registrar_ReregisterCapability.reregister.
+// See server.Call for documentation.
+type Registrar_ReregisterCapability_reregister struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Registrar_ReregisterCapability_reregister) Args() Registrar_ReregisterCapability_reregister_Params {
+	return Registrar_ReregisterCapability_reregister_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Registrar_ReregisterCapability_reregister) AllocResults() (Registrar_ReregisterCapability_reregister_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Registrar_ReregisterCapability_reregister_Results(r), err
+}
+
+// Registrar_ReregisterCapability_List is a list of Registrar_ReregisterCapability.
+type Registrar_ReregisterCapability_List = capnp.CapList[Registrar_ReregisterCapability]
+
+// NewRegistrar_ReregisterCapability_List creates a new list of Registrar_ReregisterCapability.
+func NewRegistrar_ReregisterCapability_List(s *capnp.Segment, sz int32) (Registrar_ReregisterCapability_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[Registrar_ReregisterCapability](l), err
+}
+
+type Registrar_ReregisterCapability_reregister_Params capnp.Struct
+
+// Registrar_ReregisterCapability_reregister_Params_TypeID is the unique identifier for the type Registrar_ReregisterCapability_reregister_Params.
+const Registrar_ReregisterCapability_reregister_Params_TypeID = 0xfc3aeeca54422be9
+
+func NewRegistrar_ReregisterCapability_reregister_Params(s *capnp.Segment) (Registrar_ReregisterCapability_reregister_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Registrar_ReregisterCapability_reregister_Params(st), err
+}
+
+func NewRootRegistrar_ReregisterCapability_reregister_Params(s *capnp.Segment) (Registrar_ReregisterCapability_reregister_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Registrar_ReregisterCapability_reregister_Params(st), err
+}
+
+func ReadRootRegistrar_ReregisterCapability_reregister_Params(msg *capnp.Message) (Registrar_ReregisterCapability_reregister_Params, error) {
+	root, err := msg.Root()
+	return Registrar_ReregisterCapability_reregister_Params(root.Struct()), err
+}
+
+func (s Registrar_ReregisterCapability_reregister_Params) String() string {
+	str, _ := text.Marshal(0xfc3aeeca54422be9, capnp.Struct(s))
+	return str
+}
+
+func (s Registrar_ReregisterCapability_reregister_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Registrar_ReregisterCapability_reregister_Params) DecodeFromPtr(p capnp.Ptr) Registrar_ReregisterCapability_reregister_Params {
+	return Registrar_ReregisterCapability_reregister_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Registrar_ReregisterCapability_reregister_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Registrar_ReregisterCapability_reregister_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Registrar_ReregisterCapability_reregister_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Registrar_ReregisterCapability_reregister_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Registrar_ReregisterCapability_reregister_Params_List is a list of Registrar_ReregisterCapability_reregister_Params.
+type Registrar_ReregisterCapability_reregister_Params_List = capnp.StructList[Registrar_ReregisterCapability_reregister_Params]
+
+// NewRegistrar_ReregisterCapability_reregister_Params creates a new list of Registrar_ReregisterCapability_reregister_Params.
+func NewRegistrar_ReregisterCapability_reregister_Params_List(s *capnp.Segment, sz int32) (Registrar_ReregisterCapability_reregister_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Registrar_ReregisterCapability_reregister_Params](l), err
+}
+
+// Registrar_ReregisterCapability_reregister_Params_Future is a wrapper for a Registrar_ReregisterCapability_reregister_Params promised by a client call.
+type Registrar_ReregisterCapability_reregister_Params_Future struct{ *capnp.Future }
+
+func (f Registrar_ReregisterCapability_reregister_Params_Future) Struct() (Registrar_ReregisterCapability_reregister_Params, error) {
+	p, err := f.Future.Ptr()
+	return Registrar_ReregisterCapability_reregister_Params(p.Struct()), err
+}
+
+type Registrar_ReregisterCapability_reregister_Results capnp.Struct
+
+// Registrar_ReregisterCapability_reregister_Results_TypeID is the unique identifier for the type Registrar_ReregisterCapability_reregister_Results.
+const Registrar_ReregisterCapability_reregister_Results_TypeID = 0xd7d1da5ec5b6e655
+
+func NewRegistrar_ReregisterCapability_reregister_Results(s *capnp.Segment) (Registrar_ReregisterCapability_reregister_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Registrar_ReregisterCapability_reregister_Results(st), err
+}
+
+func NewRootRegistrar_ReregisterCapability_reregister_Results(s *capnp.Segment) (Registrar_ReregisterCapability_reregister_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Registrar_ReregisterCapability_reregister_Results(st), err
+}
+
+func ReadRootRegistrar_ReregisterCapability_reregister_Results(msg *capnp.Message) (Registrar_ReregisterCapability_reregister_Results, error) {
+	root, err := msg.Root()
+	return Registrar_ReregisterCapability_reregister_Results(root.Struct()), err
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) String() string {
+	str, _ := text.Marshal(0xd7d1da5ec5b6e655, capnp.Struct(s))
+	return str
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Registrar_ReregisterCapability_reregister_Results) DecodeFromPtr(p capnp.Ptr) Registrar_ReregisterCapability_reregister_Results {
+	return Registrar_ReregisterCapability_reregister_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Registrar_ReregisterCapability_reregister_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Registrar_ReregisterCapability_reregister_Results) Success() bool {
+	return capnp.Struct(s).Bit(0)
+}
+
+func (s Registrar_ReregisterCapability_reregister_Results) SetSuccess(v bool) {
+	capnp.Struct(s).SetBit(0, v)
+}
+
+// Registrar_ReregisterCapability_reregister_Results_List is a list of Registrar_ReregisterCapability_reregister_Results.
+type Registrar_ReregisterCapability_reregister_Results_List = capnp.StructList[Registrar_ReregisterCapability_reregister_Results]
+
+// NewRegistrar_ReregisterCapability_reregister_Results creates a new list of Registrar_ReregisterCapability_reregister_Results.
+func NewRegistrar_ReregisterCapability_reregister_Results_List(s *capnp.Segment, sz int32) (Registrar_ReregisterCapability_reregister_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Registrar_ReregisterCapability_reregister_Results](l), err
+}
+
+// Registrar_ReregisterCapability_reregister_Results_Future is a wrapper for a Registrar_ReregisterCapability_reregister_Results promised by a client call.
+type Registrar_ReregisterCapability_reregister_Results_Future struct{ *capnp.Future }
+
+func (f Registrar_ReregisterCapability_reregister_Results_Future) Struct() (Registrar_ReregisterCapability_reregister_Results, error) {
+	p, err := f.Future.Ptr()
+	return Registrar_ReregisterCapability_reregister_Results(p.Struct()), err
 }
 
 type Registrar_register_Results capnp.Struct
@@ -2914,16 +3246,16 @@ func (s Registrar_register_Results) Message() *capnp.Message {
 func (s Registrar_register_Results) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-func (s Registrar_register_Results) Unreg() Registrar_Unregister {
+func (s Registrar_register_Results) Unreg() Registrar_UnregisterCapability {
 	p, _ := capnp.Struct(s).Ptr(0)
-	return Registrar_Unregister(p.Interface().Client())
+	return Registrar_UnregisterCapability(p.Interface().Client())
 }
 
 func (s Registrar_register_Results) HasUnreg() bool {
 	return capnp.Struct(s).HasPtr(0)
 }
 
-func (s Registrar_register_Results) SetUnreg(v Registrar_Unregister) error {
+func (s Registrar_register_Results) SetUnreg(v Registrar_UnregisterCapability) error {
 	if !v.IsValid() {
 		return capnp.Struct(s).SetPtr(0, capnp.Ptr{})
 	}
@@ -2972,133 +3304,144 @@ func (f Registrar_register_Results_Future) Struct() (Registrar_register_Results,
 	p, err := f.Future.Ptr()
 	return Registrar_register_Results(p.Struct()), err
 }
-func (p Registrar_register_Results_Future) Unreg() Registrar_Unregister {
-	return Registrar_Unregister(p.Future.Field(0, nil).Client())
+func (p Registrar_register_Results_Future) Unreg() Registrar_UnregisterCapability {
+	return Registrar_UnregisterCapability(p.Future.Field(0, nil).Client())
 }
 
 func (p Registrar_register_Results_Future) ReregSR() persistence.SturdyRef_Future {
 	return persistence.SturdyRef_Future{Future: p.Future.Field(1, nil)}
 }
 
-const schema_fe1be0c39c7e8269 = "x\xda\xacW{l[W\x19\xff\xbe{\x9c\\?c" +
-	"\x1fnB7*\x14e3\xdaVm\xa1i\x0b\x83*" +
-	"\xc8N\x93*\x0f\xc8\x9a\xe3u@\"6z\xed\xdc\xa4" +
-	"\xaeb;\xbd\xf7\xba\xccEq:\xdamD\x88\xa1\"" +
-	"\x81F)\x1a\x1dB\xa2{\xb05Z\xd1\x0a\x8c\x89\x8e" +
-	"jR+\x04\xd1\x16\xc6\xa8Z\x88D\x0b\xaaDA\x85" +
-	"\x94G\x1f\x17\x9d{}\x1f\xb1\xe3\xb4\x95\xfa\x9f\x93\xfb" +
-	";\xdf9\xbf\xdf\xf9}\x8f\xb3\xf6\xaa/\xe9\xeb\x88\xbc" +
-	"\x17\x05\x81\xbd\xde\xd0h|\xef\xe7}\xb3\x0b{?0" +
-	"\x03\xf4\x0e\x04h@\x11`\xfd\x9c\x98F@\xe9\x8c\x98" +
-	"\x004\xde:=\xb2'<\xff\xe63@[8@\xe0" +
-	"\x00\xf4o\xe2\x80\x80\xffK\x80\xc6\x0f\x16\xca\x17\xcbG" +
-	"~\xf8\xed\x0a\xc0\x8cP\xf2\xa78\xe0I?\x8f\xf0\xdd" +
-	"\xe3\x1b\x1e;\x7f\xbe\xff\xa0\xb5\x85\x8f\x7f?\xe6?\x80" +
-	"\xe03\xfew\x82\xc9;\x1f\xbe\xfa\x9cw\xf3\xc3\xfe\x8d" +
-	"|\xe9\x11s\xe9k\x91\x9f}\xb6\xf1\xf27\xbf\xef\x8d" +
-	"=\xef\x1f\xe1\x80\x05\x13\xb0\xd5\xbf\xfa\xd9cc\xfb\x0f" +
-	"\x01\x8b\xa3\x1d\xbc%\xf0S\x0e\xf8H\x80\x03\x1a\xbe1" +
-	"\x11#\x87^:\xec\x8d\xb09`\xf2c&\xa0iv" +
-	"g\xf9\xcc\xb3\xf4\x05\xa0w\xa2qa\xee\xd2\xc7;\xff" +
-	"\xfb\xe3\x17+<\x9f\x0c\xa4Q\xfaN@\x04\x90\xbe\x15" +
-	"\xe0\\\x9d\xef4J\x8c\xecW\xca\x07\xdf\xfa\xd3\xea\xeb" +
-	"\x00(-\x06NJ\x18|\x10@\xea\x08\xf6J\x8f\x06" +
-	"W\x01\x18\x9d\xf8\xab\x7f\xecy\xf5\xf0,\x8fl+7" +
-	"\x184\x85\x19\x0e\xf2h\xaf\xae\xd5\x9e8\xba\xed\xcdY" +
-	"/\xfd\xa3\xc1\xe79\xe0D\x90\x9f\xed\xe8\xc7\xd4\xdd\x1f" +
-	"\xdd\xfb\xa97\x80\xb58\xec\x16\x83\x03\x1c\x80!\x0e\x90" +
-	"^\xfaw\x98=]\xfa%\x8f`\xbc\xbe\xbeq\xdb\xdc" +
-	"\xa7\xbf|\x12\x1a\x08?q[\xe8\x92\xf4@\x88\xff\xba" +
-	"/\xf4\x0a\xa01\xb3/\x95\xee)\x0f\xbf\x0d\xf4N\xe2" +
-	"\x12\x01\\\x7f\"t\x17J\xf3&r.\xd4+]\xe3" +
-	"\xbf\xdc`\xd5L\xcf\x85\x8eK\x7f\x0b\xad\x02\x90\x16C" +
-	"oK\xa50gZ^\xf3\xe0c\x7f<t\xf7o\x81" +
-	"\xc6\xedcf\xc3\xb3\xfc\x86\x7fwv\x0f>\xb3\xfa\x17" +
-	"\xf3^\xf7\x0c\x87\xcd\x0bT\xc2\\\x83/\xfe\xeb\x9d\xf2" +
-	"\x81\xf7\x9e\xfe\xbd\xf7~~\x1d6)\xbe\x1f\xe6\x14/" +
-	"?\xb5\xef\xc8\x95w?x\xba\xa2\x81\x85\x88DL\x03" +
-	"\xb6Dx\x88\xc1\xc6\xa7^\xcb/^\xf8\xb3W\xc6\xa2" +
-	"\x05\x98\x8a\xf0\x10\x91+\xc5\x0b\xabz\x7ft\xae\xea\x8a" +
-	"\xcds\xbe\x1c\xf9\x10JoD8\xf9c\x91\xbfp\xcd" +
-	"\xdbf\x9a\x7f\xf3\x9f\xfb/Z\x0721\xfb\x9b\xd6p" +
-	".\x0f}nl\xd7\xdd\xff$\x8b5\x92\x94\x9a^\x90" +
-	"\x9eh\xe2\xc8\xa9\xa6^\x94\x86\xa3\\\x93\x97\xafM\xbd" +
-	"\xf8\xf7\x93\xe9\xeb^b\xfd\xd1u\xa6\xf1\xa2\x09\xf8\xab" +
-	"\xa1*\xe3YMWK\xbe\xf6\x8c<\x99\x9f\xdc\x98\xaa" +
-	"\xfc\xdd\x9e\x91ue\xbc\xa0\x96\xfa\xf3c\x85\xf8\x90\xac" +
-	"\x8arNc>\xe2\x03\xf0!\x00\x8d\x8c\x00\xb00A" +
-	"v\x87\x80\x86\x8d\x05\xd2?\x8aa\x100\x0cX\x13\xb9" +
-	"k4\x97\xcd\xb7\xe7\x0a\xbb\x94-\xe9\x1dJF\xd7x" +
-	"T9\xa7\x01\xf3;Q\xefK\x01\xb0{\x09\xb2\x1e\x01" +
-	")b3\xd7\x9avm\x02`\x9d\x04Y\x9f\x80F\xc1" +
-	"\\\xdb?\x0a\xa8a\x13\xe0\x10As\xc3&\xc0i\xbd" +
-	"\xd0-\xeb7<\x80\xaa\xd4\x1c\x01\x97\x10KU\x88\xdd" +
-	"\xbb\xe2nN\xf4\x86j\xe1\xb4\xe2\xe4dA\xd5\x95\xd1" +
-	"nK\x95\xacbmCr\x9a\xb3\x88T/R\xf2\xba" +
-	"\x09LX\x9a\xdc\x06\xa1\x97\xf2L)Zq\x82\xe8K" +
-	"\x02\xef\xf6\x10\xb5\xd0\xa3[ a-\xb0\xd9Rc\xbe" +
-	"\xef\xe0\xf0\xa9\xb9Wf\x01p%\xde\xb2\xda\xfeH\xde" +
-	"\xfa\xa6\xa8\xedE\xe7g<\x95\xe0[/\xdd\x99_\xa8" +
-	"\x9f k\x16pZ+f2\x8a\xa6!\x82\x80x\x03" +
-	"6\x15EK&\x1dq\xe2v\xd2\xf1\xd5\xd0\xe9V\x0b" +
-	"\x9a\xd6S\xc8\xc9\xd9|J\xd1t\xb1\xa0*C\x88^" +
-	"\xb3\xae\x03`q\x82l\xad\xc7\xac\x0f\x0c\x00\xb0\xfb\x09" +
-	"\xb2O\x08\xd8\xba\xcb\xf4c\xcc\xf8\xfa\xdc\xd7\xe6\xf5G" +
-	"\x83\x0b|\xd3\x98\xb9\xa9\xa6\x17TE\x05\x00\xa4Fg" +
-	"\xfb\xfb\xf7\xeck\xfb\xc9s\xfc+\xf5\x1cI\xa8>\x12" +
-	"'\x88\xde^A\x0fx\xaaJK\xcaS\\[F\x0c" +
-	"\xfb\xfcX!P \xaab\xa4\x94q\xd3a\x80\x9aa" +
-	"\xdf\x17\x10Ee>\xd2\x00\xe0DC\xbbkP:\x00" +
-	"\x02\x0d\x88\x86}\x9f\x00\x90D\xe6C\xf4(\x09+\xa8" +
-	"\xe8\xfa\xc0\xb4\x01j7\x14pS\xa5\x04l\x10\xb0\xd5" +
-	"\xf4\x11R\x97\x98%\xd1\xb4\xaa\xa8\xca\xf8\xc3)\x8c\x19" +
-	"\x83g\xf7~\xf8\x9e\xed\xb9\xaf\xba\xd2\xdeBZ.g" +
-	"\xa35\x15o\xc6\x05\x8cfd\xd7:1\xe3\x9d?\x90" +
-	"\xeb\xa7\xca\xa7\xde\xadg\x1d\xcb\xa9\xf2\xe8\xe8\x12\x9bN" +
-	"\xe8\x1a\xc0\xad\x9a_\xa8>}\xeb\xe6\xbc\xae\x96\xb8\xff" +
-	"\xc2N\xa4\xcd\xbc2\xf4\x10dC\x1e\xf9\x06\xef\x02`" +
-	"}\x04\xd9V\x01\xa9 4\xa3\x00@\x19'\xf5\x19\x82" +
-	"\xec\xf3uj\x88\xa8*cU\xc9A\x01\xa3y9\xa7" +
-	"\xd4\x94\x19R/\xf1E]Q\xf9\x09-+\xd9\xdd\x18" +
-	"\xed\xe1\x88\xd2\x11\xcbJE\x8f\xef\x928\x84\xf5i\x83" +
-	"i4w\xbc\xc0u\x96\x0e,lna\x8fth\x8f" +
-	"0\x94=\x0f\x02\x1d\x14\x11\x9d\x89\x12\xed[\xa3];" +
-	"@\xa0\x9f\x14Qp\x06>\xb4{67\x9d@\xdbD" +
-	"\xc36\x09\xdaw(f\x15-\xe9\xd1,\xca\xdba\x12" +
-	"\xa7+\xf5z\x85T\xb8\xd9\xfa8\xd4jV\xfc\x9b\xab" +
-	"{\x95>\xe2\xcd\xa1\x117]\x1c\x13t\x1c\x07`\x1b" +
-	"\x08\xb2d\xbd\x9ea\xf7\x06!\xa3k[\x0bv|\xde" +
-	"\xe8n\xbe}/\xebno\x15\xb6jpz\x07$\xcc" +
-	"&Z\xb7\x85\xd6O\xa0e&\x84\x01\x97\xafI\x17\x91" +
-	"vltk\xaeK\x17\xa0*gc\x80\x89\xe2\xa4\xa6" +
-	"\xa8z\xddfS\xd3\x8fm\x8e\xcb%p\\p|\xe0" +
-	"\x16\x09\xc7\xacUE\xa26k*\xa5\x98\xe44\x9e4" +
-	"1'\xbe\xcc3\xf8\x0b\x04\xd9v\xcf\x8d*|\xd3m" +
-	"\x04\xd9\x84'\xad\xb3\xfc\xee\xb7\x13d\xba\x80\x94\x90f" +
-	"$\x00t'GN\x10d\x8f\x0b(f\xe4\xc9\xda\xb4" +
-	"\x9eV\x95\xf1\x87\xbc\x99\xbd\x9cC\xa6\x1f\xb7Z\x1f\xc6" +
-	"\xdc~SUbI\x95S\xad\xff\xc6\x87\xe4\xe8\x12C" +
-	"\xa3\x0d\x8br\x1c\xe7\xdalf\xaf=R\xa3\xfd\xbe\xa0" +
-	"\xfb\xd3 \xd0\x19\x9e\xbd\xf6\xc0\x8e\xf6\xc3\x89N\xed\x06" +
-	"\x81\x16y\xf6\xdaOA\xb4\x87v\x9a\xe5\xebd\x11\x89" +
-	"\xf3\x0aD\xfb\xc9F\x1fQ\xad\x8a\xe0sFj\xb4g" +
-	"b\xda5`V\x04\xc3v\x1c\x88\x05\xb5\x94\xb4\xa7\x87" +
-	"n\x19\x12\x96.I7_@\xcc\xe8\x9a\x03\xd9\x92\x86" +
-	"V3\x17\x92\xae*+7\xc8:\x9a\xa5\x94\xd6\x9a!" +
-	"i\xc03\xf7y\x82#u_E\xd6}\xfe?\x00\x00" +
-	"\xff\xffl\x84q&"
+const schema_fe1be0c39c7e8269 = "x\xda\xb4W\x7f\x8cT\xd5\x15>\xe7\xdd\x19\x1e3;" +
+	"\xb33\xb7oW\xb4\x86l\xb6\xddF\xb1:\xe5\xa7\xa9" +
+	"\x84fgY\xec\xb2\xdb\xae\xec\x1d\xa1\xb6\x9b\xd6\xf2v" +
+	"\xf6\xb1\x0c\xd9\x99Y\xde{K]\x1av\xa9\x18)i" +
+	"\xc4\x94\xa4\xadP\x8c\xd6\xa6iE\xa9\xb0QSS\xad" +
+	"Y,i\x02\x7f\xd8\x8dR\x0b\x8a)I\xc1H\"m" +
+	"lA-\xc2k\xee}s\xdf\xbb;;,b\xe2\x7f" +
+	"\xbb\xf3\xce=?\xbe\xfb}\xe7\x9e3\x7f,\x9a\x8d," +
+	"H\xbeCAc\x7f\x8d\xce\xf2\x1e}q\xe5\xf8\xa9m" +
+	"\x9f\xdb\x01\xf4z\x04\x88\xa2\x0e\xb0\xe8\xf8\xec>\x044" +
+	"N\xcfn\x05\xf4\xc8\xc3\x9b\x0e|\xb0\x9b\xed\x04\x96A" +
+	"\x04\x88p\x83X,\xae\x01\x1a\xcd1n\xf0\xca\x9b\xbd" +
+	"[\x13\xc7^\xde\x09\xb4\x91{\xd0\xb8A[l9\xf7" +
+	"\xd0\x19\xfb\x01\xa07\xd2\xb0\xfd\xad\xbc>{\x17\xd0\x8c" +
+	"t\xf0BL\xd3 \xe2\xfd\xfa\xd4\xe8\xb9\xd1\x83\xbf\xf9" +
+	"y\xe5\xa8\x08\xbe?\x96\xe3G_\x10\xbe{w]\xf7" +
+	"\x8b\xfb?\xfc\xfa#@o \xde\xd9\xc9\xf7o_\xf6" +
+	"\xd1\xef\x9f\x02\xc0E\xef\xc5l40\xae\x03\x18\x97b" +
+	"\x1d\xc6<\xfe\x97\xf7\xcbC\x8b\xef=s\xa6s\xaf_" +
+	"\x8b\x08D\xe3{\x10\"\xde\xff\x0e3s\xe3\xdd\x1f?" +
+	"\xa6V\x89\xf1\xa5<P,\xce\x03=\x9b\xfc\xe3\xb7f" +
+	"]\xd8\xf5\xb8\x9a\xc9m\xf1^np\x870\x88><" +
+	"\x98&\xbfz\xfaI\xd5\xa0\x18\x178\x8d\x08\x83\xfa\xf1" +
+	"\x8d\xa3'\x1f\xa1\xfb\x80\xde\x80a\xaa>\x1c\xfb\xe3}" +
+	"hL\x88l_\x8asH\x82\xef4E\xbc\xc2\xfd\xa3" +
+	"{_\xf9\xc7\x8d\x97\x01\xd0\x98[w\xc4\x98W\xd7\x01" +
+	"`l\xac\xeb0\x1e\xad\x9b\x03\xe0-\xc3?\xff{\xeb" +
+	"\x81'\xc7\xb9g\x09\xf0Cu\x02\xa5\xddu\xdc\xdb\x81" +
+	"\xf9\xce\x8f\x9e[\xfb\xf2\xb8Z\xdd\xf9\xba'\xb8A4" +
+	"\xc1s{n\x89\xbd\xf9+\xdb\xbe\xf6\x12\xb0\xc6\xe0\x0e" +
+	"\x97$\xba\xb8A\x9b00\x9e\xfe \xc1\xb6\x8fLp" +
+	"\x0f\xde\x1f\x16\xcdZ;\xf9\x8d\x1f\x1e\x81(\xe1\x19\x9b" +
+	"\x89\xf7\x8db\x82\xffUH<\x03\xca\xe7\xea\xdc\xa3\xc9" +
+	"CF29\x07\xc0hL\xfe\xc5\xd8\xcd\xff\xf2\xfe\xf6" +
+	"\xf6V\xdcy\xe3\x9f\x8e\xa9\xe4\xd8\x91\x14\xb8\xfe,\xc9" +
+	"s_s\xe6\xf9\xc3\xf7\x9e\x98|C\xa5\xd7\xa5\xa4\xa0" +
+	"Wc=O\xed\xfb\xff}mt\xcf\x1b\xdb\xff\xae\x02" +
+	"\xbf\xa4\xde\xcf]\x18\\x\xf0\x81\x83\x17_\xbf\xee\xcd" +
+	"Jq\xbe\xc5p\xbd \xe0\x96z\x1e\xa3{\xd6\x83\xcf" +
+	"\x96\xce\x9f\xfd\xa7\x8a\xcfI\xdf\xe0\xb4p\x91\xbc8|" +
+	"vN\xc7\xefNW\xdd\x9dH\xa61\xf5y4\xbe\x94" +
+	"\xe2\xf57\xa7\xde\xe1`6\xefhx\xf5\xc3[\xcf\xf9" +
+	"\x09\x09\x9b\x8fR\xb7p\x96\xddu\xcf\xbaM_\xfc\x0f" +
+	"9?\x0d\x99S\xa9}\xc6\xbb\xdc\xc5\xa2\xd3\xa9\x0e4" +
+	"&\xd2\x1c\x9a\xee{2\x17^\\\xfc\xea\xc5i\xdc>" +
+	"\x98\xb6\xd18\x9c\xe6\x11'\xd2\x1d\xc6{\xc2\xfa\xdd/" +
+	"/_}\xe4\xdc\xd2\x8f\x15\x11\x9dL\x0b\x11\xed\xbf\xb4" +
+	"\xe5\xa9\x7f\x1d\xe9\xbb\xac\x024\x99^\xc8\xab;\x9en" +
+	"\x05\x0fb\x9em\x0d\x14\x1c\xd7\x1e\x89d\xf2\xe6Pi" +
+	"hi\xae\xf2\x7f&o\xba\xd6@\xd9\x1e\xe9,\xad+" +
+	"\xb7\xf4\x98\xb6n\x16\x1d\x16!\x11\x80\x08\x02\xd0d/" +
+	"\x00K\x10d\xd7k\xe8I[ \x9d\xfd\x98\x00\x0d\x13" +
+	"\x80\x81g}\xaag\xd3\xce\xac)\xf9\xdf,\xbb\xdd\x1c" +
+	"2\xfb\x0a\x83\x05w$3\x1c\xfc\xd8\x92\xb3\x9c\xe1A" +
+	"\xd7\x01P\xe3-\x07`\xb3\x09\xb2\x06\x0d\xc7\x9c\xe1|" +
+	"\xder\x1cD\xd0\x10\x95P\xb2\x88\xb6\xfeb\xa1\x94)" +
+	"\x967Y\xab\xfa6Xy\xd7\xe1\x05\x98E\x87{\x90" +
+	"\x0e\xe7\xe5\x00\xd8\xcd\x04\xd9\x0a\x0d)b\x03'\x08m" +
+	"\xe3Q\x96\x11d+5\xf4\xca\xe2lg?\xa0\x83\xf5" +
+	"\x80=\x04Em\xf5\x80cn\xb9\xddtk\xd4\x9a\xb8" +
+	"\xe6Z+\x89\xd9!\xeca\x01\xb65\xad\x04\x9cr\x07" +
+	"\xb9\xca\x1d\xdc<c\xb6W\xba\xe3\xe9\xd95\x89\xf4z" +
+	"\x10Y\x84D\x01\x82\xf6\x8c\xb2\xd3S\xda\x0b\x1a\x8d\xe9" +
+	"\x9e\xac\x00\x88eg\xb1\x07\xc3 \xd1j\"9\xc3C" +
+	"Ce\xdb\xb5\xfa\xdb}\x96\x14,\xbf\x16Rt\x82C" +
+	"\xa4\xfa\x90Ur\x85a\xab\x8f\xcf\xa7\"^d\x060" +
+	"\x05\xc5\x88;\xc5\xf1f\x05M\xdf\xba\x7f\x15\xb4\xfa\x07" +
+	"$\xa4\xd4;\xb6r\xefw\x8eN>3\x0e\x805\xc1" +
+	"U\xa3U*\x1e\x11\xe1\xf4\xc1\xcf\"\\x\x97\xedv" +
+	"\xd9qV\x94\x8bf\xa1\x94\xb3\x1cW/\xdb\x16\xbfI" +
+	"\x85\xf1\x0b\x01X\x0bA6_a\xfcm]\x00\xecV" +
+	"\x82\xec\xab\x1a6m\x12\xa4N{\x0fM\xfe\xe4\x98\xfb" +
+	"\xbd\xf8)\x1e4-\x82:n\xd9\xb6l\x00@\xea-" +
+	"\xcb\x1c\xbf\xe9\x81\xe6\xe7\x1f\xe3_\xa9\x92\x92V\x9d\x12" +
+	"\x00K\xe3\x94\xe7o\x8f\xd2O\xe7\xe6\x947|\xee>" +
+	"\xa5\xe95\xef\xf3d1X\xa9\xa6Ll\xcb\xcbY\x03" +
+	"\x82\x0e\x80\x8e'\x99\x8bRX)N]/g\xd5\xfa" +
+	"\xb9Bg\x19\x1b\xe5\xb3Ii\x97Og\xa9\x02\x00\xc8" +
+	"\"\x8b *\xb8\xc3\x0c\x98W\xb5,t\xae\x0a\xf7\xf2" +
+	"J\xd7Y\xaca\x93\x10\x11\xd2\x10\x06\x1f\xd01\x9b\x17" +
+	"qw\x0e\xd3^\xf7\xdb\xdb\xe6\xde\xb4\xbe\xf8\xe3\xf0\"" +
+	"\xaeAd\xb5HwK\xa5\x8b\xb6h\x98\xca\x9b!\xd1" +
+	"\xd2\xdek'\xc8\xe5\xa3\xa3G_\x9f\x99\xd7f\x7f\xff" +
+	"\x14R\x7f\xaa6\xadUg\xdftg\xc9\xb5E\xdfI" +
+	"\x04\x9e\xee\xe4:_A\x90\xf5(\xf0u\x7f\x01\x80\xad" +
+	"$\xc8VkH5\xad\x015\x00\xcaxQ\xdf$\xc8" +
+	"\xbe}\x85\x8e\xa0\xdb\xd6\xba*)Q\xc0T\xc9,Z" +
+	"\xd3\x9aFun \xd8\x10\x0eA\xb8\xd0O\x96%\x04" +
+	"\xa5\xe4\\\x89r\xd0\xa2\xec\x09\xd0h\xb7\x8e\x18\xcc\xcf" +
+	"(\xa1\xa5m\x1b@\xa3w\xe8\xa8\x05S'\xca\x01\x84" +
+	"3C\xa3\xcd\xba'o\x12%\xd0z\xc1r\xb2Ja" +
+	")\xfe\"gq\xac\xd2\"?\x01_k\xb6\xa4J\x0b" +
+	"V\x09\xdb\x1br3@|\xc1!\x00\xb6\x98 \xcb^" +
+	"\xa9\xdd\xca\xb6\xaa\xe5]guY\xfa\xe7\x0f\xd1\xd5'" +
+	"\x01)\xd7)\xaf\xa3m}\x96\x93@M\x97j/\xf6" +
+	";q\xdf\x06h\x15\xef\xe9U_\xd3\xe9\xc2\xa81l" +
+	"t\x85\xd0\x0ad\x11\xe9\x82\xa5a\xe7\x0d\x91\x05\xa8\xd2" +
+	"b\x1a\xb0ux\xc8\xb1l\xf7\x8aEN{5e\x8d" +
+	"\xb5Pk\xd1\x02\xea\x84\xe2\x0f\xf8]%~R\xe3\xc6" +
+	"\x06*\xcc\xe1rM\x07\xfeM\xae\xcc\xef\x12d\xeb\x15" +
+	"\xf2X<\xe8Z\x82lP\x91k\x81\xd3l=A\xe6" +
+	"jH\x09i@\x02@7r\xcbA\x82\xec>\x0d\xf5" +
+	"\xbc94]\xaec\xb65p\x97\xaa\xd8Zd\x1c\xbb" +
+	"\xcf\x7f\x001\x1d\xbe:U\xad\x93T\x89\xc2\xff\xb5\xa5" +
+	"\xc7L\xf1K\x0b\xccP\x9a\xa5\xb8\x1d\xaf\xb5A\x08^" +
+	"\xae\x14(\x17'\xfa\xd3>\xd0\xe8\x0e.x\xb9\xd1\xa0" +
+	"\xdc\x08\xe9\x96\xcd\xa0\xd1a.x\xb9\x0a\xa3\\Zh" +
+	"\x81\x9f3u$\xc1\xae\x8br\xd5\xa4kl\xbf\x89D" +
+	"\x82\x95\x02\xe5,O\xdb\xbaD\x13\xf1$\xe3@/\xdb" +
+	"#Y9C\xb4\x9b\xd0\xea\xe3\x92\x0d\xa5\x09z\xdeu" +
+	"\x02\x93U}\xd0$\xb4\x90\x0dQ\xb9\xd6\x87\xafJ\xb8" +
+	"\xd5\x83\xa3\\IP\xeep\xc1\xe0(\xc5\xed\x0f\x8e\"" +
+	"\xa2u\xf4\xf6\xb7\x1e?\xf1\xdb\x095b\xdd5\xb7\x8a" +
+	"\x99\x07\xe9\xca-\xe7\xac&\xa1\x0cU\x18]\xca<\xa9" +
+	"\xc0\x814\\g}\x06\xfe?\x00\x00\xff\xff:\xd7\x11" +
+	"\xd7"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_fe1be0c39c7e8269,
 		Nodes: []uint64{
 			0x891283e1b248bc9d,
+			0x8e5199f7b0768f03,
 			0x8ebfd50c805adbc3,
+			0x92080763dc871479,
 			0x96a5b17eee7ee1a3,
+			0x9846f8829716925a,
 			0x9c49e6e65e34c29b,
 			0x9ffc53716151c5fa,
 			0xa092f60656bb0db4,
-			0xa19166b9981b0854,
 			0xa9aca103106c8f05,
 			0xaa1198dd7e71b20e,
 			0xabaef93c36f2d1ea,
@@ -3106,16 +3449,17 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xb2bf60b5817330b0,
 			0xbd3d832f7a7235b5,
 			0xc17987510cf7ac13,
-			0xc7597e4462528489,
 			0xca7b4bd1600633b8,
-			0xd023a1df5e372a7e,
 			0xd5be1b8e0180ded6,
+			0xd7d1da5ec5b6e655,
 			0xd887d79a7ed3f45f,
 			0xdb16d4fbb18486f6,
 			0xe4eaf56eb486064d,
 			0xe5a84717ea75fb0d,
 			0xee2cf8cf148921b5,
 			0xf503f3237666574e,
+			0xfbcf34bcf62e574d,
+			0xfc3aeeca54422be9,
 			0xfe62caefab7dfdad,
 		},
 		Compressed: true,

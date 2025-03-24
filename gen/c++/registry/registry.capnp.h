@@ -44,9 +44,12 @@ CAPNP_DECLARE_SCHEMA(e4eaf56eb486064d);
 CAPNP_DECLARE_SCHEMA(abaef93c36f2d1ea);
 CAPNP_DECLARE_SCHEMA(aa1198dd7e71b20e);
 CAPNP_DECLARE_SCHEMA(e5a84717ea75fb0d);
-CAPNP_DECLARE_SCHEMA(c7597e4462528489);
-CAPNP_DECLARE_SCHEMA(d023a1df5e372a7e);
-CAPNP_DECLARE_SCHEMA(a19166b9981b0854);
+CAPNP_DECLARE_SCHEMA(9846f8829716925a);
+CAPNP_DECLARE_SCHEMA(92080763dc871479);
+CAPNP_DECLARE_SCHEMA(8e5199f7b0768f03);
+CAPNP_DECLARE_SCHEMA(fbcf34bcf62e574d);
+CAPNP_DECLARE_SCHEMA(fc3aeeca54422be9);
+CAPNP_DECLARE_SCHEMA(d7d1da5ec5b6e655);
 CAPNP_DECLARE_SCHEMA(b2a9b080f0c4013c);
 
 }  // namespace schemas
@@ -356,7 +359,8 @@ struct Registrar {
 
   struct CrossDomainRestore;
   struct RegParams;
-  struct Unregister;
+  struct UnregisterCapability;
+  struct ReregisterCapability;
   struct RegisterResults;
 
   #if !CAPNP_LITE
@@ -397,8 +401,8 @@ struct Registrar::RegParams {
   };
 };
 
-struct Registrar::Unregister {
-  Unregister() = delete;
+struct Registrar::UnregisterCapability {
+  UnregisterCapability() = delete;
 
 #if !CAPNP_LITE
   class Client;
@@ -410,13 +414,13 @@ struct Registrar::Unregister {
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
-    CAPNP_DECLARE_INTERFACE_HEADER(c7597e4462528489)
+    CAPNP_DECLARE_INTERFACE_HEADER(9846f8829716925a)
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
   };
   #endif  // !CAPNP_LITE
 };
 
-struct Registrar::Unregister::UnregisterParams {
+struct Registrar::UnregisterCapability::UnregisterParams {
   UnregisterParams() = delete;
 
   class Reader;
@@ -424,14 +428,14 @@ struct Registrar::Unregister::UnregisterParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(d023a1df5e372a7e, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(92080763dc871479, 0, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registrar::Unregister::UnregisterResults {
+struct Registrar::UnregisterCapability::UnregisterResults {
   UnregisterResults() = delete;
 
   class Reader;
@@ -439,7 +443,56 @@ struct Registrar::Unregister::UnregisterResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(a19166b9981b0854, 1, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(8e5199f7b0768f03, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Registrar::ReregisterCapability {
+  ReregisterCapability() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct ReregisterParams;
+  struct ReregisterResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(fbcf34bcf62e574d)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Registrar::ReregisterCapability::ReregisterParams {
+  ReregisterParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(fc3aeeca54422be9, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Registrar::ReregisterCapability::ReregisterResults {
+  ReregisterResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d7d1da5ec5b6e655, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2215,11 +2268,11 @@ private:
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-class Registrar::Unregister::Client
+class Registrar::UnregisterCapability::Client
     : public virtual ::capnp::Capability::Client {
 public:
-  typedef Unregister Calls;
-  typedef Unregister Reads;
+  typedef UnregisterCapability Calls;
+  typedef UnregisterCapability Reads;
 
   Client(decltype(nullptr));
   explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
@@ -2233,17 +2286,17 @@ public:
   Client& operator=(Client& other);
   Client& operator=(Client&& other);
 
-  ::capnp::Request< ::mas::schema::registry::Registrar::Unregister::UnregisterParams,  ::mas::schema::registry::Registrar::Unregister::UnregisterResults> unregisterRequest(
+  ::capnp::Request< ::mas::schema::registry::Registrar::UnregisterCapability::UnregisterParams,  ::mas::schema::registry::Registrar::UnregisterCapability::UnregisterResults> unregisterRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
 };
 
-class Registrar::Unregister::Server
+class Registrar::UnregisterCapability::Server
     : public virtual ::capnp::Capability::Server {
 public:
-  typedef Unregister Serves;
+  typedef UnregisterCapability Serves;
 
   ::capnp::Capability::Server::DispatchCallResult dispatchCall(
       uint64_t interfaceId, uint16_t methodId,
@@ -2251,14 +2304,14 @@ public:
       override;
 
 protected:
-  typedef  ::mas::schema::registry::Registrar::Unregister::UnregisterParams UnregisterParams;
-  typedef  ::mas::schema::registry::Registrar::Unregister::UnregisterResults UnregisterResults;
+  typedef  ::mas::schema::registry::Registrar::UnregisterCapability::UnregisterParams UnregisterParams;
+  typedef  ::mas::schema::registry::Registrar::UnregisterCapability::UnregisterResults UnregisterResults;
   typedef ::capnp::CallContext<UnregisterParams, UnregisterResults> UnregisterContext;
   virtual ::kj::Promise<void> unregister(UnregisterContext context);
 
-  inline  ::mas::schema::registry::Registrar::Unregister::Client thisCap() {
+  inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
-        .template castAs< ::mas::schema::registry::Registrar::Unregister>();
+        .template castAs< ::mas::schema::registry::Registrar::UnregisterCapability>();
   }
 
   ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
@@ -2267,7 +2320,7 @@ protected:
 };
 #endif  // !CAPNP_LITE
 
-class Registrar::Unregister::UnregisterParams::Reader {
+class Registrar::UnregisterCapability::UnregisterParams::Reader {
 public:
   typedef UnregisterParams Reads;
 
@@ -2296,7 +2349,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registrar::Unregister::UnregisterParams::Builder {
+class Registrar::UnregisterCapability::UnregisterParams::Builder {
 public:
   typedef UnregisterParams Builds;
 
@@ -2322,7 +2375,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registrar::Unregister::UnregisterParams::Pipeline {
+class Registrar::UnregisterCapability::UnregisterParams::Pipeline {
 public:
   typedef UnregisterParams Pipelines;
 
@@ -2338,7 +2391,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registrar::Unregister::UnregisterResults::Reader {
+class Registrar::UnregisterCapability::UnregisterResults::Reader {
 public:
   typedef UnregisterResults Reads;
 
@@ -2369,7 +2422,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registrar::Unregister::UnregisterResults::Builder {
+class Registrar::UnregisterCapability::UnregisterResults::Builder {
 public:
   typedef UnregisterResults Builds;
 
@@ -2398,9 +2451,211 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registrar::Unregister::UnregisterResults::Pipeline {
+class Registrar::UnregisterCapability::UnregisterResults::Pipeline {
 public:
   typedef UnregisterResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class Registrar::ReregisterCapability::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::persistence::Persistent::Client {
+public:
+  typedef ReregisterCapability Calls;
+  typedef ReregisterCapability Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::registry::Registrar::ReregisterCapability::ReregisterParams,  ::mas::schema::registry::Registrar::ReregisterCapability::ReregisterResults> reregisterRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Registrar::ReregisterCapability::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::persistence::Persistent::Server {
+public:
+  typedef ReregisterCapability Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::registry::Registrar::ReregisterCapability::ReregisterParams ReregisterParams;
+  typedef  ::mas::schema::registry::Registrar::ReregisterCapability::ReregisterResults ReregisterResults;
+  typedef ::capnp::CallContext<ReregisterParams, ReregisterResults> ReregisterContext;
+  virtual ::kj::Promise<void> reregister(ReregisterContext context);
+
+  inline  ::mas::schema::registry::Registrar::ReregisterCapability::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::registry::Registrar::ReregisterCapability>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Registrar::ReregisterCapability::ReregisterParams::Reader {
+public:
+  typedef ReregisterParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Registrar::ReregisterCapability::ReregisterParams::Builder {
+public:
+  typedef ReregisterParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Registrar::ReregisterCapability::ReregisterParams::Pipeline {
+public:
+  typedef ReregisterParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Registrar::ReregisterCapability::ReregisterResults::Reader {
+public:
+  typedef ReregisterResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool getSuccess() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Registrar::ReregisterCapability::ReregisterResults::Builder {
+public:
+  typedef ReregisterResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool getSuccess();
+  inline void setSuccess(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Registrar::ReregisterCapability::ReregisterResults::Pipeline {
+public:
+  typedef ReregisterResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -2433,7 +2688,7 @@ public:
 
   inline bool hasUnreg() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::registry::Registrar::Unregister::Client getUnreg() const;
+  inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client getUnreg() const;
 #endif  // !CAPNP_LITE
 
   inline bool hasReregSR() const;
@@ -2469,11 +2724,11 @@ public:
 
   inline bool hasUnreg();
 #if !CAPNP_LITE
-  inline  ::mas::schema::registry::Registrar::Unregister::Client getUnreg();
-  inline void setUnreg( ::mas::schema::registry::Registrar::Unregister::Client&& value);
-  inline void setUnreg( ::mas::schema::registry::Registrar::Unregister::Client& value);
-  inline void adoptUnreg(::capnp::Orphan< ::mas::schema::registry::Registrar::Unregister>&& value);
-  inline ::capnp::Orphan< ::mas::schema::registry::Registrar::Unregister> disownUnreg();
+  inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client getUnreg();
+  inline void setUnreg( ::mas::schema::registry::Registrar::UnregisterCapability::Client&& value);
+  inline void setUnreg( ::mas::schema::registry::Registrar::UnregisterCapability::Client& value);
+  inline void adoptUnreg(::capnp::Orphan< ::mas::schema::registry::Registrar::UnregisterCapability>&& value);
+  inline ::capnp::Orphan< ::mas::schema::registry::Registrar::UnregisterCapability> disownUnreg();
 #endif  // !CAPNP_LITE
 
   inline bool hasReregSR();
@@ -2501,7 +2756,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::registry::Registrar::Unregister::Client getUnreg();
+  inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client getUnreg();
   inline  ::mas::schema::persistence::SturdyRef::Pipeline getReregSR();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
@@ -3447,39 +3702,77 @@ inline ::capnp::Orphan< ::mas::schema::registry::Registrar::CrossDomainRestore> 
 }
 
 #if !CAPNP_LITE
-inline Registrar::Unregister::Client::Client(decltype(nullptr))
+inline Registrar::UnregisterCapability::Client::Client(decltype(nullptr))
     : ::capnp::Capability::Client(nullptr) {}
-inline Registrar::Unregister::Client::Client(
+inline Registrar::UnregisterCapability::Client::Client(
     ::kj::Own< ::capnp::ClientHook>&& hook)
     : ::capnp::Capability::Client(::kj::mv(hook)) {}
 template <typename _t, typename>
-inline Registrar::Unregister::Client::Client(::kj::Own<_t>&& server)
+inline Registrar::UnregisterCapability::Client::Client(::kj::Own<_t>&& server)
     : ::capnp::Capability::Client(::kj::mv(server)) {}
 template <typename _t, typename>
-inline Registrar::Unregister::Client::Client(::kj::Promise<_t>&& promise)
+inline Registrar::UnregisterCapability::Client::Client(::kj::Promise<_t>&& promise)
     : ::capnp::Capability::Client(::kj::mv(promise)) {}
-inline Registrar::Unregister::Client::Client(::kj::Exception&& exception)
+inline Registrar::UnregisterCapability::Client::Client(::kj::Exception&& exception)
     : ::capnp::Capability::Client(::kj::mv(exception)) {}
-inline  ::mas::schema::registry::Registrar::Unregister::Client& Registrar::Unregister::Client::operator=(Client& other) {
+inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client& Registrar::UnregisterCapability::Client::operator=(Client& other) {
   ::capnp::Capability::Client::operator=(other);
   return *this;
 }
-inline  ::mas::schema::registry::Registrar::Unregister::Client& Registrar::Unregister::Client::operator=(Client&& other) {
+inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client& Registrar::UnregisterCapability::Client::operator=(Client&& other) {
   ::capnp::Capability::Client::operator=(kj::mv(other));
   return *this;
 }
 
 #endif  // !CAPNP_LITE
-inline bool Registrar::Unregister::UnregisterResults::Reader::getSuccess() const {
+inline bool Registrar::UnregisterCapability::UnregisterResults::Reader::getSuccess() const {
   return _reader.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
 
-inline bool Registrar::Unregister::UnregisterResults::Builder::getSuccess() {
+inline bool Registrar::UnregisterCapability::UnregisterResults::Builder::getSuccess() {
   return _builder.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
-inline void Registrar::Unregister::UnregisterResults::Builder::setSuccess(bool value) {
+inline void Registrar::UnregisterCapability::UnregisterResults::Builder::setSuccess(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+#if !CAPNP_LITE
+inline Registrar::ReregisterCapability::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Registrar::ReregisterCapability::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Registrar::ReregisterCapability::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Registrar::ReregisterCapability::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Registrar::ReregisterCapability::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::registry::Registrar::ReregisterCapability::Client& Registrar::ReregisterCapability::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::registry::Registrar::ReregisterCapability::Client& Registrar::ReregisterCapability::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Registrar::ReregisterCapability::ReregisterResults::Reader::getSuccess() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Registrar::ReregisterCapability::ReregisterResults::Builder::getSuccess() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Registrar::ReregisterCapability::ReregisterResults::Builder::setSuccess(bool value) {
   _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
@@ -3493,32 +3786,32 @@ inline bool Registrar::RegisterResults::Builder::hasUnreg() {
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::registry::Registrar::Unregister::Client Registrar::RegisterResults::Reader::getUnreg() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::get(_reader.getPointerField(
+inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client Registrar::RegisterResults::Reader::getUnreg() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::registry::Registrar::Unregister::Client Registrar::RegisterResults::Builder::getUnreg() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::get(_builder.getPointerField(
+inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client Registrar::RegisterResults::Builder::getUnreg() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::registry::Registrar::Unregister::Client Registrar::RegisterResults::Pipeline::getUnreg() {
-  return  ::mas::schema::registry::Registrar::Unregister::Client(_typeless.getPointerField(0).asCap());
+inline  ::mas::schema::registry::Registrar::UnregisterCapability::Client Registrar::RegisterResults::Pipeline::getUnreg() {
+  return  ::mas::schema::registry::Registrar::UnregisterCapability::Client(_typeless.getPointerField(0).asCap());
 }
-inline void Registrar::RegisterResults::Builder::setUnreg( ::mas::schema::registry::Registrar::Unregister::Client&& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::set(_builder.getPointerField(
+inline void Registrar::RegisterResults::Builder::setUnreg( ::mas::schema::registry::Registrar::UnregisterCapability::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Registrar::RegisterResults::Builder::setUnreg( ::mas::schema::registry::Registrar::Unregister::Client& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::set(_builder.getPointerField(
+inline void Registrar::RegisterResults::Builder::setUnreg( ::mas::schema::registry::Registrar::UnregisterCapability::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
 }
 inline void Registrar::RegisterResults::Builder::adoptUnreg(
-    ::capnp::Orphan< ::mas::schema::registry::Registrar::Unregister>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::registry::Registrar::UnregisterCapability>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::registry::Registrar::Unregister> Registrar::RegisterResults::Builder::disownUnreg() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::Unregister>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::registry::Registrar::UnregisterCapability> Registrar::RegisterResults::Builder::disownUnreg() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registrar::UnregisterCapability>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
