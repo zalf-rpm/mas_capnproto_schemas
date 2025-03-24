@@ -5,13 +5,14 @@
 
 namespace capnp {
 namespace schemas {
-static const ::capnp::_::AlignedData<61> b_97e6feac0322118d = {
-  {   0,   0,   0,   0,   5,   0,   6,   0,
+static const ::capnp::_::AlignedData<62> b_97e6feac0322118d = {
+  {   0,   0,   0,   0,   6,   0,   6,   0,
     141,  17,  34,   3, 172, 254, 230, 151,
      11,   0,   0,   0,   1,   0,   1,   0,
      42, 246,   7, 139, 195,  43, 234, 232,
       0,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
+    248,   0,   0,   0, 224,   1,   0,   0,
      21,   0,   0,   0, 130,   0,   0,   0,
      25,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -73,7 +74,7 @@ static const ::capnp::_::AlignedData<61> b_97e6feac0322118d = {
 static const uint16_t m_97e6feac0322118d[] = {2, 1, 0};
 static const uint16_t i_97e6feac0322118d[] = {0, 1, 2};
 const ::capnp::_::RawSchema s_97e6feac0322118d = {
-  0x97e6feac0322118d, b_97e6feac0322118d.words, 61, nullptr, m_97e6feac0322118d,
+  0x97e6feac0322118d, b_97e6feac0322118d.words, 62, nullptr, m_97e6feac0322118d,
   0, 3, i_97e6feac0322118d, nullptr, nullptr, { &s_97e6feac0322118d, nullptr, nullptr, 0, 0, nullptr }, false
 };
 #endif  // !CAPNP_LITE

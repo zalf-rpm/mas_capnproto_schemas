@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1001000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -9669,12 +9669,12 @@ inline bool CSVTimeSeriesFactory::CSVConfig::Builder::hasSep() {
 inline  ::capnp::Text::Reader CSVTimeSeriesFactory::CSVConfig::Reader::getSep() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_eba81ca9f46690b8 + 56, 1);
+        ::capnp::schemas::bp_eba81ca9f46690b8 + 57, 1);
 }
 inline  ::capnp::Text::Builder CSVTimeSeriesFactory::CSVConfig::Builder::getSep() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_eba81ca9f46690b8 + 56, 1);
+        ::capnp::schemas::bp_eba81ca9f46690b8 + 57, 1);
 }
 inline void CSVTimeSeriesFactory::CSVConfig::Builder::setSep( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
