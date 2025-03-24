@@ -20,12 +20,12 @@ type IP capnp.Struct
 const IP_TypeID = 0xaf0a1dc4709a5ccf
 
 func NewIP(s *capnp.Segment) (IP, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
 	return IP(st), err
 }
 
 func NewRootIP(s *capnp.Segment) (IP, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
 	return IP(st), err
 }
 
@@ -84,6 +84,14 @@ func (s IP) NewAttributes(n int32) (IP_KV_List, error) {
 	err = capnp.Struct(s).SetPtr(0, l.ToPtr())
 	return l, err
 }
+func (s IP) Type() IP_Type {
+	return IP_Type(capnp.Struct(s).Uint16(0))
+}
+
+func (s IP) SetType(v IP_Type) {
+	capnp.Struct(s).SetUint16(0, uint16(v))
+}
+
 func (s IP) Content() (capnp.Ptr, error) {
 	return capnp.Struct(s).Ptr(1)
 }
@@ -101,7 +109,7 @@ type IP_List = capnp.StructList[IP]
 
 // NewIP creates a new list of IP.
 func NewIP_List(s *capnp.Segment, sz int32) (IP_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
 	return capnp.StructList[IP](l), err
 }
 
@@ -229,6 +237,134 @@ func (f IP_KV_Future) Struct() (IP_KV, error) {
 }
 func (p IP_KV_Future) Value() *capnp.Future {
 	return p.Future.Field(2, nil)
+}
+
+type IP_Type uint16
+
+// IP_Type_TypeID is the unique identifier for the type IP_Type.
+const IP_Type_TypeID = 0xf684cae29bdc484e
+
+// Values of IP_Type.
+const (
+	IP_Type_standard     IP_Type = 0
+	IP_Type_openBracket  IP_Type = 1
+	IP_Type_closeBracket IP_Type = 2
+)
+
+// String returns the enum's constant name.
+func (c IP_Type) String() string {
+	switch c {
+	case IP_Type_standard:
+		return "standard"
+	case IP_Type_openBracket:
+		return "openBracket"
+	case IP_Type_closeBracket:
+		return "closeBracket"
+
+	default:
+		return ""
+	}
+}
+
+// IP_TypeFromString returns the enum value with a name,
+// or the zero value if there's no such value.
+func IP_TypeFromString(c string) IP_Type {
+	switch c {
+	case "standard":
+		return IP_Type_standard
+	case "openBracket":
+		return IP_Type_openBracket
+	case "closeBracket":
+		return IP_Type_closeBracket
+
+	default:
+		return 0
+	}
+}
+
+type IP_Type_List = capnp.EnumList[IP_Type]
+
+func NewIP_Type_List(s *capnp.Segment, sz int32) (IP_Type_List, error) {
+	return capnp.NewEnumList[IP_Type](s, sz)
+}
+
+type IIP capnp.Struct
+
+// IIP_TypeID is the unique identifier for the type IIP.
+const IIP_TypeID = 0xf3705fb36d44a21f
+
+func NewIIP(s *capnp.Segment) (IIP, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return IIP(st), err
+}
+
+func NewRootIIP(s *capnp.Segment) (IIP, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return IIP(st), err
+}
+
+func ReadRootIIP(msg *capnp.Message) (IIP, error) {
+	root, err := msg.Root()
+	return IIP(root.Struct()), err
+}
+
+func (s IIP) String() string {
+	str, _ := text.Marshal(0xf3705fb36d44a21f, capnp.Struct(s))
+	return str
+}
+
+func (s IIP) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (IIP) DecodeFromPtr(p capnp.Ptr) IIP {
+	return IIP(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s IIP) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s IIP) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s IIP) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s IIP) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s IIP) Content() (capnp.Ptr, error) {
+	return capnp.Struct(s).Ptr(0)
+}
+
+func (s IIP) HasContent() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s IIP) SetContent(v capnp.Ptr) error {
+	return capnp.Struct(s).SetPtr(0, v)
+}
+
+// IIP_List is a list of IIP.
+type IIP_List = capnp.StructList[IIP]
+
+// NewIIP creates a new list of IIP.
+func NewIIP_List(s *capnp.Segment, sz int32) (IIP_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[IIP](l), err
+}
+
+// IIP_Future is a wrapper for a IIP promised by a client call.
+type IIP_Future struct{ *capnp.Future }
+
+func (f IIP_Future) Struct() (IIP, error) {
+	p, err := f.Future.Ptr()
+	return IIP(p.Struct()), err
+}
+func (p IIP_Future) Content() *capnp.Future {
+	return p.Future.Field(0, nil)
 }
 
 type Channel capnp.Client
@@ -2713,454 +2849,116 @@ func (f Channel_close_Results_Future) Struct() (Channel_close_Results, error) {
 	return Channel_close_Results(p.Struct()), err
 }
 
-type PortCallbackRegistrar capnp.Client
+type NewPortInfo capnp.Struct
+type NewPortInfo_Which uint16
 
-// PortCallbackRegistrar_TypeID is the unique identifier for the type PortCallbackRegistrar.
-const PortCallbackRegistrar_TypeID = 0x8dff741cb4dfa00c
+const (
+	NewPortInfo_Which_inPortReaderCap  NewPortInfo_Which = 0
+	NewPortInfo_Which_inPortReaderSR   NewPortInfo_Which = 1
+	NewPortInfo_Which_outPortWriterCap NewPortInfo_Which = 2
+	NewPortInfo_Which_outPortWriterSR  NewPortInfo_Which = 3
+)
 
-func (c PortCallbackRegistrar) RegisterCallback(ctx context.Context, params func(PortCallbackRegistrar_registerCallback_Params) error) (PortCallbackRegistrar_registerCallback_Results_Future, capnp.ReleaseFunc) {
+func (w NewPortInfo_Which) String() string {
+	const s = "inPortReaderCapinPortReaderSRoutPortWriterCapoutPortWriterSR"
+	switch w {
+	case NewPortInfo_Which_inPortReaderCap:
+		return s[0:15]
+	case NewPortInfo_Which_inPortReaderSR:
+		return s[15:29]
+	case NewPortInfo_Which_outPortWriterCap:
+		return s[29:45]
+	case NewPortInfo_Which_outPortWriterSR:
+		return s[45:60]
 
-	s := capnp.Send{
-		Method: capnp.Method{
-			InterfaceID:   0x8dff741cb4dfa00c,
-			MethodID:      0,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar",
-			MethodName:    "registerCallback",
-		},
 	}
-	if params != nil {
-		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(PortCallbackRegistrar_registerCallback_Params(s)) }
-	}
-
-	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return PortCallbackRegistrar_registerCallback_Results_Future{Future: ans.Future()}, release
-
+	return "NewPortInfo_Which(" + strconv.FormatUint(uint64(w), 10) + ")"
 }
 
-func (c PortCallbackRegistrar) WaitStreaming() error {
-	return capnp.Client(c).WaitStreaming()
+// NewPortInfo_TypeID is the unique identifier for the type NewPortInfo.
+const NewPortInfo_TypeID = 0xa2dcae494290639e
+
+func NewNewPortInfo(s *capnp.Segment) (NewPortInfo, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return NewPortInfo(st), err
 }
 
-// String returns a string that identifies this capability for debugging
-// purposes.  Its format should not be depended on: in particular, it
-// should not be used to compare clients.  Use IsSame to compare clients
-// for equality.
-func (c PortCallbackRegistrar) String() string {
-	return "PortCallbackRegistrar(" + capnp.Client(c).String() + ")"
+func NewRootNewPortInfo(s *capnp.Segment) (NewPortInfo, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return NewPortInfo(st), err
 }
 
-// AddRef creates a new Client that refers to the same capability as c.
-// If c is nil or has resolved to null, then AddRef returns nil.
-func (c PortCallbackRegistrar) AddRef() PortCallbackRegistrar {
-	return PortCallbackRegistrar(capnp.Client(c).AddRef())
-}
-
-// Release releases a capability reference.  If this is the last
-// reference to the capability, then the underlying resources associated
-// with the capability will be released.
-//
-// Release will panic if c has already been released, but not if c is
-// nil or resolved to null.
-func (c PortCallbackRegistrar) Release() {
-	capnp.Client(c).Release()
-}
-
-// Resolve blocks until the capability is fully resolved or the Context
-// expires.
-func (c PortCallbackRegistrar) Resolve(ctx context.Context) error {
-	return capnp.Client(c).Resolve(ctx)
-}
-
-func (c PortCallbackRegistrar) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
-	return capnp.Client(c).EncodeAsPtr(seg)
-}
-
-func (PortCallbackRegistrar) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar {
-	return PortCallbackRegistrar(capnp.Client{}.DecodeFromPtr(p))
-}
-
-// IsValid reports whether c is a valid reference to a capability.
-// A reference is invalid if it is nil, has resolved to null, or has
-// been released.
-func (c PortCallbackRegistrar) IsValid() bool {
-	return capnp.Client(c).IsValid()
-}
-
-// IsSame reports whether c and other refer to a capability created by the
-// same call to NewClient.  This can return false negatives if c or other
-// are not fully resolved: use Resolve if this is an issue.  If either
-// c or other are released, then IsSame panics.
-func (c PortCallbackRegistrar) IsSame(other PortCallbackRegistrar) bool {
-	return capnp.Client(c).IsSame(capnp.Client(other))
-}
-
-// Update the flowcontrol.FlowLimiter used to manage flow control for
-// this client. This affects all future calls, but not calls already
-// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
-// which is also the default.
-func (c PortCallbackRegistrar) SetFlowLimiter(lim fc.FlowLimiter) {
-	capnp.Client(c).SetFlowLimiter(lim)
-}
-
-// Get the current flowcontrol.FlowLimiter used to manage flow control
-// for this client.
-func (c PortCallbackRegistrar) GetFlowLimiter() fc.FlowLimiter {
-	return capnp.Client(c).GetFlowLimiter()
-}
-
-// A PortCallbackRegistrar_Server is a PortCallbackRegistrar with a local implementation.
-type PortCallbackRegistrar_Server interface {
-	RegisterCallback(context.Context, PortCallbackRegistrar_registerCallback) error
-}
-
-// PortCallbackRegistrar_NewServer creates a new Server from an implementation of PortCallbackRegistrar_Server.
-func PortCallbackRegistrar_NewServer(s PortCallbackRegistrar_Server) *server.Server {
-	c, _ := s.(server.Shutdowner)
-	return server.New(PortCallbackRegistrar_Methods(nil, s), s, c)
-}
-
-// PortCallbackRegistrar_ServerToClient creates a new Client from an implementation of PortCallbackRegistrar_Server.
-// The caller is responsible for calling Release on the returned Client.
-func PortCallbackRegistrar_ServerToClient(s PortCallbackRegistrar_Server) PortCallbackRegistrar {
-	return PortCallbackRegistrar(capnp.NewClient(PortCallbackRegistrar_NewServer(s)))
-}
-
-// PortCallbackRegistrar_Methods appends Methods to a slice that invoke the methods on s.
-// This can be used to create a more complicated Server.
-func PortCallbackRegistrar_Methods(methods []server.Method, s PortCallbackRegistrar_Server) []server.Method {
-	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 1)
-	}
-
-	methods = append(methods, server.Method{
-		Method: capnp.Method{
-			InterfaceID:   0x8dff741cb4dfa00c,
-			MethodID:      0,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar",
-			MethodName:    "registerCallback",
-		},
-		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.RegisterCallback(ctx, PortCallbackRegistrar_registerCallback{call})
-		},
-	})
-
-	return methods
-}
-
-// PortCallbackRegistrar_registerCallback holds the state for a server call to PortCallbackRegistrar.registerCallback.
-// See server.Call for documentation.
-type PortCallbackRegistrar_registerCallback struct {
-	*server.Call
-}
-
-// Args returns the call's arguments.
-func (c PortCallbackRegistrar_registerCallback) Args() PortCallbackRegistrar_registerCallback_Params {
-	return PortCallbackRegistrar_registerCallback_Params(c.Call.Args())
-}
-
-// AllocResults allocates the results struct.
-func (c PortCallbackRegistrar_registerCallback) AllocResults() (PortCallbackRegistrar_registerCallback_Results, error) {
-	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_registerCallback_Results(r), err
-}
-
-// PortCallbackRegistrar_List is a list of PortCallbackRegistrar.
-type PortCallbackRegistrar_List = capnp.CapList[PortCallbackRegistrar]
-
-// NewPortCallbackRegistrar_List creates a new list of PortCallbackRegistrar.
-func NewPortCallbackRegistrar_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_List, error) {
-	l, err := capnp.NewPointerList(s, sz)
-	return capnp.CapList[PortCallbackRegistrar](l), err
-}
-
-type PortCallbackRegistrar_PortCallback capnp.Client
-
-// PortCallbackRegistrar_PortCallback_TypeID is the unique identifier for the type PortCallbackRegistrar_PortCallback.
-const PortCallbackRegistrar_PortCallback_TypeID = 0xbcdf87a68541a8ef
-
-func (c PortCallbackRegistrar_PortCallback) NewInPort(ctx context.Context, params func(PortCallbackRegistrar_PortCallback_newInPort_Params) error) (PortCallbackRegistrar_PortCallback_newInPort_Results_Future, capnp.ReleaseFunc) {
-
-	s := capnp.Send{
-		Method: capnp.Method{
-			InterfaceID:   0xbcdf87a68541a8ef,
-			MethodID:      0,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar.PortCallback",
-			MethodName:    "newInPort",
-		},
-	}
-	if params != nil {
-		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 2}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(PortCallbackRegistrar_PortCallback_newInPort_Params(s)) }
-	}
-
-	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return PortCallbackRegistrar_PortCallback_newInPort_Results_Future{Future: ans.Future()}, release
-
-}
-
-func (c PortCallbackRegistrar_PortCallback) NewOutPort(ctx context.Context, params func(PortCallbackRegistrar_PortCallback_newOutPort_Params) error) (PortCallbackRegistrar_PortCallback_newOutPort_Results_Future, capnp.ReleaseFunc) {
-
-	s := capnp.Send{
-		Method: capnp.Method{
-			InterfaceID:   0xbcdf87a68541a8ef,
-			MethodID:      1,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar.PortCallback",
-			MethodName:    "newOutPort",
-		},
-	}
-	if params != nil {
-		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 2}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(PortCallbackRegistrar_PortCallback_newOutPort_Params(s)) }
-	}
-
-	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results_Future{Future: ans.Future()}, release
-
-}
-
-func (c PortCallbackRegistrar_PortCallback) WaitStreaming() error {
-	return capnp.Client(c).WaitStreaming()
-}
-
-// String returns a string that identifies this capability for debugging
-// purposes.  Its format should not be depended on: in particular, it
-// should not be used to compare clients.  Use IsSame to compare clients
-// for equality.
-func (c PortCallbackRegistrar_PortCallback) String() string {
-	return "PortCallbackRegistrar_PortCallback(" + capnp.Client(c).String() + ")"
-}
-
-// AddRef creates a new Client that refers to the same capability as c.
-// If c is nil or has resolved to null, then AddRef returns nil.
-func (c PortCallbackRegistrar_PortCallback) AddRef() PortCallbackRegistrar_PortCallback {
-	return PortCallbackRegistrar_PortCallback(capnp.Client(c).AddRef())
-}
-
-// Release releases a capability reference.  If this is the last
-// reference to the capability, then the underlying resources associated
-// with the capability will be released.
-//
-// Release will panic if c has already been released, but not if c is
-// nil or resolved to null.
-func (c PortCallbackRegistrar_PortCallback) Release() {
-	capnp.Client(c).Release()
-}
-
-// Resolve blocks until the capability is fully resolved or the Context
-// expires.
-func (c PortCallbackRegistrar_PortCallback) Resolve(ctx context.Context) error {
-	return capnp.Client(c).Resolve(ctx)
-}
-
-func (c PortCallbackRegistrar_PortCallback) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
-	return capnp.Client(c).EncodeAsPtr(seg)
-}
-
-func (PortCallbackRegistrar_PortCallback) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_PortCallback {
-	return PortCallbackRegistrar_PortCallback(capnp.Client{}.DecodeFromPtr(p))
-}
-
-// IsValid reports whether c is a valid reference to a capability.
-// A reference is invalid if it is nil, has resolved to null, or has
-// been released.
-func (c PortCallbackRegistrar_PortCallback) IsValid() bool {
-	return capnp.Client(c).IsValid()
-}
-
-// IsSame reports whether c and other refer to a capability created by the
-// same call to NewClient.  This can return false negatives if c or other
-// are not fully resolved: use Resolve if this is an issue.  If either
-// c or other are released, then IsSame panics.
-func (c PortCallbackRegistrar_PortCallback) IsSame(other PortCallbackRegistrar_PortCallback) bool {
-	return capnp.Client(c).IsSame(capnp.Client(other))
-}
-
-// Update the flowcontrol.FlowLimiter used to manage flow control for
-// this client. This affects all future calls, but not calls already
-// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
-// which is also the default.
-func (c PortCallbackRegistrar_PortCallback) SetFlowLimiter(lim fc.FlowLimiter) {
-	capnp.Client(c).SetFlowLimiter(lim)
-}
-
-// Get the current flowcontrol.FlowLimiter used to manage flow control
-// for this client.
-func (c PortCallbackRegistrar_PortCallback) GetFlowLimiter() fc.FlowLimiter {
-	return capnp.Client(c).GetFlowLimiter()
-}
-
-// A PortCallbackRegistrar_PortCallback_Server is a PortCallbackRegistrar_PortCallback with a local implementation.
-type PortCallbackRegistrar_PortCallback_Server interface {
-	NewInPort(context.Context, PortCallbackRegistrar_PortCallback_newInPort) error
-
-	NewOutPort(context.Context, PortCallbackRegistrar_PortCallback_newOutPort) error
-}
-
-// PortCallbackRegistrar_PortCallback_NewServer creates a new Server from an implementation of PortCallbackRegistrar_PortCallback_Server.
-func PortCallbackRegistrar_PortCallback_NewServer(s PortCallbackRegistrar_PortCallback_Server) *server.Server {
-	c, _ := s.(server.Shutdowner)
-	return server.New(PortCallbackRegistrar_PortCallback_Methods(nil, s), s, c)
-}
-
-// PortCallbackRegistrar_PortCallback_ServerToClient creates a new Client from an implementation of PortCallbackRegistrar_PortCallback_Server.
-// The caller is responsible for calling Release on the returned Client.
-func PortCallbackRegistrar_PortCallback_ServerToClient(s PortCallbackRegistrar_PortCallback_Server) PortCallbackRegistrar_PortCallback {
-	return PortCallbackRegistrar_PortCallback(capnp.NewClient(PortCallbackRegistrar_PortCallback_NewServer(s)))
-}
-
-// PortCallbackRegistrar_PortCallback_Methods appends Methods to a slice that invoke the methods on s.
-// This can be used to create a more complicated Server.
-func PortCallbackRegistrar_PortCallback_Methods(methods []server.Method, s PortCallbackRegistrar_PortCallback_Server) []server.Method {
-	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 2)
-	}
-
-	methods = append(methods, server.Method{
-		Method: capnp.Method{
-			InterfaceID:   0xbcdf87a68541a8ef,
-			MethodID:      0,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar.PortCallback",
-			MethodName:    "newInPort",
-		},
-		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.NewInPort(ctx, PortCallbackRegistrar_PortCallback_newInPort{call})
-		},
-	})
-
-	methods = append(methods, server.Method{
-		Method: capnp.Method{
-			InterfaceID:   0xbcdf87a68541a8ef,
-			MethodID:      1,
-			InterfaceName: "fbp.capnp:PortCallbackRegistrar.PortCallback",
-			MethodName:    "newOutPort",
-		},
-		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.NewOutPort(ctx, PortCallbackRegistrar_PortCallback_newOutPort{call})
-		},
-	})
-
-	return methods
-}
-
-// PortCallbackRegistrar_PortCallback_newInPort holds the state for a server call to PortCallbackRegistrar_PortCallback.newInPort.
-// See server.Call for documentation.
-type PortCallbackRegistrar_PortCallback_newInPort struct {
-	*server.Call
-}
-
-// Args returns the call's arguments.
-func (c PortCallbackRegistrar_PortCallback_newInPort) Args() PortCallbackRegistrar_PortCallback_newInPort_Params {
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(c.Call.Args())
-}
-
-// AllocResults allocates the results struct.
-func (c PortCallbackRegistrar_PortCallback_newInPort) AllocResults() (PortCallbackRegistrar_PortCallback_newInPort_Results, error) {
-	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(r), err
-}
-
-// PortCallbackRegistrar_PortCallback_newOutPort holds the state for a server call to PortCallbackRegistrar_PortCallback.newOutPort.
-// See server.Call for documentation.
-type PortCallbackRegistrar_PortCallback_newOutPort struct {
-	*server.Call
-}
-
-// Args returns the call's arguments.
-func (c PortCallbackRegistrar_PortCallback_newOutPort) Args() PortCallbackRegistrar_PortCallback_newOutPort_Params {
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(c.Call.Args())
-}
-
-// AllocResults allocates the results struct.
-func (c PortCallbackRegistrar_PortCallback_newOutPort) AllocResults() (PortCallbackRegistrar_PortCallback_newOutPort_Results, error) {
-	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(r), err
-}
-
-// PortCallbackRegistrar_PortCallback_List is a list of PortCallbackRegistrar_PortCallback.
-type PortCallbackRegistrar_PortCallback_List = capnp.CapList[PortCallbackRegistrar_PortCallback]
-
-// NewPortCallbackRegistrar_PortCallback_List creates a new list of PortCallbackRegistrar_PortCallback.
-func NewPortCallbackRegistrar_PortCallback_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_PortCallback_List, error) {
-	l, err := capnp.NewPointerList(s, sz)
-	return capnp.CapList[PortCallbackRegistrar_PortCallback](l), err
-}
-
-type PortCallbackRegistrar_PortCallback_newInPort_Params capnp.Struct
-
-// PortCallbackRegistrar_PortCallback_newInPort_Params_TypeID is the unique identifier for the type PortCallbackRegistrar_PortCallback_newInPort_Params.
-const PortCallbackRegistrar_PortCallback_newInPort_Params_TypeID = 0x8b8e4a16ae5a6f8b
-
-func NewPortCallbackRegistrar_PortCallback_newInPort_Params(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newInPort_Params, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(st), err
-}
-
-func NewRootPortCallbackRegistrar_PortCallback_newInPort_Params(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newInPort_Params, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(st), err
-}
-
-func ReadRootPortCallbackRegistrar_PortCallback_newInPort_Params(msg *capnp.Message) (PortCallbackRegistrar_PortCallback_newInPort_Params, error) {
+func ReadRootNewPortInfo(msg *capnp.Message) (NewPortInfo, error) {
 	root, err := msg.Root()
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(root.Struct()), err
+	return NewPortInfo(root.Struct()), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) String() string {
-	str, _ := text.Marshal(0x8b8e4a16ae5a6f8b, capnp.Struct(s))
+func (s NewPortInfo) String() string {
+	str, _ := text.Marshal(0xa2dcae494290639e, capnp.Struct(s))
 	return str
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s NewPortInfo) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (PortCallbackRegistrar_PortCallback_newInPort_Params) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_PortCallback_newInPort_Params {
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(capnp.Struct{}.DecodeFromPtr(p))
+func (NewPortInfo) DecodeFromPtr(p capnp.Ptr) NewPortInfo {
+	return NewPortInfo(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) ToPtr() capnp.Ptr {
+func (s NewPortInfo) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) IsValid() bool {
+
+func (s NewPortInfo) Which() NewPortInfo_Which {
+	return NewPortInfo_Which(capnp.Struct(s).Uint16(0))
+}
+func (s NewPortInfo) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) Message() *capnp.Message {
+func (s NewPortInfo) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) Segment() *capnp.Segment {
+func (s NewPortInfo) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) Name() (string, error) {
+func (s NewPortInfo) Name() (string, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) HasName() bool {
+func (s NewPortInfo) HasName() bool {
 	return capnp.Struct(s).HasPtr(0)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) NameBytes() ([]byte, error) {
+func (s NewPortInfo) NameBytes() ([]byte, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) SetName(v string) error {
+func (s NewPortInfo) SetName(v string) error {
 	return capnp.Struct(s).SetText(0, v)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) ReaderCap() Channel_Reader {
+func (s NewPortInfo) InPortReaderCap() Channel_Reader {
+	if capnp.Struct(s).Uint16(0) != 0 {
+		panic("Which() != inPortReaderCap")
+	}
 	p, _ := capnp.Struct(s).Ptr(1)
 	return Channel_Reader(p.Interface().Client())
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) HasReaderCap() bool {
+func (s NewPortInfo) HasInPortReaderCap() bool {
+	if capnp.Struct(s).Uint16(0) != 0 {
+		return false
+	}
 	return capnp.Struct(s).HasPtr(1)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newInPort_Params) SetReaderCap(v Channel_Reader) error {
+func (s NewPortInfo) SetInPortReaderCap(v Channel_Reader) error {
+	capnp.Struct(s).SetUint16(0, 0)
 	if !v.IsValid() {
 		return capnp.Struct(s).SetPtr(1, capnp.Ptr{})
 	}
@@ -3169,166 +2967,48 @@ func (s PortCallbackRegistrar_PortCallback_newInPort_Params) SetReaderCap(v Chan
 	return capnp.Struct(s).SetPtr(1, in.ToPtr())
 }
 
-// PortCallbackRegistrar_PortCallback_newInPort_Params_List is a list of PortCallbackRegistrar_PortCallback_newInPort_Params.
-type PortCallbackRegistrar_PortCallback_newInPort_Params_List = capnp.StructList[PortCallbackRegistrar_PortCallback_newInPort_Params]
-
-// NewPortCallbackRegistrar_PortCallback_newInPort_Params creates a new list of PortCallbackRegistrar_PortCallback_newInPort_Params.
-func NewPortCallbackRegistrar_PortCallback_newInPort_Params_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_PortCallback_newInPort_Params_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
-	return capnp.StructList[PortCallbackRegistrar_PortCallback_newInPort_Params](l), err
-}
-
-// PortCallbackRegistrar_PortCallback_newInPort_Params_Future is a wrapper for a PortCallbackRegistrar_PortCallback_newInPort_Params promised by a client call.
-type PortCallbackRegistrar_PortCallback_newInPort_Params_Future struct{ *capnp.Future }
-
-func (f PortCallbackRegistrar_PortCallback_newInPort_Params_Future) Struct() (PortCallbackRegistrar_PortCallback_newInPort_Params, error) {
-	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_PortCallback_newInPort_Params(p.Struct()), err
-}
-func (p PortCallbackRegistrar_PortCallback_newInPort_Params_Future) ReaderCap() Channel_Reader {
-	return Channel_Reader(p.Future.Field(1, nil).Client())
-}
-
-type PortCallbackRegistrar_PortCallback_newInPort_Results capnp.Struct
-
-// PortCallbackRegistrar_PortCallback_newInPort_Results_TypeID is the unique identifier for the type PortCallbackRegistrar_PortCallback_newInPort_Results.
-const PortCallbackRegistrar_PortCallback_newInPort_Results_TypeID = 0x8c9a1cea4542fa30
-
-func NewPortCallbackRegistrar_PortCallback_newInPort_Results(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newInPort_Results, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(st), err
-}
-
-func NewRootPortCallbackRegistrar_PortCallback_newInPort_Results(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newInPort_Results, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(st), err
-}
-
-func ReadRootPortCallbackRegistrar_PortCallback_newInPort_Results(msg *capnp.Message) (PortCallbackRegistrar_PortCallback_newInPort_Results, error) {
-	root, err := msg.Root()
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(root.Struct()), err
-}
-
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) String() string {
-	str, _ := text.Marshal(0x8c9a1cea4542fa30, capnp.Struct(s))
-	return str
-}
-
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
-	return capnp.Struct(s).EncodeAsPtr(seg)
-}
-
-func (PortCallbackRegistrar_PortCallback_newInPort_Results) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_PortCallback_newInPort_Results {
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(capnp.Struct{}.DecodeFromPtr(p))
-}
-
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) ToPtr() capnp.Ptr {
-	return capnp.Struct(s).ToPtr()
-}
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) IsValid() bool {
-	return capnp.Struct(s).IsValid()
-}
-
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) Message() *capnp.Message {
-	return capnp.Struct(s).Message()
-}
-
-func (s PortCallbackRegistrar_PortCallback_newInPort_Results) Segment() *capnp.Segment {
-	return capnp.Struct(s).Segment()
-}
-
-// PortCallbackRegistrar_PortCallback_newInPort_Results_List is a list of PortCallbackRegistrar_PortCallback_newInPort_Results.
-type PortCallbackRegistrar_PortCallback_newInPort_Results_List = capnp.StructList[PortCallbackRegistrar_PortCallback_newInPort_Results]
-
-// NewPortCallbackRegistrar_PortCallback_newInPort_Results creates a new list of PortCallbackRegistrar_PortCallback_newInPort_Results.
-func NewPortCallbackRegistrar_PortCallback_newInPort_Results_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_PortCallback_newInPort_Results_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[PortCallbackRegistrar_PortCallback_newInPort_Results](l), err
-}
-
-// PortCallbackRegistrar_PortCallback_newInPort_Results_Future is a wrapper for a PortCallbackRegistrar_PortCallback_newInPort_Results promised by a client call.
-type PortCallbackRegistrar_PortCallback_newInPort_Results_Future struct{ *capnp.Future }
-
-func (f PortCallbackRegistrar_PortCallback_newInPort_Results_Future) Struct() (PortCallbackRegistrar_PortCallback_newInPort_Results, error) {
-	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_PortCallback_newInPort_Results(p.Struct()), err
-}
-
-type PortCallbackRegistrar_PortCallback_newOutPort_Params capnp.Struct
-
-// PortCallbackRegistrar_PortCallback_newOutPort_Params_TypeID is the unique identifier for the type PortCallbackRegistrar_PortCallback_newOutPort_Params.
-const PortCallbackRegistrar_PortCallback_newOutPort_Params_TypeID = 0x89fcdfabc3b994d7
-
-func NewPortCallbackRegistrar_PortCallback_newOutPort_Params(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newOutPort_Params, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(st), err
-}
-
-func NewRootPortCallbackRegistrar_PortCallback_newOutPort_Params(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newOutPort_Params, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(st), err
-}
-
-func ReadRootPortCallbackRegistrar_PortCallback_newOutPort_Params(msg *capnp.Message) (PortCallbackRegistrar_PortCallback_newOutPort_Params, error) {
-	root, err := msg.Root()
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(root.Struct()), err
-}
-
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) String() string {
-	str, _ := text.Marshal(0x89fcdfabc3b994d7, capnp.Struct(s))
-	return str
-}
-
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
-	return capnp.Struct(s).EncodeAsPtr(seg)
-}
-
-func (PortCallbackRegistrar_PortCallback_newOutPort_Params) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_PortCallback_newOutPort_Params {
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(capnp.Struct{}.DecodeFromPtr(p))
-}
-
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) ToPtr() capnp.Ptr {
-	return capnp.Struct(s).ToPtr()
-}
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) IsValid() bool {
-	return capnp.Struct(s).IsValid()
-}
-
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) Message() *capnp.Message {
-	return capnp.Struct(s).Message()
-}
-
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) Segment() *capnp.Segment {
-	return capnp.Struct(s).Segment()
-}
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) Name() (string, error) {
-	p, err := capnp.Struct(s).Ptr(0)
+func (s NewPortInfo) InPortReaderSR() (string, error) {
+	if capnp.Struct(s).Uint16(0) != 1 {
+		panic("Which() != inPortReaderSR")
+	}
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) HasName() bool {
-	return capnp.Struct(s).HasPtr(0)
+func (s NewPortInfo) HasInPortReaderSR() bool {
+	if capnp.Struct(s).Uint16(0) != 1 {
+		return false
+	}
+	return capnp.Struct(s).HasPtr(1)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) NameBytes() ([]byte, error) {
-	p, err := capnp.Struct(s).Ptr(0)
+func (s NewPortInfo) InPortReaderSRBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) SetName(v string) error {
-	return capnp.Struct(s).SetText(0, v)
+func (s NewPortInfo) SetInPortReaderSR(v string) error {
+	capnp.Struct(s).SetUint16(0, 1)
+	return capnp.Struct(s).SetText(1, v)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) WriterCap() Channel_Writer {
+func (s NewPortInfo) OutPortWriterCap() Channel_Writer {
+	if capnp.Struct(s).Uint16(0) != 2 {
+		panic("Which() != outPortWriterCap")
+	}
 	p, _ := capnp.Struct(s).Ptr(1)
 	return Channel_Writer(p.Interface().Client())
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) HasWriterCap() bool {
+func (s NewPortInfo) HasOutPortWriterCap() bool {
+	if capnp.Struct(s).Uint16(0) != 2 {
+		return false
+	}
 	return capnp.Struct(s).HasPtr(1)
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) SetWriterCap(v Channel_Writer) error {
+func (s NewPortInfo) SetOutPortWriterCap(v Channel_Writer) error {
+	capnp.Struct(s).SetUint16(0, 2)
 	if !v.IsValid() {
 		return capnp.Struct(s).SetPtr(1, capnp.Ptr{})
 	}
@@ -3337,392 +3017,1031 @@ func (s PortCallbackRegistrar_PortCallback_newOutPort_Params) SetWriterCap(v Cha
 	return capnp.Struct(s).SetPtr(1, in.ToPtr())
 }
 
-// PortCallbackRegistrar_PortCallback_newOutPort_Params_List is a list of PortCallbackRegistrar_PortCallback_newOutPort_Params.
-type PortCallbackRegistrar_PortCallback_newOutPort_Params_List = capnp.StructList[PortCallbackRegistrar_PortCallback_newOutPort_Params]
-
-// NewPortCallbackRegistrar_PortCallback_newOutPort_Params creates a new list of PortCallbackRegistrar_PortCallback_newOutPort_Params.
-func NewPortCallbackRegistrar_PortCallback_newOutPort_Params_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_PortCallback_newOutPort_Params_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
-	return capnp.StructList[PortCallbackRegistrar_PortCallback_newOutPort_Params](l), err
+func (s NewPortInfo) OutPortWriterSR() (string, error) {
+	if capnp.Struct(s).Uint16(0) != 3 {
+		panic("Which() != outPortWriterSR")
+	}
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.Text(), err
 }
 
-// PortCallbackRegistrar_PortCallback_newOutPort_Params_Future is a wrapper for a PortCallbackRegistrar_PortCallback_newOutPort_Params promised by a client call.
-type PortCallbackRegistrar_PortCallback_newOutPort_Params_Future struct{ *capnp.Future }
+func (s NewPortInfo) HasOutPortWriterSR() bool {
+	if capnp.Struct(s).Uint16(0) != 3 {
+		return false
+	}
+	return capnp.Struct(s).HasPtr(1)
+}
 
-func (f PortCallbackRegistrar_PortCallback_newOutPort_Params_Future) Struct() (PortCallbackRegistrar_PortCallback_newOutPort_Params, error) {
+func (s NewPortInfo) OutPortWriterSRBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s NewPortInfo) SetOutPortWriterSR(v string) error {
+	capnp.Struct(s).SetUint16(0, 3)
+	return capnp.Struct(s).SetText(1, v)
+}
+
+// NewPortInfo_List is a list of NewPortInfo.
+type NewPortInfo_List = capnp.StructList[NewPortInfo]
+
+// NewNewPortInfo creates a new list of NewPortInfo.
+func NewNewPortInfo_List(s *capnp.Segment, sz int32) (NewPortInfo_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
+	return capnp.StructList[NewPortInfo](l), err
+}
+
+// NewPortInfo_Future is a wrapper for a NewPortInfo promised by a client call.
+type NewPortInfo_Future struct{ *capnp.Future }
+
+func (f NewPortInfo_Future) Struct() (NewPortInfo, error) {
 	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_PortCallback_newOutPort_Params(p.Struct()), err
+	return NewPortInfo(p.Struct()), err
 }
-func (p PortCallbackRegistrar_PortCallback_newOutPort_Params_Future) WriterCap() Channel_Writer {
+func (p NewPortInfo_Future) InPortReaderCap() Channel_Reader {
+	return Channel_Reader(p.Future.Field(1, nil).Client())
+}
+
+func (p NewPortInfo_Future) OutPortWriterCap() Channel_Writer {
 	return Channel_Writer(p.Future.Field(1, nil).Client())
 }
 
-type PortCallbackRegistrar_PortCallback_newOutPort_Results capnp.Struct
+type PortInfos capnp.Struct
 
-// PortCallbackRegistrar_PortCallback_newOutPort_Results_TypeID is the unique identifier for the type PortCallbackRegistrar_PortCallback_newOutPort_Results.
-const PortCallbackRegistrar_PortCallback_newOutPort_Results_TypeID = 0xbce653a60607e124
+// PortInfos_TypeID is the unique identifier for the type PortInfos.
+const PortInfos_TypeID = 0xece0efa9a922d4a8
 
-func NewPortCallbackRegistrar_PortCallback_newOutPort_Results(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newOutPort_Results, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(st), err
+func NewPortInfos(s *capnp.Segment) (PortInfos, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return PortInfos(st), err
 }
 
-func NewRootPortCallbackRegistrar_PortCallback_newOutPort_Results(s *capnp.Segment) (PortCallbackRegistrar_PortCallback_newOutPort_Results, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(st), err
+func NewRootPortInfos(s *capnp.Segment) (PortInfos, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return PortInfos(st), err
 }
 
-func ReadRootPortCallbackRegistrar_PortCallback_newOutPort_Results(msg *capnp.Message) (PortCallbackRegistrar_PortCallback_newOutPort_Results, error) {
+func ReadRootPortInfos(msg *capnp.Message) (PortInfos, error) {
 	root, err := msg.Root()
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(root.Struct()), err
+	return PortInfos(root.Struct()), err
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) String() string {
-	str, _ := text.Marshal(0xbce653a60607e124, capnp.Struct(s))
+func (s PortInfos) String() string {
+	str, _ := text.Marshal(0xece0efa9a922d4a8, capnp.Struct(s))
 	return str
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s PortInfos) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (PortCallbackRegistrar_PortCallback_newOutPort_Results) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_PortCallback_newOutPort_Results {
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(capnp.Struct{}.DecodeFromPtr(p))
+func (PortInfos) DecodeFromPtr(p capnp.Ptr) PortInfos {
+	return PortInfos(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) ToPtr() capnp.Ptr {
+func (s PortInfos) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) IsValid() bool {
+func (s PortInfos) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) Message() *capnp.Message {
+func (s PortInfos) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s PortCallbackRegistrar_PortCallback_newOutPort_Results) Segment() *capnp.Segment {
+func (s PortInfos) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-
-// PortCallbackRegistrar_PortCallback_newOutPort_Results_List is a list of PortCallbackRegistrar_PortCallback_newOutPort_Results.
-type PortCallbackRegistrar_PortCallback_newOutPort_Results_List = capnp.StructList[PortCallbackRegistrar_PortCallback_newOutPort_Results]
-
-// NewPortCallbackRegistrar_PortCallback_newOutPort_Results creates a new list of PortCallbackRegistrar_PortCallback_newOutPort_Results.
-func NewPortCallbackRegistrar_PortCallback_newOutPort_Results_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_PortCallback_newOutPort_Results_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[PortCallbackRegistrar_PortCallback_newOutPort_Results](l), err
+func (s PortInfos) InPorts() (PortInfos_NameAndSR_List, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return PortInfos_NameAndSR_List(p.List()), err
 }
 
-// PortCallbackRegistrar_PortCallback_newOutPort_Results_Future is a wrapper for a PortCallbackRegistrar_PortCallback_newOutPort_Results promised by a client call.
-type PortCallbackRegistrar_PortCallback_newOutPort_Results_Future struct{ *capnp.Future }
-
-func (f PortCallbackRegistrar_PortCallback_newOutPort_Results_Future) Struct() (PortCallbackRegistrar_PortCallback_newOutPort_Results, error) {
-	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_PortCallback_newOutPort_Results(p.Struct()), err
-}
-
-type PortCallbackRegistrar_registerCallback_Params capnp.Struct
-
-// PortCallbackRegistrar_registerCallback_Params_TypeID is the unique identifier for the type PortCallbackRegistrar_registerCallback_Params.
-const PortCallbackRegistrar_registerCallback_Params_TypeID = 0x8e507b91facc10f5
-
-func NewPortCallbackRegistrar_registerCallback_Params(s *capnp.Segment) (PortCallbackRegistrar_registerCallback_Params, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return PortCallbackRegistrar_registerCallback_Params(st), err
-}
-
-func NewRootPortCallbackRegistrar_registerCallback_Params(s *capnp.Segment) (PortCallbackRegistrar_registerCallback_Params, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return PortCallbackRegistrar_registerCallback_Params(st), err
-}
-
-func ReadRootPortCallbackRegistrar_registerCallback_Params(msg *capnp.Message) (PortCallbackRegistrar_registerCallback_Params, error) {
-	root, err := msg.Root()
-	return PortCallbackRegistrar_registerCallback_Params(root.Struct()), err
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) String() string {
-	str, _ := text.Marshal(0x8e507b91facc10f5, capnp.Struct(s))
-	return str
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
-	return capnp.Struct(s).EncodeAsPtr(seg)
-}
-
-func (PortCallbackRegistrar_registerCallback_Params) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_registerCallback_Params {
-	return PortCallbackRegistrar_registerCallback_Params(capnp.Struct{}.DecodeFromPtr(p))
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) ToPtr() capnp.Ptr {
-	return capnp.Struct(s).ToPtr()
-}
-func (s PortCallbackRegistrar_registerCallback_Params) IsValid() bool {
-	return capnp.Struct(s).IsValid()
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) Message() *capnp.Message {
-	return capnp.Struct(s).Message()
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) Segment() *capnp.Segment {
-	return capnp.Struct(s).Segment()
-}
-func (s PortCallbackRegistrar_registerCallback_Params) Callback() PortCallbackRegistrar_PortCallback {
-	p, _ := capnp.Struct(s).Ptr(0)
-	return PortCallbackRegistrar_PortCallback(p.Interface().Client())
-}
-
-func (s PortCallbackRegistrar_registerCallback_Params) HasCallback() bool {
+func (s PortInfos) HasInPorts() bool {
 	return capnp.Struct(s).HasPtr(0)
 }
 
-func (s PortCallbackRegistrar_registerCallback_Params) SetCallback(v PortCallbackRegistrar_PortCallback) error {
-	if !v.IsValid() {
-		return capnp.Struct(s).SetPtr(0, capnp.Ptr{})
+func (s PortInfos) SetInPorts(v PortInfos_NameAndSR_List) error {
+	return capnp.Struct(s).SetPtr(0, v.ToPtr())
+}
+
+// NewInPorts sets the inPorts field to a newly
+// allocated PortInfos_NameAndSR_List, preferring placement in s's segment.
+func (s PortInfos) NewInPorts(n int32) (PortInfos_NameAndSR_List, error) {
+	l, err := NewPortInfos_NameAndSR_List(capnp.Struct(s).Segment(), n)
+	if err != nil {
+		return PortInfos_NameAndSR_List{}, err
 	}
-	seg := s.Segment()
-	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
-	return capnp.Struct(s).SetPtr(0, in.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, l.ToPtr())
+	return l, err
+}
+func (s PortInfos) OutPorts() (PortInfos_NameAndSR_List, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return PortInfos_NameAndSR_List(p.List()), err
 }
 
-// PortCallbackRegistrar_registerCallback_Params_List is a list of PortCallbackRegistrar_registerCallback_Params.
-type PortCallbackRegistrar_registerCallback_Params_List = capnp.StructList[PortCallbackRegistrar_registerCallback_Params]
-
-// NewPortCallbackRegistrar_registerCallback_Params creates a new list of PortCallbackRegistrar_registerCallback_Params.
-func NewPortCallbackRegistrar_registerCallback_Params_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_registerCallback_Params_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
-	return capnp.StructList[PortCallbackRegistrar_registerCallback_Params](l), err
+func (s PortInfos) HasOutPorts() bool {
+	return capnp.Struct(s).HasPtr(1)
 }
 
-// PortCallbackRegistrar_registerCallback_Params_Future is a wrapper for a PortCallbackRegistrar_registerCallback_Params promised by a client call.
-type PortCallbackRegistrar_registerCallback_Params_Future struct{ *capnp.Future }
+func (s PortInfos) SetOutPorts(v PortInfos_NameAndSR_List) error {
+	return capnp.Struct(s).SetPtr(1, v.ToPtr())
+}
 
-func (f PortCallbackRegistrar_registerCallback_Params_Future) Struct() (PortCallbackRegistrar_registerCallback_Params, error) {
+// NewOutPorts sets the outPorts field to a newly
+// allocated PortInfos_NameAndSR_List, preferring placement in s's segment.
+func (s PortInfos) NewOutPorts(n int32) (PortInfos_NameAndSR_List, error) {
+	l, err := NewPortInfos_NameAndSR_List(capnp.Struct(s).Segment(), n)
+	if err != nil {
+		return PortInfos_NameAndSR_List{}, err
+	}
+	err = capnp.Struct(s).SetPtr(1, l.ToPtr())
+	return l, err
+}
+
+// PortInfos_List is a list of PortInfos.
+type PortInfos_List = capnp.StructList[PortInfos]
+
+// NewPortInfos creates a new list of PortInfos.
+func NewPortInfos_List(s *capnp.Segment, sz int32) (PortInfos_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return capnp.StructList[PortInfos](l), err
+}
+
+// PortInfos_Future is a wrapper for a PortInfos promised by a client call.
+type PortInfos_Future struct{ *capnp.Future }
+
+func (f PortInfos_Future) Struct() (PortInfos, error) {
 	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_registerCallback_Params(p.Struct()), err
-}
-func (p PortCallbackRegistrar_registerCallback_Params_Future) Callback() PortCallbackRegistrar_PortCallback {
-	return PortCallbackRegistrar_PortCallback(p.Future.Field(0, nil).Client())
+	return PortInfos(p.Struct()), err
 }
 
-type PortCallbackRegistrar_registerCallback_Results capnp.Struct
+type PortInfos_NameAndSR capnp.Struct
+type PortInfos_NameAndSR_Which uint16
 
-// PortCallbackRegistrar_registerCallback_Results_TypeID is the unique identifier for the type PortCallbackRegistrar_registerCallback_Results.
-const PortCallbackRegistrar_registerCallback_Results_TypeID = 0x901a895e37911943
+const (
+	PortInfos_NameAndSR_Which_sr  PortInfos_NameAndSR_Which = 0
+	PortInfos_NameAndSR_Which_srs PortInfos_NameAndSR_Which = 1
+)
 
-func NewPortCallbackRegistrar_registerCallback_Results(s *capnp.Segment) (PortCallbackRegistrar_registerCallback_Results, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_registerCallback_Results(st), err
+func (w PortInfos_NameAndSR_Which) String() string {
+	const s = "srsrs"
+	switch w {
+	case PortInfos_NameAndSR_Which_sr:
+		return s[0:2]
+	case PortInfos_NameAndSR_Which_srs:
+		return s[2:5]
+
+	}
+	return "PortInfos_NameAndSR_Which(" + strconv.FormatUint(uint64(w), 10) + ")"
 }
 
-func NewRootPortCallbackRegistrar_registerCallback_Results(s *capnp.Segment) (PortCallbackRegistrar_registerCallback_Results, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return PortCallbackRegistrar_registerCallback_Results(st), err
+// PortInfos_NameAndSR_TypeID is the unique identifier for the type PortInfos_NameAndSR.
+const PortInfos_NameAndSR_TypeID = 0x8a4d34c4b5eb1545
+
+func NewPortInfos_NameAndSR(s *capnp.Segment) (PortInfos_NameAndSR, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return PortInfos_NameAndSR(st), err
 }
 
-func ReadRootPortCallbackRegistrar_registerCallback_Results(msg *capnp.Message) (PortCallbackRegistrar_registerCallback_Results, error) {
+func NewRootPortInfos_NameAndSR(s *capnp.Segment) (PortInfos_NameAndSR, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return PortInfos_NameAndSR(st), err
+}
+
+func ReadRootPortInfos_NameAndSR(msg *capnp.Message) (PortInfos_NameAndSR, error) {
 	root, err := msg.Root()
-	return PortCallbackRegistrar_registerCallback_Results(root.Struct()), err
+	return PortInfos_NameAndSR(root.Struct()), err
 }
 
-func (s PortCallbackRegistrar_registerCallback_Results) String() string {
-	str, _ := text.Marshal(0x901a895e37911943, capnp.Struct(s))
+func (s PortInfos_NameAndSR) String() string {
+	str, _ := text.Marshal(0x8a4d34c4b5eb1545, capnp.Struct(s))
 	return str
 }
 
-func (s PortCallbackRegistrar_registerCallback_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s PortInfos_NameAndSR) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (PortCallbackRegistrar_registerCallback_Results) DecodeFromPtr(p capnp.Ptr) PortCallbackRegistrar_registerCallback_Results {
-	return PortCallbackRegistrar_registerCallback_Results(capnp.Struct{}.DecodeFromPtr(p))
+func (PortInfos_NameAndSR) DecodeFromPtr(p capnp.Ptr) PortInfos_NameAndSR {
+	return PortInfos_NameAndSR(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s PortCallbackRegistrar_registerCallback_Results) ToPtr() capnp.Ptr {
+func (s PortInfos_NameAndSR) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s PortCallbackRegistrar_registerCallback_Results) IsValid() bool {
+
+func (s PortInfos_NameAndSR) Which() PortInfos_NameAndSR_Which {
+	return PortInfos_NameAndSR_Which(capnp.Struct(s).Uint16(0))
+}
+func (s PortInfos_NameAndSR) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s PortCallbackRegistrar_registerCallback_Results) Message() *capnp.Message {
+func (s PortInfos_NameAndSR) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s PortCallbackRegistrar_registerCallback_Results) Segment() *capnp.Segment {
+func (s PortInfos_NameAndSR) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s PortInfos_NameAndSR) Name() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s PortInfos_NameAndSR) HasName() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s PortInfos_NameAndSR) NameBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s PortInfos_NameAndSR) SetName(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+func (s PortInfos_NameAndSR) Sr() (string, error) {
+	if capnp.Struct(s).Uint16(0) != 0 {
+		panic("Which() != sr")
+	}
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.Text(), err
+}
+
+func (s PortInfos_NameAndSR) HasSr() bool {
+	if capnp.Struct(s).Uint16(0) != 0 {
+		return false
+	}
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s PortInfos_NameAndSR) SrBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s PortInfos_NameAndSR) SetSr(v string) error {
+	capnp.Struct(s).SetUint16(0, 0)
+	return capnp.Struct(s).SetText(1, v)
+}
+
+func (s PortInfos_NameAndSR) Srs() (capnp.TextList, error) {
+	if capnp.Struct(s).Uint16(0) != 1 {
+		panic("Which() != srs")
+	}
+	p, err := capnp.Struct(s).Ptr(1)
+	return capnp.TextList(p.List()), err
+}
+
+func (s PortInfos_NameAndSR) HasSrs() bool {
+	if capnp.Struct(s).Uint16(0) != 1 {
+		return false
+	}
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s PortInfos_NameAndSR) SetSrs(v capnp.TextList) error {
+	capnp.Struct(s).SetUint16(0, 1)
+	return capnp.Struct(s).SetPtr(1, v.ToPtr())
+}
+
+// NewSrs sets the srs field to a newly
+// allocated capnp.TextList, preferring placement in s's segment.
+func (s PortInfos_NameAndSR) NewSrs(n int32) (capnp.TextList, error) {
+	capnp.Struct(s).SetUint16(0, 1)
+	l, err := capnp.NewTextList(capnp.Struct(s).Segment(), n)
+	if err != nil {
+		return capnp.TextList{}, err
+	}
+	err = capnp.Struct(s).SetPtr(1, l.ToPtr())
+	return l, err
+}
+
+// PortInfos_NameAndSR_List is a list of PortInfos_NameAndSR.
+type PortInfos_NameAndSR_List = capnp.StructList[PortInfos_NameAndSR]
+
+// NewPortInfos_NameAndSR creates a new list of PortInfos_NameAndSR.
+func NewPortInfos_NameAndSR_List(s *capnp.Segment, sz int32) (PortInfos_NameAndSR_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
+	return capnp.StructList[PortInfos_NameAndSR](l), err
+}
+
+// PortInfos_NameAndSR_Future is a wrapper for a PortInfos_NameAndSR promised by a client call.
+type PortInfos_NameAndSR_Future struct{ *capnp.Future }
+
+func (f PortInfos_NameAndSR_Future) Struct() (PortInfos_NameAndSR, error) {
+	p, err := f.Future.Ptr()
+	return PortInfos_NameAndSR(p.Struct()), err
+}
+
+type Component capnp.Client
+
+// Component_TypeID is the unique identifier for the type Component.
+const Component_TypeID = 0xd717ff7d6815a6b0
+
+func (c Component) Start(ctx context.Context, params func(Component_start_Params) error) (Component_start_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xd717ff7d6815a6b0,
+			MethodID:      0,
+			InterfaceName: "fbp.capnp:Component",
+			MethodName:    "start",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_start_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Component_start_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Component) Stop(ctx context.Context, params func(Component_stop_Params) error) (Component_stop_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xd717ff7d6815a6b0,
+			MethodID:      1,
+			InterfaceName: "fbp.capnp:Component",
+			MethodName:    "stop",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_stop_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Component_stop_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Component) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(common.Identifiable_info_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return common.IdInformation_Future{Future: ans.Future()}, release
+
+}
+
+func (c Component) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c Component) String() string {
+	return "Component(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c Component) AddRef() Component {
+	return Component(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c Component) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c Component) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c Component) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (Component) DecodeFromPtr(p capnp.Ptr) Component {
+	return Component(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c Component) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c Component) IsSame(other Component) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c Component) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c Component) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A Component_Server is a Component with a local implementation.
+type Component_Server interface {
+	Start(context.Context, Component_start) error
+
+	Stop(context.Context, Component_stop) error
+
+	Info(context.Context, common.Identifiable_info) error
+}
+
+// Component_NewServer creates a new Server from an implementation of Component_Server.
+func Component_NewServer(s Component_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(Component_Methods(nil, s), s, c)
+}
+
+// Component_ServerToClient creates a new Client from an implementation of Component_Server.
+// The caller is responsible for calling Release on the returned Client.
+func Component_ServerToClient(s Component_Server) Component {
+	return Component(capnp.NewClient(Component_NewServer(s)))
+}
+
+// Component_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func Component_Methods(methods []server.Method, s Component_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 3)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xd717ff7d6815a6b0,
+			MethodID:      0,
+			InterfaceName: "fbp.capnp:Component",
+			MethodName:    "start",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Start(ctx, Component_start{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xd717ff7d6815a6b0,
+			MethodID:      1,
+			InterfaceName: "fbp.capnp:Component",
+			MethodName:    "stop",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Stop(ctx, Component_stop{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Info(ctx, common.Identifiable_info{call})
+		},
+	})
+
+	return methods
+}
+
+// Component_start holds the state for a server call to Component.start.
+// See server.Call for documentation.
+type Component_start struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Component_start) Args() Component_start_Params {
+	return Component_start_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Component_start) AllocResults() (Component_start_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_start_Results(r), err
+}
+
+// Component_stop holds the state for a server call to Component.stop.
+// See server.Call for documentation.
+type Component_stop struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Component_stop) Args() Component_stop_Params {
+	return Component_stop_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Component_stop) AllocResults() (Component_stop_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_stop_Results(r), err
+}
+
+// Component_List is a list of Component.
+type Component_List = capnp.CapList[Component]
+
+// NewComponent_List creates a new list of Component.
+func NewComponent_List(s *capnp.Segment, sz int32) (Component_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[Component](l), err
+}
+
+type Component_start_Params capnp.Struct
+
+// Component_start_Params_TypeID is the unique identifier for the type Component_start_Params.
+const Component_start_Params_TypeID = 0xf5b257d7fba7ed60
+
+func NewComponent_start_Params(s *capnp.Segment) (Component_start_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Component_start_Params(st), err
+}
+
+func NewRootComponent_start_Params(s *capnp.Segment) (Component_start_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Component_start_Params(st), err
+}
+
+func ReadRootComponent_start_Params(msg *capnp.Message) (Component_start_Params, error) {
+	root, err := msg.Root()
+	return Component_start_Params(root.Struct()), err
+}
+
+func (s Component_start_Params) String() string {
+	str, _ := text.Marshal(0xf5b257d7fba7ed60, capnp.Struct(s))
+	return str
+}
+
+func (s Component_start_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Component_start_Params) DecodeFromPtr(p capnp.Ptr) Component_start_Params {
+	return Component_start_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Component_start_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Component_start_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Component_start_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Component_start_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Component_start_Params) PortInfosReaderSr() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s Component_start_Params) HasPortInfosReaderSr() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Component_start_Params) PortInfosReaderSrBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s Component_start_Params) SetPortInfosReaderSr(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+// Component_start_Params_List is a list of Component_start_Params.
+type Component_start_Params_List = capnp.StructList[Component_start_Params]
+
+// NewComponent_start_Params creates a new list of Component_start_Params.
+func NewComponent_start_Params_List(s *capnp.Segment, sz int32) (Component_start_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[Component_start_Params](l), err
+}
+
+// Component_start_Params_Future is a wrapper for a Component_start_Params promised by a client call.
+type Component_start_Params_Future struct{ *capnp.Future }
+
+func (f Component_start_Params_Future) Struct() (Component_start_Params, error) {
+	p, err := f.Future.Ptr()
+	return Component_start_Params(p.Struct()), err
+}
+
+type Component_start_Results capnp.Struct
+
+// Component_start_Results_TypeID is the unique identifier for the type Component_start_Results.
+const Component_start_Results_TypeID = 0xda58608ec3b1dfa6
+
+func NewComponent_start_Results(s *capnp.Segment) (Component_start_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_start_Results(st), err
+}
+
+func NewRootComponent_start_Results(s *capnp.Segment) (Component_start_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_start_Results(st), err
+}
+
+func ReadRootComponent_start_Results(msg *capnp.Message) (Component_start_Results, error) {
+	root, err := msg.Root()
+	return Component_start_Results(root.Struct()), err
+}
+
+func (s Component_start_Results) String() string {
+	str, _ := text.Marshal(0xda58608ec3b1dfa6, capnp.Struct(s))
+	return str
+}
+
+func (s Component_start_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Component_start_Results) DecodeFromPtr(p capnp.Ptr) Component_start_Results {
+	return Component_start_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Component_start_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Component_start_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Component_start_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Component_start_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Component_start_Results) Success() bool {
+	return capnp.Struct(s).Bit(0)
+}
+
+func (s Component_start_Results) SetSuccess(v bool) {
+	capnp.Struct(s).SetBit(0, v)
+}
+
+// Component_start_Results_List is a list of Component_start_Results.
+type Component_start_Results_List = capnp.StructList[Component_start_Results]
+
+// NewComponent_start_Results creates a new list of Component_start_Results.
+func NewComponent_start_Results_List(s *capnp.Segment, sz int32) (Component_start_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Component_start_Results](l), err
+}
+
+// Component_start_Results_Future is a wrapper for a Component_start_Results promised by a client call.
+type Component_start_Results_Future struct{ *capnp.Future }
+
+func (f Component_start_Results_Future) Struct() (Component_start_Results, error) {
+	p, err := f.Future.Ptr()
+	return Component_start_Results(p.Struct()), err
+}
+
+type Component_stop_Params capnp.Struct
+
+// Component_stop_Params_TypeID is the unique identifier for the type Component_stop_Params.
+const Component_stop_Params_TypeID = 0xbe5bb9ba1de54674
+
+func NewComponent_stop_Params(s *capnp.Segment) (Component_stop_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Component_stop_Params(st), err
+}
+
+func NewRootComponent_stop_Params(s *capnp.Segment) (Component_stop_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Component_stop_Params(st), err
+}
+
+func ReadRootComponent_stop_Params(msg *capnp.Message) (Component_stop_Params, error) {
+	root, err := msg.Root()
+	return Component_stop_Params(root.Struct()), err
+}
+
+func (s Component_stop_Params) String() string {
+	str, _ := text.Marshal(0xbe5bb9ba1de54674, capnp.Struct(s))
+	return str
+}
+
+func (s Component_stop_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Component_stop_Params) DecodeFromPtr(p capnp.Ptr) Component_stop_Params {
+	return Component_stop_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Component_stop_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Component_stop_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Component_stop_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Component_stop_Params) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
 
-// PortCallbackRegistrar_registerCallback_Results_List is a list of PortCallbackRegistrar_registerCallback_Results.
-type PortCallbackRegistrar_registerCallback_Results_List = capnp.StructList[PortCallbackRegistrar_registerCallback_Results]
+// Component_stop_Params_List is a list of Component_stop_Params.
+type Component_stop_Params_List = capnp.StructList[Component_stop_Params]
 
-// NewPortCallbackRegistrar_registerCallback_Results creates a new list of PortCallbackRegistrar_registerCallback_Results.
-func NewPortCallbackRegistrar_registerCallback_Results_List(s *capnp.Segment, sz int32) (PortCallbackRegistrar_registerCallback_Results_List, error) {
+// NewComponent_stop_Params creates a new list of Component_stop_Params.
+func NewComponent_stop_Params_List(s *capnp.Segment, sz int32) (Component_stop_Params_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[PortCallbackRegistrar_registerCallback_Results](l), err
+	return capnp.StructList[Component_stop_Params](l), err
 }
 
-// PortCallbackRegistrar_registerCallback_Results_Future is a wrapper for a PortCallbackRegistrar_registerCallback_Results promised by a client call.
-type PortCallbackRegistrar_registerCallback_Results_Future struct{ *capnp.Future }
+// Component_stop_Params_Future is a wrapper for a Component_stop_Params promised by a client call.
+type Component_stop_Params_Future struct{ *capnp.Future }
 
-func (f PortCallbackRegistrar_registerCallback_Results_Future) Struct() (PortCallbackRegistrar_registerCallback_Results, error) {
+func (f Component_stop_Params_Future) Struct() (Component_stop_Params, error) {
 	p, err := f.Future.Ptr()
-	return PortCallbackRegistrar_registerCallback_Results(p.Struct()), err
+	return Component_stop_Params(p.Struct()), err
 }
 
-const schema_bf602c4868dbb22f = "x\xda\xbcX}l\x14\xd7\x11\x9f\xdf\xee\xdak\xfb\xce" +
-	"\xde{\xb7n\x09\x16\xce\x05b\xa9\x84\x80\x03v>$" +
-	"\x17d\x16\x87\x06'A\xbd\xb5+\x12\x10\xa9z>\xaf" +
-	"\xc1\xc4\xdc]\xee\xd6A8M\xa2\xa2F.%\xa0\x1a" +
-	"\x05\x05\x10!\xa0\xb6\x84\xb4\xa5\x14J\xd4/\xda@C" +
-	"\xd2\xf2\x91\x14\"Q\"\x82\x05(\x85\xb6Q\xa4\xca$" +
-	"\xb4\x02\x11\xb6z\xbb\xf7\xee\xf6\xf09\xc6\x89\xda\xff\xec" +
-	"}\xf3\xf1f\xe67\xbf\x99w\xd3kJg+3*" +
-	"\x1f\xd0I2\xcf\x95\x94:\xa7^\xf8\xcd\x1b?={" +
-	"m5\xb1i *\x91T\xa2\xc6\xd5\xe5WA\xd0_" +
-	"*_Ap\xd6$\x17\xfd\xfc\xcb\x0f\xae[\xe3\x17\x98" +
-	"Vq\x89\x0b\x18\x15\\\xe0\xd8\x8b\xfb?^?\xf0\xd6" +
-	"\x1aba\xd9\xf9\xc7\x9eKw\xdd\xf9F\xc7\x16\"\x0a" +
-	"A?QqD\x1f\xacP\xf5\xc1\x8a\x88\x8e@\xbf\xbe" +
-	"=\xa0\x129\xd3\xaf\xce\x99\xfb\xe1\x84\xcd\xcf{\x16\x15" +
-	"\xd7c\xe0*Hq\x82\xdb\xce\xee\x9b`;k\x89U" +
-	"\xc8\xce]{\xdf_:o\xea\xb7^'B\xe3\xd3\x01" +
-	"\x09\xfa\xea\xc08\"}C\xe0\x01\xfdM\xd7\xce\xe5\xd0" +
-	"\xb1\xab\x03OE\xd7\x11\xbb\x8d\xdf\x0c\xdc\xd0\xae\xc0\x1f" +
-	"\xf9\xcd~\x1fh&8-\xe3\x07\xee\xfb\xe6\xea\x9a\x1f" +
-	"x\x02\xae\xa3\xf3\x81#\xdcQ\xa3\xfed\xdfWo\x0d" +
-	"\xad'3\x0c\xf7(\x84\xc6\x93\x81&\xae:\xe8\xaa\xfe" +
-	"\xd9x~\xa8\xf3\xc3\xc9/\x10\x1b/\xce?\x0d4p" +
-	"\xd5-\xb3\xd8A\xeczo\x83OU\xbf\x10\xb8J\xd0" +
-	"\xff\xe9j\xe62P\x18\x03O\x07\x0b\xae\xd7\xc7\x07\x1f" +
-	"!j\\\x18\xec\x87\xdeZ\xf5\x15}a\x95\xe6\\\xdc" +
-	"t\xe8\xdc@\xfb\xd6\xad\xc4*\xe1\xfce\xf1\xe6\xd4\xa1" +
-	"\xda\x8a\xddT\"\xabD\xfa\xfc\xaaU\xbaY\xe5\xfd\xb5" +
-	"\x9b\x87\xb4\xf7\xdc\xdf\x8f\xf4\x9f\xdaI,,\x15&\xbb" +
-	"\xf1BU\x05\xf4\xcb\xae\xecP\xd5}\xe43\xc5*\x90" +
-	"\xbf\x89[A\xfdr\xd52\xfdJ\x15\xcf'4^\xc4" +
-	"\x1d\x1f\x1d>v\xd8\xb9g\x0f\xb1\xb0\x97\xcb\x10\x1a\x9f" +
-	"\xd0*xBVj<\xac\x9aU\xed\xafo/\xbb\xfe" +
-	"K_BviM<!\xcf,\xde\xb8uI\xfbS" +
-	"\xfb\xfc\xaa\x1b<\xd5\x97\\\xd5\xc1\xa6G\xe7\xbev\xef" +
-	"\xc6}\xfed\x9f\xd0\xfa\xdcd\xbb\x02\xd1[g\x9d^" +
-	"\xbb\xf1\xcco}\xb6Y\xc8M\xf6\xbfv\x1a\xcf\xed\xe8" +
-	"?\xbb\x9f\xd8mr\x1e\x1d\x84\xc6+\xda2\xe8\x95!" +
-	"\x1eJy\xa8_\x8f\xf1\xbf\x9c\xba\xf3j\xe9\x8e\xf6\x8b" +
-	"\xfb}\xc0j\x0dI\x12)N\xf9\xf9\xa5\x1f\xdc]\x1b" +
-	"\xfb\x83wG\xd7\xc3\xac\x90\xc4=\xfc\xf8\xce5\xefo" +
-	"z\xac\xf1\x80\xcf\xf7\xc4\xd0\x14~R\xdap\xb4yQ" +
-	"\xe2\xda\x01\x9fNyh\x15?9\xfc\xe8\xba\xf3\x03g" +
-	"\xa4\xa3>\x9d\xcb^.~\x15\xd7\xb5\xbfnV\x8f\xf9" +
-	"t\x065\xd7O\xdd\x86\xea\x8f~]\xf7\xf2;>\x9d" +
-	"\x83\x9e\xce{\x99\x96\x81g\xbe\xd3\xfc\xaeO\xe7U\xad" +
-	"\x86\x9f\xd4\xff\xe4\xf8\xfeO\xc2\xaf\x9dt\x13\x97\xaf\xf6" +
-	"\\\xa8R\x08\xfa\x80\xb6W\xdf\xa4\xf1\x0clpK8" +
-	"9:\xee\xd9\xdb\x7fx\xea\x03.\xed\xc3F\x89\xcc\x11" +
-	":\xa4]\xd2?\xe5\xc2\x8dW\xb4\x08\x08\xce!\xe5t" +
-	"\xe7\xe0a\xf5\xa2\xcf\xab\xc9\xdc\x9b\xfe\xee\xc5\xb5\x91w" +
-	"a\x7f\x9c\xad\xa7\xc4\x8f\xeea\x93x\xb9f1\xee\xe8" +
-	"\xe5?\xed\xdc\xa7\xbfu\xfd?E\x1a\xfe ;\xa2\xbf" +
-	"\xcdT\xfdm\x16\xd1\x87X\xbf>\x10\xe6u\xb9}\xea" +
-	"\x13\xe7N\x96-\xbb\xee\xf3\xb52<\x07\xf4o\xa7\xab" +
-	"#U\x1f\x8f\xa5\x12\xa5\xa9\xa6h2m\xb7\xc4zz" +
-	":b\xf1\xc7\xdb\xac%\xdd\x19;\x1dK\xd7\xfb\xbf\xd6" +
-	"'\xac\x15_\xef\xb5\xf9\xa7\xba\xe6h,\x1d[\x9e1" +
-	"\xcbd\x85H\x01\x11\xbbc\x0a\x91Y'\xc3\x9c.\x81" +
-	"\x01\xd5\x1cjlZ\x1b\x919U\x86\xb9T\x82\x96\x88" +
-	"-\xb7\x10$\x09A\x82\xb3\"\xddm[\xe9\x96\x18!" +
-	"\x05\x96\x0f\x89h6\x18\"\xa6\"\xc1\x1f\x1a\xc38S" +
-	"\x01\x80\xa8\x0c\x84\xf2\x9dE\x00#\x8c=\x8c\xd6\x84\x1b" +
-	"E4\xf2\x05\xa3H[\xb1\xce|\x149&\xfebQ" +
-	"H\xa9\xa6\x96\xa5\xb1D\xc2\xea\xa9os\xed\x13E\x01" +
-	"S\x81\xe4\xbc30t}\xe5+\x9d\x97\x88\x9b6\xaa" +
-	"\x81 \xb7\xba\xc8\xe1\xf2\\\x96d.m\x96\xc9%D" +
-	"\xb9\xd6\x82\xc01\x9b1\x85\xc8\x98\x0ac&\xd8|\x15" +
-	"y\x96\x85`\x17f4\x10\x193a<\x0c\xf6\x98\xaa" +
-	"\xf1\xf0\x86\xc5\xe1\xa6\xa4\xd8\xc7\xd9\x88\xc4{\x92\x19k" +
-	",\x1aQ|\xfe\xea\xb55[\x99\xde\x1e;\x933 " +
-	"\x8f`\x80x\xd6}\\\x86e\x8e\x90#\x8dK\x9a\x8a" +
-	"\x9b01\xd0 \x06\x17c\xdf'\x89U\xaaN\xda5" +
-	"e\xa5!l\xdf\xf4\xdd\x85\xa68\xa9\xf3\x1a\x87L%" +
-	"\x87\xb9\xca\x07\x89\xcc\xa0\x0c\xf3\x16\x09N<\xe7\x80\xc0" +
-	"\xf2w\xbeY\xa0\x0fs\xd7\xe6\xe5\x88\xc8\x9f%\x01\xaf" +
-	"\x8ce\xcf\xe9\xed\xea\xb2\xd2\xed\xdd}V\xae\xa7\xb37" +
-	"\x03X\xe5\x14\x17L0\xab%h\x99\xee>\x0b\xe5$" +
-	"\xa1\x9c\x97\xae\x989\x0f\xad\xf5.\x08Do\x15C\xb5" +
-	"'P\xc4\xddf\"3$\xc3\x9c \xc1Y\x11\xeb\xb6" +
-	"\xbf\x96L\xcf\xc5\xf2\x94\xbd\x92\xdfR\xb6\xd2\x00I%" +
-	"\x80/\x11\x10V\xd1cV\xc3?\x9f'\xf6\xe5\xf9\x9b" +
-	"M\x9c\x94\xa7gV\xdb\xe1\xdb\x99j\x9b||:\xbe" +
-	"\xc9i\xe1wk\xb7\x96Ss,aw\xc73\xea\xfc" +
-	"\xcc\x12\xa7\xdd\x8e\xa5\xed\xdeT+\xa9\x89\xaed\xb3\x17" +
-	"f\xf3#.\x83\x99\xb7\xb8\xd0\x11\x0b\x0d\x04\xd7\xb2=" +
-	"i\"\xe3\x170\x0e\x80\x9d\xe0\xbd&\x08\x1fb\xd4\xb3" +
-	"7\x9b\x88\x8c\x030\x8e\x83\x9dW!\xe5\x86$\xc4D" +
-	"g'\xb9\xc4q\x18\xe7\xc0\x86T\xc8\xb9Q\x051#" +
-	"\xd8\x856\"\xe3o0>\x81^\x02\x15Jn\xd8C" +
-	"\x8cOve/\x91q\x0d-A@\xaf\x85\x8a\x92\xdc" +
-	"\x0a\x051.u\x86\x06\".\xd12\x01\xd0\xa7Au" +
-	"\x044(\xe2\x82c,=\xdd\xec\xb1\xe2\x98T\xbcq" +
-	"0\x16\x15\xc7Jt\xa6\x92\xdd\x09\x9b\x90\x19\x93^\xc6" +
-	"\xb2\x8d^;\xd9\x82l\xa5c\x11\xb7\xd0\xff[\x9e3" +
-	"\xcb\x00\xe7\xe4\xbc-\x0b\x8f\x9e\xd8\xbd\x97\x88\x1c\xeb\xe8" +
-	"\xbdg\xb6\x9d~\xe5 \x11\x19\x0a\x18\xc2X\xe0\x07u" +
-	"k\xb4\xfe\xa1\x05.\xed\x07s<1w\x12\x919[" +
-	"\x86\xf9\xb0o6\xb5\xf2\x16\xbd_\x86\x19\x95\xc0$\xa9" +
-	"\x1a\x12\x11\x9b\xdf@d\xce\x93a~C\x82\xfa\xb8\xb5" +
-	"R\xcc+\xad\xd3\xca\xc4\xc5?\x91'c=\xbd\x16\xc2" +
-	"$!\xec\xeb(_?\x8b^\xf0:\xc1\x9bBe\xae" +
-	"\x036\xc9e\xa4\xf2\x1a\"\xb5\xab#%'\x929}" +
-	"\xd2\xf8\xed]\xc6\xcd/\xd6\xa8\x91\x1fZ\xe0\x1f\xb3\x8b" +
-	"\x88\xcc\xc92\xcc\xfb}\xa1\x18s\x88\xcc\x992\xccy" +
-	"\x12\x9c\x98m\xa7\xbb;zm\x92\xad\x0c\xaa(;2" +
-	"s\x16\x09\xfc\xe3\xb3\xf1d\xc2\xb6\x12\xf6g\x05\xe1\x81" +
-	"1\xcf\x83~\xe2\x0dg\xe9m\xb2\x04\xa4G\x1d\xe0\xfc" +
-	"\x92\x05,<\x12\xf5\x15\x1bLB\xd0\x03\xfa\xe8\xd7Y" +
-	"1\xeaV4\xec:J\x01\xb1\xbb\x18/(\xe0\x8d\x8c" +
-	"\xcb]\xd6\xe4]\xca\xf1\x0c\xb4<\x81\x8e\xecS+\x9e" +
-	"\x02\x8f\x0fG`\x7fe\xb4\xd9\xee\xcea\x17`.\x9f" +
-	"\x8aW/\xc4c\x95\xcdh#\x89\xdd\xc1\x99T<\x99" +
-	"!\xde\x1b\xacv\x11I\xecK\xaa#v\x03\x82=\x1b" +
-	"\x8eXWIN\xdb\x85\xd3Z\x1b\xeb\xba+\xca%\x0c" +
-	"\x0c\xabgv\xaa\x0f?\xcf\x02\x83\xa3\xb0.\x1a\xd3\x0a" +
-	"\x92R>Z\xc1Fv[\x90\xecaxSo\x9c\xb5" +
-	"\xa3\x1ar\xc3\xf8L\xe0\x0a\xba\xcd\xb8\xb1\xca\xbe0r" +
-	"38\xd2S??\xb3\xc4+\xa2\x12t\x1c\xaf\xd5\x1b" +
-	"\xf2\x1bu%\xae;\xd9\x95zJ\x96\x00\xee\x96rD" +
-	"\x84\x82e\x99\xf7\xb3\xd6\x99LXTZl\x87\xf0F" +
-	"r$\xd5\x9a\xe8Jr\x8f\xd59L?\xcd\xb9\xe5\xdb" +
-	"2\xcc\xefqnQ<\x7f\xcf\xf5\x11\x99\xdf\x95a\xfe" +
-	"H\x02\xb2,\xb9\x9d\xaf\xf5\xdbd\x98?\x93\xc0dT" +
-	"C&b\xaf\xf2\x8f;e\x98\x87$0E\xaa\x86B" +
-	"\xc4\x0e\xf2\x8f\x07d\x98g$8\x1d\xd9\x8d\x89d\xb1" +
-	"\x0f\x11\x9c\xf8\x0dk\xc3\xcdwR\xdc\x0b\xa8\x9d\xd0v" +
-	"\xc3\xb3\xa2\xbd\x8d\x90\xe3>~T\x95{7\x15=*" +
-	"R\xfd,\xf9\x8d\x88\xce|Q9B\xd4\x1e\xbb\xe0-" +
-	"\x14\xceV\xae\x80\xa4\xc3Y\x92^<&\xce\xfc<|" +
-	"&\xdd\x88\xd2\x9b{\x07q\xd9\x82w\x90X\x03!~" +
-	"\x03`3\x1a\x0a\xdfA\xe2\x07\x10\x88_\x16\x0a\xdfA" +
-	"\x117\xe9\xff\xbf\x87\x902\xd2\x86.\xda\xf8\xbf\x01\x00" +
-	"\x00\xff\xff\xe1>\x0e;"
+type Component_stop_Results capnp.Struct
+
+// Component_stop_Results_TypeID is the unique identifier for the type Component_stop_Results.
+const Component_stop_Results_TypeID = 0xbe0c6a5a76e75105
+
+func NewComponent_stop_Results(s *capnp.Segment) (Component_stop_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_stop_Results(st), err
+}
+
+func NewRootComponent_stop_Results(s *capnp.Segment) (Component_stop_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Component_stop_Results(st), err
+}
+
+func ReadRootComponent_stop_Results(msg *capnp.Message) (Component_stop_Results, error) {
+	root, err := msg.Root()
+	return Component_stop_Results(root.Struct()), err
+}
+
+func (s Component_stop_Results) String() string {
+	str, _ := text.Marshal(0xbe0c6a5a76e75105, capnp.Struct(s))
+	return str
+}
+
+func (s Component_stop_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Component_stop_Results) DecodeFromPtr(p capnp.Ptr) Component_stop_Results {
+	return Component_stop_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Component_stop_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Component_stop_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Component_stop_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Component_stop_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Component_stop_Results) Success() bool {
+	return capnp.Struct(s).Bit(0)
+}
+
+func (s Component_stop_Results) SetSuccess(v bool) {
+	capnp.Struct(s).SetBit(0, v)
+}
+
+// Component_stop_Results_List is a list of Component_stop_Results.
+type Component_stop_Results_List = capnp.StructList[Component_stop_Results]
+
+// NewComponent_stop_Results creates a new list of Component_stop_Results.
+func NewComponent_stop_Results_List(s *capnp.Segment, sz int32) (Component_stop_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Component_stop_Results](l), err
+}
+
+// Component_stop_Results_Future is a wrapper for a Component_stop_Results promised by a client call.
+type Component_stop_Results_Future struct{ *capnp.Future }
+
+func (f Component_stop_Results_Future) Struct() (Component_stop_Results, error) {
+	p, err := f.Future.Ptr()
+	return Component_stop_Results(p.Struct()), err
+}
+
+const schema_bf602c4868dbb22f = "x\xda\xbcX\x7fpT\xd5\xf5?\xe7\xbd]^~\xb2" +
+	"{\xf7n\x86/\x19\xd7\x1db\x1c1j\xd4\xc4\xaf\x9d" +
+	"Ia\x92M\x88C\xd4\xd0}\xbb\x94_\x85)/\xbb" +
+	"/\x10Lv\x97}/\xa4I\xabT\x06\x87\x8e\x16\xa7" +
+	"a\xea\x88\x14Ph\xe5G\xa7\x16\x89d\xaa\x16\x91\x8c" +
+	"\xd1\x96_\x16\x9dR,\xc6)\xa9\xf5W\x0b\xd3\x09\x88" +
+	"\x8e-\xe4u\xee}\xfbv\xdf&\x1bc\x9ci\xffK" +
+	"\xde\xbd\xf7\x9c{\xce\xf9\x9c\xcf\xe7\x9e\xbd\xe3\xf4\xb4:" +
+	"\xc7\x9d\xc5\x9fS\x10\xe4\x8f\x9d\xd3\x8c\xc6\x92\x7f\xf4\x0f" +
+	"\xde\xd5\xfc(\xc8^Dc\xdf\x1f\xcb\xf6\xef\xff\xe7\xf9" +
+	"\x0b\xd0(H\x02\x00\x1d\xce\xbfD/\xe6K\x00\xf4\x93" +
+	"\xfc\x03\x80\xc6\xc9'\x0f_\xde\xd2\xfb\xc6c@<\xa2" +
+	"\xf1\xf1\xc1K\xb7\xdf\xf2Z\xcbv\x00p#\xed-8" +
+	"Nw\x14HtG\x81\x9f\x0e\x14l\xa2J\xa1\x04`" +
+	"T\xd3u=\xdf\xbc\xde\xbd\x05d\x0f\"\x80Crc" +
+	"uSa\x0d\x02R\xb9\xb0\x16\xd0\xf8}\xe0\xc7#\xd1" +
+	"\xbf\xcf\xfe)\x90\x99\xd6\xfa\xda\xc2*\x04\x87\xb1}." +
+	"\x19\xc0\xe7\xdey\xc2v\x94.-\xfc\x17 ]\xc1O" +
+	"\xa6\xdd\x93\x02\xd1\xb8\xbd\xef\xdd\xd5\xf3o]\xf9\xaay" +
+	"\x97G\x0a\xb7\xd0\xcd\x85\x8b\x01\xaaO\x15nB\xfaJ" +
+	"\xf1M\xf4T\xb1\xcb\xf8\xf0\xa9\xc1\xf3\xbd\xe1\x9d;\x81" +
+	"\x14\xa3\xf1\x87\xe5\xdb\x12\x83\xbe\x82\x03\xe0\x14Y|\x03" +
+	"\xc5\x1b\xe8\xeb\xc5\xe6_,\xd2\x9d\x91\x9f\xd47\xfdz" +
+	"h7\xc8\x05\x88\x19\xf3\x8d\x82\xe4\x00\xa0K\xa7\xf7Q" +
+	"e\xba\x04P\xbdb\xba\x1f\x01\x8d\x86\xbe\xf3\x1f\x1d\xdf" +
+	"tv\x1f\x10\x8f\x90\x9d\x98\xeaaW\x01\xd2\x11\x173" +
+	"}\xd1\xf5\x0d\xb0y\xce6\xed\x14\xd8\x96\x11\xd7\x1az" +
+	"\xc5u\x13\x00\xcdw\xb3{\xec\xb9p\xec\xe41\xe3\xff" +
+	"\x0f\x02\xf1 \x80\x13Y\x82\xfa\xdd\x05,\x81\xaf\xb8Y" +
+	"\x1aJ7\x84_\xdd\x957\xfa\x82-\x81#\xee\x1a\x96" +
+	"\xc0\x87\x96o\xdd\xb9*\xfc\xfdC\xf6\xa3\x7f6\x8f\x0e" +
+	"\xf3\xa3\xef\xd5,i\xec\xbf{\xeb!{qJH\x0f" +
+	"\xdb0\x8b\xb0\x0d\xc1\xeb\xe7\x9e\xdb\xbcu\xe8e\x9b\xed" +
+	"o\x13^\x1c\xa7\xfc\xd1\xbaek\x8a\x8ep\xd8\xb0%" +
+	"\x80\xea\xb9\x84\xdbn\xe4G\xf5{>\xf0\xbd\xfc\xd2w" +
+	"\x8e\x00\xf1Z\xeb*\x11\xd8\xd1\xfc\xe1\xd5\xef\xdf\xe5S" +
+	"\x8e\x98\xd72\x11a\xae<{\xcbc\xef>\xb5\xa2\xfa" +
+	"\xa8\xcd\xddm\xa4\x82\xadL\xab:Q\xbb,v\xf5\xa8" +
+	"\xedL\x09\xd9\xc0V\x8e-y|\xb8wH8a;" +
+	"\x83\x84\x87\xff\x9b\x08u\xfdi\x9bt\xd2v\xe6\x137" +
+	"\xf7S\xfe\x84\xf7\xc2\x8b\xe5O\xbfi;s\xcaL\xd9" +
+	";ZC\xefC\x0f\xd7\xbem;\xd3\xef.e+\x95" +
+	"\xbf<}\xf8SO\xff\x19\x9e\xabL\x85\x1bQ\x12\xdc" +
+	"Hw\xb8\xfb\xe8\xb3nV\xbf]\xee.@\xe3\xf9=" +
+	"%\xab\x1f4f\x9c\x1d\x83M\xa4\xd7\xdc\xbb\xa9\x93\xb0" +
+	"\x8dH6Q\x99\xcc\x000\xf6\xfc\xe5\xe0k\x8f\xaf\\" +
+	"r\xce\x9e\xcb\x00\xbb\x00\xd2&\x9e\xcb\xd9\xc1\x19\xebo" +
+	"\xf8\xf9\xd9\xf7\x99o\x1b\xba\x9c\"k\x896r\x89v" +
+	"2\x8b\xd5k\x09\x87\xe2\xa0\xe3\\\xf4\xbdc\xd2\x87\xb6" +
+	"\x18\x8eyx\xdc\xe9\xee&\x05\xe3p\xf7\x9cg7\xed" +
+	"\xf7\xcc`\xf8\xf7\xb0\x08\xfc\xbb\xe7u\xbc\xf0\xdd\xc4\xe5" +
+	"1{\x91\xed\x0d\xd0$m\xa4\xe6_\xec~\xbf}r" +
+	"\xb3\xffm\xd4/\xa7\x80&0\x97\x0a-c\x01\xb4Q" +
+	"fl\xe5\xc5\xbd\xff>\xbb\xb8\xef\x8a\x09\x06n\xa4\xfa" +
+	"\"\xe5h\xb9\xc2-,\x98?\xf4\xb3\xbf\x1e\xdf\xf8\x19" +
+	"\x90b!\xd3\x1f\x80\xd4\xe7\xddBo\xf42W\xb3\xbc" +
+	"\xdf\x024\x9e\xfe\xdd\xbeC\xf4\x8d\xd1\xcfs\x10P\xc0" +
+	"{\x9c6{%\xda\xec\xf5\xd3\xb5\xdeM\x94\x940\x02" +
+	"\xba\xe1\xd6\xb5\xe7\xcf\xe4\xad\x19\xb5e\xe3\x0bo=\xc2" +
+	"gFkK\xa22\xa2$bB\xa2&\x18O\xeaM" +
+	"\xb1\xd6\xb8V\xb9@\xe9P\xfd\x81X4\x1c\x0a\"\xca" +
+	"E\xa2\x03\xc0\x81\x00\xa4\xb1\x02@\xae\x13Q\xbe_@" +
+	"\x1f\x1a\x06\xf2R\x91\xa6R\x00y\x9e\x88rP@\x9f" +
+	"0\xca>\x0b\x00\xa4\xb9\x0c@\x9e/\xa2\x1c\x15\xd0\x15" +
+	"S:T,\x02\x01\x8b\x00E-i\xfd)iI\x0d" +
+	"\xa7\x03\x06E\xe4\x9f\xa6\x03\xda\xaf\xd4\xb0Z\x89\xc5\xd4" +
+	"\xf6\xca\x90\xaaD\xd5$\x00\xbb\x8e\x03\x05\xe3\xcd\xde\x91" +
+	"\xd1\xee\xbd\xd1K ;\x04\x0cx\xd9Y \xb8\xcc`" +
+	"\xfb\xd9^\x10\xd9n9Ot\x02\xa4\x1b\x0a-\xf4\x92" +
+	";+\x00\x02\xb7b`\x0e\x92f\x093\xf4\x8b\x16\x8d" +
+	"\x90@\x15@`\x0e\x06\xeeG\xb2Br%U%J" +
+	"\xd0\xcf\x9ce\xd2\xcdC\xcf\xf5\xb1\x0e\xfd\x91\xf6\xb8\xa6" +
+	"N\xe5D\x103q\x8b\x99\xb85U\xaf\xeflmU" +
+	"\x93\xe1\xb6\x1e\xb5\xbc6\xa8$\x95\x0eMv\x98\x05A" +
+	"$\xc5\x15<J\x94\xbd\x02\xba\xb4\xb6\x1e\x15\xf3A\xc0" +
+	"|f3\x9793\x8d\x95\xfcv\xe5A?\xb7\x96+" +
+	"\xdd\xe6\x86\x1c\xee\xb6\x01\xc8n\x11\xe5\xeb\x044\xba\x94" +
+	"6\xfd\x9ex\xb2\x11;\x12z7\xbb\xa5\xa8&\x11A" +
+	"p\"\xda\x8a\x88\x96Ul\xe7\xda\x9a\x91\x88Y=\x19" +
+	":!\xb3\xca2\xfdM|-6\x89\xf5\xd5\xd8\xe0>" +
+	"\xb3\xc6h`w\x0b\xab\x1dP\xab\xc4\xf4\xb6\x88&5" +
+	"k\xab\x8c\xb0\xae$\xf5\xceD\x13H\xb1\xd6x\xad\x19" +
+	"f\xed\xe2d\x9b\xae&\xe5\xff\xe3 \xb0$\x18\xadV" +
+	" \x07\x93\x00\x81\xe71p\x14\xc9[\x0c\x04\x16c\xa0" +
+	"%6\xe4\xf5\x1a\x80\xc0Q\x0c\x9cF2,\xa1\x90\xe6" +
+	"l\xb44\x85\x9ca;Nc\xe0<\x92\x11\x09\xc54" +
+	"s\xa2E\x06\xe4\x83\x10@\xe0o\x18\xf8\x14\xa9\x13%" +
+	"t\xa4\xe5\x06-6'_\xf4\x01\x04\xaebC\x11\"" +
+	"\xf5\xa1\x84\xce\xb4\xe8\xa3\xc5\xde\x94`\x15\x00\xdb\xd1p" +
+	"\x1d\"\xbd\x0d%\xc3\x82\x06\xf898\xa6\x02\xb6\xda$" +
+	"O\xd0\x94\x8et\xf1dN\xe5\x88\xa1\xc6\xa2\x89x[" +
+	"L\x07\xd4\xa6tNS\xf5@\xa7\x1eo\xc0T\xa5\x15" +
+	"?/\xf4\x7f\xb7\x01\xe5<D\xe3\xcc\xfc\xedKO\xbc" +
+	"u\xa0\x0f\x00\x0c\xf5\xc4\xddC\xcf\x9c\xdb;\x00\x00\x01" +
+	"\x07\x12\xf4\xe0\";\xa8\x9b\x82\x95\xf7-\x821\xf4X" +
+	"\x96\xa1G\x82\x169Vd\xc8\x91\x08B\x8a\x1a\xabR" +
+	"\xd4\xb8P@\xe9\x01\xb5\xdb\xa2CWT\xd5\"\xd6?" +
+	"\xfeuJ{\xa7\x8a\x1e\x10\xd0\x93\xddQ\x0b\xd4\xae`" +
+	"<\xe9\xe7l\xcd\xae\xe0M_\xe1A\xe6\xed{\"\xca" +
+	"\x1b\xb3\x18\xfa\xe1\x0d\x00\xf2\x0fE\x94\x0fg1\xf4K" +
+	"=\x00\xf2\x8b\"\xca\x83\x02\xfa\xc4k\xec\xb3\x08@\x06" +
+	"\x1e\x05\x90\x07E\x0c\xa1\x80>\xc7U\xf6\xd9\x01@\xae" +
+	"1#WE\x0c\xe7\xe1\x18B7\xdabL<B*" +
+	"2\\5(\x09@\x92ia\x96\xdeqYg\x85\x98" +
+	"!3V\xe1\xdc\xef\xb6\xeb\x1d\x12\x9bI\xa8e6\xc3" +
+	"\xa1\xb4\xafx\xa7\xceV\x16#G$s\xc6\xbc\xa59" +
+	"\xe2\xeby\xcb6\x1a\x0eA\xda]\x0e\x1a\xb5(\xc8$" +
+	" S\x95\xf2xBI\x197\x98_\x0a \xb5\xb6$" +
+	"\xc4X<}\x1e\\\x0c4\x1cf\x99\x17x~\xa9M" +
+	"\xf4\x9d\x15\xe2}\x8b\\\x0b\xbb\x13\xaa\x1dS\xcbR\xf0" +
+	"Y\xc9\xe0\x93*\xe7\x8az\x00y\x89\xa9\xac\x0cg\x02" +
+	"\"QX\xe5\x97\x8b(\xaf\x16\xd0Pt=\xd9\xd6\xd2" +
+	"\xa9\x83\xa8\xa6\xe5\xd5\x9d\xf1\x0b\xc8>\xae\x8f\xc4c\xba" +
+	"\x1a\xd3-\x84\xb9\xf4\xee\x84\x8a\xae\xcc\x8d\x00\xd1\x95;" +
+	"\x03&\x81\x94\x87T\xad\xb3]\xd7\x00,\x8d\x00 \xc5" +
+	"\x9e\x94$\xcd\x16\x10\x93\x93\xe2\x80\xc5\xc3+0\x99\\" +
+	"\x85jMg\xb96\x9a\xe44\xf9u\xba&\x05\xca\xb8" +
+	"\xeb8\xb2\xc4\x98\xf3RV\xf5\xc7\xaa$sY\x9aq" +
+	")F4teDob\x9f\x13$\xda\xd4\xb0\x09\x14" +
+	"\x9b\xed\x8bw$\xe215\xa6Wjz<\x91;\x03" +
+	"\xf5\x997\xc2z\xad3\x12Q5\x8d\xe9t\x96L\x17" +
+	"\x8e3e\x86\x05\xd6\x86q\xc9\x9ep=U5\x06\x91" +
+	"\xf2\xa0\xe2\xca\xbaq\xfed\xd9\xb4\x02\x18o6+\x13" +
+	"\xe3\xc0 \x8d}\xbcLj\x88\x87\xf1\xa5\xa8\xb2\xf4K" +
+	"\xe3\xb1\x8a\xb60\xd2\x8f\x1a\x7f{e\xb3\xb6\x8a\xf7\xbf" +
+	"\xe8(2\x0c\x9e\xf0\x9b\x19\xb9\x97\x8b(\xdf!`1" +
+	"\x8e\x1af\xcf\xde\xc6\xfas\xb6\x88\xf2]B\x9a\xd91" +
+	"\x8b\xa2x\x0fF\xe31\x15\xa6ey\xe2u\x91\xd4\x98" +
+	"n\xfaa\xaf\x19k\x94@kj\"wV\x81@n" +
+	"d\xef\x18k\xe6Dk:%3+@ \xc5\x92_" +
+	"c\xaf\xa4:t\xb1\xfa\xd6\xb1\x87t\xb6\xe2M\x00+" +
+	"%\xa9\xa7\xb2\x89\xdaTae{S\x9aO4\x7f\"" +
+	"\x87f1\x8a\xfb\x81\x88\xf2\x8f\x98l:\xcct=\xc2" +
+	"\xa4i\xa3\x88\xf2/\x04\xc4\x94j\xee\x0a\x01\xc8\xcf\x88" +
+	"(\xffJ@\"\xa6\xc4j?\xfb\xb8\xcf\xd40\xe2\x10" +
+	"L\xa9\x1a`\x1f\x8f\x8a(\x0f\x09h\xb4\xa4^\xd0 " +
+	"Z\xefc@#2\xe6\x19\xf9\xd5\xbb4b\x06\x14\x06" +
+	"\xcch\x92\xc9\x87L6\xc6M3]iE\x99p\xd0" +
+	"q\x8e#\xd6q\xcde\xcefRk\\\xe3eK\xff" +
+	"^E0d\xb0i\x8d\x0dk\x80!\x06\xc3TVo" +
+	"\xaeO\xa1\xb0\xce\xf6\x18\x99{/\x80<GDy\x89" +
+	"\x80\xebM\x85\xb5\xe9C\xda\xaa\xa9\x0f\x96(j\x0c\x9b" +
+	"\x13nJ\xeb\x9b?Q\xd3\xd4\x14\xe4\x13Zn\x90\x8c" +
+	"\x91\x9b/o9\x868\xa9]\xd7\xec\x11yR\x11\xcd" +
+	"\xb3E\x14\xf0\xa4\"Z>%\xb9\xf9:R\x90\xa3/" +
+	"Ru\xca\xa2\xdb-\xb6\x19)\x91\x1a\xa9Q3Y1" +
+	"\x8c\xc9q\x0f\x0b\xf31\xb9\xb0;\x81*\x7fNr\xa8" +
+	"\xfb\xee\xe5\x0f\x89\x99-\x00(\x90\x925\x00\x86\xa6+" +
+	"\xb1\xa8\x92\x8c\xb2V\x8d'\xd4X}R\x89\x80\xf4\x80" +
+	"\xaa\x9bX\xaeO*\xe0\x8a\xb0\x7fs4\x9f\xc9y_" +
+	"m~f{\xb3\xe6gkJC\xeb\x17#F6Y" +
+	"\xf3\xb3\xf5\x0b\x19Z\xbfCe\xcf\xcf~\xde\x03\xff\xbb" +
+	"\x01\xda1\xd1\x00m\x89\xc2\x7f\x02\x00\x00\xff\xff8@" +
+	"T\x95"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_bf602c4868dbb22f,
 		Nodes: []uint64{
-			0x89fcdfabc3b994d7,
-			0x8b8e4a16ae5a6f8b,
+			0x8a4d34c4b5eb1545,
 			0x8bc69192f3bc97cc,
-			0x8c9a1cea4542fa30,
-			0x8dff741cb4dfa00c,
-			0x8e507b91facc10f5,
-			0x901a895e37911943,
 			0x92101e3b7a761333,
 			0x9428ea64f18c41c8,
 			0x95d8ad01c1113d9c,
 			0x9c62c32b2ff2b1e8,
 			0x9e9e5391e0c499e6,
+			0xa2dcae494290639e,
 			0xa8d787cae7e0b243,
 			0xaf0a1dc4709a5ccf,
 			0xb135ffc9ccc9eca6,
@@ -3730,8 +4049,8 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xb47b53679e985c7e,
 			0xb49836b545583add,
 			0xbadc988dda3d1e50,
-			0xbcdf87a68541a8ef,
-			0xbce653a60607e124,
+			0xbe0c6a5a76e75105,
+			0xbe5bb9ba1de54674,
 			0xbe611d34e368e109,
 			0xc0335d99db8b2ba5,
 			0xc0fc6e5a3fcb3206,
@@ -3740,9 +4059,15 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xce9f24b8ec149524,
 			0xd23f817e914373d8,
 			0xd5b512f4bcd0aa2e,
+			0xd717ff7d6815a6b0,
+			0xda58608ec3b1dfa6,
 			0xe3d7a3237f175028,
 			0xe607c9dd64da04c4,
+			0xece0efa9a922d4a8,
+			0xf3705fb36d44a21f,
 			0xf37401d21f8d97bb,
+			0xf5b257d7fba7ed60,
+			0xf684cae29bdc484e,
 			0xf7fec613b4a8c79f,
 			0xfe6a08d5e0712c23,
 		},
