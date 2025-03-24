@@ -92,29 +92,10 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public byte Zone
-        {
-            get;
-            set;
-        }
-
-        public string LatitudeBand
-        {
-            get;
-            set;
-        }
-
-        public double R
-        {
-            get;
-            set;
-        }
-
-        public double H
-        {
-            get;
-            set;
-        }
+        public byte Zone { get; set; }
+        public string LatitudeBand { get; set; }
+        public double R { get; set; }
+        public double H { get; set; }
 
         public struct READER
         {
@@ -140,29 +121,10 @@ namespace Mas.Schema.Geo
                 this.SetStruct(3, 1);
             }
 
-            public byte Zone
-            {
-                get => this.ReadDataByte(0UL, (byte)0);
-                set => this.WriteData(0UL, value, (byte)0);
-            }
-
-            public string LatitudeBand
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public double R
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double H
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
+            public byte Zone { get => this.ReadDataByte(0UL, (byte)0); set => this.WriteData(0UL, value, (byte)0); }
+            public string LatitudeBand { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public double R { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double H { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
         }
     }
 
@@ -193,17 +155,8 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public double Lat
-        {
-            get;
-            set;
-        }
-
-        public double Lon
-        {
-            get;
-            set;
-        }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
 
         public struct READER
         {
@@ -227,17 +180,8 @@ namespace Mas.Schema.Geo
                 this.SetStruct(2, 0);
             }
 
-            public double Lat
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double Lon
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
+            public double Lat { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double Lon { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
         }
     }
 
@@ -270,23 +214,9 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public byte MeridianNo
-        {
-            get;
-            set;
-        }
-
-        public double R
-        {
-            get;
-            set;
-        }
-
-        public double H
-        {
-            get;
-            set;
-        }
+        public byte MeridianNo { get; set; }
+        public double R { get; set; }
+        public double H { get; set; }
 
         public struct READER
         {
@@ -311,23 +241,9 @@ namespace Mas.Schema.Geo
                 this.SetStruct(3, 0);
             }
 
-            public byte MeridianNo
-            {
-                get => this.ReadDataByte(0UL, (byte)0);
-                set => this.WriteData(0UL, value, (byte)0);
-            }
-
-            public double R
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double H
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
+            public byte MeridianNo { get => this.ReadDataByte(0UL, (byte)0); set => this.WriteData(0UL, value, (byte)0); }
+            public double R { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double H { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
         }
     }
 
@@ -358,17 +274,8 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public double X
-        {
-            get;
-            set;
-        }
-
-        public double Y
-        {
-            get;
-            set;
-        }
+        public double X { get; set; }
+        public double Y { get; set; }
 
         public struct READER
         {
@@ -392,17 +299,8 @@ namespace Mas.Schema.Geo
                 this.SetStruct(2, 0);
             }
 
-            public double X
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double Y
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
+            public double X { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double Y { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
         }
     }
 
@@ -433,17 +331,8 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public ulong Row
-        {
-            get;
-            set;
-        }
-
-        public ulong Col
-        {
-            get;
-            set;
-        }
+        public ulong Row { get; set; }
+        public ulong Col { get; set; }
 
         public struct READER
         {
@@ -467,17 +356,8 @@ namespace Mas.Schema.Geo
                 this.SetStruct(2, 0);
             }
 
-            public ulong Row
-            {
-                get => this.ReadDataULong(0UL, 0UL);
-                set => this.WriteData(0UL, value, 0UL);
-            }
-
-            public ulong Col
-            {
-                get => this.ReadDataULong(64UL, 0UL);
-                set => this.WriteData(64UL, value, 0UL);
-            }
+            public ulong Row { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+            public ulong Col { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
         }
     }
 
@@ -664,41 +544,12 @@ namespace Mas.Schema.Geo
                 this.SetStruct(1, 1);
             }
 
-            public WHICH which
-            {
-                get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
-                set => this.WriteData(0U, (ushort)value, (ushort)0);
-            }
-
-            public Mas.Schema.Geo.GKCoord.WRITER Gk
-            {
-                get => which == WHICH.Gk ? BuildPointer<Mas.Schema.Geo.GKCoord.WRITER>(0) : default;
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Geo.LatLonCoord.WRITER Latlon
-            {
-                get => which == WHICH.Latlon ? BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0) : default;
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Geo.UTMCoord.WRITER Utm
-            {
-                get => which == WHICH.Utm ? BuildPointer<Mas.Schema.Geo.UTMCoord.WRITER>(0) : default;
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Geo.Point2D.WRITER P2D
-            {
-                get => which == WHICH.P2D ? BuildPointer<Mas.Schema.Geo.Point2D.WRITER>(0) : default;
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Geo.RowCol.WRITER Rowcol
-            {
-                get => which == WHICH.Rowcol ? BuildPointer<Mas.Schema.Geo.RowCol.WRITER>(0) : default;
-                set => Link(0, value);
-            }
+            public WHICH which { get => (WHICH)this.ReadDataUShort(0U, (ushort)0); set => this.WriteData(0U, (ushort)value, (ushort)0); }
+            public Mas.Schema.Geo.GKCoord.WRITER Gk { get => which == WHICH.Gk ? BuildPointer<Mas.Schema.Geo.GKCoord.WRITER>(0) : default; set => Link(0, value); }
+            public Mas.Schema.Geo.LatLonCoord.WRITER Latlon { get => which == WHICH.Latlon ? BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0) : default; set => Link(0, value); }
+            public Mas.Schema.Geo.UTMCoord.WRITER Utm { get => which == WHICH.Utm ? BuildPointer<Mas.Schema.Geo.UTMCoord.WRITER>(0) : default; set => Link(0, value); }
+            public Mas.Schema.Geo.Point2D.WRITER P2D { get => which == WHICH.P2D ? BuildPointer<Mas.Schema.Geo.Point2D.WRITER>(0) : default; set => Link(0, value); }
+            public Mas.Schema.Geo.RowCol.WRITER Rowcol { get => which == WHICH.Rowcol ? BuildPointer<Mas.Schema.Geo.RowCol.WRITER>(0) : default; set => Link(0, value); }
         }
     }
 
@@ -729,17 +580,8 @@ namespace Mas.Schema.Geo
         {
         }
 
-        public TCoordinateType Tl
-        {
-            get;
-            set;
-        }
-
-        public TCoordinateType Br
-        {
-            get;
-            set;
-        }
+        public TCoordinateType Tl { get; set; }
+        public TCoordinateType Br { get; set; }
 
         public struct READER
         {
@@ -763,17 +605,8 @@ namespace Mas.Schema.Geo
                 this.SetStruct(0, 2);
             }
 
-            public DynamicSerializerState Tl
-            {
-                get => BuildPointer<DynamicSerializerState>(0);
-                set => Link(0, value);
-            }
-
-            public DynamicSerializerState Br
-            {
-                get => BuildPointer<DynamicSerializerState>(1);
-                set => Link(1, value);
-            }
+            public DynamicSerializerState Tl { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
+            public DynamicSerializerState Br { get => BuildPointer<DynamicSerializerState>(1); set => Link(1, value); }
         }
     }
 }

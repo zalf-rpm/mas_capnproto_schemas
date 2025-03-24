@@ -35,19 +35,9 @@ namespace Mas.Schema.Jobs
         {
         }
 
-        public TPayload Data
-        {
-            get;
-            set;
-        }
+        public TPayload Data { get; set; }
+        public bool NoFurtherJobs { get; set; } = false;
 
-        public bool NoFurtherJobs
-        {
-            get;
-            set;
-        }
-
-        = false;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -70,17 +60,8 @@ namespace Mas.Schema.Jobs
                 this.SetStruct(1, 1);
             }
 
-            public DynamicSerializerState Data
-            {
-                get => BuildPointer<DynamicSerializerState>(0);
-                set => Link(0, value);
-            }
-
-            public bool NoFurtherJobs
-            {
-                get => this.ReadDataBool(0UL, false);
-                set => this.WriteData(0UL, value, false);
-            }
+            public DynamicSerializerState Data { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
+            public bool NoFurtherJobs { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
         }
     }
 
@@ -97,7 +78,8 @@ namespace Mas.Schema.Jobs
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Jobs.Service.Params_NextJob.WRITER>();
             var arg_ = new Mas.Schema.Jobs.Service.Params_NextJob()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(13291341123522120688UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -106,9 +88,7 @@ namespace Mas.Schema.Jobs
                     var r_ = CapnpSerializable.Create<Mas.Schema.Jobs.Service.Result_NextJob>(d_);
                     return (r_.Job);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -126,7 +106,8 @@ namespace Mas.Schema.Jobs
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -145,6 +126,7 @@ namespace Mas.Schema.Jobs
         }
 
         public override ulong InterfaceId => 13291341123522120688UL;
+
         Task<AnswerOrCounterquestion> NextJob(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -152,12 +134,13 @@ namespace Mas.Schema.Jobs
                 return Impatient.MaybeTailCall(Impl.NextJob(cancellationToken_), job =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Jobs.Service.Result_NextJob.WRITER>();
-                    var r_ = new Mas.Schema.Jobs.Service.Result_NextJob{Job = job};
+                    var r_ = new Mas.Schema.Jobs.Service.Result_NextJob
+                    {
+                        Job = job
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -234,11 +217,7 @@ namespace Mas.Schema.Jobs
             {
             }
 
-            public Mas.Schema.Jobs.Job<object> Job
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Jobs.Job<object> Job { get; set; }
 
             public struct READER
             {
@@ -262,11 +241,7 @@ namespace Mas.Schema.Jobs
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Jobs.Job<object>.WRITER Job
-                {
-                    get => BuildPointer<Mas.Schema.Jobs.Job<object>.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Jobs.Job<object>.WRITER Job { get => BuildPointer<Mas.Schema.Jobs.Job<object>.WRITER>(0); set => Link(0, value); }
             }
         }
     }

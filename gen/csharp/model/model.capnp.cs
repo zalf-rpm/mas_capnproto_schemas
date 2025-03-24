@@ -35,17 +35,8 @@ namespace Mas.Schema.Model
         {
         }
 
-        public IReadOnlyList<double> Xs
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Ys
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> Xs { get; set; }
+        public IReadOnlyList<double> Ys { get; set; }
 
         public struct READER
         {
@@ -71,17 +62,8 @@ namespace Mas.Schema.Model
                 this.SetStruct(0, 2);
             }
 
-            public ListOfPrimitivesSerializer<double> Xs
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(0);
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> Ys
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(1);
-                set => Link(1, value);
-            }
+            public ListOfPrimitivesSerializer<double> Xs { get => BuildPointer<ListOfPrimitivesSerializer<double>>(0); set => Link(0, value); }
+            public ListOfPrimitivesSerializer<double> Ys { get => BuildPointer<ListOfPrimitivesSerializer<double>>(1); set => Link(1, value); }
         }
     }
 
@@ -112,18 +94,8 @@ namespace Mas.Schema.Model
         {
         }
 
-        public Mas.Schema.Model.Stat.Type TheType
-        {
-            get;
-            set;
-        }
-
-        = Mas.Schema.Model.Stat.Type.avg;
-        public IReadOnlyList<double> Vs
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Stat.Type TheType { get; set; } = Mas.Schema.Model.Stat.Type.avg;
+        public IReadOnlyList<double> Vs { get; set; }
 
         public struct READER
         {
@@ -148,17 +120,8 @@ namespace Mas.Schema.Model
                 this.SetStruct(1, 1);
             }
 
-            public Mas.Schema.Model.Stat.Type TheType
-            {
-                get => (Mas.Schema.Model.Stat.Type)this.ReadDataUShort(0UL, (ushort)3);
-                set => this.WriteData(0UL, (ushort)value, (ushort)3);
-            }
-
-            public ListOfPrimitivesSerializer<double> Vs
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(0);
-                set => Link(0, value);
-            }
+            public Mas.Schema.Model.Stat.Type TheType { get => (Mas.Schema.Model.Stat.Type)this.ReadDataUShort(0UL, (ushort)3); set => this.WriteData(0UL, (ushort)value, (ushort)3); }
+            public ListOfPrimitivesSerializer<double> Vs { get => BuildPointer<ListOfPrimitivesSerializer<double>>(0); set => Link(0, value); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbd33bb6d8cbd9ed2UL)]
@@ -199,17 +162,8 @@ namespace Mas.Schema.Model
         {
         }
 
-        public Mas.Schema.Model.XYResult Xy
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Stat> Stats
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.XYResult Xy { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Stat> Stats { get; set; }
 
         public struct READER
         {
@@ -235,17 +189,8 @@ namespace Mas.Schema.Model
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Model.XYResult.WRITER Xy
-            {
-                get => BuildPointer<Mas.Schema.Model.XYResult.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER> Stats
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER>>(1);
-                set => Link(1, value);
-            }
+            public Mas.Schema.Model.XYResult.WRITER Xy { get => BuildPointer<Mas.Schema.Model.XYResult.WRITER>(0); set => Link(0, value); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER> Stats { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER>>(1); set => Link(1, value); }
         }
     }
 
@@ -263,7 +208,9 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.ClimateInstance.Params_Run.WRITER>();
             var arg_ = new Mas.Schema.Model.ClimateInstance.Params_Run()
-            {TimeSeries = timeSeries};
+            {
+                TimeSeries = timeSeries
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16127367692277074172UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -276,7 +223,9 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.ClimateInstance.Params_RunSet.WRITER>();
             var arg_ = new Mas.Schema.Model.ClimateInstance.Params_RunSet()
-            {Dataset = dataset};
+            {
+                Dataset = dataset
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16127367692277074172UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -289,7 +238,8 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -308,6 +258,7 @@ namespace Mas.Schema.Model
         }
 
         public override ulong InterfaceId => 16127367692277074172UL;
+
         Task<AnswerOrCounterquestion> Run(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -316,12 +267,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.Run(in_.TimeSeries, cancellationToken_), result =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.ClimateInstance.Result_Run.WRITER>();
-                    var r_ = new Mas.Schema.Model.ClimateInstance.Result_Run{Result = result};
+                    var r_ = new Mas.Schema.Model.ClimateInstance.Result_Run
+                    {
+                        Result = result
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -333,12 +285,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.RunSet(in_.Dataset, cancellationToken_), result =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.ClimateInstance.Result_RunSet.WRITER>();
-                    var r_ = new Mas.Schema.Model.ClimateInstance.Result_RunSet{Result = result};
+                    var r_ = new Mas.Schema.Model.ClimateInstance.Result_RunSet
+                    {
+                        Result = result
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -370,11 +323,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -397,11 +346,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -430,11 +375,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Model.XYResult Result
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.XYResult Result { get; set; }
 
             public struct READER
             {
@@ -458,11 +399,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Model.XYResult.WRITER Result
-                {
-                    get => BuildPointer<Mas.Schema.Model.XYResult.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Model.XYResult.WRITER Result { get => BuildPointer<Mas.Schema.Model.XYResult.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -491,11 +428,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.ITimeSeries> Dataset
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.ITimeSeries> Dataset { get; set; }
 
             public struct READER
             {
@@ -519,11 +452,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Climate.ITimeSeries> Dataset
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Climate.ITimeSeries>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Climate.ITimeSeries> Dataset { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Climate.ITimeSeries>>(0); set => Link(0, value); }
             }
         }
 
@@ -552,11 +481,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Model.XYPlusResult Result
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.XYPlusResult Result { get; set; }
 
             public struct READER
             {
@@ -580,11 +505,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Model.XYPlusResult.WRITER Result
-                {
-                    get => BuildPointer<Mas.Schema.Model.XYPlusResult.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Model.XYPlusResult.WRITER Result { get => BuildPointer<Mas.Schema.Model.XYPlusResult.WRITER>(0); set => Link(0, value); }
             }
         }
     }
@@ -620,29 +541,10 @@ namespace Mas.Schema.Model
         {
         }
 
-        public TRestInput Rest
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Climate.ITimeSeries TimeSeries
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Soil.IProfile SoilProfile
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Management.Event> MgmtEvents
-        {
-            get;
-            set;
-        }
+        public TRestInput Rest { get; set; }
+        public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
+        public Mas.Schema.Soil.IProfile SoilProfile { get; set; }
+        public IReadOnlyList<Mas.Schema.Management.Event> MgmtEvents { get; set; }
 
         public struct READER
         {
@@ -669,29 +571,10 @@ namespace Mas.Schema.Model
                 this.SetStruct(0, 4);
             }
 
-            public DynamicSerializerState Rest
-            {
-                get => BuildPointer<DynamicSerializerState>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get => ReadCap<Mas.Schema.Climate.ITimeSeries>(1);
-                set => LinkObject(1, value);
-            }
-
-            public Mas.Schema.Soil.IProfile SoilProfile
-            {
-                get => ReadCap<Mas.Schema.Soil.IProfile>(2);
-                set => LinkObject(2, value);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER> MgmtEvents
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER>>(3);
-                set => Link(3, value);
-            }
+            public DynamicSerializerState Rest { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(1); set => LinkObject(1, value); }
+            public Mas.Schema.Soil.IProfile SoilProfile { get => ReadCap<Mas.Schema.Soil.IProfile>(2); set => LinkObject(2, value); }
+            public ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER> MgmtEvents { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER>>(3); set => Link(3, value); }
         }
     }
 
@@ -708,7 +591,9 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Params_Run.WRITER>();
             var arg_ = new Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Params_Run()
-            {Env = env};
+            {
+                Env = env
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(11961258999001406538UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -717,16 +602,15 @@ namespace Mas.Schema.Model
                     var r_ = CapnpSerializable.Create<Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Result_Run>(d_);
                     return (r_.Result);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -750,7 +634,8 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -769,6 +654,7 @@ namespace Mas.Schema.Model
         }
 
         public override ulong InterfaceId => 11961258999001406538UL;
+
         Task<AnswerOrCounterquestion> Run(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -777,12 +663,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.Run(in_.Env, cancellationToken_), result =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Result_Run.WRITER>();
-                    var r_ = new Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Result_Run{Result = result};
+                    var r_ = new Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Result_Run
+                    {
+                        Result = result
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -815,11 +702,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Model.Env<TRestInput> Env
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Env<TRestInput> Env { get; set; }
 
             public struct READER
             {
@@ -843,11 +726,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Model.Env<TRestInput>.WRITER Env
-                {
-                    get => BuildPointer<Mas.Schema.Model.Env<TRestInput>.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Model.Env<TRestInput>.WRITER Env { get => BuildPointer<Mas.Schema.Model.Env<TRestInput>.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -876,11 +755,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public TOutput Result
-            {
-                get;
-                set;
-            }
+            public TOutput Result { get; set; }
 
             public struct READER
             {
@@ -903,11 +778,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public DynamicSerializerState Result
-                {
-                    get => BuildPointer<DynamicSerializerState>(0);
-                    set => Link(0, value);
-                }
+                public DynamicSerializerState Result { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
             }
         }
     }
@@ -925,7 +796,9 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Params_RegisterEnvInstance.WRITER>();
             var arg_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Params_RegisterEnvInstance()
-            {Instance = instance};
+            {
+                Instance = instance
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(9785174083248628298UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -934,16 +807,16 @@ namespace Mas.Schema.Model
                     var r_ = CapnpSerializable.Create<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Result_RegisterEnvInstance>(d_);
                     return (r_.Unregister);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<TOutput> Run(Mas.Schema.Model.Env<TRestInput> env, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Params_Run.WRITER>();
             var arg_ = new Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Params_Run()
-            {Env = env};
+            {
+                Env = env
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(11961258999001406538UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -952,16 +825,15 @@ namespace Mas.Schema.Model
                     var r_ = CapnpSerializable.Create<Mas.Schema.Model.EnvInstance<TRestInput, TOutput>.Result_Run>(d_);
                     return (r_.Result);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -985,7 +857,8 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1004,6 +877,7 @@ namespace Mas.Schema.Model
         }
 
         public override ulong InterfaceId => 9785174083248628298UL;
+
         Task<AnswerOrCounterquestion> RegisterEnvInstance(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1012,12 +886,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.RegisterEnvInstance(in_.Instance, cancellationToken_), unregister =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Result_RegisterEnvInstance.WRITER>();
-                    var r_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Result_RegisterEnvInstance{Unregister = unregister};
+                    var r_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Result_RegisterEnvInstance
+                    {
+                        Unregister = unregister
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1025,7 +900,7 @@ namespace Mas.Schema.Model
     public static class EnvInstanceProxy<TRestInput, TOutput>
         where TRestInput : class where TOutput : class
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc727892bd5c66f88UL), Proxy(typeof(EnvInstanceProxy<object, object>.Unregister_Proxy)), Skeleton(typeof(EnvInstanceProxy<object, object>.Unregister_Skeleton))]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc727892bd5c66f88UL), Proxy(typeof(Unregister_Proxy)), Skeleton(typeof(Unregister_Skeleton))]
         public interface IUnregister : IDisposable
         {
             Task<bool> Unregister(CancellationToken cancellationToken_ = default);
@@ -1038,7 +913,8 @@ namespace Mas.Schema.Model
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Unregister.Params_Unregister.WRITER>();
                 var arg_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Unregister.Params_Unregister()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(14350589559002525576UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1057,6 +933,7 @@ namespace Mas.Schema.Model
             }
 
             public override ulong InterfaceId => 14350589559002525576UL;
+
             Task<AnswerOrCounterquestion> Unregister(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1064,12 +941,13 @@ namespace Mas.Schema.Model
                     return Impatient.MaybeTailCall(Impl.Unregister(cancellationToken_), success =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Unregister.Result_Unregister.WRITER>();
-                        var r_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Unregister.Result_Unregister{Success = success};
+                        var r_ = new Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.Unregister.Result_Unregister
+                        {
+                            Success = success
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1146,11 +1024,7 @@ namespace Mas.Schema.Model
                 {
                 }
 
-                public bool Success
-                {
-                    get;
-                    set;
-                }
+                public bool Success { get; set; }
 
                 public struct READER
                 {
@@ -1173,11 +1047,7 @@ namespace Mas.Schema.Model
                         this.SetStruct(1, 0);
                     }
 
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
+                    public bool Success { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
                 }
             }
         }
@@ -1207,11 +1077,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Model.IEnvInstance<TRestInput, TOutput> Instance
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.IEnvInstance<TRestInput, TOutput> Instance { get; set; }
 
             public struct READER
             {
@@ -1234,11 +1100,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Model.IEnvInstance<TRestInput, TOutput> Instance
-                {
-                    get => ReadCap<Mas.Schema.Model.IEnvInstance<TRestInput, TOutput>>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Model.IEnvInstance<TRestInput, TOutput> Instance { get => ReadCap<Mas.Schema.Model.IEnvInstance<TRestInput, TOutput>>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -1267,11 +1129,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister Unregister
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister Unregister { get; set; }
 
             public struct READER
             {
@@ -1294,11 +1152,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister Unregister
-                {
-                    get => ReadCap<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister Unregister { get => ReadCap<Mas.Schema.Model.EnvInstanceProxy<TRestInput, TOutput>.IUnregister>(0); set => LinkObject(0, value); }
             }
         }
     }
@@ -1318,7 +1172,8 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.InstanceFactory.Params_ModelInfo.WRITER>();
             var arg_ = new Mas.Schema.Model.InstanceFactory.Params_ModelInfo()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14867841350804063722UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1331,7 +1186,8 @@ namespace Mas.Schema.Model
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.InstanceFactory.Params_NewInstance.WRITER>();
             var arg_ = new Mas.Schema.Model.InstanceFactory.Params_NewInstance()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14867841350804063722UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1340,16 +1196,16 @@ namespace Mas.Schema.Model
                     var r_ = CapnpSerializable.Create<Mas.Schema.Model.InstanceFactory.Result_NewInstance>(d_);
                     return (r_.Instance);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<IReadOnlyList<Mas.Schema.Common.IIdentifiable>> NewInstances(short numberOfInstances, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.InstanceFactory.Params_NewInstances.WRITER>();
             var arg_ = new Mas.Schema.Model.InstanceFactory.Params_NewInstances()
-            {NumberOfInstances = numberOfInstances};
+            {
+                NumberOfInstances = numberOfInstances
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14867841350804063722UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1358,16 +1214,15 @@ namespace Mas.Schema.Model
                     var r_ = CapnpSerializable.Create<Mas.Schema.Model.InstanceFactory.Result_NewInstances>(d_);
                     return (r_.Instances);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1386,6 +1241,7 @@ namespace Mas.Schema.Model
         }
 
         public override ulong InterfaceId => 14867841350804063722UL;
+
         Task<AnswerOrCounterquestion> ModelInfo(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1395,9 +1251,7 @@ namespace Mas.Schema.Model
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1408,12 +1262,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.NewInstance(cancellationToken_), instance =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.InstanceFactory.Result_NewInstance.WRITER>();
-                    var r_ = new Mas.Schema.Model.InstanceFactory.Result_NewInstance{Instance = instance};
+                    var r_ = new Mas.Schema.Model.InstanceFactory.Result_NewInstance
+                    {
+                        Instance = instance
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1425,12 +1280,13 @@ namespace Mas.Schema.Model
                 return Impatient.MaybeTailCall(Impl.NewInstances(in_.NumberOfInstances, cancellationToken_), instances =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.InstanceFactory.Result_NewInstances.WRITER>();
-                    var r_ = new Mas.Schema.Model.InstanceFactory.Result_NewInstances{Instances = instances};
+                    var r_ = new Mas.Schema.Model.InstanceFactory.Result_NewInstances
+                    {
+                        Instances = instances
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1552,11 +1408,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public Mas.Schema.Common.IIdentifiable Instance
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.IIdentifiable Instance { get; set; }
 
             public struct READER
             {
@@ -1579,11 +1431,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Common.IIdentifiable Instance
-                {
-                    get => ReadCap<Mas.Schema.Common.IIdentifiable>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Common.IIdentifiable Instance { get => ReadCap<Mas.Schema.Common.IIdentifiable>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -1612,11 +1460,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public short NumberOfInstances
-            {
-                get;
-                set;
-            }
+            public short NumberOfInstances { get; set; }
 
             public struct READER
             {
@@ -1639,11 +1483,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(1, 0);
                 }
 
-                public short NumberOfInstances
-                {
-                    get => this.ReadDataShort(0UL, (short)0);
-                    set => this.WriteData(0UL, value, (short)0);
-                }
+                public short NumberOfInstances { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
             }
         }
 
@@ -1672,11 +1512,7 @@ namespace Mas.Schema.Model
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> Instances
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> Instances { get; set; }
 
             public struct READER
             {
@@ -1700,11 +1536,7 @@ namespace Mas.Schema.Model
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> Instances
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> Instances { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0); set => Link(0, value); }
             }
         }
     }

@@ -21,7 +21,11 @@ namespace Mas.Schema.Model.Weberest
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData.WRITER>();
             var arg_ = new Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData()
-            {Id = id, Dwla = dwla, Dwlb = dwlb};
+            {
+                Id = id,
+                Dwla = dwla,
+                Dwlb = dwlb
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(11647625426448067183UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -40,6 +44,7 @@ namespace Mas.Schema.Model.Weberest
         }
 
         public override ulong InterfaceId => 11647625426448067183UL;
+
         Task<AnswerOrCounterquestion> ImportData(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -48,12 +53,15 @@ namespace Mas.Schema.Model.Weberest
                 return Impatient.MaybeTailCall(Impl.ImportData(in_.Id, in_.Dwla, in_.Dwlb, cancellationToken_), (id, successA, successB) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData.WRITER>();
-                    var r_ = new Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData{Id = id, SuccessA = successA, SuccessB = successB};
+                    var r_ = new Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData
+                    {
+                        Id = id,
+                        SuccessA = successA,
+                        SuccessB = successB
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -89,23 +97,9 @@ namespace Mas.Schema.Model.Weberest
             {
             }
 
-            public string Id
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<byte> Dwla
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<byte> Dwlb
-            {
-                get;
-                set;
-            }
+            public string Id { get; set; }
+            public IReadOnlyList<byte> Dwla { get; set; }
+            public IReadOnlyList<byte> Dwlb { get; set; }
 
             public struct READER
             {
@@ -130,23 +124,9 @@ namespace Mas.Schema.Model.Weberest
                     this.SetStruct(0, 3);
                 }
 
-                public string Id
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public ListOfPrimitivesSerializer<byte> Dwla
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<byte>>(1);
-                    set => Link(1, value);
-                }
-
-                public ListOfPrimitivesSerializer<byte> Dwlb
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<byte>>(2);
-                    set => Link(2, value);
-                }
+                public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public ListOfPrimitivesSerializer<byte> Dwla { get => BuildPointer<ListOfPrimitivesSerializer<byte>>(1); set => Link(1, value); }
+                public ListOfPrimitivesSerializer<byte> Dwlb { get => BuildPointer<ListOfPrimitivesSerializer<byte>>(2); set => Link(2, value); }
             }
         }
 
@@ -179,23 +159,9 @@ namespace Mas.Schema.Model.Weberest
             {
             }
 
-            public string Id
-            {
-                get;
-                set;
-            }
-
-            public bool SuccessA
-            {
-                get;
-                set;
-            }
-
-            public bool SuccessB
-            {
-                get;
-                set;
-            }
+            public string Id { get; set; }
+            public bool SuccessA { get; set; }
+            public bool SuccessB { get; set; }
 
             public struct READER
             {
@@ -220,23 +186,9 @@ namespace Mas.Schema.Model.Weberest
                     this.SetStruct(1, 1);
                 }
 
-                public string Id
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public bool SuccessA
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
-
-                public bool SuccessB
-                {
-                    get => this.ReadDataBool(1UL, false);
-                    set => this.WriteData(1UL, value, false);
-                }
+                public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public bool SuccessA { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+                public bool SuccessB { get => this.ReadDataBool(1UL, false); set => this.WriteData(1UL, value, false); }
             }
         }
     }

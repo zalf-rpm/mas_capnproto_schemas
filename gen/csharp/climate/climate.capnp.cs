@@ -90,29 +90,10 @@ namespace Mas.Schema.Climate
         {
         }
 
-        public ushort R
-        {
-            get;
-            set;
-        }
-
-        public ushort I
-        {
-            get;
-            set;
-        }
-
-        public ushort P
-        {
-            get;
-            set;
-        }
-
-        public ushort F
-        {
-            get;
-            set;
-        }
+        public ushort R { get; set; }
+        public ushort I { get; set; }
+        public ushort P { get; set; }
+        public ushort F { get; set; }
 
         public struct READER
         {
@@ -138,29 +119,10 @@ namespace Mas.Schema.Climate
                 this.SetStruct(1, 0);
             }
 
-            public ushort R
-            {
-                get => this.ReadDataUShort(0UL, (ushort)0);
-                set => this.WriteData(0UL, value, (ushort)0);
-            }
-
-            public ushort I
-            {
-                get => this.ReadDataUShort(16UL, (ushort)0);
-                set => this.WriteData(16UL, value, (ushort)0);
-            }
-
-            public ushort P
-            {
-                get => this.ReadDataUShort(32UL, (ushort)0);
-                set => this.WriteData(32UL, value, (ushort)0);
-            }
-
-            public ushort F
-            {
-                get => this.ReadDataUShort(48UL, (ushort)0);
-                set => this.WriteData(48UL, value, (ushort)0);
-            }
+            public ushort R { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+            public ushort I { get => this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, value, (ushort)0); }
+            public ushort P { get => this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, value, (ushort)0); }
+            public ushort F { get => this.ReadDataUShort(48UL, (ushort)0); set => this.WriteData(48UL, value, (ushort)0); }
         }
     }
 
@@ -191,17 +153,8 @@ namespace Mas.Schema.Climate
         {
         }
 
-        public IReadOnlyList<Mas.Schema.Climate.Metadata.Entry> Entries
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Climate.Metadata.IInformation Info
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Climate.Metadata.Entry> Entries { get; set; }
+        public Mas.Schema.Climate.Metadata.IInformation Info { get; set; }
 
         public struct READER
         {
@@ -226,17 +179,8 @@ namespace Mas.Schema.Climate
                 this.SetStruct(0, 2);
             }
 
-            public ListOfStructsSerializer<Mas.Schema.Climate.Metadata.Entry.WRITER> Entries
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Metadata.Entry.WRITER>>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Climate.Metadata.IInformation Info
-            {
-                get => ReadCap<Mas.Schema.Climate.Metadata.IInformation>(1);
-                set => LinkObject(1, value);
-            }
+            public ListOfStructsSerializer<Mas.Schema.Climate.Metadata.Entry.WRITER> Entries { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Metadata.Entry.WRITER>>(0); set => Link(0, value); }
+            public Mas.Schema.Climate.Metadata.IInformation Info { get => ReadCap<Mas.Schema.Climate.Metadata.IInformation>(1); set => LinkObject(1, value); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xab06444b30722e01UL), Proxy(typeof(Supported_Proxy)), Skeleton(typeof(Supported_Skeleton))]
@@ -253,7 +197,8 @@ namespace Mas.Schema.Climate
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Supported.Params_Categories.WRITER>();
                 var arg_ = new Mas.Schema.Climate.Metadata.Supported.Params_Categories()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12323612520071966209UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -266,7 +211,9 @@ namespace Mas.Schema.Climate
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Supported.Params_SupportedValues.WRITER>();
                 var arg_ = new Mas.Schema.Climate.Metadata.Supported.Params_SupportedValues()
-                {TypeId = typeId};
+                {
+                    TypeId = typeId
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12323612520071966209UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -285,6 +232,7 @@ namespace Mas.Schema.Climate
             }
 
             public override ulong InterfaceId => 12323612520071966209UL;
+
             Task<AnswerOrCounterquestion> Categories(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -292,12 +240,13 @@ namespace Mas.Schema.Climate
                     return Impatient.MaybeTailCall(Impl.Categories(cancellationToken_), types =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Supported.Result_Categories.WRITER>();
-                        var r_ = new Mas.Schema.Climate.Metadata.Supported.Result_Categories{Types = types};
+                        var r_ = new Mas.Schema.Climate.Metadata.Supported.Result_Categories
+                        {
+                            Types = types
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -309,12 +258,13 @@ namespace Mas.Schema.Climate
                     return Impatient.MaybeTailCall(Impl.SupportedValues(in_.TypeId, cancellationToken_), values =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Supported.Result_SupportedValues.WRITER>();
-                        var r_ = new Mas.Schema.Climate.Metadata.Supported.Result_SupportedValues{Values = values};
+                        var r_ = new Mas.Schema.Climate.Metadata.Supported.Result_SupportedValues
+                        {
+                            Values = values
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -391,11 +341,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Common.IdInformation> Types
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Common.IdInformation> Types { get; set; }
 
                 public struct READER
                 {
@@ -419,11 +365,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Types
-                    {
-                        get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Types { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0); set => Link(0, value); }
                 }
             }
 
@@ -452,11 +394,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public string TypeId
-                {
-                    get;
-                    set;
-                }
+                public string TypeId { get; set; }
 
                 public struct READER
                 {
@@ -479,11 +417,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public string TypeId
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
+                    public string TypeId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
                 }
             }
 
@@ -512,11 +446,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Common.IdInformation> Values
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Common.IdInformation> Values { get; set; }
 
                 public struct READER
                 {
@@ -540,11 +470,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Values
-                    {
-                        get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Values { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -728,41 +654,12 @@ namespace Mas.Schema.Climate
                     this.SetStruct(2, 1);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
-                    set => this.WriteData(0U, (ushort)value, (ushort)0);
-                }
-
-                public string Text
-                {
-                    get => which == WHICH.Text ? this.ReadText(0, null) : default;
-                    set => this.WriteText(0, value, null);
-                }
-
-                public double Float
-                {
-                    get => which == WHICH.Float ? this.ReadDataDouble(64UL, 0) : default;
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public long Int
-                {
-                    get => which == WHICH.Int ? this.ReadDataLong(64UL, 0L) : default;
-                    set => this.WriteData(64UL, value, 0L);
-                }
-
-                public bool Bool
-                {
-                    get => which == WHICH.Bool ? this.ReadDataBool(64UL, false) : default;
-                    set => this.WriteData(64UL, value, false);
-                }
-
-                public Mas.Schema.Common.Date.WRITER Date
-                {
-                    get => which == WHICH.Date ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default;
-                    set => Link(0, value);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(0U, (ushort)0); set => this.WriteData(0U, (ushort)value, (ushort)0); }
+                public string Text { get => which == WHICH.Text ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
+                public double Float { get => which == WHICH.Float ? this.ReadDataDouble(64UL, 0) : default; set => this.WriteData(64UL, value, 0); }
+                public long Int { get => which == WHICH.Int ? this.ReadDataLong(64UL, 0L) : default; set => this.WriteData(64UL, value, 0L); }
+                public bool Bool { get => which == WHICH.Bool ? this.ReadDataBool(64UL, false) : default; set => this.WriteData(64UL, value, false); }
+                public Mas.Schema.Common.Date.WRITER Date { get => which == WHICH.Date ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default; set => Link(0, value); }
             }
         }
 
@@ -1068,71 +965,17 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 1);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                    set => this.WriteData(16U, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Climate.GCM Gcm
-                {
-                    get => which == WHICH.Gcm ? (Mas.Schema.Climate.GCM)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Climate.RCM Rcm
-                {
-                    get => which == WHICH.Rcm ? (Mas.Schema.Climate.RCM)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Climate.RCP Rcp
-                {
-                    get => which == WHICH.Rcp ? (Mas.Schema.Climate.RCP)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Climate.SSP Ssp
-                {
-                    get => which == WHICH.Ssp ? (Mas.Schema.Climate.SSP)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Climate.EnsembleMember.WRITER EnsMem
-                {
-                    get => which == WHICH.EnsMem ? BuildPointer<Mas.Schema.Climate.EnsembleMember.WRITER>(0) : default;
-                    set => Link(0, value);
-                }
-
-                public string Version
-                {
-                    get => which == WHICH.Version ? this.ReadText(0, null) : default;
-                    set => this.WriteText(0, value, null);
-                }
-
-                public Mas.Schema.Common.Date.WRITER Start
-                {
-                    get => which == WHICH.Start ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default;
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Common.Date.WRITER End
-                {
-                    get => which == WHICH.End ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default;
-                    set => Link(0, value);
-                }
-
-                public float Co2
-                {
-                    get => which == WHICH.Co2 ? this.ReadDataFloat(32UL, 0F) : default;
-                    set => this.WriteData(32UL, value, 0F);
-                }
-
-                public string Description
-                {
-                    get => which == WHICH.Description ? this.ReadText(0, null) : default;
-                    set => this.WriteText(0, value, null);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+                public Mas.Schema.Climate.GCM Gcm { get => which == WHICH.Gcm ? (Mas.Schema.Climate.GCM)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Climate.RCM Rcm { get => which == WHICH.Rcm ? (Mas.Schema.Climate.RCM)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Climate.RCP Rcp { get => which == WHICH.Rcp ? (Mas.Schema.Climate.RCP)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Climate.SSP Ssp { get => which == WHICH.Ssp ? (Mas.Schema.Climate.SSP)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Climate.EnsembleMember.WRITER EnsMem { get => which == WHICH.EnsMem ? BuildPointer<Mas.Schema.Climate.EnsembleMember.WRITER>(0) : default; set => Link(0, value); }
+                public string Version { get => which == WHICH.Version ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
+                public Mas.Schema.Common.Date.WRITER Start { get => which == WHICH.Start ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default; set => Link(0, value); }
+                public Mas.Schema.Common.Date.WRITER End { get => which == WHICH.End ? BuildPointer<Mas.Schema.Common.Date.WRITER>(0) : default; set => Link(0, value); }
+                public float Co2 { get => which == WHICH.Co2 ? this.ReadDataFloat(32UL, 0F) : default; set => this.WriteData(32UL, value, 0F); }
+                public string Description { get => which == WHICH.Description ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
             }
         }
 
@@ -1150,7 +993,9 @@ namespace Mas.Schema.Climate
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Information.Params_ForOne.WRITER>();
                 var arg_ = new Mas.Schema.Climate.Metadata.Information.Params_ForOne()
-                {Entry = entry};
+                {
+                    Entry = entry
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(14376033077909916855UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1163,7 +1008,8 @@ namespace Mas.Schema.Climate
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Information.Params_ForAll.WRITER>();
                 var arg_ = new Mas.Schema.Climate.Metadata.Information.Params_ForAll()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(14376033077909916855UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1182,6 +1028,7 @@ namespace Mas.Schema.Climate
             }
 
             public override ulong InterfaceId => 14376033077909916855UL;
+
             Task<AnswerOrCounterquestion> ForOne(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1192,9 +1039,7 @@ namespace Mas.Schema.Climate
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -1205,12 +1050,13 @@ namespace Mas.Schema.Climate
                     return Impatient.MaybeTailCall(Impl.ForAll(cancellationToken_), all =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.Information.Result_ForAll.WRITER>();
-                        var r_ = new Mas.Schema.Climate.Metadata.Information.Result_ForAll{All = all};
+                        var r_ = new Mas.Schema.Climate.Metadata.Information.Result_ForAll
+                        {
+                            All = all
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1242,11 +1088,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public Mas.Schema.Climate.Metadata.Entry Entry
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Climate.Metadata.Entry Entry { get; set; }
 
                 public struct READER
                 {
@@ -1270,11 +1112,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Climate.Metadata.Entry.WRITER Entry
-                    {
-                        get => BuildPointer<Mas.Schema.Climate.Metadata.Entry.WRITER>(0);
-                        set => Link(0, value);
-                    }
+                    public Mas.Schema.Climate.Metadata.Entry.WRITER Entry { get => BuildPointer<Mas.Schema.Climate.Metadata.Entry.WRITER>(0); set => Link(0, value); }
                 }
             }
 
@@ -1348,11 +1186,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>> All
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>> All { get; set; }
 
                 public struct READER
                 {
@@ -1376,11 +1210,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfStructsSerializer<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>.WRITER> All
-                    {
-                        get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>.WRITER>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfStructsSerializer<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>.WRITER> All { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<Mas.Schema.Climate.Metadata.Entry, Mas.Schema.Common.IdInformation>.WRITER>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -1403,7 +1233,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Params_Metadata.WRITER>();
             var arg_ = new Mas.Schema.Climate.Dataset.Params_Metadata()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17741365385218318576UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1412,16 +1243,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Metadata>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.ITimeSeries> ClosestTimeSeriesAt(Mas.Schema.Geo.LatLonCoord latlon, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Params_ClosestTimeSeriesAt.WRITER>();
             var arg_ = new Mas.Schema.Climate.Dataset.Params_ClosestTimeSeriesAt()
-            {Latlon = latlon};
+            {
+                Latlon = latlon
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17741365385218318576UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1430,16 +1261,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Dataset.Result_ClosestTimeSeriesAt>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.ITimeSeries> TimeSeriesAt(string locationId, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Params_TimeSeriesAt.WRITER>();
             var arg_ = new Mas.Schema.Climate.Dataset.Params_TimeSeriesAt()
-            {LocationId = locationId};
+            {
+                LocationId = locationId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17741365385218318576UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1448,16 +1279,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Dataset.Result_TimeSeriesAt>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<IReadOnlyList<Mas.Schema.Climate.Location>> Locations(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Params_Locations.WRITER>();
             var arg_ = new Mas.Schema.Climate.Dataset.Params_Locations()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17741365385218318576UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1466,16 +1296,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Dataset.Result_Locations>(d_);
                     return (r_.Locations);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.Dataset.IGetLocationsCallback> StreamLocations(string startAfterLocationId, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Params_StreamLocations.WRITER>();
             var arg_ = new Mas.Schema.Climate.Dataset.Params_StreamLocations()
-            {StartAfterLocationId = startAfterLocationId};
+            {
+                StartAfterLocationId = startAfterLocationId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17741365385218318576UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1484,9 +1314,7 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Dataset.Result_StreamLocations>(d_);
                     return (r_.LocationsCallback);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -1504,7 +1332,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1523,6 +1352,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 17741365385218318576UL;
+
         Task<AnswerOrCounterquestion> Metadata(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1532,9 +1362,7 @@ namespace Mas.Schema.Climate
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1546,12 +1374,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.ClosestTimeSeriesAt(in_.Latlon, cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Result_ClosestTimeSeriesAt.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Dataset.Result_ClosestTimeSeriesAt{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.Dataset.Result_ClosestTimeSeriesAt
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1563,12 +1392,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.TimeSeriesAt(in_.LocationId, cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Result_TimeSeriesAt.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Dataset.Result_TimeSeriesAt{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.Dataset.Result_TimeSeriesAt
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1579,12 +1409,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Locations(cancellationToken_), locations =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Result_Locations.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Dataset.Result_Locations{Locations = locations};
+                    var r_ = new Mas.Schema.Climate.Dataset.Result_Locations
+                    {
+                        Locations = locations
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -1596,12 +1427,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.StreamLocations(in_.StartAfterLocationId, cancellationToken_), locationsCallback =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.Result_StreamLocations.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Dataset.Result_StreamLocations{LocationsCallback = locationsCallback};
+                    var r_ = new Mas.Schema.Climate.Dataset.Result_StreamLocations
+                    {
+                        LocationsCallback = locationsCallback
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1621,7 +1453,9 @@ namespace Mas.Schema.Climate
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.GetLocationsCallback.Params_NextLocations.WRITER>();
                 var arg_ = new Mas.Schema.Climate.Dataset.GetLocationsCallback.Params_NextLocations()
-                {MaxCount = maxCount};
+                {
+                    MaxCount = maxCount
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(15428101162159563125UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1630,9 +1464,7 @@ namespace Mas.Schema.Climate
                         var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Dataset.GetLocationsCallback.Result_NextLocations>(d_);
                         return (r_.Locations);
                     }
-                }
-
-                );
+                });
             }
         }
 
@@ -1645,6 +1477,7 @@ namespace Mas.Schema.Climate
             }
 
             public override ulong InterfaceId => 15428101162159563125UL;
+
             Task<AnswerOrCounterquestion> NextLocations(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1653,12 +1486,13 @@ namespace Mas.Schema.Climate
                     return Impatient.MaybeTailCall(Impl.NextLocations(in_.MaxCount, cancellationToken_), locations =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Dataset.GetLocationsCallback.Result_NextLocations.WRITER>();
-                        var r_ = new Mas.Schema.Climate.Dataset.GetLocationsCallback.Result_NextLocations{Locations = locations};
+                        var r_ = new Mas.Schema.Climate.Dataset.GetLocationsCallback.Result_NextLocations
+                        {
+                            Locations = locations
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1690,11 +1524,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public long MaxCount
-                {
-                    get;
-                    set;
-                }
+                public long MaxCount { get; set; }
 
                 public struct READER
                 {
@@ -1717,11 +1547,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(1, 0);
                     }
 
-                    public long MaxCount
-                    {
-                        get => this.ReadDataLong(0UL, 0L);
-                        set => this.WriteData(0UL, value, 0L);
-                    }
+                    public long MaxCount { get => this.ReadDataLong(0UL, 0L); set => this.WriteData(0UL, value, 0L); }
                 }
             }
 
@@ -1750,11 +1576,7 @@ namespace Mas.Schema.Climate
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Climate.Location> Locations
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Climate.Location> Locations { get; set; }
 
                 public struct READER
                 {
@@ -1778,11 +1600,7 @@ namespace Mas.Schema.Climate
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER> Locations
-                    {
-                        get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER> Locations { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -1857,11 +1675,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Geo.LatLonCoord Latlon
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Geo.LatLonCoord Latlon { get; set; }
 
             public struct READER
             {
@@ -1885,11 +1699,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Geo.LatLonCoord.WRITER Latlon
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Latlon { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -1918,11 +1728,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -1945,11 +1751,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -1978,11 +1780,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public string LocationId
-            {
-                get;
-                set;
-            }
+            public string LocationId { get; set; }
 
             public struct READER
             {
@@ -2005,11 +1803,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public string LocationId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string LocationId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -2038,11 +1832,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -2065,11 +1855,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -2143,11 +1929,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.Location> Locations
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.Location> Locations { get; set; }
 
             public struct READER
             {
@@ -2171,11 +1953,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER> Locations
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER> Locations { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -2204,11 +1982,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public string StartAfterLocationId
-            {
-                get;
-                set;
-            }
+            public string StartAfterLocationId { get; set; }
 
             public struct READER
             {
@@ -2231,11 +2005,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public string StartAfterLocationId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string StartAfterLocationId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -2264,11 +2034,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.Dataset.IGetLocationsCallback LocationsCallback
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.Dataset.IGetLocationsCallback LocationsCallback { get; set; }
 
             public struct READER
             {
@@ -2291,11 +2057,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.Dataset.IGetLocationsCallback LocationsCallback
-                {
-                    get => ReadCap<Mas.Schema.Climate.Dataset.IGetLocationsCallback>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.Dataset.IGetLocationsCallback LocationsCallback { get => ReadCap<Mas.Schema.Climate.Dataset.IGetLocationsCallback>(0); set => LinkObject(0, value); }
             }
         }
     }
@@ -2327,17 +2089,8 @@ namespace Mas.Schema.Climate
         {
         }
 
-        public Mas.Schema.Climate.Metadata Meta
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Climate.IDataset Data
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Climate.Metadata Meta { get; set; }
+        public Mas.Schema.Climate.IDataset Data { get; set; }
 
         public struct READER
         {
@@ -2362,17 +2115,8 @@ namespace Mas.Schema.Climate
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Climate.Metadata.WRITER Meta
-            {
-                get => BuildPointer<Mas.Schema.Climate.Metadata.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Climate.IDataset Data
-            {
-                get => ReadCap<Mas.Schema.Climate.IDataset>(1);
-                set => LinkObject(1, value);
-            }
+            public Mas.Schema.Climate.Metadata.WRITER Meta { get => BuildPointer<Mas.Schema.Climate.Metadata.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Climate.IDataset Data { get => ReadCap<Mas.Schema.Climate.IDataset>(1); set => LinkObject(1, value); }
         }
     }
 
@@ -2432,35 +2176,11 @@ namespace Mas.Schema.Climate
         {
         }
 
-        public Mas.Schema.Common.IdInformation Id
-        {
-            get;
-            set;
-        }
-
-        public float HeightNN
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Geo.LatLonCoord Latlon
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Climate.ITimeSeries TimeSeries
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Climate.Location.KV> CustomData
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.IdInformation Id { get; set; }
+        public float HeightNN { get; set; }
+        public Mas.Schema.Geo.LatLonCoord Latlon { get; set; }
+        public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
+        public IReadOnlyList<Mas.Schema.Climate.Location.KV> CustomData { get; set; }
 
         public struct READER
         {
@@ -2490,35 +2210,11 @@ namespace Mas.Schema.Climate
                 this.SetStruct(1, 4);
             }
 
-            public Mas.Schema.Common.IdInformation.WRITER Id
-            {
-                get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public float HeightNN
-            {
-                get => this.ReadDataFloat(0UL, 0F);
-                set => this.WriteData(0UL, value, 0F);
-            }
-
-            public Mas.Schema.Geo.LatLonCoord.WRITER Latlon
-            {
-                get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(1);
-                set => Link(1, value);
-            }
-
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get => ReadCap<Mas.Schema.Climate.ITimeSeries>(2);
-                set => LinkObject(2, value);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Climate.Location.KV.WRITER> CustomData
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.KV.WRITER>>(3);
-                set => Link(3, value);
-            }
+            public Mas.Schema.Common.IdInformation.WRITER Id { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
+            public float HeightNN { get => this.ReadDataFloat(0UL, 0F); set => this.WriteData(0UL, value, 0F); }
+            public Mas.Schema.Geo.LatLonCoord.WRITER Latlon { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(1); set => Link(1, value); }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(2); set => LinkObject(2, value); }
+            public ListOfStructsSerializer<Mas.Schema.Climate.Location.KV.WRITER> CustomData { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.Location.KV.WRITER>>(3); set => Link(3, value); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc5fd13a53ae6d46aUL)]
@@ -2548,17 +2244,8 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public string Key
-            {
-                get;
-                set;
-            }
-
-            public object Value
-            {
-                get;
-                set;
-            }
+            public string Key { get; set; }
+            public object Value { get; set; }
 
             public struct READER
             {
@@ -2582,17 +2269,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 2);
                 }
 
-                public string Key
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public DynamicSerializerState Value
-                {
-                    get => BuildPointer<DynamicSerializerState>(1);
-                    set => Link(1, value);
-                }
+                public string Key { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public DynamicSerializerState Value { get => BuildPointer<DynamicSerializerState>(1); set => Link(1, value); }
             }
         }
     }
@@ -2618,7 +2296,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Resolution.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Resolution()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2631,7 +2310,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Range.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Range()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2644,7 +2324,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Header.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Header()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2657,7 +2338,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Data.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Data()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2670,7 +2352,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_DataT.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_DataT()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2683,7 +2366,10 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Subrange.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Subrange()
-            {Start = start, End = end};
+            {
+                Start = start,
+                End = end
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 5, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2692,16 +2378,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.TimeSeries.Result_Subrange>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.ITimeSeries> Subheader(IReadOnlyList<Mas.Schema.Climate.Element> elements, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Subheader.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Subheader()
-            {Elements = elements};
+            {
+                Elements = elements
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 6, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2710,16 +2396,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.TimeSeries.Result_Subheader>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.Metadata> Metadata(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Metadata.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Metadata()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 7, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2728,16 +2413,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Metadata>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.Location> Location(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Location.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Location()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 8, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2746,9 +2430,7 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Location>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -2766,7 +2448,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2785,6 +2468,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 12067007353081196008UL;
+
         Task<AnswerOrCounterquestion> Resolution(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -2792,12 +2476,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Resolution(cancellationToken_), resolution =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Resolution.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Resolution{Resolution = resolution};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Resolution
+                    {
+                        Resolution = resolution
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2808,12 +2493,14 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Range(cancellationToken_), (startDate, endDate) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Range.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Range{StartDate = startDate, EndDate = endDate};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Range
+                    {
+                        StartDate = startDate,
+                        EndDate = endDate
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2824,12 +2511,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Header(cancellationToken_), header =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Header.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Header{Header = header};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Header
+                    {
+                        Header = header
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2840,12 +2528,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Data(cancellationToken_), data =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Data.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Data{Data = data};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Data
+                    {
+                        Data = data
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2856,12 +2545,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.DataT(cancellationToken_), data =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_DataT.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_DataT{Data = data};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_DataT
+                    {
+                        Data = data
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2873,12 +2563,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Subrange(in_.Start, in_.End, cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Subrange.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Subrange{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Subrange
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2890,12 +2581,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Subheader(in_.Elements, cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Result_Subheader.WRITER>();
-                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Subheader{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.TimeSeries.Result_Subheader
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2908,9 +2600,7 @@ namespace Mas.Schema.Climate
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Metadata.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2923,9 +2613,7 @@ namespace Mas.Schema.Climate
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Location.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -3009,11 +2697,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.TimeSeries.Resolution Resolution
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.TimeSeries.Resolution Resolution { get; set; }
 
             public struct READER
             {
@@ -3036,11 +2720,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 0);
                 }
 
-                public Mas.Schema.Climate.TimeSeries.Resolution Resolution
-                {
-                    get => (Mas.Schema.Climate.TimeSeries.Resolution)this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
+                public Mas.Schema.Climate.TimeSeries.Resolution Resolution { get => (Mas.Schema.Climate.TimeSeries.Resolution)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
             }
         }
 
@@ -3116,17 +2796,8 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Common.Date StartDate
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.Date EndDate
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date StartDate { get; set; }
+            public Mas.Schema.Common.Date EndDate { get; set; }
 
             public struct READER
             {
@@ -3152,17 +2823,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Common.Date.WRITER StartDate
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Common.Date.WRITER EndDate
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Common.Date.WRITER StartDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Common.Date.WRITER EndDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -3236,11 +2898,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.Element> Header
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.Element> Header { get; set; }
 
             public struct READER
             {
@@ -3264,11 +2922,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Header
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Header { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(0); set => Link(0, value); }
             }
         }
 
@@ -3342,11 +2996,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<IReadOnlyList<float>> Data
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<IReadOnlyList<float>> Data { get; set; }
 
             public struct READER
             {
@@ -3370,11 +3020,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data
-                {
-                    get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data { get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0); set => Link(0, value); }
             }
         }
 
@@ -3448,11 +3094,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<IReadOnlyList<float>> Data
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<IReadOnlyList<float>> Data { get; set; }
 
             public struct READER
             {
@@ -3476,11 +3118,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data
-                {
-                    get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data { get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0); set => Link(0, value); }
             }
         }
 
@@ -3511,17 +3149,8 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Common.Date Start
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.Date End
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Start { get; set; }
+            public Mas.Schema.Common.Date End { get; set; }
 
             public struct READER
             {
@@ -3547,17 +3176,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Common.Date.WRITER Start
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Common.Date.WRITER End
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Common.Date.WRITER Start { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Common.Date.WRITER End { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -3586,11 +3206,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -3613,11 +3229,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -3646,11 +3258,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.Element> Elements
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.Element> Elements { get; set; }
 
             public struct READER
             {
@@ -3674,11 +3282,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Elements
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Elements { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(0); set => Link(0, value); }
             }
         }
 
@@ -3707,11 +3311,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -3734,11 +3334,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -3868,43 +3464,13 @@ namespace Mas.Schema.Climate
         {
         }
 
-        public IReadOnlyList<IReadOnlyList<float>> Data
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<IReadOnlyList<float>> Data { get; set; }
+        public bool IsTransposed { get; set; }
+        public IReadOnlyList<Mas.Schema.Climate.Element> Header { get; set; }
+        public Mas.Schema.Common.Date StartDate { get; set; }
+        public Mas.Schema.Common.Date EndDate { get; set; }
+        public Mas.Schema.Climate.TimeSeries.Resolution Resolution { get; set; } = Mas.Schema.Climate.TimeSeries.Resolution.daily;
 
-        public bool IsTransposed
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Climate.Element> Header
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date StartDate
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date EndDate
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Climate.TimeSeries.Resolution Resolution
-        {
-            get;
-            set;
-        }
-
-        = Mas.Schema.Climate.TimeSeries.Resolution.daily;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -3935,41 +3501,12 @@ namespace Mas.Schema.Climate
                 this.SetStruct(1, 4);
             }
 
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data
-            {
-                get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0);
-                set => Link(0, value);
-            }
-
-            public bool IsTransposed
-            {
-                get => this.ReadDataBool(0UL, false);
-                set => this.WriteData(0UL, value, false);
-            }
-
-            public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Header
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(1);
-                set => Link(1, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER StartDate
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER EndDate
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
-                set => Link(3, value);
-            }
-
-            public Mas.Schema.Climate.TimeSeries.Resolution Resolution
-            {
-                get => (Mas.Schema.Climate.TimeSeries.Resolution)this.ReadDataUShort(16UL, (ushort)0);
-                set => this.WriteData(16UL, (ushort)value, (ushort)0);
-            }
+            public ListOfPointersSerializer<ListOfPrimitivesSerializer<float>> Data { get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0); set => Link(0, value); }
+            public bool IsTransposed { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+            public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Header { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(1); set => Link(1, value); }
+            public Mas.Schema.Common.Date.WRITER StartDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2); set => Link(2, value); }
+            public Mas.Schema.Common.Date.WRITER EndDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3); set => Link(3, value); }
+            public Mas.Schema.Climate.TimeSeries.Resolution Resolution { get => (Mas.Schema.Climate.TimeSeries.Resolution)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
         }
     }
 
@@ -3987,7 +3524,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Service.Params_GetAvailableDatasets.WRITER>();
             var arg_ = new Mas.Schema.Climate.Service.Params_GetAvailableDatasets()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(18337822965240630367UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -3996,16 +3534,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Service.Result_GetAvailableDatasets>(d_);
                     return (r_.Datasets);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<IReadOnlyList<Mas.Schema.Climate.IDataset>> GetDatasetsFor(Mas.Schema.Climate.Metadata template, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Service.Params_GetDatasetsFor.WRITER>();
             var arg_ = new Mas.Schema.Climate.Service.Params_GetDatasetsFor()
-            {Template = template};
+            {
+                Template = template
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(18337822965240630367UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4014,9 +3552,7 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Service.Result_GetDatasetsFor>(d_);
                     return (r_.Datasets);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -4034,7 +3570,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4053,6 +3590,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 18337822965240630367UL;
+
         Task<AnswerOrCounterquestion> GetAvailableDatasets(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -4060,12 +3598,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.GetAvailableDatasets(cancellationToken_), datasets =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Service.Result_GetAvailableDatasets.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Service.Result_GetAvailableDatasets{Datasets = datasets};
+                    var r_ = new Mas.Schema.Climate.Service.Result_GetAvailableDatasets
+                    {
+                        Datasets = datasets
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -4077,12 +3616,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.GetDatasetsFor(in_.Template, cancellationToken_), datasets =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.Service.Result_GetDatasetsFor.WRITER>();
-                    var r_ = new Mas.Schema.Climate.Service.Result_GetDatasetsFor{Datasets = datasets};
+                    var r_ = new Mas.Schema.Climate.Service.Result_GetDatasetsFor
+                    {
+                        Datasets = datasets
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -4159,11 +3699,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.MetaPlusData> Datasets
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.MetaPlusData> Datasets { get; set; }
 
             public struct READER
             {
@@ -4187,11 +3723,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Climate.MetaPlusData.WRITER> Datasets
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.MetaPlusData.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Climate.MetaPlusData.WRITER> Datasets { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.MetaPlusData.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -4220,11 +3752,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.Metadata Template
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.Metadata Template { get; set; }
 
             public struct READER
             {
@@ -4248,11 +3776,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.Metadata.WRITER Template
-                {
-                    get => BuildPointer<Mas.Schema.Climate.Metadata.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Climate.Metadata.WRITER Template { get => BuildPointer<Mas.Schema.Climate.Metadata.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -4281,11 +3805,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.IDataset> Datasets
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.IDataset> Datasets { get; set; }
 
             public struct READER
             {
@@ -4309,11 +3829,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Climate.IDataset> Datasets
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Climate.IDataset>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Climate.IDataset> Datasets { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Climate.IDataset>>(0); set => Link(0, value); }
             }
         }
     }
@@ -4331,7 +3847,10 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.CSVTimeSeriesFactory.Params_Create.WRITER>();
             var arg_ = new Mas.Schema.Climate.CSVTimeSeriesFactory.Params_Create()
-            {CsvData = csvData, Config = config};
+            {
+                CsvData = csvData,
+                Config = config
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(11824414594088643033UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4340,16 +3859,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.CSVTimeSeriesFactory.Result_Create>(d_);
                     return (r_.Timeseries, r_.Error);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4368,6 +3886,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 11824414594088643033UL;
+
         Task<AnswerOrCounterquestion> Create(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -4376,12 +3895,14 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Create(in_.CsvData, in_.Config, cancellationToken_), (timeseries, error) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.CSVTimeSeriesFactory.Result_Create.WRITER>();
-                    var r_ = new Mas.Schema.Climate.CSVTimeSeriesFactory.Result_Create{Timeseries = timeseries, Error = error};
+                    var r_ = new Mas.Schema.Climate.CSVTimeSeriesFactory.Result_Create
+                    {
+                        Timeseries = timeseries,
+                        Error = error
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -4420,32 +3941,11 @@ namespace Mas.Schema.Climate
                 Sep = Sep ?? ",";
             }
 
-            public string Sep
-            {
-                get;
-                set;
-            }
+            public string Sep { get; set; }
+            public IReadOnlyList<Mas.Schema.Common.Pair<string, string>> HeaderMap { get; set; }
+            public short SkipLinesToHeader { get; set; } = 0;
+            public short SkipLinesFromHeaderToData { get; set; } = 1;
 
-            public IReadOnlyList<Mas.Schema.Common.Pair<string, string>> HeaderMap
-            {
-                get;
-                set;
-            }
-
-            public short SkipLinesToHeader
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public short SkipLinesFromHeaderToData
-            {
-                get;
-                set;
-            }
-
-            = 1;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -4471,29 +3971,10 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 2);
                 }
 
-                public string Sep
-                {
-                    get => this.ReadText(0, ",");
-                    set => this.WriteText(0, value, ",");
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER> HeaderMap
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER>>(1);
-                    set => Link(1, value);
-                }
-
-                public short SkipLinesToHeader
-                {
-                    get => this.ReadDataShort(0UL, (short)0);
-                    set => this.WriteData(0UL, value, (short)0);
-                }
-
-                public short SkipLinesFromHeaderToData
-                {
-                    get => this.ReadDataShort(16UL, (short)1);
-                    set => this.WriteData(16UL, value, (short)1);
-                }
+                public string Sep { get => this.ReadText(0, ","); set => this.WriteText(0, value, ","); }
+                public ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER> HeaderMap { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER>>(1); set => Link(1, value); }
+                public short SkipLinesToHeader { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
+                public short SkipLinesFromHeaderToData { get => this.ReadDataShort(16UL, (short)1); set => this.WriteData(16UL, value, (short)1); }
             }
         }
 
@@ -4524,17 +4005,8 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public string CsvData
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig Config
-            {
-                get;
-                set;
-            }
+            public string CsvData { get; set; }
+            public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig Config { get; set; }
 
             public struct READER
             {
@@ -4559,17 +4031,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 2);
                 }
 
-                public string CsvData
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig.WRITER Config
-                {
-                    get => BuildPointer<Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public string CsvData { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig.WRITER Config { get => BuildPointer<Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -4600,17 +4063,8 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries Timeseries
-            {
-                get;
-                set;
-            }
-
-            public string Error
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries Timeseries { get; set; }
+            public string Error { get; set; }
 
             public struct READER
             {
@@ -4634,17 +4088,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries Timeseries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public string Error
-                {
-                    get => this.ReadText(1, null);
-                    set => this.WriteText(1, value, null);
-                }
+                public Mas.Schema.Climate.ITimeSeries Timeseries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
+                public string Error { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
             }
         }
     }
@@ -4666,7 +4111,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_WrappedTimeSeries.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_WrappedTimeSeries()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(16281780319380014258UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4675,16 +4121,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_WrappedTimeSeries>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<IReadOnlyList<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered>> AlteredElements(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_AlteredElements.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_AlteredElements()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16281780319380014258UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4697,7 +4142,10 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_Alter.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_Alter()
-            {Desc = desc, AsNewTimeSeries = asNewTimeSeries};
+            {
+                Desc = desc,
+                AsNewTimeSeries = asNewTimeSeries
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(16281780319380014258UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4706,16 +4154,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_Alter>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task Remove(Mas.Schema.Climate.Element alteredElement, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_Remove.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_Remove()
-            {AlteredElement = alteredElement};
+            {
+                AlteredElement = alteredElement
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16281780319380014258UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4728,7 +4176,9 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_ReplaceWrappedTimeSeries.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Params_ReplaceWrappedTimeSeries()
-            {TimeSeries = timeSeries};
+            {
+                TimeSeries = timeSeries
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16281780319380014258UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4741,7 +4191,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Resolution.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Resolution()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4754,7 +4205,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Range.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Range()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4767,7 +4219,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Header.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Header()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4780,7 +4233,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Data.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Data()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4793,7 +4247,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_DataT.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_DataT()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12067007353081196008UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4806,7 +4261,10 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Subrange.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Subrange()
-            {Start = start, End = end};
+            {
+                Start = start,
+                End = end
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 5, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4815,16 +4273,16 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.TimeSeries.Result_Subrange>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.ITimeSeries> Subheader(IReadOnlyList<Mas.Schema.Climate.Element> elements, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Subheader.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Subheader()
-            {Elements = elements};
+            {
+                Elements = elements
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 6, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4833,16 +4291,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.TimeSeries.Result_Subheader>(d_);
                     return (r_.TimeSeries);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.Metadata> Metadata(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Metadata.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Metadata()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 7, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4851,16 +4308,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Metadata>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Climate.Location> Location(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.TimeSeries.Params_Location.WRITER>();
             var arg_ = new Mas.Schema.Climate.TimeSeries.Params_Location()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12067007353081196008UL, 8, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -4869,9 +4325,7 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.Location>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -4889,7 +4343,8 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -4908,6 +4363,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 16281780319380014258UL;
+
         Task<AnswerOrCounterquestion> WrappedTimeSeries(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -4915,12 +4371,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.WrappedTimeSeries(cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_WrappedTimeSeries.WRITER>();
-                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_WrappedTimeSeries{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_WrappedTimeSeries
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -4931,12 +4388,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.AlteredElements(cancellationToken_), list =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_AlteredElements.WRITER>();
-                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_AlteredElements{List = list};
+                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_AlteredElements
+                    {
+                        List = list
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -4948,12 +4406,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Alter(in_.Desc, in_.AsNewTimeSeries, cancellationToken_), timeSeries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_Alter.WRITER>();
-                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_Alter{TimeSeries = timeSeries};
+                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapper.Result_Alter
+                    {
+                        TimeSeries = timeSeries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -5011,23 +4470,9 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.Element Element
-            {
-                get;
-                set;
-            }
-
-            public float Value
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.Element Element { get; set; }
+            public float Value { get; set; }
+            public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type { get; set; }
 
             public struct READER
             {
@@ -5052,23 +4497,9 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 0);
                 }
 
-                public Mas.Schema.Climate.Element Element
-                {
-                    get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public float Value
-                {
-                    get => this.ReadDataFloat(32UL, 0F);
-                    set => this.WriteData(32UL, value, 0F);
-                }
-
-                public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type
-                {
-                    get => (Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType)this.ReadDataUShort(16UL, (ushort)0);
-                    set => this.WriteData(16UL, (ushort)value, (ushort)0);
-                }
+                public Mas.Schema.Climate.Element Element { get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public float Value { get => this.ReadDataFloat(32UL, 0F); set => this.WriteData(32UL, value, 0F); }
+                public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type { get => (Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
             }
         }
 
@@ -5149,11 +4580,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -5176,11 +4603,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -5254,11 +4677,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered> List
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered> List { get; set; }
 
             public struct READER
             {
@@ -5282,11 +4701,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER> List
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER> List { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -5317,19 +4732,9 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered Desc
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered Desc { get; set; }
+            public bool AsNewTimeSeries { get; set; } = false;
 
-            public bool AsNewTimeSeries
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -5353,17 +4758,8 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 1);
                 }
 
-                public Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER Desc
-                {
-                    get => BuildPointer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public bool AsNewTimeSeries
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER Desc { get => BuildPointer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER>(0); set => Link(0, value); }
+                public bool AsNewTimeSeries { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -5392,11 +4788,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -5419,11 +4811,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -5452,11 +4840,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.Element AlteredElement
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.Element AlteredElement { get; set; }
 
             public struct READER
             {
@@ -5479,11 +4863,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(1, 0);
                 }
 
-                public Mas.Schema.Climate.Element AlteredElement
-                {
-                    get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
+                public Mas.Schema.Climate.Element AlteredElement { get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
             }
         }
 
@@ -5557,11 +4937,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -5584,11 +4960,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -5651,7 +5023,9 @@ namespace Mas.Schema.Climate
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Params_Wrap.WRITER>();
             var arg_ = new Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Params_Wrap()
-            {TimeSeries = timeSeries};
+            {
+                TimeSeries = timeSeries
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14263232006403204932UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -5660,16 +5034,15 @@ namespace Mas.Schema.Climate
                     var r_ = CapnpSerializable.Create<Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Result_Wrap>(d_);
                     return (r_.Wrapper);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -5688,6 +5061,7 @@ namespace Mas.Schema.Climate
         }
 
         public override ulong InterfaceId => 14263232006403204932UL;
+
         Task<AnswerOrCounterquestion> Wrap(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -5696,12 +5070,13 @@ namespace Mas.Schema.Climate
                 return Impatient.MaybeTailCall(Impl.Wrap(in_.TimeSeries, cancellationToken_), wrapper =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Result_Wrap.WRITER>();
-                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Result_Wrap{Wrapper = wrapper};
+                    var r_ = new Mas.Schema.Climate.AlterTimeSeriesWrapperFactory.Result_Wrap
+                    {
+                        Wrapper = wrapper
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -5733,11 +5108,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.ITimeSeries TimeSeries
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
 
             public struct READER
             {
@@ -5760,11 +5131,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.ITimeSeries TimeSeries
-                {
-                    get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.ITimeSeries TimeSeries { get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -5793,11 +5160,7 @@ namespace Mas.Schema.Climate
             {
             }
 
-            public Mas.Schema.Climate.IAlterTimeSeriesWrapper Wrapper
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Climate.IAlterTimeSeriesWrapper Wrapper { get; set; }
 
             public struct READER
             {
@@ -5820,11 +5183,7 @@ namespace Mas.Schema.Climate
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Climate.IAlterTimeSeriesWrapper Wrapper
-                {
-                    get => ReadCap<Mas.Schema.Climate.IAlterTimeSeriesWrapper>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Climate.IAlterTimeSeriesWrapper Wrapper { get => ReadCap<Mas.Schema.Climate.IAlterTimeSeriesWrapper>(0); set => LinkObject(0, value); }
             }
         }
     }

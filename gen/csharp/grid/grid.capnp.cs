@@ -49,7 +49,14 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_ClosestValueAt.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_ClosestValueAt()
-            {LatlonCoord = latlonCoord, IgnoreNoData = ignoreNoData, Resolution = resolution, Agg = agg, ReturnRowCols = returnRowCols, IncludeAggParts = includeAggParts};
+            {
+                LatlonCoord = latlonCoord,
+                IgnoreNoData = ignoreNoData,
+                Resolution = resolution,
+                Agg = agg,
+                ReturnRowCols = returnRowCols,
+                IncludeAggParts = includeAggParts
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -62,7 +69,8 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_Resolution.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_Resolution()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -75,7 +83,8 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_Dimension.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_Dimension()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -88,7 +97,8 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_NoDataValue.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_NoDataValue()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -101,7 +111,13 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_ValueAt.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_ValueAt()
-            {Row = row, Col = col, Resolution = resolution, Agg = agg, IncludeAggParts = includeAggParts};
+            {
+                Row = row,
+                Col = col,
+                Resolution = resolution,
+                Agg = agg,
+                IncludeAggParts = includeAggParts
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -114,7 +130,9 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_LatLonBounds.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_LatLonBounds()
-            {UseCellCenter = useCellCenter};
+            {
+                UseCellCenter = useCellCenter
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 5, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -127,7 +145,10 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_StreamCells.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_StreamCells()
-            {TopLeft = topLeft, BottomRight = bottomRight};
+            {
+                TopLeft = topLeft,
+                BottomRight = bottomRight
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(16440799125557076934UL, 6, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -136,16 +157,15 @@ namespace Mas.Schema.Grid
                     var r_ = CapnpSerializable.Create<Mas.Schema.Grid.Grid.Result_StreamCells>(d_);
                     return (r_.Callback);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<string> Unit(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Params_Unit.WRITER>();
             var arg_ = new Mas.Schema.Grid.Grid.Params_Unit()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16440799125557076934UL, 7, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -169,7 +189,8 @@ namespace Mas.Schema.Grid
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -188,6 +209,7 @@ namespace Mas.Schema.Grid
         }
 
         public override ulong InterfaceId => 16440799125557076934UL;
+
         Task<AnswerOrCounterquestion> ClosestValueAt(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -196,12 +218,16 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.ClosestValueAt(in_.LatlonCoord, in_.IgnoreNoData, in_.Resolution, in_.Agg, in_.ReturnRowCols, in_.IncludeAggParts, cancellationToken_), (val, tl, br, aggParts) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_ClosestValueAt.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_ClosestValueAt{Val = val, Tl = tl, Br = br, AggParts = aggParts};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_ClosestValueAt
+                    {
+                        Val = val,
+                        Tl = tl,
+                        Br = br,
+                        AggParts = aggParts
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -212,12 +238,13 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.Resolution(cancellationToken_), res =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_Resolution.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_Resolution{Res = res};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_Resolution
+                    {
+                        Res = res
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -228,12 +255,14 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.Dimension(cancellationToken_), (rows, cols) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_Dimension.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_Dimension{Rows = rows, Cols = cols};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_Dimension
+                    {
+                        Rows = rows,
+                        Cols = cols
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -244,12 +273,13 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.NoDataValue(cancellationToken_), nodata =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_NoDataValue.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_NoDataValue{Nodata = nodata};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_NoDataValue
+                    {
+                        Nodata = nodata
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -261,12 +291,14 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.ValueAt(in_.Row, in_.Col, in_.Resolution, in_.Agg, in_.IncludeAggParts, cancellationToken_), (val, aggParts) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_ValueAt.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_ValueAt{Val = val, AggParts = aggParts};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_ValueAt
+                    {
+                        Val = val,
+                        AggParts = aggParts
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -278,12 +310,16 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.LatLonBounds(in_.UseCellCenter, cancellationToken_), (tl, tr, br, bl) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_LatLonBounds.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_LatLonBounds{Tl = tl, Tr = tr, Br = br, Bl = bl};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_LatLonBounds
+                    {
+                        Tl = tl,
+                        Tr = tr,
+                        Br = br,
+                        Bl = bl
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -295,12 +331,13 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.StreamCells(in_.TopLeft, in_.BottomRight, cancellationToken_), callback =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_StreamCells.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_StreamCells{Callback = callback};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_StreamCells
+                    {
+                        Callback = callback
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -311,12 +348,13 @@ namespace Mas.Schema.Grid
                 return Impatient.MaybeTailCall(Impl.Unit(cancellationToken_), unit =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Result_Unit.WRITER>();
-                    var r_ = new Mas.Schema.Grid.Grid.Result_Unit{Unit = unit};
+                    var r_ = new Mas.Schema.Grid.Grid.Result_Unit
+                    {
+                        Unit = unit
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -480,35 +518,11 @@ namespace Mas.Schema.Grid
                     this.SetStruct(2, 0);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(64U, (ushort)0);
-                    set => this.WriteData(64U, (ushort)value, (ushort)0);
-                }
-
-                public double F
-                {
-                    get => which == WHICH.F ? this.ReadDataDouble(0UL, 0) : default;
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public long I
-                {
-                    get => which == WHICH.I ? this.ReadDataLong(0UL, 0L) : default;
-                    set => this.WriteData(0UL, value, 0L);
-                }
-
-                public ulong Ui
-                {
-                    get => which == WHICH.Ui ? this.ReadDataULong(0UL, 0UL) : default;
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public bool No
-                {
-                    get => which == WHICH.No ? this.ReadDataBool(0UL, false) : default;
-                    set => this.WriteData(0UL, value, false);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(64U, (ushort)0); set => this.WriteData(64U, (ushort)value, (ushort)0); }
+                public double F { get => which == WHICH.F ? this.ReadDataDouble(0UL, 0) : default; set => this.WriteData(0UL, value, 0); }
+                public long I { get => which == WHICH.I ? this.ReadDataLong(0UL, 0L) : default; set => this.WriteData(0UL, value, 0L); }
+                public ulong Ui { get => which == WHICH.Ui ? this.ReadDataULong(0UL, 0UL) : default; set => this.WriteData(0UL, value, 0UL); }
+                public bool No { get => which == WHICH.No ? this.ReadDataBool(0UL, false) : default; set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -627,23 +641,9 @@ namespace Mas.Schema.Grid
                     this.SetStruct(2, 0);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(64U, (ushort)0);
-                    set => this.WriteData(64U, (ushort)value, (ushort)0);
-                }
-
-                public long Meter
-                {
-                    get => which == WHICH.Meter ? this.ReadDataLong(0UL, 0L) : default;
-                    set => this.WriteData(0UL, value, 0L);
-                }
-
-                public double Degree
-                {
-                    get => which == WHICH.Degree ? this.ReadDataDouble(0UL, 0) : default;
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(64U, (ushort)0); set => this.WriteData(64U, (ushort)value, (ushort)0); }
+                public long Meter { get => which == WHICH.Meter ? this.ReadDataLong(0UL, 0L) : default; set => this.WriteData(0UL, value, 0L); }
+                public double Degree { get => which == WHICH.Degree ? this.ReadDataDouble(0UL, 0) : default; set => this.WriteData(0UL, value, 0); }
             }
         }
 
@@ -674,17 +674,8 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public ulong Row
-            {
-                get;
-                set;
-            }
-
-            public ulong Col
-            {
-                get;
-                set;
-            }
+            public ulong Row { get; set; }
+            public ulong Col { get; set; }
 
             public struct READER
             {
@@ -708,17 +699,8 @@ namespace Mas.Schema.Grid
                     this.SetStruct(2, 0);
                 }
 
-                public ulong Row
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public ulong Col
-                {
-                    get => this.ReadDataULong(64UL, 0UL);
-                    set => this.WriteData(64UL, value, 0UL);
-                }
+                public ulong Row { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public ulong Col { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
             }
         }
 
@@ -753,29 +735,10 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.Value Value
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.RowCol RowCol
-            {
-                get;
-                set;
-            }
-
-            public double AreaFrac
-            {
-                get;
-                set;
-            }
-
-            public double IValue
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.Value Value { get; set; }
+            public Mas.Schema.Grid.Grid.RowCol RowCol { get; set; }
+            public double AreaFrac { get; set; }
+            public double IValue { get; set; }
 
             public struct READER
             {
@@ -803,29 +766,10 @@ namespace Mas.Schema.Grid
                     this.SetStruct(2, 2);
                 }
 
-                public Mas.Schema.Grid.Grid.Value.WRITER Value
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Grid.Grid.RowCol.WRITER RowCol
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public double AreaFrac
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double IValue
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
+                public Mas.Schema.Grid.Grid.Value.WRITER Value { get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER RowCol { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1); set => Link(1, value); }
+                public double AreaFrac { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double IValue { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
             }
         }
 
@@ -858,23 +802,9 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Geo.LatLonCoord LatLonCoord
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.RowCol RowCol
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.Value Value
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Geo.LatLonCoord LatLonCoord { get; set; }
+            public Mas.Schema.Grid.Grid.RowCol RowCol { get; set; }
+            public Mas.Schema.Grid.Grid.Value Value { get; set; }
 
             public struct READER
             {
@@ -902,23 +832,9 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 3);
                 }
 
-                public Mas.Schema.Geo.LatLonCoord.WRITER LatLonCoord
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Grid.Grid.RowCol.WRITER RowCol
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Grid.Grid.Value.WRITER Value
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(2);
-                    set => Link(2, value);
-                }
+                public Mas.Schema.Geo.LatLonCoord.WRITER LatLonCoord { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER RowCol { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Grid.Grid.Value.WRITER Value { get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(2); set => Link(2, value); }
             }
         }
 
@@ -935,7 +851,9 @@ namespace Mas.Schema.Grid
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Callback.Params_SendCells.WRITER>();
                 var arg_ = new Mas.Schema.Grid.Grid.Callback.Params_SendCells()
-                {MaxCount = maxCount};
+                {
+                    MaxCount = maxCount
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(15436458818737493459UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -954,6 +872,7 @@ namespace Mas.Schema.Grid
             }
 
             public override ulong InterfaceId => 15436458818737493459UL;
+
             Task<AnswerOrCounterquestion> SendCells(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -962,12 +881,13 @@ namespace Mas.Schema.Grid
                     return Impatient.MaybeTailCall(Impl.SendCells(in_.MaxCount, cancellationToken_), locations =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Grid.Grid.Callback.Result_SendCells.WRITER>();
-                        var r_ = new Mas.Schema.Grid.Grid.Callback.Result_SendCells{Locations = locations};
+                        var r_ = new Mas.Schema.Grid.Grid.Callback.Result_SendCells
+                        {
+                            Locations = locations
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -999,11 +919,7 @@ namespace Mas.Schema.Grid
                 {
                 }
 
-                public long MaxCount
-                {
-                    get;
-                    set;
-                }
+                public long MaxCount { get; set; }
 
                 public struct READER
                 {
@@ -1026,11 +942,7 @@ namespace Mas.Schema.Grid
                         this.SetStruct(1, 0);
                     }
 
-                    public long MaxCount
-                    {
-                        get => this.ReadDataLong(0UL, 0L);
-                        set => this.WriteData(0UL, value, 0L);
-                    }
+                    public long MaxCount { get => this.ReadDataLong(0UL, 0L); set => this.WriteData(0UL, value, 0L); }
                 }
             }
 
@@ -1059,11 +971,7 @@ namespace Mas.Schema.Grid
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Grid.Grid.Location> Locations
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Grid.Grid.Location> Locations { get; set; }
 
                 public struct READER
                 {
@@ -1087,11 +995,7 @@ namespace Mas.Schema.Grid
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfStructsSerializer<Mas.Schema.Grid.Grid.Location.WRITER> Locations
-                    {
-                        get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.Location.WRITER>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfStructsSerializer<Mas.Schema.Grid.Grid.Location.WRITER> Locations { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.Location.WRITER>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -1131,46 +1035,13 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Geo.LatLonCoord LatlonCoord
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Geo.LatLonCoord LatlonCoord { get; set; }
+            public bool IgnoreNoData { get; set; } = true;
+            public Mas.Schema.Grid.Grid.Resolution Resolution { get; set; }
+            public Mas.Schema.Grid.Aggregation Agg { get; set; } = Mas.Schema.Grid.Aggregation.none;
+            public bool ReturnRowCols { get; set; } = false;
+            public bool IncludeAggParts { get; set; } = false;
 
-            public bool IgnoreNoData
-            {
-                get;
-                set;
-            }
-
-            = true;
-            public Mas.Schema.Grid.Grid.Resolution Resolution
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Aggregation Agg
-            {
-                get;
-                set;
-            }
-
-            = Mas.Schema.Grid.Aggregation.none;
-            public bool ReturnRowCols
-            {
-                get;
-                set;
-            }
-
-            = false;
-            public bool IncludeAggParts
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1199,41 +1070,12 @@ namespace Mas.Schema.Grid
                     this.SetStruct(1, 2);
                 }
 
-                public Mas.Schema.Geo.LatLonCoord.WRITER LatlonCoord
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public bool IgnoreNoData
-                {
-                    get => this.ReadDataBool(0UL, true);
-                    set => this.WriteData(0UL, value, true);
-                }
-
-                public Mas.Schema.Grid.Grid.Resolution.WRITER Resolution
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Grid.Aggregation Agg
-                {
-                    get => (Mas.Schema.Grid.Aggregation)this.ReadDataUShort(16UL, (ushort)0);
-                    set => this.WriteData(16UL, (ushort)value, (ushort)0);
-                }
-
-                public bool ReturnRowCols
-                {
-                    get => this.ReadDataBool(1UL, false);
-                    set => this.WriteData(1UL, value, false);
-                }
-
-                public bool IncludeAggParts
-                {
-                    get => this.ReadDataBool(2UL, false);
-                    set => this.WriteData(2UL, value, false);
-                }
+                public Mas.Schema.Geo.LatLonCoord.WRITER LatlonCoord { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0); set => Link(0, value); }
+                public bool IgnoreNoData { get => this.ReadDataBool(0UL, true); set => this.WriteData(0UL, value, true); }
+                public Mas.Schema.Grid.Grid.Resolution.WRITER Resolution { get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Grid.Aggregation Agg { get => (Mas.Schema.Grid.Aggregation)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
+                public bool ReturnRowCols { get => this.ReadDataBool(1UL, false); set => this.WriteData(1UL, value, false); }
+                public bool IncludeAggParts { get => this.ReadDataBool(2UL, false); set => this.WriteData(2UL, value, false); }
             }
         }
 
@@ -1268,29 +1110,10 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.Value Val
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.RowCol Tl
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.RowCol Br
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Grid.Grid.AggregationPart> AggParts
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.Value Val { get; set; }
+            public Mas.Schema.Grid.Grid.RowCol Tl { get; set; }
+            public Mas.Schema.Grid.Grid.RowCol Br { get; set; }
+            public IReadOnlyList<Mas.Schema.Grid.Grid.AggregationPart> AggParts { get; set; }
 
             public struct READER
             {
@@ -1320,29 +1143,10 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 4);
                 }
 
-                public Mas.Schema.Grid.Grid.Value.WRITER Val
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Grid.Grid.RowCol.WRITER Tl
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Grid.Grid.RowCol.WRITER Br
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(2);
-                    set => Link(2, value);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER> AggParts
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER>>(3);
-                    set => Link(3, value);
-                }
+                public Mas.Schema.Grid.Grid.Value.WRITER Val { get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER Tl { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER Br { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(2); set => Link(2, value); }
+                public ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER> AggParts { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER>>(3); set => Link(3, value); }
             }
         }
 
@@ -1416,11 +1220,7 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.Resolution Res
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.Resolution Res { get; set; }
 
             public struct READER
             {
@@ -1444,11 +1244,7 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Grid.Grid.Resolution.WRITER Res
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Grid.Grid.Resolution.WRITER Res { get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -1524,17 +1320,8 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public ulong Rows
-            {
-                get;
-                set;
-            }
-
-            public ulong Cols
-            {
-                get;
-                set;
-            }
+            public ulong Rows { get; set; }
+            public ulong Cols { get; set; }
 
             public struct READER
             {
@@ -1558,17 +1345,8 @@ namespace Mas.Schema.Grid
                     this.SetStruct(2, 0);
                 }
 
-                public ulong Rows
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public ulong Cols
-                {
-                    get => this.ReadDataULong(64UL, 0UL);
-                    set => this.WriteData(64UL, value, 0UL);
-                }
+                public ulong Rows { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public ulong Cols { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
             }
         }
 
@@ -1642,11 +1420,7 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.Value Nodata
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.Value Nodata { get; set; }
 
             public struct READER
             {
@@ -1670,11 +1444,7 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Grid.Grid.Value.WRITER Nodata
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Grid.Grid.Value.WRITER Nodata { get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -1711,38 +1481,12 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public ulong Row
-            {
-                get;
-                set;
-            }
+            public ulong Row { get; set; }
+            public ulong Col { get; set; }
+            public Mas.Schema.Grid.Grid.Resolution Resolution { get; set; }
+            public Mas.Schema.Grid.Aggregation Agg { get; set; } = Mas.Schema.Grid.Aggregation.none;
+            public bool IncludeAggParts { get; set; } = false;
 
-            public ulong Col
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.Resolution Resolution
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Aggregation Agg
-            {
-                get;
-                set;
-            }
-
-            = Mas.Schema.Grid.Aggregation.none;
-            public bool IncludeAggParts
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1769,35 +1513,11 @@ namespace Mas.Schema.Grid
                     this.SetStruct(3, 1);
                 }
 
-                public ulong Row
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public ulong Col
-                {
-                    get => this.ReadDataULong(64UL, 0UL);
-                    set => this.WriteData(64UL, value, 0UL);
-                }
-
-                public Mas.Schema.Grid.Grid.Resolution.WRITER Resolution
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Grid.Aggregation Agg
-                {
-                    get => (Mas.Schema.Grid.Aggregation)this.ReadDataUShort(128UL, (ushort)0);
-                    set => this.WriteData(128UL, (ushort)value, (ushort)0);
-                }
-
-                public bool IncludeAggParts
-                {
-                    get => this.ReadDataBool(144UL, false);
-                    set => this.WriteData(144UL, value, false);
-                }
+                public ulong Row { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public ulong Col { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
+                public Mas.Schema.Grid.Grid.Resolution.WRITER Resolution { get => BuildPointer<Mas.Schema.Grid.Grid.Resolution.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Grid.Aggregation Agg { get => (Mas.Schema.Grid.Aggregation)this.ReadDataUShort(128UL, (ushort)0); set => this.WriteData(128UL, (ushort)value, (ushort)0); }
+                public bool IncludeAggParts { get => this.ReadDataBool(144UL, false); set => this.WriteData(144UL, value, false); }
             }
         }
 
@@ -1828,17 +1548,8 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.Value Val
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Grid.Grid.AggregationPart> AggParts
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.Value Val { get; set; }
+            public IReadOnlyList<Mas.Schema.Grid.Grid.AggregationPart> AggParts { get; set; }
 
             public struct READER
             {
@@ -1864,17 +1575,8 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Grid.Grid.Value.WRITER Val
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER> AggParts
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER>>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Grid.Grid.Value.WRITER Val { get => BuildPointer<Mas.Schema.Grid.Grid.Value.WRITER>(0); set => Link(0, value); }
+                public ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER> AggParts { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Grid.Grid.AggregationPart.WRITER>>(1); set => Link(1, value); }
             }
         }
 
@@ -1903,13 +1605,8 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public bool UseCellCenter
-            {
-                get;
-                set;
-            }
+            public bool UseCellCenter { get; set; } = false;
 
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1931,11 +1628,7 @@ namespace Mas.Schema.Grid
                     this.SetStruct(1, 0);
                 }
 
-                public bool UseCellCenter
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public bool UseCellCenter { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -1970,29 +1663,10 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Geo.LatLonCoord Tl
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Geo.LatLonCoord Tr
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Geo.LatLonCoord Br
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Geo.LatLonCoord Bl
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Geo.LatLonCoord Tl { get; set; }
+            public Mas.Schema.Geo.LatLonCoord Tr { get; set; }
+            public Mas.Schema.Geo.LatLonCoord Br { get; set; }
+            public Mas.Schema.Geo.LatLonCoord Bl { get; set; }
 
             public struct READER
             {
@@ -2022,29 +1696,10 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 4);
                 }
 
-                public Mas.Schema.Geo.LatLonCoord.WRITER Tl
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Geo.LatLonCoord.WRITER Tr
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Geo.LatLonCoord.WRITER Br
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(2);
-                    set => Link(2, value);
-                }
-
-                public Mas.Schema.Geo.LatLonCoord.WRITER Bl
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(3);
-                    set => Link(3, value);
-                }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Tl { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Tr { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Br { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(2); set => Link(2, value); }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Bl { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(3); set => Link(3, value); }
             }
         }
 
@@ -2075,17 +1730,8 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.RowCol TopLeft
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Grid.Grid.RowCol BottomRight
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.RowCol TopLeft { get; set; }
+            public Mas.Schema.Grid.Grid.RowCol BottomRight { get; set; }
 
             public struct READER
             {
@@ -2111,17 +1757,8 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Grid.Grid.RowCol.WRITER TopLeft
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Grid.Grid.RowCol.WRITER BottomRight
-                {
-                    get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER TopLeft { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Grid.Grid.RowCol.WRITER BottomRight { get => BuildPointer<Mas.Schema.Grid.Grid.RowCol.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -2150,11 +1787,7 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public Mas.Schema.Grid.Grid.ICallback Callback
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Grid.Grid.ICallback Callback { get; set; }
 
             public struct READER
             {
@@ -2177,11 +1810,7 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Grid.Grid.ICallback Callback
-                {
-                    get => ReadCap<Mas.Schema.Grid.Grid.ICallback>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Grid.Grid.ICallback Callback { get => ReadCap<Mas.Schema.Grid.Grid.ICallback>(0); set => LinkObject(0, value); }
             }
         }
 
@@ -2255,11 +1884,7 @@ namespace Mas.Schema.Grid
             {
             }
 
-            public string Unit
-            {
-                get;
-                set;
-            }
+            public string Unit { get; set; }
 
             public struct READER
             {
@@ -2282,11 +1907,7 @@ namespace Mas.Schema.Grid
                     this.SetStruct(0, 1);
                 }
 
-                public string Unit
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string Unit { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
     }

@@ -65,7 +65,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Unregister.Params_Unregister.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Unregister.Params_Unregister()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(16767455160994962366UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -84,6 +85,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 16767455160994962366UL;
+
             Task<AnswerOrCounterquestion> Unregister(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -91,12 +93,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.Unregister(cancellationToken_), success =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Unregister.Result_Unregister.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Unregister.Result_Unregister{Success = success};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Unregister.Result_Unregister
+                        {
+                            Success = success
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -173,11 +176,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public bool Success
-                {
-                    get;
-                    set;
-                }
+                public bool Success { get; set; }
 
                 public struct READER
                 {
@@ -200,11 +199,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
+                    public bool Success { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
                 }
             }
         }
@@ -223,7 +218,10 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.AdminMaster.Params_RegisterModelInstanceFactory.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Params_RegisterModelInstanceFactory()
-                {AModelId = aModelId, AFactory = aFactory};
+                {
+                    AModelId = aModelId,
+                    AFactory = aFactory
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(13773177044365358030UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -232,16 +230,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.AdminMaster.Result_RegisterModelInstanceFactory>(d_);
                         return (r_.Unregister);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>> AvailableModels(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.AdminMaster.Params_AvailableModels.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Params_AvailableModels()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(13773177044365358030UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -250,16 +247,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.AdminMaster.Result_AvailableModels>(d_);
                         return (r_.Factories);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
                 var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -278,6 +274,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 13773177044365358030UL;
+
             Task<AnswerOrCounterquestion> RegisterModelInstanceFactory(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -286,12 +283,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.RegisterModelInstanceFactory(in_.AModelId, in_.AFactory, cancellationToken_), unregister =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.AdminMaster.Result_RegisterModelInstanceFactory.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Result_RegisterModelInstanceFactory{Unregister = unregister};
+                        var r_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Result_RegisterModelInstanceFactory
+                        {
+                            Unregister = unregister
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -302,12 +300,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.AvailableModels(cancellationToken_), factories =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.AdminMaster.Result_AvailableModels.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Result_AvailableModels{Factories = factories};
+                        var r_ = new Mas.Schema.Cluster.Cluster.AdminMaster.Result_AvailableModels
+                        {
+                            Factories = factories
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -341,17 +340,8 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public string AModelId
-                {
-                    get;
-                    set;
-                }
-
-                public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
-                {
-                    get;
-                    set;
-                }
+                public string AModelId { get; set; }
+                public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get; set; }
 
                 public struct READER
                 {
@@ -375,17 +365,8 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 2);
                     }
 
-                    public string AModelId
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
-
-                    public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1);
-                        set => LinkObject(1, value);
-                    }
+                    public string AModelId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                    public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1); set => LinkObject(1, value); }
                 }
             }
 
@@ -414,11 +395,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get; set; }
 
                 public struct READER
                 {
@@ -441,11 +418,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -519,11 +492,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get; set; }
 
                 public struct READER
                 {
@@ -547,11 +516,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                    {
-                        get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -569,7 +534,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.UserMaster.Params_AvailableModels.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.UserMaster.Params_AvailableModels()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(17024388203168484192UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -578,16 +544,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.UserMaster.Result_AvailableModels>(d_);
                         return (r_.Factories);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
                 var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -606,6 +571,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 17024388203168484192UL;
+
             Task<AnswerOrCounterquestion> AvailableModels(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -613,12 +579,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.AvailableModels(cancellationToken_), factories =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.UserMaster.Result_AvailableModels.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.UserMaster.Result_AvailableModels{Factories = factories};
+                        var r_ = new Mas.Schema.Cluster.Cluster.UserMaster.Result_AvailableModels
+                        {
+                            Factories = factories
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -695,11 +662,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get; set; }
 
                 public struct READER
                 {
@@ -723,11 +686,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                    {
-                        get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -749,7 +708,10 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Params_RegisterModelInstanceFactory.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Runtime.Params_RegisterModelInstanceFactory()
-                {AModelId = aModelId, AFactory = aFactory};
+                {
+                    AModelId = aModelId,
+                    AFactory = aFactory
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(17890976748353111926UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -758,16 +720,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.Runtime.Result_RegisterModelInstanceFactory>(d_);
                         return (r_.Unregister);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>> AvailableModels(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Params_AvailableModels.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Runtime.Params_AvailableModels()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(17890976748353111926UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -776,16 +737,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.Runtime.Result_AvailableModels>(d_);
                         return (r_.Factories);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task<short> NumberOfCores(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Params_NumberOfCores.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Runtime.Params_NumberOfCores()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(17890976748353111926UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -798,7 +758,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Params_FreeNumberOfCores.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Runtime.Params_FreeNumberOfCores()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(17890976748353111926UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -811,7 +772,10 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Params_ReserveNumberOfCores.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.Runtime.Params_ReserveNumberOfCores()
-                {ReserveCores = reserveCores, AModelId = aModelId};
+                {
+                    ReserveCores = reserveCores,
+                    AModelId = aModelId
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(17890976748353111926UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -824,7 +788,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
                 var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -843,6 +808,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 17890976748353111926UL;
+
             Task<AnswerOrCounterquestion> RegisterModelInstanceFactory(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -851,12 +817,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.RegisterModelInstanceFactory(in_.AModelId, in_.AFactory, cancellationToken_), unregister =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Result_RegisterModelInstanceFactory.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_RegisterModelInstanceFactory{Unregister = unregister};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_RegisterModelInstanceFactory
+                        {
+                            Unregister = unregister
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -867,12 +834,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.AvailableModels(cancellationToken_), factories =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Result_AvailableModels.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_AvailableModels{Factories = factories};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_AvailableModels
+                        {
+                            Factories = factories
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -883,12 +851,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.NumberOfCores(cancellationToken_), cores =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Result_NumberOfCores.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_NumberOfCores{Cores = cores};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_NumberOfCores
+                        {
+                            Cores = cores
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -899,12 +868,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.FreeNumberOfCores(cancellationToken_), cores =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Result_FreeNumberOfCores.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_FreeNumberOfCores{Cores = cores};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_FreeNumberOfCores
+                        {
+                            Cores = cores
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -916,12 +886,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.ReserveNumberOfCores(in_.ReserveCores, in_.AModelId, cancellationToken_), reservedCores =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.Runtime.Result_ReserveNumberOfCores.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_ReserveNumberOfCores{ReservedCores = reservedCores};
+                        var r_ = new Mas.Schema.Cluster.Cluster.Runtime.Result_ReserveNumberOfCores
+                        {
+                            ReservedCores = reservedCores
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -955,17 +926,8 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public string AModelId
-                {
-                    get;
-                    set;
-                }
-
-                public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
-                {
-                    get;
-                    set;
-                }
+                public string AModelId { get; set; }
+                public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get; set; }
 
                 public struct READER
                 {
@@ -989,17 +951,8 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 2);
                     }
 
-                    public string AModelId
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
-
-                    public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1);
-                        set => LinkObject(1, value);
-                    }
+                    public string AModelId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                    public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1); set => LinkObject(1, value); }
                 }
             }
 
@@ -1028,11 +981,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get; set; }
 
                 public struct READER
                 {
@@ -1055,11 +1004,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -1133,11 +1078,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get; set; }
 
                 public struct READER
                 {
@@ -1161,11 +1102,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories
-                    {
-                        get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory> Factories { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>>(0); set => Link(0, value); }
                 }
             }
 
@@ -1239,11 +1176,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short Cores
-                {
-                    get;
-                    set;
-                }
+                public short Cores { get; set; }
 
                 public struct READER
                 {
@@ -1266,11 +1199,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short Cores
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short Cores { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
 
@@ -1344,11 +1273,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short Cores
-                {
-                    get;
-                    set;
-                }
+                public short Cores { get; set; }
 
                 public struct READER
                 {
@@ -1371,11 +1296,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short Cores
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short Cores { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
 
@@ -1406,17 +1327,8 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short ReserveCores
-                {
-                    get;
-                    set;
-                }
-
-                public string AModelId
-                {
-                    get;
-                    set;
-                }
+                public short ReserveCores { get; set; }
+                public string AModelId { get; set; }
 
                 public struct READER
                 {
@@ -1440,17 +1352,8 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 1);
                     }
 
-                    public short ReserveCores
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
-
-                    public string AModelId
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
+                    public short ReserveCores { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
+                    public string AModelId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
                 }
             }
 
@@ -1479,11 +1382,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short ReservedCores
-                {
-                    get;
-                    set;
-                }
+                public short ReservedCores { get; set; }
 
                 public struct READER
                 {
@@ -1506,11 +1405,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short ReservedCores
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short ReservedCores { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
         }
@@ -1542,17 +1437,8 @@ namespace Mas.Schema.Cluster
             {
             }
 
-            public string Input
-            {
-                get;
-                set;
-            }
-
-            public string Output
-            {
-                get;
-                set;
-            }
+            public string Input { get; set; }
+            public string Output { get; set; }
 
             public struct READER
             {
@@ -1576,17 +1462,8 @@ namespace Mas.Schema.Cluster
                     this.SetStruct(0, 2);
                 }
 
-                public string Input
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public string Output
-                {
-                    get => this.ReadText(1, null);
-                    set => this.WriteText(1, value, null);
-                }
+                public string Input { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public string Output { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
             }
         }
 
@@ -1604,7 +1481,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Params_Value.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Params_Value()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(15469003256364184776UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1613,16 +1491,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Result_Value>(d_);
                         return (r_.Val);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task Release(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Params_Release.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Params_Release()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(15469003256364184776UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1641,6 +1518,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 15469003256364184776UL;
+
             Task<AnswerOrCounterquestion> Value(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1648,12 +1526,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.Value(cancellationToken_), val =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Result_Value.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Result_Value{Val = val};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ValueHolder<TT>.Result_Value
+                        {
+                            Val = val
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -1741,11 +1620,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public TT Val
-                {
-                    get;
-                    set;
-                }
+                public TT Val { get; set; }
 
                 public struct READER
                 {
@@ -1768,11 +1643,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public DynamicSerializerState Val
-                    {
-                        get => BuildPointer<DynamicSerializerState>(0);
-                        set => Link(0, value);
-                    }
+                    public DynamicSerializerState Val { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
                 }
             }
 
@@ -1886,7 +1757,8 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewInstance.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewInstance()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1895,16 +1767,16 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstance>(d_);
                         return (r_.Instance);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>>> NewInstances(short numberOfInstances, CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewInstances.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewInstances()
-                {NumberOfInstances = numberOfInstances};
+                {
+                    NumberOfInstances = numberOfInstances
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1913,16 +1785,16 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstances>(d_);
                         return (r_.Instances);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses>> NewCloudViaZmqPipelineProxies(short numberOfInstances, CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewCloudViaZmqPipelineProxies.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewCloudViaZmqPipelineProxies()
-                {NumberOfInstances = numberOfInstances};
+                {
+                    NumberOfInstances = numberOfInstances
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1931,16 +1803,16 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaZmqPipelineProxies>(d_);
                         return (r_.ProxyAddresses);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<Mas.Schema.Cluster.Cluster.IValueHolder<object>> NewCloudViaProxy(short numberOfInstances, CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewCloudViaProxy.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_NewCloudViaProxy()
-                {NumberOfInstances = numberOfInstances};
+                {
+                    NumberOfInstances = numberOfInstances
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1949,16 +1821,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaProxy>(d_);
                         return (r_.Proxy);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task<string> ModelId(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_ModelId.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_ModelId()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(18273735479106932414UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1971,7 +1842,10 @@ namespace Mas.Schema.Cluster
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_RegisterModelInstance.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_RegisterModelInstance()
-                {Instance = instance, RegistrationToken = registrationToken};
+                {
+                    Instance = instance,
+                    RegistrationToken = registrationToken
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 5, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1980,16 +1854,16 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RegisterModelInstance>(d_);
                         return (r_.Unregister);
                     }
-                }
-
-                );
+                });
             }
 
             public Task<Mas.Schema.Cluster.Cluster.IValueHolder<object>> RestoreSturdyRef(string sturdyRef, CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_RestoreSturdyRef.WRITER>();
                 var arg_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Params_RestoreSturdyRef()
-                {SturdyRef = sturdyRef};
+                {
+                    SturdyRef = sturdyRef
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(18273735479106932414UL, 6, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -1998,16 +1872,15 @@ namespace Mas.Schema.Cluster
                         var r_ = CapnpSerializable.Create<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RestoreSturdyRef>(d_);
                         return (r_.Cap);
                     }
-                }
-
-                );
+                });
             }
 
             public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
                 var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -2026,6 +1899,7 @@ namespace Mas.Schema.Cluster
             }
 
             public override ulong InterfaceId => 18273735479106932414UL;
+
             Task<AnswerOrCounterquestion> NewInstance(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -2033,12 +1907,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.NewInstance(cancellationToken_), instance =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstance.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstance{Instance = instance};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstance
+                        {
+                            Instance = instance
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2050,12 +1925,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.NewInstances(in_.NumberOfInstances, cancellationToken_), instances =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstances.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstances{Instances = instances};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewInstances
+                        {
+                            Instances = instances
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2067,12 +1943,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.NewCloudViaZmqPipelineProxies(in_.NumberOfInstances, cancellationToken_), proxyAddresses =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaZmqPipelineProxies.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaZmqPipelineProxies{ProxyAddresses = proxyAddresses};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaZmqPipelineProxies
+                        {
+                            ProxyAddresses = proxyAddresses
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2084,12 +1961,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.NewCloudViaProxy(in_.NumberOfInstances, cancellationToken_), proxy =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaProxy.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaProxy{Proxy = proxy};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_NewCloudViaProxy
+                        {
+                            Proxy = proxy
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2100,12 +1978,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.ModelId(cancellationToken_), id =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_ModelId.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_ModelId{Id = id};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_ModelId
+                        {
+                            Id = id
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2117,12 +1996,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.RegisterModelInstance(in_.Instance, in_.RegistrationToken, cancellationToken_), unregister =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RegisterModelInstance.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RegisterModelInstance{Unregister = unregister};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RegisterModelInstance
+                        {
+                            Unregister = unregister
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
 
@@ -2134,12 +2014,13 @@ namespace Mas.Schema.Cluster
                     return Impatient.MaybeTailCall(Impl.RestoreSturdyRef(in_.SturdyRef, cancellationToken_), cap =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RestoreSturdyRef.WRITER>();
-                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RestoreSturdyRef{Cap = cap};
+                        var r_ = new Mas.Schema.Cluster.Cluster.ModelInstanceFactory.Result_RestoreSturdyRef
+                        {
+                            Cap = cap
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -2216,11 +2097,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Instance
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Instance { get; set; }
 
                 public struct READER
                 {
@@ -2243,11 +2120,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Instance
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Instance { get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -2276,11 +2149,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short NumberOfInstances
-                {
-                    get;
-                    set;
-                }
+                public short NumberOfInstances { get; set; }
 
                 public struct READER
                 {
@@ -2303,11 +2172,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short NumberOfInstances
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short NumberOfInstances { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
 
@@ -2336,11 +2201,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>> Instances
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>> Instances { get; set; }
 
                 public struct READER
                 {
@@ -2363,11 +2224,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>> Instances
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>>>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>> Instances { get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<IReadOnlyList<Mas.Schema.Cluster.Cluster.IValueHolder<object>>>>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -2396,11 +2253,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short NumberOfInstances
-                {
-                    get;
-                    set;
-                }
+                public short NumberOfInstances { get; set; }
 
                 public struct READER
                 {
@@ -2423,11 +2276,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short NumberOfInstances
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short NumberOfInstances { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
 
@@ -2456,11 +2305,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses> ProxyAddresses
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses> ProxyAddresses { get; set; }
 
                 public struct READER
                 {
@@ -2483,11 +2328,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses> ProxyAddresses
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses>>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses> ProxyAddresses { get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<Mas.Schema.Cluster.Cluster.ZmqPipelineAddresses>>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -2516,11 +2357,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public short NumberOfInstances
-                {
-                    get;
-                    set;
-                }
+                public short NumberOfInstances { get; set; }
 
                 public struct READER
                 {
@@ -2543,11 +2380,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(1, 0);
                     }
 
-                    public short NumberOfInstances
-                    {
-                        get => this.ReadDataShort(0UL, (short)0);
-                        set => this.WriteData(0UL, value, (short)0);
-                    }
+                    public short NumberOfInstances { get => this.ReadDataShort(0UL, (short)0); set => this.WriteData(0UL, value, (short)0); }
                 }
             }
 
@@ -2576,11 +2409,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Proxy
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Proxy { get; set; }
 
                 public struct READER
                 {
@@ -2603,11 +2432,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Proxy
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Proxy { get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -2681,11 +2506,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public string Id
-                {
-                    get;
-                    set;
-                }
+                public string Id { get; set; }
 
                 public struct READER
                 {
@@ -2708,11 +2529,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public string Id
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
+                    public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
                 }
             }
 
@@ -2744,17 +2561,8 @@ namespace Mas.Schema.Cluster
                     RegistrationToken = RegistrationToken ?? "";
                 }
 
-                public BareProxy Instance
-                {
-                    get;
-                    set;
-                }
-
-                public string RegistrationToken
-                {
-                    get;
-                    set;
-                }
+                public BareProxy Instance { get; set; }
+                public string RegistrationToken { get; set; }
 
                 public struct READER
                 {
@@ -2778,17 +2586,8 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 2);
                     }
 
-                    public BareProxy Instance
-                    {
-                        get => ReadCap<BareProxy>(0);
-                        set => LinkObject(0, value);
-                    }
-
-                    public string RegistrationToken
-                    {
-                        get => this.ReadText(1, "");
-                        set => this.WriteText(1, value, "");
-                    }
+                    public BareProxy Instance { get => ReadCap<BareProxy>(0); set => LinkObject(0, value); }
+                    public string RegistrationToken { get => this.ReadText(1, ""); set => this.WriteText(1, value, ""); }
                 }
             }
 
@@ -2817,11 +2616,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get; set; }
 
                 public struct READER
                 {
@@ -2844,11 +2639,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IUnregister Unregister { get => ReadCap<Mas.Schema.Cluster.Cluster.IUnregister>(0); set => LinkObject(0, value); }
                 }
             }
 
@@ -2877,11 +2668,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public string SturdyRef
-                {
-                    get;
-                    set;
-                }
+                public string SturdyRef { get; set; }
 
                 public struct READER
                 {
@@ -2904,11 +2691,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public string SturdyRef
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
+                    public string SturdyRef { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
                 }
             }
 
@@ -2937,11 +2720,7 @@ namespace Mas.Schema.Cluster
                 {
                 }
 
-                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Cap
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Cluster.Cluster.IValueHolder<object> Cap { get; set; }
 
                 public struct READER
                 {
@@ -2964,11 +2743,7 @@ namespace Mas.Schema.Cluster
                         this.SetStruct(0, 1);
                     }
 
-                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Cap
-                    {
-                        get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0);
-                        set => LinkObject(0, value);
-                    }
+                    public Mas.Schema.Cluster.Cluster.IValueHolder<object> Cap { get => ReadCap<Mas.Schema.Cluster.Cluster.IValueHolder<object>>(0); set => LinkObject(0, value); }
                 }
             }
         }

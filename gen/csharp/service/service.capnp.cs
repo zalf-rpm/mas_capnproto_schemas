@@ -25,7 +25,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Params_Heartbeat.WRITER>();
             var arg_ = new Mas.Schema.Service.Admin.Params_Heartbeat()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18357226832451728969UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -38,7 +39,9 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Params_SetTimeout.WRITER>();
             var arg_ = new Mas.Schema.Service.Admin.Params_SetTimeout()
-            {Seconds = seconds};
+            {
+                Seconds = seconds
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18357226832451728969UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -51,7 +54,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Admin.Params_Stop()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18357226832451728969UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -64,7 +68,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Params_Identities.WRITER>();
             var arg_ = new Mas.Schema.Service.Admin.Params_Identities()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18357226832451728969UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -77,7 +82,10 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Params_UpdateIdentity.WRITER>();
             var arg_ = new Mas.Schema.Service.Admin.Params_UpdateIdentity()
-            {OldId = oldId, NewInfo = newInfo};
+            {
+                OldId = oldId,
+                NewInfo = newInfo
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18357226832451728969UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -90,7 +98,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -109,6 +118,7 @@ namespace Mas.Schema.Service
         }
 
         public override ulong InterfaceId => 18357226832451728969UL;
+
         async Task<AnswerOrCounterquestion> Heartbeat(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -147,12 +157,13 @@ namespace Mas.Schema.Service
                 return Impatient.MaybeTailCall(Impl.Identities(cancellationToken_), infos =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Admin.Result_Identities.WRITER>();
-                    var r_ = new Mas.Schema.Service.Admin.Result_Identities{Infos = infos};
+                    var r_ = new Mas.Schema.Service.Admin.Result_Identities
+                    {
+                        Infos = infos
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -285,11 +296,7 @@ namespace Mas.Schema.Service
             {
             }
 
-            public ulong Seconds
-            {
-                get;
-                set;
-            }
+            public ulong Seconds { get; set; }
 
             public struct READER
             {
@@ -312,11 +319,7 @@ namespace Mas.Schema.Service
                     this.SetStruct(1, 0);
                 }
 
-                public ulong Seconds
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
+                public ulong Seconds { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
             }
         }
 
@@ -525,11 +528,7 @@ namespace Mas.Schema.Service
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IdInformation> Infos
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IdInformation> Infos { get; set; }
 
             public struct READER
             {
@@ -553,11 +552,7 @@ namespace Mas.Schema.Service
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Infos
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Infos { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -588,17 +583,8 @@ namespace Mas.Schema.Service
             {
             }
 
-            public string OldId
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.IdInformation NewInfo
-            {
-                get;
-                set;
-            }
+            public string OldId { get; set; }
+            public Mas.Schema.Common.IdInformation NewInfo { get; set; }
 
             public struct READER
             {
@@ -623,17 +609,8 @@ namespace Mas.Schema.Service
                     this.SetStruct(0, 2);
                 }
 
-                public string OldId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public Mas.Schema.Common.IdInformation.WRITER NewInfo
-                {
-                    get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public string OldId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public Mas.Schema.Common.IdInformation.WRITER NewInfo { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -696,7 +673,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.SimpleFactory.Params_Create.WRITER>();
             var arg_ = new Mas.Schema.Service.SimpleFactory.Params_Create()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(12368435515802915787UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -705,16 +683,15 @@ namespace Mas.Schema.Service
                     var r_ = CapnpSerializable.Create<Mas.Schema.Service.SimpleFactory.Result_Create>(d_);
                     return (r_.Caps);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -733,6 +710,7 @@ namespace Mas.Schema.Service
         }
 
         public override ulong InterfaceId => 12368435515802915787UL;
+
         Task<AnswerOrCounterquestion> Create(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -740,12 +718,13 @@ namespace Mas.Schema.Service
                 return Impatient.MaybeTailCall(Impl.Create(cancellationToken_), caps =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.SimpleFactory.Result_Create.WRITER>();
-                    var r_ = new Mas.Schema.Service.SimpleFactory.Result_Create{Caps = caps};
+                    var r_ = new Mas.Schema.Service.SimpleFactory.Result_Create
+                    {
+                        Caps = caps
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -822,11 +801,7 @@ namespace Mas.Schema.Service
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> Caps
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> Caps { get; set; }
 
             public struct READER
             {
@@ -850,11 +825,7 @@ namespace Mas.Schema.Service
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> Caps
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> Caps { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0); set => Link(0, value); }
             }
         }
     }
@@ -880,16 +851,15 @@ namespace Mas.Schema.Service
                     var r_ = CapnpSerializable.Create<Mas.Schema.Service.Factory<TPayload>.AccessInfo>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<IReadOnlyList<string>> ServiceInterfaceNames(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Factory<TPayload>.Params_ServiceInterfaceNames.WRITER>();
             var arg_ = new Mas.Schema.Service.Factory<TPayload>.Params_ServiceInterfaceNames()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(9993747855068011647UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -902,7 +872,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -921,6 +892,7 @@ namespace Mas.Schema.Service
         }
 
         public override ulong InterfaceId => 9993747855068011647UL;
+
         Task<AnswerOrCounterquestion> Create(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -930,9 +902,7 @@ namespace Mas.Schema.Service
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Factory<TPayload>.AccessInfo.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -943,12 +913,13 @@ namespace Mas.Schema.Service
                 return Impatient.MaybeTailCall(Impl.ServiceInterfaceNames(cancellationToken_), names =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Factory<TPayload>.Result_ServiceInterfaceNames.WRITER>();
-                    var r_ = new Mas.Schema.Service.Factory<TPayload>.Result_ServiceInterfaceNames{Names = names};
+                    var r_ = new Mas.Schema.Service.Factory<TPayload>.Result_ServiceInterfaceNames
+                    {
+                        Names = names
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -985,24 +956,9 @@ namespace Mas.Schema.Service
             {
             }
 
-            public ulong TimeoutSeconds
-            {
-                get;
-                set;
-            }
-
-            = 3600UL;
-            public IReadOnlyList<Mas.Schema.Common.Pair<string, string>> InterfaceNameToRegistrySR
-            {
-                get;
-                set;
-            }
-
-            public TPayload MsgPayload
-            {
-                get;
-                set;
-            }
+            public ulong TimeoutSeconds { get; set; } = 3600UL;
+            public IReadOnlyList<Mas.Schema.Common.Pair<string, string>> InterfaceNameToRegistrySR { get; set; }
+            public TPayload MsgPayload { get; set; }
 
             public struct READER
             {
@@ -1028,23 +984,9 @@ namespace Mas.Schema.Service
                     this.SetStruct(1, 2);
                 }
 
-                public ulong TimeoutSeconds
-                {
-                    get => this.ReadDataULong(0UL, 3600UL);
-                    set => this.WriteData(0UL, value, 3600UL);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER> InterfaceNameToRegistrySR
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER>>(0);
-                    set => Link(0, value);
-                }
-
-                public DynamicSerializerState MsgPayload
-                {
-                    get => BuildPointer<DynamicSerializerState>(1);
-                    set => Link(1, value);
-                }
+                public ulong TimeoutSeconds { get => this.ReadDataULong(0UL, 3600UL); set => this.WriteData(0UL, value, 3600UL); }
+                public ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER> InterfaceNameToRegistrySR { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<string, string>.WRITER>>(0); set => Link(0, value); }
+                public DynamicSerializerState MsgPayload { get => BuildPointer<DynamicSerializerState>(1); set => Link(1, value); }
             }
         }
 
@@ -1077,23 +1019,9 @@ namespace Mas.Schema.Service
             {
             }
 
-            public BareProxy AdminCap
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> ServiceCaps
-            {
-                get;
-                set;
-            }
-
-            public string Error
-            {
-                get;
-                set;
-            }
+            public BareProxy AdminCap { get; set; }
+            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> ServiceCaps { get; set; }
+            public string Error { get; set; }
 
             public struct READER
             {
@@ -1119,23 +1047,9 @@ namespace Mas.Schema.Service
                     this.SetStruct(0, 3);
                 }
 
-                public BareProxy AdminCap
-                {
-                    get => ReadCap<BareProxy>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> ServiceCaps
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(1);
-                    set => Link(1, value);
-                }
-
-                public string Error
-                {
-                    get => this.ReadText(2, null);
-                    set => this.WriteText(2, value, null);
-                }
+                public BareProxy AdminCap { get => ReadCap<BareProxy>(0); set => LinkObject(0, value); }
+                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> ServiceCaps { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(1); set => Link(1, value); }
+                public string Error { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
             }
         }
 
@@ -1209,11 +1123,7 @@ namespace Mas.Schema.Service
             {
             }
 
-            public IReadOnlyList<string> Names
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<string> Names { get; set; }
 
             public struct READER
             {
@@ -1237,11 +1147,7 @@ namespace Mas.Schema.Service
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfTextSerializer Names
-                {
-                    get => BuildPointer<ListOfTextSerializer>(0);
-                    set => Link(0, value);
-                }
+                public ListOfTextSerializer Names { get => BuildPointer<ListOfTextSerializer>(0); set => Link(0, value); }
             }
         }
     }
@@ -1259,7 +1165,8 @@ namespace Mas.Schema.Service
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1278,6 +1185,7 @@ namespace Mas.Schema.Service
         }
 
         public override ulong InterfaceId => 16848456770422576869UL;
+
         async Task<AnswerOrCounterquestion> Stop(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)

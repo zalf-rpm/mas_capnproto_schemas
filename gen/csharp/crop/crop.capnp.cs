@@ -23,7 +23,8 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Params_Parameters.WRITER>();
             var arg_ = new Mas.Schema.Crop.Crop.Params_Parameters()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(16757216515467467908UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -32,16 +33,15 @@ namespace Mas.Schema.Crop
                     var r_ = CapnpSerializable.Create<Mas.Schema.Crop.Crop.Result_Parameters>(d_);
                     return (r_.Params);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Cultivar(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Params_Cultivar.WRITER>();
             var arg_ = new Mas.Schema.Crop.Crop.Params_Cultivar()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16757216515467467908UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -54,7 +54,8 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Params_Species.WRITER>();
             var arg_ = new Mas.Schema.Crop.Crop.Params_Species()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(16757216515467467908UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -78,7 +79,8 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -97,6 +99,7 @@ namespace Mas.Schema.Crop
         }
 
         public override ulong InterfaceId => 16757216515467467908UL;
+
         Task<AnswerOrCounterquestion> Parameters(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -104,12 +107,13 @@ namespace Mas.Schema.Crop
                 return Impatient.MaybeTailCall(Impl.Parameters(cancellationToken_), @params =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Result_Parameters.WRITER>();
-                    var r_ = new Mas.Schema.Crop.Crop.Result_Parameters{Params = @params};
+                    var r_ = new Mas.Schema.Crop.Crop.Result_Parameters
+                    {
+                        Params = @params
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -120,12 +124,13 @@ namespace Mas.Schema.Crop
                 return Impatient.MaybeTailCall(Impl.Cultivar(cancellationToken_), info =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Result_Cultivar.WRITER>();
-                    var r_ = new Mas.Schema.Crop.Crop.Result_Cultivar{Info = info};
+                    var r_ = new Mas.Schema.Crop.Crop.Result_Cultivar
+                    {
+                        Info = info
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -136,12 +141,13 @@ namespace Mas.Schema.Crop
                 return Impatient.MaybeTailCall(Impl.Species(cancellationToken_), info =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Crop.Crop.Result_Species.WRITER>();
-                    var r_ = new Mas.Schema.Crop.Crop.Result_Species{Info = info};
+                    var r_ = new Mas.Schema.Crop.Crop.Result_Species
+                    {
+                        Info = info
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -218,11 +224,7 @@ namespace Mas.Schema.Crop
             {
             }
 
-            public object Params
-            {
-                get;
-                set;
-            }
+            public object Params { get; set; }
 
             public struct READER
             {
@@ -245,11 +247,7 @@ namespace Mas.Schema.Crop
                     this.SetStruct(0, 1);
                 }
 
-                public DynamicSerializerState Params
-                {
-                    get => BuildPointer<DynamicSerializerState>(0);
-                    set => Link(0, value);
-                }
+                public DynamicSerializerState Params { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
             }
         }
 
@@ -323,11 +321,7 @@ namespace Mas.Schema.Crop
             {
             }
 
-            public Mas.Schema.Common.IdInformation Info
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.IdInformation Info { get; set; }
 
             public struct READER
             {
@@ -351,11 +345,7 @@ namespace Mas.Schema.Crop
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Common.IdInformation.WRITER Info
-                {
-                    get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Common.IdInformation.WRITER Info { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -429,11 +419,7 @@ namespace Mas.Schema.Crop
             {
             }
 
-            public Mas.Schema.Common.IdInformation Info
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.IdInformation Info { get; set; }
 
             public struct READER
             {
@@ -457,11 +443,7 @@ namespace Mas.Schema.Crop
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Common.IdInformation.WRITER Info
-                {
-                    get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Common.IdInformation.WRITER Info { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
             }
         }
     }
@@ -478,7 +460,8 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_SupportedCategories.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_SupportedCategories()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -491,7 +474,9 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_CategoryInfo.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_CategoryInfo()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -504,7 +489,9 @@ namespace Mas.Schema.Crop
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_Entries.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_Entries()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14590338780428121016UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -513,16 +500,15 @@ namespace Mas.Schema.Crop
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Registry.Result_Entries>(d_);
                     return (r_.Entries);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {

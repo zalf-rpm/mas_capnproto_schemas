@@ -35,17 +35,8 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.CropParameters CropParams
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropParameters CropParams { get; set; }
+        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams { get; set; }
 
         public struct READER
         {
@@ -71,17 +62,8 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Model.Monica.CropParameters.WRITER CropParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.CropParameters.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Model.Monica.CropResidueParameters.WRITER ResidueParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.CropResidueParameters.WRITER>(1);
-                set => Link(1, value);
-            }
+            public Mas.Schema.Model.Monica.CropParameters.WRITER CropParams { get => BuildPointer<Mas.Schema.Model.Monica.CropParameters.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Model.Monica.CropResidueParameters.WRITER ResidueParams { get => BuildPointer<Mas.Schema.Model.Monica.CropResidueParameters.WRITER>(1); set => Link(1, value); }
         }
     }
 
@@ -112,17 +94,8 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.SpeciesParameters SpeciesParams
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.CultivarParameters CultivarParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SpeciesParameters SpeciesParams { get; set; }
+        public Mas.Schema.Model.Monica.CultivarParameters CultivarParams { get; set; }
 
         public struct READER
         {
@@ -148,17 +121,8 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Model.Monica.SpeciesParameters.WRITER SpeciesParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.SpeciesParameters.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Model.Monica.CultivarParameters.WRITER CultivarParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.CultivarParameters.WRITER>(1);
-                set => Link(1, value);
-            }
+            public Mas.Schema.Model.Monica.SpeciesParameters.WRITER SpeciesParams { get => BuildPointer<Mas.Schema.Model.Monica.SpeciesParameters.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Model.Monica.CultivarParameters.WRITER CultivarParams { get => BuildPointer<Mas.Schema.Model.Monica.CultivarParameters.WRITER>(1); set => Link(1, value); }
         }
     }
 
@@ -295,345 +259,62 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public string SpeciesId
-        {
-            get;
-            set;
-        }
+        public string SpeciesId { get; set; }
+        public byte CarboxylationPathway { get; set; }
+        public double DefaultRadiationUseEfficiency { get; set; }
+        public double PartBiologicalNFixation { get; set; }
+        public double InitialKcFactor { get; set; }
+        public double LuxuryNCoeff { get; set; }
+        public double MaxCropDiameter { get; set; }
+        public double StageAtMaxHeight { get; set; }
+        public double StageAtMaxDiameter { get; set; }
+        public double MinimumNConcentration { get; set; }
+        public double MinimumTemperatureForAssimilation { get; set; }
+        public double OptimumTemperatureForAssimilation { get; set; }
+        public double MaximumTemperatureForAssimilation { get; set; }
+        public double NConcentrationAbovegroundBiomass { get; set; }
+        public double NConcentrationB0 { get; set; }
+        public double NConcentrationPN { get; set; }
+        public double NConcentrationRoot { get; set; }
+        public ushort DevelopmentAccelerationByNitrogenStress { get; set; }
+        public double FieldConditionModifier { get; set; } = 1;
+        public double AssimilateReallocation { get; set; }
+        public IReadOnlyList<double> BaseTemperature { get; set; }
+        public IReadOnlyList<double> OrganMaintenanceRespiration { get; set; }
+        public IReadOnlyList<double> OrganGrowthRespiration { get; set; }
+        public IReadOnlyList<double> StageMaxRootNConcentration { get; set; }
+        public IReadOnlyList<double> InitialOrganBiomass { get; set; }
+        public IReadOnlyList<double> CriticalOxygenContent { get; set; }
+        public IReadOnlyList<double> StageMobilFromStorageCoeff { get; set; }
+        public IReadOnlyList<bool> AbovegroundOrgan { get; set; }
+        public IReadOnlyList<bool> StorageOrgan { get; set; }
+        public double SamplingDepth { get; set; }
+        public double TargetNSamplingDepth { get; set; }
+        public double TargetN30 { get; set; }
+        public double MaxNUptakeParam { get; set; }
+        public double RootDistributionParam { get; set; }
+        public ushort PlantDensity { get; set; }
+        public double RootGrowthLag { get; set; }
+        public double MinimumTemperatureRootGrowth { get; set; }
+        public double InitialRootingDepth { get; set; }
+        public double RootPenetrationRate { get; set; }
+        public double RootFormFactor { get; set; }
+        public double SpecificRootLength { get; set; }
+        public ushort StageAfterCut { get; set; }
+        public double LimitingTemperatureHeatStress { get; set; }
+        public ushort CuttingDelayDays { get; set; }
+        public double DroughtImpactOnFertilityFactor { get; set; }
+        public double EfMono { get; set; } = 0.5;
+        public double EfMonos { get; set; } = 0.5;
+        public double EfIso { get; set; }
+        public double VcMax25 { get; set; }
+        public double Aekc { get; set; } = 65800;
+        public double Aeko { get; set; } = 1400;
+        public double Aevc { get; set; } = 68800;
+        public double Kc25 { get; set; } = 460;
+        public double Ko25 { get; set; } = 330;
+        public short TransitionStageLeafExp { get; set; } = -1;
 
-        public byte CarboxylationPathway
-        {
-            get;
-            set;
-        }
-
-        public double DefaultRadiationUseEfficiency
-        {
-            get;
-            set;
-        }
-
-        public double PartBiologicalNFixation
-        {
-            get;
-            set;
-        }
-
-        public double InitialKcFactor
-        {
-            get;
-            set;
-        }
-
-        public double LuxuryNCoeff
-        {
-            get;
-            set;
-        }
-
-        public double MaxCropDiameter
-        {
-            get;
-            set;
-        }
-
-        public double StageAtMaxHeight
-        {
-            get;
-            set;
-        }
-
-        public double StageAtMaxDiameter
-        {
-            get;
-            set;
-        }
-
-        public double MinimumNConcentration
-        {
-            get;
-            set;
-        }
-
-        public double MinimumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double OptimumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double MaximumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationAbovegroundBiomass
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationB0
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationPN
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationRoot
-        {
-            get;
-            set;
-        }
-
-        public ushort DevelopmentAccelerationByNitrogenStress
-        {
-            get;
-            set;
-        }
-
-        public double FieldConditionModifier
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double AssimilateReallocation
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> BaseTemperature
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganMaintenanceRespiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganGrowthRespiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> StageMaxRootNConcentration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> InitialOrganBiomass
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CriticalOxygenContent
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> StageMobilFromStorageCoeff
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<bool> AbovegroundOrgan
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<bool> StorageOrgan
-        {
-            get;
-            set;
-        }
-
-        public double SamplingDepth
-        {
-            get;
-            set;
-        }
-
-        public double TargetNSamplingDepth
-        {
-            get;
-            set;
-        }
-
-        public double TargetN30
-        {
-            get;
-            set;
-        }
-
-        public double MaxNUptakeParam
-        {
-            get;
-            set;
-        }
-
-        public double RootDistributionParam
-        {
-            get;
-            set;
-        }
-
-        public ushort PlantDensity
-        {
-            get;
-            set;
-        }
-
-        public double RootGrowthLag
-        {
-            get;
-            set;
-        }
-
-        public double MinimumTemperatureRootGrowth
-        {
-            get;
-            set;
-        }
-
-        public double InitialRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double RootPenetrationRate
-        {
-            get;
-            set;
-        }
-
-        public double RootFormFactor
-        {
-            get;
-            set;
-        }
-
-        public double SpecificRootLength
-        {
-            get;
-            set;
-        }
-
-        public ushort StageAfterCut
-        {
-            get;
-            set;
-        }
-
-        public double LimitingTemperatureHeatStress
-        {
-            get;
-            set;
-        }
-
-        public ushort CuttingDelayDays
-        {
-            get;
-            set;
-        }
-
-        public double DroughtImpactOnFertilityFactor
-        {
-            get;
-            set;
-        }
-
-        public double EfMono
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double EfMonos
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double EfIso
-        {
-            get;
-            set;
-        }
-
-        public double VcMax25
-        {
-            get;
-            set;
-        }
-
-        public double Aekc
-        {
-            get;
-            set;
-        }
-
-        = 65800;
-        public double Aeko
-        {
-            get;
-            set;
-        }
-
-        = 1400;
-        public double Aevc
-        {
-            get;
-            set;
-        }
-
-        = 68800;
-        public double Kc25
-        {
-            get;
-            set;
-        }
-
-        = 460;
-        public double Ko25
-        {
-            get;
-            set;
-        }
-
-        = 330;
-        public short TransitionStageLeafExp
-        {
-            get;
-            set;
-        }
-
-        = -1;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -718,335 +399,61 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(41, 10);
             }
 
-            public string SpeciesId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public byte CarboxylationPathway
-            {
-                get => this.ReadDataByte(0UL, (byte)0);
-                set => this.WriteData(0UL, value, (byte)0);
-            }
-
-            public double DefaultRadiationUseEfficiency
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double PartBiologicalNFixation
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double InitialKcFactor
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double LuxuryNCoeff
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double MaxCropDiameter
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double StageAtMaxHeight
-            {
-                get => this.ReadDataDouble(384UL, 0);
-                set => this.WriteData(384UL, value, 0);
-            }
-
-            public double StageAtMaxDiameter
-            {
-                get => this.ReadDataDouble(448UL, 0);
-                set => this.WriteData(448UL, value, 0);
-            }
-
-            public double MinimumNConcentration
-            {
-                get => this.ReadDataDouble(512UL, 0);
-                set => this.WriteData(512UL, value, 0);
-            }
-
-            public double MinimumTemperatureForAssimilation
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public double OptimumTemperatureForAssimilation
-            {
-                get => this.ReadDataDouble(640UL, 0);
-                set => this.WriteData(640UL, value, 0);
-            }
-
-            public double MaximumTemperatureForAssimilation
-            {
-                get => this.ReadDataDouble(704UL, 0);
-                set => this.WriteData(704UL, value, 0);
-            }
-
-            public double NConcentrationAbovegroundBiomass
-            {
-                get => this.ReadDataDouble(768UL, 0);
-                set => this.WriteData(768UL, value, 0);
-            }
-
-            public double NConcentrationB0
-            {
-                get => this.ReadDataDouble(832UL, 0);
-                set => this.WriteData(832UL, value, 0);
-            }
-
-            public double NConcentrationPN
-            {
-                get => this.ReadDataDouble(896UL, 0);
-                set => this.WriteData(896UL, value, 0);
-            }
-
-            public double NConcentrationRoot
-            {
-                get => this.ReadDataDouble(960UL, 0);
-                set => this.WriteData(960UL, value, 0);
-            }
-
-            public ushort DevelopmentAccelerationByNitrogenStress
-            {
-                get => this.ReadDataUShort(16UL, (ushort)0);
-                set => this.WriteData(16UL, value, (ushort)0);
-            }
-
-            public double FieldConditionModifier
-            {
-                get => this.ReadDataDouble(1024UL, 1);
-                set => this.WriteData(1024UL, value, 1);
-            }
-
-            public double AssimilateReallocation
-            {
-                get => this.ReadDataDouble(1088UL, 0);
-                set => this.WriteData(1088UL, value, 0);
-            }
-
-            public ListOfPrimitivesSerializer<double> BaseTemperature
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(1);
-                set => Link(1, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> OrganMaintenanceRespiration
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(2);
-                set => Link(2, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> OrganGrowthRespiration
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(3);
-                set => Link(3, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> StageMaxRootNConcentration
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(4);
-                set => Link(4, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> InitialOrganBiomass
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(5);
-                set => Link(5, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> CriticalOxygenContent
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(6);
-                set => Link(6, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> StageMobilFromStorageCoeff
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(7);
-                set => Link(7, value);
-            }
-
-            public ListOfBitsSerializer AbovegroundOrgan
-            {
-                get => BuildPointer<ListOfBitsSerializer>(8);
-                set => Link(8, value);
-            }
-
-            public ListOfBitsSerializer StorageOrgan
-            {
-                get => BuildPointer<ListOfBitsSerializer>(9);
-                set => Link(9, value);
-            }
-
-            public double SamplingDepth
-            {
-                get => this.ReadDataDouble(1152UL, 0);
-                set => this.WriteData(1152UL, value, 0);
-            }
-
-            public double TargetNSamplingDepth
-            {
-                get => this.ReadDataDouble(1216UL, 0);
-                set => this.WriteData(1216UL, value, 0);
-            }
-
-            public double TargetN30
-            {
-                get => this.ReadDataDouble(1280UL, 0);
-                set => this.WriteData(1280UL, value, 0);
-            }
-
-            public double MaxNUptakeParam
-            {
-                get => this.ReadDataDouble(1344UL, 0);
-                set => this.WriteData(1344UL, value, 0);
-            }
-
-            public double RootDistributionParam
-            {
-                get => this.ReadDataDouble(1408UL, 0);
-                set => this.WriteData(1408UL, value, 0);
-            }
-
-            public ushort PlantDensity
-            {
-                get => this.ReadDataUShort(32UL, (ushort)0);
-                set => this.WriteData(32UL, value, (ushort)0);
-            }
-
-            public double RootGrowthLag
-            {
-                get => this.ReadDataDouble(1472UL, 0);
-                set => this.WriteData(1472UL, value, 0);
-            }
-
-            public double MinimumTemperatureRootGrowth
-            {
-                get => this.ReadDataDouble(1536UL, 0);
-                set => this.WriteData(1536UL, value, 0);
-            }
-
-            public double InitialRootingDepth
-            {
-                get => this.ReadDataDouble(1600UL, 0);
-                set => this.WriteData(1600UL, value, 0);
-            }
-
-            public double RootPenetrationRate
-            {
-                get => this.ReadDataDouble(1664UL, 0);
-                set => this.WriteData(1664UL, value, 0);
-            }
-
-            public double RootFormFactor
-            {
-                get => this.ReadDataDouble(1728UL, 0);
-                set => this.WriteData(1728UL, value, 0);
-            }
-
-            public double SpecificRootLength
-            {
-                get => this.ReadDataDouble(1792UL, 0);
-                set => this.WriteData(1792UL, value, 0);
-            }
-
-            public ushort StageAfterCut
-            {
-                get => this.ReadDataUShort(48UL, (ushort)0);
-                set => this.WriteData(48UL, value, (ushort)0);
-            }
-
-            public double LimitingTemperatureHeatStress
-            {
-                get => this.ReadDataDouble(1856UL, 0);
-                set => this.WriteData(1856UL, value, 0);
-            }
-
-            public ushort CuttingDelayDays
-            {
-                get => this.ReadDataUShort(1920UL, (ushort)0);
-                set => this.WriteData(1920UL, value, (ushort)0);
-            }
-
-            public double DroughtImpactOnFertilityFactor
-            {
-                get => this.ReadDataDouble(1984UL, 0);
-                set => this.WriteData(1984UL, value, 0);
-            }
-
-            public double EfMono
-            {
-                get => this.ReadDataDouble(2048UL, 0.5);
-                set => this.WriteData(2048UL, value, 0.5);
-            }
-
-            public double EfMonos
-            {
-                get => this.ReadDataDouble(2112UL, 0.5);
-                set => this.WriteData(2112UL, value, 0.5);
-            }
-
-            public double EfIso
-            {
-                get => this.ReadDataDouble(2176UL, 0);
-                set => this.WriteData(2176UL, value, 0);
-            }
-
-            public double VcMax25
-            {
-                get => this.ReadDataDouble(2240UL, 0);
-                set => this.WriteData(2240UL, value, 0);
-            }
-
-            public double Aekc
-            {
-                get => this.ReadDataDouble(2304UL, 65800);
-                set => this.WriteData(2304UL, value, 65800);
-            }
-
-            public double Aeko
-            {
-                get => this.ReadDataDouble(2368UL, 1400);
-                set => this.WriteData(2368UL, value, 1400);
-            }
-
-            public double Aevc
-            {
-                get => this.ReadDataDouble(2432UL, 68800);
-                set => this.WriteData(2432UL, value, 68800);
-            }
-
-            public double Kc25
-            {
-                get => this.ReadDataDouble(2496UL, 460);
-                set => this.WriteData(2496UL, value, 460);
-            }
-
-            public double Ko25
-            {
-                get => this.ReadDataDouble(2560UL, 330);
-                set => this.WriteData(2560UL, value, 330);
-            }
-
-            public short TransitionStageLeafExp
-            {
-                get => this.ReadDataShort(1936UL, (short)-1);
-                set => this.WriteData(1936UL, value, (short)-1);
-            }
+            public string SpeciesId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public byte CarboxylationPathway { get => this.ReadDataByte(0UL, (byte)0); set => this.WriteData(0UL, value, (byte)0); }
+            public double DefaultRadiationUseEfficiency { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double PartBiologicalNFixation { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double InitialKcFactor { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double LuxuryNCoeff { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double MaxCropDiameter { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double StageAtMaxHeight { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+            public double StageAtMaxDiameter { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+            public double MinimumNConcentration { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+            public double MinimumTemperatureForAssimilation { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public double OptimumTemperatureForAssimilation { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+            public double MaximumTemperatureForAssimilation { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+            public double NConcentrationAbovegroundBiomass { get => this.ReadDataDouble(768UL, 0); set => this.WriteData(768UL, value, 0); }
+            public double NConcentrationB0 { get => this.ReadDataDouble(832UL, 0); set => this.WriteData(832UL, value, 0); }
+            public double NConcentrationPN { get => this.ReadDataDouble(896UL, 0); set => this.WriteData(896UL, value, 0); }
+            public double NConcentrationRoot { get => this.ReadDataDouble(960UL, 0); set => this.WriteData(960UL, value, 0); }
+            public ushort DevelopmentAccelerationByNitrogenStress { get => this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, value, (ushort)0); }
+            public double FieldConditionModifier { get => this.ReadDataDouble(1024UL, 1); set => this.WriteData(1024UL, value, 1); }
+            public double AssimilateReallocation { get => this.ReadDataDouble(1088UL, 0); set => this.WriteData(1088UL, value, 0); }
+            public ListOfPrimitivesSerializer<double> BaseTemperature { get => BuildPointer<ListOfPrimitivesSerializer<double>>(1); set => Link(1, value); }
+            public ListOfPrimitivesSerializer<double> OrganMaintenanceRespiration { get => BuildPointer<ListOfPrimitivesSerializer<double>>(2); set => Link(2, value); }
+            public ListOfPrimitivesSerializer<double> OrganGrowthRespiration { get => BuildPointer<ListOfPrimitivesSerializer<double>>(3); set => Link(3, value); }
+            public ListOfPrimitivesSerializer<double> StageMaxRootNConcentration { get => BuildPointer<ListOfPrimitivesSerializer<double>>(4); set => Link(4, value); }
+            public ListOfPrimitivesSerializer<double> InitialOrganBiomass { get => BuildPointer<ListOfPrimitivesSerializer<double>>(5); set => Link(5, value); }
+            public ListOfPrimitivesSerializer<double> CriticalOxygenContent { get => BuildPointer<ListOfPrimitivesSerializer<double>>(6); set => Link(6, value); }
+            public ListOfPrimitivesSerializer<double> StageMobilFromStorageCoeff { get => BuildPointer<ListOfPrimitivesSerializer<double>>(7); set => Link(7, value); }
+            public ListOfBitsSerializer AbovegroundOrgan { get => BuildPointer<ListOfBitsSerializer>(8); set => Link(8, value); }
+            public ListOfBitsSerializer StorageOrgan { get => BuildPointer<ListOfBitsSerializer>(9); set => Link(9, value); }
+            public double SamplingDepth { get => this.ReadDataDouble(1152UL, 0); set => this.WriteData(1152UL, value, 0); }
+            public double TargetNSamplingDepth { get => this.ReadDataDouble(1216UL, 0); set => this.WriteData(1216UL, value, 0); }
+            public double TargetN30 { get => this.ReadDataDouble(1280UL, 0); set => this.WriteData(1280UL, value, 0); }
+            public double MaxNUptakeParam { get => this.ReadDataDouble(1344UL, 0); set => this.WriteData(1344UL, value, 0); }
+            public double RootDistributionParam { get => this.ReadDataDouble(1408UL, 0); set => this.WriteData(1408UL, value, 0); }
+            public ushort PlantDensity { get => this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, value, (ushort)0); }
+            public double RootGrowthLag { get => this.ReadDataDouble(1472UL, 0); set => this.WriteData(1472UL, value, 0); }
+            public double MinimumTemperatureRootGrowth { get => this.ReadDataDouble(1536UL, 0); set => this.WriteData(1536UL, value, 0); }
+            public double InitialRootingDepth { get => this.ReadDataDouble(1600UL, 0); set => this.WriteData(1600UL, value, 0); }
+            public double RootPenetrationRate { get => this.ReadDataDouble(1664UL, 0); set => this.WriteData(1664UL, value, 0); }
+            public double RootFormFactor { get => this.ReadDataDouble(1728UL, 0); set => this.WriteData(1728UL, value, 0); }
+            public double SpecificRootLength { get => this.ReadDataDouble(1792UL, 0); set => this.WriteData(1792UL, value, 0); }
+            public ushort StageAfterCut { get => this.ReadDataUShort(48UL, (ushort)0); set => this.WriteData(48UL, value, (ushort)0); }
+            public double LimitingTemperatureHeatStress { get => this.ReadDataDouble(1856UL, 0); set => this.WriteData(1856UL, value, 0); }
+            public ushort CuttingDelayDays { get => this.ReadDataUShort(1920UL, (ushort)0); set => this.WriteData(1920UL, value, (ushort)0); }
+            public double DroughtImpactOnFertilityFactor { get => this.ReadDataDouble(1984UL, 0); set => this.WriteData(1984UL, value, 0); }
+            public double EfMono { get => this.ReadDataDouble(2048UL, 0.5); set => this.WriteData(2048UL, value, 0.5); }
+            public double EfMonos { get => this.ReadDataDouble(2112UL, 0.5); set => this.WriteData(2112UL, value, 0.5); }
+            public double EfIso { get => this.ReadDataDouble(2176UL, 0); set => this.WriteData(2176UL, value, 0); }
+            public double VcMax25 { get => this.ReadDataDouble(2240UL, 0); set => this.WriteData(2240UL, value, 0); }
+            public double Aekc { get => this.ReadDataDouble(2304UL, 65800); set => this.WriteData(2304UL, value, 65800); }
+            public double Aeko { get => this.ReadDataDouble(2368UL, 1400); set => this.WriteData(2368UL, value, 1400); }
+            public double Aevc { get => this.ReadDataDouble(2432UL, 68800); set => this.WriteData(2432UL, value, 68800); }
+            public double Kc25 { get => this.ReadDataDouble(2496UL, 460); set => this.WriteData(2496UL, value, 460); }
+            public double Ko25 { get => this.ReadDataDouble(2560UL, 330); set => this.WriteData(2560UL, value, 330); }
+            public short TransitionStageLeafExp { get => this.ReadDataShort(1936UL, (short)-1); set => this.WriteData(1936UL, value, (short)-1); }
         }
     }
 
@@ -1151,242 +558,45 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public string CultivarId
-        {
-            get;
-            set;
-        }
-
-        public string Description
-        {
-            get;
-            set;
-        }
-
-        public bool Perennial
-        {
-            get;
-            set;
-        }
-
-        public double MaxAssimilationRate
-        {
-            get;
-            set;
-        }
-
-        public double MaxCropHeight
-        {
-            get;
-            set;
-        }
-
-        public double ResidueNRatio
-        {
-            get;
-            set;
-        }
-
-        public double Lt50cultivar
-        {
-            get;
-            set;
-        }
-
-        public double CropHeightP1
-        {
-            get;
-            set;
-        }
-
-        public double CropHeightP2
-        {
-            get;
-            set;
-        }
-
-        public double CropSpecificMaxRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<IReadOnlyList<double>> AssimilatePartitioningCoeff
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<IReadOnlyList<double>> OrganSenescenceRate
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> BaseDaylength
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OptimumTemperature
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> DaylengthRequirement
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> DroughtStressThreshold
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> SpecificLeafArea
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> StageKcFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> StageTemperatureSum
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> VernalisationRequirement
-        {
-            get;
-            set;
-        }
-
-        public double HeatSumIrrigationStart
-        {
-            get;
-            set;
-        }
-
-        public double HeatSumIrrigationEnd
-        {
-            get;
-            set;
-        }
-
-        public double CriticalTemperatureHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double BeginSensitivePhaseHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double EndSensitivePhaseHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double FrostHardening
-        {
-            get;
-            set;
-        }
-
-        public double FrostDehardening
-        {
-            get;
-            set;
-        }
-
-        public double LowTemperatureExposure
-        {
-            get;
-            set;
-        }
-
-        public double RespiratoryStress
-        {
-            get;
-            set;
-        }
-
-        public short LatestHarvestDoy
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForPrimaryYield
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForSecondaryYield
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForCutting
-        {
-            get;
-            set;
-        }
-
-        public double EarlyRefLeafExp
-        {
-            get;
-            set;
-        }
-
-        = 12;
-        public double RefLeafExp
-        {
-            get;
-            set;
-        }
-
-        = 20;
-        public double MinTempDevWE
-        {
-            get;
-            set;
-        }
-
-        public double OptTempDevWE
-        {
-            get;
-            set;
-        }
-
-        public double MaxTempDevWE
-        {
-            get;
-            set;
-        }
-
-        public bool WinterCrop
-        {
-            get;
-            set;
-        }
+        public string CultivarId { get; set; }
+        public string Description { get; set; }
+        public bool Perennial { get; set; }
+        public double MaxAssimilationRate { get; set; }
+        public double MaxCropHeight { get; set; }
+        public double ResidueNRatio { get; set; }
+        public double Lt50cultivar { get; set; }
+        public double CropHeightP1 { get; set; }
+        public double CropHeightP2 { get; set; }
+        public double CropSpecificMaxRootingDepth { get; set; }
+        public IReadOnlyList<IReadOnlyList<double>> AssimilatePartitioningCoeff { get; set; }
+        public IReadOnlyList<IReadOnlyList<double>> OrganSenescenceRate { get; set; }
+        public IReadOnlyList<double> BaseDaylength { get; set; }
+        public IReadOnlyList<double> OptimumTemperature { get; set; }
+        public IReadOnlyList<double> DaylengthRequirement { get; set; }
+        public IReadOnlyList<double> DroughtStressThreshold { get; set; }
+        public IReadOnlyList<double> SpecificLeafArea { get; set; }
+        public IReadOnlyList<double> StageKcFactor { get; set; }
+        public IReadOnlyList<double> StageTemperatureSum { get; set; }
+        public IReadOnlyList<double> VernalisationRequirement { get; set; }
+        public double HeatSumIrrigationStart { get; set; }
+        public double HeatSumIrrigationEnd { get; set; }
+        public double CriticalTemperatureHeatStress { get; set; }
+        public double BeginSensitivePhaseHeatStress { get; set; }
+        public double EndSensitivePhaseHeatStress { get; set; }
+        public double FrostHardening { get; set; }
+        public double FrostDehardening { get; set; }
+        public double LowTemperatureExposure { get; set; }
+        public double RespiratoryStress { get; set; }
+        public short LatestHarvestDoy { get; set; } = -1;
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForPrimaryYield { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForSecondaryYield { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> OrganIdsForCutting { get; set; }
+        public double EarlyRefLeafExp { get; set; } = 12;
+        public double RefLeafExp { get; set; } = 20;
+        public double MinTempDevWE { get; set; }
+        public double OptTempDevWE { get; set; }
+        public double MaxTempDevWE { get; set; }
+        public bool WinterCrop { get; set; }
 
         public struct READER
         {
@@ -1460,239 +670,45 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(22, 15);
             }
 
-            public string CultivarId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string Description
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
-            public bool Perennial
-            {
-                get => this.ReadDataBool(0UL, false);
-                set => this.WriteData(0UL, value, false);
-            }
-
-            public double MaxAssimilationRate
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double MaxCropHeight
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double ResidueNRatio
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double Lt50cultivar
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double CropHeightP1
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double CropHeightP2
-            {
-                get => this.ReadDataDouble(384UL, 0);
-                set => this.WriteData(384UL, value, 0);
-            }
-
-            public double CropSpecificMaxRootingDepth
-            {
-                get => this.ReadDataDouble(448UL, 0);
-                set => this.WriteData(448UL, value, 0);
-            }
-
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> AssimilatePartitioningCoeff
-            {
-                get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(2);
-                set => Link(2, value);
-            }
-
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> OrganSenescenceRate
-            {
-                get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(3);
-                set => Link(3, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> BaseDaylength
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(4);
-                set => Link(4, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> OptimumTemperature
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(5);
-                set => Link(5, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> DaylengthRequirement
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(6);
-                set => Link(6, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> DroughtStressThreshold
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(7);
-                set => Link(7, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> SpecificLeafArea
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(8);
-                set => Link(8, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> StageKcFactor
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(9);
-                set => Link(9, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> StageTemperatureSum
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(10);
-                set => Link(10, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> VernalisationRequirement
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<double>>(11);
-                set => Link(11, value);
-            }
-
-            public double HeatSumIrrigationStart
-            {
-                get => this.ReadDataDouble(512UL, 0);
-                set => this.WriteData(512UL, value, 0);
-            }
-
-            public double HeatSumIrrigationEnd
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public double CriticalTemperatureHeatStress
-            {
-                get => this.ReadDataDouble(640UL, 0);
-                set => this.WriteData(640UL, value, 0);
-            }
-
-            public double BeginSensitivePhaseHeatStress
-            {
-                get => this.ReadDataDouble(704UL, 0);
-                set => this.WriteData(704UL, value, 0);
-            }
-
-            public double EndSensitivePhaseHeatStress
-            {
-                get => this.ReadDataDouble(768UL, 0);
-                set => this.WriteData(768UL, value, 0);
-            }
-
-            public double FrostHardening
-            {
-                get => this.ReadDataDouble(832UL, 0);
-                set => this.WriteData(832UL, value, 0);
-            }
-
-            public double FrostDehardening
-            {
-                get => this.ReadDataDouble(896UL, 0);
-                set => this.WriteData(896UL, value, 0);
-            }
-
-            public double LowTemperatureExposure
-            {
-                get => this.ReadDataDouble(960UL, 0);
-                set => this.WriteData(960UL, value, 0);
-            }
-
-            public double RespiratoryStress
-            {
-                get => this.ReadDataDouble(1024UL, 0);
-                set => this.WriteData(1024UL, value, 0);
-            }
-
-            public short LatestHarvestDoy
-            {
-                get => this.ReadDataShort(16UL, (short)-1);
-                set => this.WriteData(16UL, value, (short)-1);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForPrimaryYield
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(12);
-                set => Link(12, value);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForSecondaryYield
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(13);
-                set => Link(13, value);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForCutting
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(14);
-                set => Link(14, value);
-            }
-
-            public double EarlyRefLeafExp
-            {
-                get => this.ReadDataDouble(1088UL, 12);
-                set => this.WriteData(1088UL, value, 12);
-            }
-
-            public double RefLeafExp
-            {
-                get => this.ReadDataDouble(1152UL, 20);
-                set => this.WriteData(1152UL, value, 20);
-            }
-
-            public double MinTempDevWE
-            {
-                get => this.ReadDataDouble(1216UL, 0);
-                set => this.WriteData(1216UL, value, 0);
-            }
-
-            public double OptTempDevWE
-            {
-                get => this.ReadDataDouble(1280UL, 0);
-                set => this.WriteData(1280UL, value, 0);
-            }
-
-            public double MaxTempDevWE
-            {
-                get => this.ReadDataDouble(1344UL, 0);
-                set => this.WriteData(1344UL, value, 0);
-            }
-
-            public bool WinterCrop
-            {
-                get => this.ReadDataBool(1UL, false);
-                set => this.WriteData(1UL, value, false);
-            }
+            public string CultivarId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public string Description { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+            public bool Perennial { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+            public double MaxAssimilationRate { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double MaxCropHeight { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double ResidueNRatio { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double Lt50cultivar { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double CropHeightP1 { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double CropHeightP2 { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+            public double CropSpecificMaxRootingDepth { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> AssimilatePartitioningCoeff { get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(2); set => Link(2, value); }
+            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> OrganSenescenceRate { get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(3); set => Link(3, value); }
+            public ListOfPrimitivesSerializer<double> BaseDaylength { get => BuildPointer<ListOfPrimitivesSerializer<double>>(4); set => Link(4, value); }
+            public ListOfPrimitivesSerializer<double> OptimumTemperature { get => BuildPointer<ListOfPrimitivesSerializer<double>>(5); set => Link(5, value); }
+            public ListOfPrimitivesSerializer<double> DaylengthRequirement { get => BuildPointer<ListOfPrimitivesSerializer<double>>(6); set => Link(6, value); }
+            public ListOfPrimitivesSerializer<double> DroughtStressThreshold { get => BuildPointer<ListOfPrimitivesSerializer<double>>(7); set => Link(7, value); }
+            public ListOfPrimitivesSerializer<double> SpecificLeafArea { get => BuildPointer<ListOfPrimitivesSerializer<double>>(8); set => Link(8, value); }
+            public ListOfPrimitivesSerializer<double> StageKcFactor { get => BuildPointer<ListOfPrimitivesSerializer<double>>(9); set => Link(9, value); }
+            public ListOfPrimitivesSerializer<double> StageTemperatureSum { get => BuildPointer<ListOfPrimitivesSerializer<double>>(10); set => Link(10, value); }
+            public ListOfPrimitivesSerializer<double> VernalisationRequirement { get => BuildPointer<ListOfPrimitivesSerializer<double>>(11); set => Link(11, value); }
+            public double HeatSumIrrigationStart { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+            public double HeatSumIrrigationEnd { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public double CriticalTemperatureHeatStress { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+            public double BeginSensitivePhaseHeatStress { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+            public double EndSensitivePhaseHeatStress { get => this.ReadDataDouble(768UL, 0); set => this.WriteData(768UL, value, 0); }
+            public double FrostHardening { get => this.ReadDataDouble(832UL, 0); set => this.WriteData(832UL, value, 0); }
+            public double FrostDehardening { get => this.ReadDataDouble(896UL, 0); set => this.WriteData(896UL, value, 0); }
+            public double LowTemperatureExposure { get => this.ReadDataDouble(960UL, 0); set => this.WriteData(960UL, value, 0); }
+            public double RespiratoryStress { get => this.ReadDataDouble(1024UL, 0); set => this.WriteData(1024UL, value, 0); }
+            public short LatestHarvestDoy { get => this.ReadDataShort(16UL, (short)-1); set => this.WriteData(16UL, value, (short)-1); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForPrimaryYield { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(12); set => Link(12, value); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForSecondaryYield { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(13); set => Link(13, value); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> OrganIdsForCutting { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(14); set => Link(14, value); }
+            public double EarlyRefLeafExp { get => this.ReadDataDouble(1088UL, 12); set => this.WriteData(1088UL, value, 12); }
+            public double RefLeafExp { get => this.ReadDataDouble(1152UL, 20); set => this.WriteData(1152UL, value, 20); }
+            public double MinTempDevWE { get => this.ReadDataDouble(1216UL, 0); set => this.WriteData(1216UL, value, 0); }
+            public double OptTempDevWE { get => this.ReadDataDouble(1280UL, 0); set => this.WriteData(1280UL, value, 0); }
+            public double MaxTempDevWE { get => this.ReadDataDouble(1344UL, 0); set => this.WriteData(1344UL, value, 0); }
+            public bool WinterCrop { get => this.ReadDataBool(1UL, false); set => this.WriteData(1UL, value, false); }
         }
     }
 
@@ -1725,24 +741,9 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public long OrganId
-        {
-            get;
-            set;
-        }
-
-        = -1L;
-        public double YieldPercentage
-        {
-            get;
-            set;
-        }
-
-        public double YieldDryMatter
-        {
-            get;
-            set;
-        }
+        public long OrganId { get; set; } = -1L;
+        public double YieldPercentage { get; set; }
+        public double YieldDryMatter { get; set; }
 
         public struct READER
         {
@@ -1767,23 +768,9 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(3, 0);
             }
 
-            public long OrganId
-            {
-                get => this.ReadDataLong(0UL, -1L);
-                set => this.WriteData(0UL, value, -1L);
-            }
-
-            public double YieldPercentage
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double YieldDryMatter
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
+            public long OrganId { get => this.ReadDataLong(0UL, -1L); set => this.WriteData(0UL, value, -1L); }
+            public double YieldPercentage { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double YieldDryMatter { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
         }
     }
 
@@ -1814,20 +801,9 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime TheHarvestTime
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime TheHarvestTime { get; set; } = Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime.unknown;
+        public short LatestHarvestDOY { get; set; } = -1;
 
-        = Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime.unknown;
-        public short LatestHarvestDOY
-        {
-            get;
-            set;
-        }
-
-        = -1;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1850,17 +826,8 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(1, 0);
             }
 
-            public Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime TheHarvestTime
-            {
-                get => (Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime)this.ReadDataUShort(0UL, (ushort)1);
-                set => this.WriteData(0UL, (ushort)value, (ushort)1);
-            }
-
-            public short LatestHarvestDOY
-            {
-                get => this.ReadDataShort(16UL, (short)-1);
-                set => this.WriteData(16UL, value, (short)-1);
-            }
+            public Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime TheHarvestTime { get => (Mas.Schema.Model.Monica.AutomaticHarvestParameters.HarvestTime)this.ReadDataUShort(0UL, (ushort)1); set => this.WriteData(0UL, (ushort)value, (ushort)1); }
+            public short LatestHarvestDOY { get => this.ReadDataShort(16UL, (short)-1); set => this.WriteData(16UL, value, (short)-1); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x990bdcf2be83b604UL)]
@@ -1900,23 +867,9 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double SamplingDepth
-        {
-            get;
-            set;
-        }
-
-        public double NTarget
-        {
-            get;
-            set;
-        }
-
-        public double NTarget30
-        {
-            get;
-            set;
-        }
+        public double SamplingDepth { get; set; }
+        public double NTarget { get; set; }
+        public double NTarget30 { get; set; }
 
         public struct READER
         {
@@ -1941,23 +894,9 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(3, 0);
             }
 
-            public double SamplingDepth
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double NTarget
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double NTarget30
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
+            public double SamplingDepth { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double NTarget { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double NTarget30 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
         }
     }
 
@@ -1990,23 +929,9 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double Min
-        {
-            get;
-            set;
-        }
-
-        public double Max
-        {
-            get;
-            set;
-        }
-
-        public ushort DelayInDays
-        {
-            get;
-            set;
-        }
+        public double Min { get; set; }
+        public double Max { get; set; }
+        public ushort DelayInDays { get; set; }
 
         public struct READER
         {
@@ -2031,23 +956,9 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(3, 0);
             }
 
-            public double Min
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double Max
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public ushort DelayInDays
-            {
-                get => this.ReadDataUShort(128UL, (ushort)0);
-                set => this.WriteData(128UL, value, (ushort)0);
-            }
+            public double Min { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double Max { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public ushort DelayInDays { get => this.ReadDataUShort(128UL, (ushort)0); set => this.WriteData(128UL, value, (ushort)0); }
         }
     }
 
@@ -2080,23 +991,9 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params
-        {
-            get;
-            set;
-        }
-
-        public string Species
-        {
-            get;
-            set;
-        }
-
-        public string ResidueType
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params { get; set; }
+        public string Species { get; set; }
+        public string ResidueType { get; set; }
 
         public struct READER
         {
@@ -2122,23 +1019,9 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(0, 3);
             }
 
-            public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER Params
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public string Species
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
-            public string ResidueType
-            {
-                get => this.ReadText(2, null);
-                set => this.WriteText(2, value, null);
-            }
+            public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER Params { get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(0); set => Link(0, value); }
+            public string Species { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+            public string ResidueType { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
         }
     }
 
@@ -2199,123 +1082,24 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double SoilSandContent
-        {
-            get;
-            set;
-        }
+        public double SoilSandContent { get; set; } = -1;
+        public double SoilClayContent { get; set; } = -1;
+        public double SoilpH { get; set; } = 6.9;
+        public double SoilStoneContent { get; set; }
+        public double Lambda { get; set; } = -1;
+        public double FieldCapacity { get; set; } = -1;
+        public double Saturation { get; set; } = -1;
+        public double PermanentWiltingPoint { get; set; } = -1;
+        public string SoilTexture { get; set; }
+        public double SoilAmmonium { get; set; } = 0.0005;
+        public double SoilNitrate { get; set; } = 0.005;
+        public double SoilCNRatio { get; set; } = 10;
+        public double SoilMoisturePercentFC { get; set; } = 100;
+        public double SoilRawDensity { get; set; } = -1;
+        public double SoilBulkDensity { get; set; } = -1;
+        public double SoilOrganicCarbon { get; set; } = -1;
+        public double SoilOrganicMatter { get; set; } = -1;
 
-        = -1;
-        public double SoilClayContent
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double SoilpH
-        {
-            get;
-            set;
-        }
-
-        = 6.9;
-        public double SoilStoneContent
-        {
-            get;
-            set;
-        }
-
-        public double Lambda
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double FieldCapacity
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double Saturation
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double PermanentWiltingPoint
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public string SoilTexture
-        {
-            get;
-            set;
-        }
-
-        public double SoilAmmonium
-        {
-            get;
-            set;
-        }
-
-        = 0.0005;
-        public double SoilNitrate
-        {
-            get;
-            set;
-        }
-
-        = 0.005;
-        public double SoilCNRatio
-        {
-            get;
-            set;
-        }
-
-        = 10;
-        public double SoilMoisturePercentFC
-        {
-            get;
-            set;
-        }
-
-        = 100;
-        public double SoilRawDensity
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double SoilBulkDensity
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double SoilOrganicCarbon
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double SoilOrganicMatter
-        {
-            get;
-            set;
-        }
-
-        = -1;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2353,107 +1137,23 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(16, 1);
             }
 
-            public double SoilSandContent
-            {
-                get => this.ReadDataDouble(0UL, -1);
-                set => this.WriteData(0UL, value, -1);
-            }
-
-            public double SoilClayContent
-            {
-                get => this.ReadDataDouble(64UL, -1);
-                set => this.WriteData(64UL, value, -1);
-            }
-
-            public double SoilpH
-            {
-                get => this.ReadDataDouble(128UL, 6.9);
-                set => this.WriteData(128UL, value, 6.9);
-            }
-
-            public double SoilStoneContent
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double Lambda
-            {
-                get => this.ReadDataDouble(256UL, -1);
-                set => this.WriteData(256UL, value, -1);
-            }
-
-            public double FieldCapacity
-            {
-                get => this.ReadDataDouble(320UL, -1);
-                set => this.WriteData(320UL, value, -1);
-            }
-
-            public double Saturation
-            {
-                get => this.ReadDataDouble(384UL, -1);
-                set => this.WriteData(384UL, value, -1);
-            }
-
-            public double PermanentWiltingPoint
-            {
-                get => this.ReadDataDouble(448UL, -1);
-                set => this.WriteData(448UL, value, -1);
-            }
-
-            public string SoilTexture
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public double SoilAmmonium
-            {
-                get => this.ReadDataDouble(512UL, 0.0005);
-                set => this.WriteData(512UL, value, 0.0005);
-            }
-
-            public double SoilNitrate
-            {
-                get => this.ReadDataDouble(576UL, 0.005);
-                set => this.WriteData(576UL, value, 0.005);
-            }
-
-            public double SoilCNRatio
-            {
-                get => this.ReadDataDouble(640UL, 10);
-                set => this.WriteData(640UL, value, 10);
-            }
-
-            public double SoilMoisturePercentFC
-            {
-                get => this.ReadDataDouble(704UL, 100);
-                set => this.WriteData(704UL, value, 100);
-            }
-
-            public double SoilRawDensity
-            {
-                get => this.ReadDataDouble(768UL, -1);
-                set => this.WriteData(768UL, value, -1);
-            }
-
-            public double SoilBulkDensity
-            {
-                get => this.ReadDataDouble(832UL, -1);
-                set => this.WriteData(832UL, value, -1);
-            }
-
-            public double SoilOrganicCarbon
-            {
-                get => this.ReadDataDouble(896UL, -1);
-                set => this.WriteData(896UL, value, -1);
-            }
-
-            public double SoilOrganicMatter
-            {
-                get => this.ReadDataDouble(960UL, -1);
-                set => this.WriteData(960UL, value, -1);
-            }
+            public double SoilSandContent { get => this.ReadDataDouble(0UL, -1); set => this.WriteData(0UL, value, -1); }
+            public double SoilClayContent { get => this.ReadDataDouble(64UL, -1); set => this.WriteData(64UL, value, -1); }
+            public double SoilpH { get => this.ReadDataDouble(128UL, 6.9); set => this.WriteData(128UL, value, 6.9); }
+            public double SoilStoneContent { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double Lambda { get => this.ReadDataDouble(256UL, -1); set => this.WriteData(256UL, value, -1); }
+            public double FieldCapacity { get => this.ReadDataDouble(320UL, -1); set => this.WriteData(320UL, value, -1); }
+            public double Saturation { get => this.ReadDataDouble(384UL, -1); set => this.WriteData(384UL, value, -1); }
+            public double PermanentWiltingPoint { get => this.ReadDataDouble(448UL, -1); set => this.WriteData(448UL, value, -1); }
+            public string SoilTexture { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public double SoilAmmonium { get => this.ReadDataDouble(512UL, 0.0005); set => this.WriteData(512UL, value, 0.0005); }
+            public double SoilNitrate { get => this.ReadDataDouble(576UL, 0.005); set => this.WriteData(576UL, value, 0.005); }
+            public double SoilCNRatio { get => this.ReadDataDouble(640UL, 10); set => this.WriteData(640UL, value, 10); }
+            public double SoilMoisturePercentFC { get => this.ReadDataDouble(704UL, 100); set => this.WriteData(704UL, value, 100); }
+            public double SoilRawDensity { get => this.ReadDataDouble(768UL, -1); set => this.WriteData(768UL, value, -1); }
+            public double SoilBulkDensity { get => this.ReadDataDouble(832UL, -1); set => this.WriteData(832UL, value, -1); }
+            public double SoilOrganicCarbon { get => this.ReadDataDouble(896UL, -1); set => this.WriteData(896UL, value, -1); }
+            public double SoilOrganicMatter { get => this.ReadDataDouble(960UL, -1); set => this.WriteData(960UL, value, -1); }
         }
     }
 
@@ -2486,26 +1186,10 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params { get; set; }
+        public double Amount { get; set; } = 17;
+        public double Threshold { get; set; } = 0.35;
 
-        public double Amount
-        {
-            get;
-            set;
-        }
-
-        = 17;
-        public double Threshold
-        {
-            get;
-            set;
-        }
-
-        = 0.35;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2530,23 +1214,9 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(2, 1);
             }
 
-            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public double Amount
-            {
-                get => this.ReadDataDouble(0UL, 17);
-                set => this.WriteData(0UL, value, 17);
-            }
-
-            public double Threshold
-            {
-                get => this.ReadDataDouble(64UL, 0.35);
-                set => this.WriteData(64UL, value, 0.35);
-            }
+            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params { get => BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(0); set => Link(0, value); }
+            public double Amount { get => this.ReadDataDouble(0UL, 17); set => this.WriteData(0UL, value, 17); }
+            public double Threshold { get => this.ReadDataDouble(64UL, 0.35); set => this.WriteData(64UL, value, 0.35); }
         }
     }
 
@@ -2595,80 +1265,17 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double Latitude
-        {
-            get;
-            set;
-        }
-
-        = 52.5;
-        public double Slope
-        {
-            get;
-            set;
-        }
-
-        = 0.01;
-        public double HeightNN
-        {
-            get;
-            set;
-        }
-
-        = 50;
-        public double GroundwaterDepth
-        {
-            get;
-            set;
-        }
-
-        = 70;
-        public double SoilCNRatio
-        {
-            get;
-            set;
-        }
-
-        = 10;
-        public double DrainageCoeff
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double VqNDeposition
-        {
-            get;
-            set;
-        }
-
-        = 30;
-        public double MaxEffectiveRootingDepth
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public double ImpenetrableLayerDepth
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public double SoilSpecificHumusBalanceCorrection
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.SoilParameters> SoilParameters
-        {
-            get;
-            set;
-        }
+        public double Latitude { get; set; } = 52.5;
+        public double Slope { get; set; } = 0.01;
+        public double HeightNN { get; set; } = 50;
+        public double GroundwaterDepth { get; set; } = 70;
+        public double SoilCNRatio { get; set; } = 10;
+        public double DrainageCoeff { get; set; } = 1;
+        public double VqNDeposition { get; set; } = 30;
+        public double MaxEffectiveRootingDepth { get; set; } = 2;
+        public double ImpenetrableLayerDepth { get; set; } = -1;
+        public double SoilSpecificHumusBalanceCorrection { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.SoilParameters> SoilParameters { get; set; }
 
         public struct READER
         {
@@ -2702,71 +1309,17 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(10, 1);
             }
 
-            public double Latitude
-            {
-                get => this.ReadDataDouble(0UL, 52.5);
-                set => this.WriteData(0UL, value, 52.5);
-            }
-
-            public double Slope
-            {
-                get => this.ReadDataDouble(64UL, 0.01);
-                set => this.WriteData(64UL, value, 0.01);
-            }
-
-            public double HeightNN
-            {
-                get => this.ReadDataDouble(128UL, 50);
-                set => this.WriteData(128UL, value, 50);
-            }
-
-            public double GroundwaterDepth
-            {
-                get => this.ReadDataDouble(192UL, 70);
-                set => this.WriteData(192UL, value, 70);
-            }
-
-            public double SoilCNRatio
-            {
-                get => this.ReadDataDouble(256UL, 10);
-                set => this.WriteData(256UL, value, 10);
-            }
-
-            public double DrainageCoeff
-            {
-                get => this.ReadDataDouble(320UL, 1);
-                set => this.WriteData(320UL, value, 1);
-            }
-
-            public double VqNDeposition
-            {
-                get => this.ReadDataDouble(384UL, 30);
-                set => this.WriteData(384UL, value, 30);
-            }
-
-            public double MaxEffectiveRootingDepth
-            {
-                get => this.ReadDataDouble(448UL, 2);
-                set => this.WriteData(448UL, value, 2);
-            }
-
-            public double ImpenetrableLayerDepth
-            {
-                get => this.ReadDataDouble(512UL, -1);
-                set => this.WriteData(512UL, value, -1);
-            }
-
-            public double SoilSpecificHumusBalanceCorrection
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilParameters.WRITER> SoilParameters
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilParameters.WRITER>>(0);
-                set => Link(0, value);
-            }
+            public double Latitude { get => this.ReadDataDouble(0UL, 52.5); set => this.WriteData(0UL, value, 52.5); }
+            public double Slope { get => this.ReadDataDouble(64UL, 0.01); set => this.WriteData(64UL, value, 0.01); }
+            public double HeightNN { get => this.ReadDataDouble(128UL, 50); set => this.WriteData(128UL, value, 50); }
+            public double GroundwaterDepth { get => this.ReadDataDouble(192UL, 70); set => this.WriteData(192UL, value, 70); }
+            public double SoilCNRatio { get => this.ReadDataDouble(256UL, 10); set => this.WriteData(256UL, value, 10); }
+            public double DrainageCoeff { get => this.ReadDataDouble(320UL, 1); set => this.WriteData(320UL, value, 1); }
+            public double VqNDeposition { get => this.ReadDataDouble(384UL, 30); set => this.WriteData(384UL, value, 30); }
+            public double MaxEffectiveRootingDepth { get => this.ReadDataDouble(448UL, 2); set => this.WriteData(448UL, value, 2); }
+            public double ImpenetrableLayerDepth { get => this.ReadDataDouble(512UL, -1); set => this.WriteData(512UL, value, -1); }
+            public double SoilSpecificHumusBalanceCorrection { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilParameters.WRITER> SoilParameters { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilParameters.WRITER>>(0); set => Link(0, value); }
         }
     }
 
@@ -2817,82 +1370,18 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double Albedo
-        {
-            get;
-            set;
-        }
-
-        = 0.23;
-        public double AtmosphericCO2
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue> AtmosphericCO2s
-        {
-            get;
-            set;
-        }
-
-        public double AtmosphericO3
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue> AtmosphericO3s
-        {
-            get;
-            set;
-        }
-
-        public double WindSpeedHeight
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public double LeachingDepth
-        {
-            get;
-            set;
-        }
-
-        public double TimeStep
-        {
-            get;
-            set;
-        }
-
-        public double MaxGroundwaterDepth
-        {
-            get;
-            set;
-        }
-
-        = 18;
-        public double MinGroundwaterDepth
-        {
-            get;
-            set;
-        }
-
-        = 20;
-        public byte MinGroundwaterDepthMonth
-        {
-            get;
-            set;
-        }
-
-        = 3;
-        public Mas.Schema.Climate.RCP Rcp
-        {
-            get;
-            set;
-        }
+        public double Albedo { get; set; } = 0.23;
+        public double AtmosphericCO2 { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue> AtmosphericCO2s { get; set; }
+        public double AtmosphericO3 { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue> AtmosphericO3s { get; set; }
+        public double WindSpeedHeight { get; set; } = 2;
+        public double LeachingDepth { get; set; }
+        public double TimeStep { get; set; }
+        public double MaxGroundwaterDepth { get; set; } = 18;
+        public double MinGroundwaterDepth { get; set; } = 20;
+        public byte MinGroundwaterDepthMonth { get; set; } = 3;
+        public Mas.Schema.Climate.RCP Rcp { get; set; }
 
         public struct READER
         {
@@ -2928,77 +1417,18 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(9, 2);
             }
 
-            public double Albedo
-            {
-                get => this.ReadDataDouble(0UL, 0.23);
-                set => this.WriteData(0UL, value, 0.23);
-            }
-
-            public double AtmosphericCO2
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER> AtmosphericCO2s
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER>>(0);
-                set => Link(0, value);
-            }
-
-            public double AtmosphericO3
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER> AtmosphericO3s
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER>>(1);
-                set => Link(1, value);
-            }
-
-            public double WindSpeedHeight
-            {
-                get => this.ReadDataDouble(192UL, 2);
-                set => this.WriteData(192UL, value, 2);
-            }
-
-            public double LeachingDepth
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double TimeStep
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double MaxGroundwaterDepth
-            {
-                get => this.ReadDataDouble(384UL, 18);
-                set => this.WriteData(384UL, value, 18);
-            }
-
-            public double MinGroundwaterDepth
-            {
-                get => this.ReadDataDouble(448UL, 20);
-                set => this.WriteData(448UL, value, 20);
-            }
-
-            public byte MinGroundwaterDepthMonth
-            {
-                get => this.ReadDataByte(512UL, (byte)3);
-                set => this.WriteData(512UL, value, (byte)3);
-            }
-
-            public Mas.Schema.Climate.RCP Rcp
-            {
-                get => (Mas.Schema.Climate.RCP)this.ReadDataUShort(528UL, (ushort)0);
-                set => this.WriteData(528UL, (ushort)value, (ushort)0);
-            }
+            public double Albedo { get => this.ReadDataDouble(0UL, 0.23); set => this.WriteData(0UL, value, 0.23); }
+            public double AtmosphericCO2 { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER> AtmosphericCO2s { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER>>(0); set => Link(0, value); }
+            public double AtmosphericO3 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER> AtmosphericO3s { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.EnvironmentParameters.YearToValue.WRITER>>(1); set => Link(1, value); }
+            public double WindSpeedHeight { get => this.ReadDataDouble(192UL, 2); set => this.WriteData(192UL, value, 2); }
+            public double LeachingDepth { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double TimeStep { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double MaxGroundwaterDepth { get => this.ReadDataDouble(384UL, 18); set => this.WriteData(384UL, value, 18); }
+            public double MinGroundwaterDepth { get => this.ReadDataDouble(448UL, 20); set => this.WriteData(448UL, value, 20); }
+            public byte MinGroundwaterDepthMonth { get => this.ReadDataByte(512UL, (byte)3); set => this.WriteData(512UL, value, (byte)3); }
+            public Mas.Schema.Climate.RCP Rcp { get => (Mas.Schema.Climate.RCP)this.ReadDataUShort(528UL, (ushort)0); set => this.WriteData(528UL, (ushort)value, (ushort)0); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe68d439455fd9cceUL)]
@@ -3028,17 +1458,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public ushort Year
-            {
-                get;
-                set;
-            }
-
-            public double Value
-            {
-                get;
-                set;
-            }
+            public ushort Year { get; set; }
+            public double Value { get; set; }
 
             public struct READER
             {
@@ -3062,17 +1483,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(2, 0);
                 }
 
-                public ushort Year
-                {
-                    get => this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, value, (ushort)0);
-                }
-
-                public double Value
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
+                public ushort Year { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+                public double Value { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
             }
         }
     }
@@ -3104,17 +1516,8 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public bool GroundwaterInformationAvailable
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue> GroundwaterInfo
-        {
-            get;
-            set;
-        }
+        public bool GroundwaterInformationAvailable { get; set; }
+        public IReadOnlyList<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue> GroundwaterInfo { get; set; }
 
         public struct READER
         {
@@ -3139,17 +1542,8 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(1, 1);
             }
 
-            public bool GroundwaterInformationAvailable
-            {
-                get => this.ReadDataBool(0UL, false);
-                set => this.WriteData(0UL, value, false);
-            }
-
-            public ListOfStructsSerializer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue.WRITER> GroundwaterInfo
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue.WRITER>>(0);
-                set => Link(0, value);
-            }
+            public bool GroundwaterInformationAvailable { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+            public ListOfStructsSerializer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue.WRITER> GroundwaterInfo { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.DateToValue.WRITER>>(0); set => Link(0, value); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x81b8ffeeb01d76f7UL)]
@@ -3179,17 +1573,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Common.Date Date
-            {
-                get;
-                set;
-            }
-
-            public double Value
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Date { get; set; }
+            public double Value { get; set; }
 
             public struct READER
             {
@@ -3214,17 +1599,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 1);
                 }
 
-                public Mas.Schema.Common.Date.WRITER Date
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public double Value
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public Mas.Schema.Common.Date.WRITER Date { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0); set => Link(0, value); }
+                public double Value { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
             }
         }
     }
@@ -3288,121 +1664,24 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Common.Date StartDate
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date EndDate
-        {
-            get;
-            set;
-        }
-
-        public bool NitrogenResponseOn
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool WaterDeficitResponseOn
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool EmergenceFloodingControlOn
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool EmergenceMoistureControlOn
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool FrostKillOn
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool UseAutomaticIrrigation
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.AutomaticIrrigationParameters AutoIrrigationParams
-        {
-            get;
-            set;
-        }
-
-        public bool UseNMinMineralFertilisingMethod
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters NMinFertiliserPartition
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.NMinApplicationParameters NMinApplicationParams
-        {
-            get;
-            set;
-        }
-
-        public bool UseSecondaryYields
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public bool UseAutomaticHarvestTrigger
-        {
-            get;
-            set;
-        }
-
-        public ushort NumberOfLayers
-        {
-            get;
-            set;
-        }
-
-        = 20;
-        public double LayerThickness
-        {
-            get;
-            set;
-        }
-
-        = 0.1;
-        public ushort StartPVIndex
-        {
-            get;
-            set;
-        }
-
-        public ushort JulianDayAutomaticFertilising
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date StartDate { get; set; }
+        public Mas.Schema.Common.Date EndDate { get; set; }
+        public bool NitrogenResponseOn { get; set; } = true;
+        public bool WaterDeficitResponseOn { get; set; } = true;
+        public bool EmergenceFloodingControlOn { get; set; } = true;
+        public bool EmergenceMoistureControlOn { get; set; } = true;
+        public bool FrostKillOn { get; set; } = true;
+        public bool UseAutomaticIrrigation { get; set; }
+        public Mas.Schema.Model.Monica.AutomaticIrrigationParameters AutoIrrigationParams { get; set; }
+        public bool UseNMinMineralFertilisingMethod { get; set; }
+        public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters NMinFertiliserPartition { get; set; }
+        public Mas.Schema.Model.Monica.NMinApplicationParameters NMinApplicationParams { get; set; }
+        public bool UseSecondaryYields { get; set; } = true;
+        public bool UseAutomaticHarvestTrigger { get; set; }
+        public ushort NumberOfLayers { get; set; } = 20;
+        public double LayerThickness { get; set; } = 0.1;
+        public ushort StartPVIndex { get; set; }
+        public ushort JulianDayAutomaticFertilising { get; set; }
 
         public struct READER
         {
@@ -3447,113 +1726,24 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(2, 5);
             }
 
-            public Mas.Schema.Common.Date.WRITER StartDate
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER EndDate
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                set => Link(1, value);
-            }
-
-            public bool NitrogenResponseOn
-            {
-                get => this.ReadDataBool(0UL, true);
-                set => this.WriteData(0UL, value, true);
-            }
-
-            public bool WaterDeficitResponseOn
-            {
-                get => this.ReadDataBool(1UL, true);
-                set => this.WriteData(1UL, value, true);
-            }
-
-            public bool EmergenceFloodingControlOn
-            {
-                get => this.ReadDataBool(2UL, true);
-                set => this.WriteData(2UL, value, true);
-            }
-
-            public bool EmergenceMoistureControlOn
-            {
-                get => this.ReadDataBool(3UL, true);
-                set => this.WriteData(3UL, value, true);
-            }
-
-            public bool FrostKillOn
-            {
-                get => this.ReadDataBool(4UL, true);
-                set => this.WriteData(4UL, value, true);
-            }
-
-            public bool UseAutomaticIrrigation
-            {
-                get => this.ReadDataBool(5UL, false);
-                set => this.WriteData(5UL, value, false);
-            }
-
-            public Mas.Schema.Model.Monica.AutomaticIrrigationParameters.WRITER AutoIrrigationParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.AutomaticIrrigationParameters.WRITER>(2);
-                set => Link(2, value);
-            }
-
-            public bool UseNMinMineralFertilisingMethod
-            {
-                get => this.ReadDataBool(6UL, false);
-                set => this.WriteData(6UL, value, false);
-            }
-
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER NMinFertiliserPartition
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(3);
-                set => Link(3, value);
-            }
-
-            public Mas.Schema.Model.Monica.NMinApplicationParameters.WRITER NMinApplicationParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.NMinApplicationParameters.WRITER>(4);
-                set => Link(4, value);
-            }
-
-            public bool UseSecondaryYields
-            {
-                get => this.ReadDataBool(7UL, true);
-                set => this.WriteData(7UL, value, true);
-            }
-
-            public bool UseAutomaticHarvestTrigger
-            {
-                get => this.ReadDataBool(8UL, false);
-                set => this.WriteData(8UL, value, false);
-            }
-
-            public ushort NumberOfLayers
-            {
-                get => this.ReadDataUShort(16UL, (ushort)20);
-                set => this.WriteData(16UL, value, (ushort)20);
-            }
-
-            public double LayerThickness
-            {
-                get => this.ReadDataDouble(64UL, 0.1);
-                set => this.WriteData(64UL, value, 0.1);
-            }
-
-            public ushort StartPVIndex
-            {
-                get => this.ReadDataUShort(32UL, (ushort)0);
-                set => this.WriteData(32UL, value, (ushort)0);
-            }
-
-            public ushort JulianDayAutomaticFertilising
-            {
-                get => this.ReadDataUShort(48UL, (ushort)0);
-                set => this.WriteData(48UL, value, (ushort)0);
-            }
+            public Mas.Schema.Common.Date.WRITER StartDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Common.Date.WRITER EndDate { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
+            public bool NitrogenResponseOn { get => this.ReadDataBool(0UL, true); set => this.WriteData(0UL, value, true); }
+            public bool WaterDeficitResponseOn { get => this.ReadDataBool(1UL, true); set => this.WriteData(1UL, value, true); }
+            public bool EmergenceFloodingControlOn { get => this.ReadDataBool(2UL, true); set => this.WriteData(2UL, value, true); }
+            public bool EmergenceMoistureControlOn { get => this.ReadDataBool(3UL, true); set => this.WriteData(3UL, value, true); }
+            public bool FrostKillOn { get => this.ReadDataBool(4UL, true); set => this.WriteData(4UL, value, true); }
+            public bool UseAutomaticIrrigation { get => this.ReadDataBool(5UL, false); set => this.WriteData(5UL, value, false); }
+            public Mas.Schema.Model.Monica.AutomaticIrrigationParameters.WRITER AutoIrrigationParams { get => BuildPointer<Mas.Schema.Model.Monica.AutomaticIrrigationParameters.WRITER>(2); set => Link(2, value); }
+            public bool UseNMinMineralFertilisingMethod { get => this.ReadDataBool(6UL, false); set => this.WriteData(6UL, value, false); }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER NMinFertiliserPartition { get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(3); set => Link(3, value); }
+            public Mas.Schema.Model.Monica.NMinApplicationParameters.WRITER NMinApplicationParams { get => BuildPointer<Mas.Schema.Model.Monica.NMinApplicationParameters.WRITER>(4); set => Link(4, value); }
+            public bool UseSecondaryYields { get => this.ReadDataBool(7UL, true); set => this.WriteData(7UL, value, true); }
+            public bool UseAutomaticHarvestTrigger { get => this.ReadDataBool(8UL, false); set => this.WriteData(8UL, value, false); }
+            public ushort NumberOfLayers { get => this.ReadDataUShort(16UL, (ushort)20); set => this.WriteData(16UL, value, (ushort)20); }
+            public double LayerThickness { get => this.ReadDataDouble(64UL, 0.1); set => this.WriteData(64UL, value, 0.1); }
+            public ushort StartPVIndex { get => this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, value, (ushort)0); }
+            public ushort JulianDayAutomaticFertilising { get => this.ReadDataUShort(48UL, (ushort)0); set => this.WriteData(48UL, value, (ushort)0); }
         }
     }
 
@@ -3624,137 +1814,28 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double CanopyReflectionCoefficient
-        {
-            get;
-            set;
-        }
-
-        public double ReferenceMaxAssimilationRate
-        {
-            get;
-            set;
-        }
-
-        public double ReferenceLeafAreaIndex
-        {
-            get;
-            set;
-        }
-
-        public double MaintenanceRespirationParameter1
-        {
-            get;
-            set;
-        }
-
-        public double MaintenanceRespirationParameter2
-        {
-            get;
-            set;
-        }
-
-        public double MinimumNConcentrationRoot
-        {
-            get;
-            set;
-        }
-
-        public double MinimumAvailableN
-        {
-            get;
-            set;
-        }
-
-        public double ReferenceAlbedo
-        {
-            get;
-            set;
-        }
-
-        public double StomataConductanceAlpha
-        {
-            get;
-            set;
-        }
-
-        public double SaturationBeta
-        {
-            get;
-            set;
-        }
-
-        public double GrowthRespirationRedux
-        {
-            get;
-            set;
-        }
-
-        public double MaxCropNDemand
-        {
-            get;
-            set;
-        }
-
-        public double GrowthRespirationParameter1
-        {
-            get;
-            set;
-        }
-
-        public double GrowthRespirationParameter2
-        {
-            get;
-            set;
-        }
-
-        public double Tortuosity
-        {
-            get;
-            set;
-        }
-
-        public bool AdjustRootDepthForSoilProps
-        {
-            get;
-            set;
-        }
-
-        public bool ExperimentalEnablePhenologyWangEngelTemperatureResponse
-        {
-            get;
-            set;
-        }
-
-        public bool ExperimentalEnablePhotosynthesisWangEngelTemperatureResponse
-        {
-            get;
-            set;
-        }
-
-        public bool ExperimentalEnableHourlyFvCBPhotosynthesis
-        {
-            get;
-            set;
-        }
-
-        public bool ExperimentalEnableTResponseLeafExpansion
-        {
-            get;
-            set;
-        }
-
-        public bool ExperimentalDisableDailyRootBiomassToSoil
-        {
-            get;
-            set;
-        }
-
-        public bool EnableVernalisationFactorFix
-        {
-            get;
-            set;
-        }
+        public double CanopyReflectionCoefficient { get; set; }
+        public double ReferenceMaxAssimilationRate { get; set; }
+        public double ReferenceLeafAreaIndex { get; set; }
+        public double MaintenanceRespirationParameter1 { get; set; }
+        public double MaintenanceRespirationParameter2 { get; set; }
+        public double MinimumNConcentrationRoot { get; set; }
+        public double MinimumAvailableN { get; set; }
+        public double ReferenceAlbedo { get; set; }
+        public double StomataConductanceAlpha { get; set; }
+        public double SaturationBeta { get; set; }
+        public double GrowthRespirationRedux { get; set; }
+        public double MaxCropNDemand { get; set; }
+        public double GrowthRespirationParameter1 { get; set; }
+        public double GrowthRespirationParameter2 { get; set; }
+        public double Tortuosity { get; set; }
+        public bool AdjustRootDepthForSoilProps { get; set; }
+        public bool ExperimentalEnablePhenologyWangEngelTemperatureResponse { get; set; }
+        public bool ExperimentalEnablePhotosynthesisWangEngelTemperatureResponse { get; set; }
+        public bool ExperimentalEnableHourlyFvCBPhotosynthesis { get; set; }
+        public bool ExperimentalEnableTResponseLeafExpansion { get; set; }
+        public bool ExperimentalDisableDailyRootBiomassToSoil { get; set; }
+        public bool EnableVernalisationFactorFix { get; set; }
 
         public struct READER
         {
@@ -3798,137 +1879,28 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(16, 0);
             }
 
-            public double CanopyReflectionCoefficient
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double ReferenceMaxAssimilationRate
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double ReferenceLeafAreaIndex
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double MaintenanceRespirationParameter1
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double MaintenanceRespirationParameter2
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double MinimumNConcentrationRoot
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double MinimumAvailableN
-            {
-                get => this.ReadDataDouble(384UL, 0);
-                set => this.WriteData(384UL, value, 0);
-            }
-
-            public double ReferenceAlbedo
-            {
-                get => this.ReadDataDouble(448UL, 0);
-                set => this.WriteData(448UL, value, 0);
-            }
-
-            public double StomataConductanceAlpha
-            {
-                get => this.ReadDataDouble(512UL, 0);
-                set => this.WriteData(512UL, value, 0);
-            }
-
-            public double SaturationBeta
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public double GrowthRespirationRedux
-            {
-                get => this.ReadDataDouble(640UL, 0);
-                set => this.WriteData(640UL, value, 0);
-            }
-
-            public double MaxCropNDemand
-            {
-                get => this.ReadDataDouble(704UL, 0);
-                set => this.WriteData(704UL, value, 0);
-            }
-
-            public double GrowthRespirationParameter1
-            {
-                get => this.ReadDataDouble(768UL, 0);
-                set => this.WriteData(768UL, value, 0);
-            }
-
-            public double GrowthRespirationParameter2
-            {
-                get => this.ReadDataDouble(832UL, 0);
-                set => this.WriteData(832UL, value, 0);
-            }
-
-            public double Tortuosity
-            {
-                get => this.ReadDataDouble(896UL, 0);
-                set => this.WriteData(896UL, value, 0);
-            }
-
-            public bool AdjustRootDepthForSoilProps
-            {
-                get => this.ReadDataBool(960UL, false);
-                set => this.WriteData(960UL, value, false);
-            }
-
-            public bool ExperimentalEnablePhenologyWangEngelTemperatureResponse
-            {
-                get => this.ReadDataBool(961UL, false);
-                set => this.WriteData(961UL, value, false);
-            }
-
-            public bool ExperimentalEnablePhotosynthesisWangEngelTemperatureResponse
-            {
-                get => this.ReadDataBool(962UL, false);
-                set => this.WriteData(962UL, value, false);
-            }
-
-            public bool ExperimentalEnableHourlyFvCBPhotosynthesis
-            {
-                get => this.ReadDataBool(963UL, false);
-                set => this.WriteData(963UL, value, false);
-            }
-
-            public bool ExperimentalEnableTResponseLeafExpansion
-            {
-                get => this.ReadDataBool(964UL, false);
-                set => this.WriteData(964UL, value, false);
-            }
-
-            public bool ExperimentalDisableDailyRootBiomassToSoil
-            {
-                get => this.ReadDataBool(965UL, false);
-                set => this.WriteData(965UL, value, false);
-            }
-
-            public bool EnableVernalisationFactorFix
-            {
-                get => this.ReadDataBool(966UL, false);
-                set => this.WriteData(966UL, value, false);
-            }
+            public double CanopyReflectionCoefficient { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double ReferenceMaxAssimilationRate { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double ReferenceLeafAreaIndex { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double MaintenanceRespirationParameter1 { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double MaintenanceRespirationParameter2 { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double MinimumNConcentrationRoot { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double MinimumAvailableN { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+            public double ReferenceAlbedo { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+            public double StomataConductanceAlpha { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+            public double SaturationBeta { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public double GrowthRespirationRedux { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+            public double MaxCropNDemand { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+            public double GrowthRespirationParameter1 { get => this.ReadDataDouble(768UL, 0); set => this.WriteData(768UL, value, 0); }
+            public double GrowthRespirationParameter2 { get => this.ReadDataDouble(832UL, 0); set => this.WriteData(832UL, value, 0); }
+            public double Tortuosity { get => this.ReadDataDouble(896UL, 0); set => this.WriteData(896UL, value, 0); }
+            public bool AdjustRootDepthForSoilProps { get => this.ReadDataBool(960UL, false); set => this.WriteData(960UL, value, false); }
+            public bool ExperimentalEnablePhenologyWangEngelTemperatureResponse { get => this.ReadDataBool(961UL, false); set => this.WriteData(961UL, value, false); }
+            public bool ExperimentalEnablePhotosynthesisWangEngelTemperatureResponse { get => this.ReadDataBool(962UL, false); set => this.WriteData(962UL, value, false); }
+            public bool ExperimentalEnableHourlyFvCBPhotosynthesis { get => this.ReadDataBool(963UL, false); set => this.WriteData(963UL, value, false); }
+            public bool ExperimentalEnableTResponseLeafExpansion { get => this.ReadDataBool(964UL, false); set => this.WriteData(964UL, value, false); }
+            public bool ExperimentalDisableDailyRootBiomassToSoil { get => this.ReadDataBool(965UL, false); set => this.WriteData(965UL, value, false); }
+            public bool EnableVernalisationFactorFix { get => this.ReadDataBool(966UL, false); set => this.WriteData(966UL, value, false); }
         }
     }
 
@@ -4003,149 +1975,30 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double CriticalMoistureDepth
-        {
-            get;
-            set;
-        }
-
-        public double SaturatedHydraulicConductivity
-        {
-            get;
-            set;
-        }
-
-        public double SurfaceRoughness
-        {
-            get;
-            set;
-        }
-
-        public double GroundwaterDischarge
-        {
-            get;
-            set;
-        }
-
-        public double HydraulicConductivityRedux
-        {
-            get;
-            set;
-        }
-
-        public double SnowAccumulationTresholdTemperature
-        {
-            get;
-            set;
-        }
-
-        public double KcFactor
-        {
-            get;
-            set;
-        }
-
-        public double TemperatureLimitForLiquidWater
-        {
-            get;
-            set;
-        }
-
-        public double CorrectionSnow
-        {
-            get;
-            set;
-        }
-
-        public double CorrectionRain
-        {
-            get;
-            set;
-        }
-
-        public double SnowMaxAdditionalDensity
-        {
-            get;
-            set;
-        }
-
-        public double NewSnowDensityMin
-        {
-            get;
-            set;
-        }
-
-        public double SnowRetentionCapacityMin
-        {
-            get;
-            set;
-        }
-
-        public double RefreezeParameter1
-        {
-            get;
-            set;
-        }
-
-        public double RefreezeParameter2
-        {
-            get;
-            set;
-        }
-
-        public double RefreezeTemperature
-        {
-            get;
-            set;
-        }
-
-        public double SnowMeltTemperature
-        {
-            get;
-            set;
-        }
-
-        public double SnowPacking
-        {
-            get;
-            set;
-        }
-
-        public double SnowRetentionCapacityMax
-        {
-            get;
-            set;
-        }
-
-        public double EvaporationZeta
-        {
-            get;
-            set;
-        }
-
-        public double XsaCriticalSoilMoisture
-        {
-            get;
-            set;
-        }
-
-        public double MaximumEvaporationImpactDepth
-        {
-            get;
-            set;
-        }
-
-        public double MaxPercolationRate
-        {
-            get;
-            set;
-        }
-
-        public double MoistureInitValue
-        {
-            get;
-            set;
-        }
+        public double CriticalMoistureDepth { get; set; }
+        public double SaturatedHydraulicConductivity { get; set; }
+        public double SurfaceRoughness { get; set; }
+        public double GroundwaterDischarge { get; set; }
+        public double HydraulicConductivityRedux { get; set; }
+        public double SnowAccumulationTresholdTemperature { get; set; }
+        public double KcFactor { get; set; }
+        public double TemperatureLimitForLiquidWater { get; set; }
+        public double CorrectionSnow { get; set; }
+        public double CorrectionRain { get; set; }
+        public double SnowMaxAdditionalDensity { get; set; }
+        public double NewSnowDensityMin { get; set; }
+        public double SnowRetentionCapacityMin { get; set; }
+        public double RefreezeParameter1 { get; set; }
+        public double RefreezeParameter2 { get; set; }
+        public double RefreezeTemperature { get; set; }
+        public double SnowMeltTemperature { get; set; }
+        public double SnowPacking { get; set; }
+        public double SnowRetentionCapacityMax { get; set; }
+        public double EvaporationZeta { get; set; }
+        public double XsaCriticalSoilMoisture { get; set; }
+        public double MaximumEvaporationImpactDepth { get; set; }
+        public double MaxPercolationRate { get; set; }
+        public double MoistureInitValue { get; set; }
 
         public struct READER
         {
@@ -4191,149 +2044,30 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(24, 0);
             }
 
-            public double CriticalMoistureDepth
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double SaturatedHydraulicConductivity
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double SurfaceRoughness
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double GroundwaterDischarge
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double HydraulicConductivityRedux
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double SnowAccumulationTresholdTemperature
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double KcFactor
-            {
-                get => this.ReadDataDouble(384UL, 0);
-                set => this.WriteData(384UL, value, 0);
-            }
-
-            public double TemperatureLimitForLiquidWater
-            {
-                get => this.ReadDataDouble(448UL, 0);
-                set => this.WriteData(448UL, value, 0);
-            }
-
-            public double CorrectionSnow
-            {
-                get => this.ReadDataDouble(512UL, 0);
-                set => this.WriteData(512UL, value, 0);
-            }
-
-            public double CorrectionRain
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public double SnowMaxAdditionalDensity
-            {
-                get => this.ReadDataDouble(640UL, 0);
-                set => this.WriteData(640UL, value, 0);
-            }
-
-            public double NewSnowDensityMin
-            {
-                get => this.ReadDataDouble(704UL, 0);
-                set => this.WriteData(704UL, value, 0);
-            }
-
-            public double SnowRetentionCapacityMin
-            {
-                get => this.ReadDataDouble(768UL, 0);
-                set => this.WriteData(768UL, value, 0);
-            }
-
-            public double RefreezeParameter1
-            {
-                get => this.ReadDataDouble(832UL, 0);
-                set => this.WriteData(832UL, value, 0);
-            }
-
-            public double RefreezeParameter2
-            {
-                get => this.ReadDataDouble(896UL, 0);
-                set => this.WriteData(896UL, value, 0);
-            }
-
-            public double RefreezeTemperature
-            {
-                get => this.ReadDataDouble(960UL, 0);
-                set => this.WriteData(960UL, value, 0);
-            }
-
-            public double SnowMeltTemperature
-            {
-                get => this.ReadDataDouble(1024UL, 0);
-                set => this.WriteData(1024UL, value, 0);
-            }
-
-            public double SnowPacking
-            {
-                get => this.ReadDataDouble(1088UL, 0);
-                set => this.WriteData(1088UL, value, 0);
-            }
-
-            public double SnowRetentionCapacityMax
-            {
-                get => this.ReadDataDouble(1152UL, 0);
-                set => this.WriteData(1152UL, value, 0);
-            }
-
-            public double EvaporationZeta
-            {
-                get => this.ReadDataDouble(1216UL, 0);
-                set => this.WriteData(1216UL, value, 0);
-            }
-
-            public double XsaCriticalSoilMoisture
-            {
-                get => this.ReadDataDouble(1280UL, 0);
-                set => this.WriteData(1280UL, value, 0);
-            }
-
-            public double MaximumEvaporationImpactDepth
-            {
-                get => this.ReadDataDouble(1344UL, 0);
-                set => this.WriteData(1344UL, value, 0);
-            }
-
-            public double MaxPercolationRate
-            {
-                get => this.ReadDataDouble(1408UL, 0);
-                set => this.WriteData(1408UL, value, 0);
-            }
-
-            public double MoistureInitValue
-            {
-                get => this.ReadDataDouble(1472UL, 0);
-                set => this.WriteData(1472UL, value, 0);
-            }
+            public double CriticalMoistureDepth { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double SaturatedHydraulicConductivity { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double SurfaceRoughness { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double GroundwaterDischarge { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double HydraulicConductivityRedux { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double SnowAccumulationTresholdTemperature { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double KcFactor { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+            public double TemperatureLimitForLiquidWater { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+            public double CorrectionSnow { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+            public double CorrectionRain { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public double SnowMaxAdditionalDensity { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+            public double NewSnowDensityMin { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+            public double SnowRetentionCapacityMin { get => this.ReadDataDouble(768UL, 0); set => this.WriteData(768UL, value, 0); }
+            public double RefreezeParameter1 { get => this.ReadDataDouble(832UL, 0); set => this.WriteData(832UL, value, 0); }
+            public double RefreezeParameter2 { get => this.ReadDataDouble(896UL, 0); set => this.WriteData(896UL, value, 0); }
+            public double RefreezeTemperature { get => this.ReadDataDouble(960UL, 0); set => this.WriteData(960UL, value, 0); }
+            public double SnowMeltTemperature { get => this.ReadDataDouble(1024UL, 0); set => this.WriteData(1024UL, value, 0); }
+            public double SnowPacking { get => this.ReadDataDouble(1088UL, 0); set => this.WriteData(1088UL, value, 0); }
+            public double SnowRetentionCapacityMax { get => this.ReadDataDouble(1152UL, 0); set => this.WriteData(1152UL, value, 0); }
+            public double EvaporationZeta { get => this.ReadDataDouble(1216UL, 0); set => this.WriteData(1216UL, value, 0); }
+            public double XsaCriticalSoilMoisture { get => this.ReadDataDouble(1280UL, 0); set => this.WriteData(1280UL, value, 0); }
+            public double MaximumEvaporationImpactDepth { get => this.ReadDataDouble(1344UL, 0); set => this.WriteData(1344UL, value, 0); }
+            public double MaxPercolationRate { get => this.ReadDataDouble(1408UL, 0); set => this.WriteData(1408UL, value, 0); }
+            public double MoistureInitValue { get => this.ReadDataDouble(1472UL, 0); set => this.WriteData(1472UL, value, 0); }
         }
     }
 
@@ -4434,263 +2168,43 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double SomSlowDecCoeffStandard
-        {
-            get;
-            set;
-        }
-
-        = 4.3E-05;
-        public double SomFastDecCoeffStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.00014;
-        public double SmbSlowMaintRateStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.001;
-        public double SmbFastMaintRateStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.01;
-        public double SmbSlowDeathRateStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.001;
-        public double SmbFastDeathRateStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.01;
-        public double SmbUtilizationEfficiency
-        {
-            get;
-            set;
-        }
-
-        = 0.6;
-        public double SomSlowUtilizationEfficiency
-        {
-            get;
-            set;
-        }
-
-        = 0.4;
-        public double SomFastUtilizationEfficiency
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double AomSlowUtilizationEfficiency
-        {
-            get;
-            set;
-        }
-
-        = 0.4;
-        public double AomFastUtilizationEfficiency
-        {
-            get;
-            set;
-        }
-
-        = 0.1;
-        public double AomFastMaxCtoN
-        {
-            get;
-            set;
-        }
-
-        = 1000;
-        public double PartSOMFastToSOMSlow
-        {
-            get;
-            set;
-        }
-
-        = 0.3;
-        public double PartSMBSlowToSOMFast
-        {
-            get;
-            set;
-        }
-
-        = 0.6;
-        public double PartSMBFastToSOMFast
-        {
-            get;
-            set;
-        }
-
-        = 0.6;
-        public double PartSOMToSMBSlow
-        {
-            get;
-            set;
-        }
-
-        = 0.015;
-        public double PartSOMToSMBFast
-        {
-            get;
-            set;
-        }
-
-        = 0.0002;
-        public double CnRatioSMB
-        {
-            get;
-            set;
-        }
-
-        = 6.7;
-        public double LimitClayEffect
-        {
-            get;
-            set;
-        }
-
-        = 0.25;
-        public double AmmoniaOxidationRateCoeffStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.1;
-        public double NitriteOxidationRateCoeffStandard
-        {
-            get;
-            set;
-        }
-
-        = 0.9;
-        public double TransportRateCoeff
-        {
-            get;
-            set;
-        }
-
-        = 0.1;
-        public double SpecAnaerobDenitrification
-        {
-            get;
-            set;
-        }
-
-        = 0.1;
-        public double ImmobilisationRateCoeffNO3
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double ImmobilisationRateCoeffNH4
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double Denit1
-        {
-            get;
-            set;
-        }
-
-        = 0.2;
-        public double Denit2
-        {
-            get;
-            set;
-        }
-
-        = 0.8;
-        public double Denit3
-        {
-            get;
-            set;
-        }
-
-        = 0.9;
-        public double HydrolysisKM
-        {
-            get;
-            set;
-        }
-
-        = 0.00334;
-        public double ActivationEnergy
-        {
-            get;
-            set;
-        }
-
-        = 41000;
-        public double HydrolysisP1
-        {
-            get;
-            set;
-        }
-
-        = 4.259E-12;
-        public double HydrolysisP2
-        {
-            get;
-            set;
-        }
-
-        = 1.408E-12;
-        public double AtmosphericResistance
-        {
-            get;
-            set;
-        }
-
-        = 0.0025;
-        public double N2oProductionRate
-        {
-            get;
-            set;
-        }
-
-        = 0.5;
-        public double InhibitorNH3
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double PsMaxMineralisationDepth
-        {
-            get;
-            set;
-        }
-
-        = 0.4;
-        public Mas.Schema.Model.Monica.SticsParameters SticsParams
-        {
-            get;
-            set;
-        }
+        public double SomSlowDecCoeffStandard { get; set; } = 4.3E-05;
+        public double SomFastDecCoeffStandard { get; set; } = 0.00014;
+        public double SmbSlowMaintRateStandard { get; set; } = 0.001;
+        public double SmbFastMaintRateStandard { get; set; } = 0.01;
+        public double SmbSlowDeathRateStandard { get; set; } = 0.001;
+        public double SmbFastDeathRateStandard { get; set; } = 0.01;
+        public double SmbUtilizationEfficiency { get; set; } = 0.6;
+        public double SomSlowUtilizationEfficiency { get; set; } = 0.4;
+        public double SomFastUtilizationEfficiency { get; set; } = 0.5;
+        public double AomSlowUtilizationEfficiency { get; set; } = 0.4;
+        public double AomFastUtilizationEfficiency { get; set; } = 0.1;
+        public double AomFastMaxCtoN { get; set; } = 1000;
+        public double PartSOMFastToSOMSlow { get; set; } = 0.3;
+        public double PartSMBSlowToSOMFast { get; set; } = 0.6;
+        public double PartSMBFastToSOMFast { get; set; } = 0.6;
+        public double PartSOMToSMBSlow { get; set; } = 0.015;
+        public double PartSOMToSMBFast { get; set; } = 0.0002;
+        public double CnRatioSMB { get; set; } = 6.7;
+        public double LimitClayEffect { get; set; } = 0.25;
+        public double AmmoniaOxidationRateCoeffStandard { get; set; } = 0.1;
+        public double NitriteOxidationRateCoeffStandard { get; set; } = 0.9;
+        public double TransportRateCoeff { get; set; } = 0.1;
+        public double SpecAnaerobDenitrification { get; set; } = 0.1;
+        public double ImmobilisationRateCoeffNO3 { get; set; } = 0.5;
+        public double ImmobilisationRateCoeffNH4 { get; set; } = 0.5;
+        public double Denit1 { get; set; } = 0.2;
+        public double Denit2 { get; set; } = 0.8;
+        public double Denit3 { get; set; } = 0.9;
+        public double HydrolysisKM { get; set; } = 0.00334;
+        public double ActivationEnergy { get; set; } = 41000;
+        public double HydrolysisP1 { get; set; } = 4.259E-12;
+        public double HydrolysisP2 { get; set; } = 1.408E-12;
+        public double AtmosphericResistance { get; set; } = 0.0025;
+        public double N2oProductionRate { get; set; } = 0.5;
+        public double InhibitorNH3 { get; set; } = 1;
+        public double PsMaxMineralisationDepth { get; set; } = 0.4;
+        public Mas.Schema.Model.Monica.SticsParameters SticsParams { get; set; }
 
         public struct READER
         {
@@ -4750,227 +2264,43 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(36, 1);
             }
 
-            public double SomSlowDecCoeffStandard
-            {
-                get => this.ReadDataDouble(0UL, 4.3E-05);
-                set => this.WriteData(0UL, value, 4.3E-05);
-            }
-
-            public double SomFastDecCoeffStandard
-            {
-                get => this.ReadDataDouble(64UL, 0.00014);
-                set => this.WriteData(64UL, value, 0.00014);
-            }
-
-            public double SmbSlowMaintRateStandard
-            {
-                get => this.ReadDataDouble(128UL, 0.001);
-                set => this.WriteData(128UL, value, 0.001);
-            }
-
-            public double SmbFastMaintRateStandard
-            {
-                get => this.ReadDataDouble(192UL, 0.01);
-                set => this.WriteData(192UL, value, 0.01);
-            }
-
-            public double SmbSlowDeathRateStandard
-            {
-                get => this.ReadDataDouble(256UL, 0.001);
-                set => this.WriteData(256UL, value, 0.001);
-            }
-
-            public double SmbFastDeathRateStandard
-            {
-                get => this.ReadDataDouble(320UL, 0.01);
-                set => this.WriteData(320UL, value, 0.01);
-            }
-
-            public double SmbUtilizationEfficiency
-            {
-                get => this.ReadDataDouble(384UL, 0.6);
-                set => this.WriteData(384UL, value, 0.6);
-            }
-
-            public double SomSlowUtilizationEfficiency
-            {
-                get => this.ReadDataDouble(448UL, 0.4);
-                set => this.WriteData(448UL, value, 0.4);
-            }
-
-            public double SomFastUtilizationEfficiency
-            {
-                get => this.ReadDataDouble(512UL, 0.5);
-                set => this.WriteData(512UL, value, 0.5);
-            }
-
-            public double AomSlowUtilizationEfficiency
-            {
-                get => this.ReadDataDouble(576UL, 0.4);
-                set => this.WriteData(576UL, value, 0.4);
-            }
-
-            public double AomFastUtilizationEfficiency
-            {
-                get => this.ReadDataDouble(640UL, 0.1);
-                set => this.WriteData(640UL, value, 0.1);
-            }
-
-            public double AomFastMaxCtoN
-            {
-                get => this.ReadDataDouble(704UL, 1000);
-                set => this.WriteData(704UL, value, 1000);
-            }
-
-            public double PartSOMFastToSOMSlow
-            {
-                get => this.ReadDataDouble(768UL, 0.3);
-                set => this.WriteData(768UL, value, 0.3);
-            }
-
-            public double PartSMBSlowToSOMFast
-            {
-                get => this.ReadDataDouble(832UL, 0.6);
-                set => this.WriteData(832UL, value, 0.6);
-            }
-
-            public double PartSMBFastToSOMFast
-            {
-                get => this.ReadDataDouble(896UL, 0.6);
-                set => this.WriteData(896UL, value, 0.6);
-            }
-
-            public double PartSOMToSMBSlow
-            {
-                get => this.ReadDataDouble(960UL, 0.015);
-                set => this.WriteData(960UL, value, 0.015);
-            }
-
-            public double PartSOMToSMBFast
-            {
-                get => this.ReadDataDouble(1024UL, 0.0002);
-                set => this.WriteData(1024UL, value, 0.0002);
-            }
-
-            public double CnRatioSMB
-            {
-                get => this.ReadDataDouble(1088UL, 6.7);
-                set => this.WriteData(1088UL, value, 6.7);
-            }
-
-            public double LimitClayEffect
-            {
-                get => this.ReadDataDouble(1152UL, 0.25);
-                set => this.WriteData(1152UL, value, 0.25);
-            }
-
-            public double AmmoniaOxidationRateCoeffStandard
-            {
-                get => this.ReadDataDouble(1216UL, 0.1);
-                set => this.WriteData(1216UL, value, 0.1);
-            }
-
-            public double NitriteOxidationRateCoeffStandard
-            {
-                get => this.ReadDataDouble(1280UL, 0.9);
-                set => this.WriteData(1280UL, value, 0.9);
-            }
-
-            public double TransportRateCoeff
-            {
-                get => this.ReadDataDouble(1344UL, 0.1);
-                set => this.WriteData(1344UL, value, 0.1);
-            }
-
-            public double SpecAnaerobDenitrification
-            {
-                get => this.ReadDataDouble(1408UL, 0.1);
-                set => this.WriteData(1408UL, value, 0.1);
-            }
-
-            public double ImmobilisationRateCoeffNO3
-            {
-                get => this.ReadDataDouble(1472UL, 0.5);
-                set => this.WriteData(1472UL, value, 0.5);
-            }
-
-            public double ImmobilisationRateCoeffNH4
-            {
-                get => this.ReadDataDouble(1536UL, 0.5);
-                set => this.WriteData(1536UL, value, 0.5);
-            }
-
-            public double Denit1
-            {
-                get => this.ReadDataDouble(1600UL, 0.2);
-                set => this.WriteData(1600UL, value, 0.2);
-            }
-
-            public double Denit2
-            {
-                get => this.ReadDataDouble(1664UL, 0.8);
-                set => this.WriteData(1664UL, value, 0.8);
-            }
-
-            public double Denit3
-            {
-                get => this.ReadDataDouble(1728UL, 0.9);
-                set => this.WriteData(1728UL, value, 0.9);
-            }
-
-            public double HydrolysisKM
-            {
-                get => this.ReadDataDouble(1792UL, 0.00334);
-                set => this.WriteData(1792UL, value, 0.00334);
-            }
-
-            public double ActivationEnergy
-            {
-                get => this.ReadDataDouble(1856UL, 41000);
-                set => this.WriteData(1856UL, value, 41000);
-            }
-
-            public double HydrolysisP1
-            {
-                get => this.ReadDataDouble(1920UL, 4.259E-12);
-                set => this.WriteData(1920UL, value, 4.259E-12);
-            }
-
-            public double HydrolysisP2
-            {
-                get => this.ReadDataDouble(1984UL, 1.408E-12);
-                set => this.WriteData(1984UL, value, 1.408E-12);
-            }
-
-            public double AtmosphericResistance
-            {
-                get => this.ReadDataDouble(2048UL, 0.0025);
-                set => this.WriteData(2048UL, value, 0.0025);
-            }
-
-            public double N2oProductionRate
-            {
-                get => this.ReadDataDouble(2112UL, 0.5);
-                set => this.WriteData(2112UL, value, 0.5);
-            }
-
-            public double InhibitorNH3
-            {
-                get => this.ReadDataDouble(2176UL, 1);
-                set => this.WriteData(2176UL, value, 1);
-            }
-
-            public double PsMaxMineralisationDepth
-            {
-                get => this.ReadDataDouble(2240UL, 0.4);
-                set => this.WriteData(2240UL, value, 0.4);
-            }
-
-            public Mas.Schema.Model.Monica.SticsParameters.WRITER SticsParams
-            {
-                get => BuildPointer<Mas.Schema.Model.Monica.SticsParameters.WRITER>(0);
-                set => Link(0, value);
-            }
+            public double SomSlowDecCoeffStandard { get => this.ReadDataDouble(0UL, 4.3E-05); set => this.WriteData(0UL, value, 4.3E-05); }
+            public double SomFastDecCoeffStandard { get => this.ReadDataDouble(64UL, 0.00014); set => this.WriteData(64UL, value, 0.00014); }
+            public double SmbSlowMaintRateStandard { get => this.ReadDataDouble(128UL, 0.001); set => this.WriteData(128UL, value, 0.001); }
+            public double SmbFastMaintRateStandard { get => this.ReadDataDouble(192UL, 0.01); set => this.WriteData(192UL, value, 0.01); }
+            public double SmbSlowDeathRateStandard { get => this.ReadDataDouble(256UL, 0.001); set => this.WriteData(256UL, value, 0.001); }
+            public double SmbFastDeathRateStandard { get => this.ReadDataDouble(320UL, 0.01); set => this.WriteData(320UL, value, 0.01); }
+            public double SmbUtilizationEfficiency { get => this.ReadDataDouble(384UL, 0.6); set => this.WriteData(384UL, value, 0.6); }
+            public double SomSlowUtilizationEfficiency { get => this.ReadDataDouble(448UL, 0.4); set => this.WriteData(448UL, value, 0.4); }
+            public double SomFastUtilizationEfficiency { get => this.ReadDataDouble(512UL, 0.5); set => this.WriteData(512UL, value, 0.5); }
+            public double AomSlowUtilizationEfficiency { get => this.ReadDataDouble(576UL, 0.4); set => this.WriteData(576UL, value, 0.4); }
+            public double AomFastUtilizationEfficiency { get => this.ReadDataDouble(640UL, 0.1); set => this.WriteData(640UL, value, 0.1); }
+            public double AomFastMaxCtoN { get => this.ReadDataDouble(704UL, 1000); set => this.WriteData(704UL, value, 1000); }
+            public double PartSOMFastToSOMSlow { get => this.ReadDataDouble(768UL, 0.3); set => this.WriteData(768UL, value, 0.3); }
+            public double PartSMBSlowToSOMFast { get => this.ReadDataDouble(832UL, 0.6); set => this.WriteData(832UL, value, 0.6); }
+            public double PartSMBFastToSOMFast { get => this.ReadDataDouble(896UL, 0.6); set => this.WriteData(896UL, value, 0.6); }
+            public double PartSOMToSMBSlow { get => this.ReadDataDouble(960UL, 0.015); set => this.WriteData(960UL, value, 0.015); }
+            public double PartSOMToSMBFast { get => this.ReadDataDouble(1024UL, 0.0002); set => this.WriteData(1024UL, value, 0.0002); }
+            public double CnRatioSMB { get => this.ReadDataDouble(1088UL, 6.7); set => this.WriteData(1088UL, value, 6.7); }
+            public double LimitClayEffect { get => this.ReadDataDouble(1152UL, 0.25); set => this.WriteData(1152UL, value, 0.25); }
+            public double AmmoniaOxidationRateCoeffStandard { get => this.ReadDataDouble(1216UL, 0.1); set => this.WriteData(1216UL, value, 0.1); }
+            public double NitriteOxidationRateCoeffStandard { get => this.ReadDataDouble(1280UL, 0.9); set => this.WriteData(1280UL, value, 0.9); }
+            public double TransportRateCoeff { get => this.ReadDataDouble(1344UL, 0.1); set => this.WriteData(1344UL, value, 0.1); }
+            public double SpecAnaerobDenitrification { get => this.ReadDataDouble(1408UL, 0.1); set => this.WriteData(1408UL, value, 0.1); }
+            public double ImmobilisationRateCoeffNO3 { get => this.ReadDataDouble(1472UL, 0.5); set => this.WriteData(1472UL, value, 0.5); }
+            public double ImmobilisationRateCoeffNH4 { get => this.ReadDataDouble(1536UL, 0.5); set => this.WriteData(1536UL, value, 0.5); }
+            public double Denit1 { get => this.ReadDataDouble(1600UL, 0.2); set => this.WriteData(1600UL, value, 0.2); }
+            public double Denit2 { get => this.ReadDataDouble(1664UL, 0.8); set => this.WriteData(1664UL, value, 0.8); }
+            public double Denit3 { get => this.ReadDataDouble(1728UL, 0.9); set => this.WriteData(1728UL, value, 0.9); }
+            public double HydrolysisKM { get => this.ReadDataDouble(1792UL, 0.00334); set => this.WriteData(1792UL, value, 0.00334); }
+            public double ActivationEnergy { get => this.ReadDataDouble(1856UL, 41000); set => this.WriteData(1856UL, value, 41000); }
+            public double HydrolysisP1 { get => this.ReadDataDouble(1920UL, 4.259E-12); set => this.WriteData(1920UL, value, 4.259E-12); }
+            public double HydrolysisP2 { get => this.ReadDataDouble(1984UL, 1.408E-12); set => this.WriteData(1984UL, value, 1.408E-12); }
+            public double AtmosphericResistance { get => this.ReadDataDouble(2048UL, 0.0025); set => this.WriteData(2048UL, value, 0.0025); }
+            public double N2oProductionRate { get => this.ReadDataDouble(2112UL, 0.5); set => this.WriteData(2112UL, value, 0.5); }
+            public double InhibitorNH3 { get => this.ReadDataDouble(2176UL, 1); set => this.WriteData(2176UL, value, 1); }
+            public double PsMaxMineralisationDepth { get => this.ReadDataDouble(2240UL, 0.4); set => this.WriteData(2240UL, value, 0.4); }
+            public Mas.Schema.Model.Monica.SticsParameters.WRITER SticsParams { get => BuildPointer<Mas.Schema.Model.Monica.SticsParameters.WRITER>(0); set => Link(0, value); }
         }
     }
 
@@ -5023,85 +2353,20 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double NTau
-        {
-            get;
-            set;
-        }
+        public double NTau { get; set; }
+        public double InitialSurfaceTemperature { get; set; }
+        public double BaseTemperature { get; set; }
+        public double QuartzRawDensity { get; set; }
+        public double DensityAir { get; set; }
+        public double DensityWater { get; set; }
+        public double DensityHumus { get; set; }
+        public double SpecificHeatCapacityAir { get; set; }
+        public double SpecificHeatCapacityQuartz { get; set; }
+        public double SpecificHeatCapacityWater { get; set; }
+        public double SpecificHeatCapacityHumus { get; set; }
+        public double SoilAlbedo { get; set; }
+        public double SoilMoisture { get; set; } = 0.25;
 
-        public double InitialSurfaceTemperature
-        {
-            get;
-            set;
-        }
-
-        public double BaseTemperature
-        {
-            get;
-            set;
-        }
-
-        public double QuartzRawDensity
-        {
-            get;
-            set;
-        }
-
-        public double DensityAir
-        {
-            get;
-            set;
-        }
-
-        public double DensityWater
-        {
-            get;
-            set;
-        }
-
-        public double DensityHumus
-        {
-            get;
-            set;
-        }
-
-        public double SpecificHeatCapacityAir
-        {
-            get;
-            set;
-        }
-
-        public double SpecificHeatCapacityQuartz
-        {
-            get;
-            set;
-        }
-
-        public double SpecificHeatCapacityWater
-        {
-            get;
-            set;
-        }
-
-        public double SpecificHeatCapacityHumus
-        {
-            get;
-            set;
-        }
-
-        public double SoilAlbedo
-        {
-            get;
-            set;
-        }
-
-        public double SoilMoisture
-        {
-            get;
-            set;
-        }
-
-        = 0.25;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -5135,83 +2400,19 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(13, 0);
             }
 
-            public double NTau
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double InitialSurfaceTemperature
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double BaseTemperature
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double QuartzRawDensity
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
-
-            public double DensityAir
-            {
-                get => this.ReadDataDouble(256UL, 0);
-                set => this.WriteData(256UL, value, 0);
-            }
-
-            public double DensityWater
-            {
-                get => this.ReadDataDouble(320UL, 0);
-                set => this.WriteData(320UL, value, 0);
-            }
-
-            public double DensityHumus
-            {
-                get => this.ReadDataDouble(384UL, 0);
-                set => this.WriteData(384UL, value, 0);
-            }
-
-            public double SpecificHeatCapacityAir
-            {
-                get => this.ReadDataDouble(448UL, 0);
-                set => this.WriteData(448UL, value, 0);
-            }
-
-            public double SpecificHeatCapacityQuartz
-            {
-                get => this.ReadDataDouble(512UL, 0);
-                set => this.WriteData(512UL, value, 0);
-            }
-
-            public double SpecificHeatCapacityWater
-            {
-                get => this.ReadDataDouble(576UL, 0);
-                set => this.WriteData(576UL, value, 0);
-            }
-
-            public double SpecificHeatCapacityHumus
-            {
-                get => this.ReadDataDouble(640UL, 0);
-                set => this.WriteData(640UL, value, 0);
-            }
-
-            public double SoilAlbedo
-            {
-                get => this.ReadDataDouble(704UL, 0);
-                set => this.WriteData(704UL, value, 0);
-            }
-
-            public double SoilMoisture
-            {
-                get => this.ReadDataDouble(768UL, 0.25);
-                set => this.WriteData(768UL, value, 0.25);
-            }
+            public double NTau { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double InitialSurfaceTemperature { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double BaseTemperature { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double QuartzRawDensity { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+            public double DensityAir { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+            public double DensityWater { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+            public double DensityHumus { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+            public double SpecificHeatCapacityAir { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+            public double SpecificHeatCapacityQuartz { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+            public double SpecificHeatCapacityWater { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+            public double SpecificHeatCapacityHumus { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+            public double SoilAlbedo { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+            public double SoilMoisture { get => this.ReadDataDouble(768UL, 0.25); set => this.WriteData(768UL, value, 0.25); }
         }
     }
 
@@ -5246,29 +2447,10 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public double DispersionLength
-        {
-            get;
-            set;
-        }
-
-        public double Ad
-        {
-            get;
-            set;
-        }
-
-        public double DiffusionCoefficientStandard
-        {
-            get;
-            set;
-        }
-
-        public double NDeposition
-        {
-            get;
-            set;
-        }
+        public double DispersionLength { get; set; }
+        public double Ad { get; set; }
+        public double DiffusionCoefficientStandard { get; set; }
+        public double NDeposition { get; set; }
 
         public struct READER
         {
@@ -5294,29 +2476,10 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(4, 0);
             }
 
-            public double DispersionLength
-            {
-                get => this.ReadDataDouble(0UL, 0);
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public double Ad
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public double DiffusionCoefficientStandard
-            {
-                get => this.ReadDataDouble(128UL, 0);
-                set => this.WriteData(128UL, value, 0);
-            }
-
-            public double NDeposition
-            {
-                get => this.ReadDataDouble(192UL, 0);
-                set => this.WriteData(192UL, value, 0);
-            }
+            public double DispersionLength { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+            public double Ad { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public double DiffusionCoefficientStandard { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+            public double NDeposition { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
         }
     }
 
@@ -5395,29 +2558,10 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission> SpeciesIdToIsopreneEmission
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission> SpeciesIdToMonoterpeneEmission
-            {
-                get;
-                set;
-            }
-
-            public double IsopreneEmission
-            {
-                get;
-                set;
-            }
-
-            public double MonoterpeneEmission
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission> SpeciesIdToIsopreneEmission { get; set; }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission> SpeciesIdToMonoterpeneEmission { get; set; }
+            public double IsopreneEmission { get; set; }
+            public double MonoterpeneEmission { get; set; }
 
             public struct READER
             {
@@ -5445,29 +2589,10 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(2, 2);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER> SpeciesIdToIsopreneEmission
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER>>(0);
-                    set => Link(0, value);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER> SpeciesIdToMonoterpeneEmission
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER>>(1);
-                    set => Link(1, value);
-                }
-
-                public double IsopreneEmission
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double MonoterpeneEmission
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER> SpeciesIdToIsopreneEmission { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER>>(0); set => Link(0, value); }
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER> SpeciesIdToMonoterpeneEmission { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Voc.Emissions.SpeciesIdToEmission.WRITER>>(1); set => Link(1, value); }
+                public double IsopreneEmission { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double MonoterpeneEmission { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd11f8d1479e2f010UL)]
@@ -5497,17 +2622,8 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public ulong SpeciesId
-                {
-                    get;
-                    set;
-                }
-
-                public double Emission
-                {
-                    get;
-                    set;
-                }
+                public ulong SpeciesId { get; set; }
+                public double Emission { get; set; }
 
                 public struct READER
                 {
@@ -5531,17 +2647,8 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(2, 0);
                     }
 
-                    public ulong SpeciesId
-                    {
-                        get => this.ReadDataULong(0UL, 0UL);
-                        set => this.WriteData(0UL, value, 0UL);
-                    }
-
-                    public double Emission
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
+                    public ulong SpeciesId { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                    public double Emission { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
                 }
             }
         }
@@ -5629,202 +2736,36 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public ulong Id
-            {
-                get;
-                set;
-            }
-
-            public double EfMonos
-            {
-                get;
-                set;
-            }
-
-            public double EfMono
-            {
-                get;
-                set;
-            }
-
-            public double EfIso
-            {
-                get;
-                set;
-            }
-
-            public double Theta
-            {
-                get;
-                set;
-            }
-
-            = 0.9;
-            public double Fage
-            {
-                get;
-                set;
-            }
-
-            = 1;
-            public double CtIs
-            {
-                get;
-                set;
-            }
-
-            public double CtMt
-            {
-                get;
-                set;
-            }
-
-            public double HaIs
-            {
-                get;
-                set;
-            }
-
-            public double HaMt
-            {
-                get;
-                set;
-            }
-
-            public double DsIs
-            {
-                get;
-                set;
-            }
-
-            public double DsMt
-            {
-                get;
-                set;
-            }
-
-            public double HdIs
-            {
-                get;
-                set;
-            }
-
-            = 284600;
-            public double HdMt
-            {
-                get;
-                set;
-            }
-
-            = 284600;
-            public double Hdj
-            {
-                get;
-                set;
-            }
-
-            = 220000;
-            public double Sdj
-            {
-                get;
-                set;
-            }
-
-            = 703;
-            public double Kc25
-            {
-                get;
-                set;
-            }
-
-            = 260;
-            public double Ko25
-            {
-                get;
-                set;
-            }
-
-            = 179;
-            public double VcMax25
-            {
-                get;
-                set;
-            }
-
-            = 80;
-            public double Qjvc
-            {
-                get;
-                set;
-            }
-
-            = 2;
-            public double Aekc
-            {
-                get;
-                set;
-            }
-
-            = 59356;
-            public double Aeko
-            {
-                get;
-                set;
-            }
-
-            = 35948;
-            public double Aejm
-            {
-                get;
-                set;
-            }
-
-            = 37000;
-            public double Aevc
-            {
-                get;
-                set;
-            }
-
-            = 58520;
-            public double SlaMin
-            {
-                get;
-                set;
-            }
-
-            = 20;
-            public double ScaleI
-            {
-                get;
-                set;
-            }
-
-            = 1;
-            public double ScaleM
-            {
-                get;
-                set;
-            }
-
-            = 1;
-            public double MFol
-            {
-                get;
-                set;
-            }
-
-            public double Lai
-            {
-                get;
-                set;
-            }
-
-            public double Sla
-            {
-                get;
-                set;
-            }
+            public ulong Id { get; set; }
+            public double EfMonos { get; set; }
+            public double EfMono { get; set; }
+            public double EfIso { get; set; }
+            public double Theta { get; set; } = 0.9;
+            public double Fage { get; set; } = 1;
+            public double CtIs { get; set; }
+            public double CtMt { get; set; }
+            public double HaIs { get; set; }
+            public double HaMt { get; set; }
+            public double DsIs { get; set; }
+            public double DsMt { get; set; }
+            public double HdIs { get; set; } = 284600;
+            public double HdMt { get; set; } = 284600;
+            public double Hdj { get; set; } = 220000;
+            public double Sdj { get; set; } = 703;
+            public double Kc25 { get; set; } = 260;
+            public double Ko25 { get; set; } = 179;
+            public double VcMax25 { get; set; } = 80;
+            public double Qjvc { get; set; } = 2;
+            public double Aekc { get; set; } = 59356;
+            public double Aeko { get; set; } = 35948;
+            public double Aejm { get; set; } = 37000;
+            public double Aevc { get; set; } = 58520;
+            public double SlaMin { get; set; } = 20;
+            public double ScaleI { get; set; } = 1;
+            public double ScaleM { get; set; } = 1;
+            public double MFol { get; set; }
+            public double Lai { get; set; }
+            public double Sla { get; set; }
 
             public struct READER
             {
@@ -5876,185 +2817,36 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(30, 0);
                 }
 
-                public ulong Id
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public double EfMonos
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public double EfMono
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double EfIso
-                {
-                    get => this.ReadDataDouble(192UL, 0);
-                    set => this.WriteData(192UL, value, 0);
-                }
-
-                public double Theta
-                {
-                    get => this.ReadDataDouble(256UL, 0.9);
-                    set => this.WriteData(256UL, value, 0.9);
-                }
-
-                public double Fage
-                {
-                    get => this.ReadDataDouble(320UL, 1);
-                    set => this.WriteData(320UL, value, 1);
-                }
-
-                public double CtIs
-                {
-                    get => this.ReadDataDouble(384UL, 0);
-                    set => this.WriteData(384UL, value, 0);
-                }
-
-                public double CtMt
-                {
-                    get => this.ReadDataDouble(448UL, 0);
-                    set => this.WriteData(448UL, value, 0);
-                }
-
-                public double HaIs
-                {
-                    get => this.ReadDataDouble(512UL, 0);
-                    set => this.WriteData(512UL, value, 0);
-                }
-
-                public double HaMt
-                {
-                    get => this.ReadDataDouble(576UL, 0);
-                    set => this.WriteData(576UL, value, 0);
-                }
-
-                public double DsIs
-                {
-                    get => this.ReadDataDouble(640UL, 0);
-                    set => this.WriteData(640UL, value, 0);
-                }
-
-                public double DsMt
-                {
-                    get => this.ReadDataDouble(704UL, 0);
-                    set => this.WriteData(704UL, value, 0);
-                }
-
-                public double HdIs
-                {
-                    get => this.ReadDataDouble(768UL, 284600);
-                    set => this.WriteData(768UL, value, 284600);
-                }
-
-                public double HdMt
-                {
-                    get => this.ReadDataDouble(832UL, 284600);
-                    set => this.WriteData(832UL, value, 284600);
-                }
-
-                public double Hdj
-                {
-                    get => this.ReadDataDouble(896UL, 220000);
-                    set => this.WriteData(896UL, value, 220000);
-                }
-
-                public double Sdj
-                {
-                    get => this.ReadDataDouble(960UL, 703);
-                    set => this.WriteData(960UL, value, 703);
-                }
-
-                public double Kc25
-                {
-                    get => this.ReadDataDouble(1024UL, 260);
-                    set => this.WriteData(1024UL, value, 260);
-                }
-
-                public double Ko25
-                {
-                    get => this.ReadDataDouble(1088UL, 179);
-                    set => this.WriteData(1088UL, value, 179);
-                }
-
-                public double VcMax25
-                {
-                    get => this.ReadDataDouble(1152UL, 80);
-                    set => this.WriteData(1152UL, value, 80);
-                }
-
-                public double Qjvc
-                {
-                    get => this.ReadDataDouble(1216UL, 2);
-                    set => this.WriteData(1216UL, value, 2);
-                }
-
-                public double Aekc
-                {
-                    get => this.ReadDataDouble(1280UL, 59356);
-                    set => this.WriteData(1280UL, value, 59356);
-                }
-
-                public double Aeko
-                {
-                    get => this.ReadDataDouble(1344UL, 35948);
-                    set => this.WriteData(1344UL, value, 35948);
-                }
-
-                public double Aejm
-                {
-                    get => this.ReadDataDouble(1408UL, 37000);
-                    set => this.WriteData(1408UL, value, 37000);
-                }
-
-                public double Aevc
-                {
-                    get => this.ReadDataDouble(1472UL, 58520);
-                    set => this.WriteData(1472UL, value, 58520);
-                }
-
-                public double SlaMin
-                {
-                    get => this.ReadDataDouble(1536UL, 20);
-                    set => this.WriteData(1536UL, value, 20);
-                }
-
-                public double ScaleI
-                {
-                    get => this.ReadDataDouble(1600UL, 1);
-                    set => this.WriteData(1600UL, value, 1);
-                }
-
-                public double ScaleM
-                {
-                    get => this.ReadDataDouble(1664UL, 1);
-                    set => this.WriteData(1664UL, value, 1);
-                }
-
-                public double MFol
-                {
-                    get => this.ReadDataDouble(1728UL, 0);
-                    set => this.WriteData(1728UL, value, 0);
-                }
-
-                public double Lai
-                {
-                    get => this.ReadDataDouble(1792UL, 0);
-                    set => this.WriteData(1792UL, value, 0);
-                }
-
-                public double Sla
-                {
-                    get => this.ReadDataDouble(1856UL, 0);
-                    set => this.WriteData(1856UL, value, 0);
-                }
+                public ulong Id { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public double EfMonos { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public double EfMono { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double EfIso { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                public double Theta { get => this.ReadDataDouble(256UL, 0.9); set => this.WriteData(256UL, value, 0.9); }
+                public double Fage { get => this.ReadDataDouble(320UL, 1); set => this.WriteData(320UL, value, 1); }
+                public double CtIs { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                public double CtMt { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                public double HaIs { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+                public double HaMt { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+                public double DsIs { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+                public double DsMt { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+                public double HdIs { get => this.ReadDataDouble(768UL, 284600); set => this.WriteData(768UL, value, 284600); }
+                public double HdMt { get => this.ReadDataDouble(832UL, 284600); set => this.WriteData(832UL, value, 284600); }
+                public double Hdj { get => this.ReadDataDouble(896UL, 220000); set => this.WriteData(896UL, value, 220000); }
+                public double Sdj { get => this.ReadDataDouble(960UL, 703); set => this.WriteData(960UL, value, 703); }
+                public double Kc25 { get => this.ReadDataDouble(1024UL, 260); set => this.WriteData(1024UL, value, 260); }
+                public double Ko25 { get => this.ReadDataDouble(1088UL, 179); set => this.WriteData(1088UL, value, 179); }
+                public double VcMax25 { get => this.ReadDataDouble(1152UL, 80); set => this.WriteData(1152UL, value, 80); }
+                public double Qjvc { get => this.ReadDataDouble(1216UL, 2); set => this.WriteData(1216UL, value, 2); }
+                public double Aekc { get => this.ReadDataDouble(1280UL, 59356); set => this.WriteData(1280UL, value, 59356); }
+                public double Aeko { get => this.ReadDataDouble(1344UL, 35948); set => this.WriteData(1344UL, value, 35948); }
+                public double Aejm { get => this.ReadDataDouble(1408UL, 37000); set => this.WriteData(1408UL, value, 37000); }
+                public double Aevc { get => this.ReadDataDouble(1472UL, 58520); set => this.WriteData(1472UL, value, 58520); }
+                public double SlaMin { get => this.ReadDataDouble(1536UL, 20); set => this.WriteData(1536UL, value, 20); }
+                public double ScaleI { get => this.ReadDataDouble(1600UL, 1); set => this.WriteData(1600UL, value, 1); }
+                public double ScaleM { get => this.ReadDataDouble(1664UL, 1); set => this.WriteData(1664UL, value, 1); }
+                public double MFol { get => this.ReadDataDouble(1728UL, 0); set => this.WriteData(1728UL, value, 0); }
+                public double Lai { get => this.ReadDataDouble(1792UL, 0); set => this.WriteData(1792UL, value, 0); }
+                public double Sla { get => this.ReadDataDouble(1856UL, 0); set => this.WriteData(1856UL, value, 0); }
             }
         }
 
@@ -6101,65 +2893,16 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Kc
-            {
-                get;
-                set;
-            }
-
-            public double Ko
-            {
-                get;
-                set;
-            }
-
-            public double Oi
-            {
-                get;
-                set;
-            }
-
-            public double Ci
-            {
-                get;
-                set;
-            }
-
-            public double Comp
-            {
-                get;
-                set;
-            }
-
-            public double VcMax
-            {
-                get;
-                set;
-            }
-
-            public double JMax
-            {
-                get;
-                set;
-            }
-
-            public double Jj
-            {
-                get;
-                set;
-            }
-
-            public double Jj1000
-            {
-                get;
-                set;
-            }
-
-            public double Jv
-            {
-                get;
-                set;
-            }
+            public double Kc { get; set; }
+            public double Ko { get; set; }
+            public double Oi { get; set; }
+            public double Ci { get; set; }
+            public double Comp { get; set; }
+            public double VcMax { get; set; }
+            public double JMax { get; set; }
+            public double Jj { get; set; }
+            public double Jj1000 { get; set; }
+            public double Jv { get; set; }
 
             public struct READER
             {
@@ -6191,65 +2934,16 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(10, 0);
                 }
 
-                public double Kc
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double Ko
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public double Oi
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double Ci
-                {
-                    get => this.ReadDataDouble(192UL, 0);
-                    set => this.WriteData(192UL, value, 0);
-                }
-
-                public double Comp
-                {
-                    get => this.ReadDataDouble(256UL, 0);
-                    set => this.WriteData(256UL, value, 0);
-                }
-
-                public double VcMax
-                {
-                    get => this.ReadDataDouble(320UL, 0);
-                    set => this.WriteData(320UL, value, 0);
-                }
-
-                public double JMax
-                {
-                    get => this.ReadDataDouble(384UL, 0);
-                    set => this.WriteData(384UL, value, 0);
-                }
-
-                public double Jj
-                {
-                    get => this.ReadDataDouble(448UL, 0);
-                    set => this.WriteData(448UL, value, 0);
-                }
-
-                public double Jj1000
-                {
-                    get => this.ReadDataDouble(512UL, 0);
-                    set => this.WriteData(512UL, value, 0);
-                }
-
-                public double Jv
-                {
-                    get => this.ReadDataDouble(576UL, 0);
-                    set => this.WriteData(576UL, value, 0);
-                }
+                public double Kc { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double Ko { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public double Oi { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double Ci { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                public double Comp { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+                public double VcMax { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+                public double JMax { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                public double Jj { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                public double Jj1000 { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+                public double Jv { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
             }
         }
 
@@ -6294,59 +2988,15 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Rad
-            {
-                get;
-                set;
-            }
-
-            public double Rad24
-            {
-                get;
-                set;
-            }
-
-            public double Rad240
-            {
-                get;
-                set;
-            }
-
-            public double TFol
-            {
-                get;
-                set;
-            }
-
-            public double TFol24
-            {
-                get;
-                set;
-            }
-
-            public double TFol240
-            {
-                get;
-                set;
-            }
-
-            public double Sunlitfoliagefraction
-            {
-                get;
-                set;
-            }
-
-            public double Sunlitfoliagefraction24
-            {
-                get;
-                set;
-            }
-
-            public double Co2concentration
-            {
-                get;
-                set;
-            }
+            public double Rad { get; set; }
+            public double Rad24 { get; set; }
+            public double Rad240 { get; set; }
+            public double TFol { get; set; }
+            public double TFol24 { get; set; }
+            public double TFol240 { get; set; }
+            public double Sunlitfoliagefraction { get; set; }
+            public double Sunlitfoliagefraction24 { get; set; }
+            public double Co2concentration { get; set; }
 
             public struct READER
             {
@@ -6377,59 +3027,15 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(9, 0);
                 }
 
-                public double Rad
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double Rad24
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public double Rad240
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double TFol
-                {
-                    get => this.ReadDataDouble(192UL, 0);
-                    set => this.WriteData(192UL, value, 0);
-                }
-
-                public double TFol24
-                {
-                    get => this.ReadDataDouble(256UL, 0);
-                    set => this.WriteData(256UL, value, 0);
-                }
-
-                public double TFol240
-                {
-                    get => this.ReadDataDouble(320UL, 0);
-                    set => this.WriteData(320UL, value, 0);
-                }
-
-                public double Sunlitfoliagefraction
-                {
-                    get => this.ReadDataDouble(384UL, 0);
-                    set => this.WriteData(384UL, value, 0);
-                }
-
-                public double Sunlitfoliagefraction24
-                {
-                    get => this.ReadDataDouble(448UL, 0);
-                    set => this.WriteData(448UL, value, 0);
-                }
-
-                public double Co2concentration
-                {
-                    get => this.ReadDataDouble(512UL, 0);
-                    set => this.WriteData(512UL, value, 0);
-                }
+                public double Rad { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double Rad24 { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public double Rad240 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double TFol { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                public double TFol24 { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+                public double TFol240 { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+                public double Sunlitfoliagefraction { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                public double Sunlitfoliagefraction24 { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                public double Co2concentration { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
             }
         }
 
@@ -6462,23 +3068,9 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Par
-            {
-                get;
-                set;
-            }
-
-            public double Par24
-            {
-                get;
-                set;
-            }
-
-            public double Par240
-            {
-                get;
-                set;
-            }
+            public double Par { get; set; }
+            public double Par24 { get; set; }
+            public double Par240 { get; set; }
 
             public struct READER
             {
@@ -6503,23 +3095,9 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(3, 0);
                 }
 
-                public double Par
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double Par24
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public double Par240
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
+                public double Par { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double Par24 { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public double Par240 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
             }
         }
 
@@ -6552,23 +3130,9 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double TempK
-            {
-                get;
-                set;
-            }
-
-            public double TempK24
-            {
-                get;
-                set;
-            }
-
-            public double TempK240
-            {
-                get;
-                set;
-            }
+            public double TempK { get; set; }
+            public double TempK24 { get; set; }
+            public double TempK240 { get; set; }
 
             public struct READER
             {
@@ -6593,23 +3157,9 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(3, 0);
                 }
 
-                public double TempK
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double TempK24
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public double TempK240
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
+                public double TempK { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double TempK24 { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public double TempK240 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
             }
         }
 
@@ -6640,17 +3190,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double EfIso
-            {
-                get;
-                set;
-            }
-
-            public double EfMono
-            {
-                get;
-                set;
-            }
+            public double EfIso { get; set; }
+            public double EfMono { get; set; }
 
             public struct READER
             {
@@ -6674,17 +3215,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(2, 0);
                 }
 
-                public double EfIso
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double EfMono
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
+                public double EfIso { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double EfMono { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
             }
         }
 
@@ -6719,29 +3251,10 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public ushort FoliageLayer
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Voc.PhotosynthT Pho
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Voc.FoliageT Fol
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Voc.EnzymeActivityT EnzAct
-            {
-                get;
-                set;
-            }
+            public ushort FoliageLayer { get; set; }
+            public Mas.Schema.Model.Monica.Voc.PhotosynthT Pho { get; set; }
+            public Mas.Schema.Model.Monica.Voc.FoliageT Fol { get; set; }
+            public Mas.Schema.Model.Monica.Voc.EnzymeActivityT EnzAct { get; set; }
 
             public struct READER
             {
@@ -6770,29 +3283,10 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 3);
                 }
 
-                public ushort FoliageLayer
-                {
-                    get => this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, value, (ushort)0);
-                }
-
-                public Mas.Schema.Model.Monica.Voc.PhotosynthT.WRITER Pho
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Voc.PhotosynthT.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Model.Monica.Voc.FoliageT.WRITER Fol
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Voc.FoliageT.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Model.Monica.Voc.EnzymeActivityT.WRITER EnzAct
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Voc.EnzymeActivityT.WRITER>(2);
-                    set => Link(2, value);
-                }
+                public ushort FoliageLayer { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+                public Mas.Schema.Model.Monica.Voc.PhotosynthT.WRITER Pho { get => BuildPointer<Mas.Schema.Model.Monica.Voc.PhotosynthT.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Model.Monica.Voc.FoliageT.WRITER Fol { get => BuildPointer<Mas.Schema.Model.Monica.Voc.FoliageT.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Model.Monica.Voc.EnzymeActivityT.WRITER EnzAct { get => BuildPointer<Mas.Schema.Model.Monica.Voc.EnzymeActivityT.WRITER>(2); set => Link(2, value); }
             }
         }
 
@@ -6823,17 +3317,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Isoprene
-            {
-                get;
-                set;
-            }
-
-            public double Monoterp
-            {
-                get;
-                set;
-            }
+            public double Isoprene { get; set; }
+            public double Monoterp { get; set; }
 
             public struct READER
             {
@@ -6857,17 +3342,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(2, 0);
                 }
 
-                public double Isoprene
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double Monoterp
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
+                public double Isoprene { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double Monoterp { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
             }
         }
     }
@@ -6973,276 +3449,46 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public bool UseN2O
-        {
-            get;
-            set;
-        }
+        public bool UseN2O { get; set; }
+        public bool UseNit { get; set; }
+        public bool UseDenit { get; set; }
+        public byte CodeVnit { get; set; } = 1;
+        public byte CodeTnit { get; set; } = 2;
+        public byte CodeRationit { get; set; } = 2;
+        public byte CodeHourlyWfpsNit { get; set; } = 2;
+        public byte CodePdenit { get; set; } = 1;
+        public byte CodeRatiodenit { get; set; } = 2;
+        public byte CodeHourlyWfpsDenit { get; set; } = 2;
+        public double Hminn { get; set; } = 0.3;
+        public double Hoptn { get; set; } = 0.9;
+        public double PHminnit { get; set; } = 4;
+        public double PHmaxnit { get; set; } = 7.2;
+        public double Nh4Min { get; set; } = 1;
+        public double PHminden { get; set; } = 7.2;
+        public double PHmaxden { get; set; } = 9.2;
+        public double Wfpsc { get; set; } = 0.62;
+        public double TdenitoptGauss { get; set; } = 47;
+        public double ScaleTdenitopt { get; set; } = 25;
+        public double Kd { get; set; } = 148;
+        public double KDesat { get; set; } = 3;
+        public double Fnx { get; set; } = 0.8;
+        public double Vnitmax { get; set; } = 27.3;
+        public double Kamm { get; set; } = 24;
+        public double Tnitmin { get; set; } = 5;
+        public double Tnitopt { get; set; } = 30;
+        public double Tnitop2 { get; set; } = 35;
+        public double Tnitmax { get; set; } = 58;
+        public double TnitoptGauss { get; set; } = 32.5;
+        public double ScaleTnitopt { get; set; } = 16;
+        public double Rationit { get; set; } = 0.0016;
+        public double CminPdenit { get; set; } = 1;
+        public double CmaxPdenit { get; set; } = 6;
+        public double MinPdenit { get; set; } = 1;
+        public double MaxPdenit { get; set; } = 20;
+        public double Ratiodenit { get; set; } = 0.2;
+        public double Profdenit { get; set; } = 20;
+        public double Vpotdenit { get; set; } = 2;
 
-        public bool UseNit
-        {
-            get;
-            set;
-        }
-
-        public bool UseDenit
-        {
-            get;
-            set;
-        }
-
-        public byte CodeVnit
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public byte CodeTnit
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public byte CodeRationit
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public byte CodeHourlyWfpsNit
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public byte CodePdenit
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public byte CodeRatiodenit
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public byte CodeHourlyWfpsDenit
-        {
-            get;
-            set;
-        }
-
-        = 2;
-        public double Hminn
-        {
-            get;
-            set;
-        }
-
-        = 0.3;
-        public double Hoptn
-        {
-            get;
-            set;
-        }
-
-        = 0.9;
-        public double PHminnit
-        {
-            get;
-            set;
-        }
-
-        = 4;
-        public double PHmaxnit
-        {
-            get;
-            set;
-        }
-
-        = 7.2;
-        public double Nh4Min
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double PHminden
-        {
-            get;
-            set;
-        }
-
-        = 7.2;
-        public double PHmaxden
-        {
-            get;
-            set;
-        }
-
-        = 9.2;
-        public double Wfpsc
-        {
-            get;
-            set;
-        }
-
-        = 0.62;
-        public double TdenitoptGauss
-        {
-            get;
-            set;
-        }
-
-        = 47;
-        public double ScaleTdenitopt
-        {
-            get;
-            set;
-        }
-
-        = 25;
-        public double Kd
-        {
-            get;
-            set;
-        }
-
-        = 148;
-        public double KDesat
-        {
-            get;
-            set;
-        }
-
-        = 3;
-        public double Fnx
-        {
-            get;
-            set;
-        }
-
-        = 0.8;
-        public double Vnitmax
-        {
-            get;
-            set;
-        }
-
-        = 27.3;
-        public double Kamm
-        {
-            get;
-            set;
-        }
-
-        = 24;
-        public double Tnitmin
-        {
-            get;
-            set;
-        }
-
-        = 5;
-        public double Tnitopt
-        {
-            get;
-            set;
-        }
-
-        = 30;
-        public double Tnitop2
-        {
-            get;
-            set;
-        }
-
-        = 35;
-        public double Tnitmax
-        {
-            get;
-            set;
-        }
-
-        = 58;
-        public double TnitoptGauss
-        {
-            get;
-            set;
-        }
-
-        = 32.5;
-        public double ScaleTnitopt
-        {
-            get;
-            set;
-        }
-
-        = 16;
-        public double Rationit
-        {
-            get;
-            set;
-        }
-
-        = 0.0016;
-        public double CminPdenit
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double CmaxPdenit
-        {
-            get;
-            set;
-        }
-
-        = 6;
-        public double MinPdenit
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double MaxPdenit
-        {
-            get;
-            set;
-        }
-
-        = 20;
-        public double Ratiodenit
-        {
-            get;
-            set;
-        }
-
-        = 0.2;
-        public double Profdenit
-        {
-            get;
-            set;
-        }
-
-        = 20;
-        public double Vpotdenit
-        {
-            get;
-            set;
-        }
-
-        = 2;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -7302,239 +3548,45 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(30, 0);
             }
 
-            public bool UseN2O
-            {
-                get => this.ReadDataBool(0UL, false);
-                set => this.WriteData(0UL, value, false);
-            }
-
-            public bool UseNit
-            {
-                get => this.ReadDataBool(1UL, false);
-                set => this.WriteData(1UL, value, false);
-            }
-
-            public bool UseDenit
-            {
-                get => this.ReadDataBool(2UL, false);
-                set => this.WriteData(2UL, value, false);
-            }
-
-            public byte CodeVnit
-            {
-                get => this.ReadDataByte(8UL, (byte)1);
-                set => this.WriteData(8UL, value, (byte)1);
-            }
-
-            public byte CodeTnit
-            {
-                get => this.ReadDataByte(16UL, (byte)2);
-                set => this.WriteData(16UL, value, (byte)2);
-            }
-
-            public byte CodeRationit
-            {
-                get => this.ReadDataByte(24UL, (byte)2);
-                set => this.WriteData(24UL, value, (byte)2);
-            }
-
-            public byte CodeHourlyWfpsNit
-            {
-                get => this.ReadDataByte(32UL, (byte)2);
-                set => this.WriteData(32UL, value, (byte)2);
-            }
-
-            public byte CodePdenit
-            {
-                get => this.ReadDataByte(40UL, (byte)1);
-                set => this.WriteData(40UL, value, (byte)1);
-            }
-
-            public byte CodeRatiodenit
-            {
-                get => this.ReadDataByte(48UL, (byte)2);
-                set => this.WriteData(48UL, value, (byte)2);
-            }
-
-            public byte CodeHourlyWfpsDenit
-            {
-                get => this.ReadDataByte(56UL, (byte)2);
-                set => this.WriteData(56UL, value, (byte)2);
-            }
-
-            public double Hminn
-            {
-                get => this.ReadDataDouble(64UL, 0.3);
-                set => this.WriteData(64UL, value, 0.3);
-            }
-
-            public double Hoptn
-            {
-                get => this.ReadDataDouble(128UL, 0.9);
-                set => this.WriteData(128UL, value, 0.9);
-            }
-
-            public double PHminnit
-            {
-                get => this.ReadDataDouble(192UL, 4);
-                set => this.WriteData(192UL, value, 4);
-            }
-
-            public double PHmaxnit
-            {
-                get => this.ReadDataDouble(256UL, 7.2);
-                set => this.WriteData(256UL, value, 7.2);
-            }
-
-            public double Nh4Min
-            {
-                get => this.ReadDataDouble(320UL, 1);
-                set => this.WriteData(320UL, value, 1);
-            }
-
-            public double PHminden
-            {
-                get => this.ReadDataDouble(384UL, 7.2);
-                set => this.WriteData(384UL, value, 7.2);
-            }
-
-            public double PHmaxden
-            {
-                get => this.ReadDataDouble(448UL, 9.2);
-                set => this.WriteData(448UL, value, 9.2);
-            }
-
-            public double Wfpsc
-            {
-                get => this.ReadDataDouble(512UL, 0.62);
-                set => this.WriteData(512UL, value, 0.62);
-            }
-
-            public double TdenitoptGauss
-            {
-                get => this.ReadDataDouble(576UL, 47);
-                set => this.WriteData(576UL, value, 47);
-            }
-
-            public double ScaleTdenitopt
-            {
-                get => this.ReadDataDouble(640UL, 25);
-                set => this.WriteData(640UL, value, 25);
-            }
-
-            public double Kd
-            {
-                get => this.ReadDataDouble(704UL, 148);
-                set => this.WriteData(704UL, value, 148);
-            }
-
-            public double KDesat
-            {
-                get => this.ReadDataDouble(768UL, 3);
-                set => this.WriteData(768UL, value, 3);
-            }
-
-            public double Fnx
-            {
-                get => this.ReadDataDouble(832UL, 0.8);
-                set => this.WriteData(832UL, value, 0.8);
-            }
-
-            public double Vnitmax
-            {
-                get => this.ReadDataDouble(896UL, 27.3);
-                set => this.WriteData(896UL, value, 27.3);
-            }
-
-            public double Kamm
-            {
-                get => this.ReadDataDouble(960UL, 24);
-                set => this.WriteData(960UL, value, 24);
-            }
-
-            public double Tnitmin
-            {
-                get => this.ReadDataDouble(1024UL, 5);
-                set => this.WriteData(1024UL, value, 5);
-            }
-
-            public double Tnitopt
-            {
-                get => this.ReadDataDouble(1088UL, 30);
-                set => this.WriteData(1088UL, value, 30);
-            }
-
-            public double Tnitop2
-            {
-                get => this.ReadDataDouble(1152UL, 35);
-                set => this.WriteData(1152UL, value, 35);
-            }
-
-            public double Tnitmax
-            {
-                get => this.ReadDataDouble(1216UL, 58);
-                set => this.WriteData(1216UL, value, 58);
-            }
-
-            public double TnitoptGauss
-            {
-                get => this.ReadDataDouble(1280UL, 32.5);
-                set => this.WriteData(1280UL, value, 32.5);
-            }
-
-            public double ScaleTnitopt
-            {
-                get => this.ReadDataDouble(1344UL, 16);
-                set => this.WriteData(1344UL, value, 16);
-            }
-
-            public double Rationit
-            {
-                get => this.ReadDataDouble(1408UL, 0.0016);
-                set => this.WriteData(1408UL, value, 0.0016);
-            }
-
-            public double CminPdenit
-            {
-                get => this.ReadDataDouble(1472UL, 1);
-                set => this.WriteData(1472UL, value, 1);
-            }
-
-            public double CmaxPdenit
-            {
-                get => this.ReadDataDouble(1536UL, 6);
-                set => this.WriteData(1536UL, value, 6);
-            }
-
-            public double MinPdenit
-            {
-                get => this.ReadDataDouble(1600UL, 1);
-                set => this.WriteData(1600UL, value, 1);
-            }
-
-            public double MaxPdenit
-            {
-                get => this.ReadDataDouble(1664UL, 20);
-                set => this.WriteData(1664UL, value, 20);
-            }
-
-            public double Ratiodenit
-            {
-                get => this.ReadDataDouble(1728UL, 0.2);
-                set => this.WriteData(1728UL, value, 0.2);
-            }
-
-            public double Profdenit
-            {
-                get => this.ReadDataDouble(1792UL, 20);
-                set => this.WriteData(1792UL, value, 20);
-            }
-
-            public double Vpotdenit
-            {
-                get => this.ReadDataDouble(1856UL, 2);
-                set => this.WriteData(1856UL, value, 2);
-            }
+            public bool UseN2O { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+            public bool UseNit { get => this.ReadDataBool(1UL, false); set => this.WriteData(1UL, value, false); }
+            public bool UseDenit { get => this.ReadDataBool(2UL, false); set => this.WriteData(2UL, value, false); }
+            public byte CodeVnit { get => this.ReadDataByte(8UL, (byte)1); set => this.WriteData(8UL, value, (byte)1); }
+            public byte CodeTnit { get => this.ReadDataByte(16UL, (byte)2); set => this.WriteData(16UL, value, (byte)2); }
+            public byte CodeRationit { get => this.ReadDataByte(24UL, (byte)2); set => this.WriteData(24UL, value, (byte)2); }
+            public byte CodeHourlyWfpsNit { get => this.ReadDataByte(32UL, (byte)2); set => this.WriteData(32UL, value, (byte)2); }
+            public byte CodePdenit { get => this.ReadDataByte(40UL, (byte)1); set => this.WriteData(40UL, value, (byte)1); }
+            public byte CodeRatiodenit { get => this.ReadDataByte(48UL, (byte)2); set => this.WriteData(48UL, value, (byte)2); }
+            public byte CodeHourlyWfpsDenit { get => this.ReadDataByte(56UL, (byte)2); set => this.WriteData(56UL, value, (byte)2); }
+            public double Hminn { get => this.ReadDataDouble(64UL, 0.3); set => this.WriteData(64UL, value, 0.3); }
+            public double Hoptn { get => this.ReadDataDouble(128UL, 0.9); set => this.WriteData(128UL, value, 0.9); }
+            public double PHminnit { get => this.ReadDataDouble(192UL, 4); set => this.WriteData(192UL, value, 4); }
+            public double PHmaxnit { get => this.ReadDataDouble(256UL, 7.2); set => this.WriteData(256UL, value, 7.2); }
+            public double Nh4Min { get => this.ReadDataDouble(320UL, 1); set => this.WriteData(320UL, value, 1); }
+            public double PHminden { get => this.ReadDataDouble(384UL, 7.2); set => this.WriteData(384UL, value, 7.2); }
+            public double PHmaxden { get => this.ReadDataDouble(448UL, 9.2); set => this.WriteData(448UL, value, 9.2); }
+            public double Wfpsc { get => this.ReadDataDouble(512UL, 0.62); set => this.WriteData(512UL, value, 0.62); }
+            public double TdenitoptGauss { get => this.ReadDataDouble(576UL, 47); set => this.WriteData(576UL, value, 47); }
+            public double ScaleTdenitopt { get => this.ReadDataDouble(640UL, 25); set => this.WriteData(640UL, value, 25); }
+            public double Kd { get => this.ReadDataDouble(704UL, 148); set => this.WriteData(704UL, value, 148); }
+            public double KDesat { get => this.ReadDataDouble(768UL, 3); set => this.WriteData(768UL, value, 3); }
+            public double Fnx { get => this.ReadDataDouble(832UL, 0.8); set => this.WriteData(832UL, value, 0.8); }
+            public double Vnitmax { get => this.ReadDataDouble(896UL, 27.3); set => this.WriteData(896UL, value, 27.3); }
+            public double Kamm { get => this.ReadDataDouble(960UL, 24); set => this.WriteData(960UL, value, 24); }
+            public double Tnitmin { get => this.ReadDataDouble(1024UL, 5); set => this.WriteData(1024UL, value, 5); }
+            public double Tnitopt { get => this.ReadDataDouble(1088UL, 30); set => this.WriteData(1088UL, value, 30); }
+            public double Tnitop2 { get => this.ReadDataDouble(1152UL, 35); set => this.WriteData(1152UL, value, 35); }
+            public double Tnitmax { get => this.ReadDataDouble(1216UL, 58); set => this.WriteData(1216UL, value, 58); }
+            public double TnitoptGauss { get => this.ReadDataDouble(1280UL, 32.5); set => this.WriteData(1280UL, value, 32.5); }
+            public double ScaleTnitopt { get => this.ReadDataDouble(1344UL, 16); set => this.WriteData(1344UL, value, 16); }
+            public double Rationit { get => this.ReadDataDouble(1408UL, 0.0016); set => this.WriteData(1408UL, value, 0.0016); }
+            public double CminPdenit { get => this.ReadDataDouble(1472UL, 1); set => this.WriteData(1472UL, value, 1); }
+            public double CmaxPdenit { get => this.ReadDataDouble(1536UL, 6); set => this.WriteData(1536UL, value, 6); }
+            public double MinPdenit { get => this.ReadDataDouble(1600UL, 1); set => this.WriteData(1600UL, value, 1); }
+            public double MaxPdenit { get => this.ReadDataDouble(1664UL, 20); set => this.WriteData(1664UL, value, 20); }
+            public double Ratiodenit { get => this.ReadDataDouble(1728UL, 0.2); set => this.WriteData(1728UL, value, 0.2); }
+            public double Profdenit { get => this.ReadDataDouble(1792UL, 20); set => this.WriteData(1792UL, value, 20); }
+            public double Vpotdenit { get => this.ReadDataDouble(1856UL, 2); set => this.WriteData(1856UL, value, 2); }
         }
     }
 }

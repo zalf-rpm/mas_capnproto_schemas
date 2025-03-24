@@ -39,29 +39,10 @@ namespace Mas.Schema.Persistence
         {
         }
 
-        public ulong PublicKey0
-        {
-            get;
-            set;
-        }
-
-        public ulong PublicKey1
-        {
-            get;
-            set;
-        }
-
-        public ulong PublicKey2
-        {
-            get;
-            set;
-        }
-
-        public ulong PublicKey3
-        {
-            get;
-            set;
-        }
+        public ulong PublicKey0 { get; set; }
+        public ulong PublicKey1 { get; set; }
+        public ulong PublicKey2 { get; set; }
+        public ulong PublicKey3 { get; set; }
 
         public struct READER
         {
@@ -87,29 +68,10 @@ namespace Mas.Schema.Persistence
                 this.SetStruct(4, 0);
             }
 
-            public ulong PublicKey0
-            {
-                get => this.ReadDataULong(0UL, 0UL);
-                set => this.WriteData(0UL, value, 0UL);
-            }
-
-            public ulong PublicKey1
-            {
-                get => this.ReadDataULong(64UL, 0UL);
-                set => this.WriteData(64UL, value, 0UL);
-            }
-
-            public ulong PublicKey2
-            {
-                get => this.ReadDataULong(128UL, 0UL);
-                set => this.WriteData(128UL, value, 0UL);
-            }
-
-            public ulong PublicKey3
-            {
-                get => this.ReadDataULong(192UL, 0UL);
-                set => this.WriteData(192UL, value, 0UL);
-            }
+            public ulong PublicKey0 { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+            public ulong PublicKey1 { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
+            public ulong PublicKey2 { get => this.ReadDataULong(128UL, 0UL); set => this.WriteData(128UL, value, 0UL); }
+            public ulong PublicKey3 { get => this.ReadDataULong(192UL, 0UL); set => this.WriteData(192UL, value, 0UL); }
         }
     }
 
@@ -198,11 +160,7 @@ namespace Mas.Schema.Persistence
             }
         }
 
-        public ushort Port
-        {
-            get;
-            set;
-        }
+        public ushort Port { get; set; }
 
         public string Host
         {
@@ -238,28 +196,10 @@ namespace Mas.Schema.Persistence
                 this.SetStruct(3, 1);
             }
 
-            public WHICH which
-            {
-                get => (WHICH)this.ReadDataUShort(144U, (ushort)0);
-                set => this.WriteData(144U, (ushort)value, (ushort)0);
-            }
-
-            public ip6.WRITER Ip6
-            {
-                get => which == WHICH.Ip6 ? Rewrap<ip6.WRITER>() : default;
-            }
-
-            public ushort Port
-            {
-                get => this.ReadDataUShort(128UL, (ushort)0);
-                set => this.WriteData(128UL, value, (ushort)0);
-            }
-
-            public string Host
-            {
-                get => which == WHICH.Host ? this.ReadText(0, null) : default;
-                set => this.WriteText(0, value, null);
-            }
+            public WHICH which { get => (WHICH)this.ReadDataUShort(144U, (ushort)0); set => this.WriteData(144U, (ushort)value, (ushort)0); }
+            public ip6.WRITER Ip6 { get => which == WHICH.Ip6 ? Rewrap<ip6.WRITER>() : default; }
+            public ushort Port { get => this.ReadDataUShort(128UL, (ushort)0); set => this.WriteData(128UL, value, (ushort)0); }
+            public string Host { get => which == WHICH.Host ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8fb25d0428898a69UL)]
@@ -289,17 +229,8 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public ulong Lower64
-            {
-                get;
-                set;
-            }
-
-            public ulong Upper64
-            {
-                get;
-                set;
-            }
+            public ulong Lower64 { get; set; }
+            public ulong Upper64 { get; set; }
 
             public struct READER
             {
@@ -322,17 +253,8 @@ namespace Mas.Schema.Persistence
                 {
                 }
 
-                public ulong Lower64
-                {
-                    get => this.ReadDataULong(0UL, 0UL);
-                    set => this.WriteData(0UL, value, 0UL);
-                }
-
-                public ulong Upper64
-                {
-                    get => this.ReadDataULong(64UL, 0UL);
-                    set => this.WriteData(64UL, value, 0UL);
-                }
+                public ulong Lower64 { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public ulong Upper64 { get => this.ReadDataULong(64UL, 0UL); set => this.WriteData(64UL, value, 0UL); }
             }
         }
     }
@@ -364,17 +286,8 @@ namespace Mas.Schema.Persistence
         {
         }
 
-        public Mas.Schema.Persistence.VatId Id
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Persistence.Address Address
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Persistence.VatId Id { get; set; }
+        public Mas.Schema.Persistence.Address Address { get; set; }
 
         public struct READER
         {
@@ -400,17 +313,8 @@ namespace Mas.Schema.Persistence
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Persistence.VatId.WRITER Id
-            {
-                get => BuildPointer<Mas.Schema.Persistence.VatId.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Persistence.Address.WRITER Address
-            {
-                get => BuildPointer<Mas.Schema.Persistence.Address.WRITER>(1);
-                set => Link(1, value);
-            }
+            public Mas.Schema.Persistence.VatId.WRITER Id { get => BuildPointer<Mas.Schema.Persistence.VatId.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Persistence.Address.WRITER Address { get => BuildPointer<Mas.Schema.Persistence.Address.WRITER>(1); set => Link(1, value); }
         }
     }
 
@@ -441,17 +345,8 @@ namespace Mas.Schema.Persistence
         {
         }
 
-        public Mas.Schema.Persistence.VatPath Vat
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Persistence.SturdyRef.Token LocalRef
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Persistence.VatPath Vat { get; set; }
+        public Mas.Schema.Persistence.SturdyRef.Token LocalRef { get; set; }
 
         public struct READER
         {
@@ -477,17 +372,8 @@ namespace Mas.Schema.Persistence
                 this.SetStruct(0, 2);
             }
 
-            public Mas.Schema.Persistence.VatPath.WRITER Vat
-            {
-                get => BuildPointer<Mas.Schema.Persistence.VatPath.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Persistence.SturdyRef.Token.WRITER LocalRef
-            {
-                get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Token.WRITER>(1);
-                set => Link(1, value);
-            }
+            public Mas.Schema.Persistence.VatPath.WRITER Vat { get => BuildPointer<Mas.Schema.Persistence.VatPath.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Persistence.SturdyRef.Token.WRITER LocalRef { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Token.WRITER>(1); set => Link(1, value); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfdd799ed60c87723UL)]
@@ -515,11 +401,7 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public string Guid
-            {
-                get;
-                set;
-            }
+            public string Guid { get; set; }
 
             public struct READER
             {
@@ -542,11 +424,7 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 1);
                 }
 
-                public string Guid
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string Guid { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -665,23 +543,9 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(1, 1);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
-                    set => this.WriteData(0U, (ushort)value, (ushort)0);
-                }
-
-                public string Text
-                {
-                    get => which == WHICH.Text ? this.ReadText(0, null) : default;
-                    set => this.WriteText(0, value, null);
-                }
-
-                public ListOfPrimitivesSerializer<byte> Data
-                {
-                    get => which == WHICH.Data ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
-                    set => Link(0, value);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(0U, (ushort)0); set => this.WriteData(0U, (ushort)value, (ushort)0); }
+                public string Text { get => which == WHICH.Text ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
+                public ListOfPrimitivesSerializer<byte> Data { get => which == WHICH.Data ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default; set => Link(0, value); }
             }
         }
     }
@@ -699,7 +563,8 @@ namespace Mas.Schema.Persistence
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Heartbeat.Params_Beat.WRITER>();
             var arg_ = new Mas.Schema.Persistence.Heartbeat.Params_Beat()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(11507750357812365882UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -718,6 +583,7 @@ namespace Mas.Schema.Persistence
         }
 
         public override ulong InterfaceId => 11507750357812365882UL;
+
         async Task<AnswerOrCounterquestion> Beat(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -852,6 +718,7 @@ namespace Mas.Schema.Persistence
         }
 
         public override ulong InterfaceId => 13954362354854972261UL;
+
         Task<AnswerOrCounterquestion> Save(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -861,9 +728,7 @@ namespace Mas.Schema.Persistence
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Persistent.SaveResults.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -895,11 +760,7 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public Mas.Schema.Persistence.SturdyRef.Owner SealFor
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Persistence.SturdyRef.Owner SealFor { get; set; }
 
             public struct READER
             {
@@ -923,11 +784,7 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Persistence.SturdyRef.Owner.WRITER SealFor
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Owner.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public Mas.Schema.Persistence.SturdyRef.Owner.WRITER SealFor { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Owner.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -958,17 +815,8 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public Mas.Schema.Persistence.SturdyRef SturdyRef
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Persistence.SturdyRef UnsaveSR
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Persistence.SturdyRef SturdyRef { get; set; }
+            public Mas.Schema.Persistence.SturdyRef UnsaveSR { get; set; }
 
             public struct READER
             {
@@ -994,17 +842,8 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Persistence.SturdyRef.WRITER UnsaveSR
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Persistence.SturdyRef.WRITER UnsaveSR { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -1021,7 +860,8 @@ namespace Mas.Schema.Persistence
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Persistent.ReleaseSturdyRef.Params_Release.WRITER>();
                 var arg_ = new Mas.Schema.Persistence.Persistent.ReleaseSturdyRef.Params_Release()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(10335778191920016978UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1040,6 +880,7 @@ namespace Mas.Schema.Persistence
             }
 
             public override ulong InterfaceId => 10335778191920016978UL;
+
             Task<AnswerOrCounterquestion> Release(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1047,12 +888,13 @@ namespace Mas.Schema.Persistence
                     return Impatient.MaybeTailCall(Impl.Release(cancellationToken_), success =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Persistent.ReleaseSturdyRef.Result_Release.WRITER>();
-                        var r_ = new Mas.Schema.Persistence.Persistent.ReleaseSturdyRef.Result_Release{Success = success};
+                        var r_ = new Mas.Schema.Persistence.Persistent.ReleaseSturdyRef.Result_Release
+                        {
+                            Success = success
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1129,11 +971,7 @@ namespace Mas.Schema.Persistence
                 {
                 }
 
-                public bool Success
-                {
-                    get;
-                    set;
-                }
+                public bool Success { get; set; }
 
                 public struct READER
                 {
@@ -1156,11 +994,7 @@ namespace Mas.Schema.Persistence
                         this.SetStruct(1, 0);
                     }
 
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
+                    public bool Success { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
                 }
             }
         }
@@ -1186,9 +1020,7 @@ namespace Mas.Schema.Persistence
                     var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Restorer.Result_Restore>(d_);
                     return (r_.Cap);
                 }
-            }
-
-            );
+            });
         }
     }
 
@@ -1201,6 +1033,7 @@ namespace Mas.Schema.Persistence
         }
 
         public override ulong InterfaceId => 11508422749279825468UL;
+
         Task<AnswerOrCounterquestion> Restore(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1208,12 +1041,13 @@ namespace Mas.Schema.Persistence
                 return Impatient.MaybeTailCall(Impl.Restore(CapnpSerializable.Create<Mas.Schema.Persistence.Restorer.RestoreParams>(d_), cancellationToken_), cap =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Restorer.Result_Restore.WRITER>();
-                    var r_ = new Mas.Schema.Persistence.Restorer.Result_Restore{Cap = cap};
+                    var r_ = new Mas.Schema.Persistence.Restorer.Result_Restore
+                    {
+                        Cap = cap
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1247,17 +1081,8 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public Mas.Schema.Persistence.SturdyRef.Token LocalRef
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Persistence.SturdyRef.Owner SealedBy
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Persistence.SturdyRef.Token LocalRef { get; set; }
+            public Mas.Schema.Persistence.SturdyRef.Owner SealedBy { get; set; }
 
             public struct READER
             {
@@ -1283,17 +1108,8 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Persistence.SturdyRef.Token.WRITER LocalRef
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Token.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Persistence.SturdyRef.Owner.WRITER SealedBy
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Owner.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Persistence.SturdyRef.Token.WRITER LocalRef { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Token.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Persistence.SturdyRef.Owner.WRITER SealedBy { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.Owner.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -1322,11 +1138,7 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public BareProxy Cap
-            {
-                get;
-                set;
-            }
+            public BareProxy Cap { get; set; }
 
             public struct READER
             {
@@ -1349,11 +1161,7 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 1);
                 }
 
-                public BareProxy Cap
-                {
-                    get => ReadCap<BareProxy>(0);
-                    set => LinkObject(0, value);
-                }
+                public BareProxy Cap { get => ReadCap<BareProxy>(0); set => LinkObject(0, value); }
             }
         }
     }
@@ -1371,7 +1179,9 @@ namespace Mas.Schema.Persistence
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.HostPortResolver.Params_Resolve.WRITER>();
             var arg_ = new Mas.Schema.Persistence.HostPortResolver.Params_Resolve()
-            {Id = id};
+            {
+                Id = id
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12289639464158895519UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1391,16 +1201,15 @@ namespace Mas.Schema.Persistence
                     var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Restorer.Result_Restore>(d_);
                     return (r_.Cap);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1419,6 +1228,7 @@ namespace Mas.Schema.Persistence
         }
 
         public override ulong InterfaceId => 12289639464158895519UL;
+
         Task<AnswerOrCounterquestion> Resolve(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1427,12 +1237,14 @@ namespace Mas.Schema.Persistence
                 return Impatient.MaybeTailCall(Impl.Resolve(in_.Id, cancellationToken_), (host, port) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.HostPortResolver.Result_Resolve.WRITER>();
-                    var r_ = new Mas.Schema.Persistence.HostPortResolver.Result_Resolve{Host = host, Port = port};
+                    var r_ = new Mas.Schema.Persistence.HostPortResolver.Result_Resolve
+                    {
+                        Host = host,
+                        Port = port
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1459,9 +1271,7 @@ namespace Mas.Schema.Persistence
                         var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.HostPortResolver.Registrar.Result_Register>(d_);
                         return (r_.Heartbeat, r_.SecsHeartbeatInterval);
                     }
-                }
-
-                );
+                });
             }
         }
 
@@ -1474,6 +1284,7 @@ namespace Mas.Schema.Persistence
             }
 
             public override ulong InterfaceId => 12739266579737776306UL;
+
             Task<AnswerOrCounterquestion> Register(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1481,12 +1292,14 @@ namespace Mas.Schema.Persistence
                     return Impatient.MaybeTailCall(Impl.Register(CapnpSerializable.Create<Mas.Schema.Persistence.HostPortResolver.Registrar.RegisterParams>(d_), cancellationToken_), (heartbeat, secsHeartbeatInterval) =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.HostPortResolver.Registrar.Result_Register.WRITER>();
-                        var r_ = new Mas.Schema.Persistence.HostPortResolver.Registrar.Result_Register{Heartbeat = heartbeat, SecsHeartbeatInterval = secsHeartbeatInterval};
+                        var r_ = new Mas.Schema.Persistence.HostPortResolver.Registrar.Result_Register
+                        {
+                            Heartbeat = heartbeat,
+                            SecsHeartbeatInterval = secsHeartbeatInterval
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1524,29 +1337,10 @@ namespace Mas.Schema.Persistence
                 {
                 }
 
-                public string Base64VatId
-                {
-                    get;
-                    set;
-                }
-
-                public string Host
-                {
-                    get;
-                    set;
-                }
-
-                public ushort Port
-                {
-                    get;
-                    set;
-                }
-
-                public string Alias
-                {
-                    get;
-                    set;
-                }
+                public string Base64VatId { get; set; }
+                public string Host { get; set; }
+                public ushort Port { get; set; }
+                public string Alias { get; set; }
 
                 public struct READER
                 {
@@ -1572,29 +1366,10 @@ namespace Mas.Schema.Persistence
                         this.SetStruct(1, 3);
                     }
 
-                    public string Base64VatId
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
-
-                    public string Host
-                    {
-                        get => this.ReadText(1, null);
-                        set => this.WriteText(1, value, null);
-                    }
-
-                    public ushort Port
-                    {
-                        get => this.ReadDataUShort(0UL, (ushort)0);
-                        set => this.WriteData(0UL, value, (ushort)0);
-                    }
-
-                    public string Alias
-                    {
-                        get => this.ReadText(2, null);
-                        set => this.WriteText(2, value, null);
-                    }
+                    public string Base64VatId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                    public string Host { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+                    public ushort Port { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+                    public string Alias { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
                 }
             }
 
@@ -1625,17 +1400,8 @@ namespace Mas.Schema.Persistence
                 {
                 }
 
-                public Mas.Schema.Persistence.IHeartbeat Heartbeat
-                {
-                    get;
-                    set;
-                }
-
-                public uint SecsHeartbeatInterval
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Persistence.IHeartbeat Heartbeat { get; set; }
+                public uint SecsHeartbeatInterval { get; set; }
 
                 public struct READER
                 {
@@ -1659,17 +1425,8 @@ namespace Mas.Schema.Persistence
                         this.SetStruct(1, 1);
                     }
 
-                    public Mas.Schema.Persistence.IHeartbeat Heartbeat
-                    {
-                        get => ReadCap<Mas.Schema.Persistence.IHeartbeat>(0);
-                        set => LinkObject(0, value);
-                    }
-
-                    public uint SecsHeartbeatInterval
-                    {
-                        get => this.ReadDataUInt(0UL, 0U);
-                        set => this.WriteData(0UL, value, 0U);
-                    }
+                    public Mas.Schema.Persistence.IHeartbeat Heartbeat { get => ReadCap<Mas.Schema.Persistence.IHeartbeat>(0); set => LinkObject(0, value); }
+                    public uint SecsHeartbeatInterval { get => this.ReadDataUInt(0UL, 0U); set => this.WriteData(0UL, value, 0U); }
                 }
             }
         }
@@ -1699,11 +1456,7 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public string Id
-            {
-                get;
-                set;
-            }
+            public string Id { get; set; }
 
             public struct READER
             {
@@ -1726,11 +1479,7 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 1);
                 }
 
-                public string Id
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -1761,17 +1510,8 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public string Host
-            {
-                get;
-                set;
-            }
-
-            public ushort Port
-            {
-                get;
-                set;
-            }
+            public string Host { get; set; }
+            public ushort Port { get; set; }
 
             public struct READER
             {
@@ -1795,17 +1535,8 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(1, 1);
                 }
 
-                public string Host
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public ushort Port
-                {
-                    get => this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, value, (ushort)0);
-                }
+                public string Host { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public ushort Port { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
             }
         }
     }
@@ -1823,7 +1554,9 @@ namespace Mas.Schema.Persistence
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Gateway.Params_Register.WRITER>();
             var arg_ = new Mas.Schema.Persistence.Gateway.Params_Register()
-            {Cap = cap};
+            {
+                Cap = cap
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(10348194466865555437UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -1832,9 +1565,7 @@ namespace Mas.Schema.Persistence
                     var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Gateway.RegResults>(d_);
                     return r_;
                 }
-            }
-
-            );
+            });
         }
 
         public Task<BareProxy> Restore(Mas.Schema.Persistence.Restorer.RestoreParams arg_, CancellationToken cancellationToken_ = default)
@@ -1848,16 +1579,15 @@ namespace Mas.Schema.Persistence
                     var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Restorer.Result_Restore>(d_);
                     return (r_.Cap);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1876,6 +1606,7 @@ namespace Mas.Schema.Persistence
         }
 
         public override ulong InterfaceId => 10348194466865555437UL;
+
         Task<AnswerOrCounterquestion> Register(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1886,9 +1617,7 @@ namespace Mas.Schema.Persistence
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Gateway.RegResults.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1924,23 +1653,9 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public Mas.Schema.Persistence.SturdyRef SturdyRef
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Persistence.IHeartbeat Heartbeat
-            {
-                get;
-                set;
-            }
-
-            public uint SecsHeartbeatInterval
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Persistence.SturdyRef SturdyRef { get; set; }
+            public Mas.Schema.Persistence.IHeartbeat Heartbeat { get; set; }
+            public uint SecsHeartbeatInterval { get; set; }
 
             public struct READER
             {
@@ -1966,23 +1681,9 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(1, 2);
                 }
 
-                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Persistence.IHeartbeat Heartbeat
-                {
-                    get => ReadCap<Mas.Schema.Persistence.IHeartbeat>(1);
-                    set => LinkObject(1, value);
-                }
-
-                public uint SecsHeartbeatInterval
-                {
-                    get => this.ReadDataUInt(0UL, 0U);
-                    set => this.WriteData(0UL, value, 0U);
-                }
+                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Persistence.IHeartbeat Heartbeat { get => ReadCap<Mas.Schema.Persistence.IHeartbeat>(1); set => LinkObject(1, value); }
+                public uint SecsHeartbeatInterval { get => this.ReadDataUInt(0UL, 0U); set => this.WriteData(0UL, value, 0U); }
             }
         }
 
@@ -2011,11 +1712,7 @@ namespace Mas.Schema.Persistence
             {
             }
 
-            public BareProxy Cap
-            {
-                get;
-                set;
-            }
+            public BareProxy Cap { get; set; }
 
             public struct READER
             {
@@ -2038,11 +1735,7 @@ namespace Mas.Schema.Persistence
                     this.SetStruct(0, 1);
                 }
 
-                public BareProxy Cap
-                {
-                    get => ReadCap<BareProxy>(0);
-                    set => LinkObject(0, value);
-                }
+                public BareProxy Cap { get => ReadCap<BareProxy>(0); set => LinkObject(0, value); }
             }
         }
     }
