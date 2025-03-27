@@ -69,23 +69,9 @@ namespace Mas.Schema.Soil
         {
         }
 
-        public IReadOnlyList<Mas.Schema.Soil.Layer.Property> Properties
-        {
-            get;
-            set;
-        }
-
-        public float Size
-        {
-            get;
-            set;
-        }
-
-        public string Description
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.Layer.Property> Properties { get; set; }
+        public float Size { get; set; }
+        public string Description { get; set; }
 
         public struct READER
         {
@@ -111,23 +97,9 @@ namespace Mas.Schema.Soil
                 this.SetStruct(1, 2);
             }
 
-            public ListOfStructsSerializer<Mas.Schema.Soil.Layer.Property.WRITER> Properties
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.Property.WRITER>>(0);
-                set => Link(0, value);
-            }
-
-            public float Size
-            {
-                get => this.ReadDataFloat(0UL, 0F);
-                set => this.WriteData(0UL, value, 0F);
-            }
-
-            public string Description
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
+            public ListOfStructsSerializer<Mas.Schema.Soil.Layer.Property.WRITER> Properties { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.Property.WRITER>>(0); set => Link(0, value); }
+            public float Size { get => this.ReadDataFloat(0UL, 0F); set => this.WriteData(0UL, value, 0F); }
+            public string Description { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x92f4b81bcfdb71b0UL)]
@@ -223,11 +195,7 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public Mas.Schema.Soil.PropertyName Name
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Soil.PropertyName Name { get; set; }
 
             public float? F32Value
             {
@@ -284,35 +252,11 @@ namespace Mas.Schema.Soil
                     this.SetStruct(1, 1);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                    set => this.WriteData(16U, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Soil.PropertyName Name
-                {
-                    get => (Mas.Schema.Soil.PropertyName)this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public float F32Value
-                {
-                    get => which == WHICH.F32Value ? this.ReadDataFloat(32UL, 0F) : default;
-                    set => this.WriteData(32UL, value, 0F);
-                }
-
-                public bool BValue
-                {
-                    get => which == WHICH.BValue ? this.ReadDataBool(32UL, false) : default;
-                    set => this.WriteData(32UL, value, false);
-                }
-
-                public string Type
-                {
-                    get => which == WHICH.Type ? this.ReadText(0, null) : default;
-                    set => this.WriteText(0, value, null);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+                public Mas.Schema.Soil.PropertyName Name { get => (Mas.Schema.Soil.PropertyName)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public float F32Value { get => which == WHICH.F32Value ? this.ReadDataFloat(32UL, 0F) : default; set => this.WriteData(32UL, value, 0F); }
+                public bool BValue { get => which == WHICH.BValue ? this.ReadDataBool(32UL, false) : default; set => this.WriteData(32UL, value, false); }
+                public string Type { get => which == WHICH.Type ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
             }
         }
     }
@@ -346,25 +290,10 @@ namespace Mas.Schema.Soil
         {
         }
 
-        public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
+        public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
+        public bool OnlyRawData { get; set; } = true;
 
-        public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional
-        {
-            get;
-            set;
-        }
-
-        public bool OnlyRawData
-        {
-            get;
-            set;
-        }
-
-        = true;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -390,23 +319,9 @@ namespace Mas.Schema.Soil
                 this.SetStruct(1, 2);
             }
 
-            public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
-            {
-                get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1);
-                set => Link(1, value);
-            }
-
-            public bool OnlyRawData
-            {
-                get => this.ReadDataBool(0UL, true);
-                set => this.WriteData(0UL, value, true);
-            }
+            public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0); set => Link(0, value); }
+            public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1); set => Link(1, value); }
+            public bool OnlyRawData { get => this.ReadDataBool(0UL, true); set => this.WriteData(0UL, value, true); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbf4e1b07ad88943fUL)]
@@ -438,23 +353,9 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public bool Failed
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional
-            {
-                get;
-                set;
-            }
+            public bool Failed { get; set; }
+            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
+            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
 
             public struct READER
             {
@@ -481,23 +382,9 @@ namespace Mas.Schema.Soil
                     this.SetStruct(1, 2);
                 }
 
-                public bool Failed
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
-
-                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
-                    set => Link(0, value);
-                }
-
-                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1);
-                    set => Link(1, value);
-                }
+                public bool Failed { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0); set => Link(0, value); }
+                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1); set => Link(1, value); }
             }
         }
     }
@@ -529,19 +416,9 @@ namespace Mas.Schema.Soil
         {
         }
 
-        public IReadOnlyList<Mas.Schema.Soil.Layer> Layers
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.Layer> Layers { get; set; }
+        public float PercentageOfArea { get; set; } = 100F;
 
-        public float PercentageOfArea
-        {
-            get;
-            set;
-        }
-
-        = 100F;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -565,17 +442,8 @@ namespace Mas.Schema.Soil
                 this.SetStruct(1, 1);
             }
 
-            public ListOfStructsSerializer<Mas.Schema.Soil.Layer.WRITER> Layers
-            {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.WRITER>>(0);
-                set => Link(0, value);
-            }
-
-            public float PercentageOfArea
-            {
-                get => this.ReadDataFloat(0UL, 100F);
-                set => this.WriteData(0UL, value, 100F);
-            }
+            public ListOfStructsSerializer<Mas.Schema.Soil.Layer.WRITER> Layers { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.WRITER>>(0); set => Link(0, value); }
+            public float PercentageOfArea { get => this.ReadDataFloat(0UL, 100F); set => this.WriteData(0UL, value, 100F); }
         }
     }
 
@@ -593,7 +461,8 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Profile.Params_Data.WRITER>();
             var arg_ = new Mas.Schema.Soil.Profile.Params_Data()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18403892418668764201UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -606,7 +475,8 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Profile.Params_GeoLocation.WRITER>();
             var arg_ = new Mas.Schema.Soil.Profile.Params_GeoLocation()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(18403892418668764201UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -630,7 +500,8 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -649,6 +520,7 @@ namespace Mas.Schema.Soil
         }
 
         public override ulong InterfaceId => 18403892418668764201UL;
+
         Task<AnswerOrCounterquestion> Data(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -658,9 +530,7 @@ namespace Mas.Schema.Soil
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.ProfileData.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -673,9 +543,7 @@ namespace Mas.Schema.Soil
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Geo.LatLonCoord.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -800,7 +668,9 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Params_GetAllAvailableParameters.WRITER>();
             var arg_ = new Mas.Schema.Soil.Service.Params_GetAllAvailableParameters()
-            {OnlyRawData = onlyRawData};
+            {
+                OnlyRawData = onlyRawData
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(11572745897491850465UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -813,7 +683,10 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Params_ClosestProfilesAt.WRITER>();
             var arg_ = new Mas.Schema.Soil.Service.Params_ClosestProfilesAt()
-            {Coord = coord, Query = query};
+            {
+                Coord = coord,
+                Query = query
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(11572745897491850465UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -822,9 +695,7 @@ namespace Mas.Schema.Soil
                     var r_ = CapnpSerializable.Create<Mas.Schema.Soil.Service.Result_ClosestProfilesAt>(d_);
                     return (r_.Profiles);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Soil.Service.IStream> StreamAllProfiles(Mas.Schema.Soil.Query arg_, CancellationToken cancellationToken_ = default)
@@ -838,9 +709,7 @@ namespace Mas.Schema.Soil
                     var r_ = CapnpSerializable.Create<Mas.Schema.Soil.Service.Result_StreamAllProfiles>(d_);
                     return (r_.AllProfiles);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -858,7 +727,8 @@ namespace Mas.Schema.Soil
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -877,6 +747,7 @@ namespace Mas.Schema.Soil
         }
 
         public override ulong InterfaceId => 11572745897491850465UL;
+
         Task<AnswerOrCounterquestion> CheckAvailableParameters(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -886,9 +757,7 @@ namespace Mas.Schema.Soil
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Query.Result.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -900,12 +769,14 @@ namespace Mas.Schema.Soil
                 return Impatient.MaybeTailCall(Impl.GetAllAvailableParameters(in_.OnlyRawData, cancellationToken_), (mandatory, optional) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Result_GetAllAvailableParameters.WRITER>();
-                    var r_ = new Mas.Schema.Soil.Service.Result_GetAllAvailableParameters{Mandatory = mandatory, Optional = optional};
+                    var r_ = new Mas.Schema.Soil.Service.Result_GetAllAvailableParameters
+                    {
+                        Mandatory = mandatory,
+                        Optional = optional
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -917,12 +788,13 @@ namespace Mas.Schema.Soil
                 return Impatient.MaybeTailCall(Impl.ClosestProfilesAt(in_.Coord, in_.Query, cancellationToken_), profiles =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Result_ClosestProfilesAt.WRITER>();
-                    var r_ = new Mas.Schema.Soil.Service.Result_ClosestProfilesAt{Profiles = profiles};
+                    var r_ = new Mas.Schema.Soil.Service.Result_ClosestProfilesAt
+                    {
+                        Profiles = profiles
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -933,12 +805,13 @@ namespace Mas.Schema.Soil
                 return Impatient.MaybeTailCall(Impl.StreamAllProfiles(CapnpSerializable.Create<Mas.Schema.Soil.Query>(d_), cancellationToken_), allProfiles =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Result_StreamAllProfiles.WRITER>();
-                    var r_ = new Mas.Schema.Soil.Service.Result_StreamAllProfiles{AllProfiles = allProfiles};
+                    var r_ = new Mas.Schema.Soil.Service.Result_StreamAllProfiles
+                    {
+                        AllProfiles = allProfiles
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -958,7 +831,9 @@ namespace Mas.Schema.Soil
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Stream.Params_NextProfiles.WRITER>();
                 var arg_ = new Mas.Schema.Soil.Service.Stream.Params_NextProfiles()
-                {MaxCount = maxCount};
+                {
+                    MaxCount = maxCount
+                };
                 arg_?.serialize(in_);
                 return Impatient.MakePipelineAware(Call(17652047127749839161UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
                 {
@@ -967,9 +842,7 @@ namespace Mas.Schema.Soil
                         var r_ = CapnpSerializable.Create<Mas.Schema.Soil.Service.Stream.Result_NextProfiles>(d_);
                         return (r_.Profiles);
                     }
-                }
-
-                );
+                });
             }
         }
 
@@ -982,6 +855,7 @@ namespace Mas.Schema.Soil
             }
 
             public override ulong InterfaceId => 17652047127749839161UL;
+
             Task<AnswerOrCounterquestion> NextProfiles(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -990,12 +864,13 @@ namespace Mas.Schema.Soil
                     return Impatient.MaybeTailCall(Impl.NextProfiles(in_.MaxCount, cancellationToken_), profiles =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Soil.Service.Stream.Result_NextProfiles.WRITER>();
-                        var r_ = new Mas.Schema.Soil.Service.Stream.Result_NextProfiles{Profiles = profiles};
+                        var r_ = new Mas.Schema.Soil.Service.Stream.Result_NextProfiles
+                        {
+                            Profiles = profiles
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1027,13 +902,8 @@ namespace Mas.Schema.Soil
                 {
                 }
 
-                public long MaxCount
-                {
-                    get;
-                    set;
-                }
+                public long MaxCount { get; set; } = 100L;
 
-                = 100L;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -1055,11 +925,7 @@ namespace Mas.Schema.Soil
                         this.SetStruct(1, 0);
                     }
 
-                    public long MaxCount
-                    {
-                        get => this.ReadDataLong(0UL, 100L);
-                        set => this.WriteData(0UL, value, 100L);
-                    }
+                    public long MaxCount { get => this.ReadDataLong(0UL, 100L); set => this.WriteData(0UL, value, 100L); }
                 }
             }
 
@@ -1088,11 +954,7 @@ namespace Mas.Schema.Soil
                 {
                 }
 
-                public IReadOnlyList<Mas.Schema.Soil.IProfile> Profiles
-                {
-                    get;
-                    set;
-                }
+                public IReadOnlyList<Mas.Schema.Soil.IProfile> Profiles { get; set; }
 
                 public struct READER
                 {
@@ -1116,11 +978,7 @@ namespace Mas.Schema.Soil
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfCapsSerializer<Mas.Schema.Soil.IProfile> Profiles
-                    {
-                        get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Soil.IProfile>>(0);
-                        set => Link(0, value);
-                    }
+                    public ListOfCapsSerializer<Mas.Schema.Soil.IProfile> Profiles { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Soil.IProfile>>(0); set => Link(0, value); }
                 }
             }
         }
@@ -1150,11 +1008,7 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public bool OnlyRawData
-            {
-                get;
-                set;
-            }
+            public bool OnlyRawData { get; set; }
 
             public struct READER
             {
@@ -1177,11 +1031,7 @@ namespace Mas.Schema.Soil
                     this.SetStruct(1, 0);
                 }
 
-                public bool OnlyRawData
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public bool OnlyRawData { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -1212,17 +1062,8 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
+            public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
 
             public struct READER
             {
@@ -1248,17 +1089,8 @@ namespace Mas.Schema.Soil
                     this.SetStruct(0, 2);
                 }
 
-                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
-                    set => Link(0, value);
-                }
-
-                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
-                {
-                    get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1);
-                    set => Link(1, value);
-                }
+                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0); set => Link(0, value); }
+                public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional { get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1); set => Link(1, value); }
             }
         }
 
@@ -1289,17 +1121,8 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public Mas.Schema.Geo.LatLonCoord Coord
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Soil.Query Query
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Geo.LatLonCoord Coord { get; set; }
+            public Mas.Schema.Soil.Query Query { get; set; }
 
             public struct READER
             {
@@ -1325,17 +1148,8 @@ namespace Mas.Schema.Soil
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Geo.LatLonCoord.WRITER Coord
-                {
-                    get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Soil.Query.WRITER Query
-                {
-                    get => BuildPointer<Mas.Schema.Soil.Query.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Geo.LatLonCoord.WRITER Coord { get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Soil.Query.WRITER Query { get => BuildPointer<Mas.Schema.Soil.Query.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -1364,11 +1178,7 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Soil.IProfile> Profiles
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Soil.IProfile> Profiles { get; set; }
 
             public struct READER
             {
@@ -1392,11 +1202,7 @@ namespace Mas.Schema.Soil
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Soil.IProfile> Profiles
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Soil.IProfile>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Soil.IProfile> Profiles { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Soil.IProfile>>(0); set => Link(0, value); }
             }
         }
 
@@ -1425,11 +1231,7 @@ namespace Mas.Schema.Soil
             {
             }
 
-            public Mas.Schema.Soil.Service.IStream AllProfiles
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Soil.Service.IStream AllProfiles { get; set; }
 
             public struct READER
             {
@@ -1452,11 +1254,7 @@ namespace Mas.Schema.Soil
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Soil.Service.IStream AllProfiles
-                {
-                    get => ReadCap<Mas.Schema.Soil.Service.IStream>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Soil.Service.IStream AllProfiles { get => ReadCap<Mas.Schema.Soil.Service.IStream>(0); set => LinkObject(0, value); }
             }
         }
     }

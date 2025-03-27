@@ -21,7 +21,9 @@ namespace Mas.Rpc.Test
         {
             var in_ = SerializerState.CreateForRpc<Mas.Rpc.Test.A.Params_Method.WRITER>();
             var arg_ = new Mas.Rpc.Test.A.Params_Method()
-            {Param = @param};
+            {
+                Param = @param
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(13447466392595712079UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -40,6 +42,7 @@ namespace Mas.Rpc.Test
         }
 
         public override ulong InterfaceId => 13447466392595712079UL;
+
         Task<AnswerOrCounterquestion> Method(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -48,12 +51,13 @@ namespace Mas.Rpc.Test
                 return Impatient.MaybeTailCall(Impl.Method(in_.Param, cancellationToken_), res =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Rpc.Test.A.Result_Method.WRITER>();
-                    var r_ = new Mas.Rpc.Test.A.Result_Method{Res = res};
+                    var r_ = new Mas.Rpc.Test.A.Result_Method
+                    {
+                        Res = res
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -85,11 +89,7 @@ namespace Mas.Rpc.Test
             {
             }
 
-            public string Param
-            {
-                get;
-                set;
-            }
+            public string Param { get; set; }
 
             public struct READER
             {
@@ -112,11 +112,7 @@ namespace Mas.Rpc.Test
                     this.SetStruct(0, 1);
                 }
 
-                public string Param
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string Param { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -145,11 +141,7 @@ namespace Mas.Rpc.Test
             {
             }
 
-            public string Res
-            {
-                get;
-                set;
-            }
+            public string Res { get; set; }
 
             public struct READER
             {
@@ -172,11 +164,7 @@ namespace Mas.Rpc.Test
                     this.SetStruct(0, 1);
                 }
 
-                public string Res
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string Res { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
     }

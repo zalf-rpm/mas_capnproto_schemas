@@ -25,7 +25,10 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Params_AddCategory.WRITER>();
             var arg_ = new Mas.Schema.Registry.Admin.Params_AddCategory()
-            {Category = category, Upsert = upsert};
+            {
+                Category = category,
+                Upsert = upsert
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(17655222297858299726UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -38,7 +41,10 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Params_RemoveCategory.WRITER>();
             var arg_ = new Mas.Schema.Registry.Admin.Params_RemoveCategory()
-            {CategoryId = categoryId, MoveObjectsToCategoryId = moveObjectsToCategoryId};
+            {
+                CategoryId = categoryId,
+                MoveObjectsToCategoryId = moveObjectsToCategoryId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17655222297858299726UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -47,16 +53,17 @@ namespace Mas.Schema.Registry
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Admin.Result_RemoveCategory>(d_);
                     return (r_.RemovedObjects);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<IReadOnlyList<string>> MoveObjects(IReadOnlyList<string> objectIds, string toCatId, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Params_MoveObjects.WRITER>();
             var arg_ = new Mas.Schema.Registry.Admin.Params_MoveObjects()
-            {ObjectIds = objectIds, ToCatId = toCatId};
+            {
+                ObjectIds = objectIds,
+                ToCatId = toCatId
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(17655222297858299726UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -69,7 +76,9 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Params_RemoveObjects.WRITER>();
             var arg_ = new Mas.Schema.Registry.Admin.Params_RemoveObjects()
-            {ObjectIds = objectIds};
+            {
+                ObjectIds = objectIds
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17655222297858299726UL, 3, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -78,16 +87,15 @@ namespace Mas.Schema.Registry
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Admin.Result_RemoveObjects>(d_);
                     return (r_.RemovedObjects);
                 }
-            }
-
-            );
+            });
         }
 
         public Task<Mas.Schema.Registry.IRegistry> Registry(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Params_Registry.WRITER>();
             var arg_ = new Mas.Schema.Registry.Admin.Params_Registry()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(17655222297858299726UL, 4, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -96,16 +104,15 @@ namespace Mas.Schema.Registry
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Admin.Result_Registry>(d_);
                     return (r_.Registry);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -124,6 +131,7 @@ namespace Mas.Schema.Registry
         }
 
         public override ulong InterfaceId => 17655222297858299726UL;
+
         Task<AnswerOrCounterquestion> AddCategory(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -132,12 +140,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.AddCategory(in_.Category, in_.Upsert, cancellationToken_), success =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Result_AddCategory.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Admin.Result_AddCategory{Success = success};
+                    var r_ = new Mas.Schema.Registry.Admin.Result_AddCategory
+                    {
+                        Success = success
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -149,12 +158,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.RemoveCategory(in_.CategoryId, in_.MoveObjectsToCategoryId, cancellationToken_), removedObjects =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Result_RemoveCategory.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Admin.Result_RemoveCategory{RemovedObjects = removedObjects};
+                    var r_ = new Mas.Schema.Registry.Admin.Result_RemoveCategory
+                    {
+                        RemovedObjects = removedObjects
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -166,12 +176,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.MoveObjects(in_.ObjectIds, in_.ToCatId, cancellationToken_), movedObjectIds =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Result_MoveObjects.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Admin.Result_MoveObjects{MovedObjectIds = movedObjectIds};
+                    var r_ = new Mas.Schema.Registry.Admin.Result_MoveObjects
+                    {
+                        MovedObjectIds = movedObjectIds
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -183,12 +194,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.RemoveObjects(in_.ObjectIds, cancellationToken_), removedObjects =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Result_RemoveObjects.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Admin.Result_RemoveObjects{RemovedObjects = removedObjects};
+                    var r_ = new Mas.Schema.Registry.Admin.Result_RemoveObjects
+                    {
+                        RemovedObjects = removedObjects
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -199,12 +211,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.Registry(cancellationToken_), registry =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Admin.Result_Registry.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Admin.Result_Registry{Registry = registry};
+                    var r_ = new Mas.Schema.Registry.Admin.Result_Registry
+                    {
+                        Registry = registry
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -238,19 +251,9 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public Mas.Schema.Common.IdInformation Category
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.IdInformation Category { get; set; }
+            public bool Upsert { get; set; } = false;
 
-            public bool Upsert
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -274,17 +277,8 @@ namespace Mas.Schema.Registry
                     this.SetStruct(1, 1);
                 }
 
-                public Mas.Schema.Common.IdInformation.WRITER Category
-                {
-                    get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public bool Upsert
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public Mas.Schema.Common.IdInformation.WRITER Category { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
+                public bool Upsert { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -313,11 +307,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public bool Success
-            {
-                get;
-                set;
-            }
+            public bool Success { get; set; }
 
             public struct READER
             {
@@ -340,11 +330,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(1, 0);
                 }
 
-                public bool Success
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public bool Success { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
 
@@ -375,17 +361,8 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public string CategoryId
-            {
-                get;
-                set;
-            }
-
-            public string MoveObjectsToCategoryId
-            {
-                get;
-                set;
-            }
+            public string CategoryId { get; set; }
+            public string MoveObjectsToCategoryId { get; set; }
 
             public struct READER
             {
@@ -409,17 +386,8 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 2);
                 }
 
-                public string CategoryId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public string MoveObjectsToCategoryId
-                {
-                    get => this.ReadText(1, null);
-                    set => this.WriteText(1, value, null);
-                }
+                public string CategoryId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public string MoveObjectsToCategoryId { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
             }
         }
 
@@ -448,11 +416,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> RemovedObjects
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> RemovedObjects { get; set; }
 
             public struct READER
             {
@@ -476,11 +440,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> RemovedObjects
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> RemovedObjects { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0); set => Link(0, value); }
             }
         }
 
@@ -511,17 +471,8 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<string> ObjectIds
-            {
-                get;
-                set;
-            }
-
-            public string ToCatId
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<string> ObjectIds { get; set; }
+            public string ToCatId { get; set; }
 
             public struct READER
             {
@@ -546,17 +497,8 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 2);
                 }
 
-                public ListOfTextSerializer ObjectIds
-                {
-                    get => BuildPointer<ListOfTextSerializer>(0);
-                    set => Link(0, value);
-                }
-
-                public string ToCatId
-                {
-                    get => this.ReadText(1, null);
-                    set => this.WriteText(1, value, null);
-                }
+                public ListOfTextSerializer ObjectIds { get => BuildPointer<ListOfTextSerializer>(0); set => Link(0, value); }
+                public string ToCatId { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
             }
         }
 
@@ -585,11 +527,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<string> MovedObjectIds
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<string> MovedObjectIds { get; set; }
 
             public struct READER
             {
@@ -613,11 +551,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfTextSerializer MovedObjectIds
-                {
-                    get => BuildPointer<ListOfTextSerializer>(0);
-                    set => Link(0, value);
-                }
+                public ListOfTextSerializer MovedObjectIds { get => BuildPointer<ListOfTextSerializer>(0); set => Link(0, value); }
             }
         }
 
@@ -646,11 +580,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<string> ObjectIds
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<string> ObjectIds { get; set; }
 
             public struct READER
             {
@@ -674,11 +604,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfTextSerializer ObjectIds
-                {
-                    get => BuildPointer<ListOfTextSerializer>(0);
-                    set => Link(0, value);
-                }
+                public ListOfTextSerializer ObjectIds { get => BuildPointer<ListOfTextSerializer>(0); set => Link(0, value); }
             }
         }
 
@@ -707,11 +633,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> RemovedObjects
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IIdentifiable> RemovedObjects { get; set; }
 
             public struct READER
             {
@@ -735,11 +657,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> RemovedObjects
-                {
-                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> RemovedObjects { get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(0); set => Link(0, value); }
             }
         }
 
@@ -813,11 +731,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public Mas.Schema.Registry.IRegistry Registry
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Registry.IRegistry Registry { get; set; }
 
             public struct READER
             {
@@ -840,11 +754,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public Mas.Schema.Registry.IRegistry Registry
-                {
-                    get => ReadCap<Mas.Schema.Registry.IRegistry>(0);
-                    set => LinkObject(0, value);
-                }
+                public Mas.Schema.Registry.IRegistry Registry { get => ReadCap<Mas.Schema.Registry.IRegistry>(0); set => LinkObject(0, value); }
             }
         }
     }
@@ -864,7 +774,8 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_SupportedCategories.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_SupportedCategories()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -877,7 +788,9 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_CategoryInfo.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_CategoryInfo()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -890,7 +803,9 @@ namespace Mas.Schema.Registry
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_Entries.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_Entries()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14590338780428121016UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -899,16 +814,15 @@ namespace Mas.Schema.Registry
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Registry.Result_Entries>(d_);
                     return (r_.Entries);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -927,6 +841,7 @@ namespace Mas.Schema.Registry
         }
 
         public override ulong InterfaceId => 14590338780428121016UL;
+
         Task<AnswerOrCounterquestion> SupportedCategories(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -934,12 +849,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.SupportedCategories(cancellationToken_), cats =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Result_SupportedCategories.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Registry.Result_SupportedCategories{Cats = cats};
+                    var r_ = new Mas.Schema.Registry.Registry.Result_SupportedCategories
+                    {
+                        Cats = cats
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -953,9 +869,7 @@ namespace Mas.Schema.Registry
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -967,12 +881,13 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.Entries(in_.CategoryId, cancellationToken_), entries =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Result_Entries.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Registry.Result_Entries{Entries = entries};
+                    var r_ = new Mas.Schema.Registry.Registry.Result_Entries
+                    {
+                        Entries = entries
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1008,23 +923,9 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public string CategoryId
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.IIdentifiable Ref
-            {
-                get;
-                set;
-            }
-
-            public string Name
-            {
-                get;
-                set;
-            }
+            public string CategoryId { get; set; }
+            public Mas.Schema.Common.IIdentifiable Ref { get; set; }
+            public string Name { get; set; }
 
             public struct READER
             {
@@ -1049,23 +950,9 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 3);
                 }
 
-                public string CategoryId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public Mas.Schema.Common.IIdentifiable Ref
-                {
-                    get => ReadCap<Mas.Schema.Common.IIdentifiable>(1);
-                    set => LinkObject(1, value);
-                }
-
-                public string Name
-                {
-                    get => this.ReadText(2, null);
-                    set => this.WriteText(2, value, null);
-                }
+                public string CategoryId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public Mas.Schema.Common.IIdentifiable Ref { get => ReadCap<Mas.Schema.Common.IIdentifiable>(1); set => LinkObject(1, value); }
+                public string Name { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
             }
         }
 
@@ -1139,11 +1026,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Common.IdInformation> Cats
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Common.IdInformation> Cats { get; set; }
 
             public struct READER
             {
@@ -1167,11 +1050,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Cats
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Cats { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -1200,11 +1079,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public string CategoryId
-            {
-                get;
-                set;
-            }
+            public string CategoryId { get; set; }
 
             public struct READER
             {
@@ -1227,11 +1102,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public string CategoryId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string CategoryId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -1260,11 +1131,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public string CategoryId
-            {
-                get;
-                set;
-            }
+            public string CategoryId { get; set; }
 
             public struct READER
             {
@@ -1287,11 +1154,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public string CategoryId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
+                public string CategoryId { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
             }
         }
 
@@ -1320,11 +1183,7 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Registry.Registry.Entry> Entries
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Registry.Registry.Entry> Entries { get; set; }
 
             public struct READER
             {
@@ -1348,11 +1207,7 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Registry.Registry.Entry.WRITER> Entries
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Registry.Registry.Entry.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Registry.Registry.Entry.WRITER> Entries { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Registry.Registry.Entry.WRITER>>(0); set => Link(0, value); }
             }
         }
     }
@@ -1377,16 +1232,15 @@ namespace Mas.Schema.Registry
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Registrar.Result_Register>(d_);
                     return (r_.Unreg, r_.ReregSR);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -1405,6 +1259,7 @@ namespace Mas.Schema.Registry
         }
 
         public override ulong InterfaceId => 12371099263448568298UL;
+
         Task<AnswerOrCounterquestion> Register(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -1412,12 +1267,14 @@ namespace Mas.Schema.Registry
                 return Impatient.MaybeTailCall(Impl.Register(CapnpSerializable.Create<Mas.Schema.Registry.Registrar.RegParams>(d_), cancellationToken_), (unreg, reregSR) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registrar.Result_Register.WRITER>();
-                    var r_ = new Mas.Schema.Registry.Registrar.Result_Register{Unreg = unreg, ReregSR = reregSR};
+                    var r_ = new Mas.Schema.Registry.Registrar.Result_Register
+                    {
+                        Unreg = unreg,
+                        ReregSR = reregSR
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -1451,17 +1308,8 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public Mas.Schema.Persistence.VatId VatId
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Persistence.IRestorer Restorer
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Persistence.VatId VatId { get; set; }
+            public Mas.Schema.Persistence.IRestorer Restorer { get; set; }
 
             public struct READER
             {
@@ -1486,17 +1334,8 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Persistence.VatId.WRITER VatId
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.VatId.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Persistence.IRestorer Restorer
-                {
-                    get => ReadCap<Mas.Schema.Persistence.IRestorer>(1);
-                    set => LinkObject(1, value);
-                }
+                public Mas.Schema.Persistence.VatId.WRITER VatId { get => BuildPointer<Mas.Schema.Persistence.VatId.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Persistence.IRestorer Restorer { get => ReadCap<Mas.Schema.Persistence.IRestorer>(1); set => LinkObject(1, value); }
             }
         }
 
@@ -1531,29 +1370,10 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public Mas.Schema.Common.IIdentifiable Cap
-            {
-                get;
-                set;
-            }
-
-            public string RegName
-            {
-                get;
-                set;
-            }
-
-            public string CategoryId
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Registry.Registrar.CrossDomainRestore XDomain
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.IIdentifiable Cap { get; set; }
+            public string RegName { get; set; }
+            public string CategoryId { get; set; }
+            public Mas.Schema.Registry.Registrar.CrossDomainRestore XDomain { get; set; }
 
             public struct READER
             {
@@ -1580,29 +1400,10 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 4);
                 }
 
-                public Mas.Schema.Common.IIdentifiable Cap
-                {
-                    get => ReadCap<Mas.Schema.Common.IIdentifiable>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public string RegName
-                {
-                    get => this.ReadText(1, null);
-                    set => this.WriteText(1, value, null);
-                }
-
-                public string CategoryId
-                {
-                    get => this.ReadText(2, null);
-                    set => this.WriteText(2, value, null);
-                }
-
-                public Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER XDomain
-                {
-                    get => BuildPointer<Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER>(3);
-                    set => Link(3, value);
-                }
+                public Mas.Schema.Common.IIdentifiable Cap { get => ReadCap<Mas.Schema.Common.IIdentifiable>(0); set => LinkObject(0, value); }
+                public string RegName { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+                public string CategoryId { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
+                public Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER XDomain { get => BuildPointer<Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER>(3); set => Link(3, value); }
             }
         }
 
@@ -1619,7 +1420,8 @@ namespace Mas.Schema.Registry
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registrar.Unregister.Params_Unregister.WRITER>();
                 var arg_ = new Mas.Schema.Registry.Registrar.Unregister.Params_Unregister()
-                {};
+                {
+                };
                 arg_?.serialize(in_);
                 using (var d_ = await Call(14364651318647358601UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -1638,6 +1440,7 @@ namespace Mas.Schema.Registry
             }
 
             public override ulong InterfaceId => 14364651318647358601UL;
+
             Task<AnswerOrCounterquestion> Unregister(DeserializerState d_, CancellationToken cancellationToken_)
             {
                 using (d_)
@@ -1645,12 +1448,13 @@ namespace Mas.Schema.Registry
                     return Impatient.MaybeTailCall(Impl.Unregister(cancellationToken_), success =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registrar.Unregister.Result_Unregister.WRITER>();
-                        var r_ = new Mas.Schema.Registry.Registrar.Unregister.Result_Unregister{Success = success};
+                        var r_ = new Mas.Schema.Registry.Registrar.Unregister.Result_Unregister
+                        {
+                            Success = success
+                        };
                         r_.serialize(s_);
                         return s_;
-                    }
-
-                    );
+                    });
                 }
             }
         }
@@ -1727,11 +1531,7 @@ namespace Mas.Schema.Registry
                 {
                 }
 
-                public bool Success
-                {
-                    get;
-                    set;
-                }
+                public bool Success { get; set; }
 
                 public struct READER
                 {
@@ -1754,11 +1554,7 @@ namespace Mas.Schema.Registry
                         this.SetStruct(1, 0);
                     }
 
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
+                    public bool Success { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
                 }
             }
         }
@@ -1790,17 +1586,8 @@ namespace Mas.Schema.Registry
             {
             }
 
-            public Mas.Schema.Registry.Registrar.IUnregister Unreg
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Persistence.SturdyRef ReregSR
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Registry.Registrar.IUnregister Unreg { get; set; }
+            public Mas.Schema.Persistence.SturdyRef ReregSR { get; set; }
 
             public struct READER
             {
@@ -1825,17 +1612,8 @@ namespace Mas.Schema.Registry
                     this.SetStruct(0, 2);
                 }
 
-                public Mas.Schema.Registry.Registrar.IUnregister Unreg
-                {
-                    get => ReadCap<Mas.Schema.Registry.Registrar.IUnregister>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public Mas.Schema.Persistence.SturdyRef.WRITER ReregSR
-                {
-                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Registry.Registrar.IUnregister Unreg { get => ReadCap<Mas.Schema.Registry.Registrar.IUnregister>(0); set => LinkObject(0, value); }
+                public Mas.Schema.Persistence.SturdyRef.WRITER ReregSR { get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1); set => Link(1, value); }
             }
         }
     }

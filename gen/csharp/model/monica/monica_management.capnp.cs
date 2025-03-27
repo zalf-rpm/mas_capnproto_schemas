@@ -41,35 +41,11 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Common.Date Sowing
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date EarliestSowing
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date LatestSowing
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date Harvest
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.Date LatestHarvest
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date Sowing { get; set; }
+        public Mas.Schema.Common.Date EarliestSowing { get; set; }
+        public Mas.Schema.Common.Date LatestSowing { get; set; }
+        public Mas.Schema.Common.Date Harvest { get; set; }
+        public Mas.Schema.Common.Date LatestHarvest { get; set; }
 
         public struct READER
         {
@@ -101,35 +77,11 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(0, 5);
             }
 
-            public Mas.Schema.Common.Date.WRITER Sowing
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER EarliestSowing
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                set => Link(1, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER LatestSowing
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER Harvest
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
-                set => Link(3, value);
-            }
-
-            public Mas.Schema.Common.Date.WRITER LatestHarvest
-            {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(4);
-                set => Link(4, value);
-            }
+            public Mas.Schema.Common.Date.WRITER Sowing { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0); set => Link(0, value); }
+            public Mas.Schema.Common.Date.WRITER EarliestSowing { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
+            public Mas.Schema.Common.Date.WRITER LatestSowing { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2); set => Link(2, value); }
+            public Mas.Schema.Common.Date.WRITER Harvest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3); set => Link(3, value); }
+            public Mas.Schema.Common.Date.WRITER LatestHarvest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(4); set => Link(4, value); }
         }
     }
 
@@ -252,17 +204,8 @@ namespace Mas.Schema.Model.Monica
         {
         }
 
-        public Mas.Schema.Model.Monica.Event.ExternalType TheType
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.IdInformation Info
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.Event.ExternalType TheType { get; set; }
+        public Mas.Schema.Common.IdInformation Info { get; set; }
 
         public Mas.Schema.Model.Monica.Event.at At
         {
@@ -294,17 +237,8 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        public object Params
-        {
-            get;
-            set;
-        }
-
-        public bool RunAtStartOfDay
-        {
-            get;
-            set;
-        }
+        public object Params { get; set; }
+        public bool RunAtStartOfDay { get; set; }
 
         public struct READER
         {
@@ -335,50 +269,14 @@ namespace Mas.Schema.Model.Monica
                 this.SetStruct(1, 4);
             }
 
-            public WHICH which
-            {
-                get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                set => this.WriteData(16U, (ushort)value, (ushort)0);
-            }
-
-            public Mas.Schema.Model.Monica.Event.ExternalType TheType
-            {
-                get => (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
-                set => this.WriteData(0UL, (ushort)value, (ushort)0);
-            }
-
-            public Mas.Schema.Common.IdInformation.WRITER Info
-            {
-                get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public at.WRITER At
-            {
-                get => which == WHICH.At ? Rewrap<at.WRITER>() : default;
-            }
-
-            public between.WRITER Between
-            {
-                get => which == WHICH.Between ? Rewrap<between.WRITER>() : default;
-            }
-
-            public after.WRITER After
-            {
-                get => which == WHICH.After ? Rewrap<after.WRITER>() : default;
-            }
-
-            public DynamicSerializerState Params
-            {
-                get => BuildPointer<DynamicSerializerState>(3);
-                set => Link(3, value);
-            }
-
-            public bool RunAtStartOfDay
-            {
-                get => this.ReadDataBool(48UL, false);
-                set => this.WriteData(48UL, value, false);
-            }
+            public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+            public Mas.Schema.Model.Monica.Event.ExternalType TheType { get => (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+            public Mas.Schema.Common.IdInformation.WRITER Info { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
+            public at.WRITER At { get => which == WHICH.At ? Rewrap<at.WRITER>() : default; }
+            public between.WRITER Between { get => which == WHICH.Between ? Rewrap<between.WRITER>() : default; }
+            public after.WRITER After { get => which == WHICH.After ? Rewrap<after.WRITER>() : default; }
+            public DynamicSerializerState Params { get => BuildPointer<DynamicSerializerState>(3); set => Link(3, value); }
+            public bool RunAtStartOfDay { get => this.ReadDataBool(48UL, false); set => this.WriteData(48UL, value, false); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdb4674cbf3154bfaUL)]
@@ -406,11 +304,7 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Common.Date Date
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Date { get; set; }
 
             public struct READER
             {
@@ -433,11 +327,7 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public Mas.Schema.Common.Date.WRITER Date
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Common.Date.WRITER Date { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -468,17 +358,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Common.Date Earliest
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.Date Latest
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Earliest { get; set; }
+            public Mas.Schema.Common.Date Latest { get; set; }
 
             public struct READER
             {
@@ -503,17 +384,8 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public Mas.Schema.Common.Date.WRITER Earliest
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Common.Date.WRITER Latest
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                    set => Link(2, value);
-                }
+                public Mas.Schema.Common.Date.WRITER Earliest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Common.Date.WRITER Latest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2); set => Link(2, value); }
             }
         }
 
@@ -544,17 +416,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Model.Monica.Event.Type Event
-            {
-                get;
-                set;
-            }
-
-            public ushort Days
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Event.Type Event { get; set; }
+            public ushort Days { get; set; }
 
             public struct READER
             {
@@ -578,17 +441,8 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public Mas.Schema.Model.Monica.Event.Type.WRITER Event
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Event.Type.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public ushort Days
-                {
-                    get => this.ReadDataUShort(32UL, (ushort)0);
-                    set => this.WriteData(32UL, value, (ushort)0);
-                }
+                public Mas.Schema.Model.Monica.Event.Type.WRITER Event { get => BuildPointer<Mas.Schema.Model.Monica.Event.Type.WRITER>(1); set => Link(1, value); }
+                public ushort Days { get => this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, value, (ushort)0); }
             }
         }
 
@@ -604,7 +458,10 @@ namespace Mas.Schema.Model.Monica
             organicFertilization,
             mineralFertilization,
             nDemandFertilization,
-            cutting
+            cutting,
+            setValue,
+            saveState,
+            weather
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2bf3a5557791bc1UL)]
@@ -731,23 +588,9 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 0);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                    set => this.WriteData(16U, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Model.Monica.Event.ExternalType External
-                {
-                    get => which == WHICH.External ? (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Model.Monica.Event.PhenoStage Internal
-                {
-                    get => which == WHICH.Internal ? (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+                public Mas.Schema.Model.Monica.Event.ExternalType External { get => which == WHICH.External ? (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Model.Monica.Event.PhenoStage Internal { get => which == WHICH.Internal ? (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
             }
         }
     }
@@ -796,6 +639,116 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa332cfe9735a304cUL)]
+        public class DailyWeather : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa332cfe9735a304cUL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Data = reader.Data?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.DailyWeather.KV>(_));
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Data.Init(Data, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV> Data { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER> Data => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER.create);
+                public bool HasData => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER> Data { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER>>(0); set => Link(0, value); }
+            }
+
+            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa63c8017ca26718bUL)]
+            public class KV : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xa63c8017ca26718bUL;
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Key = reader.Key;
+                    Value = reader.Value;
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.Key = Key;
+                    writer.Value = Value;
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults()
+                {
+                }
+
+                public Mas.Schema.Climate.Element Key { get; set; }
+                public double Value { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                    public Mas.Schema.Climate.Element Key => (Mas.Schema.Climate.Element)ctx.ReadDataUShort(0UL, (ushort)0);
+                    public double Value => ctx.ReadDataDouble(64UL, 0);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(2, 0);
+                    }
+
+                    public Mas.Schema.Climate.Element Key { get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                    public double Value { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                }
+            }
+        }
+
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc6880d1c13ec14dcUL)]
         public class Sowing : ICapnpSerializable
         {
@@ -825,24 +778,9 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public string Cultivar
-            {
-                get;
-                set;
-            }
-
-            public ushort PlantDensity
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public Mas.Schema.Crop.ICrop Crop
-            {
-                get;
-                set;
-            }
+            public string Cultivar { get; set; }
+            public ushort PlantDensity { get; set; } = 0;
+            public Mas.Schema.Crop.ICrop Crop { get; set; }
 
             public struct READER
             {
@@ -867,23 +805,9 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 2);
                 }
 
-                public string Cultivar
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public ushort PlantDensity
-                {
-                    get => this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, value, (ushort)0);
-                }
-
-                public Mas.Schema.Crop.ICrop Crop
-                {
-                    get => ReadCap<Mas.Schema.Crop.ICrop>(1);
-                    set => LinkObject(1, value);
-                }
+                public string Cultivar { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public ushort PlantDensity { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+                public Mas.Schema.Crop.ICrop Crop { get => ReadCap<Mas.Schema.Crop.ICrop>(1); set => LinkObject(1, value); }
             }
         }
 
@@ -930,67 +854,16 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double MinTempThreshold
-            {
-                get;
-                set;
-            }
-
-            public ushort DaysInTempWindow
-            {
-                get;
-                set;
-            }
-
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double TempSumAboveBaseTemp
-            {
-                get;
-                set;
-            }
-
-            public double BaseTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Params.Sowing Sowing
-            {
-                get;
-                set;
-            }
+            public double MinTempThreshold { get; set; }
+            public ushort DaysInTempWindow { get; set; }
+            public double MinPercentASW { get; set; } = 0;
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
+            public double MaxCurrentDayPrecipSum { get; set; }
+            public double TempSumAboveBaseTemp { get; set; }
+            public double BaseTemp { get; set; }
+            public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp { get; set; }
+            public Mas.Schema.Model.Monica.Params.Sowing Sowing { get; set; }
 
             public struct READER
             {
@@ -1024,65 +897,16 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(8, 2);
                 }
 
-                public double MinTempThreshold
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public ushort DaysInTempWindow
-                {
-                    get => this.ReadDataUShort(64UL, (ushort)0);
-                    set => this.WriteData(64UL, value, (ushort)0);
-                }
-
-                public double MinPercentASW
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double MaxPercentASW
-                {
-                    get => this.ReadDataDouble(192UL, 100);
-                    set => this.WriteData(192UL, value, 100);
-                }
-
-                public double Max3dayPrecipSum
-                {
-                    get => this.ReadDataDouble(256UL, 0);
-                    set => this.WriteData(256UL, value, 0);
-                }
-
-                public double MaxCurrentDayPrecipSum
-                {
-                    get => this.ReadDataDouble(320UL, 0);
-                    set => this.WriteData(320UL, value, 0);
-                }
-
-                public double TempSumAboveBaseTemp
-                {
-                    get => this.ReadDataDouble(384UL, 0);
-                    set => this.WriteData(384UL, value, 0);
-                }
-
-                public double BaseTemp
-                {
-                    get => this.ReadDataDouble(448UL, 0);
-                    set => this.WriteData(448UL, value, 0);
-                }
-
-                public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Model.Monica.Params.Sowing.WRITER Sowing
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Sowing.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public double MinTempThreshold { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public ushort DaysInTempWindow { get => this.ReadDataUShort(64UL, (ushort)0); set => this.WriteData(64UL, value, (ushort)0); }
+                public double MinPercentASW { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double MaxPercentASW { get => this.ReadDataDouble(192UL, 100); set => this.WriteData(192UL, value, 100); }
+                public double Max3dayPrecipSum { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+                public double MaxCurrentDayPrecipSum { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+                public double TempSumAboveBaseTemp { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                public double BaseTemp { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp { get => BuildPointer<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Model.Monica.Params.Sowing.WRITER Sowing { get => BuildPointer<Mas.Schema.Model.Monica.Params.Sowing.WRITER>(1); set => Link(1, value); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x846f567433b186d1UL)]
@@ -1114,24 +938,9 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public double SoilDepthForAveraging
-                {
-                    get;
-                    set;
-                }
-
-                = 0.3;
-                public ushort DaysInSoilTempWindow
-                {
-                    get;
-                    set;
-                }
-
-                public double SowingIfAboveAvgSoilTemp
-                {
-                    get;
-                    set;
-                }
+                public double SoilDepthForAveraging { get; set; } = 0.3;
+                public ushort DaysInSoilTempWindow { get; set; }
+                public double SowingIfAboveAvgSoilTemp { get; set; }
 
                 public struct READER
                 {
@@ -1156,23 +965,9 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(3, 0);
                     }
 
-                    public double SoilDepthForAveraging
-                    {
-                        get => this.ReadDataDouble(0UL, 0.3);
-                        set => this.WriteData(0UL, value, 0.3);
-                    }
-
-                    public ushort DaysInSoilTempWindow
-                    {
-                        get => this.ReadDataUShort(64UL, (ushort)0);
-                        set => this.WriteData(64UL, value, (ushort)0);
-                    }
-
-                    public double SowingIfAboveAvgSoilTemp
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
+                    public double SoilDepthForAveraging { get => this.ReadDataDouble(0UL, 0.3); set => this.WriteData(0UL, value, 0.3); }
+                    public ushort DaysInSoilTempWindow { get => this.ReadDataUShort(64UL, (ushort)0); set => this.WriteData(64UL, value, (ushort)0); }
+                    public double SowingIfAboveAvgSoilTemp { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
                 }
             }
         }
@@ -1204,18 +999,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public bool Exported
-            {
-                get;
-                set;
-            }
-
-            = true;
-            public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData
-            {
-                get;
-                set;
-            }
+            public bool Exported { get; set; } = true;
+            public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData { get; set; }
 
             public struct READER
             {
@@ -1240,17 +1025,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 1);
                 }
 
-                public bool Exported
-                {
-                    get => this.ReadDataBool(0UL, true);
-                    set => this.WriteData(0UL, value, true);
-                }
-
-                public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public bool Exported { get => this.ReadDataBool(0UL, true); set => this.WriteData(0UL, value, true); }
+                public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData { get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER>(0); set => Link(0, value); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa9a9bc941e963701UL)]
@@ -1295,48 +1071,13 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public bool OptCarbonConservation
-                {
-                    get;
-                    set;
-                }
+                public bool OptCarbonConservation { get; set; } = false;
+                public double CropImpactOnHumusBalance { get; set; } = 0;
+                public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage { get; set; } = Mas.Schema.Model.Monica.Params.Harvest.CropUsage.biomassProduction;
+                public double ResidueHeq { get; set; } = 0;
+                public double OrganicFertilizerHeq { get; set; } = 0;
+                public double MaxResidueRecoverFraction { get; set; } = 0;
 
-                = false;
-                public double CropImpactOnHumusBalance
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Model.Monica.Params.Harvest.CropUsage.biomassProduction;
-                public double ResidueHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double OrganicFertilizerHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double MaxResidueRecoverFraction
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -1363,41 +1104,12 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(5, 0);
                     }
 
-                    public bool OptCarbonConservation
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
-
-                    public double CropImpactOnHumusBalance
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage
-                    {
-                        get => (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)this.ReadDataUShort(16UL, (ushort)1);
-                        set => this.WriteData(16UL, (ushort)value, (ushort)1);
-                    }
-
-                    public double ResidueHeq
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
-
-                    public double OrganicFertilizerHeq
-                    {
-                        get => this.ReadDataDouble(192UL, 0);
-                        set => this.WriteData(192UL, value, 0);
-                    }
-
-                    public double MaxResidueRecoverFraction
-                    {
-                        get => this.ReadDataDouble(256UL, 0);
-                        set => this.WriteData(256UL, value, 0);
-                    }
+                    public bool OptCarbonConservation { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+                    public double CropImpactOnHumusBalance { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage { get => (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)this.ReadDataUShort(16UL, (ushort)1); set => this.WriteData(16UL, (ushort)value, (ushort)1); }
+                    public double ResidueHeq { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                    public double OrganicFertilizerHeq { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                    public double MaxResidueRecoverFraction { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
                 }
             }
         }
@@ -1437,43 +1149,12 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
-
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime
-            {
-                get;
-                set;
-            }
-
-            = Mas.Schema.Model.Monica.Event.PhenoStage.maturity;
-            public Mas.Schema.Model.Monica.Params.Harvest Harvest
-            {
-                get;
-                set;
-            }
+            public double MinPercentASW { get; set; }
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
+            public double MaxCurrentDayPrecipSum { get; set; }
+            public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime { get; set; } = Mas.Schema.Model.Monica.Event.PhenoStage.maturity;
+            public Mas.Schema.Model.Monica.Params.Harvest Harvest { get; set; }
 
             public struct READER
             {
@@ -1502,41 +1183,12 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(5, 1);
                 }
 
-                public double MinPercentASW
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double MaxPercentASW
-                {
-                    get => this.ReadDataDouble(64UL, 100);
-                    set => this.WriteData(64UL, value, 100);
-                }
-
-                public double Max3dayPrecipSum
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double MaxCurrentDayPrecipSum
-                {
-                    get => this.ReadDataDouble(192UL, 0);
-                    set => this.WriteData(192UL, value, 0);
-                }
-
-                public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime
-                {
-                    get => (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(256UL, (ushort)3);
-                    set => this.WriteData(256UL, (ushort)value, (ushort)3);
-                }
-
-                public Mas.Schema.Model.Monica.Params.Harvest.WRITER Harvest
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public double MinPercentASW { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double MaxPercentASW { get => this.ReadDataDouble(64UL, 100); set => this.WriteData(64UL, value, 100); }
+                public double Max3dayPrecipSum { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double MaxCurrentDayPrecipSum { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime { get => (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(256UL, (ushort)3); set => this.WriteData(256UL, (ushort)value, (ushort)3); }
+                public Mas.Schema.Model.Monica.Params.Harvest.WRITER Harvest { get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -1567,17 +1219,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec> CuttingSpec
-            {
-                get;
-                set;
-            }
-
-            public double CutMaxAssimilationRatePercentage
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec> CuttingSpec { get; set; }
+            public double CutMaxAssimilationRatePercentage { get; set; } = 100;
 
             public struct READER
             {
@@ -1592,7 +1235,7 @@ namespace Mas.Schema.Model.Monica
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                 public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec.READER> CuttingSpec => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.Cutting.Spec.READER.create);
                 public bool HasCuttingSpec => ctx.IsStructFieldNonNull(0);
-                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 0);
+                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 100);
             }
 
             public class WRITER : SerializerState
@@ -1602,17 +1245,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER> CuttingSpec
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER>>(0);
-                    set => Link(0, value);
-                }
-
-                public double CutMaxAssimilationRatePercentage
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER> CuttingSpec { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER>>(0); set => Link(0, value); }
+                public double CutMaxAssimilationRatePercentage { get => this.ReadDataDouble(0UL, 100); set => this.WriteData(0UL, value, 100); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe444f780b29541a7UL)]
@@ -1663,39 +1297,12 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public Mas.Schema.Model.Monica.PlantOrgan Organ
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Model.Monica.PlantOrgan Organ { get; set; }
+                public double Value { get; set; }
+                public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit { get; set; } = Mas.Schema.Model.Monica.Params.Cutting.Unit.percentage;
+                public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft { get; set; } = Mas.Schema.Model.Monica.Params.Cutting.CL.cut;
+                public double ExportPercentage { get; set; } = 100;
 
-                public double Value
-                {
-                    get;
-                    set;
-                }
-
-                public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Model.Monica.Params.Cutting.Unit.percentage;
-                public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Model.Monica.Params.Cutting.CL.cut;
-                public double ExportPercentage
-                {
-                    get;
-                    set;
-                }
-
-                = 100;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -1721,35 +1328,11 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(3, 0);
                     }
 
-                    public Mas.Schema.Model.Monica.PlantOrgan Organ
-                    {
-                        get => (Mas.Schema.Model.Monica.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
-                        set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                    }
-
-                    public double Value
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit
-                    {
-                        get => (Mas.Schema.Model.Monica.Params.Cutting.Unit)this.ReadDataUShort(16UL, (ushort)0);
-                        set => this.WriteData(16UL, (ushort)value, (ushort)0);
-                    }
-
-                    public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft
-                    {
-                        get => (Mas.Schema.Model.Monica.Params.Cutting.CL)this.ReadDataUShort(32UL, (ushort)0);
-                        set => this.WriteData(32UL, (ushort)value, (ushort)0);
-                    }
-
-                    public double ExportPercentage
-                    {
-                        get => this.ReadDataDouble(128UL, 100);
-                        set => this.WriteData(128UL, value, 100);
-                    }
+                    public Mas.Schema.Model.Monica.PlantOrgan Organ { get => (Mas.Schema.Model.Monica.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                    public double Value { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit { get => (Mas.Schema.Model.Monica.Params.Cutting.Unit)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
+                    public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft { get => (Mas.Schema.Model.Monica.Params.Cutting.CL)this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, (ushort)value, (ushort)0); }
+                    public double ExportPercentage { get => this.ReadDataDouble(128UL, 100); set => this.WriteData(128UL, value, 100); }
                 }
             }
         }
@@ -1781,17 +1364,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition
-            {
-                get;
-                set;
-            }
-
-            public double Amount
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
+            public double Amount { get; set; }
 
             public struct READER
             {
@@ -1816,17 +1390,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 1);
                 }
 
-                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition { get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0); set => Link(0, value); }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc75b5ef2e9b05c2dUL)]
@@ -1862,35 +1427,11 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public string Id
-                {
-                    get;
-                    set;
-                }
-
-                public string Name
-                {
-                    get;
-                    set;
-                }
-
-                public double Carbamid
-                {
-                    get;
-                    set;
-                }
-
-                public double Nh4
-                {
-                    get;
-                    set;
-                }
-
-                public double No3
-                {
-                    get;
-                    set;
-                }
+                public string Id { get; set; }
+                public string Name { get; set; }
+                public double Carbamid { get; set; }
+                public double Nh4 { get; set; }
+                public double No3 { get; set; }
 
                 public struct READER
                 {
@@ -1917,35 +1458,11 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(3, 2);
                     }
 
-                    public string Id
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
-
-                    public string Name
-                    {
-                        get => this.ReadText(1, null);
-                        set => this.WriteText(1, value, null);
-                    }
-
-                    public double Carbamid
-                    {
-                        get => this.ReadDataDouble(0UL, 0);
-                        set => this.WriteData(0UL, value, 0);
-                    }
-
-                    public double Nh4
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public double No3
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
+                    public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                    public string Name { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+                    public double Carbamid { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                    public double Nh4 { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public double No3 { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
                 }
             }
         }
@@ -1981,31 +1498,11 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double NDemand
-            {
-                get;
-                set;
-            }
+            public double NDemand { get; set; }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
+            public double Depth { get; set; }
+            public byte Stage { get; set; } = 1;
 
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition
-            {
-                get;
-                set;
-            }
-
-            public double Depth
-            {
-                get;
-                set;
-            }
-
-            public byte Stage
-            {
-                get;
-                set;
-            }
-
-            = 1;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -2031,29 +1528,10 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(3, 1);
                 }
 
-                public double NDemand
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public double Depth
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public byte Stage
-                {
-                    get => this.ReadDataByte(128UL, (byte)1);
-                    set => this.WriteData(128UL, value, (byte)1);
-                }
+                public double NDemand { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition { get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0); set => Link(0, value); }
+                public double Depth { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public byte Stage { get => this.ReadDataByte(128UL, (byte)1); set => this.WriteData(128UL, value, (byte)1); }
             }
         }
 
@@ -2086,25 +1564,10 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters Params
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters Params { get; set; }
+            public double Amount { get; set; }
+            public bool Incorporation { get; set; } = false;
 
-            public double Amount
-            {
-                get;
-                set;
-            }
-
-            public bool Incorporation
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -2129,23 +1592,9 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(2, 1);
                 }
 
-                public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER Params
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public bool Incorporation
-                {
-                    get => this.ReadDataBool(64UL, false);
-                    set => this.WriteData(64UL, value, false);
-                }
+                public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER Params { get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER>(0); set => Link(0, value); }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public bool Incorporation { get => this.ReadDataBool(64UL, false); set => this.WriteData(64UL, value, false); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x95cdc661a6600137UL)]
@@ -2197,83 +1646,19 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public double AomDryMatterContent
-                {
-                    get;
-                    set;
-                }
-
-                public double AomNH4Content
-                {
-                    get;
-                    set;
-                }
-
-                public double AomNO3Content
-                {
-                    get;
-                    set;
-                }
-
-                public double AomCarbamidContent
-                {
-                    get;
-                    set;
-                }
-
-                public double AomSlowDecCoeffStandard
-                {
-                    get;
-                    set;
-                }
-
-                public double AomFastDecCoeffStandard
-                {
-                    get;
-                    set;
-                }
-
-                public double PartAOMToAOMSlow
-                {
-                    get;
-                    set;
-                }
-
-                public double PartAOMToAOMFast
-                {
-                    get;
-                    set;
-                }
-
-                public double CnRatioAOMSlow
-                {
-                    get;
-                    set;
-                }
-
-                public double CnRatioAOMFast
-                {
-                    get;
-                    set;
-                }
-
-                public double PartAOMSlowToSMBSlow
-                {
-                    get;
-                    set;
-                }
-
-                public double PartAOMSlowToSMBFast
-                {
-                    get;
-                    set;
-                }
-
-                public double NConcentration
-                {
-                    get;
-                    set;
-                }
+                public double AomDryMatterContent { get; set; }
+                public double AomNH4Content { get; set; }
+                public double AomNO3Content { get; set; }
+                public double AomCarbamidContent { get; set; }
+                public double AomSlowDecCoeffStandard { get; set; }
+                public double AomFastDecCoeffStandard { get; set; }
+                public double PartAOMToAOMSlow { get; set; }
+                public double PartAOMToAOMFast { get; set; }
+                public double CnRatioAOMSlow { get; set; }
+                public double CnRatioAOMFast { get; set; }
+                public double PartAOMSlowToSMBSlow { get; set; }
+                public double PartAOMSlowToSMBFast { get; set; }
+                public double NConcentration { get; set; }
 
                 public struct READER
                 {
@@ -2308,83 +1693,19 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(13, 0);
                     }
 
-                    public double AomDryMatterContent
-                    {
-                        get => this.ReadDataDouble(0UL, 0);
-                        set => this.WriteData(0UL, value, 0);
-                    }
-
-                    public double AomNH4Content
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public double AomNO3Content
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
-
-                    public double AomCarbamidContent
-                    {
-                        get => this.ReadDataDouble(192UL, 0);
-                        set => this.WriteData(192UL, value, 0);
-                    }
-
-                    public double AomSlowDecCoeffStandard
-                    {
-                        get => this.ReadDataDouble(256UL, 0);
-                        set => this.WriteData(256UL, value, 0);
-                    }
-
-                    public double AomFastDecCoeffStandard
-                    {
-                        get => this.ReadDataDouble(320UL, 0);
-                        set => this.WriteData(320UL, value, 0);
-                    }
-
-                    public double PartAOMToAOMSlow
-                    {
-                        get => this.ReadDataDouble(384UL, 0);
-                        set => this.WriteData(384UL, value, 0);
-                    }
-
-                    public double PartAOMToAOMFast
-                    {
-                        get => this.ReadDataDouble(448UL, 0);
-                        set => this.WriteData(448UL, value, 0);
-                    }
-
-                    public double CnRatioAOMSlow
-                    {
-                        get => this.ReadDataDouble(512UL, 0);
-                        set => this.WriteData(512UL, value, 0);
-                    }
-
-                    public double CnRatioAOMFast
-                    {
-                        get => this.ReadDataDouble(576UL, 0);
-                        set => this.WriteData(576UL, value, 0);
-                    }
-
-                    public double PartAOMSlowToSMBSlow
-                    {
-                        get => this.ReadDataDouble(640UL, 0);
-                        set => this.WriteData(640UL, value, 0);
-                    }
-
-                    public double PartAOMSlowToSMBFast
-                    {
-                        get => this.ReadDataDouble(704UL, 0);
-                        set => this.WriteData(704UL, value, 0);
-                    }
-
-                    public double NConcentration
-                    {
-                        get => this.ReadDataDouble(768UL, 0);
-                        set => this.WriteData(768UL, value, 0);
-                    }
+                    public double AomDryMatterContent { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                    public double AomNH4Content { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public double AomNO3Content { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                    public double AomCarbamidContent { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                    public double AomSlowDecCoeffStandard { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+                    public double AomFastDecCoeffStandard { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+                    public double PartAOMToAOMSlow { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                    public double PartAOMToAOMFast { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                    public double CnRatioAOMSlow { get => this.ReadDataDouble(512UL, 0); set => this.WriteData(512UL, value, 0); }
+                    public double CnRatioAOMFast { get => this.ReadDataDouble(576UL, 0); set => this.WriteData(576UL, value, 0); }
+                    public double PartAOMSlowToSMBSlow { get => this.ReadDataDouble(640UL, 0); set => this.WriteData(640UL, value, 0); }
+                    public double PartAOMSlowToSMBFast { get => this.ReadDataDouble(704UL, 0); set => this.WriteData(704UL, value, 0); }
+                    public double NConcentration { get => this.ReadDataDouble(768UL, 0); set => this.WriteData(768UL, value, 0); }
                 }
             }
 
@@ -2417,23 +1738,9 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params
-                {
-                    get;
-                    set;
-                }
-
-                public string Id
-                {
-                    get;
-                    set;
-                }
-
-                public string Name
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params { get; set; }
+                public string Id { get; set; }
+                public string Name { get; set; }
 
                 public struct READER
                 {
@@ -2459,23 +1766,9 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(0, 3);
                     }
 
-                    public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER Params
-                    {
-                        get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(0);
-                        set => Link(0, value);
-                    }
-
-                    public string Id
-                    {
-                        get => this.ReadText(1, null);
-                        set => this.WriteText(1, value, null);
-                    }
-
-                    public string Name
-                    {
-                        get => this.ReadText(2, null);
-                        set => this.WriteText(2, value, null);
-                    }
+                    public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER Params { get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(0); set => Link(0, value); }
+                    public string Id { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+                    public string Name { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
                 }
             }
         }
@@ -2505,13 +1798,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Depth
-            {
-                get;
-                set;
-            }
+            public double Depth { get; set; } = 0.3;
 
-            = 0.3;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -2533,11 +1821,7 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 0);
                 }
 
-                public double Depth
-                {
-                    get => this.ReadDataDouble(0UL, 0.3);
-                    set => this.WriteData(0UL, value, 0.3);
-                }
+                public double Depth { get => this.ReadDataDouble(0UL, 0.3); set => this.WriteData(0UL, value, 0.3); }
             }
         }
 
@@ -2568,17 +1852,8 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public double Amount
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params
-            {
-                get;
-                set;
-            }
+            public double Amount { get; set; }
+            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params { get; set; }
 
             public struct READER
             {
@@ -2603,17 +1878,8 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(1, 1);
                 }
 
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params
-                {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params { get => BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(0); set => Link(0, value); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xaec9e089e87f1599UL)]
@@ -2643,17 +1909,8 @@ namespace Mas.Schema.Model.Monica
                 {
                 }
 
-                public double NitrateConcentration
-                {
-                    get;
-                    set;
-                }
-
-                public double SulfateConcentration
-                {
-                    get;
-                    set;
-                }
+                public double NitrateConcentration { get; set; }
+                public double SulfateConcentration { get; set; }
 
                 public struct READER
                 {
@@ -2677,18 +1934,66 @@ namespace Mas.Schema.Model.Monica
                         this.SetStruct(2, 0);
                     }
 
-                    public double NitrateConcentration
-                    {
-                        get => this.ReadDataDouble(0UL, 0);
-                        set => this.WriteData(0UL, value, 0);
-                    }
-
-                    public double SulfateConcentration
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
+                    public double NitrateConcentration { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                    public double SulfateConcentration { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
                 }
+            }
+        }
+
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdd84803fc87ac648UL)]
+        public class SaveState : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xdd84803fc87ac648UL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                NoOfPreviousDaysSerializedClimateData = reader.NoOfPreviousDaysSerializedClimateData;
+                AsJson = reader.AsJson;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.NoOfPreviousDaysSerializedClimateData = NoOfPreviousDaysSerializedClimateData;
+                writer.AsJson = AsJson;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public ulong NoOfPreviousDaysSerializedClimateData { get; set; }
+            public bool AsJson { get; set; } = false;
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public ulong NoOfPreviousDaysSerializedClimateData => ctx.ReadDataULong(0UL, 0UL);
+                public bool AsJson => ctx.ReadDataBool(64UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(2, 0);
+                }
+
+                public ulong NoOfPreviousDaysSerializedClimateData { get => this.ReadDataULong(0UL, 0UL); set => this.WriteData(0UL, value, 0UL); }
+                public bool AsJson { get => this.ReadDataBool(64UL, false); set => this.WriteData(64UL, value, false); }
             }
         }
     }
@@ -2717,7 +2022,8 @@ namespace Mas.Schema.Model.Monica
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2736,6 +2042,7 @@ namespace Mas.Schema.Model.Monica
         }
 
         public override ulong InterfaceId => 13824389634348780551UL;
+
         Task<AnswerOrCounterquestion> ManagementAt(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -2743,12 +2050,13 @@ namespace Mas.Schema.Model.Monica
                 return Impatient.MaybeTailCall(Impl.ManagementAt(CapnpSerializable.Create<Mas.Schema.Geo.LatLonCoord>(d_), cancellationToken_), mgmt =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.Monica.Service.Result_ManagementAt.WRITER>();
-                    var r_ = new Mas.Schema.Model.Monica.Service.Result_ManagementAt{Mgmt = mgmt};
+                    var r_ = new Mas.Schema.Model.Monica.Service.Result_ManagementAt
+                    {
+                        Mgmt = mgmt
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -2780,11 +2088,7 @@ namespace Mas.Schema.Model.Monica
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Event> Mgmt
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Event> Mgmt { get; set; }
 
             public struct READER
             {
@@ -2808,11 +2112,7 @@ namespace Mas.Schema.Model.Monica
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER> Mgmt
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER> Mgmt { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER>>(0); set => Link(0, value); }
             }
         }
     }

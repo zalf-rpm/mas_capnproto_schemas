@@ -127,17 +127,8 @@ namespace Mas.Schema.Management
         {
         }
 
-        public Mas.Schema.Management.Event.ExternalType TheType
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.IdInformation Info
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Management.Event.ExternalType TheType { get; set; }
+        public Mas.Schema.Common.IdInformation Info { get; set; }
 
         public Mas.Schema.Management.Event.at At
         {
@@ -169,17 +160,8 @@ namespace Mas.Schema.Management
             }
         }
 
-        public object Params
-        {
-            get;
-            set;
-        }
-
-        public bool RunAtStartOfDay
-        {
-            get;
-            set;
-        }
+        public object Params { get; set; }
+        public bool RunAtStartOfDay { get; set; }
 
         public struct READER
         {
@@ -210,50 +192,14 @@ namespace Mas.Schema.Management
                 this.SetStruct(1, 4);
             }
 
-            public WHICH which
-            {
-                get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                set => this.WriteData(16U, (ushort)value, (ushort)0);
-            }
-
-            public Mas.Schema.Management.Event.ExternalType TheType
-            {
-                get => (Mas.Schema.Management.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
-                set => this.WriteData(0UL, (ushort)value, (ushort)0);
-            }
-
-            public Mas.Schema.Common.IdInformation.WRITER Info
-            {
-                get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
-                set => Link(0, value);
-            }
-
-            public at.WRITER At
-            {
-                get => which == WHICH.At ? Rewrap<at.WRITER>() : default;
-            }
-
-            public between.WRITER Between
-            {
-                get => which == WHICH.Between ? Rewrap<between.WRITER>() : default;
-            }
-
-            public after.WRITER After
-            {
-                get => which == WHICH.After ? Rewrap<after.WRITER>() : default;
-            }
-
-            public DynamicSerializerState Params
-            {
-                get => BuildPointer<DynamicSerializerState>(3);
-                set => Link(3, value);
-            }
-
-            public bool RunAtStartOfDay
-            {
-                get => this.ReadDataBool(48UL, false);
-                set => this.WriteData(48UL, value, false);
-            }
+            public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+            public Mas.Schema.Management.Event.ExternalType TheType { get => (Mas.Schema.Management.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+            public Mas.Schema.Common.IdInformation.WRITER Info { get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0); set => Link(0, value); }
+            public at.WRITER At { get => which == WHICH.At ? Rewrap<at.WRITER>() : default; }
+            public between.WRITER Between { get => which == WHICH.Between ? Rewrap<between.WRITER>() : default; }
+            public after.WRITER After { get => which == WHICH.After ? Rewrap<after.WRITER>() : default; }
+            public DynamicSerializerState Params { get => BuildPointer<DynamicSerializerState>(3); set => Link(3, value); }
+            public bool RunAtStartOfDay { get => this.ReadDataBool(48UL, false); set => this.WriteData(48UL, value, false); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc6c4991fe51b272fUL)]
@@ -281,11 +227,7 @@ namespace Mas.Schema.Management
             {
             }
 
-            public Mas.Schema.Common.Date Date
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Date { get; set; }
 
             public struct READER
             {
@@ -308,11 +250,7 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public Mas.Schema.Common.Date.WRITER Date
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public Mas.Schema.Common.Date.WRITER Date { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
             }
         }
 
@@ -343,17 +281,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public Mas.Schema.Common.Date Earliest
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Common.Date Latest
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Earliest { get; set; }
+            public Mas.Schema.Common.Date Latest { get; set; }
 
             public struct READER
             {
@@ -378,17 +307,8 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public Mas.Schema.Common.Date.WRITER Earliest
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public Mas.Schema.Common.Date.WRITER Latest
-                {
-                    get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                    set => Link(2, value);
-                }
+                public Mas.Schema.Common.Date.WRITER Earliest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1); set => Link(1, value); }
+                public Mas.Schema.Common.Date.WRITER Latest { get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2); set => Link(2, value); }
             }
         }
 
@@ -419,17 +339,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public Mas.Schema.Management.Event.Type Event
-            {
-                get;
-                set;
-            }
-
-            public ushort Days
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Management.Event.Type Event { get; set; }
+            public ushort Days { get; set; }
 
             public struct READER
             {
@@ -453,17 +364,8 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public Mas.Schema.Management.Event.Type.WRITER Event
-                {
-                    get => BuildPointer<Mas.Schema.Management.Event.Type.WRITER>(1);
-                    set => Link(1, value);
-                }
-
-                public ushort Days
-                {
-                    get => this.ReadDataUShort(32UL, (ushort)0);
-                    set => this.WriteData(32UL, value, (ushort)0);
-                }
+                public Mas.Schema.Management.Event.Type.WRITER Event { get => BuildPointer<Mas.Schema.Management.Event.Type.WRITER>(1); set => Link(1, value); }
+                public ushort Days { get => this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, value, (ushort)0); }
             }
         }
 
@@ -606,23 +508,9 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 0);
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
-                    set => this.WriteData(16U, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Management.Event.ExternalType External
-                {
-                    get => which == WHICH.External ? (Mas.Schema.Management.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
-
-                public Mas.Schema.Management.Event.PhenoStage Internal
-                {
-                    get => which == WHICH.Internal ? (Mas.Schema.Management.Event.PhenoStage)this.ReadDataUShort(0UL, (ushort)0) : default;
-                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(16U, (ushort)0); set => this.WriteData(16U, (ushort)value, (ushort)0); }
+                public Mas.Schema.Management.Event.ExternalType External { get => which == WHICH.External ? (Mas.Schema.Management.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                public Mas.Schema.Management.Event.PhenoStage Internal { get => which == WHICH.Internal ? (Mas.Schema.Management.Event.PhenoStage)this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, (ushort)value, (ushort)0); }
             }
         }
     }
@@ -700,24 +588,9 @@ namespace Mas.Schema.Management
             {
             }
 
-            public string Cultivar
-            {
-                get;
-                set;
-            }
-
-            public ushort PlantDensity
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public Mas.Schema.Crop.ICrop Crop
-            {
-                get;
-                set;
-            }
+            public string Cultivar { get; set; }
+            public ushort PlantDensity { get; set; } = 0;
+            public Mas.Schema.Crop.ICrop Crop { get; set; }
 
             public struct READER
             {
@@ -742,23 +615,9 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 2);
                 }
 
-                public string Cultivar
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public ushort PlantDensity
-                {
-                    get => this.ReadDataUShort(0UL, (ushort)0);
-                    set => this.WriteData(0UL, value, (ushort)0);
-                }
-
-                public Mas.Schema.Crop.ICrop Crop
-                {
-                    get => ReadCap<Mas.Schema.Crop.ICrop>(1);
-                    set => LinkObject(1, value);
-                }
+                public string Cultivar { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+                public ushort PlantDensity { get => this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, value, (ushort)0); }
+                public Mas.Schema.Crop.ICrop Crop { get => ReadCap<Mas.Schema.Crop.ICrop>(1); set => LinkObject(1, value); }
             }
         }
 
@@ -805,67 +664,16 @@ namespace Mas.Schema.Management
             {
             }
 
-            public double MinTempThreshold
-            {
-                get;
-                set;
-            }
-
-            public ushort DaysInTempWindow
-            {
-                get;
-                set;
-            }
-
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double TempSumAboveBaseTemp
-            {
-                get;
-                set;
-            }
-
-            public double BaseTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Management.Params.Sowing Sowing
-            {
-                get;
-                set;
-            }
+            public double MinTempThreshold { get; set; }
+            public ushort DaysInTempWindow { get; set; }
+            public double MinPercentASW { get; set; } = 0;
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
+            public double MaxCurrentDayPrecipSum { get; set; }
+            public double TempSumAboveBaseTemp { get; set; }
+            public double BaseTemp { get; set; }
+            public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp { get; set; }
+            public Mas.Schema.Management.Params.Sowing Sowing { get; set; }
 
             public struct READER
             {
@@ -899,65 +707,16 @@ namespace Mas.Schema.Management
                     this.SetStruct(8, 2);
                 }
 
-                public double MinTempThreshold
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public ushort DaysInTempWindow
-                {
-                    get => this.ReadDataUShort(64UL, (ushort)0);
-                    set => this.WriteData(64UL, value, (ushort)0);
-                }
-
-                public double MinPercentASW
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double MaxPercentASW
-                {
-                    get => this.ReadDataDouble(192UL, 100);
-                    set => this.WriteData(192UL, value, 100);
-                }
-
-                public double Max3dayPrecipSum
-                {
-                    get => this.ReadDataDouble(256UL, 0);
-                    set => this.WriteData(256UL, value, 0);
-                }
-
-                public double MaxCurrentDayPrecipSum
-                {
-                    get => this.ReadDataDouble(320UL, 0);
-                    set => this.WriteData(320UL, value, 0);
-                }
-
-                public double TempSumAboveBaseTemp
-                {
-                    get => this.ReadDataDouble(384UL, 0);
-                    set => this.WriteData(384UL, value, 0);
-                }
-
-                public double BaseTemp
-                {
-                    get => this.ReadDataDouble(448UL, 0);
-                    set => this.WriteData(448UL, value, 0);
-                }
-
-                public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp
-                {
-                    get => BuildPointer<Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp.WRITER>(0);
-                    set => Link(0, value);
-                }
-
-                public Mas.Schema.Management.Params.Sowing.WRITER Sowing
-                {
-                    get => BuildPointer<Mas.Schema.Management.Params.Sowing.WRITER>(1);
-                    set => Link(1, value);
-                }
+                public double MinTempThreshold { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public ushort DaysInTempWindow { get => this.ReadDataUShort(64UL, (ushort)0); set => this.WriteData(64UL, value, (ushort)0); }
+                public double MinPercentASW { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double MaxPercentASW { get => this.ReadDataDouble(192UL, 100); set => this.WriteData(192UL, value, 100); }
+                public double Max3dayPrecipSum { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
+                public double MaxCurrentDayPrecipSum { get => this.ReadDataDouble(320UL, 0); set => this.WriteData(320UL, value, 0); }
+                public double TempSumAboveBaseTemp { get => this.ReadDataDouble(384UL, 0); set => this.WriteData(384UL, value, 0); }
+                public double BaseTemp { get => this.ReadDataDouble(448UL, 0); set => this.WriteData(448UL, value, 0); }
+                public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp { get => BuildPointer<Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp.WRITER>(0); set => Link(0, value); }
+                public Mas.Schema.Management.Params.Sowing.WRITER Sowing { get => BuildPointer<Mas.Schema.Management.Params.Sowing.WRITER>(1); set => Link(1, value); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9d81d2bf4cd0f868UL)]
@@ -989,24 +748,9 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public double SoilDepthForAveraging
-                {
-                    get;
-                    set;
-                }
-
-                = 0.3;
-                public ushort DaysInSoilTempWindow
-                {
-                    get;
-                    set;
-                }
-
-                public double SowingIfAboveAvgSoilTemp
-                {
-                    get;
-                    set;
-                }
+                public double SoilDepthForAveraging { get; set; } = 0.3;
+                public ushort DaysInSoilTempWindow { get; set; }
+                public double SowingIfAboveAvgSoilTemp { get; set; }
 
                 public struct READER
                 {
@@ -1031,23 +775,9 @@ namespace Mas.Schema.Management
                         this.SetStruct(3, 0);
                     }
 
-                    public double SoilDepthForAveraging
-                    {
-                        get => this.ReadDataDouble(0UL, 0.3);
-                        set => this.WriteData(0UL, value, 0.3);
-                    }
-
-                    public ushort DaysInSoilTempWindow
-                    {
-                        get => this.ReadDataUShort(64UL, (ushort)0);
-                        set => this.WriteData(64UL, value, (ushort)0);
-                    }
-
-                    public double SowingIfAboveAvgSoilTemp
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
+                    public double SoilDepthForAveraging { get => this.ReadDataDouble(0UL, 0.3); set => this.WriteData(0UL, value, 0.3); }
+                    public ushort DaysInSoilTempWindow { get => this.ReadDataUShort(64UL, (ushort)0); set => this.WriteData(64UL, value, (ushort)0); }
+                    public double SowingIfAboveAvgSoilTemp { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
                 }
             }
         }
@@ -1079,18 +809,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public bool Exported
-            {
-                get;
-                set;
-            }
-
-            = true;
-            public Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData
-            {
-                get;
-                set;
-            }
+            public bool Exported { get; set; } = true;
+            public Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData { get; set; }
 
             public struct READER
             {
@@ -1115,17 +835,8 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 1);
                 }
 
-                public bool Exported
-                {
-                    get => this.ReadDataBool(0UL, true);
-                    set => this.WriteData(0UL, value, true);
-                }
-
-                public Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData
-                {
-                    get => BuildPointer<Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public bool Exported { get => this.ReadDataBool(0UL, true); set => this.WriteData(0UL, value, true); }
+                public Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData { get => BuildPointer<Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData.WRITER>(0); set => Link(0, value); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8f0cbec420589373UL)]
@@ -1170,48 +881,13 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public bool OptCarbonConservation
-                {
-                    get;
-                    set;
-                }
+                public bool OptCarbonConservation { get; set; } = false;
+                public double CropImpactOnHumusBalance { get; set; } = 0;
+                public Mas.Schema.Management.Params.Harvest.CropUsage CropUsage { get; set; } = Mas.Schema.Management.Params.Harvest.CropUsage.biomassProduction;
+                public double ResidueHeq { get; set; } = 0;
+                public double OrganicFertilizerHeq { get; set; } = 0;
+                public double MaxResidueRecoverFraction { get; set; } = 0;
 
-                = false;
-                public double CropImpactOnHumusBalance
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public Mas.Schema.Management.Params.Harvest.CropUsage CropUsage
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Management.Params.Harvest.CropUsage.biomassProduction;
-                public double ResidueHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double OrganicFertilizerHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double MaxResidueRecoverFraction
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -1238,41 +914,12 @@ namespace Mas.Schema.Management
                         this.SetStruct(5, 0);
                     }
 
-                    public bool OptCarbonConservation
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
-
-                    public double CropImpactOnHumusBalance
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public Mas.Schema.Management.Params.Harvest.CropUsage CropUsage
-                    {
-                        get => (Mas.Schema.Management.Params.Harvest.CropUsage)this.ReadDataUShort(16UL, (ushort)1);
-                        set => this.WriteData(16UL, (ushort)value, (ushort)1);
-                    }
-
-                    public double ResidueHeq
-                    {
-                        get => this.ReadDataDouble(128UL, 0);
-                        set => this.WriteData(128UL, value, 0);
-                    }
-
-                    public double OrganicFertilizerHeq
-                    {
-                        get => this.ReadDataDouble(192UL, 0);
-                        set => this.WriteData(192UL, value, 0);
-                    }
-
-                    public double MaxResidueRecoverFraction
-                    {
-                        get => this.ReadDataDouble(256UL, 0);
-                        set => this.WriteData(256UL, value, 0);
-                    }
+                    public bool OptCarbonConservation { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
+                    public double CropImpactOnHumusBalance { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public Mas.Schema.Management.Params.Harvest.CropUsage CropUsage { get => (Mas.Schema.Management.Params.Harvest.CropUsage)this.ReadDataUShort(16UL, (ushort)1); set => this.WriteData(16UL, (ushort)value, (ushort)1); }
+                    public double ResidueHeq { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                    public double OrganicFertilizerHeq { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                    public double MaxResidueRecoverFraction { get => this.ReadDataDouble(256UL, 0); set => this.WriteData(256UL, value, 0); }
                 }
             }
         }
@@ -1312,43 +959,12 @@ namespace Mas.Schema.Management
             {
             }
 
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
-
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
-
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Management.Event.PhenoStage HarvestTime
-            {
-                get;
-                set;
-            }
-
-            = Mas.Schema.Management.Event.PhenoStage.maturity;
-            public Mas.Schema.Management.Params.Harvest Harvest
-            {
-                get;
-                set;
-            }
+            public double MinPercentASW { get; set; }
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
+            public double MaxCurrentDayPrecipSum { get; set; }
+            public Mas.Schema.Management.Event.PhenoStage HarvestTime { get; set; } = Mas.Schema.Management.Event.PhenoStage.maturity;
+            public Mas.Schema.Management.Params.Harvest Harvest { get; set; }
 
             public struct READER
             {
@@ -1377,41 +993,12 @@ namespace Mas.Schema.Management
                     this.SetStruct(5, 1);
                 }
 
-                public double MinPercentASW
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public double MaxPercentASW
-                {
-                    get => this.ReadDataDouble(64UL, 100);
-                    set => this.WriteData(64UL, value, 100);
-                }
-
-                public double Max3dayPrecipSum
-                {
-                    get => this.ReadDataDouble(128UL, 0);
-                    set => this.WriteData(128UL, value, 0);
-                }
-
-                public double MaxCurrentDayPrecipSum
-                {
-                    get => this.ReadDataDouble(192UL, 0);
-                    set => this.WriteData(192UL, value, 0);
-                }
-
-                public Mas.Schema.Management.Event.PhenoStage HarvestTime
-                {
-                    get => (Mas.Schema.Management.Event.PhenoStage)this.ReadDataUShort(256UL, (ushort)3);
-                    set => this.WriteData(256UL, (ushort)value, (ushort)3);
-                }
-
-                public Mas.Schema.Management.Params.Harvest.WRITER Harvest
-                {
-                    get => BuildPointer<Mas.Schema.Management.Params.Harvest.WRITER>(0);
-                    set => Link(0, value);
-                }
+                public double MinPercentASW { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public double MaxPercentASW { get => this.ReadDataDouble(64UL, 100); set => this.WriteData(64UL, value, 100); }
+                public double Max3dayPrecipSum { get => this.ReadDataDouble(128UL, 0); set => this.WriteData(128UL, value, 0); }
+                public double MaxCurrentDayPrecipSum { get => this.ReadDataDouble(192UL, 0); set => this.WriteData(192UL, value, 0); }
+                public Mas.Schema.Management.Event.PhenoStage HarvestTime { get => (Mas.Schema.Management.Event.PhenoStage)this.ReadDataUShort(256UL, (ushort)3); set => this.WriteData(256UL, (ushort)value, (ushort)3); }
+                public Mas.Schema.Management.Params.Harvest.WRITER Harvest { get => BuildPointer<Mas.Schema.Management.Params.Harvest.WRITER>(0); set => Link(0, value); }
             }
         }
 
@@ -1442,17 +1029,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Management.Params.Cutting.Spec> CuttingSpec
-            {
-                get;
-                set;
-            }
-
-            public double CutMaxAssimilationRatePercentage
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Management.Params.Cutting.Spec> CuttingSpec { get; set; }
+            public double CutMaxAssimilationRatePercentage { get; set; } = 100;
 
             public struct READER
             {
@@ -1467,7 +1045,7 @@ namespace Mas.Schema.Management
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                 public IReadOnlyList<Mas.Schema.Management.Params.Cutting.Spec.READER> CuttingSpec => ctx.ReadList(0).Cast(Mas.Schema.Management.Params.Cutting.Spec.READER.create);
                 public bool HasCuttingSpec => ctx.IsStructFieldNonNull(0);
-                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 0);
+                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 100);
             }
 
             public class WRITER : SerializerState
@@ -1477,17 +1055,8 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Management.Params.Cutting.Spec.WRITER> CuttingSpec
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Params.Cutting.Spec.WRITER>>(0);
-                    set => Link(0, value);
-                }
-
-                public double CutMaxAssimilationRatePercentage
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Management.Params.Cutting.Spec.WRITER> CuttingSpec { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Params.Cutting.Spec.WRITER>>(0); set => Link(0, value); }
+                public double CutMaxAssimilationRatePercentage { get => this.ReadDataDouble(0UL, 100); set => this.WriteData(0UL, value, 100); }
             }
 
             [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x825bb2508c0b37b2UL)]
@@ -1538,39 +1107,12 @@ namespace Mas.Schema.Management
                 {
                 }
 
-                public Mas.Schema.Management.PlantOrgan Organ
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Management.PlantOrgan Organ { get; set; }
+                public double Value { get; set; }
+                public Mas.Schema.Management.Params.Cutting.Unit Unit { get; set; } = Mas.Schema.Management.Params.Cutting.Unit.percentage;
+                public Mas.Schema.Management.Params.Cutting.CL CutOrLeft { get; set; } = Mas.Schema.Management.Params.Cutting.CL.cut;
+                public double ExportPercentage { get; set; } = 100;
 
-                public double Value
-                {
-                    get;
-                    set;
-                }
-
-                public Mas.Schema.Management.Params.Cutting.Unit Unit
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Management.Params.Cutting.Unit.percentage;
-                public Mas.Schema.Management.Params.Cutting.CL CutOrLeft
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Management.Params.Cutting.CL.cut;
-                public double ExportPercentage
-                {
-                    get;
-                    set;
-                }
-
-                = 100;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -1596,35 +1138,11 @@ namespace Mas.Schema.Management
                         this.SetStruct(3, 0);
                     }
 
-                    public Mas.Schema.Management.PlantOrgan Organ
-                    {
-                        get => (Mas.Schema.Management.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
-                        set => this.WriteData(0UL, (ushort)value, (ushort)0);
-                    }
-
-                    public double Value
-                    {
-                        get => this.ReadDataDouble(64UL, 0);
-                        set => this.WriteData(64UL, value, 0);
-                    }
-
-                    public Mas.Schema.Management.Params.Cutting.Unit Unit
-                    {
-                        get => (Mas.Schema.Management.Params.Cutting.Unit)this.ReadDataUShort(16UL, (ushort)0);
-                        set => this.WriteData(16UL, (ushort)value, (ushort)0);
-                    }
-
-                    public Mas.Schema.Management.Params.Cutting.CL CutOrLeft
-                    {
-                        get => (Mas.Schema.Management.Params.Cutting.CL)this.ReadDataUShort(32UL, (ushort)0);
-                        set => this.WriteData(32UL, (ushort)value, (ushort)0);
-                    }
-
-                    public double ExportPercentage
-                    {
-                        get => this.ReadDataDouble(128UL, 100);
-                        set => this.WriteData(128UL, value, 100);
-                    }
+                    public Mas.Schema.Management.PlantOrgan Organ { get => (Mas.Schema.Management.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+                    public double Value { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                    public Mas.Schema.Management.Params.Cutting.Unit Unit { get => (Mas.Schema.Management.Params.Cutting.Unit)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
+                    public Mas.Schema.Management.Params.Cutting.CL CutOrLeft { get => (Mas.Schema.Management.Params.Cutting.CL)this.ReadDataUShort(32UL, (ushort)0); set => this.WriteData(32UL, (ushort)value, (ushort)0); }
+                    public double ExportPercentage { get => this.ReadDataDouble(128UL, 100); set => this.WriteData(128UL, value, 100); }
                 }
             }
         }
@@ -1656,17 +1174,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public Mas.Schema.Management.IFertilizer Fertilizer
-            {
-                get;
-                set;
-            }
-
-            public double Amount
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
+            public double Amount { get; set; }
 
             public struct READER
             {
@@ -1690,17 +1199,8 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 1);
                 }
 
-                public Mas.Schema.Management.IFertilizer Fertilizer
-                {
-                    get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
+                public Mas.Schema.Management.IFertilizer Fertilizer { get => ReadCap<Mas.Schema.Management.IFertilizer>(0); set => LinkObject(0, value); }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
             }
         }
 
@@ -1735,31 +1235,11 @@ namespace Mas.Schema.Management
             {
             }
 
-            public double NDemand
-            {
-                get;
-                set;
-            }
+            public double NDemand { get; set; }
+            public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
+            public double Depth { get; set; }
+            public byte Stage { get; set; } = 1;
 
-            public Mas.Schema.Management.IFertilizer Fertilizer
-            {
-                get;
-                set;
-            }
-
-            public double Depth
-            {
-                get;
-                set;
-            }
-
-            public byte Stage
-            {
-                get;
-                set;
-            }
-
-            = 1;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1784,29 +1264,10 @@ namespace Mas.Schema.Management
                     this.SetStruct(3, 1);
                 }
 
-                public double NDemand
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public Mas.Schema.Management.IFertilizer Fertilizer
-                {
-                    get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public double Depth
-                {
-                    get => this.ReadDataDouble(64UL, 0);
-                    set => this.WriteData(64UL, value, 0);
-                }
-
-                public byte Stage
-                {
-                    get => this.ReadDataByte(128UL, (byte)1);
-                    set => this.WriteData(128UL, value, (byte)1);
-                }
+                public double NDemand { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public Mas.Schema.Management.IFertilizer Fertilizer { get => ReadCap<Mas.Schema.Management.IFertilizer>(0); set => LinkObject(0, value); }
+                public double Depth { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+                public byte Stage { get => this.ReadDataByte(128UL, (byte)1); set => this.WriteData(128UL, value, (byte)1); }
             }
         }
 
@@ -1839,25 +1300,10 @@ namespace Mas.Schema.Management
             {
             }
 
-            public Mas.Schema.Management.IFertilizer Fertilizer
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
+            public double Amount { get; set; }
+            public bool Incorporation { get; set; } = false;
 
-            public double Amount
-            {
-                get;
-                set;
-            }
-
-            public bool Incorporation
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1881,23 +1327,9 @@ namespace Mas.Schema.Management
                     this.SetStruct(2, 1);
                 }
 
-                public Mas.Schema.Management.IFertilizer Fertilizer
-                {
-                    get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
-                    set => LinkObject(0, value);
-                }
-
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public bool Incorporation
-                {
-                    get => this.ReadDataBool(64UL, false);
-                    set => this.WriteData(64UL, value, false);
-                }
+                public Mas.Schema.Management.IFertilizer Fertilizer { get => ReadCap<Mas.Schema.Management.IFertilizer>(0); set => LinkObject(0, value); }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public bool Incorporation { get => this.ReadDataBool(64UL, false); set => this.WriteData(64UL, value, false); }
             }
         }
 
@@ -1926,13 +1358,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public double Depth
-            {
-                get;
-                set;
-            }
+            public double Depth { get; set; } = 0.3;
 
-            = 0.3;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1954,11 +1381,7 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 0);
                 }
 
-                public double Depth
-                {
-                    get => this.ReadDataDouble(0UL, 0.3);
-                    set => this.WriteData(0UL, value, 0.3);
-                }
+                public double Depth { get => this.ReadDataDouble(0UL, 0.3); set => this.WriteData(0UL, value, 0.3); }
             }
         }
 
@@ -1989,17 +1412,8 @@ namespace Mas.Schema.Management
             {
             }
 
-            public double Amount
-            {
-                get;
-                set;
-            }
-
-            public IReadOnlyList<Mas.Schema.Management.Nutrient> NutrientConcentrations
-            {
-                get;
-                set;
-            }
+            public double Amount { get; set; }
+            public IReadOnlyList<Mas.Schema.Management.Nutrient> NutrientConcentrations { get; set; }
 
             public struct READER
             {
@@ -2024,17 +1438,8 @@ namespace Mas.Schema.Management
                     this.SetStruct(1, 1);
                 }
 
-                public double Amount
-                {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER> NutrientConcentrations
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public double Amount { get => this.ReadDataDouble(0UL, 0); set => this.WriteData(0UL, value, 0); }
+                public ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER> NutrientConcentrations { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER>>(0); set => Link(0, value); }
             }
         }
     }
@@ -2068,23 +1473,9 @@ namespace Mas.Schema.Management
         {
         }
 
-        public Mas.Schema.Management.Nutrient.Name TheNutrient
-        {
-            get;
-            set;
-        }
-
-        public double Value
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Management.Nutrient.Unit TheUnit
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Management.Nutrient.Name TheNutrient { get; set; }
+        public double Value { get; set; }
+        public Mas.Schema.Management.Nutrient.Unit TheUnit { get; set; }
 
         public struct READER
         {
@@ -2109,23 +1500,9 @@ namespace Mas.Schema.Management
                 this.SetStruct(2, 0);
             }
 
-            public Mas.Schema.Management.Nutrient.Name TheNutrient
-            {
-                get => (Mas.Schema.Management.Nutrient.Name)this.ReadDataUShort(0UL, (ushort)0);
-                set => this.WriteData(0UL, (ushort)value, (ushort)0);
-            }
-
-            public double Value
-            {
-                get => this.ReadDataDouble(64UL, 0);
-                set => this.WriteData(64UL, value, 0);
-            }
-
-            public Mas.Schema.Management.Nutrient.Unit TheUnit
-            {
-                get => (Mas.Schema.Management.Nutrient.Unit)this.ReadDataUShort(16UL, (ushort)0);
-                set => this.WriteData(16UL, (ushort)value, (ushort)0);
-            }
+            public Mas.Schema.Management.Nutrient.Name TheNutrient { get => (Mas.Schema.Management.Nutrient.Name)this.ReadDataUShort(0UL, (ushort)0); set => this.WriteData(0UL, (ushort)value, (ushort)0); }
+            public double Value { get => this.ReadDataDouble(64UL, 0); set => this.WriteData(64UL, value, 0); }
+            public Mas.Schema.Management.Nutrient.Unit TheUnit { get => (Mas.Schema.Management.Nutrient.Unit)this.ReadDataUShort(16UL, (ushort)0); set => this.WriteData(16UL, (ushort)value, (ushort)0); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbc6b579acf43fb6eUL)]
@@ -2167,7 +1544,8 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Management.Fertilizer.Params_Nutrients.WRITER>();
             var arg_ = new Mas.Schema.Management.Fertilizer.Params_Nutrients()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(10109658492985257671UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2180,7 +1558,8 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Management.Fertilizer.Params_Parameters.WRITER>();
             var arg_ = new Mas.Schema.Management.Fertilizer.Params_Parameters()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(10109658492985257671UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2189,9 +1568,7 @@ namespace Mas.Schema.Management
                     var r_ = CapnpSerializable.Create<Mas.Schema.Management.Fertilizer.Result_Parameters>(d_);
                     return (r_.Params);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
@@ -2209,7 +1586,8 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2228,6 +1606,7 @@ namespace Mas.Schema.Management
         }
 
         public override ulong InterfaceId => 10109658492985257671UL;
+
         Task<AnswerOrCounterquestion> Nutrients(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -2235,12 +1614,13 @@ namespace Mas.Schema.Management
                 return Impatient.MaybeTailCall(Impl.Nutrients(cancellationToken_), nutrients =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Management.Fertilizer.Result_Nutrients.WRITER>();
-                    var r_ = new Mas.Schema.Management.Fertilizer.Result_Nutrients{Nutrients = nutrients};
+                    var r_ = new Mas.Schema.Management.Fertilizer.Result_Nutrients
+                    {
+                        Nutrients = nutrients
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
 
@@ -2251,12 +1631,13 @@ namespace Mas.Schema.Management
                 return Impatient.MaybeTailCall(Impl.Parameters(cancellationToken_), @params =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Management.Fertilizer.Result_Parameters.WRITER>();
-                    var r_ = new Mas.Schema.Management.Fertilizer.Result_Parameters{Params = @params};
+                    var r_ = new Mas.Schema.Management.Fertilizer.Result_Parameters
+                    {
+                        Params = @params
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -2333,11 +1714,7 @@ namespace Mas.Schema.Management
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Management.Nutrient> Nutrients
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Management.Nutrient> Nutrients { get; set; }
 
             public struct READER
             {
@@ -2361,11 +1738,7 @@ namespace Mas.Schema.Management
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER> Nutrients
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER> Nutrients { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER>>(0); set => Link(0, value); }
             }
         }
 
@@ -2439,11 +1812,7 @@ namespace Mas.Schema.Management
             {
             }
 
-            public object Params
-            {
-                get;
-                set;
-            }
+            public object Params { get; set; }
 
             public struct READER
             {
@@ -2466,11 +1835,7 @@ namespace Mas.Schema.Management
                     this.SetStruct(0, 1);
                 }
 
-                public DynamicSerializerState Params
-                {
-                    get => BuildPointer<DynamicSerializerState>(0);
-                    set => Link(0, value);
-                }
+                public DynamicSerializerState Params { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
             }
         }
     }
@@ -2487,7 +1852,8 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_SupportedCategories.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_SupportedCategories()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2500,7 +1866,9 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_CategoryInfo.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_CategoryInfo()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(14590338780428121016UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2513,7 +1881,9 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Registry.Registry.Params_Entries.WRITER>();
             var arg_ = new Mas.Schema.Registry.Registry.Params_Entries()
-            {CategoryId = categoryId};
+            {
+                CategoryId = categoryId
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(14590338780428121016UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -2522,16 +1892,15 @@ namespace Mas.Schema.Management
                     var r_ = CapnpSerializable.Create<Mas.Schema.Registry.Registry.Result_Entries>(d_);
                     return (r_.Entries);
                 }
-            }
-
-            );
+            });
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2576,7 +1945,8 @@ namespace Mas.Schema.Management
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -2595,6 +1965,7 @@ namespace Mas.Schema.Management
         }
 
         public override ulong InterfaceId => 14444934244643370713UL;
+
         Task<AnswerOrCounterquestion> ManagementAt(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -2602,12 +1973,13 @@ namespace Mas.Schema.Management
                 return Impatient.MaybeTailCall(Impl.ManagementAt(CapnpSerializable.Create<Mas.Schema.Geo.LatLonCoord>(d_), cancellationToken_), mgmt =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Management.Service.Result_ManagementAt.WRITER>();
-                    var r_ = new Mas.Schema.Management.Service.Result_ManagementAt{Mgmt = mgmt};
+                    var r_ = new Mas.Schema.Management.Service.Result_ManagementAt
+                    {
+                        Mgmt = mgmt
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -2639,11 +2011,7 @@ namespace Mas.Schema.Management
             {
             }
 
-            public IReadOnlyList<Mas.Schema.Management.Event> Mgmt
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Management.Event> Mgmt { get; set; }
 
             public struct READER
             {
@@ -2667,11 +2035,7 @@ namespace Mas.Schema.Management
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER> Mgmt
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER>>(0);
-                    set => Link(0, value);
-                }
+                public ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER> Mgmt { get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER>>(0); set => Link(0, value); }
             }
         }
     }

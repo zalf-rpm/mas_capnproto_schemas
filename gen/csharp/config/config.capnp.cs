@@ -21,7 +21,8 @@ namespace Mas.Schema.Config
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Config.Service<TC>.Params_NextConfig.WRITER>();
             var arg_ = new Mas.Schema.Config.Service<TC>.Params_NextConfig()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(Call(9659488952283757786UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
@@ -30,9 +31,7 @@ namespace Mas.Schema.Config
                     var r_ = CapnpSerializable.Create<Mas.Schema.Config.Service<TC>.Result_NextConfig>(d_);
                     return (r_.Config, r_.NoFurtherConfigs);
                 }
-            }
-
-            );
+            });
         }
     }
 
@@ -45,6 +44,7 @@ namespace Mas.Schema.Config
         }
 
         public override ulong InterfaceId => 9659488952283757786UL;
+
         Task<AnswerOrCounterquestion> NextConfig(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -52,12 +52,14 @@ namespace Mas.Schema.Config
                 return Impatient.MaybeTailCall(Impl.NextConfig(cancellationToken_), (config, noFurtherConfigs) =>
                 {
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Config.Service<TC>.Result_NextConfig.WRITER>();
-                    var r_ = new Mas.Schema.Config.Service<TC>.Result_NextConfig{Config = config, NoFurtherConfigs = noFurtherConfigs};
+                    var r_ = new Mas.Schema.Config.Service<TC>.Result_NextConfig
+                    {
+                        Config = config,
+                        NoFurtherConfigs = noFurtherConfigs
+                    };
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -137,19 +139,9 @@ namespace Mas.Schema.Config
             {
             }
 
-            public TC Config
-            {
-                get;
-                set;
-            }
+            public TC Config { get; set; }
+            public bool NoFurtherConfigs { get; set; } = false;
 
-            public bool NoFurtherConfigs
-            {
-                get;
-                set;
-            }
-
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -172,17 +164,8 @@ namespace Mas.Schema.Config
                     this.SetStruct(1, 1);
                 }
 
-                public DynamicSerializerState Config
-                {
-                    get => BuildPointer<DynamicSerializerState>(0);
-                    set => Link(0, value);
-                }
-
-                public bool NoFurtherConfigs
-                {
-                    get => this.ReadDataBool(0UL, false);
-                    set => this.WriteData(0UL, value, false);
-                }
+                public DynamicSerializerState Config { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
+                public bool NoFurtherConfigs { get => this.ReadDataBool(0UL, false); set => this.WriteData(0UL, value, false); }
             }
         }
     }

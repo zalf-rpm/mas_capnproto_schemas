@@ -37,23 +37,9 @@ namespace Mas.Schema.Common
         {
         }
 
-        public string Id
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Description
-        {
-            get;
-            set;
-        }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
         public struct READER
         {
@@ -78,23 +64,9 @@ namespace Mas.Schema.Common
                 this.SetStruct(0, 3);
             }
 
-            public string Id
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string Name
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
-            public string Description
-            {
-                get => this.ReadText(2, null);
-                set => this.WriteText(2, value, null);
-            }
+            public string Id { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public string Name { get => this.ReadText(1, null); set => this.WriteText(1, value, null); }
+            public string Description { get => this.ReadText(2, null); set => this.WriteText(2, value, null); }
         }
     }
 
@@ -111,7 +83,8 @@ namespace Mas.Schema.Common
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
             var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            {
+            };
             arg_?.serialize(in_);
             using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
@@ -130,6 +103,7 @@ namespace Mas.Schema.Common
         }
 
         public override ulong InterfaceId => 12875740530987518165UL;
+
         Task<AnswerOrCounterquestion> Info(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
@@ -139,9 +113,7 @@ namespace Mas.Schema.Common
                     var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
                     r_.serialize(s_);
                     return s_;
-                }
-
-                );
+                });
             }
         }
     }
@@ -221,17 +193,8 @@ namespace Mas.Schema.Common
         {
         }
 
-        public string Value
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Common.StructuredText.structure Structure
-        {
-            get;
-            set;
-        }
+        public string Value { get; set; }
+        public Mas.Schema.Common.StructuredText.structure Structure { get; set; }
 
         public struct READER
         {
@@ -255,16 +218,8 @@ namespace Mas.Schema.Common
                 this.SetStruct(1, 1);
             }
 
-            public string Value
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public structure.WRITER Structure
-            {
-                get => Rewrap<structure.WRITER>();
-            }
+            public string Value { get => this.ReadText(0, null); set => this.WriteText(0, value, null); }
+            public structure.WRITER Structure { get => Rewrap<structure.WRITER>(); }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe8cbf552b1c262ccUL)]
@@ -276,6 +231,7 @@ namespace Mas.Schema.Common
                 None = 0,
                 Json = 1,
                 Xml = 2,
+                Toml = 3,
                 undefined = 65535
             }
 
@@ -291,6 +247,9 @@ namespace Mas.Schema.Common
                         which = reader.which;
                         break;
                     case WHICH.Xml:
+                        which = reader.which;
+                        break;
+                    case WHICH.Toml:
                         which = reader.which;
                         break;
                 }
@@ -315,6 +274,8 @@ namespace Mas.Schema.Common
                             break;
                         case WHICH.Xml:
                             break;
+                        case WHICH.Toml:
+                            break;
                     }
                 }
             }
@@ -329,6 +290,8 @@ namespace Mas.Schema.Common
                     case WHICH.Json:
                         break;
                     case WHICH.Xml:
+                        break;
+                    case WHICH.Toml:
                         break;
                 }
             }
@@ -362,11 +325,7 @@ namespace Mas.Schema.Common
                 {
                 }
 
-                public WHICH which
-                {
-                    get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
-                    set => this.WriteData(0U, (ushort)value, (ushort)0);
-                }
+                public WHICH which { get => (WHICH)this.ReadDataUShort(0U, (ushort)0); set => this.WriteData(0U, (ushort)value, (ushort)0); }
             }
         }
     }
@@ -1067,185 +1026,36 @@ namespace Mas.Schema.Common
                 this.SetStruct(2, 1);
             }
 
-            public WHICH which
-            {
-                get => (WHICH)this.ReadDataUShort(64U, (ushort)0);
-                set => this.WriteData(64U, (ushort)value, (ushort)0);
-            }
-
-            public double F64
-            {
-                get => which == WHICH.F64 ? this.ReadDataDouble(0UL, 0) : default;
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public float F32
-            {
-                get => which == WHICH.F32 ? this.ReadDataFloat(0UL, 0F) : default;
-                set => this.WriteData(0UL, value, 0F);
-            }
-
-            public long I64
-            {
-                get => which == WHICH.I64 ? this.ReadDataLong(0UL, 0L) : default;
-                set => this.WriteData(0UL, value, 0L);
-            }
-
-            public int I32
-            {
-                get => which == WHICH.I32 ? this.ReadDataInt(0UL, 0) : default;
-                set => this.WriteData(0UL, value, 0);
-            }
-
-            public short I16
-            {
-                get => which == WHICH.I16 ? this.ReadDataShort(0UL, (short)0) : default;
-                set => this.WriteData(0UL, value, (short)0);
-            }
-
-            public sbyte I8
-            {
-                get => which == WHICH.I8 ? this.ReadDataSByte(0UL, (sbyte)0) : default;
-                set => this.WriteData(0UL, value, (sbyte)0);
-            }
-
-            public ulong Ui64
-            {
-                get => which == WHICH.Ui64 ? this.ReadDataULong(0UL, 0UL) : default;
-                set => this.WriteData(0UL, value, 0UL);
-            }
-
-            public uint Ui32
-            {
-                get => which == WHICH.Ui32 ? this.ReadDataUInt(0UL, 0U) : default;
-                set => this.WriteData(0UL, value, 0U);
-            }
-
-            public ushort Ui16
-            {
-                get => which == WHICH.Ui16 ? this.ReadDataUShort(0UL, (ushort)0) : default;
-                set => this.WriteData(0UL, value, (ushort)0);
-            }
-
-            public byte Ui8
-            {
-                get => which == WHICH.Ui8 ? this.ReadDataByte(0UL, (byte)0) : default;
-                set => this.WriteData(0UL, value, (byte)0);
-            }
-
-            public bool B
-            {
-                get => which == WHICH.B ? this.ReadDataBool(0UL, false) : default;
-                set => this.WriteData(0UL, value, false);
-            }
-
-            public string T
-            {
-                get => which == WHICH.T ? this.ReadText(0, null) : default;
-                set => this.WriteText(0, value, null);
-            }
-
-            public ListOfPrimitivesSerializer<byte> D
-            {
-                get => which == WHICH.D ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public DynamicSerializerState P
-            {
-                get => which == WHICH.P ? BuildPointer<DynamicSerializerState>(0) : default;
-                set => Link(0, value);
-            }
-
-            public BareProxy Cap
-            {
-                get => which == WHICH.Cap ? ReadCap<BareProxy>(0) : default;
-                set => LinkObject(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<double> Lf64
-            {
-                get => which == WHICH.Lf64 ? BuildPointer<ListOfPrimitivesSerializer<double>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<float> Lf32
-            {
-                get => which == WHICH.Lf32 ? BuildPointer<ListOfPrimitivesSerializer<float>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<long> Li64
-            {
-                get => which == WHICH.Li64 ? BuildPointer<ListOfPrimitivesSerializer<long>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<int> Li32
-            {
-                get => which == WHICH.Li32 ? BuildPointer<ListOfPrimitivesSerializer<int>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<short> Li16
-            {
-                get => which == WHICH.Li16 ? BuildPointer<ListOfPrimitivesSerializer<short>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<sbyte> Li8
-            {
-                get => which == WHICH.Li8 ? BuildPointer<ListOfPrimitivesSerializer<sbyte>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<ulong> Lui64
-            {
-                get => which == WHICH.Lui64 ? BuildPointer<ListOfPrimitivesSerializer<ulong>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<uint> Lui32
-            {
-                get => which == WHICH.Lui32 ? BuildPointer<ListOfPrimitivesSerializer<uint>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<ushort> Lui16
-            {
-                get => which == WHICH.Lui16 ? BuildPointer<ListOfPrimitivesSerializer<ushort>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPrimitivesSerializer<byte> Lui8
-            {
-                get => which == WHICH.Lui8 ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfBitsSerializer Lb
-            {
-                get => which == WHICH.Lb ? BuildPointer<ListOfBitsSerializer>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfTextSerializer Lt
-            {
-                get => which == WHICH.Lt ? BuildPointer<ListOfTextSerializer>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>> Ld
-            {
-                get => which == WHICH.Ld ? BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>>>(0) : default;
-                set => Link(0, value);
-            }
-
-            public ListOfCapsSerializer<BareProxy> Lcap
-            {
-                get => which == WHICH.Lcap ? BuildPointer<ListOfCapsSerializer<BareProxy>>(0) : default;
-                set => Link(0, value);
-            }
+            public WHICH which { get => (WHICH)this.ReadDataUShort(64U, (ushort)0); set => this.WriteData(64U, (ushort)value, (ushort)0); }
+            public double F64 { get => which == WHICH.F64 ? this.ReadDataDouble(0UL, 0) : default; set => this.WriteData(0UL, value, 0); }
+            public float F32 { get => which == WHICH.F32 ? this.ReadDataFloat(0UL, 0F) : default; set => this.WriteData(0UL, value, 0F); }
+            public long I64 { get => which == WHICH.I64 ? this.ReadDataLong(0UL, 0L) : default; set => this.WriteData(0UL, value, 0L); }
+            public int I32 { get => which == WHICH.I32 ? this.ReadDataInt(0UL, 0) : default; set => this.WriteData(0UL, value, 0); }
+            public short I16 { get => which == WHICH.I16 ? this.ReadDataShort(0UL, (short)0) : default; set => this.WriteData(0UL, value, (short)0); }
+            public sbyte I8 { get => which == WHICH.I8 ? this.ReadDataSByte(0UL, (sbyte)0) : default; set => this.WriteData(0UL, value, (sbyte)0); }
+            public ulong Ui64 { get => which == WHICH.Ui64 ? this.ReadDataULong(0UL, 0UL) : default; set => this.WriteData(0UL, value, 0UL); }
+            public uint Ui32 { get => which == WHICH.Ui32 ? this.ReadDataUInt(0UL, 0U) : default; set => this.WriteData(0UL, value, 0U); }
+            public ushort Ui16 { get => which == WHICH.Ui16 ? this.ReadDataUShort(0UL, (ushort)0) : default; set => this.WriteData(0UL, value, (ushort)0); }
+            public byte Ui8 { get => which == WHICH.Ui8 ? this.ReadDataByte(0UL, (byte)0) : default; set => this.WriteData(0UL, value, (byte)0); }
+            public bool B { get => which == WHICH.B ? this.ReadDataBool(0UL, false) : default; set => this.WriteData(0UL, value, false); }
+            public string T { get => which == WHICH.T ? this.ReadText(0, null) : default; set => this.WriteText(0, value, null); }
+            public ListOfPrimitivesSerializer<byte> D { get => which == WHICH.D ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default; set => Link(0, value); }
+            public DynamicSerializerState P { get => which == WHICH.P ? BuildPointer<DynamicSerializerState>(0) : default; set => Link(0, value); }
+            public BareProxy Cap { get => which == WHICH.Cap ? ReadCap<BareProxy>(0) : default; set => LinkObject(0, value); }
+            public ListOfPrimitivesSerializer<double> Lf64 { get => which == WHICH.Lf64 ? BuildPointer<ListOfPrimitivesSerializer<double>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<float> Lf32 { get => which == WHICH.Lf32 ? BuildPointer<ListOfPrimitivesSerializer<float>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<long> Li64 { get => which == WHICH.Li64 ? BuildPointer<ListOfPrimitivesSerializer<long>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<int> Li32 { get => which == WHICH.Li32 ? BuildPointer<ListOfPrimitivesSerializer<int>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<short> Li16 { get => which == WHICH.Li16 ? BuildPointer<ListOfPrimitivesSerializer<short>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<sbyte> Li8 { get => which == WHICH.Li8 ? BuildPointer<ListOfPrimitivesSerializer<sbyte>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<ulong> Lui64 { get => which == WHICH.Lui64 ? BuildPointer<ListOfPrimitivesSerializer<ulong>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<uint> Lui32 { get => which == WHICH.Lui32 ? BuildPointer<ListOfPrimitivesSerializer<uint>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<ushort> Lui16 { get => which == WHICH.Lui16 ? BuildPointer<ListOfPrimitivesSerializer<ushort>>(0) : default; set => Link(0, value); }
+            public ListOfPrimitivesSerializer<byte> Lui8 { get => which == WHICH.Lui8 ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default; set => Link(0, value); }
+            public ListOfBitsSerializer Lb { get => which == WHICH.Lb ? BuildPointer<ListOfBitsSerializer>(0) : default; set => Link(0, value); }
+            public ListOfTextSerializer Lt { get => which == WHICH.Lt ? BuildPointer<ListOfTextSerializer>(0) : default; set => Link(0, value); }
+            public ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>> Ld { get => which == WHICH.Ld ? BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>>>(0) : default; set => Link(0, value); }
+            public ListOfCapsSerializer<BareProxy> Lcap { get => which == WHICH.Lcap ? BuildPointer<ListOfCapsSerializer<BareProxy>>(0) : default; set => Link(0, value); }
         }
     }
 
@@ -1276,17 +1086,8 @@ namespace Mas.Schema.Common
         {
         }
 
-        public TF Fst
-        {
-            get;
-            set;
-        }
-
-        public TS Snd
-        {
-            get;
-            set;
-        }
+        public TF Fst { get; set; }
+        public TS Snd { get; set; }
 
         public struct READER
         {
@@ -1310,17 +1111,8 @@ namespace Mas.Schema.Common
                 this.SetStruct(0, 2);
             }
 
-            public DynamicSerializerState Fst
-            {
-                get => BuildPointer<DynamicSerializerState>(0);
-                set => Link(0, value);
-            }
-
-            public DynamicSerializerState Snd
-            {
-                get => BuildPointer<DynamicSerializerState>(1);
-                set => Link(1, value);
-            }
+            public DynamicSerializerState Fst { get => BuildPointer<DynamicSerializerState>(0); set => Link(0, value); }
+            public DynamicSerializerState Snd { get => BuildPointer<DynamicSerializerState>(1); set => Link(1, value); }
         }
     }
 }
