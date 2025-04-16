@@ -50,7 +50,8 @@ interface Channel(V) extends(Identifiable, Persistent) {
   struct Msg {
     union {
       value @0 :V;
-      done  @1 :Void;
+      done  @1 :Void;   # done message, no more data will be sent (indicate upstream is done - but semantics up to user)
+      noMsg @2 :Void;   # no message available, if readIfMsg is used
     }
   }
 
@@ -75,12 +76,24 @@ interface Channel(V) extends(Identifiable, Persistent) {
 
   interface Reader $Cxx.name("ChanReader") {
     read          @0 () -> Msg;
+    # read blocking until message is available
+
+    readIfMsg     @2 () -> Msg;
+    # read non blocking if there is a message available
+
     close         @1 ();
+    # close this reading end of the channel
   }
 
   interface Writer $Cxx.name("ChanWriter") {
-    write @0 Msg;
-    close @1 ();
+    write           @0 Msg;
+    # write blocking until message is written
+
+    writeIfSpace    @2 Msg -> (success :Bool);
+    # write non blocking if there is space in the buffer
+
+    close           @1 ();
+    # close this writing end of the channel
   }
 
   setBufferSize @0 (size :UInt64 = 1);
