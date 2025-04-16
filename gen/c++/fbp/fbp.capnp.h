@@ -9,7 +9,9 @@
 #include <capnp/capability.h>
 #endif  // !CAPNP_LITE
 
-#if CAPNP_VERSION != 10000
+#ifndef CAPNP_VERSION
+#error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
+#elif CAPNP_VERSION != 1000002
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -4351,15 +4353,19 @@ inline void Channel<V>::Msg::Builder::setNoMsg( ::capnp::Void value) {
 }
 
 // Channel<V>::Msg
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::Msg::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::Msg::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::Msg::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::Msg::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::Msg::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4546,15 +4552,19 @@ inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Cha
 }
 
 // Channel<V>::StartupInfo
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::StartupInfo::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::StartupInfo::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::StartupInfo::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::StartupInfo::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::StartupInfo::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4602,15 +4612,19 @@ inline typename  ::mas::schema::fbp::Channel<V>::ChanReader::Client& Channel<V>:
 
 #endif  // !CAPNP_LITE
 // Channel<V>::ChanReader::ReadParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::ReadParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::ReadParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanReader::ReadParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanReader::ReadParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanReader::ReadParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4627,15 +4641,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ChanReader::ReadParams::_capnpPri
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ChanReader::CloseParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::CloseParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::CloseParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanReader::CloseParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanReader::CloseParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanReader::CloseParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4652,15 +4670,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ChanReader::CloseParams::_capnpPr
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ChanReader::CloseResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::CloseResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::CloseResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanReader::CloseResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanReader::CloseResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanReader::CloseResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4677,15 +4699,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ChanReader::CloseResults::_capnpP
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ChanReader::ReadIfMsgParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::ReadIfMsgParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanReader::ReadIfMsgParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanReader::ReadIfMsgParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanReader::ReadIfMsgParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanReader::ReadIfMsgParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4706,7 +4732,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadParams, typename  ::mas::schema::fbp::Channel<V>::Msg>)
 Channel<V>::ChanReader::Client::readRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadParams, typename  ::mas::schema::fbp::Channel<V>::Msg>(
-      0x8bc69192f3bc97ccull, 0, sizeHint);
+      0x8bc69192f3bc97ccull, 0, sizeHint, {false});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::read(ReadContext) {
@@ -4718,7 +4744,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseResults>)
 Channel<V>::ChanReader::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseResults>(
-      0x8bc69192f3bc97ccull, 1, sizeHint);
+      0x8bc69192f3bc97ccull, 1, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::close(CloseContext) {
@@ -4730,7 +4756,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadIfMsgParams, typename  ::mas::schema::fbp::Channel<V>::Msg>)
 Channel<V>::ChanReader::Client::readIfMsgRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadIfMsgParams, typename  ::mas::schema::fbp::Channel<V>::Msg>(
-      0x8bc69192f3bc97ccull, 2, sizeHint);
+      0x8bc69192f3bc97ccull, 2, sizeHint, {false});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::readIfMsg(ReadIfMsgContext) {
@@ -4758,18 +4784,21 @@ template <typename V>
       return {
         read(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadParams, typename  ::mas::schema::fbp::Channel<V>::Msg>(context)),
+        false,
         false
       };
     case 1:
       return {
         close(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanReader::CloseResults>(context)),
+        false,
         false
       };
     case 2:
       return {
         readIfMsg(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadIfMsgParams, typename  ::mas::schema::fbp::Channel<V>::Msg>(context)),
+        false,
         false
       };
     default:
@@ -4783,10 +4812,12 @@ template <typename V>
 
 // Channel<V>::ChanReader
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanReader::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanReader::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanReader::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4843,15 +4874,19 @@ inline typename  ::mas::schema::fbp::Channel<V>::ChanWriter::Client& Channel<V>:
 
 #endif  // !CAPNP_LITE
 // Channel<V>::ChanWriter::WriteResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::WriteResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::WriteResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanWriter::WriteResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanWriter::WriteResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanWriter::WriteResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4868,15 +4903,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ChanWriter::WriteResults::_capnpP
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ChanWriter::CloseParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::CloseParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::CloseParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanWriter::CloseParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanWriter::CloseParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanWriter::CloseParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4893,15 +4932,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ChanWriter::CloseParams::_capnpPr
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ChanWriter::CloseResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::CloseResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::CloseResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanWriter::CloseResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanWriter::CloseResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanWriter::CloseResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4935,15 +4978,19 @@ inline void Channel<V>::ChanWriter::WriteIfSpaceResults::Builder::setSuccess(boo
 }
 
 // Channel<V>::ChanWriter::WriteIfSpaceResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::WriteIfSpaceResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ChanWriter::WriteIfSpaceResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanWriter::WriteIfSpaceResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanWriter::WriteIfSpaceResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanWriter::WriteIfSpaceResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -4964,7 +5011,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteResults>)
 Channel<V>::ChanWriter::Client::writeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteResults>(
-      0xf7fec613b4a8c79full, 0, sizeHint);
+      0xf7fec613b4a8c79full, 0, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::write(WriteContext) {
@@ -4976,7 +5023,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseResults>)
 Channel<V>::ChanWriter::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseResults>(
-      0xf7fec613b4a8c79full, 1, sizeHint);
+      0xf7fec613b4a8c79full, 1, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::close(CloseContext) {
@@ -4988,7 +5035,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteIfSpaceResults>)
 Channel<V>::ChanWriter::Client::writeIfSpaceRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteIfSpaceResults>(
-      0xf7fec613b4a8c79full, 2, sizeHint);
+      0xf7fec613b4a8c79full, 2, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::writeIfSpace(WriteIfSpaceContext) {
@@ -5016,18 +5063,21 @@ template <typename V>
       return {
         write(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteResults>(context)),
+        false,
         false
       };
     case 1:
       return {
         close(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseParams, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::CloseResults>(context)),
+        false,
         false
       };
     case 2:
       return {
         writeIfSpace(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteIfSpaceResults>(context)),
+        false,
         false
       };
     default:
@@ -5041,10 +5091,12 @@ template <typename V>
 
 // Channel<V>::ChanWriter
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ChanWriter::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ChanWriter::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ChanWriter::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5087,15 +5139,19 @@ inline void Channel<V>::SetBufferSizeParams::Builder::setSize( ::uint64_t value)
 }
 
 // Channel<V>::SetBufferSizeParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::SetBufferSizeParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::SetBufferSizeParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::SetBufferSizeParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::SetBufferSizeParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::SetBufferSizeParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5112,15 +5168,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::SetBufferSizeParams::_capnpPrivat
 #endif  // !CAPNP_LITE
 
 // Channel<V>::SetBufferSizeResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::SetBufferSizeResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::SetBufferSizeResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::SetBufferSizeResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::SetBufferSizeResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::SetBufferSizeResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5137,15 +5197,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::SetBufferSizeResults::_capnpPriva
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ReaderParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ReaderParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ReaderParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ReaderParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ReaderParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ReaderParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5210,15 +5274,19 @@ inline ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::ChanReader> Cha
 #endif  // !CAPNP_LITE
 
 // Channel<V>::ReaderResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::ReaderResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::ReaderResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::ReaderResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::ReaderResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::ReaderResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5239,15 +5307,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::ReaderResults::_capnpPrivate::spe
 #endif  // !CAPNP_LITE
 
 // Channel<V>::WriterParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::WriterParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::WriterParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::WriterParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::WriterParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::WriterParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5312,15 +5384,19 @@ inline ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::ChanWriter> Cha
 #endif  // !CAPNP_LITE
 
 // Channel<V>::WriterResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::WriterResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::WriterResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::WriterResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::WriterResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::WriterResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5341,15 +5417,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::WriterResults::_capnpPrivate::spe
 #endif  // !CAPNP_LITE
 
 // Channel<V>::EndpointsParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::EndpointsParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::EndpointsParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::EndpointsParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::EndpointsParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::EndpointsParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5462,15 +5542,19 @@ inline ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::ChanWriter> Cha
 #endif  // !CAPNP_LITE
 
 // Channel<V>::EndpointsResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::EndpointsResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::EndpointsResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::EndpointsResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::EndpointsResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::EndpointsResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5509,15 +5593,19 @@ inline void Channel<V>::SetAutoCloseSemanticsParams::Builder::setCs(typename  ::
 }
 
 // Channel<V>::SetAutoCloseSemanticsParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::SetAutoCloseSemanticsParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::SetAutoCloseSemanticsParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::SetAutoCloseSemanticsParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::SetAutoCloseSemanticsParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::SetAutoCloseSemanticsParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5534,15 +5622,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::SetAutoCloseSemanticsParams::_cap
 #endif  // !CAPNP_LITE
 
 // Channel<V>::SetAutoCloseSemanticsResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::SetAutoCloseSemanticsResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::SetAutoCloseSemanticsResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::SetAutoCloseSemanticsResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::SetAutoCloseSemanticsResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::SetAutoCloseSemanticsResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5576,15 +5668,19 @@ inline void Channel<V>::CloseParams::Builder::setWaitForEmptyBuffer(bool value) 
 }
 
 // Channel<V>::CloseParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::CloseParams::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::CloseParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::CloseParams::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::CloseParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::CloseParams::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5601,15 +5697,19 @@ const ::capnp::_::RawBrandedSchema Channel<V>::CloseParams::_capnpPrivate::speci
 #endif  // !CAPNP_LITE
 
 // Channel<V>::CloseResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr uint16_t Channel<V>::CloseResults::_capnpPrivate::dataWordSize;
 template <typename V>
 constexpr uint16_t Channel<V>::CloseResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::CloseResults::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::CloseResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::CloseResults::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
@@ -5630,7 +5730,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeParams, typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeResults>)
 Channel<V>::Client::setBufferSizeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeParams, typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeResults>(
-      0x9c62c32b2ff2b1e8ull, 0, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 0, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::setBufferSize(SetBufferSizeContext) {
@@ -5642,7 +5742,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::ReaderParams, typename  ::mas::schema::fbp::Channel<V>::ReaderResults>)
 Channel<V>::Client::readerRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::ReaderParams, typename  ::mas::schema::fbp::Channel<V>::ReaderResults>(
-      0x9c62c32b2ff2b1e8ull, 1, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 1, sizeHint, {false});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::reader(ReaderContext) {
@@ -5654,7 +5754,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::WriterParams, typename  ::mas::schema::fbp::Channel<V>::WriterResults>)
 Channel<V>::Client::writerRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::WriterParams, typename  ::mas::schema::fbp::Channel<V>::WriterResults>(
-      0x9c62c32b2ff2b1e8ull, 2, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 2, sizeHint, {false});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::writer(WriterContext) {
@@ -5666,7 +5766,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::EndpointsParams, typename  ::mas::schema::fbp::Channel<V>::EndpointsResults>)
 Channel<V>::Client::endpointsRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::EndpointsParams, typename  ::mas::schema::fbp::Channel<V>::EndpointsResults>(
-      0x9c62c32b2ff2b1e8ull, 3, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 3, sizeHint, {false});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::endpoints(EndpointsContext) {
@@ -5678,7 +5778,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsParams, typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsResults>)
 Channel<V>::Client::setAutoCloseSemanticsRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsParams, typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsResults>(
-      0x9c62c32b2ff2b1e8ull, 4, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 4, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::setAutoCloseSemantics(SetAutoCloseSemanticsContext) {
@@ -5690,7 +5790,7 @@ template <typename V>
 CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::CloseParams, typename  ::mas::schema::fbp::Channel<V>::CloseResults>)
 Channel<V>::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
   return newCall<typename  ::mas::schema::fbp::Channel<V>::CloseParams, typename  ::mas::schema::fbp::Channel<V>::CloseResults>(
-      0x9c62c32b2ff2b1e8ull, 5, sizeHint);
+      0x9c62c32b2ff2b1e8ull, 5, sizeHint, {true});
 }
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::close(CloseContext) {
@@ -5722,36 +5822,42 @@ template <typename V>
       return {
         setBufferSize(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeParams, typename  ::mas::schema::fbp::Channel<V>::SetBufferSizeResults>(context)),
+        false,
         false
       };
     case 1:
       return {
         reader(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ReaderParams, typename  ::mas::schema::fbp::Channel<V>::ReaderResults>(context)),
+        false,
         false
       };
     case 2:
       return {
         writer(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::WriterParams, typename  ::mas::schema::fbp::Channel<V>::WriterResults>(context)),
+        false,
         false
       };
     case 3:
       return {
         endpoints(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::EndpointsParams, typename  ::mas::schema::fbp::Channel<V>::EndpointsResults>(context)),
+        false,
         false
       };
     case 4:
       return {
         setAutoCloseSemantics(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsParams, typename  ::mas::schema::fbp::Channel<V>::SetAutoCloseSemanticsResults>(context)),
+        false,
         false
       };
     case 5:
       return {
         close(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::CloseParams, typename  ::mas::schema::fbp::Channel<V>::CloseResults>(context)),
+        false,
         false
       };
     default:
@@ -5765,10 +5871,12 @@ template <typename V>
 
 // Channel<V>
 #if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 constexpr ::capnp::Kind Channel<V>::_capnpPrivate::kind;
 template <typename V>
 constexpr ::capnp::_::RawSchema const* Channel<V>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Scope Channel<V>::_capnpPrivate::brandScopes[] = {
   { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
