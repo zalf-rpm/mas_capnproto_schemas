@@ -39,7 +39,7 @@ interface Admin extends(Identifiable) {
 
 
 interface Registry extends(Identifiable) {
-  # public registry interface for capabilites implementing at least the identifiable interface
+  # public registry interface for capabilities implementing at least the identifiable interface
   # the registry might make its entries persistent by wrapping the Identifiables into a persistent wrapper
 
   supportedCategories @0 () -> (cats :List(IdInformation));
