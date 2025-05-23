@@ -9,8 +9,7 @@ $Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/fbp"
 
 using Persistent = import "persistence.capnp".Persistent;
 using SturdyRef = import "persistence.capnp".SturdyRef;
-using Identifiable = import "common.capnp".Identifiable;
-using Value = import "common.capnp".Value;
+using Common = import "common.capnp";
 
 struct IP {
   # an FBP information packet
@@ -18,7 +17,7 @@ struct IP {
   struct KV {
     key 	@0 :Text;
     desc 	@1 :Text; # optional human readable info on what value is
-    value @2 :AnyPointer;  # would often be a common.Value
+    value   @2 :AnyPointer;  # would often be a Common.Value
   }
   attributes @0 :List(KV);
   # key value pair attributes attached to IP additional to main content
@@ -36,10 +35,10 @@ struct IP {
 
 struct IIP {
   content @0 :AnyPointer;
-  # might often be a common.Value or common.StructuredText
+  # might often be a Common.Value or common.StructuredText
 }
 
-interface Channel(V) extends(Identifiable, Persistent) {
+interface Channel(V) extends(Common.Identifiable, Persistent) {
   # a potentially buffered channel to transport values of type V
   
   enum CloseSemantics {
@@ -116,17 +115,6 @@ interface Channel(V) extends(Identifiable, Persistent) {
   # wait for empty buffer or kill channel right away
 }
 
-struct NewPortInfo {
-  # data for a component which port has been connected
-  name          @0 :Text;
-  union {
-    inPortReaderCap     @1 :Channel(IP).Reader;
-    inPortReaderSR      @2 :Text;
-    outPortWriterCap    @3 :Channel(IP).Writer;
-    outPortWriterSR     @4 :Text;
-  }
-}
-
 struct PortInfos {
   # information for component to connect to in/out ports
 
@@ -145,13 +133,63 @@ struct PortInfos {
   # writer sturdy refs for the OUT ports
 }
 
-interface Component extends(Identifiable) {
-  # interface to manage remote FBP components
+struct Component {
+    interface Runnable {
+      # interface to run remote FBP component
 
-  start @0 (portInfosReaderSr :Text) -> (success :Bool);
-  # start component with a sturdy ref to a reader of PortInfos
-  # the component will use the port infos to connect to the channels
+      start @0 (portInfosReaderSr :Text) -> (success :Bool);
+      # start component with a sturdy ref to a reader of PortInfos
+      # the component will use the port infos to connect to the channels
 
-  stop  @1 () -> (success :Bool);
-  # stop the component
+      stop  @1 () -> (success :Bool);
+      # stop the component
+    }
+
+    enum ComponentType {
+        standard    @0; # standard FBP component
+        iip         @1; # initial information packet
+        subflow     @2; # represents a subflow
+    }
+
+    struct Port {
+        enum PortType {
+            standard @0; # standard port
+        }
+
+        enum ContentType {
+            structuredText @0;
+        }
+
+        name        @0 :Text; # port name
+
+        contentType @1 :Text;
+        # type of content, e.g. common.capnp:StructuredText or geo.capnp:LatLngCoord or Text
+
+        type        @2 :PortType = standard; # port type
+    }
+
+    info        @0 :Common.IdInformation; # id, name and description of this FBP component
+    type        @1 :ComponentType; # the type of FBP component
+    inPorts     @2 :List(Port); # the components allowed input ports
+    outPorts    @3 :List(Port); # the components allowed input ports
+
+    run         @4 :Runnable; # if non null, interface to runtime instance of this component
+}
+
+interface ComponentService extends(Common.Identifiable) {
+    # serving FBP components (meta)data and possibly capability to run a component somehow/somewhere
+
+    struct Entry {
+        categoryId  @0 :Text;
+        component   @1 :Component;
+    }
+
+    categories  @2 () -> (categories :List(Common.IdInformation));
+    # the categories the service offers
+
+    list        @0 () -> (entries :List(Entry));
+    # list all available components
+
+    component   @1 (id :Text) -> (comp :Component);
+    # get a component by it's id
 }
