@@ -29,6 +29,7 @@ struct StructuredText {
     json            @1;
     xml             @2;
     toml            @3;
+    sturdyRef       @4;
   }
   type @5 :Type = unstructured;
 
