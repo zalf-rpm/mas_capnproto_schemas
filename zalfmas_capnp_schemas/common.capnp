@@ -24,6 +24,14 @@ struct StructuredText {
   value @0 :Text;
   # text stream
 
+  enum Type {
+    unstructured    @0;
+    json            @1;
+    xml             @2;
+    toml            @3;
+  }
+  type @5 :Type = unstructured;
+
   structure :union {
     # structural type
     none    @1 :Void; # just normal text
@@ -31,6 +39,7 @@ struct StructuredText {
     xml     @3 :Void; # it's XML
     toml    @4 :Void; # it's TOML
   }
+  # deprecated, don't use anymore
 }
 
 struct Value {
