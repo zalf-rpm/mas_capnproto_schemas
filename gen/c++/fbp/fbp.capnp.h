@@ -3782,7 +3782,8 @@ private:
 
 #if !CAPNP_LITE
 class Component::Runnable::Client
-    : public virtual ::capnp::Capability::Client {
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
 public:
   typedef Runnable Calls;
   typedef Runnable Reads;
@@ -3809,7 +3810,8 @@ protected:
 };
 
 class Component::Runnable::Server
-    : public virtual ::capnp::Capability::Server {
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
 public:
   typedef Runnable Serves;
 

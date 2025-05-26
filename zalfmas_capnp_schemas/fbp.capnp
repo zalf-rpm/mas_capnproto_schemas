@@ -134,7 +134,7 @@ struct PortInfos {
 }
 
 struct Component {
-    interface Runnable {
+    interface Runnable extends(Common.Identifiable) {
       # interface to run remote FBP component
 
       start @0 (portInfosReaderSr :Text) -> (success :Bool);

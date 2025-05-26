@@ -1913,7 +1913,7 @@ const ::capnp::_::RawSchema s_d717ff7d6815a6b0 = {
   4, 5, i_d717ff7d6815a6b0, nullptr, nullptr, { &s_d717ff7d6815a6b0, nullptr, nullptr, 0, 0, nullptr }, true
 };
 #endif  // !CAPNP_LITE
-static const ::capnp::_::AlignedData<39> b_cb17668f2d39c70f = {
+static const ::capnp::_::AlignedData<41> b_cb17668f2d39c70f = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
      15, 199,  57,  45, 143, 102,  23, 203,
      20,   0,   0,   0,   3,   0,   0,   0,
@@ -1924,7 +1924,7 @@ static const ::capnp::_::AlignedData<39> b_cb17668f2d39c70f = {
      33,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      29,   0,   0,   0, 135,   0,   0,   0,
-    109,   0,   0,   0,   7,   0,   0,   0,
+    109,   0,   0,   0,  23,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
     102,  98, 112,  46,  99,  97, 112, 110,
     112,  58,  67, 111, 109, 112, 111, 110,
@@ -1952,11 +1952,14 @@ static const ::capnp::_::AlignedData<39> b_cb17668f2d39c70f = {
       0,   0,   0,   0,   0,   0,   1,   0,
     115, 116, 111, 112,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   1,   0,
-      0,   0,   0,   0,   1,   0,   1,   0, }
+      4,   0,   0,   0,   1,   0,   1,   0,
+    213,  72, 156,  89, 203, 209, 175, 178,
+      0,   0,   0,   0,   0,   0,   0,   0, }
 };
 ::capnp::word const* const bp_cb17668f2d39c70f = b_cb17668f2d39c70f.words;
 #if !CAPNP_LITE
 static const ::capnp::_::RawSchema* const d_cb17668f2d39c70f[] = {
+  &s_b2afd1cb599c48d5,
   &s_bb18da359652a59c,
   &s_cbf00f9ba87ee17e,
   &s_deb75f08b2540532,
@@ -1964,8 +1967,8 @@ static const ::capnp::_::RawSchema* const d_cb17668f2d39c70f[] = {
 };
 static const uint16_t m_cb17668f2d39c70f[] = {0, 1};
 const ::capnp::_::RawSchema s_cb17668f2d39c70f = {
-  0xcb17668f2d39c70f, b_cb17668f2d39c70f.words, 39, d_cb17668f2d39c70f, m_cb17668f2d39c70f,
-  4, 2, nullptr, nullptr, nullptr, { &s_cb17668f2d39c70f, nullptr, nullptr, 0, 0, nullptr }, false
+  0xcb17668f2d39c70f, b_cb17668f2d39c70f.words, 41, d_cb17668f2d39c70f, m_cb17668f2d39c70f,
+  5, 2, nullptr, nullptr, nullptr, { &s_cb17668f2d39c70f, nullptr, nullptr, 0, 0, nullptr }, false
 };
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<36> b_deb75f08b2540532 = {
@@ -2829,6 +2832,8 @@ Component::Runnable::Client::stopRequest(::kj::Maybe< ::capnp::MessageSize> size
   switch (interfaceId) {
     case 0xcb17668f2d39c70full:
       return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("fbp.capnp:Component.Runnable", interfaceId);
   }

@@ -2322,7 +2322,7 @@ namespace Mas.Schema.Fbp
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcb17668f2d39c70fUL), Proxy(typeof(Runnable_Proxy)), Skeleton(typeof(Runnable_Skeleton))]
-        public interface IRunnable : IDisposable
+        public interface IRunnable : Mas.Schema.Common.IIdentifiable
         {
             Task<bool> Start(string portInfosReaderSr, CancellationToken cancellationToken_ = default);
             Task<bool> Stop(CancellationToken cancellationToken_ = default);
@@ -2354,6 +2354,19 @@ namespace Mas.Schema.Fbp
                 {
                     var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Component.Runnable.Result_Stop>(d_);
                     return (r_.Success);
+                }
+            }
+
+            public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+            {
+                var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+                var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
+                {};
+                arg_?.serialize(in_);
+                using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                    return r_;
                 }
             }
         }
