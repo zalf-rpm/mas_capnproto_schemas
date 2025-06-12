@@ -233,6 +233,7 @@ struct Admin::RegistryResults {
   };
 };
 
+template <typename T = ::capnp::AnyPointer>
 struct Registry {
   Registry() = delete;
 
@@ -251,27 +252,40 @@ struct Registry {
   #if !CAPNP_LITE
   struct _capnpPrivate {
     CAPNP_DECLARE_INTERFACE_HEADER(ca7b4bd1600633b8)
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
   };
   #endif  // !CAPNP_LITE
 };
 
-struct Registry::Entry {
+template <typename T>
+struct Registry<T>::Entry {
   Entry() = delete;
 
   class Reader;
   class Builder;
   class Pipeline;
+  enum Which: uint16_t {
+    REF,
+    VALUE,
+  };
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(c17987510cf7ac13, 0, 3)
+    CAPNP_DECLARE_STRUCT_HEADER(c17987510cf7ac13, 1, 3)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registry::SupportedCategoriesParams {
+template <typename T>
+struct Registry<T>::SupportedCategoriesParams {
   SupportedCategoriesParams() = delete;
 
   class Reader;
@@ -281,12 +295,16 @@ struct Registry::SupportedCategoriesParams {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9c49e6e65e34c29b, 0, 0)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registry::SupportedCategoriesResults {
+template <typename T>
+struct Registry<T>::SupportedCategoriesResults {
   SupportedCategoriesResults() = delete;
 
   class Reader;
@@ -296,12 +314,16 @@ struct Registry::SupportedCategoriesResults {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(b2bf60b5817330b0, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registry::CategoryInfoParams {
+template <typename T>
+struct Registry<T>::CategoryInfoParams {
   CategoryInfoParams() = delete;
 
   class Reader;
@@ -311,12 +333,16 @@ struct Registry::CategoryInfoParams {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(891283e1b248bc9d, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registry::EntriesParams {
+template <typename T>
+struct Registry<T>::EntriesParams {
   EntriesParams() = delete;
 
   class Reader;
@@ -326,12 +352,16 @@ struct Registry::EntriesParams {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9ffc53716151c5fa, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Registry::EntriesResults {
+template <typename T>
+struct Registry<T>::EntriesResults {
   EntriesResults() = delete;
 
   class Reader;
@@ -341,7 +371,11 @@ struct Registry::EntriesResults {
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(e4eaf56eb486064d, 0, 1)
     #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
@@ -1312,7 +1346,7 @@ public:
 
   inline bool hasRegistry() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::registry::Registry::Client getRegistry() const;
+  inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client getRegistry() const;
 #endif  // !CAPNP_LITE
 
 private:
@@ -1345,11 +1379,11 @@ public:
 
   inline bool hasRegistry();
 #if !CAPNP_LITE
-  inline  ::mas::schema::registry::Registry::Client getRegistry();
-  inline void setRegistry( ::mas::schema::registry::Registry::Client&& value);
-  inline void setRegistry( ::mas::schema::registry::Registry::Client& value);
-  inline void adoptRegistry(::capnp::Orphan< ::mas::schema::registry::Registry>&& value);
-  inline ::capnp::Orphan< ::mas::schema::registry::Registry> disownRegistry();
+  inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client getRegistry();
+  inline void setRegistry( ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client&& value);
+  inline void setRegistry( ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client& value);
+  inline void adoptRegistry(::capnp::Orphan< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>&& value);
+  inline ::capnp::Orphan< ::mas::schema::registry::Registry< ::capnp::AnyPointer>> disownRegistry();
 #endif  // !CAPNP_LITE
 
 private:
@@ -1370,7 +1404,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::registry::Registry::Client getRegistry();
+  inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client getRegistry();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -1380,7 +1414,8 @@ private:
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-class Registry::Client
+template <typename T>
+class Registry<T>::Client
     : public virtual ::capnp::Capability::Client,
       public virtual  ::mas::schema::common::Identifiable::Client {
 public:
@@ -1399,18 +1434,24 @@ public:
   Client& operator=(Client& other);
   Client& operator=(Client&& other);
 
-  ::capnp::Request< ::mas::schema::registry::Registry::SupportedCategoriesParams,  ::mas::schema::registry::Registry::SupportedCategoriesResults> supportedCategoriesRequest(
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::Client asGeneric() {
+    return castAs<Registry<T2>>();
+  }
+
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams, typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults>) supportedCategoriesRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
-  ::capnp::Request< ::mas::schema::registry::Registry::CategoryInfoParams,  ::mas::schema::common::IdInformation> categoryInfoRequest(
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::CategoryInfoParams,  ::mas::schema::common::IdInformation>) categoryInfoRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
-  ::capnp::Request< ::mas::schema::registry::Registry::EntriesParams,  ::mas::schema::registry::Registry::EntriesResults> entriesRequest(
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::EntriesParams, typename  ::mas::schema::registry::Registry<T>::EntriesResults>) entriesRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
 };
 
-class Registry::Server
+template <typename T>
+class Registry<T>::Server
     : public virtual ::capnp::Capability::Server,
       public virtual  ::mas::schema::common::Identifiable::Server {
 public:
@@ -1422,21 +1463,21 @@ public:
       override;
 
 protected:
-  typedef  ::mas::schema::registry::Registry::SupportedCategoriesParams SupportedCategoriesParams;
-  typedef  ::mas::schema::registry::Registry::SupportedCategoriesResults SupportedCategoriesResults;
+  typedef typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams SupportedCategoriesParams;
+  typedef typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults SupportedCategoriesResults;
   typedef ::capnp::CallContext<SupportedCategoriesParams, SupportedCategoriesResults> SupportedCategoriesContext;
   virtual ::kj::Promise<void> supportedCategories(SupportedCategoriesContext context);
-  typedef  ::mas::schema::registry::Registry::CategoryInfoParams CategoryInfoParams;
+  typedef typename  ::mas::schema::registry::Registry<T>::CategoryInfoParams CategoryInfoParams;
   typedef ::capnp::CallContext<CategoryInfoParams,  ::mas::schema::common::IdInformation> CategoryInfoContext;
   virtual ::kj::Promise<void> categoryInfo(CategoryInfoContext context);
-  typedef  ::mas::schema::registry::Registry::EntriesParams EntriesParams;
-  typedef  ::mas::schema::registry::Registry::EntriesResults EntriesResults;
+  typedef typename  ::mas::schema::registry::Registry<T>::EntriesParams EntriesParams;
+  typedef typename  ::mas::schema::registry::Registry<T>::EntriesResults EntriesResults;
   typedef ::capnp::CallContext<EntriesParams, EntriesResults> EntriesContext;
   virtual ::kj::Promise<void> entries(EntriesContext context);
 
-  inline  ::mas::schema::registry::Registry::Client thisCap() {
+  inline typename  ::mas::schema::registry::Registry<T>::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
-        .template castAs< ::mas::schema::registry::Registry>();
+        .template castAs< ::mas::schema::registry::Registry<T>>();
   }
 
   ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
@@ -1445,7 +1486,8 @@ protected:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::Entry::Reader {
+template <typename T>
+class Registry<T>::Entry::Reader {
 public:
   typedef Entry Reads;
 
@@ -1462,9 +1504,16 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::Entry::Reader asRegistryGeneric() {
+    return typename Registry<T2>::Entry::Reader(_reader);
+  }
+
+  inline Which which() const;
   inline bool hasCategoryId() const;
   inline  ::capnp::Text::Reader getCategoryId() const;
 
+  inline bool isRef() const;
   inline bool hasRef() const;
 #if !CAPNP_LITE
   inline  ::mas::schema::common::Identifiable::Client getRef() const;
@@ -1472,6 +1521,10 @@ public:
 
   inline bool hasName() const;
   inline  ::capnp::Text::Reader getName() const;
+
+  inline bool isValue() const;
+  inline bool hasValue() const;
+  inline  ::capnp::ReaderFor<T> getValue() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1485,7 +1538,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::Entry::Builder {
+template <typename T>
+class Registry<T>::Entry::Builder {
 public:
   typedef Entry Builds;
 
@@ -1501,6 +1555,12 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::Entry::Builder asRegistryGeneric() {
+    return typename Registry<T2>::Entry::Builder(_builder);
+  }
+
+  inline Which which();
   inline bool hasCategoryId();
   inline  ::capnp::Text::Builder getCategoryId();
   inline void setCategoryId( ::capnp::Text::Reader value);
@@ -1508,6 +1568,7 @@ public:
   inline void adoptCategoryId(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownCategoryId();
 
+  inline bool isRef();
   inline bool hasRef();
 #if !CAPNP_LITE
   inline  ::mas::schema::common::Identifiable::Client getRef();
@@ -1524,6 +1585,15 @@ public:
   inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownName();
 
+  inline bool isValue();
+  inline bool hasValue();
+  inline  ::capnp::BuilderFor<T> getValue();
+  inline void setValue( ::capnp::ReaderFor<T> value);
+  inline  ::capnp::BuilderFor<T> initValue();
+  inline  ::capnp::BuilderFor<T> initValue(unsigned int size);
+  inline void adoptValue(::capnp::Orphan<T>&& value);
+  inline ::capnp::Orphan<T> disownValue();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1534,7 +1604,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::Entry::Pipeline {
+template <typename T>
+class Registry<T>::Entry::Pipeline {
 public:
   typedef Entry Pipelines;
 
@@ -1542,7 +1613,6 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::common::Identifiable::Client getRef();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -1551,7 +1621,8 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::SupportedCategoriesParams::Reader {
+template <typename T>
+class Registry<T>::SupportedCategoriesParams::Reader {
 public:
   typedef SupportedCategoriesParams Reads;
 
@@ -1568,6 +1639,11 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::SupportedCategoriesParams::Reader asRegistryGeneric() {
+    return typename Registry<T2>::SupportedCategoriesParams::Reader(_reader);
+  }
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -1580,7 +1656,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::SupportedCategoriesParams::Builder {
+template <typename T>
+class Registry<T>::SupportedCategoriesParams::Builder {
 public:
   typedef SupportedCategoriesParams Builds;
 
@@ -1596,6 +1673,11 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::SupportedCategoriesParams::Builder asRegistryGeneric() {
+    return typename Registry<T2>::SupportedCategoriesParams::Builder(_builder);
+  }
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1606,7 +1688,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::SupportedCategoriesParams::Pipeline {
+template <typename T>
+class Registry<T>::SupportedCategoriesParams::Pipeline {
 public:
   typedef SupportedCategoriesParams Pipelines;
 
@@ -1622,7 +1705,8 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::SupportedCategoriesResults::Reader {
+template <typename T>
+class Registry<T>::SupportedCategoriesResults::Reader {
 public:
   typedef SupportedCategoriesResults Reads;
 
@@ -1639,6 +1723,11 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::SupportedCategoriesResults::Reader asRegistryGeneric() {
+    return typename Registry<T2>::SupportedCategoriesResults::Reader(_reader);
+  }
+
   inline bool hasCats() const;
   inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Reader getCats() const;
 
@@ -1654,7 +1743,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::SupportedCategoriesResults::Builder {
+template <typename T>
+class Registry<T>::SupportedCategoriesResults::Builder {
 public:
   typedef SupportedCategoriesResults Builds;
 
@@ -1669,6 +1759,11 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::SupportedCategoriesResults::Builder asRegistryGeneric() {
+    return typename Registry<T2>::SupportedCategoriesResults::Builder(_builder);
+  }
 
   inline bool hasCats();
   inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Builder getCats();
@@ -1687,7 +1782,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::SupportedCategoriesResults::Pipeline {
+template <typename T>
+class Registry<T>::SupportedCategoriesResults::Pipeline {
 public:
   typedef SupportedCategoriesResults Pipelines;
 
@@ -1703,7 +1799,8 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::CategoryInfoParams::Reader {
+template <typename T>
+class Registry<T>::CategoryInfoParams::Reader {
 public:
   typedef CategoryInfoParams Reads;
 
@@ -1720,6 +1817,11 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::CategoryInfoParams::Reader asRegistryGeneric() {
+    return typename Registry<T2>::CategoryInfoParams::Reader(_reader);
+  }
+
   inline bool hasCategoryId() const;
   inline  ::capnp::Text::Reader getCategoryId() const;
 
@@ -1735,7 +1837,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::CategoryInfoParams::Builder {
+template <typename T>
+class Registry<T>::CategoryInfoParams::Builder {
 public:
   typedef CategoryInfoParams Builds;
 
@@ -1750,6 +1853,11 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::CategoryInfoParams::Builder asRegistryGeneric() {
+    return typename Registry<T2>::CategoryInfoParams::Builder(_builder);
+  }
 
   inline bool hasCategoryId();
   inline  ::capnp::Text::Builder getCategoryId();
@@ -1768,7 +1876,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::CategoryInfoParams::Pipeline {
+template <typename T>
+class Registry<T>::CategoryInfoParams::Pipeline {
 public:
   typedef CategoryInfoParams Pipelines;
 
@@ -1784,7 +1893,8 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::EntriesParams::Reader {
+template <typename T>
+class Registry<T>::EntriesParams::Reader {
 public:
   typedef EntriesParams Reads;
 
@@ -1801,6 +1911,11 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::EntriesParams::Reader asRegistryGeneric() {
+    return typename Registry<T2>::EntriesParams::Reader(_reader);
+  }
+
   inline bool hasCategoryId() const;
   inline  ::capnp::Text::Reader getCategoryId() const;
 
@@ -1816,7 +1931,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::EntriesParams::Builder {
+template <typename T>
+class Registry<T>::EntriesParams::Builder {
 public:
   typedef EntriesParams Builds;
 
@@ -1831,6 +1947,11 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::EntriesParams::Builder asRegistryGeneric() {
+    return typename Registry<T2>::EntriesParams::Builder(_builder);
+  }
 
   inline bool hasCategoryId();
   inline  ::capnp::Text::Builder getCategoryId();
@@ -1849,7 +1970,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::EntriesParams::Pipeline {
+template <typename T>
+class Registry<T>::EntriesParams::Pipeline {
 public:
   typedef EntriesParams Pipelines;
 
@@ -1865,7 +1987,8 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Registry::EntriesResults::Reader {
+template <typename T>
+class Registry<T>::EntriesResults::Reader {
 public:
   typedef EntriesResults Reads;
 
@@ -1882,8 +2005,13 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::EntriesResults::Reader asRegistryGeneric() {
+    return typename Registry<T2>::EntriesResults::Reader(_reader);
+  }
+
   inline bool hasEntries() const;
-  inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Reader getEntries() const;
+  inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Reader getEntries() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1897,7 +2025,8 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Registry::EntriesResults::Builder {
+template <typename T>
+class Registry<T>::EntriesResults::Builder {
 public:
   typedef EntriesResults Builds;
 
@@ -1913,12 +2042,17 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Registry<T2>::EntriesResults::Builder asRegistryGeneric() {
+    return typename Registry<T2>::EntriesResults::Builder(_builder);
+  }
+
   inline bool hasEntries();
-  inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Builder getEntries();
-  inline void setEntries( ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Reader value);
-  inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Builder initEntries(unsigned int size);
-  inline void adoptEntries(::capnp::Orphan< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>&& value);
-  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>> disownEntries();
+  inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Builder getEntries();
+  inline void setEntries(typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Reader value);
+  inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Builder initEntries(unsigned int size);
+  inline void adoptEntries(::capnp::Orphan< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>> disownEntries();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1930,7 +2064,8 @@ private:
 };
 
 #if !CAPNP_LITE
-class Registry::EntriesResults::Pipeline {
+template <typename T>
+class Registry<T>::EntriesResults::Pipeline {
 public:
   typedef EntriesResults Pipelines;
 
@@ -2901,302 +3036,760 @@ inline bool Admin::RegistryResults::Builder::hasRegistry() {
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::registry::Registry::Client Admin::RegistryResults::Reader::getRegistry() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::get(_reader.getPointerField(
+inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client Admin::RegistryResults::Reader::getRegistry() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::registry::Registry::Client Admin::RegistryResults::Builder::getRegistry() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::get(_builder.getPointerField(
+inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client Admin::RegistryResults::Builder::getRegistry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::registry::Registry::Client Admin::RegistryResults::Pipeline::getRegistry() {
-  return  ::mas::schema::registry::Registry::Client(_typeless.getPointerField(0).asCap());
+inline  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client Admin::RegistryResults::Pipeline::getRegistry() {
+  return  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client(_typeless.getPointerField(0).asCap());
 }
-inline void Admin::RegistryResults::Builder::setRegistry( ::mas::schema::registry::Registry::Client&& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::set(_builder.getPointerField(
+inline void Admin::RegistryResults::Builder::setRegistry( ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Admin::RegistryResults::Builder::setRegistry( ::mas::schema::registry::Registry::Client& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::set(_builder.getPointerField(
+inline void Admin::RegistryResults::Builder::setRegistry( ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
 }
 inline void Admin::RegistryResults::Builder::adoptRegistry(
-    ::capnp::Orphan< ::mas::schema::registry::Registry>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::registry::Registry> Admin::RegistryResults::Builder::disownRegistry() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::registry::Registry< ::capnp::AnyPointer>> Admin::RegistryResults::Builder::disownRegistry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::registry::Registry< ::capnp::AnyPointer>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-inline Registry::Client::Client(decltype(nullptr))
+template <typename T>
+inline Registry<T>::Client::Client(decltype(nullptr))
     : ::capnp::Capability::Client(nullptr) {}
-inline Registry::Client::Client(
+template <typename T>
+inline Registry<T>::Client::Client(
     ::kj::Own< ::capnp::ClientHook>&& hook)
     : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename T>
 template <typename _t, typename>
-inline Registry::Client::Client(::kj::Own<_t>&& server)
+inline Registry<T>::Client::Client(::kj::Own<_t>&& server)
     : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename T>
 template <typename _t, typename>
-inline Registry::Client::Client(::kj::Promise<_t>&& promise)
+inline Registry<T>::Client::Client(::kj::Promise<_t>&& promise)
     : ::capnp::Capability::Client(::kj::mv(promise)) {}
-inline Registry::Client::Client(::kj::Exception&& exception)
+template <typename T>
+inline Registry<T>::Client::Client(::kj::Exception&& exception)
     : ::capnp::Capability::Client(::kj::mv(exception)) {}
-inline  ::mas::schema::registry::Registry::Client& Registry::Client::operator=(Client& other) {
+template <typename T>
+inline typename  ::mas::schema::registry::Registry<T>::Client& Registry<T>::Client::operator=(Client& other) {
   ::capnp::Capability::Client::operator=(other);
   return *this;
 }
-inline  ::mas::schema::registry::Registry::Client& Registry::Client::operator=(Client&& other) {
+template <typename T>
+inline typename  ::mas::schema::registry::Registry<T>::Client& Registry<T>::Client::operator=(Client&& other) {
   ::capnp::Capability::Client::operator=(kj::mv(other));
   return *this;
 }
 
 #endif  // !CAPNP_LITE
-inline bool Registry::Entry::Reader::hasCategoryId() const {
+template <typename T>
+inline typename  ::mas::schema::registry::Registry<T>::Entry::Which Registry<T>::Entry::Reader::which() const {
+  return _reader.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+template <typename T>
+inline typename  ::mas::schema::registry::Registry<T>::Entry::Which Registry<T>::Entry::Builder::which() {
+  return _builder.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+template <typename T>
+inline bool Registry<T>::Entry::Reader::hasCategoryId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::Entry::Builder::hasCategoryId() {
+template <typename T>
+inline bool Registry<T>::Entry::Builder::hasCategoryId() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Registry::Entry::Reader::getCategoryId() const {
+template <typename T>
+inline  ::capnp::Text::Reader Registry<T>::Entry::Reader::getCategoryId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Registry::Entry::Builder::getCategoryId() {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::Entry::Builder::getCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Registry::Entry::Builder::setCategoryId( ::capnp::Text::Reader value) {
+template <typename T>
+inline void Registry<T>::Entry::Builder::setCategoryId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Registry::Entry::Builder::initCategoryId(unsigned int size) {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::Entry::Builder::initCategoryId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Registry::Entry::Builder::adoptCategoryId(
+template <typename T>
+inline void Registry<T>::Entry::Builder::adoptCategoryId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Registry::Entry::Builder::disownCategoryId() {
+template <typename T>
+inline ::capnp::Orphan< ::capnp::Text> Registry<T>::Entry::Builder::disownCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Registry::Entry::Reader::hasRef() const {
+template <typename T>
+inline bool Registry<T>::Entry::Reader::isRef() const {
+  return which() == Registry<T>::Entry::REF;
+}
+template <typename T>
+inline bool Registry<T>::Entry::Builder::isRef() {
+  return which() == Registry<T>::Entry::REF;
+}
+template <typename T>
+inline bool Registry<T>::Entry::Reader::hasRef() const {
+  if (which() != Registry<T>::Entry::REF) return false;
   return !_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::Entry::Builder::hasRef() {
+template <typename T>
+inline bool Registry<T>::Entry::Builder::hasRef() {
+  if (which() != Registry<T>::Entry::REF) return false;
   return !_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::common::Identifiable::Client Registry::Entry::Reader::getRef() const {
+template <typename T>
+inline  ::mas::schema::common::Identifiable::Client Registry<T>::Entry::Reader::getRef() const {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::REF),
+              "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Identifiable::Client Registry::Entry::Builder::getRef() {
+template <typename T>
+inline  ::mas::schema::common::Identifiable::Client Registry<T>::Entry::Builder::getRef() {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::REF),
+              "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Identifiable::Client Registry::Entry::Pipeline::getRef() {
-  return  ::mas::schema::common::Identifiable::Client(_typeless.getPointerField(1).asCap());
-}
-inline void Registry::Entry::Builder::setRef( ::mas::schema::common::Identifiable::Client&& cap) {
+template <typename T>
+inline void Registry<T>::Entry::Builder::setRef( ::mas::schema::common::Identifiable::Client&& cap) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::REF);
   ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Registry::Entry::Builder::setRef( ::mas::schema::common::Identifiable::Client& cap) {
+template <typename T>
+inline void Registry<T>::Entry::Builder::setRef( ::mas::schema::common::Identifiable::Client& cap) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::REF);
   ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), cap);
 }
-inline void Registry::Entry::Builder::adoptRef(
+template <typename T>
+inline void Registry<T>::Entry::Builder::adoptRef(
     ::capnp::Orphan< ::mas::schema::common::Identifiable>&& value) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::REF);
   ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::common::Identifiable> Registry::Entry::Builder::disownRef() {
+template <typename T>
+inline ::capnp::Orphan< ::mas::schema::common::Identifiable> Registry<T>::Entry::Builder::disownRef() {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::REF),
+              "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Identifiable>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
 
-inline bool Registry::Entry::Reader::hasName() const {
+template <typename T>
+inline bool Registry<T>::Entry::Reader::hasName() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::Entry::Builder::hasName() {
+template <typename T>
+inline bool Registry<T>::Entry::Builder::hasName() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Registry::Entry::Reader::getName() const {
+template <typename T>
+inline  ::capnp::Text::Reader Registry<T>::Entry::Reader::getName() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Registry::Entry::Builder::getName() {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::Entry::Builder::getName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void Registry::Entry::Builder::setName( ::capnp::Text::Reader value) {
+template <typename T>
+inline void Registry<T>::Entry::Builder::setName( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Registry::Entry::Builder::initName(unsigned int size) {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::Entry::Builder::initName(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
-inline void Registry::Entry::Builder::adoptName(
+template <typename T>
+inline void Registry<T>::Entry::Builder::adoptName(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Registry::Entry::Builder::disownName() {
+template <typename T>
+inline ::capnp::Orphan< ::capnp::Text> Registry<T>::Entry::Builder::disownName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
-inline bool Registry::SupportedCategoriesResults::Reader::hasCats() const {
+template <typename T>
+inline bool Registry<T>::Entry::Reader::isValue() const {
+  return which() == Registry<T>::Entry::VALUE;
+}
+template <typename T>
+inline bool Registry<T>::Entry::Builder::isValue() {
+  return which() == Registry<T>::Entry::VALUE;
+}
+template <typename T>
+inline bool Registry<T>::Entry::Reader::hasValue() const {
+  if (which() != Registry<T>::Entry::VALUE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+template <typename T>
+inline bool Registry<T>::Entry::Builder::hasValue() {
+  if (which() != Registry<T>::Entry::VALUE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+template <typename T>
+inline  ::capnp::ReaderFor<T> Registry<T>::Entry::Reader::getValue() const {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::VALUE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers<T>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Registry<T>::Entry::Builder::getValue() {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::VALUE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers<T>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+template <typename T>
+inline void Registry<T>::Entry::Builder::setValue( ::capnp::ReaderFor<T> value) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::VALUE);
+  ::capnp::_::PointerHelpers<T>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Registry<T>::Entry::Builder::initValue() {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::VALUE);
+  return ::capnp::_::PointerHelpers<T>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Registry<T>::Entry::Builder::initValue(unsigned int size) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::VALUE);
+  return ::capnp::_::PointerHelpers<T>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+template <typename T>
+inline void Registry<T>::Entry::Builder::adoptValue(
+    ::capnp::Orphan<T>&& value) {
+  _builder.setDataField<Registry<T>::Entry::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, Registry<T>::Entry::VALUE);
+  ::capnp::_::PointerHelpers<T>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename T>
+inline ::capnp::Orphan<T> Registry<T>::Entry::Builder::disownValue() {
+  KJ_IREQUIRE((which() == Registry<T>::Entry::VALUE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers<T>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+// Registry<T>::Entry
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::Entry::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::Entry::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::Entry::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::Entry::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::Entry::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::Entry::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::Entry::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_c17987510cf7ac13, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+// Registry<T>::SupportedCategoriesParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::SupportedCategoriesParams::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::SupportedCategoriesParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::SupportedCategoriesParams::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::SupportedCategoriesParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::SupportedCategoriesParams::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::SupportedCategoriesParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::SupportedCategoriesParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_9c49e6e65e34c29b, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+inline bool Registry<T>::SupportedCategoriesResults::Reader::hasCats() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::SupportedCategoriesResults::Builder::hasCats() {
+template <typename T>
+inline bool Registry<T>::SupportedCategoriesResults::Builder::hasCats() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Reader Registry::SupportedCategoriesResults::Reader::getCats() const {
+template <typename T>
+inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Reader Registry<T>::SupportedCategoriesResults::Reader::getCats() const {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Builder Registry::SupportedCategoriesResults::Builder::getCats() {
+template <typename T>
+inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Builder Registry<T>::SupportedCategoriesResults::Builder::getCats() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Registry::SupportedCategoriesResults::Builder::setCats( ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Reader value) {
+template <typename T>
+inline void Registry<T>::SupportedCategoriesResults::Builder::setCats( ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Builder Registry::SupportedCategoriesResults::Builder::initCats(unsigned int size) {
+template <typename T>
+inline  ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>::Builder Registry<T>::SupportedCategoriesResults::Builder::initCats(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Registry::SupportedCategoriesResults::Builder::adoptCats(
+template <typename T>
+inline void Registry<T>::SupportedCategoriesResults::Builder::adoptCats(
     ::capnp::Orphan< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>> Registry::SupportedCategoriesResults::Builder::disownCats() {
+template <typename T>
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>> Registry<T>::SupportedCategoriesResults::Builder::disownCats() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::IdInformation,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Registry::CategoryInfoParams::Reader::hasCategoryId() const {
+// Registry<T>::SupportedCategoriesResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::SupportedCategoriesResults::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::SupportedCategoriesResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::SupportedCategoriesResults::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::SupportedCategoriesResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::SupportedCategoriesResults::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::SupportedCategoriesResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::SupportedCategoriesResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_b2bf60b5817330b0, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+inline bool Registry<T>::CategoryInfoParams::Reader::hasCategoryId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::CategoryInfoParams::Builder::hasCategoryId() {
+template <typename T>
+inline bool Registry<T>::CategoryInfoParams::Builder::hasCategoryId() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Registry::CategoryInfoParams::Reader::getCategoryId() const {
+template <typename T>
+inline  ::capnp::Text::Reader Registry<T>::CategoryInfoParams::Reader::getCategoryId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Registry::CategoryInfoParams::Builder::getCategoryId() {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::CategoryInfoParams::Builder::getCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Registry::CategoryInfoParams::Builder::setCategoryId( ::capnp::Text::Reader value) {
+template <typename T>
+inline void Registry<T>::CategoryInfoParams::Builder::setCategoryId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Registry::CategoryInfoParams::Builder::initCategoryId(unsigned int size) {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::CategoryInfoParams::Builder::initCategoryId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Registry::CategoryInfoParams::Builder::adoptCategoryId(
+template <typename T>
+inline void Registry<T>::CategoryInfoParams::Builder::adoptCategoryId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Registry::CategoryInfoParams::Builder::disownCategoryId() {
+template <typename T>
+inline ::capnp::Orphan< ::capnp::Text> Registry<T>::CategoryInfoParams::Builder::disownCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Registry::EntriesParams::Reader::hasCategoryId() const {
+// Registry<T>::CategoryInfoParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::CategoryInfoParams::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::CategoryInfoParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::CategoryInfoParams::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::CategoryInfoParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::CategoryInfoParams::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::CategoryInfoParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::CategoryInfoParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_891283e1b248bc9d, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+inline bool Registry<T>::EntriesParams::Reader::hasCategoryId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::EntriesParams::Builder::hasCategoryId() {
+template <typename T>
+inline bool Registry<T>::EntriesParams::Builder::hasCategoryId() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Registry::EntriesParams::Reader::getCategoryId() const {
+template <typename T>
+inline  ::capnp::Text::Reader Registry<T>::EntriesParams::Reader::getCategoryId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Registry::EntriesParams::Builder::getCategoryId() {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::EntriesParams::Builder::getCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Registry::EntriesParams::Builder::setCategoryId( ::capnp::Text::Reader value) {
+template <typename T>
+inline void Registry<T>::EntriesParams::Builder::setCategoryId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Registry::EntriesParams::Builder::initCategoryId(unsigned int size) {
+template <typename T>
+inline  ::capnp::Text::Builder Registry<T>::EntriesParams::Builder::initCategoryId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Registry::EntriesParams::Builder::adoptCategoryId(
+template <typename T>
+inline void Registry<T>::EntriesParams::Builder::adoptCategoryId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Registry::EntriesParams::Builder::disownCategoryId() {
+template <typename T>
+inline ::capnp::Orphan< ::capnp::Text> Registry<T>::EntriesParams::Builder::disownCategoryId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Registry::EntriesResults::Reader::hasEntries() const {
+// Registry<T>::EntriesParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::EntriesParams::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::EntriesParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::EntriesParams::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::EntriesParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::EntriesParams::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::EntriesParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::EntriesParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_9ffc53716151c5fa, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+inline bool Registry<T>::EntriesResults::Reader::hasEntries() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Registry::EntriesResults::Builder::hasEntries() {
+template <typename T>
+inline bool Registry<T>::EntriesResults::Builder::hasEntries() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Reader Registry::EntriesResults::Reader::getEntries() const {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+template <typename T>
+inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Reader Registry<T>::EntriesResults::Reader::getEntries() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Builder Registry::EntriesResults::Builder::getEntries() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+template <typename T>
+inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Builder Registry<T>::EntriesResults::Builder::getEntries() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Registry::EntriesResults::Builder::setEntries( ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+template <typename T>
+inline void Registry<T>::EntriesResults::Builder::setEntries(typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>::Builder Registry::EntriesResults::Builder::initEntries(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+template <typename T>
+inline typename  ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>::Builder Registry<T>::EntriesResults::Builder::initEntries(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Registry::EntriesResults::Builder::adoptEntries(
-    ::capnp::Orphan< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+template <typename T>
+inline void Registry<T>::EntriesResults::Builder::adoptEntries(
+    ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>> Registry::EntriesResults::Builder::disownEntries() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::registry::Registry::Entry,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+template <typename T>
+inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>> Registry<T>::EntriesResults::Builder::disownEntries() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::registry::Registry<T>::Entry,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
+
+// Registry<T>::EntriesResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Registry<T>::EntriesResults::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Registry<T>::EntriesResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::EntriesResults::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::EntriesResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::EntriesResults::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::EntriesResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Dependency Registry<T>::EntriesResults::_capnpPrivate::brandDependencies[] = {
+  { 16777216,  ::mas::schema::registry::Registry<T>::Entry::_capnpPrivate::brand() },
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::EntriesResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_e4eaf56eb486064d, brandScopes, brandDependencies,
+  1, 1, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams, typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults>)
+Registry<T>::Client::supportedCategoriesRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams, typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults>(
+      0xca7b4bd1600633b8ull, 0, sizeHint, {true});
+}
+template <typename T>
+::kj::Promise<void> Registry<T>::Server::supportedCategories(SupportedCategoriesContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "registry.capnp:Registry", "supportedCategories",
+      0xca7b4bd1600633b8ull, 0);
+}
+template <typename T>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::CategoryInfoParams,  ::mas::schema::common::IdInformation>)
+Registry<T>::Client::categoryInfoRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::registry::Registry<T>::CategoryInfoParams,  ::mas::schema::common::IdInformation>(
+      0xca7b4bd1600633b8ull, 1, sizeHint, {true});
+}
+template <typename T>
+::kj::Promise<void> Registry<T>::Server::categoryInfo(CategoryInfoContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "registry.capnp:Registry", "categoryInfo",
+      0xca7b4bd1600633b8ull, 1);
+}
+template <typename T>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::registry::Registry<T>::EntriesParams, typename  ::mas::schema::registry::Registry<T>::EntriesResults>)
+Registry<T>::Client::entriesRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::registry::Registry<T>::EntriesParams, typename  ::mas::schema::registry::Registry<T>::EntriesResults>(
+      0xca7b4bd1600633b8ull, 2, sizeHint, {false});
+}
+template <typename T>
+::kj::Promise<void> Registry<T>::Server::entries(EntriesContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "registry.capnp:Registry", "entries",
+      0xca7b4bd1600633b8ull, 2);
+}
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult Registry<T>::Server::dispatchCall(
+    uint64_t interfaceId, uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (interfaceId) {
+    case 0xca7b4bd1600633b8ull:
+      return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    default:
+      return internalUnimplemented("registry.capnp:Registry", interfaceId);
+  }
+}
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult Registry<T>::Server::dispatchCallInternal(
+    uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (methodId) {
+    case 0:
+      return {
+        supportedCategories(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams, typename  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults>(context)),
+        false,
+        false
+      };
+    case 1:
+      return {
+        categoryInfo(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::registry::Registry<T>::CategoryInfoParams,  ::mas::schema::common::IdInformation>(context)),
+        false,
+        false
+      };
+    case 2:
+      return {
+        entries(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::registry::Registry<T>::EntriesParams, typename  ::mas::schema::registry::Registry<T>::EntriesResults>(context)),
+        false,
+        false
+      };
+    default:
+      (void)context;
+      return ::capnp::Capability::Server::internalUnimplemented(
+          "registry.capnp:Registry",
+          0xca7b4bd1600633b8ull, methodId);
+  }
+}
+#endif  // !CAPNP_LITE
+
+// Registry<T>
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Registry<T>::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Registry<T>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Registry<T>::_capnpPrivate::brandScopes[] = {
+  { 0xca7b4bd1600633b8, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Registry<T>::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Dependency Registry<T>::_capnpPrivate::brandDependencies[] = {
+  { 33554432,  ::mas::schema::registry::Registry<T>::SupportedCategoriesParams::_capnpPrivate::brand() },
+  { 33554433,  ::mas::schema::registry::Registry<T>::CategoryInfoParams::_capnpPrivate::brand() },
+  { 33554434,  ::mas::schema::registry::Registry<T>::EntriesParams::_capnpPrivate::brand() },
+  { 50331648,  ::mas::schema::registry::Registry<T>::SupportedCategoriesResults::_capnpPrivate::brand() },
+  { 50331650,  ::mas::schema::registry::Registry<T>::EntriesResults::_capnpPrivate::brand() },
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Registry<T>::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_ca7b4bd1600633b8, brandScopes, brandDependencies,
+  1, 5, nullptr
+};
+#endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
 inline Registrar::Client::Client(decltype(nullptr))

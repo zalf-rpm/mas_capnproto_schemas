@@ -3019,7 +3019,7 @@ constexpr ::capnp::_::RawSchema const* Fertilizer::ParametersResults::_capnpPriv
     case 0xb2afd1cb599c48d5ull:
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     case 0xca7b4bd1600633b8ull:
-      return  ::mas::schema::registry::Registry::Server::dispatchCallInternal(methodId, context);
+      return  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("management.capnp:FertilizerService", interfaceId);
   }

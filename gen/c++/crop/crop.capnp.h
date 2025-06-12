@@ -699,7 +699,7 @@ private:
 #if !CAPNP_LITE
 class Service::Client
     : public virtual ::capnp::Capability::Client,
-      public virtual  ::mas::schema::registry::Registry::Client {
+      public virtual  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client {
 public:
   typedef Service Calls;
   typedef Service Reads;
@@ -723,7 +723,7 @@ protected:
 
 class Service::Server
     : public virtual ::capnp::Capability::Server,
-      public virtual  ::mas::schema::registry::Registry::Server {
+      public virtual  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Server {
 public:
   typedef Service Serves;
 
