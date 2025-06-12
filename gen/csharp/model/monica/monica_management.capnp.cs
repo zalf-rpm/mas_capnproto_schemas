@@ -604,7 +604,10 @@ namespace Mas.Schema.Model.Monica
             organicFertilization,
             mineralFertilization,
             nDemandFertilization,
-            cutting
+            cutting,
+            setValue,
+            saveState,
+            weather
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2bf3a5557791bc1UL)]
@@ -793,6 +796,142 @@ namespace Mas.Schema.Model.Monica
             public WRITER()
             {
                 this.SetStruct(0, 0);
+            }
+        }
+
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa332cfe9735a304cUL)]
+        public class DailyWeather : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa332cfe9735a304cUL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Data = reader.Data?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.DailyWeather.KV>(_));
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Data.Init(Data, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV> Data
+            {
+                get;
+                set;
+            }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER> Data => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER.create);
+                public bool HasData => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER> Data
+                {
+                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER>>(0);
+                    set => Link(0, value);
+                }
+            }
+
+            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa63c8017ca26718bUL)]
+            public class KV : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xa63c8017ca26718bUL;
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Key = reader.Key;
+                    Value = reader.Value;
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.Key = Key;
+                    writer.Value = Value;
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults()
+                {
+                }
+
+                public Mas.Schema.Climate.Element Key
+                {
+                    get;
+                    set;
+                }
+
+                public double Value
+                {
+                    get;
+                    set;
+                }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                    public Mas.Schema.Climate.Element Key => (Mas.Schema.Climate.Element)ctx.ReadDataUShort(0UL, (ushort)0);
+                    public double Value => ctx.ReadDataDouble(64UL, 0);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(2, 0);
+                    }
+
+                    public Mas.Schema.Climate.Element Key
+                    {
+                        get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0);
+                        set => this.WriteData(0UL, (ushort)value, (ushort)0);
+                    }
+
+                    public double Value
+                    {
+                        get => this.ReadDataDouble(64UL, 0);
+                        set => this.WriteData(64UL, value, 0);
+                    }
+                }
             }
         }
 
@@ -1579,6 +1718,7 @@ namespace Mas.Schema.Model.Monica
                 set;
             }
 
+            = 100;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1592,7 +1732,7 @@ namespace Mas.Schema.Model.Monica
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                 public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec.READER> CuttingSpec => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.Cutting.Spec.READER.create);
                 public bool HasCuttingSpec => ctx.IsStructFieldNonNull(0);
-                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 0);
+                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 100);
             }
 
             public class WRITER : SerializerState
@@ -1610,8 +1750,8 @@ namespace Mas.Schema.Model.Monica
 
                 public double CutMaxAssimilationRatePercentage
                 {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
+                    get => this.ReadDataDouble(0UL, 100);
+                    set => this.WriteData(0UL, value, 100);
                 }
             }
 
@@ -2688,6 +2828,82 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
+                }
+            }
+        }
+
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdd84803fc87ac648UL)]
+        public class SaveState : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xdd84803fc87ac648UL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                NoOfPreviousDaysSerializedClimateData = reader.NoOfPreviousDaysSerializedClimateData;
+                AsJson = reader.AsJson;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.NoOfPreviousDaysSerializedClimateData = NoOfPreviousDaysSerializedClimateData;
+                writer.AsJson = AsJson;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public ulong NoOfPreviousDaysSerializedClimateData
+            {
+                get;
+                set;
+            }
+
+            public bool AsJson
+            {
+                get;
+                set;
+            }
+
+            = false;
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public ulong NoOfPreviousDaysSerializedClimateData => ctx.ReadDataULong(0UL, 0UL);
+                public bool AsJson => ctx.ReadDataBool(64UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(2, 0);
+                }
+
+                public ulong NoOfPreviousDaysSerializedClimateData
+                {
+                    get => this.ReadDataULong(0UL, 0UL);
+                    set => this.WriteData(0UL, value, 0UL);
+                }
+
+                public bool AsJson
+                {
+                    get => this.ReadDataBool(64UL, false);
+                    set => this.WriteData(64UL, value, false);
                 }
             }
         }

@@ -203,6 +203,7 @@ namespace Mas.Schema.Common
             var reader = READER.create(arg_);
             Value = reader.Value;
             Structure = CapnpSerializable.Create<Mas.Schema.Common.StructuredText.structure>(reader.Structure);
+            TheType = reader.TheType;
             applyDefaults();
         }
 
@@ -210,6 +211,7 @@ namespace Mas.Schema.Common
         {
             writer.Value = Value;
             Structure?.serialize(writer.Structure);
+            writer.TheType = TheType;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -233,6 +235,13 @@ namespace Mas.Schema.Common
             set;
         }
 
+        public Mas.Schema.Common.StructuredText.Type TheType
+        {
+            get;
+            set;
+        }
+
+        = Mas.Schema.Common.StructuredText.Type.unstructured;
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -246,6 +255,7 @@ namespace Mas.Schema.Common
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             public string Value => ctx.ReadText(0, null);
             public structure.READER Structure => new structure.READER(ctx);
+            public Mas.Schema.Common.StructuredText.Type TheType => (Mas.Schema.Common.StructuredText.Type)ctx.ReadDataUShort(16UL, (ushort)0);
         }
 
         public class WRITER : SerializerState
@@ -265,6 +275,12 @@ namespace Mas.Schema.Common
             {
                 get => Rewrap<structure.WRITER>();
             }
+
+            public Mas.Schema.Common.StructuredText.Type TheType
+            {
+                get => (Mas.Schema.Common.StructuredText.Type)this.ReadDataUShort(16UL, (ushort)0);
+                set => this.WriteData(16UL, (ushort)value, (ushort)0);
+            }
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe8cbf552b1c262ccUL)]
@@ -276,6 +292,7 @@ namespace Mas.Schema.Common
                 None = 0,
                 Json = 1,
                 Xml = 2,
+                Toml = 3,
                 undefined = 65535
             }
 
@@ -291,6 +308,9 @@ namespace Mas.Schema.Common
                         which = reader.which;
                         break;
                     case WHICH.Xml:
+                        which = reader.which;
+                        break;
+                    case WHICH.Toml:
                         which = reader.which;
                         break;
                 }
@@ -315,6 +335,8 @@ namespace Mas.Schema.Common
                             break;
                         case WHICH.Xml:
                             break;
+                        case WHICH.Toml:
+                            break;
                     }
                 }
             }
@@ -329,6 +351,8 @@ namespace Mas.Schema.Common
                     case WHICH.Json:
                         break;
                     case WHICH.Xml:
+                        break;
+                    case WHICH.Toml:
                         break;
                 }
             }
@@ -368,6 +392,16 @@ namespace Mas.Schema.Common
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
             }
+        }
+
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9eebc43e17b5974fUL)]
+        public enum Type : ushort
+        {
+            unstructured,
+            json,
+            xml,
+            toml,
+            sturdyRef
         }
     }
 

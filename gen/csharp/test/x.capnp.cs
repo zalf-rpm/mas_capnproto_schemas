@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CapnpGen
+namespace Mas.Schema.Test
 {
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd227ef68de0bc647UL)]
     public class S : ICapnpSerializable
@@ -33,7 +33,7 @@ namespace CapnpGen
         {
         }
 
-        public CapnpGen.IX C
+        public Mas.Schema.Test.IX C
         {
             get;
             set;
@@ -50,7 +50,7 @@ namespace CapnpGen
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public CapnpGen.IX C => ctx.ReadCap<CapnpGen.IX>(0);
+            public Mas.Schema.Test.IX C => ctx.ReadCap<Mas.Schema.Test.IX>(0);
         }
 
         public class WRITER : SerializerState
@@ -60,9 +60,9 @@ namespace CapnpGen
                 this.SetStruct(0, 1);
             }
 
-            public CapnpGen.IX C
+            public Mas.Schema.Test.IX C
             {
-                get => ReadCap<CapnpGen.IX>(0);
+                get => ReadCap<Mas.Schema.Test.IX>(0);
                 set => LinkObject(0, value);
             }
         }
@@ -79,13 +79,13 @@ namespace CapnpGen
     {
         public async Task<string> M(long i, CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<CapnpGen.X.Params_M.WRITER>();
-            var arg_ = new CapnpGen.X.Params_M()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.X.Params_M.WRITER>();
+            var arg_ = new Mas.Schema.Test.X.Params_M()
             {I = i};
             arg_?.serialize(in_);
             using (var d_ = await Call(15920944321609459221UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<CapnpGen.X.Result_M>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Test.X.Result_M>(d_);
                 return (r_.T);
             }
         }
@@ -104,11 +104,11 @@ namespace CapnpGen
         {
             using (d_)
             {
-                var in_ = CapnpSerializable.Create<CapnpGen.X.Params_M>(d_);
+                var in_ = CapnpSerializable.Create<Mas.Schema.Test.X.Params_M>(d_);
                 return Impatient.MaybeTailCall(Impl.M(in_.I, cancellationToken_), t =>
                 {
-                    var s_ = SerializerState.CreateForRpc<CapnpGen.X.Result_M.WRITER>();
-                    var r_ = new CapnpGen.X.Result_M{T = t};
+                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.X.Result_M.WRITER>();
+                    var r_ = new Mas.Schema.Test.X.Result_M{T = t};
                     r_.serialize(s_);
                     return s_;
                 }
@@ -252,13 +252,13 @@ namespace CapnpGen
     {
         public async Task M(string hello, CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<CapnpGen.Y.Params_M.WRITER>();
-            var arg_ = new CapnpGen.Y.Params_M()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.Y.Params_M.WRITER>();
+            var arg_ = new Mas.Schema.Test.Y.Params_M()
             {Hello = hello};
             arg_?.serialize(in_);
             using (var d_ = await Call(12399006098821785277UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<CapnpGen.Y.Result_M>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Test.Y.Result_M>(d_);
                 return;
             }
         }
@@ -277,9 +277,9 @@ namespace CapnpGen
         {
             using (d_)
             {
-                var in_ = CapnpSerializable.Create<CapnpGen.Y.Params_M>(d_);
+                var in_ = CapnpSerializable.Create<Mas.Schema.Test.Y.Params_M>(d_);
                 await Impl.M(in_.Hello, cancellationToken_);
-                var s_ = SerializerState.CreateForRpc<CapnpGen.Y.Result_M.WRITER>();
+                var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.Y.Result_M.WRITER>();
                 return s_;
             }
         }
@@ -393,47 +393,47 @@ namespace CapnpGen
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbab68c252196561bUL), Proxy(typeof(A_Proxy)), Skeleton(typeof(A_Skeleton))]
-    public interface IA : IDisposable
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL), Proxy(typeof(Z_Proxy)), Skeleton(typeof(Z_Skeleton))]
+    public interface IZ : IDisposable
     {
         Task<double> M(long n, CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbab68c252196561bUL)]
-    public class A_Proxy : Proxy, IA
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL)]
+    public class Z_Proxy : Proxy, IZ
     {
         public async Task<double> M(long n, CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<CapnpGen.A.Params_M.WRITER>();
-            var arg_ = new CapnpGen.A.Params_M()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.Z.Params_M.WRITER>();
+            var arg_ = new Mas.Schema.Test.Z.Params_M()
             {N = n};
             arg_?.serialize(in_);
-            using (var d_ = await Call(13454095027921114651UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (var d_ = await Call(14286867313463771819UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<CapnpGen.A.Result_M>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Test.Z.Result_M>(d_);
                 return (r_.R);
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbab68c252196561bUL)]
-    public class A_Skeleton : Skeleton<IA>
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL)]
+    public class Z_Skeleton : Skeleton<IZ>
     {
-        public A_Skeleton()
+        public Z_Skeleton()
         {
             SetMethodTable(M);
         }
 
-        public override ulong InterfaceId => 13454095027921114651UL;
+        public override ulong InterfaceId => 14286867313463771819UL;
         Task<AnswerOrCounterquestion> M(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
-                var in_ = CapnpSerializable.Create<CapnpGen.A.Params_M>(d_);
+                var in_ = CapnpSerializable.Create<Mas.Schema.Test.Z.Params_M>(d_);
                 return Impatient.MaybeTailCall(Impl.M(in_.N, cancellationToken_), r =>
                 {
-                    var s_ = SerializerState.CreateForRpc<CapnpGen.A.Result_M.WRITER>();
-                    var r_ = new CapnpGen.A.Result_M{R = r};
+                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.Z.Result_M.WRITER>();
+                    var r_ = new Mas.Schema.Test.Z.Result_M{R = r};
                     r_.serialize(s_);
                     return s_;
                 }
@@ -443,12 +443,12 @@ namespace CapnpGen
         }
     }
 
-    public static class A
+    public static class Z
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8be7edcd35d4c706UL)]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf01d08c96dc98cc9UL)]
         public class Params_M : ICapnpSerializable
         {
-            public const UInt64 typeId = 0x8be7edcd35d4c706UL;
+            public const UInt64 typeId = 0xf01d08c96dc98cc9UL;
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -505,10 +505,10 @@ namespace CapnpGen
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc0e8eed87688cb46UL)]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd444a663531a6b53UL)]
         public class Result_M : ICapnpSerializable
         {
-            public const UInt64 typeId = 0xc0e8eed87688cb46UL;
+            public const UInt64 typeId = 0xd444a663531a6b53UL;
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);

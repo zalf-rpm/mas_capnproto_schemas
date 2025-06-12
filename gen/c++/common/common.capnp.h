@@ -25,6 +25,15 @@ CAPNP_DECLARE_SCHEMA(d4cb7ecbfe03dad3);
 CAPNP_DECLARE_SCHEMA(b2afd1cb599c48d5);
 CAPNP_DECLARE_SCHEMA(9d8aa1cf1e49deb1);
 CAPNP_DECLARE_SCHEMA(ed6c098b67cad454);
+CAPNP_DECLARE_SCHEMA(9eebc43e17b5974f);
+enum class Type_9eebc43e17b5974f: uint16_t {
+  UNSTRUCTURED,
+  JSON,
+  XML,
+  TOML,
+  STURDY_REF,
+};
+CAPNP_DECLARE_ENUM(Type, 9eebc43e17b5974f);
 CAPNP_DECLARE_SCHEMA(e8cbf552b1c262cc);
 CAPNP_DECLARE_SCHEMA(e17592335373b246);
 CAPNP_DECLARE_SCHEMA(b9d4864725174733);
@@ -90,6 +99,8 @@ struct StructuredText {
   class Reader;
   class Builder;
   class Pipeline;
+  typedef ::capnp::schemas::Type_9eebc43e17b5974f Type;
+
   struct Structure;
 
   struct _capnpPrivate {
@@ -434,6 +445,8 @@ public:
 
   inline typename Structure::Reader getStructure() const;
 
+  inline  ::mas::schema::common::StructuredText::Type getType() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -471,6 +484,9 @@ public:
 
   inline typename Structure::Builder getStructure();
   inline typename Structure::Builder initStructure();
+
+  inline  ::mas::schema::common::StructuredText::Type getType();
+  inline void setType( ::mas::schema::common::StructuredText::Type value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1269,6 +1285,20 @@ inline typename StructuredText::Structure::Builder StructuredText::Builder::init
   _builder.setDataField< ::uint16_t>(::capnp::bounded<0>() * ::capnp::ELEMENTS, 0);
   return typename StructuredText::Structure::Builder(_builder);
 }
+inline  ::mas::schema::common::StructuredText::Type StructuredText::Reader::getType() const {
+  return _reader.getDataField< ::mas::schema::common::StructuredText::Type>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::common::StructuredText::Type StructuredText::Builder::getType() {
+  return _builder.getDataField< ::mas::schema::common::StructuredText::Type>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+inline void StructuredText::Builder::setType( ::mas::schema::common::StructuredText::Type value) {
+  _builder.setDataField< ::mas::schema::common::StructuredText::Type>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
+}
+
 inline  ::mas::schema::common::StructuredText::Structure::Which StructuredText::Structure::Reader::which() const {
   return _reader.getDataField<Which>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);

@@ -1454,6 +1454,7 @@ namespace Mas.Schema.Management
                 set;
             }
 
+            = 100;
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -1467,7 +1468,7 @@ namespace Mas.Schema.Management
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                 public IReadOnlyList<Mas.Schema.Management.Params.Cutting.Spec.READER> CuttingSpec => ctx.ReadList(0).Cast(Mas.Schema.Management.Params.Cutting.Spec.READER.create);
                 public bool HasCuttingSpec => ctx.IsStructFieldNonNull(0);
-                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 0);
+                public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 100);
             }
 
             public class WRITER : SerializerState
@@ -1485,8 +1486,8 @@ namespace Mas.Schema.Management
 
                 public double CutMaxAssimilationRatePercentage
                 {
-                    get => this.ReadDataDouble(0UL, 0);
-                    set => this.WriteData(0UL, value, 0);
+                    get => this.ReadDataDouble(0UL, 100);
+                    set => this.WriteData(0UL, value, 100);
                 }
             }
 
