@@ -2871,7 +2871,7 @@ private:
 #if !CAPNP_LITE
 class FertilizerService::Client
     : public virtual ::capnp::Capability::Client,
-      public virtual  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Client {
+      public virtual  ::mas::schema::registry::Registry::Client {
 public:
   typedef FertilizerService Calls;
   typedef FertilizerService Reads;
@@ -2895,7 +2895,7 @@ protected:
 
 class FertilizerService::Server
     : public virtual ::capnp::Capability::Server,
-      public virtual  ::mas::schema::registry::Registry< ::capnp::AnyPointer>::Server {
+      public virtual  ::mas::schema::registry::Registry::Server {
 public:
   typedef FertilizerService Serves;
 

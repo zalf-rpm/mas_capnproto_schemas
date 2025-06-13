@@ -100,3 +100,11 @@ struct Pair(F, S) {
   # forward clock one step to time T (which could also be just a Common.Date)
 #}
 
+interface Holder(T) {
+    # hold a value of type T
+
+    value @0 () -> (value :T);
+    # get the value being hold
+}
+
+interface IdentifiableHolder(T) extends(Identifiable, Holder(T)) {}

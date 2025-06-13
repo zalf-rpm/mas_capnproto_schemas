@@ -37,6 +37,10 @@ CAPNP_DECLARE_ENUM(Type, 9eebc43e17b5974f);
 CAPNP_DECLARE_SCHEMA(e8cbf552b1c262cc);
 CAPNP_DECLARE_SCHEMA(e17592335373b246);
 CAPNP_DECLARE_SCHEMA(b9d4864725174733);
+CAPNP_DECLARE_SCHEMA(c83045ccbb0b6ac5);
+CAPNP_DECLARE_SCHEMA(966d054acf5f578d);
+CAPNP_DECLARE_SCHEMA(a18bd34aee32cc89);
+CAPNP_DECLARE_SCHEMA(ee543d7c305d56f6);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -195,6 +199,90 @@ struct Pair {
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, F, S>::brand(); }
     #endif  // !CAPNP_LITE
   };
+};
+
+template <typename T = ::capnp::AnyPointer>
+struct Holder {
+  Holder() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct ValueParams;
+  struct ValueResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(c83045ccbb0b6ac5)
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+template <typename T>
+struct Holder<T>::ValueParams {
+  ValueParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(966d054acf5f578d, 0, 0)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename T>
+struct Holder<T>::ValueResults {
+  ValueResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a18bd34aee32cc89, 0, 1)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename T = ::capnp::AnyPointer>
+struct IdentifiableHolder {
+  IdentifiableHolder() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(ee543d7c305d56f6)
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, T>::brand(); }
+  };
+  #endif  // !CAPNP_LITE
 };
 
 // =======================================================================================
@@ -1105,6 +1193,304 @@ private:
   friend class ::capnp::PipelineHook;
   template <typename, ::capnp::Kind>
   friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+class Holder<T>::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef Holder Calls;
+  typedef Holder Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Holder<T2>::Client asGeneric() {
+    return castAs<Holder<T2>>();
+  }
+
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::Holder<T>::ValueParams, typename  ::mas::schema::common::Holder<T>::ValueResults>) valueRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+template <typename T>
+class Holder<T>::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef Holder Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef typename  ::mas::schema::common::Holder<T>::ValueParams ValueParams;
+  typedef typename  ::mas::schema::common::Holder<T>::ValueResults ValueResults;
+  typedef ::capnp::CallContext<ValueParams, ValueResults> ValueContext;
+  virtual ::kj::Promise<void> value(ValueContext context);
+
+  inline typename  ::mas::schema::common::Holder<T>::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::common::Holder<T>>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+class Holder<T>::ValueParams::Reader {
+public:
+  typedef ValueParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Holder<T2>::ValueParams::Reader asHolderGeneric() {
+    return typename Holder<T2>::ValueParams::Reader(_reader);
+  }
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename T>
+class Holder<T>::ValueParams::Builder {
+public:
+  typedef ValueParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Holder<T2>::ValueParams::Builder asHolderGeneric() {
+    return typename Holder<T2>::ValueParams::Builder(_builder);
+  }
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename T>
+class Holder<T>::ValueParams::Pipeline {
+public:
+  typedef ValueParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+class Holder<T>::ValueResults::Reader {
+public:
+  typedef ValueResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Holder<T2>::ValueResults::Reader asHolderGeneric() {
+    return typename Holder<T2>::ValueResults::Reader(_reader);
+  }
+
+  inline bool hasValue() const;
+  inline  ::capnp::ReaderFor<T> getValue() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename T>
+class Holder<T>::ValueResults::Builder {
+public:
+  typedef ValueResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename Holder<T2>::ValueResults::Builder asHolderGeneric() {
+    return typename Holder<T2>::ValueResults::Builder(_builder);
+  }
+
+  inline bool hasValue();
+  inline  ::capnp::BuilderFor<T> getValue();
+  inline void setValue( ::capnp::ReaderFor<T> value);
+  inline  ::capnp::BuilderFor<T> initValue();
+  inline  ::capnp::BuilderFor<T> initValue(unsigned int size);
+  inline void adoptValue(::capnp::Orphan<T>&& value);
+  inline ::capnp::Orphan<T> disownValue();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename T>
+class Holder<T>::ValueResults::Pipeline {
+public:
+  typedef ValueResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::capnp::PipelineFor<T> getValue();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+class IdentifiableHolder<T>::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client,
+      public virtual  ::mas::schema::common::Holder<T>::Client {
+public:
+  typedef IdentifiableHolder Calls;
+  typedef IdentifiableHolder Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  template <typename T2 = ::capnp::AnyPointer>
+  typename IdentifiableHolder<T2>::Client asGeneric() {
+    return castAs<IdentifiableHolder<T2>>();
+  }
+
+
+protected:
+  Client() = default;
+};
+
+template <typename T>
+class IdentifiableHolder<T>::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server,
+      public virtual  ::mas::schema::common::Holder<T>::Server {
+public:
+  typedef IdentifiableHolder Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+
+  inline typename  ::mas::schema::common::IdentifiableHolder<T>::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::common::IdentifiableHolder<T>>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
 };
 #endif  // !CAPNP_LITE
 
@@ -2877,6 +3263,309 @@ template <typename F, typename S>
 const ::capnp::_::RawBrandedSchema Pair<F, S>::_capnpPrivate::specificBrand = {
   &::capnp::schemas::s_b9d4864725174733, brandScopes, nullptr,
   1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+inline Holder<T>::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+template <typename T>
+inline Holder<T>::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename T>
+template <typename _t, typename>
+inline Holder<T>::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename T>
+template <typename _t, typename>
+inline Holder<T>::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+template <typename T>
+inline Holder<T>::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+template <typename T>
+inline typename  ::mas::schema::common::Holder<T>::Client& Holder<T>::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+template <typename T>
+inline typename  ::mas::schema::common::Holder<T>::Client& Holder<T>::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+// Holder<T>::ValueParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Holder<T>::ValueParams::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Holder<T>::ValueParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Holder<T>::ValueParams::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Holder<T>::ValueParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Holder<T>::ValueParams::_capnpPrivate::brandScopes[] = {
+  { 0xc83045ccbb0b6ac5, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Holder<T>::ValueParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Holder<T>::ValueParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_966d054acf5f578d, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename T>
+inline bool Holder<T>::ValueResults::Reader::hasValue() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename T>
+inline bool Holder<T>::ValueResults::Builder::hasValue() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename T>
+inline  ::capnp::ReaderFor<T> Holder<T>::ValueResults::Reader::getValue() const {
+  return ::capnp::_::PointerHelpers<T>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Holder<T>::ValueResults::Builder::getValue() {
+  return ::capnp::_::PointerHelpers<T>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+template <typename T>
+inline  ::capnp::PipelineFor<T> Holder<T>::ValueResults::Pipeline::getValue() {
+  return  ::capnp::PipelineFor<T>(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename T>
+inline void Holder<T>::ValueResults::Builder::setValue( ::capnp::ReaderFor<T> value) {
+  ::capnp::_::PointerHelpers<T>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Holder<T>::ValueResults::Builder::initValue() {
+  return ::capnp::_::PointerHelpers<T>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename T>
+inline  ::capnp::BuilderFor<T> Holder<T>::ValueResults::Builder::initValue(unsigned int size) {
+  return ::capnp::_::PointerHelpers<T>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+template <typename T>
+inline void Holder<T>::ValueResults::Builder::adoptValue(
+    ::capnp::Orphan<T>&& value) {
+  ::capnp::_::PointerHelpers<T>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename T>
+inline ::capnp::Orphan<T> Holder<T>::ValueResults::Builder::disownValue() {
+  return ::capnp::_::PointerHelpers<T>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+// Holder<T>::ValueResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr uint16_t Holder<T>::ValueResults::_capnpPrivate::dataWordSize;
+template <typename T>
+constexpr uint16_t Holder<T>::ValueResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Holder<T>::ValueResults::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Holder<T>::ValueResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Holder<T>::ValueResults::_capnpPrivate::brandScopes[] = {
+  { 0xc83045ccbb0b6ac5, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Holder<T>::ValueResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Holder<T>::ValueResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_a18bd34aee32cc89, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::Holder<T>::ValueParams, typename  ::mas::schema::common::Holder<T>::ValueResults>)
+Holder<T>::Client::valueRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::common::Holder<T>::ValueParams, typename  ::mas::schema::common::Holder<T>::ValueResults>(
+      0xc83045ccbb0b6ac5ull, 0, sizeHint, {false});
+}
+template <typename T>
+::kj::Promise<void> Holder<T>::Server::value(ValueContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "common.capnp:Holder", "value",
+      0xc83045ccbb0b6ac5ull, 0);
+}
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult Holder<T>::Server::dispatchCall(
+    uint64_t interfaceId, uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (interfaceId) {
+    case 0xc83045ccbb0b6ac5ull:
+      return dispatchCallInternal(methodId, context);
+    default:
+      return internalUnimplemented("common.capnp:Holder", interfaceId);
+  }
+}
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult Holder<T>::Server::dispatchCallInternal(
+    uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (methodId) {
+    case 0:
+      return {
+        value(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::common::Holder<T>::ValueParams, typename  ::mas::schema::common::Holder<T>::ValueResults>(context)),
+        false,
+        false
+      };
+    default:
+      (void)context;
+      return ::capnp::Capability::Server::internalUnimplemented(
+          "common.capnp:Holder",
+          0xc83045ccbb0b6ac5ull, methodId);
+  }
+}
+#endif  // !CAPNP_LITE
+
+// Holder<T>
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind Holder<T>::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* Holder<T>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope Holder<T>::_capnpPrivate::brandScopes[] = {
+  { 0xc83045ccbb0b6ac5, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding Holder<T>::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Dependency Holder<T>::_capnpPrivate::brandDependencies[] = {
+  { 33554432,  ::mas::schema::common::Holder<T>::ValueParams::_capnpPrivate::brand() },
+  { 50331648,  ::mas::schema::common::Holder<T>::ValueResults::_capnpPrivate::brand() },
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema Holder<T>::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_c83045ccbb0b6ac5, brandScopes, brandDependencies,
+  1, 2, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename T>
+inline IdentifiableHolder<T>::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+template <typename T>
+inline IdentifiableHolder<T>::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename T>
+template <typename _t, typename>
+inline IdentifiableHolder<T>::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename T>
+template <typename _t, typename>
+inline IdentifiableHolder<T>::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+template <typename T>
+inline IdentifiableHolder<T>::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+template <typename T>
+inline typename  ::mas::schema::common::IdentifiableHolder<T>::Client& IdentifiableHolder<T>::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+template <typename T>
+inline typename  ::mas::schema::common::IdentifiableHolder<T>::Client& IdentifiableHolder<T>::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+#if !CAPNP_LITE
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult IdentifiableHolder<T>::Server::dispatchCall(
+    uint64_t interfaceId, uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (interfaceId) {
+    case 0xee543d7c305d56f6ull:
+      return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    case 0xc83045ccbb0b6ac5ull:
+      return  ::mas::schema::common::Holder<T>::Server::dispatchCallInternal(methodId, context);
+    default:
+      return internalUnimplemented("common.capnp:IdentifiableHolder", interfaceId);
+  }
+}
+template <typename T>
+::capnp::Capability::Server::DispatchCallResult IdentifiableHolder<T>::Server::dispatchCallInternal(
+    uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (methodId) {
+    default:
+      (void)context;
+      return ::capnp::Capability::Server::internalUnimplemented(
+          "common.capnp:IdentifiableHolder",
+          0xee543d7c305d56f6ull, methodId);
+  }
+}
+#endif  // !CAPNP_LITE
+
+// IdentifiableHolder<T>
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+constexpr ::capnp::Kind IdentifiableHolder<T>::_capnpPrivate::kind;
+template <typename T>
+constexpr ::capnp::_::RawSchema const* IdentifiableHolder<T>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Scope IdentifiableHolder<T>::_capnpPrivate::brandScopes[] = {
+  { 0xee543d7c305d56f6, brandBindings + 0, 1, false},
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Binding IdentifiableHolder<T>::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<T>(),
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema::Dependency IdentifiableHolder<T>::_capnpPrivate::brandDependencies[] = {
+  { 67108865,  ::mas::schema::common::Holder<T>::_capnpPrivate::brand() },
+};
+template <typename T>
+const ::capnp::_::RawBrandedSchema IdentifiableHolder<T>::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_ee543d7c305d56f6, brandScopes, brandDependencies,
+  1, 1, nullptr
 };
 #endif  // !CAPNP_LITE
 

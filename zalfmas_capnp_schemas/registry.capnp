@@ -38,7 +38,7 @@ interface Admin extends(Identifiable) {
 }
 
 
-interface Registry(T) extends(Identifiable) {
+interface Registry extends(Identifiable) {
   # public registry interface for capabilities implementing at least the identifiable interface
   # the registry might make its entries persistent by wrapping the Identifiables into a persistent wrapper
 
@@ -49,12 +49,10 @@ interface Registry(T) extends(Identifiable) {
   # get information to a particular category
 
   struct Entry {
-    categoryId  @0 :Text;
-    union {
-        ref         @1 :Identifiable;
-        value       @3 :T;
-    }
-    name        @2 :Text;
+    categoryId  @0 :Text;           # category id
+    ref         @1 :Identifiable;   # reference to remote Identifiable object
+    name        @2 :Text;           # mostly display name
+    id          @3 :Text;           # id of Identifiable, to be able to manage entries without access to ref
   }
 
   entries @2 (categoryId :Text) -> (entries :List(Entry));
