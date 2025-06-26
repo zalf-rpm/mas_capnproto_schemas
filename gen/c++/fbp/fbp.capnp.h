@@ -64,6 +64,9 @@ CAPNP_DECLARE_SCHEMA(b49836b545583add);
 CAPNP_DECLARE_SCHEMA(c0fc6e5a3fcb3206);
 CAPNP_DECLARE_SCHEMA(95d8ad01c1113d9c);
 CAPNP_DECLARE_SCHEMA(cc079ad60f1363b7);
+CAPNP_DECLARE_SCHEMA(d0cd6d829b810229);
+CAPNP_DECLARE_SCHEMA(9576b9a98d58fba2);
+CAPNP_DECLARE_SCHEMA(de5975c83de2b10c);
 CAPNP_DECLARE_SCHEMA(ece0efa9a922d4a8);
 CAPNP_DECLARE_SCHEMA(8a4d34c4b5eb1545);
 CAPNP_DECLARE_SCHEMA(d717ff7d6815a6b0);
@@ -668,6 +671,55 @@ struct Channel<V>::CloseResults {
     static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
     static const ::capnp::_::RawBrandedSchema specificBrand;
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, V>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct StartChannelsService {
+  StartChannelsService() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct Params;
+  struct CreateResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(d0cd6d829b810229)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct StartChannelsService::Params {
+  Params() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(9576b9a98d58fba2, 1, 3)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct StartChannelsService::CreateResults {
+  CreateResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(de5975c83de2b10c, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
@@ -3446,6 +3498,264 @@ template <typename V>
 class Channel<V>::CloseResults::Pipeline {
 public:
   typedef CloseResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class StartChannelsService::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
+public:
+  typedef StartChannelsService Calls;
+  typedef StartChannelsService Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::StartChannelsService::Params,  ::mas::schema::fbp::StartChannelsService::CreateResults> createRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class StartChannelsService::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
+public:
+  typedef StartChannelsService Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::StartChannelsService::CreateResults CreateResults;
+  typedef ::capnp::CallContext< ::mas::schema::fbp::StartChannelsService::Params, CreateResults> CreateContext;
+  virtual ::kj::Promise<void> create(CreateContext context);
+
+  inline  ::mas::schema::fbp::StartChannelsService::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::StartChannelsService>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class StartChannelsService::Params::Reader {
+public:
+  typedef Params Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasName() const;
+  inline  ::capnp::Text::Reader getName() const;
+
+  inline  ::uint16_t getNoOfChannels() const;
+
+  inline  ::uint16_t getNoOfReaders() const;
+
+  inline  ::uint16_t getNoOfWriters() const;
+
+  inline bool hasReaderSrts() const;
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getReaderSrts() const;
+
+  inline bool hasWriterSrts() const;
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getWriterSrts() const;
+
+  inline  ::uint16_t getBufferSize() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class StartChannelsService::Params::Builder {
+public:
+  typedef Params Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasName();
+  inline  ::capnp::Text::Builder getName();
+  inline void setName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initName(unsigned int size);
+  inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownName();
+
+  inline  ::uint16_t getNoOfChannels();
+  inline void setNoOfChannels( ::uint16_t value);
+
+  inline  ::uint16_t getNoOfReaders();
+  inline void setNoOfReaders( ::uint16_t value);
+
+  inline  ::uint16_t getNoOfWriters();
+  inline void setNoOfWriters( ::uint16_t value);
+
+  inline bool hasReaderSrts();
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getReaderSrts();
+  inline void setReaderSrts( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
+  inline void setReaderSrts(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initReaderSrts(unsigned int size);
+  inline void adoptReaderSrts(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownReaderSrts();
+
+  inline bool hasWriterSrts();
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getWriterSrts();
+  inline void setWriterSrts( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
+  inline void setWriterSrts(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initWriterSrts(unsigned int size);
+  inline void adoptWriterSrts(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownWriterSrts();
+
+  inline  ::uint16_t getBufferSize();
+  inline void setBufferSize( ::uint16_t value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class StartChannelsService::Params::Pipeline {
+public:
+  typedef Params Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class StartChannelsService::CreateResults::Reader {
+public:
+  typedef CreateResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasStartupInfos() const;
+  inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader getStartupInfos() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class StartChannelsService::CreateResults::Builder {
+public:
+  typedef CreateResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasStartupInfos();
+  inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder getStartupInfos();
+  inline void setStartupInfos( ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder initStartupInfos(unsigned int size);
+  inline void adoptStartupInfos(::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>> disownStartupInfos();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class StartChannelsService::CreateResults::Pipeline {
+public:
+  typedef CreateResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -6783,6 +7093,230 @@ const ::capnp::_::RawBrandedSchema Channel<V>::_capnpPrivate::specificBrand = {
   1, 12, nullptr
 };
 #endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+inline StartChannelsService::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline StartChannelsService::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline StartChannelsService::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline StartChannelsService::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline StartChannelsService::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::StartChannelsService::Client& StartChannelsService::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::StartChannelsService::Client& StartChannelsService::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool StartChannelsService::Params::Reader::hasName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool StartChannelsService::Params::Builder::hasName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader StartChannelsService::Params::Reader::getName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder StartChannelsService::Params::Builder::getName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void StartChannelsService::Params::Builder::setName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder StartChannelsService::Params::Builder::initName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void StartChannelsService::Params::Builder::adoptName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> StartChannelsService::Params::Builder::disownName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline  ::uint16_t StartChannelsService::Params::Reader::getNoOfChannels() const {
+  return _reader.getDataField< ::uint16_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Builder::getNoOfChannels() {
+  return _builder.getDataField< ::uint16_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
+}
+inline void StartChannelsService::Params::Builder::setNoOfChannels( ::uint16_t value) {
+  _builder.setDataField< ::uint16_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Reader::getNoOfReaders() const {
+  return _reader.getDataField< ::uint16_t>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Builder::getNoOfReaders() {
+  return _builder.getDataField< ::uint16_t>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, 1u);
+}
+inline void StartChannelsService::Params::Builder::setNoOfReaders( ::uint16_t value) {
+  _builder.setDataField< ::uint16_t>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Reader::getNoOfWriters() const {
+  return _reader.getDataField< ::uint16_t>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Builder::getNoOfWriters() {
+  return _builder.getDataField< ::uint16_t>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS, 1u);
+}
+inline void StartChannelsService::Params::Builder::setNoOfWriters( ::uint16_t value) {
+  _builder.setDataField< ::uint16_t>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS, value, 1u);
+}
+
+inline bool StartChannelsService::Params::Reader::hasReaderSrts() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool StartChannelsService::Params::Builder::hasReaderSrts() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader StartChannelsService::Params::Reader::getReaderSrts() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder StartChannelsService::Params::Builder::getReaderSrts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void StartChannelsService::Params::Builder::setReaderSrts( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline void StartChannelsService::Params::Builder::setReaderSrts(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder StartChannelsService::Params::Builder::initReaderSrts(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void StartChannelsService::Params::Builder::adoptReaderSrts(
+    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> StartChannelsService::Params::Builder::disownReaderSrts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool StartChannelsService::Params::Reader::hasWriterSrts() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool StartChannelsService::Params::Builder::hasWriterSrts() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader StartChannelsService::Params::Reader::getWriterSrts() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder StartChannelsService::Params::Builder::getWriterSrts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline void StartChannelsService::Params::Builder::setWriterSrts( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline void StartChannelsService::Params::Builder::setWriterSrts(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder StartChannelsService::Params::Builder::initWriterSrts(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
+}
+inline void StartChannelsService::Params::Builder::adoptWriterSrts(
+    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> StartChannelsService::Params::Builder::disownWriterSrts() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline  ::uint16_t StartChannelsService::Params::Reader::getBufferSize() const {
+  return _reader.getDataField< ::uint16_t>(
+      ::capnp::bounded<3>() * ::capnp::ELEMENTS, 1u);
+}
+
+inline  ::uint16_t StartChannelsService::Params::Builder::getBufferSize() {
+  return _builder.getDataField< ::uint16_t>(
+      ::capnp::bounded<3>() * ::capnp::ELEMENTS, 1u);
+}
+inline void StartChannelsService::Params::Builder::setBufferSize( ::uint16_t value) {
+  _builder.setDataField< ::uint16_t>(
+      ::capnp::bounded<3>() * ::capnp::ELEMENTS, value, 1u);
+}
+
+inline bool StartChannelsService::CreateResults::Reader::hasStartupInfos() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool StartChannelsService::CreateResults::Builder::hasStartupInfos() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader StartChannelsService::CreateResults::Reader::getStartupInfos() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::CreateResults::Builder::getStartupInfos() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void StartChannelsService::CreateResults::Builder::setStartupInfos( ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::CreateResults::Builder::initStartupInfos(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void StartChannelsService::CreateResults::Builder::adoptStartupInfos(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>> StartChannelsService::CreateResults::Builder::disownStartupInfos() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
 
 inline bool PortInfos::Reader::hasInPorts() const {
   return !_reader.getPointerField(
