@@ -115,6 +115,23 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
   # wait for empty buffer or kill channel right away
 }
 
+interface StartChannelsService extends(Common.Identifiable) {
+    # starting channels
+
+    struct Params {
+        name            @0 :Text;       # name of channel
+        noOfChannels    @1 :UInt16 = 1; # how many channels to create
+        noOfReaders     @2 :UInt16 = 1; # no of readers to create per channel
+        noOfWriters     @3 :UInt16 = 1; # no of writers to create per channel
+        readerSrts      @4 :List(Text); # fixed sturdy ref tokens per reader
+        writerSrts      @5 :List(Text); # fixed sturdy ref tokens per writer
+        bufferSize      @6 :UInt16 = 1; # how large is the buffer supposed to be
+    }
+
+    create @0 Params -> (startupInfos :List(Channel.StartupInfo));
+    # create one (or multiple with same properties) channel and return reader and writer sturdy refs to the channel(s)
+}
+
 struct PortInfos {
   # information for component to connect to in/out ports
 
