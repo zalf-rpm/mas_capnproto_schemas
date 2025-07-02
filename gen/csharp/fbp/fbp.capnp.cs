@@ -1970,6 +1970,286 @@ namespace Mas.Schema.Fbp
         }
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0cd6d829b810229UL), Proxy(typeof(StartChannelsService_Proxy)), Skeleton(typeof(StartChannelsService_Skeleton))]
+    public interface IStartChannelsService : Mas.Schema.Common.IIdentifiable
+    {
+        Task<IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>> Create(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default);
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0cd6d829b810229UL)]
+    public class StartChannelsService_Proxy : Proxy, IStartChannelsService
+    {
+        public async Task<IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>> Create(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.StartChannelsService.Params.WRITER>();
+            arg_?.serialize(in_);
+            using (var d_ = await Call(15045802337836794409UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Result_Create>(d_);
+                return (r_.StartupInfos);
+            }
+        }
+
+        public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
+            {};
+            arg_?.serialize(in_);
+            using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                return r_;
+            }
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0cd6d829b810229UL)]
+    public class StartChannelsService_Skeleton : Skeleton<IStartChannelsService>
+    {
+        public StartChannelsService_Skeleton()
+        {
+            SetMethodTable(Create);
+        }
+
+        public override ulong InterfaceId => 15045802337836794409UL;
+        Task<AnswerOrCounterquestion> Create(DeserializerState d_, CancellationToken cancellationToken_)
+        {
+            using (d_)
+            {
+                return Impatient.MaybeTailCall(Impl.Create(CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Params>(d_), cancellationToken_), startupInfos =>
+                {
+                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.StartChannelsService.Result_Create.WRITER>();
+                    var r_ = new Mas.Schema.Fbp.StartChannelsService.Result_Create{StartupInfos = startupInfos};
+                    r_.serialize(s_);
+                    return s_;
+                }
+
+                );
+            }
+        }
+    }
+
+    public static class StartChannelsService
+    {
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9576b9a98d58fba2UL)]
+        public class Params : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x9576b9a98d58fba2UL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Name = reader.Name;
+                NoOfChannels = reader.NoOfChannels;
+                NoOfReaders = reader.NoOfReaders;
+                NoOfWriters = reader.NoOfWriters;
+                ReaderSrts = reader.ReaderSrts;
+                WriterSrts = reader.WriterSrts;
+                BufferSize = reader.BufferSize;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Name = Name;
+                writer.NoOfChannels = NoOfChannels;
+                writer.NoOfReaders = NoOfReaders;
+                writer.NoOfWriters = NoOfWriters;
+                writer.ReaderSrts.Init(ReaderSrts);
+                writer.WriterSrts.Init(WriterSrts);
+                writer.BufferSize = BufferSize;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public string Name
+            {
+                get;
+                set;
+            }
+
+            public ushort NoOfChannels
+            {
+                get;
+                set;
+            }
+
+            = 1;
+            public ushort NoOfReaders
+            {
+                get;
+                set;
+            }
+
+            = 1;
+            public ushort NoOfWriters
+            {
+                get;
+                set;
+            }
+
+            = 1;
+            public IReadOnlyList<string> ReaderSrts
+            {
+                get;
+                set;
+            }
+
+            public IReadOnlyList<string> WriterSrts
+            {
+                get;
+                set;
+            }
+
+            public ushort BufferSize
+            {
+                get;
+                set;
+            }
+
+            = 1;
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public string Name => ctx.ReadText(0, null);
+                public ushort NoOfChannels => ctx.ReadDataUShort(0UL, (ushort)1);
+                public ushort NoOfReaders => ctx.ReadDataUShort(16UL, (ushort)1);
+                public ushort NoOfWriters => ctx.ReadDataUShort(32UL, (ushort)1);
+                public IReadOnlyList<string> ReaderSrts => ctx.ReadList(1).CastText2();
+                public bool HasReaderSrts => ctx.IsStructFieldNonNull(1);
+                public IReadOnlyList<string> WriterSrts => ctx.ReadList(2).CastText2();
+                public bool HasWriterSrts => ctx.IsStructFieldNonNull(2);
+                public ushort BufferSize => ctx.ReadDataUShort(48UL, (ushort)1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 3);
+                }
+
+                public string Name
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+
+                public ushort NoOfChannels
+                {
+                    get => this.ReadDataUShort(0UL, (ushort)1);
+                    set => this.WriteData(0UL, value, (ushort)1);
+                }
+
+                public ushort NoOfReaders
+                {
+                    get => this.ReadDataUShort(16UL, (ushort)1);
+                    set => this.WriteData(16UL, value, (ushort)1);
+                }
+
+                public ushort NoOfWriters
+                {
+                    get => this.ReadDataUShort(32UL, (ushort)1);
+                    set => this.WriteData(32UL, value, (ushort)1);
+                }
+
+                public ListOfTextSerializer ReaderSrts
+                {
+                    get => BuildPointer<ListOfTextSerializer>(1);
+                    set => Link(1, value);
+                }
+
+                public ListOfTextSerializer WriterSrts
+                {
+                    get => BuildPointer<ListOfTextSerializer>(2);
+                    set => Link(2, value);
+                }
+
+                public ushort BufferSize
+                {
+                    get => this.ReadDataUShort(48UL, (ushort)1);
+                    set => this.WriteData(48UL, value, (ushort)1);
+                }
+            }
+        }
+
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xde5975c83de2b10cUL)]
+        public class Result_Create : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xde5975c83de2b10cUL;
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                StartupInfos = reader.StartupInfos?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Fbp.Channel<object>.StartupInfo>(_));
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.StartupInfos.Init(StartupInfos, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults()
+            {
+            }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo> StartupInfos
+            {
+                get;
+                set;
+            }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo.READER> StartupInfos => ctx.ReadList(0).Cast(Mas.Schema.Fbp.Channel<object>.StartupInfo.READER.create);
+                public bool HasStartupInfos => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Fbp.Channel<object>.StartupInfo.WRITER> StartupInfos
+                {
+                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Channel<object>.StartupInfo.WRITER>>(0);
+                    set => Link(0, value);
+                }
+            }
+        }
+    }
+
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xece0efa9a922d4a8UL)]
     public class PortInfos : ICapnpSerializable
     {
@@ -3312,7 +3592,7 @@ namespace Mas.Schema.Fbp
         static readonly MemberAccessPath Path_mas_schema_fbp_ComponentService_component_Comp_Run = new MemberAccessPath(0U, 3U);
         public static Mas.Schema.Fbp.Component.IRunnable Comp_Run(this Task<Mas.Schema.Fbp.Component> task)
         {
-            async Task<IDisposable> AwaitProxy() => (await task).Run;
+            async Task<IDisposable> AwaitProxy() => (await task).Comp?.Run;
             return (Mas.Schema.Fbp.Component.IRunnable)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Component.IRunnable>(Impatient.Access(task, Path_mas_schema_fbp_ComponentService_component_Comp_Run, AwaitProxy()));
         }
     }
