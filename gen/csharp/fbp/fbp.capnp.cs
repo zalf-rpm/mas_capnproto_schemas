@@ -3592,7 +3592,7 @@ namespace Mas.Schema.Fbp
         static readonly MemberAccessPath Path_mas_schema_fbp_ComponentService_component_Comp_Run = new MemberAccessPath(0U, 3U);
         public static Mas.Schema.Fbp.Component.IRunnable Comp_Run(this Task<Mas.Schema.Fbp.Component> task)
         {
-            async Task<IDisposable> AwaitProxy() => (await task).Comp?.Run;
+            async Task<IDisposable> AwaitProxy() => (await task).Run;
             return (Mas.Schema.Fbp.Component.IRunnable)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Component.IRunnable>(Impatient.Access(task, Path_mas_schema_fbp_ComponentService_component_Comp_Run, AwaitProxy()));
         }
     }
