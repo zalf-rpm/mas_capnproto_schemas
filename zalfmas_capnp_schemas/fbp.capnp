@@ -73,7 +73,7 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
     # sturdy references to the writers
   }
 
-  interface Reader $Cxx.name("ChanReader") {
+  interface Reader extends(Common.Identifiable, Persistent) $Cxx.name("ChanReader") {
     read          @0 () -> Msg;
     # read blocking until message is available
 
@@ -84,7 +84,7 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
     # close this reading end of the channel
   }
 
-  interface Writer $Cxx.name("ChanWriter") {
+  interface Writer extends(Common.Identifiable, Persistent) $Cxx.name("ChanWriter") {
     write           @0 Msg;
     # write blocking until message is written
 

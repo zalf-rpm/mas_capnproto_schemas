@@ -1614,7 +1614,9 @@ private:
 #if !CAPNP_LITE
 template <typename V>
 class Channel<V>::ChanReader::Client
-    : public virtual ::capnp::Capability::Client {
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client,
+      public virtual  ::mas::schema::persistence::Persistent::Client {
 public:
   typedef ChanReader Calls;
   typedef ChanReader Reads;
@@ -1649,7 +1651,9 @@ protected:
 
 template <typename V>
 class Channel<V>::ChanReader::Server
-    : public virtual ::capnp::Capability::Server {
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server,
+      public virtual  ::mas::schema::persistence::Persistent::Server {
 public:
   typedef ChanReader Serves;
 
@@ -2020,7 +2024,9 @@ private:
 #if !CAPNP_LITE
 template <typename V>
 class Channel<V>::ChanWriter::Client
-    : public virtual ::capnp::Capability::Client {
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client,
+      public virtual  ::mas::schema::persistence::Persistent::Client {
 public:
   typedef ChanWriter Calls;
   typedef ChanWriter Reads;
@@ -2055,7 +2061,9 @@ protected:
 
 template <typename V>
 class Channel<V>::ChanWriter::Server
-    : public virtual ::capnp::Capability::Server {
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server,
+      public virtual  ::mas::schema::persistence::Persistent::Server {
 public:
   typedef ChanWriter Serves;
 
@@ -5958,6 +5966,10 @@ template <typename V>
   switch (interfaceId) {
     case 0x8bc69192f3bc97ccull:
       return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    case 0xc1a7daa0dc36cb65ull:
+      return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("fbp.capnp:Channel.Reader", interfaceId);
   }
@@ -6237,6 +6249,10 @@ template <typename V>
   switch (interfaceId) {
     case 0xf7fec613b4a8c79full:
       return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    case 0xc1a7daa0dc36cb65ull:
+      return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("fbp.capnp:Channel.Writer", interfaceId);
   }
