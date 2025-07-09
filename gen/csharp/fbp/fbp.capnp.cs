@@ -738,7 +738,7 @@ namespace Mas.Schema.Fbp
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8bc69192f3bc97ccUL), Proxy(typeof(Channel<>.Reader_Proxy)), Skeleton(typeof(Channel<>.Reader_Skeleton))]
-        public interface IReader : IDisposable
+        public interface IReader : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
         {
             Task<Mas.Schema.Fbp.Channel<TV>.Msg> Read(CancellationToken cancellationToken_ = default);
             Task Close(CancellationToken cancellationToken_ = default);
@@ -795,6 +795,30 @@ namespace Mas.Schema.Fbp
                 }
 
                 );
+            }
+
+            public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
+            {
+                var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Persistent.SaveParams.WRITER>();
+                arg_?.serialize(in_);
+                using (var d_ = await Call(13954362354854972261UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Persistent.SaveResults>(d_);
+                    return r_;
+                }
+            }
+
+            public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+            {
+                var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+                var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
+                {};
+                arg_?.serialize(in_);
+                using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                    return r_;
+                }
             }
         }
 
@@ -1032,7 +1056,7 @@ namespace Mas.Schema.Fbp
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf7fec613b4a8c79fUL), Proxy(typeof(Channel<>.Writer_Proxy)), Skeleton(typeof(Channel<>.Writer_Skeleton))]
-        public interface IWriter : IDisposable
+        public interface IWriter : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
         {
             Task Write(Mas.Schema.Fbp.Channel<TV>.Msg arg_, CancellationToken cancellationToken_ = default);
             Task Close(CancellationToken cancellationToken_ = default);
@@ -1074,6 +1098,30 @@ namespace Mas.Schema.Fbp
                 {
                     var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Writer.Result_WriteIfSpace>(d_);
                     return (r_.Success);
+                }
+            }
+
+            public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(Mas.Schema.Persistence.Persistent.SaveParams arg_, CancellationToken cancellationToken_ = default)
+            {
+                var in_ = SerializerState.CreateForRpc<Mas.Schema.Persistence.Persistent.SaveParams.WRITER>();
+                arg_?.serialize(in_);
+                using (var d_ = await Call(13954362354854972261UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Persistence.Persistent.SaveResults>(d_);
+                    return r_;
+                }
+            }
+
+            public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+            {
+                var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+                var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
+                {};
+                arg_?.serialize(in_);
+                using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                    return r_;
                 }
             }
         }
