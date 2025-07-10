@@ -807,7 +807,7 @@ struct Component::Runnable::StartParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(deb75f08b2540532, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(deb75f08b2540532, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -4179,6 +4179,9 @@ public:
   inline bool hasPortInfosReaderSr() const;
   inline  ::capnp::Text::Reader getPortInfosReaderSr() const;
 
+  inline bool hasName() const;
+  inline  ::capnp::Text::Reader getName() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -4213,6 +4216,13 @@ public:
   inline  ::capnp::Text::Builder initPortInfosReaderSr(unsigned int size);
   inline void adoptPortInfosReaderSr(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownPortInfosReaderSr();
+
+  inline bool hasName();
+  inline  ::capnp::Text::Builder getName();
+  inline void setName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initName(unsigned int size);
+  inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownName();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -7775,6 +7785,40 @@ inline void Component::Runnable::StartParams::Builder::adoptPortInfosReaderSr(
 inline ::capnp::Orphan< ::capnp::Text> Component::Runnable::StartParams::Builder::disownPortInfosReaderSr() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Component::Runnable::StartParams::Reader::hasName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Component::Runnable::StartParams::Builder::hasName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Component::Runnable::StartParams::Reader::getName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Component::Runnable::StartParams::Builder::getName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void Component::Runnable::StartParams::Builder::setName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Component::Runnable::StartParams::Builder::initName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void Component::Runnable::StartParams::Builder::adoptName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Component::Runnable::StartParams::Builder::disownName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline bool Component::Runnable::StartResults::Reader::getSuccess() const {

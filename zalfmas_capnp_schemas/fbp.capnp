@@ -154,9 +154,10 @@ struct Component {
     interface Runnable extends(Common.Identifiable) {
       # interface to run remote FBP component
 
-      start @0 (portInfosReaderSr :Text) -> (success :Bool);
+      start @0 (portInfosReaderSr :Text, name :Text) -> (success :Bool);
       # start component with a sturdy ref to a reader of PortInfos
       # the component will use the port infos to connect to the channels
+      # and given an optional nam
 
       stop  @1 () -> (success :Bool);
       # stop the component

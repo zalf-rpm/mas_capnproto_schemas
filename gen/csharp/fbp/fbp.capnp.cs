@@ -2652,18 +2652,18 @@ namespace Mas.Schema.Fbp
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcb17668f2d39c70fUL), Proxy(typeof(Runnable_Proxy)), Skeleton(typeof(Runnable_Skeleton))]
         public interface IRunnable : Mas.Schema.Common.IIdentifiable
         {
-            Task<bool> Start(string portInfosReaderSr, CancellationToken cancellationToken_ = default);
+            Task<bool> Start(string portInfosReaderSr, string name, CancellationToken cancellationToken_ = default);
             Task<bool> Stop(CancellationToken cancellationToken_ = default);
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcb17668f2d39c70fUL)]
         public class Runnable_Proxy : Proxy, IRunnable
         {
-            public async Task<bool> Start(string portInfosReaderSr, CancellationToken cancellationToken_ = default)
+            public async Task<bool> Start(string portInfosReaderSr, string name, CancellationToken cancellationToken_ = default)
             {
                 var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Params_Start.WRITER>();
                 var arg_ = new Mas.Schema.Fbp.Component.Runnable.Params_Start()
-                {PortInfosReaderSr = portInfosReaderSr};
+                {PortInfosReaderSr = portInfosReaderSr, Name = name};
                 arg_?.serialize(in_);
                 using (var d_ = await Call(14634278279288833807UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
                 {
@@ -2713,7 +2713,7 @@ namespace Mas.Schema.Fbp
                 using (d_)
                 {
                     var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Component.Runnable.Params_Start>(d_);
-                    return Impatient.MaybeTailCall(Impl.Start(in_.PortInfosReaderSr, cancellationToken_), success =>
+                    return Impatient.MaybeTailCall(Impl.Start(in_.PortInfosReaderSr, in_.Name, cancellationToken_), success =>
                     {
                         var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Result_Start.WRITER>();
                         var r_ = new Mas.Schema.Fbp.Component.Runnable.Result_Start{Success = success};
@@ -2752,12 +2752,14 @@ namespace Mas.Schema.Fbp
                 {
                     var reader = READER.create(arg_);
                     PortInfosReaderSr = reader.PortInfosReaderSr;
+                    Name = reader.Name;
                     applyDefaults();
                 }
 
                 public void serialize(WRITER writer)
                 {
                     writer.PortInfosReaderSr = PortInfosReaderSr;
+                    writer.Name = Name;
                 }
 
                 void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2775,6 +2777,12 @@ namespace Mas.Schema.Fbp
                     set;
                 }
 
+                public string Name
+                {
+                    get;
+                    set;
+                }
+
                 public struct READER
                 {
                     readonly DeserializerState ctx;
@@ -2787,19 +2795,26 @@ namespace Mas.Schema.Fbp
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
                     public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                     public string PortInfosReaderSr => ctx.ReadText(0, null);
+                    public string Name => ctx.ReadText(1, null);
                 }
 
                 public class WRITER : SerializerState
                 {
                     public WRITER()
                     {
-                        this.SetStruct(0, 1);
+                        this.SetStruct(0, 2);
                     }
 
                     public string PortInfosReaderSr
                     {
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
+                    }
+
+                    public string Name
+                    {
+                        get => this.ReadText(1, null);
+                        set => this.WriteText(1, value, null);
                     }
                 }
             }
