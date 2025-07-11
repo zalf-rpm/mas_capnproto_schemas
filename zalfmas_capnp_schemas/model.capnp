@@ -13,7 +13,7 @@ using TimeSeries = import "climate.capnp".TimeSeries;
 using SoilProfile = import "soil.capnp".Profile;
 using MgmtEvent = import "management.capnp".Event;
 using Persistent = import "persistence.capnp".Persistent;
-using Stopable = import "service.capnp".Stopable;
+using Stoppable = import "service.capnp".Stoppable;
 
 struct XYResult {
   xs @0 :List(Float64); # x axis values
@@ -70,7 +70,7 @@ struct Env(RestInput) {
 }
 
 
-interface EnvInstance(RestInput, Output) extends(Identifiable, Persistent, Stopable) {
+interface EnvInstance(RestInput, Output) extends(Identifiable, Persistent, Stoppable) {
   # an interface to run a model against an environment of input data
 
   run @0 (env :Env(RestInput)) -> (result :Output);

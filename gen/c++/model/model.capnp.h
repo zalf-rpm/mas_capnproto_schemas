@@ -1314,7 +1314,7 @@ class EnvInstance<RestInput, Output>::Client
     : public virtual ::capnp::Capability::Client,
       public virtual  ::mas::schema::common::Identifiable::Client,
       public virtual  ::mas::schema::persistence::Persistent::Client,
-      public virtual  ::mas::schema::service::Stopable::Client {
+      public virtual  ::mas::schema::service::Stoppable::Client {
 public:
   typedef EnvInstance Calls;
   typedef EnvInstance Reads;
@@ -1348,7 +1348,7 @@ class EnvInstance<RestInput, Output>::Server
     : public virtual ::capnp::Capability::Server,
       public virtual  ::mas::schema::common::Identifiable::Server,
       public virtual  ::mas::schema::persistence::Persistent::Server,
-      public virtual  ::mas::schema::service::Stopable::Server {
+      public virtual  ::mas::schema::service::Stoppable::Server {
 public:
   typedef EnvInstance Serves;
 
@@ -3333,8 +3333,8 @@ template <typename RestInput, typename Output>
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
-    case 0xe9d1be2a6e9016e5ull:
-      return  ::mas::schema::service::Stopable::Server::dispatchCallInternal(methodId, context);
+    case 0xcd5f6458232e9276ull:
+      return  ::mas::schema::service::Stoppable::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("model.capnp:EnvInstance", interfaceId);
   }
@@ -3792,8 +3792,8 @@ template <typename RestInput, typename Output>
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
-    case 0xe9d1be2a6e9016e5ull:
-      return  ::mas::schema::service::Stopable::Server::dispatchCallInternal(methodId, context);
+    case 0xcd5f6458232e9276ull:
+      return  ::mas::schema::service::Stoppable::Server::dispatchCallInternal(methodId, context);
     default:
       return internalUnimplemented("model.capnp:EnvInstanceProxy", interfaceId);
   }

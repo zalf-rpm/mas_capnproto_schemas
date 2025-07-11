@@ -653,7 +653,7 @@ static const ::capnp::_::AlignedData<50> b_a5feedafa5ec5c4a = {
       0,   0,   0,   0,   0,   0,   0,   0,
     101, 203,  54, 220, 160, 218, 167, 193,
       0,   0,   0,   0,   0,   0,   0,   0,
-    229,  22, 144, 110,  42, 190, 209, 233,
+    118, 146,  46,  35,  88, 100,  95, 205,
       0,   0,   0,   0,   0,   0,   0,   0,
       8,   0,   0,   0,   0,   0,   1,   0,
       5,   0,   0,   0,  82,   0,   0,   0,
@@ -669,7 +669,7 @@ static const ::capnp::_::RawSchema* const d_a5feedafa5ec5c4a[] = {
   &s_a931ae5cae90ece0,
   &s_b2afd1cb599c48d5,
   &s_c1a7daa0dc36cb65,
-  &s_e9d1be2a6e9016e5,
+  &s_cd5f6458232e9276,
 };
 static const uint16_t m_a5feedafa5ec5c4a[] = {0};
 KJ_CONSTEXPR(const) ::capnp::_::RawBrandedSchema::Dependency bd_a5feedafa5ec5c4a[] = {

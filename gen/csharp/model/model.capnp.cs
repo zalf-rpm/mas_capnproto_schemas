@@ -696,7 +696,7 @@ namespace Mas.Schema.Model
     }
 
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa5feedafa5ec5c4aUL), Proxy(typeof(EnvInstance_Proxy<, >)), Skeleton(typeof(EnvInstance_Skeleton<, >))]
-    public interface IEnvInstance<TRestInput, TOutput> : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent, Mas.Schema.Service.IStopable where TRestInput : class where TOutput : class
+    public interface IEnvInstance<TRestInput, TOutput> : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent, Mas.Schema.Service.IStoppable where TRestInput : class where TOutput : class
     {
         Task<TOutput> Run(Mas.Schema.Model.Env<TRestInput> env, CancellationToken cancellationToken_ = default);
     }
@@ -724,13 +724,13 @@ namespace Mas.Schema.Model
 
         public async Task Stop(CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
-            var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
+            var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
             {};
             arg_?.serialize(in_);
-            using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stopable.Result_Stop>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
                 return;
             }
         }
@@ -959,13 +959,13 @@ namespace Mas.Schema.Model
 
         public async Task Stop(CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
-            var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
+            var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
             {};
             arg_?.serialize(in_);
-            using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stopable.Result_Stop>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
                 return;
             }
         }
@@ -1025,7 +1025,7 @@ namespace Mas.Schema.Model
     public static class EnvInstanceProxy<TRestInput, TOutput>
         where TRestInput : class where TOutput : class
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc727892bd5c66f88UL), Proxy(typeof(EnvInstanceProxy<object, object>.Unregister_Proxy)), Skeleton(typeof(EnvInstanceProxy<object, object>.Unregister_Skeleton))]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc727892bd5c66f88UL), Proxy(typeof(Unregister_Proxy)), Skeleton(typeof(Unregister_Skeleton))]
         public interface IUnregister : IDisposable
         {
             Task<bool> Unregister(CancellationToken cancellationToken_ = default);
