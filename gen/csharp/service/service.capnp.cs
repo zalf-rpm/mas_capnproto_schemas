@@ -1249,13 +1249,13 @@ namespace Mas.Schema.Service
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd5f6458232e9276UL), Proxy(typeof(Stoppable_Proxy)), Skeleton(typeof(Stoppable_Skeleton))]
     public interface IStoppable : IDisposable
     {
-        Task Stop(CancellationToken cancellationToken_ = default);
+        Task<bool> Stop(CancellationToken cancellationToken_ = default);
     }
 
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd5f6458232e9276UL)]
     public class Stoppable_Proxy : Proxy, IStoppable
     {
-        public async Task Stop(CancellationToken cancellationToken_ = default)
+        public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
@@ -1264,7 +1264,7 @@ namespace Mas.Schema.Service
             using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
-                return;
+                return (r_.Success);
             }
         }
     }
@@ -1278,13 +1278,19 @@ namespace Mas.Schema.Service
         }
 
         public override ulong InterfaceId => 14798657230272893558UL;
-        async Task<AnswerOrCounterquestion> Stop(DeserializerState d_, CancellationToken cancellationToken_)
+        Task<AnswerOrCounterquestion> Stop(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
-                await Impl.Stop(cancellationToken_);
-                var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Result_Stop.WRITER>();
-                return s_;
+                return Impatient.MaybeTailCall(Impl.Stop(cancellationToken_), success =>
+                {
+                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Result_Stop.WRITER>();
+                    var r_ = new Mas.Schema.Service.Stoppable.Result_Stop{Success = success};
+                    r_.serialize(s_);
+                    return s_;
+                }
+
+                );
             }
         }
     }
@@ -1343,11 +1349,13 @@ namespace Mas.Schema.Service
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
+                Success = reader.Success;
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
+                writer.Success = Success;
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -1357,6 +1365,12 @@ namespace Mas.Schema.Service
 
             public void applyDefaults()
             {
+            }
+
+            public bool Success
+            {
+                get;
+                set;
             }
 
             public struct READER
@@ -1370,13 +1384,20 @@ namespace Mas.Schema.Service
                 public static READER create(DeserializerState ctx) => new READER(ctx);
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+                public bool Success => ctx.ReadDataBool(0UL, false);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 0);
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Success
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
                 }
             }
         }

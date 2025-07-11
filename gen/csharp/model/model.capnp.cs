@@ -722,7 +722,7 @@ namespace Mas.Schema.Model
             );
         }
 
-        public async Task Stop(CancellationToken cancellationToken_ = default)
+        public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
@@ -731,7 +731,7 @@ namespace Mas.Schema.Model
             using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
-                return;
+                return (r_.Success);
             }
         }
 
@@ -957,7 +957,7 @@ namespace Mas.Schema.Model
             );
         }
 
-        public async Task Stop(CancellationToken cancellationToken_ = default)
+        public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
@@ -966,7 +966,7 @@ namespace Mas.Schema.Model
             using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
-                return;
+                return (r_.Success);
             }
         }
 

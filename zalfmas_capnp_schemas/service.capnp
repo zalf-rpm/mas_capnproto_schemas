@@ -67,7 +67,7 @@ interface Factory(Payload) extends(Common.Identifiable) {
 
 interface Stoppable {
   # a capability to stop something
-  stop @0 () -> ();
+  stop @0 () -> (success :Bool);
 }
 
 #interface Cancelable {

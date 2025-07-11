@@ -423,7 +423,7 @@ struct Stoppable::StopResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(d2c46584c294cfd8, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(d2c46584c294cfd8, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2088,6 +2088,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  inline bool getSuccess() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -2115,6 +2117,9 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  inline bool getSuccess();
+  inline void setSuccess(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2913,6 +2918,20 @@ inline  ::mas::schema::service::Stoppable::Client& Stoppable::Client::operator=(
 }
 
 #endif  // !CAPNP_LITE
+inline bool Stoppable::StopResults::Reader::getSuccess() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Stoppable::StopResults::Builder::getSuccess() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Stoppable::StopResults::Builder::setSuccess(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
 }  // namespace
 }  // namespace
 }  // namespace

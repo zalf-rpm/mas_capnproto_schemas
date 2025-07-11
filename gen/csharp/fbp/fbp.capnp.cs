@@ -737,7 +737,7 @@ namespace Mas.Schema.Fbp
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8bc69192f3bc97ccUL), Proxy(typeof(Channel<>.Reader_Proxy)), Skeleton(typeof(Channel<>.Reader_Skeleton))]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8bc69192f3bc97ccUL), Proxy(typeof(Reader_Proxy)), Skeleton(typeof(Reader_Skeleton))]
         public interface IReader : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
         {
             Task<Mas.Schema.Fbp.Channel<TV>.Msg> Read(CancellationToken cancellationToken_ = default);
@@ -1055,7 +1055,7 @@ namespace Mas.Schema.Fbp
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf7fec613b4a8c79fUL), Proxy(typeof(Channel<>.Writer_Proxy)), Skeleton(typeof(Channel<>.Writer_Skeleton))]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf7fec613b4a8c79fUL), Proxy(typeof(Writer_Proxy)), Skeleton(typeof(Writer_Skeleton))]
         public interface IWriter : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
         {
             Task Write(Mas.Schema.Fbp.Channel<TV>.Msg arg_, CancellationToken cancellationToken_ = default);
@@ -3665,8 +3665,7 @@ namespace Mas.Schema.Fbp
     public static partial class PipeliningSupportExtensions_fbp
     {
         static readonly MemberAccessPath Path_mas_schema_fbp_Channel_endpoints_W = new MemberAccessPath(1U);
-        public static Mas.Schema.Fbp.Channel<TV>.IWriter W<TV>(this Task<(Mas.Schema.Fbp.Channel<TV>.IReader, Mas.Schema.Fbp.Channel<TV>.IWriter)> task)
-        where TV : class
+        public static Mas.Schema.Fbp.Channel<TV>.IWriter W(this Task<(Mas.Schema.Fbp.Channel<TV>.IReader, Mas.Schema.Fbp.Channel<TV>.IWriter)> task)
         {
             async Task<IDisposable> AwaitProxy() => (await task).Item2;
             return (Mas.Schema.Fbp.Channel<TV>.IWriter)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Channel<TV>.IWriter>(Impatient.Access(task, Path_mas_schema_fbp_Channel_endpoints_W, AwaitProxy()));
@@ -3682,7 +3681,7 @@ namespace Mas.Schema.Fbp
         static readonly MemberAccessPath Path_mas_schema_fbp_ComponentService_component_Comp_Run = new MemberAccessPath(0U, 3U);
         public static Mas.Schema.Fbp.Component.IRunnable Comp_Run(this Task<Mas.Schema.Fbp.Component> task)
         {
-            async Task<IDisposable> AwaitProxy() => (await task).Run;
+            async Task<IDisposable> AwaitProxy() => (await task).Comp?.Run;
             return (Mas.Schema.Fbp.Component.IRunnable)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Component.IRunnable>(Impatient.Access(task, Path_mas_schema_fbp_ComponentService_component_Comp_Run, AwaitProxy()));
         }
     }
