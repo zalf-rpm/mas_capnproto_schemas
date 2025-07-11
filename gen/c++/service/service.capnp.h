@@ -41,9 +41,9 @@ CAPNP_DECLARE_SCHEMA(c2b88517ccaa9197);
 CAPNP_DECLARE_SCHEMA(b9816a53df7cb62e);
 CAPNP_DECLARE_SCHEMA(d4d567352ab3882a);
 CAPNP_DECLARE_SCHEMA(a962c127b5dccf05);
-CAPNP_DECLARE_SCHEMA(e9d1be2a6e9016e5);
-CAPNP_DECLARE_SCHEMA(d2e4f20669b7b705);
-CAPNP_DECLARE_SCHEMA(96368058e2cef1ac);
+CAPNP_DECLARE_SCHEMA(cd5f6458232e9276);
+CAPNP_DECLARE_SCHEMA(94af8fce16d48a92);
+CAPNP_DECLARE_SCHEMA(d2c46584c294cfd8);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -381,8 +381,8 @@ struct Factory<Payload>::ServiceInterfaceNamesResults {
   };
 };
 
-struct Stopable {
-  Stopable() = delete;
+struct Stoppable {
+  Stoppable() = delete;
 
 #if !CAPNP_LITE
   class Client;
@@ -394,13 +394,13 @@ struct Stopable {
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
-    CAPNP_DECLARE_INTERFACE_HEADER(e9d1be2a6e9016e5)
+    CAPNP_DECLARE_INTERFACE_HEADER(cd5f6458232e9276)
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
   };
   #endif  // !CAPNP_LITE
 };
 
-struct Stopable::StopParams {
+struct Stoppable::StopParams {
   StopParams() = delete;
 
   class Reader;
@@ -408,14 +408,14 @@ struct Stopable::StopParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(d2e4f20669b7b705, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(94af8fce16d48a92, 0, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
   };
 };
 
-struct Stopable::StopResults {
+struct Stoppable::StopResults {
   StopResults() = delete;
 
   class Reader;
@@ -423,7 +423,7 @@ struct Stopable::StopResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(96368058e2cef1ac, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(d2c46584c294cfd8, 0, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1948,11 +1948,11 @@ private:
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-class Stopable::Client
+class Stoppable::Client
     : public virtual ::capnp::Capability::Client {
 public:
-  typedef Stopable Calls;
-  typedef Stopable Reads;
+  typedef Stoppable Calls;
+  typedef Stoppable Reads;
 
   Client(decltype(nullptr));
   explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
@@ -1966,17 +1966,17 @@ public:
   Client& operator=(Client& other);
   Client& operator=(Client&& other);
 
-  ::capnp::Request< ::mas::schema::service::Stopable::StopParams,  ::mas::schema::service::Stopable::StopResults> stopRequest(
+  ::capnp::Request< ::mas::schema::service::Stoppable::StopParams,  ::mas::schema::service::Stoppable::StopResults> stopRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
 };
 
-class Stopable::Server
+class Stoppable::Server
     : public virtual ::capnp::Capability::Server {
 public:
-  typedef Stopable Serves;
+  typedef Stoppable Serves;
 
   ::capnp::Capability::Server::DispatchCallResult dispatchCall(
       uint64_t interfaceId, uint16_t methodId,
@@ -1984,14 +1984,14 @@ public:
       override;
 
 protected:
-  typedef  ::mas::schema::service::Stopable::StopParams StopParams;
-  typedef  ::mas::schema::service::Stopable::StopResults StopResults;
+  typedef  ::mas::schema::service::Stoppable::StopParams StopParams;
+  typedef  ::mas::schema::service::Stoppable::StopResults StopResults;
   typedef ::capnp::CallContext<StopParams, StopResults> StopContext;
   virtual ::kj::Promise<void> stop(StopContext context);
 
-  inline  ::mas::schema::service::Stopable::Client thisCap() {
+  inline  ::mas::schema::service::Stoppable::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
-        .template castAs< ::mas::schema::service::Stopable>();
+        .template castAs< ::mas::schema::service::Stoppable>();
   }
 
   ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
@@ -2000,7 +2000,7 @@ protected:
 };
 #endif  // !CAPNP_LITE
 
-class Stopable::StopParams::Reader {
+class Stoppable::StopParams::Reader {
 public:
   typedef StopParams Reads;
 
@@ -2029,7 +2029,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Stopable::StopParams::Builder {
+class Stoppable::StopParams::Builder {
 public:
   typedef StopParams Builds;
 
@@ -2055,7 +2055,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class Stopable::StopParams::Pipeline {
+class Stoppable::StopParams::Pipeline {
 public:
   typedef StopParams Pipelines;
 
@@ -2071,7 +2071,7 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Stopable::StopResults::Reader {
+class Stoppable::StopResults::Reader {
 public:
   typedef StopResults Reads;
 
@@ -2100,7 +2100,7 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Stopable::StopResults::Builder {
+class Stoppable::StopResults::Builder {
 public:
   typedef StopResults Builds;
 
@@ -2126,7 +2126,7 @@ private:
 };
 
 #if !CAPNP_LITE
-class Stopable::StopResults::Pipeline {
+class Stoppable::StopResults::Pipeline {
 public:
   typedef StopResults Pipelines;
 
@@ -2890,24 +2890,24 @@ const ::capnp::_::RawBrandedSchema Factory<Payload>::_capnpPrivate::specificBran
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-inline Stopable::Client::Client(decltype(nullptr))
+inline Stoppable::Client::Client(decltype(nullptr))
     : ::capnp::Capability::Client(nullptr) {}
-inline Stopable::Client::Client(
+inline Stoppable::Client::Client(
     ::kj::Own< ::capnp::ClientHook>&& hook)
     : ::capnp::Capability::Client(::kj::mv(hook)) {}
 template <typename _t, typename>
-inline Stopable::Client::Client(::kj::Own<_t>&& server)
+inline Stoppable::Client::Client(::kj::Own<_t>&& server)
     : ::capnp::Capability::Client(::kj::mv(server)) {}
 template <typename _t, typename>
-inline Stopable::Client::Client(::kj::Promise<_t>&& promise)
+inline Stoppable::Client::Client(::kj::Promise<_t>&& promise)
     : ::capnp::Capability::Client(::kj::mv(promise)) {}
-inline Stopable::Client::Client(::kj::Exception&& exception)
+inline Stoppable::Client::Client(::kj::Exception&& exception)
     : ::capnp::Capability::Client(::kj::mv(exception)) {}
-inline  ::mas::schema::service::Stopable::Client& Stopable::Client::operator=(Client& other) {
+inline  ::mas::schema::service::Stoppable::Client& Stoppable::Client::operator=(Client& other) {
   ::capnp::Capability::Client::operator=(other);
   return *this;
 }
-inline  ::mas::schema::service::Stopable::Client& Stopable::Client::operator=(Client&& other) {
+inline  ::mas::schema::service::Stoppable::Client& Stoppable::Client::operator=(Client&& other) {
   ::capnp::Capability::Client::operator=(kj::mv(other));
   return *this;
 }

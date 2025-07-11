@@ -1246,55 +1246,55 @@ namespace Mas.Schema.Service
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe9d1be2a6e9016e5UL), Proxy(typeof(Stopable_Proxy)), Skeleton(typeof(Stopable_Skeleton))]
-    public interface IStopable : IDisposable
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd5f6458232e9276UL), Proxy(typeof(Stoppable_Proxy)), Skeleton(typeof(Stoppable_Skeleton))]
+    public interface IStoppable : IDisposable
     {
         Task Stop(CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe9d1be2a6e9016e5UL)]
-    public class Stopable_Proxy : Proxy, IStopable
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd5f6458232e9276UL)]
+    public class Stoppable_Proxy : Proxy, IStoppable
     {
         public async Task Stop(CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Params_Stop.WRITER>();
-            var arg_ = new Mas.Schema.Service.Stopable.Params_Stop()
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Params_Stop.WRITER>();
+            var arg_ = new Mas.Schema.Service.Stoppable.Params_Stop()
             {};
             arg_?.serialize(in_);
-            using (var d_ = await Call(16848456770422576869UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (var d_ = await Call(14798657230272893558UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stopable.Result_Stop>(d_);
+                var r_ = CapnpSerializable.Create<Mas.Schema.Service.Stoppable.Result_Stop>(d_);
                 return;
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe9d1be2a6e9016e5UL)]
-    public class Stopable_Skeleton : Skeleton<IStopable>
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd5f6458232e9276UL)]
+    public class Stoppable_Skeleton : Skeleton<IStoppable>
     {
-        public Stopable_Skeleton()
+        public Stoppable_Skeleton()
         {
             SetMethodTable(Stop);
         }
 
-        public override ulong InterfaceId => 16848456770422576869UL;
+        public override ulong InterfaceId => 14798657230272893558UL;
         async Task<AnswerOrCounterquestion> Stop(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
                 await Impl.Stop(cancellationToken_);
-                var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stopable.Result_Stop.WRITER>();
+                var s_ = SerializerState.CreateForRpc<Mas.Schema.Service.Stoppable.Result_Stop.WRITER>();
                 return s_;
             }
         }
     }
 
-    public static class Stopable
+    public static class Stoppable
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd2e4f20669b7b705UL)]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x94af8fce16d48a92UL)]
         public class Params_Stop : ICapnpSerializable
         {
-            public const UInt64 typeId = 0xd2e4f20669b7b705UL;
+            public const UInt64 typeId = 0x94af8fce16d48a92UL;
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -1336,10 +1336,10 @@ namespace Mas.Schema.Service
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x96368058e2cef1acUL)]
+        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd2c46584c294cfd8UL)]
         public class Result_Stop : ICapnpSerializable
         {
-            public const UInt64 typeId = 0x96368058e2cef1acUL;
+            public const UInt64 typeId = 0xd2c46584c294cfd8UL;
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);

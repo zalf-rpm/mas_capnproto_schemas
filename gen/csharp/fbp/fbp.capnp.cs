@@ -2021,21 +2021,26 @@ namespace Mas.Schema.Fbp
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0cd6d829b810229UL), Proxy(typeof(StartChannelsService_Proxy)), Skeleton(typeof(StartChannelsService_Skeleton))]
     public interface IStartChannelsService : Mas.Schema.Common.IIdentifiable
     {
-        Task<IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>> Create(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default);
+        Task<(IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>, Mas.Schema.Service.IStoppable)> Start(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default);
     }
 
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0cd6d829b810229UL)]
     public class StartChannelsService_Proxy : Proxy, IStartChannelsService
     {
-        public async Task<IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>> Create(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default)
+        public Task<(IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>, Mas.Schema.Service.IStoppable)> Start(Mas.Schema.Fbp.StartChannelsService.Params arg_, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.StartChannelsService.Params.WRITER>();
             arg_?.serialize(in_);
-            using (var d_ = await Call(15045802337836794409UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            return Impatient.MakePipelineAware(Call(15045802337836794409UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Result_Create>(d_);
-                return (r_.StartupInfos);
+                using (d_)
+                {
+                    var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Result_Start>(d_);
+                    return (r_.StartupInfos, r_.Stop);
+                }
             }
+
+            );
         }
 
         public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
@@ -2057,18 +2062,18 @@ namespace Mas.Schema.Fbp
     {
         public StartChannelsService_Skeleton()
         {
-            SetMethodTable(Create);
+            SetMethodTable(Start);
         }
 
         public override ulong InterfaceId => 15045802337836794409UL;
-        Task<AnswerOrCounterquestion> Create(DeserializerState d_, CancellationToken cancellationToken_)
+        Task<AnswerOrCounterquestion> Start(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
-                return Impatient.MaybeTailCall(Impl.Create(CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Params>(d_), cancellationToken_), startupInfos =>
+                return Impatient.MaybeTailCall(Impl.Start(CapnpSerializable.Create<Mas.Schema.Fbp.StartChannelsService.Params>(d_), cancellationToken_), (startupInfos, stop) =>
                 {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.StartChannelsService.Result_Create.WRITER>();
-                    var r_ = new Mas.Schema.Fbp.StartChannelsService.Result_Create{StartupInfos = startupInfos};
+                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.StartChannelsService.Result_Start.WRITER>();
+                    var r_ = new Mas.Schema.Fbp.StartChannelsService.Result_Start{StartupInfos = startupInfos, Stop = stop};
                     r_.serialize(s_);
                     return s_;
                 }
@@ -2237,19 +2242,21 @@ namespace Mas.Schema.Fbp
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xde5975c83de2b10cUL)]
-        public class Result_Create : ICapnpSerializable
+        public class Result_Start : ICapnpSerializable
         {
             public const UInt64 typeId = 0xde5975c83de2b10cUL;
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 StartupInfos = reader.StartupInfos?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Fbp.Channel<object>.StartupInfo>(_));
+                Stop = reader.Stop;
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
                 writer.StartupInfos.Init(StartupInfos, (_s1, _v1) => _v1?.serialize(_s1));
+                writer.Stop = Stop;
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2262,6 +2269,12 @@ namespace Mas.Schema.Fbp
             }
 
             public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo> StartupInfos
+            {
+                get;
+                set;
+            }
+
+            public Mas.Schema.Service.IStoppable Stop
             {
                 get;
                 set;
@@ -2280,19 +2293,26 @@ namespace Mas.Schema.Fbp
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
                 public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo.READER> StartupInfos => ctx.ReadList(0).Cast(Mas.Schema.Fbp.Channel<object>.StartupInfo.READER.create);
                 public bool HasStartupInfos => ctx.IsStructFieldNonNull(0);
+                public Mas.Schema.Service.IStoppable Stop => ctx.ReadCap<Mas.Schema.Service.IStoppable>(1);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 1);
+                    this.SetStruct(0, 2);
                 }
 
                 public ListOfStructsSerializer<Mas.Schema.Fbp.Channel<object>.StartupInfo.WRITER> StartupInfos
                 {
                     get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Channel<object>.StartupInfo.WRITER>>(0);
                     set => Link(0, value);
+                }
+
+                public Mas.Schema.Service.IStoppable Stop
+                {
+                    get => ReadCap<Mas.Schema.Service.IStoppable>(1);
+                    set => LinkObject(1, value);
                 }
             }
         }
@@ -3650,6 +3670,13 @@ namespace Mas.Schema.Fbp
         {
             async Task<IDisposable> AwaitProxy() => (await task).Item2;
             return (Mas.Schema.Fbp.Channel<TV>.IWriter)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Channel<TV>.IWriter>(Impatient.Access(task, Path_mas_schema_fbp_Channel_endpoints_W, AwaitProxy()));
+        }
+
+        static readonly MemberAccessPath Path_mas_schema_fbp_StartChannelsService_start_Stop = new MemberAccessPath(1U);
+        public static Mas.Schema.Service.IStoppable Stop(this Task<(IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo>, Mas.Schema.Service.IStoppable)> task)
+        {
+            async Task<IDisposable> AwaitProxy() => (await task).Item2;
+            return (Mas.Schema.Service.IStoppable)CapabilityReflection.CreateProxy<Mas.Schema.Service.IStoppable>(Impatient.Access(task, Path_mas_schema_fbp_StartChannelsService_start_Stop, AwaitProxy()));
         }
 
         static readonly MemberAccessPath Path_mas_schema_fbp_ComponentService_component_Comp_Run = new MemberAccessPath(0U, 3U);

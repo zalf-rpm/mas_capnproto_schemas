@@ -17,6 +17,7 @@
 
 #include "common.capnp.h"
 #include "persistence.capnp.h"
+#include "service.capnp.h"
 
 CAPNP_BEGIN_HEADER
 
@@ -684,7 +685,7 @@ struct StartChannelsService {
 #endif  // !CAPNP_LITE
 
   struct Params;
-  struct CreateResults;
+  struct StartResults;
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
@@ -709,15 +710,15 @@ struct StartChannelsService::Params {
   };
 };
 
-struct StartChannelsService::CreateResults {
-  CreateResults() = delete;
+struct StartChannelsService::StartResults {
+  StartResults() = delete;
 
   class Reader;
   class Builder;
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(de5975c83de2b10c, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(de5975c83de2b10c, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -3539,7 +3540,7 @@ public:
   Client& operator=(Client& other);
   Client& operator=(Client&& other);
 
-  ::capnp::Request< ::mas::schema::fbp::StartChannelsService::Params,  ::mas::schema::fbp::StartChannelsService::CreateResults> createRequest(
+  ::capnp::Request< ::mas::schema::fbp::StartChannelsService::Params,  ::mas::schema::fbp::StartChannelsService::StartResults> startRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
@@ -3558,9 +3559,9 @@ public:
       override;
 
 protected:
-  typedef  ::mas::schema::fbp::StartChannelsService::CreateResults CreateResults;
-  typedef ::capnp::CallContext< ::mas::schema::fbp::StartChannelsService::Params, CreateResults> CreateContext;
-  virtual ::kj::Promise<void> create(CreateContext context);
+  typedef  ::mas::schema::fbp::StartChannelsService::StartResults StartResults;
+  typedef ::capnp::CallContext< ::mas::schema::fbp::StartChannelsService::Params, StartResults> StartContext;
+  virtual ::kj::Promise<void> start(StartContext context);
 
   inline  ::mas::schema::fbp::StartChannelsService::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
@@ -3696,9 +3697,9 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class StartChannelsService::CreateResults::Reader {
+class StartChannelsService::StartResults::Reader {
 public:
-  typedef CreateResults Reads;
+  typedef StartResults Reads;
 
   Reader() = default;
   inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
@@ -3716,6 +3717,11 @@ public:
   inline bool hasStartupInfos() const;
   inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader getStartupInfos() const;
 
+  inline bool hasStop() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::service::Stoppable::Client getStop() const;
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -3728,9 +3734,9 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class StartChannelsService::CreateResults::Builder {
+class StartChannelsService::StartResults::Builder {
 public:
-  typedef CreateResults Builds;
+  typedef StartResults Builds;
 
   Builder() = delete;  // Deleted to discourage incorrect usage.
                        // You can explicitly initialize to nullptr instead.
@@ -3751,6 +3757,15 @@ public:
   inline void adoptStartupInfos(::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>&& value);
   inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>> disownStartupInfos();
 
+  inline bool hasStop();
+#if !CAPNP_LITE
+  inline  ::mas::schema::service::Stoppable::Client getStop();
+  inline void setStop( ::mas::schema::service::Stoppable::Client&& value);
+  inline void setStop( ::mas::schema::service::Stoppable::Client& value);
+  inline void adoptStop(::capnp::Orphan< ::mas::schema::service::Stoppable>&& value);
+  inline ::capnp::Orphan< ::mas::schema::service::Stoppable> disownStop();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -3761,14 +3776,15 @@ private:
 };
 
 #if !CAPNP_LITE
-class StartChannelsService::CreateResults::Pipeline {
+class StartChannelsService::StartResults::Pipeline {
 public:
-  typedef CreateResults Pipelines;
+  typedef StartResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::service::Stoppable::Client getStop();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -7310,39 +7326,78 @@ inline void StartChannelsService::Params::Builder::setBufferSize( ::uint16_t val
       ::capnp::bounded<3>() * ::capnp::ELEMENTS, value, 1u);
 }
 
-inline bool StartChannelsService::CreateResults::Reader::hasStartupInfos() const {
+inline bool StartChannelsService::StartResults::Reader::hasStartupInfos() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool StartChannelsService::CreateResults::Builder::hasStartupInfos() {
+inline bool StartChannelsService::StartResults::Builder::hasStartupInfos() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader StartChannelsService::CreateResults::Reader::getStartupInfos() const {
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader StartChannelsService::StartResults::Reader::getStartupInfos() const {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::CreateResults::Builder::getStartupInfos() {
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::StartResults::Builder::getStartupInfos() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void StartChannelsService::CreateResults::Builder::setStartupInfos( ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader value) {
+inline void StartChannelsService::StartResults::Builder::setStartupInfos( ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::CreateResults::Builder::initStartupInfos(unsigned int size) {
+inline  ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>::Builder StartChannelsService::StartResults::Builder::initStartupInfos(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void StartChannelsService::CreateResults::Builder::adoptStartupInfos(
+inline void StartChannelsService::StartResults::Builder::adoptStartupInfos(
     ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>> StartChannelsService::CreateResults::Builder::disownStartupInfos() {
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>> StartChannelsService::StartResults::Builder::disownStartupInfos() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Channel< ::capnp::AnyPointer>::StartupInfo,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
+
+inline bool StartChannelsService::StartResults::Reader::hasStop() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool StartChannelsService::StartResults::Builder::hasStop() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::service::Stoppable::Client StartChannelsService::StartResults::Reader::getStop() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::service::Stoppable::Client StartChannelsService::StartResults::Builder::getStop() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::service::Stoppable::Client StartChannelsService::StartResults::Pipeline::getStop() {
+  return  ::mas::schema::service::Stoppable::Client(_typeless.getPointerField(1).asCap());
+}
+inline void StartChannelsService::StartResults::Builder::setStop( ::mas::schema::service::Stoppable::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void StartChannelsService::StartResults::Builder::setStop( ::mas::schema::service::Stoppable::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), cap);
+}
+inline void StartChannelsService::StartResults::Builder::adoptStop(
+    ::capnp::Orphan< ::mas::schema::service::Stoppable>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::service::Stoppable> StartChannelsService::StartResults::Builder::disownStop() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::service::Stoppable>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
 
 inline bool PortInfos::Reader::hasInPorts() const {
   return !_reader.getPointerField(

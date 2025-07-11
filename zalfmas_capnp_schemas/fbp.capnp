@@ -10,6 +10,7 @@ $Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/fbp"
 using Persistent = import "persistence.capnp".Persistent;
 using SturdyRef = import "persistence.capnp".SturdyRef;
 using Common = import "common.capnp";
+using Stoppable = import "service.capnp".Stoppable;
 
 struct IP {
   # an FBP information packet
@@ -57,19 +58,19 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
   struct StartupInfo {
     # information about the startup of a channel
 
-    bufferSize @0 :UInt64;
+    bufferSize      @0 :UInt64;
     # size of the buffer
 
-    closeSemantics @1 :CloseSemantics;
+    closeSemantics  @1 :CloseSemantics;
     # semantics of closing the channel
 
-    channelSR @2 :Text;
+    channelSR       @2 :Text;
     # sturdy reference to the channel
 
-    readerSRs @3 :List(Text);
+    readerSRs       @3 :List(Text);
     # sturdy references to the readers
 
-    writerSRs @4 :List(Text);
+    writerSRs       @4 :List(Text);
     # sturdy references to the writers
   }
 
@@ -127,8 +128,7 @@ interface StartChannelsService extends(Common.Identifiable) {
         writerSrts      @5 :List(Text); # fixed sturdy ref tokens per writer
         bufferSize      @6 :UInt16 = 1; # how large is the buffer supposed to be
     }
-
-    create @0 Params -> (startupInfos :List(Channel.StartupInfo));
+    start @0 Params -> (startupInfos :List(Channel.StartupInfo), stop :Stoppable);
     # create one (or multiple with same properties) channel and return reader and writer sturdy refs to the channel(s)
 }
 

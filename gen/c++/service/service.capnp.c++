@@ -933,14 +933,14 @@ const ::capnp::_::RawSchema s_a962c127b5dccf05 = {
   0, 1, i_a962c127b5dccf05, nullptr, nullptr, { &s_a962c127b5dccf05, nullptr, nullptr, 0, 0, nullptr }, false
 };
 #endif  // !CAPNP_LITE
-static const ::capnp::_::AlignedData<28> b_e9d1be2a6e9016e5 = {
+static const ::capnp::_::AlignedData<28> b_cd5f6458232e9276 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
-    229,  22, 144, 110,  42, 190, 209, 233,
+    118, 146,  46,  35,  88, 100,  95, 205,
      14,   0,   0,   0,   3,   0,   0,   0,
     192, 198, 187, 210, 152, 223,  42, 245,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     21,   0,   0,   0, 186,   0,   0,   0,
+     21,   0,   0,   0, 194,   0,   0,   0,
      29,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      25,   0,   0,   0,  71,   0,   0,   0,
@@ -948,12 +948,12 @@ static const ::capnp::_::AlignedData<28> b_e9d1be2a6e9016e5 = {
       0,   0,   0,   0,   0,   0,   0,   0,
     115, 101, 114, 118, 105,  99, 101,  46,
      99,  97, 112, 110, 112,  58,  83, 116,
-    111, 112,  97,  98, 108, 101,   0,   0,
+    111, 112, 112,  97,  98, 108, 101,   0,
       0,   0,   0,   0,   1,   0,   1,   0,
       4,   0,   0,   0,   3,   0,   5,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-      5, 183, 183, 105,   6, 242, 228, 210,
-    172, 241, 206, 226,  88, 128,  54, 150,
+    146, 138, 212,  22, 206, 143, 175, 148,
+    216, 207, 148, 194, 132, 101, 196, 210,
      17,   0,   0,   0,  42,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -963,48 +963,22 @@ static const ::capnp::_::AlignedData<28> b_e9d1be2a6e9016e5 = {
       0,   0,   0,   0,   0,   0,   1,   0,
       0,   0,   0,   0,   1,   0,   1,   0, }
 };
-::capnp::word const* const bp_e9d1be2a6e9016e5 = b_e9d1be2a6e9016e5.words;
+::capnp::word const* const bp_cd5f6458232e9276 = b_cd5f6458232e9276.words;
 #if !CAPNP_LITE
-static const ::capnp::_::RawSchema* const d_e9d1be2a6e9016e5[] = {
-  &s_96368058e2cef1ac,
-  &s_d2e4f20669b7b705,
+static const ::capnp::_::RawSchema* const d_cd5f6458232e9276[] = {
+  &s_94af8fce16d48a92,
+  &s_d2c46584c294cfd8,
 };
-static const uint16_t m_e9d1be2a6e9016e5[] = {0};
-const ::capnp::_::RawSchema s_e9d1be2a6e9016e5 = {
-  0xe9d1be2a6e9016e5, b_e9d1be2a6e9016e5.words, 28, d_e9d1be2a6e9016e5, m_e9d1be2a6e9016e5,
-  2, 1, nullptr, nullptr, nullptr, { &s_e9d1be2a6e9016e5, nullptr, nullptr, 0, 0, nullptr }, false
+static const uint16_t m_cd5f6458232e9276[] = {0};
+const ::capnp::_::RawSchema s_cd5f6458232e9276 = {
+  0xcd5f6458232e9276, b_cd5f6458232e9276.words, 28, d_cd5f6458232e9276, m_cd5f6458232e9276,
+  2, 1, nullptr, nullptr, nullptr, { &s_cd5f6458232e9276, nullptr, nullptr, 0, 0, nullptr }, false
 };
 #endif  // !CAPNP_LITE
-static const ::capnp::_::AlignedData<17> b_d2e4f20669b7b705 = {
+static const ::capnp::_::AlignedData<17> b_94af8fce16d48a92 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
-      5, 183, 183, 105,   6, 242, 228, 210,
-     23,   0,   0,   0,   1,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   7,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-     21,   0,   0,   0,  26,   1,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0,   0,   0,   0,
-    115, 101, 114, 118, 105,  99, 101,  46,
-     99,  97, 112, 110, 112,  58,  83, 116,
-    111, 112,  97,  98, 108, 101,  46, 115,
-    116, 111, 112,  36,  80,  97, 114,  97,
-    109, 115,   0,   0,   0,   0,   0,   0, }
-};
-::capnp::word const* const bp_d2e4f20669b7b705 = b_d2e4f20669b7b705.words;
-#if !CAPNP_LITE
-const ::capnp::_::RawSchema s_d2e4f20669b7b705 = {
-  0xd2e4f20669b7b705, b_d2e4f20669b7b705.words, 17, nullptr, nullptr,
-  0, 0, nullptr, nullptr, nullptr, { &s_d2e4f20669b7b705, nullptr, nullptr, 0, 0, nullptr }, false
-};
-#endif  // !CAPNP_LITE
-static const ::capnp::_::AlignedData<17> b_96368058e2cef1ac = {
-  {   0,   0,   0,   0,   5,   0,   6,   0,
-    172, 241, 206, 226,  88, 128,  54, 150,
-     23,   0,   0,   0,   1,   0,   0,   0,
+    146, 138, 212,  22, 206, 143, 175, 148,
+     24,   0,   0,   0,   1,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -1016,15 +990,41 @@ static const ::capnp::_::AlignedData<17> b_96368058e2cef1ac = {
       0,   0,   0,   0,   0,   0,   0,   0,
     115, 101, 114, 118, 105,  99, 101,  46,
      99,  97, 112, 110, 112,  58,  83, 116,
-    111, 112,  97,  98, 108, 101,  46, 115,
-    116, 111, 112,  36,  82, 101, 115, 117,
-    108, 116, 115,   0,   0,   0,   0,   0, }
+    111, 112, 112,  97,  98, 108, 101,  46,
+    115, 116, 111, 112,  36,  80,  97, 114,
+     97, 109, 115,   0,   0,   0,   0,   0, }
 };
-::capnp::word const* const bp_96368058e2cef1ac = b_96368058e2cef1ac.words;
+::capnp::word const* const bp_94af8fce16d48a92 = b_94af8fce16d48a92.words;
 #if !CAPNP_LITE
-const ::capnp::_::RawSchema s_96368058e2cef1ac = {
-  0x96368058e2cef1ac, b_96368058e2cef1ac.words, 17, nullptr, nullptr,
-  0, 0, nullptr, nullptr, nullptr, { &s_96368058e2cef1ac, nullptr, nullptr, 0, 0, nullptr }, false
+const ::capnp::_::RawSchema s_94af8fce16d48a92 = {
+  0x94af8fce16d48a92, b_94af8fce16d48a92.words, 17, nullptr, nullptr,
+  0, 0, nullptr, nullptr, nullptr, { &s_94af8fce16d48a92, nullptr, nullptr, 0, 0, nullptr }, false
+};
+#endif  // !CAPNP_LITE
+static const ::capnp::_::AlignedData<17> b_d2c46584c294cfd8 = {
+  {   0,   0,   0,   0,   5,   0,   6,   0,
+    216, 207, 148, 194, 132, 101, 196, 210,
+     24,   0,   0,   0,   1,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+      0,   0,   7,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+     21,   0,   0,   0,  42,   1,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
+    115, 101, 114, 118, 105,  99, 101,  46,
+     99,  97, 112, 110, 112,  58,  83, 116,
+    111, 112, 112,  97,  98, 108, 101,  46,
+    115, 116, 111, 112,  36,  82, 101, 115,
+    117, 108, 116, 115,   0,   0,   0,   0, }
+};
+::capnp::word const* const bp_d2c46584c294cfd8 = b_d2c46584c294cfd8.words;
+#if !CAPNP_LITE
+const ::capnp::_::RawSchema s_d2c46584c294cfd8 = {
+  0xd2c46584c294cfd8, b_d2c46584c294cfd8.words, 17, nullptr, nullptr,
+  0, 0, nullptr, nullptr, nullptr, { &s_d2c46584c294cfd8, nullptr, nullptr, 0, 0, nullptr }, false
 };
 #endif  // !CAPNP_LITE
 }  // namespace schemas
@@ -1351,75 +1351,75 @@ constexpr ::capnp::_::RawSchema const* SimpleFactory::CreateResults::_capnpPriva
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
-::capnp::Request< ::mas::schema::service::Stopable::StopParams,  ::mas::schema::service::Stopable::StopResults>
-Stopable::Client::stopRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
-  return newCall< ::mas::schema::service::Stopable::StopParams,  ::mas::schema::service::Stopable::StopResults>(
-      0xe9d1be2a6e9016e5ull, 0, sizeHint, {true});
+::capnp::Request< ::mas::schema::service::Stoppable::StopParams,  ::mas::schema::service::Stoppable::StopResults>
+Stoppable::Client::stopRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall< ::mas::schema::service::Stoppable::StopParams,  ::mas::schema::service::Stoppable::StopResults>(
+      0xcd5f6458232e9276ull, 0, sizeHint, {true});
 }
-::kj::Promise<void> Stopable::Server::stop(StopContext) {
+::kj::Promise<void> Stoppable::Server::stop(StopContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "service.capnp:Stopable", "stop",
-      0xe9d1be2a6e9016e5ull, 0);
+      "service.capnp:Stoppable", "stop",
+      0xcd5f6458232e9276ull, 0);
 }
-::capnp::Capability::Server::DispatchCallResult Stopable::Server::dispatchCall(
+::capnp::Capability::Server::DispatchCallResult Stoppable::Server::dispatchCall(
     uint64_t interfaceId, uint16_t methodId,
     ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
   switch (interfaceId) {
-    case 0xe9d1be2a6e9016e5ull:
+    case 0xcd5f6458232e9276ull:
       return dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("service.capnp:Stopable", interfaceId);
+      return internalUnimplemented("service.capnp:Stoppable", interfaceId);
   }
 }
-::capnp::Capability::Server::DispatchCallResult Stopable::Server::dispatchCallInternal(
+::capnp::Capability::Server::DispatchCallResult Stoppable::Server::dispatchCallInternal(
     uint16_t methodId,
     ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
   switch (methodId) {
     case 0:
       return {
         stop(::capnp::Capability::Server::internalGetTypedContext<
-             ::mas::schema::service::Stopable::StopParams,  ::mas::schema::service::Stopable::StopResults>(context)),
+             ::mas::schema::service::Stoppable::StopParams,  ::mas::schema::service::Stoppable::StopResults>(context)),
         false,
         false
       };
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "service.capnp:Stopable",
-          0xe9d1be2a6e9016e5ull, methodId);
+          "service.capnp:Stoppable",
+          0xcd5f6458232e9276ull, methodId);
   }
 }
 #endif  // !CAPNP_LITE
 
-// Stopable
+// Stoppable
 #if !CAPNP_LITE
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
-constexpr ::capnp::Kind Stopable::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* Stopable::_capnpPrivate::schema;
+constexpr ::capnp::Kind Stoppable::_capnpPrivate::kind;
+constexpr ::capnp::_::RawSchema const* Stoppable::_capnpPrivate::schema;
 #endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #endif  // !CAPNP_LITE
 
-// Stopable::StopParams
+// Stoppable::StopParams
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
-constexpr uint16_t Stopable::StopParams::_capnpPrivate::dataWordSize;
-constexpr uint16_t Stopable::StopParams::_capnpPrivate::pointerCount;
+constexpr uint16_t Stoppable::StopParams::_capnpPrivate::dataWordSize;
+constexpr uint16_t Stoppable::StopParams::_capnpPrivate::pointerCount;
 #endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
-constexpr ::capnp::Kind Stopable::StopParams::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* Stopable::StopParams::_capnpPrivate::schema;
+constexpr ::capnp::Kind Stoppable::StopParams::_capnpPrivate::kind;
+constexpr ::capnp::_::RawSchema const* Stoppable::StopParams::_capnpPrivate::schema;
 #endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #endif  // !CAPNP_LITE
 
-// Stopable::StopResults
+// Stoppable::StopResults
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
-constexpr uint16_t Stopable::StopResults::_capnpPrivate::dataWordSize;
-constexpr uint16_t Stopable::StopResults::_capnpPrivate::pointerCount;
+constexpr uint16_t Stoppable::StopResults::_capnpPrivate::dataWordSize;
+constexpr uint16_t Stoppable::StopResults::_capnpPrivate::pointerCount;
 #endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #if !CAPNP_LITE
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
-constexpr ::capnp::Kind Stopable::StopResults::_capnpPrivate::kind;
-constexpr ::capnp::_::RawSchema const* Stopable::StopResults::_capnpPrivate::schema;
+constexpr ::capnp::Kind Stoppable::StopResults::_capnpPrivate::kind;
+constexpr ::capnp::_::RawSchema const* Stoppable::StopResults::_capnpPrivate::schema;
 #endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 #endif  // !CAPNP_LITE
 

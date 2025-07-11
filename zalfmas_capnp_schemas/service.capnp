@@ -65,7 +65,7 @@ interface Factory(Payload) extends(Common.Identifiable) {
   # these names are the ones to be used for the sturdy ref maps in CreateParams
 }
 
-interface Stopable {
+interface Stoppable {
   # a capability to stop something
   stop @0 () -> ();
 }
