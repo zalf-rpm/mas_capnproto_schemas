@@ -627,6 +627,9 @@ namespace Mas.Schema.Fbp
                 ChannelSR = reader.ChannelSR;
                 ReaderSRs = reader.ReaderSRs;
                 WriterSRs = reader.WriterSRs;
+                Channel = reader.Channel;
+                Readers = reader.Readers;
+                Writers = reader.Writers;
                 applyDefaults();
             }
 
@@ -637,6 +640,9 @@ namespace Mas.Schema.Fbp
                 writer.ChannelSR = ChannelSR;
                 writer.ReaderSRs.Init(ReaderSRs);
                 writer.WriterSRs.Init(WriterSRs);
+                writer.Channel = Channel;
+                writer.Readers.Init(Readers);
+                writer.Writers.Init(Writers);
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -678,6 +684,24 @@ namespace Mas.Schema.Fbp
                 set;
             }
 
+            public Mas.Schema.Fbp.IChannel<TV> Channel
+            {
+                get;
+                set;
+            }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IReader> Readers
+            {
+                get;
+                set;
+            }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers
+            {
+                get;
+                set;
+            }
+
             public struct READER
             {
                 readonly DeserializerState ctx;
@@ -696,13 +720,18 @@ namespace Mas.Schema.Fbp
                 public bool HasReaderSRs => ctx.IsStructFieldNonNull(1);
                 public IReadOnlyList<string> WriterSRs => ctx.ReadList(2).CastText2();
                 public bool HasWriterSRs => ctx.IsStructFieldNonNull(2);
+                public Mas.Schema.Fbp.IChannel<TV> Channel => ctx.ReadCap<Mas.Schema.Fbp.IChannel<TV>>(3);
+                public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IReader> Readers => ctx.ReadCapList<Mas.Schema.Fbp.Channel<TV>.IReader>(4);
+                public bool HasReaders => ctx.IsStructFieldNonNull(4);
+                public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers => ctx.ReadCapList<Mas.Schema.Fbp.Channel<TV>.IWriter>(5);
+                public bool HasWriters => ctx.IsStructFieldNonNull(5);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(2, 3);
+                    this.SetStruct(2, 6);
                 }
 
                 public ulong BufferSize
@@ -733,6 +762,24 @@ namespace Mas.Schema.Fbp
                 {
                     get => BuildPointer<ListOfTextSerializer>(2);
                     set => Link(2, value);
+                }
+
+                public Mas.Schema.Fbp.IChannel<TV> Channel
+                {
+                    get => ReadCap<Mas.Schema.Fbp.IChannel<TV>>(3);
+                    set => LinkObject(3, value);
+                }
+
+                public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader> Readers
+                {
+                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader>>(4);
+                    set => Link(4, value);
+                }
+
+                public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers
+                {
+                    get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IWriter>>(5);
+                    set => Link(5, value);
                 }
             }
         }

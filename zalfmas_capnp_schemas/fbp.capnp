@@ -67,11 +67,20 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
     channelSR       @2 :Text;
     # sturdy reference to the channel
 
+    channel         @5 :Channel(V);
+    # capability to started channel
+
     readerSRs       @3 :List(Text);
     # sturdy references to the readers
 
+    readers         @6 :List(Reader);
+    # list of caps to the created Readers
+
     writerSRs       @4 :List(Text);
     # sturdy references to the writers
+
+    writers         @7 :List(Writer);
+    # list of caps to the created Writers
   }
 
   interface Reader extends(Common.Identifiable, Persistent) $Cxx.name("ChanReader") {

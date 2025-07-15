@@ -231,10 +231,11 @@ struct Channel<V>::StartupInfo {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(e3d7a3237f175028, 2, 3)
+    CAPNP_DECLARE_STRUCT_HEADER(e3d7a3237f175028, 2, 6)
     #if !CAPNP_LITE
     static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
     static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
     static const ::capnp::_::RawBrandedSchema specificBrand;
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, V>::brand(); }
     #endif  // !CAPNP_LITE
@@ -1522,6 +1523,21 @@ public:
   inline bool hasWriterSRs() const;
   inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getWriterSRs() const;
 
+  inline bool hasChannel() const;
+#if !CAPNP_LITE
+  inline typename  ::mas::schema::fbp::Channel<V>::Client getChannel() const;
+#endif  // !CAPNP_LITE
+
+  inline bool hasReaders() const;
+#if !CAPNP_LITE
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Reader getReaders() const;
+#endif  // !CAPNP_LITE
+
+  inline bool hasWriters() const;
+#if !CAPNP_LITE
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Reader getWriters() const;
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -1585,6 +1601,33 @@ public:
   inline void adoptWriterSRs(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
   inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownWriterSRs();
 
+  inline bool hasChannel();
+#if !CAPNP_LITE
+  inline typename  ::mas::schema::fbp::Channel<V>::Client getChannel();
+  inline void setChannel(typename  ::mas::schema::fbp::Channel<V>::Client&& value);
+  inline void setChannel(typename  ::mas::schema::fbp::Channel<V>::Client& value);
+  inline void adoptChannel(::capnp::Orphan< ::mas::schema::fbp::Channel<V>>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Channel<V>> disownChannel();
+#endif  // !CAPNP_LITE
+
+  inline bool hasReaders();
+#if !CAPNP_LITE
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Builder getReaders();
+  inline void setReaders(typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Reader value);
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Builder initReaders(unsigned int size);
+  inline void adoptReaders(::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>&& value);
+  inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>> disownReaders();
+#endif  // !CAPNP_LITE
+
+  inline bool hasWriters();
+#if !CAPNP_LITE
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Builder getWriters();
+  inline void setWriters(typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Reader value);
+  inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Builder initWriters(unsigned int size);
+  inline void adoptWriters(::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>&& value);
+  inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>> disownWriters();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1604,6 +1647,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline typename  ::mas::schema::fbp::Channel<V>::Client getChannel();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -5772,6 +5816,142 @@ inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Cha
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
+template <typename V>
+inline bool Channel<V>::StartupInfo::Reader::hasChannel() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+template <typename V>
+inline bool Channel<V>::StartupInfo::Builder::hasChannel() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::Client Channel<V>::StartupInfo::Reader::getChannel() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::Client Channel<V>::StartupInfo::Builder::getChannel() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::Client Channel<V>::StartupInfo::Pipeline::getChannel() {
+  return typename  ::mas::schema::fbp::Channel<V>::Client(_typeless.getPointerField(3).asCap());
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::setChannel(typename  ::mas::schema::fbp::Channel<V>::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(cap));
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::setChannel(typename  ::mas::schema::fbp::Channel<V>::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), cap);
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::adoptChannel(
+    ::capnp::Orphan< ::mas::schema::fbp::Channel<V>>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename V>
+inline ::capnp::Orphan< ::mas::schema::fbp::Channel<V>> Channel<V>::StartupInfo::Builder::disownChannel() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Channel<V>>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+template <typename V>
+inline bool Channel<V>::StartupInfo::Reader::hasReaders() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+template <typename V>
+inline bool Channel<V>::StartupInfo::Builder::hasReaders() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Reader Channel<V>::StartupInfo::Reader::getReaders() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Builder Channel<V>::StartupInfo::Builder::getReaders() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::setReaders(typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>::Builder Channel<V>::StartupInfo::Builder::initReaders(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::adoptReaders(
+    ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename V>
+inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>> Channel<V>::StartupInfo::Builder::disownReaders() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanReader,  ::capnp::Kind::INTERFACE>>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+template <typename V>
+inline bool Channel<V>::StartupInfo::Reader::hasWriters() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+template <typename V>
+inline bool Channel<V>::StartupInfo::Builder::hasWriters() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Reader Channel<V>::StartupInfo::Reader::getWriters() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Builder Channel<V>::StartupInfo::Builder::getWriters() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::setWriters(typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+template <typename V>
+inline typename  ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>::Builder Channel<V>::StartupInfo::Builder::initWriters(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::adoptWriters(
+    ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename V>
+inline ::capnp::Orphan< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>> Channel<V>::StartupInfo::Builder::disownWriters() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<typename  ::mas::schema::fbp::Channel<V>::ChanWriter,  ::capnp::Kind::INTERFACE>>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
 // Channel<V>::StartupInfo
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
@@ -5795,9 +5975,15 @@ const ::capnp::_::RawBrandedSchema::Binding Channel<V>::StartupInfo::_capnpPriva
   ::capnp::_::brandBindingFor<V>(),
 };
 template <typename V>
+const ::capnp::_::RawBrandedSchema::Dependency Channel<V>::StartupInfo::_capnpPrivate::brandDependencies[] = {
+  { 16777221,  ::mas::schema::fbp::Channel<V>::_capnpPrivate::brand() },
+  { 16777222,  ::mas::schema::fbp::Channel<V>::ChanReader::_capnpPrivate::brand() },
+  { 16777223,  ::mas::schema::fbp::Channel<V>::ChanWriter::_capnpPrivate::brand() },
+};
+template <typename V>
 const ::capnp::_::RawBrandedSchema Channel<V>::StartupInfo::_capnpPrivate::specificBrand = {
-  &::capnp::schemas::s_e3d7a3237f175028, brandScopes, nullptr,
-  1, 0, nullptr
+  &::capnp::schemas::s_e3d7a3237f175028, brandScopes, brandDependencies,
+  1, 3, nullptr
 };
 #endif  // !CAPNP_LITE
 
