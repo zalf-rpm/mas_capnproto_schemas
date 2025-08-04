@@ -94,9 +94,9 @@ interface Store extends(Common.Identifiable, Persistent) {
   # get a container object with the given id
 
   struct InfoAndContainer {
-    id    @0 :Text;
-    name  @1 :Text;
-    entry @2 :Container;
+    id        @0 :Text;
+    name      @1 :Text;
+    container @2 :Container;
   }
   listContainers  @2 () -> (containers :List(InfoAndContainer));
   # list all containers

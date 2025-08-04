@@ -1822,7 +1822,7 @@ const ::capnp::_::RawSchema s_883b57737fba9e54 = {
   1, 2, i_883b57737fba9e54, nullptr, nullptr, { &s_883b57737fba9e54, nullptr, nullptr, 0, 0, nullptr }, true
 };
 #endif  // !CAPNP_LITE
-static const ::capnp::_::AlignedData<64> b_eaec227ef03ec200 = {
+static const ::capnp::_::AlignedData<65> b_eaec227ef03ec200 = {
   {   0,   0,   0,   0,   5,   0,   6,   0,
       0, 194,  62, 240, 126,  34, 236, 234,
      20,   0,   0,   0,   1,   0,   0,   0,
@@ -1859,10 +1859,10 @@ static const ::capnp::_::AlignedData<64> b_eaec227ef03ec200 = {
       2,   0,   0,   0,   2,   0,   0,   0,
       0,   0,   1,   0,   2,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     77,   0,   0,   0,  50,   0,   0,   0,
+     77,   0,   0,   0,  82,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     72,   0,   0,   0,   3,   0,   1,   0,
-     84,   0,   0,   0,   2,   0,   1,   0,
+     76,   0,   0,   0,   3,   0,   1,   0,
+     88,   0,   0,   0,   2,   0,   1,   0,
     105, 100,   0,   0,   0,   0,   0,   0,
      12,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -1879,7 +1879,8 @@ static const ::capnp::_::AlignedData<64> b_eaec227ef03ec200 = {
      12,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    101, 110, 116, 114, 121,   0,   0,   0,
+     99, 111, 110, 116,  97, 105, 110, 101,
+    114,   0,   0,   0,   0,   0,   0,   0,
      17,   0,   0,   0,   0,   0,   0,   0,
      98, 174, 103,  85, 244,  49, 129, 135,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -1896,7 +1897,7 @@ static const ::capnp::_::RawSchema* const d_eaec227ef03ec200[] = {
 static const uint16_t m_eaec227ef03ec200[] = {2, 0, 1};
 static const uint16_t i_eaec227ef03ec200[] = {0, 1, 2};
 const ::capnp::_::RawSchema s_eaec227ef03ec200 = {
-  0xeaec227ef03ec200, b_eaec227ef03ec200.words, 64, d_eaec227ef03ec200, m_eaec227ef03ec200,
+  0xeaec227ef03ec200, b_eaec227ef03ec200.words, 65, d_eaec227ef03ec200, m_eaec227ef03ec200,
   1, 3, i_eaec227ef03ec200, nullptr, nullptr, { &s_eaec227ef03ec200, nullptr, nullptr, 0, 0, nullptr }, true
 };
 #endif  // !CAPNP_LITE
