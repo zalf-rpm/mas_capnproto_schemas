@@ -33,6 +33,7 @@ CAPNP_DECLARE_SCHEMA(923c06d58238b290);
 CAPNP_DECLARE_SCHEMA(c5e6024b9f05560e);
 CAPNP_DECLARE_SCHEMA(a4ff24aa7f0debaf);
 CAPNP_DECLARE_SCHEMA(d667b97e089bae01);
+CAPNP_DECLARE_SCHEMA(efe759a6f2ffc230);
 CAPNP_DECLARE_SCHEMA(9e138889be22cc5e);
 CAPNP_DECLARE_SCHEMA(a914844d7351c9ee);
 CAPNP_DECLARE_SCHEMA(93fc14178e630994);
@@ -47,6 +48,7 @@ CAPNP_DECLARE_SCHEMA(c31c71f8d67b827b);
 CAPNP_DECLARE_SCHEMA(eb6f27dfc29bffad);
 CAPNP_DECLARE_SCHEMA(fbef00fded9c8312);
 CAPNP_DECLARE_SCHEMA(883b57737fba9e54);
+CAPNP_DECLARE_SCHEMA(eaec227ef03ec200);
 CAPNP_DECLARE_SCHEMA(847d262cefd2f142);
 CAPNP_DECLARE_SCHEMA(bc4cb84d672b9bf6);
 CAPNP_DECLARE_SCHEMA(f32349bf3a9997ac);
@@ -75,6 +77,7 @@ struct Store {
 #endif  // !CAPNP_LITE
 
   struct Container;
+  struct InfoAndContainer;
   struct ImportExportData;
   struct NewContainerParams;
   struct NewContainerResults;
@@ -104,6 +107,7 @@ struct Store::Container {
 #endif  // !CAPNP_LITE
 
   struct Entry;
+  struct KeyAndEntry;
   struct ExportParams;
   struct ExportResults;
   struct DownloadEntriesParams;
@@ -279,6 +283,21 @@ struct Store::Container::Entry::SetValueResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(d667b97e089bae01, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Store::Container::KeyAndEntry {
+  KeyAndEntry() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(efe759a6f2ffc230, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -489,6 +508,21 @@ struct Store::Container::AddEntryResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(883b57737fba9e54, 1, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Store::InfoAndContainer {
+  InfoAndContainer() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(eaec227ef03ec200, 0, 3)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1725,6 +1759,102 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+class Store::Container::KeyAndEntry::Reader {
+public:
+  typedef KeyAndEntry Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasKey() const;
+  inline  ::capnp::Text::Reader getKey() const;
+
+  inline bool hasEntry() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::storage::Store::Container::Entry::Client getEntry() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Store::Container::KeyAndEntry::Builder {
+public:
+  typedef KeyAndEntry Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasKey();
+  inline  ::capnp::Text::Builder getKey();
+  inline void setKey( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initKey(unsigned int size);
+  inline void adoptKey(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownKey();
+
+  inline bool hasEntry();
+#if !CAPNP_LITE
+  inline  ::mas::schema::storage::Store::Container::Entry::Client getEntry();
+  inline void setEntry( ::mas::schema::storage::Store::Container::Entry::Client&& value);
+  inline void setEntry( ::mas::schema::storage::Store::Container::Entry::Client& value);
+  inline void adoptEntry(::capnp::Orphan< ::mas::schema::storage::Store::Container::Entry>&& value);
+  inline ::capnp::Orphan< ::mas::schema::storage::Store::Container::Entry> disownEntry();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Store::Container::KeyAndEntry::Pipeline {
+public:
+  typedef KeyAndEntry Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::storage::Store::Container::Entry::Client getEntry();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 class Store::Container::ExportParams::Reader {
 public:
   typedef ExportParams Reads;
@@ -2118,9 +2248,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasEntries() const;
-#if !CAPNP_LITE
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Reader getEntries() const;
-#endif  // !CAPNP_LITE
+  inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Reader getEntries() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -2151,13 +2279,11 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasEntries();
-#if !CAPNP_LITE
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Builder getEntries();
-  inline void setEntries( ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Reader value);
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Builder initEntries(unsigned int size);
-  inline void adoptEntries(::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>&& value);
-  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>> disownEntries();
-#endif  // !CAPNP_LITE
+  inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Builder getEntries();
+  inline void setEntries( ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Builder initEntries(unsigned int size);
+  inline void adoptEntries(::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>> disownEntries();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2844,6 +2970,112 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+class Store::InfoAndContainer::Reader {
+public:
+  typedef InfoAndContainer Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasId() const;
+  inline  ::capnp::Text::Reader getId() const;
+
+  inline bool hasName() const;
+  inline  ::capnp::Text::Reader getName() const;
+
+  inline bool hasEntry() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::storage::Store::Container::Client getEntry() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Store::InfoAndContainer::Builder {
+public:
+  typedef InfoAndContainer Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasId();
+  inline  ::capnp::Text::Builder getId();
+  inline void setId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initId(unsigned int size);
+  inline void adoptId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownId();
+
+  inline bool hasName();
+  inline  ::capnp::Text::Builder getName();
+  inline void setName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initName(unsigned int size);
+  inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownName();
+
+  inline bool hasEntry();
+#if !CAPNP_LITE
+  inline  ::mas::schema::storage::Store::Container::Client getEntry();
+  inline void setEntry( ::mas::schema::storage::Store::Container::Client&& value);
+  inline void setEntry( ::mas::schema::storage::Store::Container::Client& value);
+  inline void adoptEntry(::capnp::Orphan< ::mas::schema::storage::Store::Container>&& value);
+  inline ::capnp::Orphan< ::mas::schema::storage::Store::Container> disownEntry();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Store::InfoAndContainer::Pipeline {
+public:
+  typedef InfoAndContainer Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::storage::Store::Container::Client getEntry();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 class Store::ImportExportData::Reader {
 public:
   typedef ImportExportData Reads;
@@ -3380,9 +3612,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasContainers() const;
-#if !CAPNP_LITE
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Reader getContainers() const;
-#endif  // !CAPNP_LITE
+  inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Reader getContainers() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -3413,13 +3643,11 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasContainers();
-#if !CAPNP_LITE
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Builder getContainers();
-  inline void setContainers( ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Reader value);
-  inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Builder initContainers(unsigned int size);
-  inline void adoptContainers(::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>&& value);
-  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>> disownContainers();
-#endif  // !CAPNP_LITE
+  inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Builder getContainers();
+  inline void setContainers( ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Builder initContainers(unsigned int size);
+  inline void adoptContainers(::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>> disownContainers();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -5225,6 +5453,79 @@ inline void Store::Container::Entry::SetValueResults::Builder::setSuccess(bool v
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
+inline bool Store::Container::KeyAndEntry::Reader::hasKey() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Store::Container::KeyAndEntry::Builder::hasKey() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Store::Container::KeyAndEntry::Reader::getKey() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Store::Container::KeyAndEntry::Builder::getKey() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Store::Container::KeyAndEntry::Builder::setKey( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Store::Container::KeyAndEntry::Builder::initKey(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Store::Container::KeyAndEntry::Builder::adoptKey(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Store::Container::KeyAndEntry::Builder::disownKey() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Store::Container::KeyAndEntry::Reader::hasEntry() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Store::Container::KeyAndEntry::Builder::hasEntry() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::storage::Store::Container::Entry::Client Store::Container::KeyAndEntry::Reader::getEntry() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::storage::Store::Container::Entry::Client Store::Container::KeyAndEntry::Builder::getEntry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::storage::Store::Container::Entry::Client Store::Container::KeyAndEntry::Pipeline::getEntry() {
+  return  ::mas::schema::storage::Store::Container::Entry::Client(_typeless.getPointerField(1).asCap());
+}
+inline void Store::Container::KeyAndEntry::Builder::setEntry( ::mas::schema::storage::Store::Container::Entry::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Store::Container::KeyAndEntry::Builder::setEntry( ::mas::schema::storage::Store::Container::Entry::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), cap);
+}
+inline void Store::Container::KeyAndEntry::Builder::adoptEntry(
+    ::capnp::Orphan< ::mas::schema::storage::Store::Container::Entry>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::storage::Store::Container::Entry> Store::Container::KeyAndEntry::Builder::disownEntry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container::Entry>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
 inline bool Store::Container::ExportResults::Reader::hasJson() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -5301,33 +5602,31 @@ inline bool Store::Container::ListEntriesResults::Builder::hasEntries() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-#if !CAPNP_LITE
-inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Reader Store::Container::ListEntriesResults::Reader::getEntries() const {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::get(_reader.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Reader Store::Container::ListEntriesResults::Reader::getEntries() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Builder Store::Container::ListEntriesResults::Builder::getEntries() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::get(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Builder Store::Container::ListEntriesResults::Builder::getEntries() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Store::Container::ListEntriesResults::Builder::setEntries( ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::set(_builder.getPointerField(
+inline void Store::Container::ListEntriesResults::Builder::setEntries( ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>::Builder Store::Container::ListEntriesResults::Builder::initEntries(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::init(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>::Builder Store::Container::ListEntriesResults::Builder::initEntries(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
 inline void Store::Container::ListEntriesResults::Builder::adoptEntries(
-    ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>> Store::Container::ListEntriesResults::Builder::disownEntries() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::Entry,  ::capnp::Kind::INTERFACE>>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>> Store::Container::ListEntriesResults::Builder::disownEntries() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container::KeyAndEntry,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-#endif  // !CAPNP_LITE
 
 inline bool Store::Container::GetEntryParams::Reader::hasKey() const {
   return !_reader.getPointerField(
@@ -5603,6 +5902,113 @@ inline void Store::Container::AddEntryResults::Builder::setSuccess(bool value) {
   _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
+
+inline bool Store::InfoAndContainer::Reader::hasId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Store::InfoAndContainer::Builder::hasId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Store::InfoAndContainer::Reader::getId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Store::InfoAndContainer::Builder::getId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Store::InfoAndContainer::Builder::setId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Store::InfoAndContainer::Builder::initId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Store::InfoAndContainer::Builder::adoptId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Store::InfoAndContainer::Builder::disownId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Store::InfoAndContainer::Reader::hasName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Store::InfoAndContainer::Builder::hasName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Store::InfoAndContainer::Reader::getName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Store::InfoAndContainer::Builder::getName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void Store::InfoAndContainer::Builder::setName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Store::InfoAndContainer::Builder::initName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void Store::InfoAndContainer::Builder::adoptName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Store::InfoAndContainer::Builder::disownName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool Store::InfoAndContainer::Reader::hasEntry() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool Store::InfoAndContainer::Builder::hasEntry() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::storage::Store::Container::Client Store::InfoAndContainer::Reader::getEntry() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::storage::Store::Container::Client Store::InfoAndContainer::Builder::getEntry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::storage::Store::Container::Client Store::InfoAndContainer::Pipeline::getEntry() {
+  return  ::mas::schema::storage::Store::Container::Client(_typeless.getPointerField(2).asCap());
+}
+inline void Store::InfoAndContainer::Builder::setEntry( ::mas::schema::storage::Store::Container::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Store::InfoAndContainer::Builder::setEntry( ::mas::schema::storage::Store::Container::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), cap);
+}
+inline void Store::InfoAndContainer::Builder::adoptEntry(
+    ::capnp::Orphan< ::mas::schema::storage::Store::Container>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::storage::Store::Container> Store::InfoAndContainer::Builder::disownEntry() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::storage::Store::Container>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
 
 inline bool Store::ImportExportData::Reader::hasInfo() const {
   return !_reader.getPointerField(
@@ -5903,33 +6309,31 @@ inline bool Store::ListContainersResults::Builder::hasContainers() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-#if !CAPNP_LITE
-inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Reader Store::ListContainersResults::Reader::getContainers() const {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::get(_reader.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Reader Store::ListContainersResults::Reader::getContainers() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Builder Store::ListContainersResults::Builder::getContainers() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::get(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Builder Store::ListContainersResults::Builder::getContainers() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Store::ListContainersResults::Builder::setContainers( ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::set(_builder.getPointerField(
+inline void Store::ListContainersResults::Builder::setContainers( ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>::Builder Store::ListContainersResults::Builder::initContainers(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::init(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>::Builder Store::ListContainersResults::Builder::initContainers(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
 inline void Store::ListContainersResults::Builder::adoptContainers(
-    ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>> Store::ListContainersResults::Builder::disownContainers() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::Container,  ::capnp::Kind::INTERFACE>>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>> Store::ListContainersResults::Builder::disownContainers() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::storage::Store::InfoAndContainer,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-#endif  // !CAPNP_LITE
 
 inline bool Store::RemoveContainerParams::Reader::hasId() const {
   return !_reader.getPointerField(

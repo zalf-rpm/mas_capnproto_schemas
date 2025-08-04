@@ -67,7 +67,11 @@ interface Store extends(Common.Identifiable, Persistent) {
     downloadEntries   @1 () -> (entries :List(Common.Pair(Text, Entry.Value)));
     # download all entries in the container as list of key-value pairs
 
-    listEntries       @2 () -> (entries :List(Entry));
+    struct KeyAndEntry {
+        key     @0 :Text;
+        entry   @1 :Entry;
+    }
+    listEntries       @2 () -> (entries :List(KeyAndEntry));
     # download all entries in the container
 
     getEntry          @3 (key :Text) -> (entry :Entry);
@@ -89,7 +93,12 @@ interface Store extends(Common.Identifiable, Persistent) {
   containerWithId @1 (id :Text) -> (container :Container);
   # get a container object with the given id
 
-  listContainers  @2 () -> (containers :List(Container));
+  struct InfoAndContainer {
+    id    @0 :Text;
+    name  @1 :Text;
+    entry @2 :Container;
+  }
+  listContainers  @2 () -> (containers :List(InfoAndContainer));
   # list all containers
 
   removeContainer @3 (id :Text) -> (success :Bool);

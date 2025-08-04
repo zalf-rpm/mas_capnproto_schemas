@@ -123,7 +123,9 @@ def find_executable_path(name: str) -> Optional[str]:
         The full path to the executable or None if not found
     """
     try:
-        return subprocess.check_output(["which", name]).decode().strip()
+
+        return subprocess.check_output(["which" if sys.platform == "linux" else "where",
+                                        name]).decode().strip()
     except subprocess.CalledProcessError:
         return None
 
