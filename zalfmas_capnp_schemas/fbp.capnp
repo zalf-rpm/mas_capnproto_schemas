@@ -203,20 +203,20 @@ struct Component {
     run         @4 :Runnable; # if non null, interface to runtime instance of this component
 }
 
-interface ComponentService extends(Common.Identifiable) {
-    # serving FBP components (meta)data and possibly capability to run a component somehow/somewhere
-
-    struct Entry {
-        categoryId  @0 :Text;
-        component   @1 :Component;
-    }
-
-    categories  @2 () -> (categories :List(Common.IdInformation));
-    # the categories the service offers
-
-    list        @0 () -> (entries :List(Entry));
-    # list all available components
-
-    component   @1 (id :Text) -> (comp :Component);
-    # get a component by it's id
-}
+#interface ComponentService extends(Common.Identifiable) {
+#    # serving FBP components (meta)data and possibly capability to run a component somehow/somewhere
+#
+#    struct Entry {
+#        categoryId  @0 :Text;
+#        component   @1 :Component;
+#    }
+#
+#    categories  @2 () -> (categories :List(Common.IdInformation));
+#    # the categories the service offers
+#
+#    list        @0 () -> (entries :List(Entry));
+#    # list all available components
+#
+#    component   @1 (id :Text) -> (comp :Component);
+#    # get a component by it's id
+#}
