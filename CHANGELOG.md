@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.32](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.31...v0.1.32) (2025-08-22)
+
+
+### Bug Fixes
+
+* populate readme to prevent push to pypi 400 error ([bcd3d35](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/bcd3d359f41b2e9dbf32ed39a311e08cefec0e71))
+
 ## [0.1.31](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.30...v0.1.31) (2025-08-22)
 
 
