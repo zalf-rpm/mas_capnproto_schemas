@@ -164,6 +164,12 @@ interface HostPortResolver extends(Identifiable, Restorer) {
 
       alias @3 :Text;
       # optional plain text alias for the service to register
+
+      identityProof @4 :Data;
+      # Ed25519 signature of the VatId's public key to proof that the
+      # sender of this message is actually the vat with the given id
+      # is only necessary, when the host and port must be updated
+      # e.g. after a service restart
     }
 
     register @0 RegisterParams -> (heartbeat :Heartbeat, secsHeartbeatInterval :UInt32);

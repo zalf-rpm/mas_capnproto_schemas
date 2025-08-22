@@ -418,7 +418,7 @@ struct HostPortResolver::Registrar::RegisterParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(bf018f62ff460d0f, 1, 3)
+    CAPNP_DECLARE_STRUCT_HEADER(bf018f62ff460d0f, 1, 4)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2143,6 +2143,9 @@ public:
   inline bool hasAlias() const;
   inline  ::capnp::Text::Reader getAlias() const;
 
+  inline bool hasIdentityProof() const;
+  inline  ::capnp::Data::Reader getIdentityProof() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -2194,6 +2197,13 @@ public:
   inline  ::capnp::Text::Builder initAlias(unsigned int size);
   inline void adoptAlias(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownAlias();
+
+  inline bool hasIdentityProof();
+  inline  ::capnp::Data::Builder getIdentityProof();
+  inline void setIdentityProof( ::capnp::Data::Reader value);
+  inline  ::capnp::Data::Builder initIdentityProof(unsigned int size);
+  inline void adoptIdentityProof(::capnp::Orphan< ::capnp::Data>&& value);
+  inline ::capnp::Orphan< ::capnp::Data> disownIdentityProof();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -3722,6 +3732,40 @@ inline void HostPortResolver::Registrar::RegisterParams::Builder::adoptAlias(
 inline ::capnp::Orphan< ::capnp::Text> HostPortResolver::Registrar::RegisterParams::Builder::disownAlias() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline bool HostPortResolver::Registrar::RegisterParams::Reader::hasIdentityProof() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline bool HostPortResolver::Registrar::RegisterParams::Builder::hasIdentityProof() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Data::Reader HostPortResolver::Registrar::RegisterParams::Reader::getIdentityProof() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Data::Builder HostPortResolver::Registrar::RegisterParams::Builder::getIdentityProof() {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline void HostPortResolver::Registrar::RegisterParams::Builder::setIdentityProof( ::capnp::Data::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Data>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Data::Builder HostPortResolver::Registrar::RegisterParams::Builder::initIdentityProof(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::init(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+}
+inline void HostPortResolver::Registrar::RegisterParams::Builder::adoptIdentityProof(
+    ::capnp::Orphan< ::capnp::Data>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Data>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Data> HostPortResolver::Registrar::RegisterParams::Builder::disownIdentityProof() {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 
 inline bool HostPortResolver::Registrar::RegisterResults::Reader::hasHeartbeat() const {
