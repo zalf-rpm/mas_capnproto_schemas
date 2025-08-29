@@ -440,6 +440,7 @@ namespace Mas.Schema.Common
             Lt = 26,
             Ld = 27,
             Lcap = 28,
+            Lpair = 29,
             undefined = 65535
         }
 
@@ -534,6 +535,9 @@ namespace Mas.Schema.Common
                     break;
                 case WHICH.Lcap:
                     Lcap = reader.Lcap;
+                    break;
+                case WHICH.Lpair:
+                    Lpair = reader.Lpair?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Common.Pair<object, object>>(_));
                     break;
             }
 
@@ -639,6 +643,9 @@ namespace Mas.Schema.Common
                     case WHICH.Lcap:
                         _content = null;
                         break;
+                    case WHICH.Lpair:
+                        _content = null;
+                        break;
                 }
             }
         }
@@ -734,6 +741,9 @@ namespace Mas.Schema.Common
                     break;
                 case WHICH.Lcap:
                     writer.Lcap.Init(Lcap);
+                    break;
+                case WHICH.Lpair:
+                    writer.Lpair.Init(Lpair, (_s1, _v1) => _v1?.serialize(_s1));
                     break;
             }
         }
@@ -1037,6 +1047,16 @@ namespace Mas.Schema.Common
             }
         }
 
+        public IReadOnlyList<Mas.Schema.Common.Pair<object, object>> Lpair
+        {
+            get => _which == WHICH.Lpair ? (IReadOnlyList<Mas.Schema.Common.Pair<object, object>>)_content : null;
+            set
+            {
+                _which = WHICH.Lpair;
+                _content = value;
+            }
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1092,6 +1112,8 @@ namespace Mas.Schema.Common
             public bool HasLd => ctx.IsStructFieldNonNull(0);
             public IReadOnlyList<BareProxy> Lcap => which == WHICH.Lcap ? ctx.ReadCapList<BareProxy>(0) : default;
             public bool HasLcap => ctx.IsStructFieldNonNull(0);
+            public IReadOnlyList<Mas.Schema.Common.Pair<object, object>.READER> Lpair => which == WHICH.Lpair ? ctx.ReadList(0).Cast(Mas.Schema.Common.Pair<object, object>.READER.create) : default;
+            public bool HasLpair => ctx.IsStructFieldNonNull(0);
         }
 
         public class WRITER : SerializerState
@@ -1278,6 +1300,12 @@ namespace Mas.Schema.Common
             public ListOfCapsSerializer<BareProxy> Lcap
             {
                 get => which == WHICH.Lcap ? BuildPointer<ListOfCapsSerializer<BareProxy>>(0) : default;
+                set => Link(0, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER> Lpair
+            {
+                get => which == WHICH.Lpair ? BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER>>(0) : default;
                 set => Link(0, value);
             }
         }
