@@ -2606,6 +2606,7 @@ namespace Mas.Schema.Fbp
             InPorts = reader.InPorts?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_));
             OutPorts = reader.OutPorts?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_));
             Run = reader.Run;
+            DefaultConfig = reader.DefaultConfig;
             applyDefaults();
         }
 
@@ -2616,6 +2617,7 @@ namespace Mas.Schema.Fbp
             writer.InPorts.Init(InPorts, (_s1, _v1) => _v1?.serialize(_s1));
             writer.OutPorts.Init(OutPorts, (_s1, _v1) => _v1?.serialize(_s1));
             writer.Run = Run;
+            writer.DefaultConfig = DefaultConfig;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2657,6 +2659,12 @@ namespace Mas.Schema.Fbp
             set;
         }
 
+        public string DefaultConfig
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2676,13 +2684,14 @@ namespace Mas.Schema.Fbp
             public IReadOnlyList<Mas.Schema.Fbp.Component.Port.READER> OutPorts => ctx.ReadList(2).Cast(Mas.Schema.Fbp.Component.Port.READER.create);
             public bool HasOutPorts => ctx.IsStructFieldNonNull(2);
             public Mas.Schema.Fbp.Component.IRunnable Run => ctx.ReadCap<Mas.Schema.Fbp.Component.IRunnable>(3);
+            public string DefaultConfig => ctx.ReadText(4, null);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 4);
+                this.SetStruct(1, 5);
             }
 
             public Mas.Schema.Common.IdInformation.WRITER Info
@@ -2713,6 +2722,12 @@ namespace Mas.Schema.Fbp
             {
                 get => ReadCap<Mas.Schema.Fbp.Component.IRunnable>(3);
                 set => LinkObject(3, value);
+            }
+
+            public string DefaultConfig
+            {
+                get => this.ReadText(4, null);
+                set => this.WriteText(4, value, null);
             }
         }
 
@@ -3160,551 +3175,6 @@ namespace Mas.Schema.Fbp
             public enum ContentType : ushort
             {
                 structuredText
-            }
-        }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfd32766446625ad7UL), Proxy(typeof(ComponentService_Proxy)), Skeleton(typeof(ComponentService_Skeleton))]
-    public interface IComponentService : Mas.Schema.Common.IIdentifiable
-    {
-        Task<IReadOnlyList<Mas.Schema.Fbp.ComponentService.Entry>> List(CancellationToken cancellationToken_ = default);
-        Task<Mas.Schema.Fbp.Component> Component(string id, CancellationToken cancellationToken_ = default);
-        Task<IReadOnlyList<Mas.Schema.Common.IdInformation>> Categories(CancellationToken cancellationToken_ = default);
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfd32766446625ad7UL)]
-    public class ComponentService_Proxy : Proxy, IComponentService
-    {
-        public Task<IReadOnlyList<Mas.Schema.Fbp.ComponentService.Entry>> List(CancellationToken cancellationToken_ = default)
-        {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Params_List.WRITER>();
-            var arg_ = new Mas.Schema.Fbp.ComponentService.Params_List()
-            {};
-            arg_?.serialize(in_);
-            return Impatient.MakePipelineAware(Call(18244775213480958679UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
-            {
-                using (d_)
-                {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.ComponentService.Result_List>(d_);
-                    return (r_.Entries);
-                }
-            }
-
-            );
-        }
-
-        public Task<Mas.Schema.Fbp.Component> Component(string id, CancellationToken cancellationToken_ = default)
-        {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Params_Component.WRITER>();
-            var arg_ = new Mas.Schema.Fbp.ComponentService.Params_Component()
-            {Id = id};
-            arg_?.serialize(in_);
-            return Impatient.MakePipelineAware(Call(18244775213480958679UL, 1, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
-            {
-                using (d_)
-                {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.ComponentService.Result_Component>(d_);
-                    return (r_.Comp);
-                }
-            }
-
-            );
-        }
-
-        public async Task<IReadOnlyList<Mas.Schema.Common.IdInformation>> Categories(CancellationToken cancellationToken_ = default)
-        {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Params_Categories.WRITER>();
-            var arg_ = new Mas.Schema.Fbp.ComponentService.Params_Categories()
-            {};
-            arg_?.serialize(in_);
-            using (var d_ = await Call(18244775213480958679UL, 2, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
-            {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.ComponentService.Result_Categories>(d_);
-                return (r_.Categories);
-            }
-        }
-
-        public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
-        {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
-            arg_?.serialize(in_);
-            using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
-            {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
-                return r_;
-            }
-        }
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfd32766446625ad7UL)]
-    public class ComponentService_Skeleton : Skeleton<IComponentService>
-    {
-        public ComponentService_Skeleton()
-        {
-            SetMethodTable(List, Component, Categories);
-        }
-
-        public override ulong InterfaceId => 18244775213480958679UL;
-        Task<AnswerOrCounterquestion> List(DeserializerState d_, CancellationToken cancellationToken_)
-        {
-            using (d_)
-            {
-                return Impatient.MaybeTailCall(Impl.List(cancellationToken_), entries =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Result_List.WRITER>();
-                    var r_ = new Mas.Schema.Fbp.ComponentService.Result_List{Entries = entries};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
-                );
-            }
-        }
-
-        Task<AnswerOrCounterquestion> Component(DeserializerState d_, CancellationToken cancellationToken_)
-        {
-            using (d_)
-            {
-                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.ComponentService.Params_Component>(d_);
-                return Impatient.MaybeTailCall(Impl.Component(in_.Id, cancellationToken_), comp =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Result_Component.WRITER>();
-                    var r_ = new Mas.Schema.Fbp.ComponentService.Result_Component{Comp = comp};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
-                );
-            }
-        }
-
-        Task<AnswerOrCounterquestion> Categories(DeserializerState d_, CancellationToken cancellationToken_)
-        {
-            using (d_)
-            {
-                return Impatient.MaybeTailCall(Impl.Categories(cancellationToken_), categories =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.ComponentService.Result_Categories.WRITER>();
-                    var r_ = new Mas.Schema.Fbp.ComponentService.Result_Categories{Categories = categories};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
-                );
-            }
-        }
-    }
-
-    public static class ComponentService
-    {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xeda3c43711165718UL)]
-        public class Entry : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0xeda3c43711165718UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                CategoryId = reader.CategoryId;
-                Component = CapnpSerializable.Create<Mas.Schema.Fbp.Component>(reader.Component);
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-                writer.CategoryId = CategoryId;
-                Component?.serialize(writer.Component);
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public string CategoryId
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Fbp.Component Component
-            {
-                get;
-                set;
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public string CategoryId => ctx.ReadText(0, null);
-                public Mas.Schema.Fbp.Component.READER Component => ctx.ReadStruct(1, Mas.Schema.Fbp.Component.READER.create);
-                public bool HasComponent => ctx.IsStructFieldNonNull(1);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 2);
-                }
-
-                public string CategoryId
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-
-                public Mas.Schema.Fbp.Component.WRITER Component
-                {
-                    get => BuildPointer<Mas.Schema.Fbp.Component.WRITER>(1);
-                    set => Link(1, value);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8fe5f30dda656838UL)]
-        public class Params_List : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0x8fe5f30dda656838UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 0);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa99399396807d8c5UL)]
-        public class Result_List : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0xa99399396807d8c5UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                Entries = reader.Entries?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Fbp.ComponentService.Entry>(_));
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-                writer.Entries.Init(Entries, (_s1, _v1) => _v1?.serialize(_s1));
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public IReadOnlyList<Mas.Schema.Fbp.ComponentService.Entry> Entries
-            {
-                get;
-                set;
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public IReadOnlyList<Mas.Schema.Fbp.ComponentService.Entry.READER> Entries => ctx.ReadList(0).Cast(Mas.Schema.Fbp.ComponentService.Entry.READER.create);
-                public bool HasEntries => ctx.IsStructFieldNonNull(0);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 1);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Fbp.ComponentService.Entry.WRITER> Entries
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.ComponentService.Entry.WRITER>>(0);
-                    set => Link(0, value);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x973c5bebb677e106UL)]
-        public class Params_Component : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0x973c5bebb677e106UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                Id = reader.Id;
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-                writer.Id = Id;
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public string Id
-            {
-                get;
-                set;
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public string Id => ctx.ReadText(0, null);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 1);
-                }
-
-                public string Id
-                {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x816f3a8598cfd055UL)]
-        public class Result_Component : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0x816f3a8598cfd055UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                Comp = CapnpSerializable.Create<Mas.Schema.Fbp.Component>(reader.Comp);
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-                Comp?.serialize(writer.Comp);
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public Mas.Schema.Fbp.Component Comp
-            {
-                get;
-                set;
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Fbp.Component.READER Comp => ctx.ReadStruct(0, Mas.Schema.Fbp.Component.READER.create);
-                public bool HasComp => ctx.IsStructFieldNonNull(0);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 1);
-                }
-
-                public Mas.Schema.Fbp.Component.WRITER Comp
-                {
-                    get => BuildPointer<Mas.Schema.Fbp.Component.WRITER>(0);
-                    set => Link(0, value);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdd2951b8efe293aeUL)]
-        public class Params_Categories : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0xdd2951b8efe293aeUL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 0);
-                }
-            }
-        }
-
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb4315bf70ae26e84UL)]
-        public class Result_Categories : ICapnpSerializable
-        {
-            public const UInt64 typeId = 0xb4315bf70ae26e84UL;
-            void ICapnpSerializable.Deserialize(DeserializerState arg_)
-            {
-                var reader = READER.create(arg_);
-                Categories = reader.Categories?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(_));
-                applyDefaults();
-            }
-
-            public void serialize(WRITER writer)
-            {
-                writer.Categories.Init(Categories, (_s1, _v1) => _v1?.serialize(_s1));
-            }
-
-            void ICapnpSerializable.Serialize(SerializerState arg_)
-            {
-                serialize(arg_.Rewrap<WRITER>());
-            }
-
-            public void applyDefaults()
-            {
-            }
-
-            public IReadOnlyList<Mas.Schema.Common.IdInformation> Categories
-            {
-                get;
-                set;
-            }
-
-            public struct READER
-            {
-                readonly DeserializerState ctx;
-                public READER(DeserializerState ctx)
-                {
-                    this.ctx = ctx;
-                }
-
-                public static READER create(DeserializerState ctx) => new READER(ctx);
-                public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public IReadOnlyList<Mas.Schema.Common.IdInformation.READER> Categories => ctx.ReadList(0).Cast(Mas.Schema.Common.IdInformation.READER.create);
-                public bool HasCategories => ctx.IsStructFieldNonNull(0);
-            }
-
-            public class WRITER : SerializerState
-            {
-                public WRITER()
-                {
-                    this.SetStruct(0, 1);
-                }
-
-                public ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER> Categories
-                {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.IdInformation.WRITER>>(0);
-                    set => Link(0, value);
-                }
             }
         }
     }

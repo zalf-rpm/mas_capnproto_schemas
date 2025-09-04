@@ -195,12 +195,14 @@ struct Component {
         type        @2 :PortType = standard; # port type
     }
 
-    info        @0 :Common.IdInformation; # id, name and description of this FBP component
-    type        @1 :ComponentType; # the type of FBP component
-    inPorts     @2 :List(Port); # the components allowed input ports
-    outPorts    @3 :List(Port); # the components allowed input ports
+    info          @0 :Common.IdInformation; # id, name and description of this FBP component
+    type          @1 :ComponentType; # the type of FBP component
+    inPorts       @2 :List(Port); # the components allowed input ports
+    outPorts      @3 :List(Port); # the components allowed input ports
 
-    run         @4 :Runnable; # if non null, interface to runtime instance of this component
+    run           @4 :Runnable; # if non null, interface to runtime instance of this component
+
+    defaultConfig @5 :Text; # default configuration for component
 }
 
 #interface ComponentService extends(Common.Identifiable) {
