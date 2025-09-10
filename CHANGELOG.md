@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.36](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.35...v0.1.36) (2025-09-10)
+
+
+### Features
+
+* added DefaultConfig option to FBP component ([ddd976b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/ddd976ba1401552b5bceddc4471655735da4dfeb))
+* simplify import logic  ([#9](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/9)) ([6891b3a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/6891b3ac5b121958e255ff976c9bfb8e3b59e59b))
+
 ## [0.1.35](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.34...v0.1.35) (2025-08-29)
 
 
