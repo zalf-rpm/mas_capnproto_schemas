@@ -1,4 +1,4 @@
-
-/__pycache__
-/_cmake_debug
-/dist
+__pycache__
+_cmake_debug
+dist
+.venv
