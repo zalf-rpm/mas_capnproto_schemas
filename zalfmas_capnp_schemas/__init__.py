@@ -1,3 +1,9 @@
+import zalfmas_capnp_schemas
+import sys
+import os
+
+sys.path.append(os.path.dirname(zalfmas_capnp_schemas.__file__))
+
 from . import a_capnp
 from . import climate_capnp
 from . import cluster_admin_service_capnp
