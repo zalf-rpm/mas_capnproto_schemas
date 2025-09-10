@@ -5,9 +5,7 @@ description = ""
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 authors = [{ name = "Michael Berg-Mohnicke", email = "michael.berg@zalf.de" }]
-dependencies = [
-    "poetry-core (>=2.0.0)",
-]
+dependencies = ["poetry-core (>=2.0.0)"]
 
 [tool.poetry]
 packages = [{ include = "zalfmas_capnp_schemas" }]
