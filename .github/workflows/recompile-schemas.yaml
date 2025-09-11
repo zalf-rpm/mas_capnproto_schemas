@@ -3,14 +3,17 @@ on:
   workflow_dispatch:
     inputs:
       languages:
-        description: "Languages to generate (space-separated, default: c++ go)"
+        description: "Languages to generate (space-separated)"
         required: false
+        default: "c++ go"
       capnp_version:
         description: "Override CAPNP_VERSION build arg"
         required: false
+        default: "1.2.0"
       capnpc_go_version:
         description: "Override CAPNPC_GO_VERSION build arg"
         required: false
+        default: "latest"
 permissions:
   contents: write
   pull-requests: write
