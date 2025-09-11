@@ -1670,11 +1670,11 @@ func (s Params_Cutting) NewCuttingSpec(n int32) (Params_Cutting_Spec_List, error
 	return l, err
 }
 func (s Params_Cutting) CutMaxAssimilationRatePercentage() float64 {
-	return math.Float64frombits(capnp.Struct(s).Uint64(0))
+	return math.Float64frombits(capnp.Struct(s).Uint64(0) ^ 0x4059000000000000)
 }
 
 func (s Params_Cutting) SetCutMaxAssimilationRatePercentage(v float64) {
-	capnp.Struct(s).SetUint64(0, math.Float64bits(v))
+	capnp.Struct(s).SetUint64(0, math.Float64bits(v)^0x4059000000000000)
 }
 
 // Params_Cutting_List is a list of Params_Cutting.
@@ -3931,10 +3931,10 @@ const schema_b30a3af53cea6b3e = "x\xda\xccY}p\x15U\x96?\xa7\xfb=\x1eAB" +
 	"\xf8\xcal\xaf\xaf\x85O`\x00+B\xbaS\xde\xd6~" +
 	"\x99\xc9 \xc6\x04\xe1Gl6'\xf2\x81\xa5\xb21\xfc" +
 	"\xfe\xc9*\x1a\xe5\xf65\xe2\x80b\xbe\x12E\xf3\x81b" +
-	"\xe0u\x04\x81\xb7\xa4u\x06F:\x94\xa2\x03S\x90\xc8" +
-	"\xf3t\xc8O\x82\xc5\x8b\xfc$]p{\xf4\x1d\xad\x8e" +
-	"\xec\x189#+\xf2\xa8Owy//\x9f|\x00\xfe" +
-	"o\x00\x00\x00\xff\xff\xfad\x14L"
+	"\xe0u\x04\x1f:\x96\xb4\xce\xc0H\x87Rt`\x0a\x12" +
+	"y\x9e\x0e\xf9I\xb0x\x91\x9f\xa4\x0bn\x8f\xbe\xa3\xd5" +
+	"\x91\x1d#gdE\x1e\xf5\xe9.\xef\xe5\x93N>\xfe" +
+	"7\x00\x00\xff\xff>\x02\x15\xa6"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{

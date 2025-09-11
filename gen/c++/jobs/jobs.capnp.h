@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -124,7 +124,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename Payload2 = ::capnp::AnyPointer>
-  typename Job<Payload2>::Reader asGeneric() {
+  typename Job<Payload2>::Reader asGeneric() const {
     return typename Job<Payload2>::Reader(_reader);
   }
 

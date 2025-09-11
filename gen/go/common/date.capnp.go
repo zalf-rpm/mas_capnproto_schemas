@@ -5,6 +5,7 @@ package common
 import (
 	capnp "capnproto.org/go/capnp/v3"
 	text "capnproto.org/go/capnp/v3/encoding/text"
+	schemas "capnproto.org/go/capnp/v3/schemas"
 )
 
 type Date capnp.Struct
@@ -93,4 +94,27 @@ type Date_Future struct{ *capnp.Future }
 func (f Date_Future) Struct() (Date, error) {
 	p, err := f.Future.Ptr()
 	return Date(p.Struct()), err
+}
+
+const schema_e8ea2bc38b07f62a = "x\xda4\xc8\xb1J\xc3P\x14\x06\xe0\xff?\xe7\x9a\x0c" +
+	"*zIFE\xcc\x18A\xd0\xd1)`\x04\x05\x85\x1c" +
+	"\xf0\x05.&\xe0b\x12$KVq\x13g_B\xf0" +
+	"!|\x97R\xfa\x00\x1d\x9bRJ\xb7\x8f\xef\xf8\xb3p" +
+	"W\x87\x9d@\xecd/\x9a\xbe}\xa6\xbf\xab\xd9\x0fl" +
+	"\x9f\x9c\xf2e\xfc\xf5\x7f\xb1\x98\xc3\xc5@r\xca\x8f\xe4" +
+	"\x9c[\xfd\xe1v\xaa\xc3\xd0\\\xbe\x84\x9em\x7fS\x86" +
+	"\xa1AE\xda\x81:\xc0\x11\xf0w9`\x85\xd2\x1e\x85" +
+	"\x9e\x92r\x93\x0f\xd7\x80\x95J\xab\x84^4\xa5\x00\xfe" +
+	")\x03\xec^i\xcf\xc2\xa3\xb1\x09\xefT\x08\x15<{" +
+	"\xeb\xda\xe1\x95\x11\x84\x11\x18\xd7a\xdcy\x1d\x00\x00\xff" +
+	"\xffg !9"
+
+func RegisterSchema(reg *schemas.Registry) {
+	reg.Register(&schemas.Schema{
+		String: schema_e8ea2bc38b07f62a,
+		Nodes: []uint64{
+			0x97e6feac0322118d,
+		},
+		Compressed: true,
+	})
 }
