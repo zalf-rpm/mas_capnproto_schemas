@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -1120,7 +1120,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename F2 = ::capnp::AnyPointer, typename S2 = ::capnp::AnyPointer>
-  typename Pair<F2, S2>::Reader asGeneric() {
+  typename Pair<F2, S2>::Reader asGeneric() const {
     return typename Pair<F2, S2>::Reader(_reader);
   }
 
@@ -1288,7 +1288,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename Holder<T2>::ValueParams::Reader asHolderGeneric() {
+  typename Holder<T2>::ValueParams::Reader asHolderGeneric() const {
     return typename Holder<T2>::ValueParams::Reader(_reader);
   }
 
@@ -1372,7 +1372,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename Holder<T2>::ValueResults::Reader asHolderGeneric() {
+  typename Holder<T2>::ValueResults::Reader asHolderGeneric() const {
     return typename Holder<T2>::ValueResults::Reader(_reader);
   }
 

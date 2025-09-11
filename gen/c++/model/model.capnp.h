@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -1191,7 +1191,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer>
-  typename Env<RestInput2>::Reader asGeneric() {
+  typename Env<RestInput2>::Reader asGeneric() const {
     return typename Env<RestInput2>::Reader(_reader);
   }
 
@@ -1393,7 +1393,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstance<RestInput2, Output2>::RunParams::Reader asEnvInstanceGeneric() {
+  typename EnvInstance<RestInput2, Output2>::RunParams::Reader asEnvInstanceGeneric() const {
     return typename EnvInstance<RestInput2, Output2>::RunParams::Reader(_reader);
   }
 
@@ -1488,7 +1488,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstance<RestInput2, Output2>::RunResults::Reader asEnvInstanceGeneric() {
+  typename EnvInstance<RestInput2, Output2>::RunResults::Reader asEnvInstanceGeneric() const {
     return typename EnvInstance<RestInput2, Output2>::RunResults::Reader(_reader);
   }
 
@@ -1706,7 +1706,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader asEnvInstanceProxyGeneric() {
+  typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader asEnvInstanceProxyGeneric() const {
     return typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader(_reader);
   }
 
@@ -1790,7 +1790,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader asEnvInstanceProxyGeneric() {
+  typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader asEnvInstanceProxyGeneric() const {
     return typename EnvInstanceProxy<RestInput2, Output2>::Unregister::Reader(_reader);
   }
 
@@ -1879,7 +1879,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceParams::Reader asEnvInstanceProxyGeneric() {
+  typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceParams::Reader asEnvInstanceProxyGeneric() const {
     return typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceParams::Reader(_reader);
   }
 
@@ -1978,7 +1978,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename RestInput2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
-  typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceResults::Reader asEnvInstanceProxyGeneric() {
+  typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceResults::Reader asEnvInstanceProxyGeneric() const {
     return typename EnvInstanceProxy<RestInput2, Output2>::RegisterEnvInstanceResults::Reader(_reader);
   }
 

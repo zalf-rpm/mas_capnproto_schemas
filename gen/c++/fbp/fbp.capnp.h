@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -1256,7 +1256,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::Msg::Reader asChannelGeneric() {
+  typename Channel<V2>::Msg::Reader asChannelGeneric() const {
     return typename Channel<V2>::Msg::Reader(_reader);
   }
 
@@ -1369,7 +1369,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::StartupInfo::Reader asChannelGeneric() {
+  typename Channel<V2>::StartupInfo::Reader asChannelGeneric() const {
     return typename Channel<V2>::StartupInfo::Reader(_reader);
   }
 
@@ -1612,7 +1612,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanReader::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanReader::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanReader::Reader(_reader);
   }
 
@@ -1696,7 +1696,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanReader::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanReader::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanReader::Reader(_reader);
   }
 
@@ -1780,7 +1780,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanReader::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanReader::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanReader::Reader(_reader);
   }
 
@@ -1864,7 +1864,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanReader::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanReader::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanReader::Reader(_reader);
   }
 
@@ -2022,7 +2022,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanWriter::Reader(_reader);
   }
 
@@ -2106,7 +2106,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanWriter::Reader(_reader);
   }
 
@@ -2190,7 +2190,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanWriter::Reader(_reader);
   }
 
@@ -2274,7 +2274,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() {
+  typename Channel<V2>::ChanWriter::Reader asChannelGeneric() const {
     return typename Channel<V2>::ChanWriter::Reader(_reader);
   }
 
@@ -2363,7 +2363,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::SetBufferSizeParams::Reader asChannelGeneric() {
+  typename Channel<V2>::SetBufferSizeParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::SetBufferSizeParams::Reader(_reader);
   }
 
@@ -2452,7 +2452,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::SetBufferSizeResults::Reader asChannelGeneric() {
+  typename Channel<V2>::SetBufferSizeResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::SetBufferSizeResults::Reader(_reader);
   }
 
@@ -2536,7 +2536,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ReaderParams::Reader asChannelGeneric() {
+  typename Channel<V2>::ReaderParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::ReaderParams::Reader(_reader);
   }
 
@@ -2620,7 +2620,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::ReaderResults::Reader asChannelGeneric() {
+  typename Channel<V2>::ReaderResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::ReaderResults::Reader(_reader);
   }
 
@@ -2719,7 +2719,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::WriterParams::Reader asChannelGeneric() {
+  typename Channel<V2>::WriterParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::WriterParams::Reader(_reader);
   }
 
@@ -2803,7 +2803,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::WriterResults::Reader asChannelGeneric() {
+  typename Channel<V2>::WriterResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::WriterResults::Reader(_reader);
   }
 
@@ -2902,7 +2902,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::EndpointsParams::Reader asChannelGeneric() {
+  typename Channel<V2>::EndpointsParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::EndpointsParams::Reader(_reader);
   }
 
@@ -2986,7 +2986,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::EndpointsResults::Reader asChannelGeneric() {
+  typename Channel<V2>::EndpointsResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::EndpointsResults::Reader(_reader);
   }
 
@@ -3100,7 +3100,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::SetAutoCloseSemanticsParams::Reader asChannelGeneric() {
+  typename Channel<V2>::SetAutoCloseSemanticsParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::SetAutoCloseSemanticsParams::Reader(_reader);
   }
 
@@ -3189,7 +3189,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::SetAutoCloseSemanticsResults::Reader asChannelGeneric() {
+  typename Channel<V2>::SetAutoCloseSemanticsResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::SetAutoCloseSemanticsResults::Reader(_reader);
   }
 
@@ -3273,7 +3273,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::CloseParams::Reader asChannelGeneric() {
+  typename Channel<V2>::CloseParams::Reader asChannelGeneric() const {
     return typename Channel<V2>::CloseParams::Reader(_reader);
   }
 
@@ -3362,7 +3362,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename V2 = ::capnp::AnyPointer>
-  typename Channel<V2>::CloseResults::Reader asChannelGeneric() {
+  typename Channel<V2>::CloseResults::Reader asChannelGeneric() const {
     return typename Channel<V2>::CloseResults::Reader(_reader);
   }
 
