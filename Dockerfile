@@ -43,15 +43,4 @@ RUN ldconfig
 # Override languages via: docker run ... capnp-gen --lang c++ go
 # capnpc-go plugin installed in /usr/local/bin (already in default PATH)
 ENTRYPOINT ["python3", "capnp_compile.py"]
-CMD ["--lang", "c++"]
-
-# Usage examples (no repo copy -> mount at runtime):
-# docker build -t capnp-gen .
-# docker run --rm -u $(id -u):$(id -g) -v "$(pwd)":/workspace -w /workspace capnp-gen \
-#   python3 capnp_compile.py --lang c++
-# Multi-language:
-# docker run --rm -u $(id -u):$(id -g) -v "$(pwd)":/workspace -w /workspace capnp-gen \
-#   python3 capnp_compile.py --lang c++ go
-# Direct capnp usage:
-# docker run --rm -u $(id -u):$(id -g) -v "$(pwd)":/workspace -w /workspace capnp-gen \
-#   capnp compile -I zalfmas_capnp_schemas -oc++:gen/c++ zalfmas_capnp_schemas/common.capnp
+CMD ["--lang", "c++", "go"]
