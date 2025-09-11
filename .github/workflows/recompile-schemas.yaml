@@ -1,0 +1,74 @@
+name: Recompile Cap'n Proto Schemas
+on:
+  workflow_dispatch:
+    inputs:
+      languages:
+        description: "Languages to generate (space-separated, default: c++ go)"
+        required: false
+      capnp_version:
+        description: "Override CAPNP_VERSION build arg"
+        required: false
+      capnpc_go_version:
+        description: "Override CAPNPC_GO_VERSION build arg"
+        required: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  recompile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build capnp compiler image
+        run: |
+          args=()
+          if [ -n "${{ github.event.inputs.capnp_version }}" ]; then
+            args+=(--build-arg CAPNP_VERSION=${{ github.event.inputs.capnp_version }})
+          fi
+          if [ -n "${{ github.event.inputs.capnpc_go_version }}" ]; then
+            args+=(--build-arg CAPNPC_GO_VERSION=${{ github.event.inputs.capnpc_go_version }})
+          fi
+            # Optional: bump JOBS to speed build
+          docker build "${args[@]}" -t capnp-gen .
+      - name: Run code generation
+        run: |
+          set -e
+          langs="${{ github.event.inputs.languages }}"
+          if [ -n "$langs" ]; then
+            echo "Generating for languages: $langs"
+            docker run --rm -u $(id -u):$(id -g) -v "$PWD":/workspace -w /workspace capnp-gen --lang $langs
+          else
+            echo "Generating for default languages (c++ go)"
+            docker run --rm -u $(id -u):$(id -g) -v "$PWD":/workspace -w /workspace capnp-gen
+          fi
+      - name: Show diff (if any)
+        run: |
+          git add -N .
+          git diff --name-status || true
+          git diff --stat || true
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: recompile capnp schemas"
+          branch: chore/recompile-capnp-schemas
+          title: "chore: recompile Cap'n Proto schemas"
+          body: |
+            Automated schema recompilation (manual trigger).
+            Inputs:
+            - languages: ${{ github.event.inputs.languages }}
+            - CAPNP_VERSION: ${{ github.event.inputs.capnp_version }}
+            - CAPNPC_GO_VERSION: ${{ github.event.inputs.capnpc_go_version }}
+          labels: automated, schemas
+          signoff: true
+          delete-branch: true
+      - name: Summary
+        run: |
+          if [ "${{ steps.cpr.outputs.pull-request-number }}" != "" ]; then
+            echo "Created/updated PR #${{ steps.cpr.outputs.pull-request-number }}"
+          else
+            echo "No changes to commit; no PR created."
+          fi
