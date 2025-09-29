@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.37](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.36...v0.1.37) (2025-09-29)
+
+
+### Features
+
+* added potET to climate variables ([61cd28b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/61cd28bc46a4aa4e5b762b6df135bd1cfb4de1e0))
+* basic recompilation in docker image and ([#10](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/10)) ([8036c4c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/8036c4c17e56dbbf36cb2e753bc92eb485f976c1))
+
 ## [0.1.36](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.35...v0.1.36) (2025-09-10)
 
 
