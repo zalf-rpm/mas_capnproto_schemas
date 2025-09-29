@@ -2,7 +2,8 @@ import zalfmas_capnp_schemas
 import sys
 import os
 
-sys.path.append(os.path.dirname(zalfmas_capnp_schemas.__file__))
+schemas_dir = os.path.dirname(zalfmas_capnp_schemas.__file__)
+sys.path.append(schemas_dir)
 
 from . import a_capnp
 from . import climate_capnp
@@ -46,4 +47,5 @@ __all__ = [
     "soil_capnp",
     "storage_capnp",
     "x_capnp",
+    "schemas_dir",
 ]
