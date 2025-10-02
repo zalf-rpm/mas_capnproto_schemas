@@ -13,6 +13,7 @@
     "crop.capnp": { "output_dir": "crop" },
     "date.capnp": { "output_dir": "common" },
     "fbp.capnp": { "output_dir": "fbp" },
+    "field_exp_data.capnp": { "output_dir": "data" },
     "geo.capnp": { "output_dir": "geo" },
     "grid.capnp": { "output_dir": "grid" },
     "jobs.capnp": { "output_dir": "jobs" },
