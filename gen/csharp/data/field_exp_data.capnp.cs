@@ -324,7 +324,7 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ProfileId = reader.ProfileId;
+            Id = reader.Id;
             Name = reader.Name;
             Source = reader.Source;
             DepthInCM = reader.DepthInCM;
@@ -342,12 +342,13 @@ namespace Mas.Schema.Data
             SoilTexture = reader.SoilTexture;
             Classification = reader.Classification;
             Notes = reader.Notes;
+            Profile = reader.Profile;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ProfileId = ProfileId;
+            writer.Id = Id;
             writer.Name = Name;
             writer.Source = Source;
             writer.DepthInCM = DepthInCM;
@@ -365,6 +366,7 @@ namespace Mas.Schema.Data
             writer.SoilTexture = SoilTexture;
             writer.Classification = Classification;
             writer.Notes = Notes;
+            writer.Profile = Profile;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -376,7 +378,7 @@ namespace Mas.Schema.Data
         {
         }
 
-        public string ProfileId
+        public string Id
         {
             get;
             set;
@@ -495,6 +497,12 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public Mas.Schema.Soil.IProfile Profile
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -506,7 +514,7 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ProfileId => ctx.ReadText(0, null);
+            public string Id => ctx.ReadText(0, null);
             public string Name => ctx.ReadText(1, null);
             public string Source => ctx.ReadText(2, null);
             public short DepthInCM => ctx.ReadDataShort(0UL, (short)-1);
@@ -524,16 +532,17 @@ namespace Mas.Schema.Data
             public string SoilTexture => ctx.ReadText(4, null);
             public string Classification => ctx.ReadText(5, null);
             public string Notes => ctx.ReadText(6, null);
+            public Mas.Schema.Soil.IProfile Profile => ctx.ReadCap<Mas.Schema.Soil.IProfile>(7);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(9, 7);
+                this.SetStruct(9, 8);
             }
 
-            public string ProfileId
+            public string Id
             {
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
@@ -639,6 +648,12 @@ namespace Mas.Schema.Data
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
+            }
+
+            public Mas.Schema.Soil.IProfile Profile
+            {
+                get => ReadCap<Mas.Schema.Soil.IProfile>(7);
+                set => LinkObject(7, value);
             }
         }
     }
@@ -897,6 +912,7 @@ namespace Mas.Schema.Data
             PlantingYear = reader.PlantingYear;
             HarvestOperationYear = reader.HarvestOperationYear;
             Notes = reader.Notes;
+            Treatments = reader.Treatments?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.Treatment>(_));
             applyDefaults();
         }
 
@@ -919,6 +935,7 @@ namespace Mas.Schema.Data
             writer.PlantingYear = PlantingYear;
             writer.HarvestOperationYear = HarvestOperationYear;
             writer.Notes = Notes;
+            writer.Treatments.Init(Treatments, (_s1, _v1) => _v1?.serialize(_s1));
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -1034,6 +1051,12 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public IReadOnlyList<Mas.Schema.Data.Treatment> Treatments
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1062,13 +1085,15 @@ namespace Mas.Schema.Data
             public short PlantingYear => ctx.ReadDataShort(0UL, (short)-1);
             public short HarvestOperationYear => ctx.ReadDataShort(16UL, (short)-1);
             public string Notes => ctx.ReadText(14, null);
+            public IReadOnlyList<Mas.Schema.Data.Treatment.READER> Treatments => ctx.ReadList(15).Cast(Mas.Schema.Data.Treatment.READER.create);
+            public bool HasTreatments => ctx.IsStructFieldNonNull(15);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 15);
+                this.SetStruct(1, 16);
             }
 
             public string Id
@@ -1172,6 +1197,12 @@ namespace Mas.Schema.Data
                 get => this.ReadText(14, null);
                 set => this.WriteText(14, value, null);
             }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.Treatment.WRITER> Treatments
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.Treatment.WRITER>>(15);
+                set => Link(15, value);
+            }
         }
     }
 
@@ -1183,10 +1214,9 @@ namespace Mas.Schema.Data
         {
             var reader = READER.create(arg_);
             Id = reader.Id;
-            ExperimentId = reader.ExperimentId;
-            FieldId = reader.FieldId;
-            WeatherStationId = reader.WeatherStationId;
-            WeatherStationDataset = reader.WeatherStationDataset;
+            Field = CapnpSerializable.Create<Mas.Schema.Data.Field>(reader.Field);
+            WeatherStation = CapnpSerializable.Create<Mas.Schema.Data.WeatherStation>(reader.WeatherStation);
+            WeatherStationTimeseries = reader.WeatherStationTimeseries;
             Name = reader.Name;
             SimulationStartDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.SimulationStartDate);
             SimulationEndDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.SimulationEndDate);
@@ -1200,16 +1230,27 @@ namespace Mas.Schema.Data
             PlantingDensityLevel = reader.PlantingDensityLevel;
             NumberOfBlocksOrReplicates = reader.NumberOfBlocksOrReplicates;
             Notes = reader.Notes;
+            Plots = reader.Plots?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.Plot>(_));
+            Residue = CapnpSerializable.Create<Mas.Schema.Data.Residue>(reader.Residue);
+            InitialConditionsLayers = reader.InitialConditionsLayers?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.InitialConditionsLayer>(_));
+            PlantingEvents = reader.PlantingEvents?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.PlantingEvent>(_));
+            HarvestEvents = reader.HarvestEvents?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.HarvestEvent>(_));
+            IrrigationEvents = reader.IrrigationEvents?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.IrrigationEvent>(_));
+            FertilizerEvents = reader.FertilizerEvents?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.FertilizerEvent>(_));
+            EnvironmentModifications = reader.EnvironmentModifications?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Data.EnvironmentModification>(_));
+            ExperimentId = reader.ExperimentId;
+            FieldId = reader.FieldId;
+            WeatherStationId = reader.WeatherStationId;
+            WeatherStationDataset = reader.WeatherStationDataset;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
             writer.Id = Id;
-            writer.ExperimentId = ExperimentId;
-            writer.FieldId = FieldId;
-            writer.WeatherStationId = WeatherStationId;
-            writer.WeatherStationDataset = WeatherStationDataset;
+            Field?.serialize(writer.Field);
+            WeatherStation?.serialize(writer.WeatherStation);
+            writer.WeatherStationTimeseries = WeatherStationTimeseries;
             writer.Name = Name;
             SimulationStartDate?.serialize(writer.SimulationStartDate);
             SimulationEndDate?.serialize(writer.SimulationEndDate);
@@ -1223,6 +1264,18 @@ namespace Mas.Schema.Data
             writer.PlantingDensityLevel = PlantingDensityLevel;
             writer.NumberOfBlocksOrReplicates = NumberOfBlocksOrReplicates;
             writer.Notes = Notes;
+            writer.Plots.Init(Plots, (_s1, _v1) => _v1?.serialize(_s1));
+            Residue?.serialize(writer.Residue);
+            writer.InitialConditionsLayers.Init(InitialConditionsLayers, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.PlantingEvents.Init(PlantingEvents, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.HarvestEvents.Init(HarvestEvents, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.IrrigationEvents.Init(IrrigationEvents, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.FertilizerEvents.Init(FertilizerEvents, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.EnvironmentModifications.Init(EnvironmentModifications, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.ExperimentId = ExperimentId;
+            writer.FieldId = FieldId;
+            writer.WeatherStationId = WeatherStationId;
+            writer.WeatherStationDataset = WeatherStationDataset;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -1240,25 +1293,19 @@ namespace Mas.Schema.Data
             set;
         }
 
-        public string ExperimentId
+        public Mas.Schema.Data.Field Field
         {
             get;
             set;
         }
 
-        public string FieldId
+        public Mas.Schema.Data.WeatherStation WeatherStation
         {
             get;
             set;
         }
 
-        public string WeatherStationId
-        {
-            get;
-            set;
-        }
-
-        public string WeatherStationDataset
+        public Mas.Schema.Climate.ITimeSeries WeatherStationTimeseries
         {
             get;
             set;
@@ -1349,6 +1396,78 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public IReadOnlyList<Mas.Schema.Data.Plot> Plots
+        {
+            get;
+            set;
+        }
+
+        public Mas.Schema.Data.Residue Residue
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.InitialConditionsLayer> InitialConditionsLayers
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.PlantingEvent> PlantingEvents
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.HarvestEvent> HarvestEvents
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.IrrigationEvent> IrrigationEvents
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.FertilizerEvent> FertilizerEvents
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<Mas.Schema.Data.EnvironmentModification> EnvironmentModifications
+        {
+            get;
+            set;
+        }
+
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string FieldId
+        {
+            get;
+            set;
+        }
+
+        public string WeatherStationId
+        {
+            get;
+            set;
+        }
+
+        public string WeatherStationDataset
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1361,15 +1480,16 @@ namespace Mas.Schema.Data
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             public string Id => ctx.ReadText(0, null);
-            public string ExperimentId => ctx.ReadText(1, null);
-            public string FieldId => ctx.ReadText(2, null);
-            public string WeatherStationId => ctx.ReadText(3, null);
-            public string WeatherStationDataset => ctx.ReadText(4, null);
-            public string Name => ctx.ReadText(5, null);
-            public Mas.Schema.Common.Date.READER SimulationStartDate => ctx.ReadStruct(6, Mas.Schema.Common.Date.READER.create);
-            public bool HasSimulationStartDate => ctx.IsStructFieldNonNull(6);
-            public Mas.Schema.Common.Date.READER SimulationEndDate => ctx.ReadStruct(7, Mas.Schema.Common.Date.READER.create);
-            public bool HasSimulationEndDate => ctx.IsStructFieldNonNull(7);
+            public Mas.Schema.Data.Field.READER Field => ctx.ReadStruct(1, Mas.Schema.Data.Field.READER.create);
+            public bool HasField => ctx.IsStructFieldNonNull(1);
+            public Mas.Schema.Data.WeatherStation.READER WeatherStation => ctx.ReadStruct(2, Mas.Schema.Data.WeatherStation.READER.create);
+            public bool HasWeatherStation => ctx.IsStructFieldNonNull(2);
+            public Mas.Schema.Climate.ITimeSeries WeatherStationTimeseries => ctx.ReadCap<Mas.Schema.Climate.ITimeSeries>(3);
+            public string Name => ctx.ReadText(4, null);
+            public Mas.Schema.Common.Date.READER SimulationStartDate => ctx.ReadStruct(5, Mas.Schema.Common.Date.READER.create);
+            public bool HasSimulationStartDate => ctx.IsStructFieldNonNull(5);
+            public Mas.Schema.Common.Date.READER SimulationEndDate => ctx.ReadStruct(6, Mas.Schema.Common.Date.READER.create);
+            public bool HasSimulationEndDate => ctx.IsStructFieldNonNull(6);
             public bool IrrigationApplied => ctx.ReadDataBool(0UL, false);
             public bool FertilizerApplied => ctx.ReadDataBool(1UL, false);
             public sbyte IrrigationLevel => ctx.ReadDataSByte(8UL, (sbyte)-1);
@@ -1379,14 +1499,34 @@ namespace Mas.Schema.Data
             public sbyte InitialConditionsLevel => ctx.ReadDataSByte(40UL, (sbyte)-1);
             public sbyte PlantingDensityLevel => ctx.ReadDataSByte(48UL, (sbyte)-1);
             public sbyte NumberOfBlocksOrReplicates => ctx.ReadDataSByte(56UL, (sbyte)-1);
-            public string Notes => ctx.ReadText(8, null);
+            public string Notes => ctx.ReadText(7, null);
+            public IReadOnlyList<Mas.Schema.Data.Plot.READER> Plots => ctx.ReadList(8).Cast(Mas.Schema.Data.Plot.READER.create);
+            public bool HasPlots => ctx.IsStructFieldNonNull(8);
+            public Mas.Schema.Data.Residue.READER Residue => ctx.ReadStruct(9, Mas.Schema.Data.Residue.READER.create);
+            public bool HasResidue => ctx.IsStructFieldNonNull(9);
+            public IReadOnlyList<Mas.Schema.Data.InitialConditionsLayer.READER> InitialConditionsLayers => ctx.ReadList(10).Cast(Mas.Schema.Data.InitialConditionsLayer.READER.create);
+            public bool HasInitialConditionsLayers => ctx.IsStructFieldNonNull(10);
+            public IReadOnlyList<Mas.Schema.Data.PlantingEvent.READER> PlantingEvents => ctx.ReadList(11).Cast(Mas.Schema.Data.PlantingEvent.READER.create);
+            public bool HasPlantingEvents => ctx.IsStructFieldNonNull(11);
+            public IReadOnlyList<Mas.Schema.Data.HarvestEvent.READER> HarvestEvents => ctx.ReadList(12).Cast(Mas.Schema.Data.HarvestEvent.READER.create);
+            public bool HasHarvestEvents => ctx.IsStructFieldNonNull(12);
+            public IReadOnlyList<Mas.Schema.Data.IrrigationEvent.READER> IrrigationEvents => ctx.ReadList(13).Cast(Mas.Schema.Data.IrrigationEvent.READER.create);
+            public bool HasIrrigationEvents => ctx.IsStructFieldNonNull(13);
+            public IReadOnlyList<Mas.Schema.Data.FertilizerEvent.READER> FertilizerEvents => ctx.ReadList(14).Cast(Mas.Schema.Data.FertilizerEvent.READER.create);
+            public bool HasFertilizerEvents => ctx.IsStructFieldNonNull(14);
+            public IReadOnlyList<Mas.Schema.Data.EnvironmentModification.READER> EnvironmentModifications => ctx.ReadList(15).Cast(Mas.Schema.Data.EnvironmentModification.READER.create);
+            public bool HasEnvironmentModifications => ctx.IsStructFieldNonNull(15);
+            public string ExperimentId => ctx.ReadText(16, null);
+            public string FieldId => ctx.ReadText(17, null);
+            public string WeatherStationId => ctx.ReadText(18, null);
+            public string WeatherStationDataset => ctx.ReadText(19, null);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 9);
+                this.SetStruct(1, 20);
             }
 
             public string Id
@@ -1395,46 +1535,40 @@ namespace Mas.Schema.Data
                 set => this.WriteText(0, value, null);
             }
 
-            public string ExperimentId
+            public Mas.Schema.Data.Field.WRITER Field
             {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
+                get => BuildPointer<Mas.Schema.Data.Field.WRITER>(1);
+                set => Link(1, value);
             }
 
-            public string FieldId
+            public Mas.Schema.Data.WeatherStation.WRITER WeatherStation
             {
-                get => this.ReadText(2, null);
-                set => this.WriteText(2, value, null);
+                get => BuildPointer<Mas.Schema.Data.WeatherStation.WRITER>(2);
+                set => Link(2, value);
             }
 
-            public string WeatherStationId
+            public Mas.Schema.Climate.ITimeSeries WeatherStationTimeseries
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => ReadCap<Mas.Schema.Climate.ITimeSeries>(3);
+                set => LinkObject(3, value);
             }
 
-            public string WeatherStationDataset
+            public string Name
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
 
-            public string Name
-            {
-                get => this.ReadText(5, null);
-                set => this.WriteText(5, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER SimulationStartDate
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(6);
-                set => Link(6, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(5);
+                set => Link(5, value);
             }
 
             public Mas.Schema.Common.Date.WRITER SimulationEndDate
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(7);
-                set => Link(7, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(6);
+                set => Link(6, value);
             }
 
             public bool IrrigationApplied
@@ -1493,8 +1627,80 @@ namespace Mas.Schema.Data
 
             public string Notes
             {
-                get => this.ReadText(8, null);
-                set => this.WriteText(8, value, null);
+                get => this.ReadText(7, null);
+                set => this.WriteText(7, value, null);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.Plot.WRITER> Plots
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.Plot.WRITER>>(8);
+                set => Link(8, value);
+            }
+
+            public Mas.Schema.Data.Residue.WRITER Residue
+            {
+                get => BuildPointer<Mas.Schema.Data.Residue.WRITER>(9);
+                set => Link(9, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.InitialConditionsLayer.WRITER> InitialConditionsLayers
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.InitialConditionsLayer.WRITER>>(10);
+                set => Link(10, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.PlantingEvent.WRITER> PlantingEvents
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.PlantingEvent.WRITER>>(11);
+                set => Link(11, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.HarvestEvent.WRITER> HarvestEvents
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.HarvestEvent.WRITER>>(12);
+                set => Link(12, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.IrrigationEvent.WRITER> IrrigationEvents
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.IrrigationEvent.WRITER>>(13);
+                set => Link(13, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.FertilizerEvent.WRITER> FertilizerEvents
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.FertilizerEvent.WRITER>>(14);
+                set => Link(14, value);
+            }
+
+            public ListOfStructsSerializer<Mas.Schema.Data.EnvironmentModification.WRITER> EnvironmentModifications
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.EnvironmentModification.WRITER>>(15);
+                set => Link(15, value);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(16, null);
+                set => this.WriteText(16, value, null);
+            }
+
+            public string FieldId
+            {
+                get => this.ReadText(17, null);
+                set => this.WriteText(17, value, null);
+            }
+
+            public string WeatherStationId
+            {
+                get => this.ReadText(18, null);
+                set => this.WriteText(18, value, null);
+            }
+
+            public string WeatherStationDataset
+            {
+                get => this.ReadText(19, null);
+                set => this.WriteText(19, value, null);
             }
         }
     }
@@ -1718,10 +1924,8 @@ namespace Mas.Schema.Data
         {
             var reader = READER.create(arg_);
             Id = reader.Id;
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
-            CultivarId = reader.CultivarId;
-            SoilId = reader.SoilId;
+            Cultivar = CapnpSerializable.Create<Mas.Schema.Data.Cultivar>(reader.Cultivar);
+            Soil = CapnpSerializable.Create<Mas.Schema.Data.SoilMetadata>(reader.Soil);
             BlockNumber = reader.BlockNumber;
             PlotNumber = reader.PlotNumber;
             ReplicateNumber = reader.ReplicateNumber;
@@ -1729,16 +1933,18 @@ namespace Mas.Schema.Data
             ColumnNumber = reader.ColumnNumber;
             HarvestMethod = reader.HarvestMethod;
             Notes = reader.Notes;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
+            CultivarId = reader.CultivarId;
+            SoilId = reader.SoilId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
             writer.Id = Id;
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
-            writer.CultivarId = CultivarId;
-            writer.SoilId = SoilId;
+            Cultivar?.serialize(writer.Cultivar);
+            Soil?.serialize(writer.Soil);
             writer.BlockNumber = BlockNumber;
             writer.PlotNumber = PlotNumber;
             writer.ReplicateNumber = ReplicateNumber;
@@ -1746,6 +1952,10 @@ namespace Mas.Schema.Data
             writer.ColumnNumber = ColumnNumber;
             writer.HarvestMethod = HarvestMethod;
             writer.Notes = Notes;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
+            writer.CultivarId = CultivarId;
+            writer.SoilId = SoilId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -1763,25 +1973,13 @@ namespace Mas.Schema.Data
             set;
         }
 
-        public string ExperimentId
+        public Mas.Schema.Data.Cultivar Cultivar
         {
             get;
             set;
         }
 
-        public string TreatmentId
-        {
-            get;
-            set;
-        }
-
-        public string CultivarId
-        {
-            get;
-            set;
-        }
-
-        public string SoilId
+        public Mas.Schema.Data.SoilMetadata Soil
         {
             get;
             set;
@@ -1834,6 +2032,30 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
+        public string CultivarId
+        {
+            get;
+            set;
+        }
+
+        public string SoilId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1846,24 +2068,28 @@ namespace Mas.Schema.Data
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             public string Id => ctx.ReadText(0, null);
-            public string ExperimentId => ctx.ReadText(1, null);
-            public string TreatmentId => ctx.ReadText(2, null);
-            public string CultivarId => ctx.ReadText(3, null);
-            public string SoilId => ctx.ReadText(4, null);
+            public Mas.Schema.Data.Cultivar.READER Cultivar => ctx.ReadStruct(1, Mas.Schema.Data.Cultivar.READER.create);
+            public bool HasCultivar => ctx.IsStructFieldNonNull(1);
+            public Mas.Schema.Data.SoilMetadata.READER Soil => ctx.ReadStruct(2, Mas.Schema.Data.SoilMetadata.READER.create);
+            public bool HasSoil => ctx.IsStructFieldNonNull(2);
             public sbyte BlockNumber => ctx.ReadDataSByte(0UL, (sbyte)-1);
             public sbyte PlotNumber => ctx.ReadDataSByte(8UL, (sbyte)-1);
             public sbyte ReplicateNumber => ctx.ReadDataSByte(16UL, (sbyte)-1);
             public sbyte RowNumber => ctx.ReadDataSByte(24UL, (sbyte)-1);
             public sbyte ColumnNumber => ctx.ReadDataSByte(32UL, (sbyte)-1);
-            public string HarvestMethod => ctx.ReadText(5, null);
-            public string Notes => ctx.ReadText(6, null);
+            public string HarvestMethod => ctx.ReadText(3, null);
+            public string Notes => ctx.ReadText(4, null);
+            public string ExperimentId => ctx.ReadText(5, null);
+            public string TreatmentId => ctx.ReadText(6, null);
+            public string CultivarId => ctx.ReadText(7, null);
+            public string SoilId => ctx.ReadText(8, null);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 7);
+                this.SetStruct(1, 9);
             }
 
             public string Id
@@ -1872,28 +2098,16 @@ namespace Mas.Schema.Data
                 set => this.WriteText(0, value, null);
             }
 
-            public string ExperimentId
+            public Mas.Schema.Data.Cultivar.WRITER Cultivar
             {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
+                get => BuildPointer<Mas.Schema.Data.Cultivar.WRITER>(1);
+                set => Link(1, value);
             }
 
-            public string TreatmentId
+            public Mas.Schema.Data.SoilMetadata.WRITER Soil
             {
-                get => this.ReadText(2, null);
-                set => this.WriteText(2, value, null);
-            }
-
-            public string CultivarId
-            {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
-            }
-
-            public string SoilId
-            {
-                get => this.ReadText(4, null);
-                set => this.WriteText(4, value, null);
+                get => BuildPointer<Mas.Schema.Data.SoilMetadata.WRITER>(2);
+                set => Link(2, value);
             }
 
             public sbyte BlockNumber
@@ -1928,14 +2142,38 @@ namespace Mas.Schema.Data
 
             public string HarvestMethod
             {
-                get => this.ReadText(5, null);
-                set => this.WriteText(5, value, null);
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
             }
 
             public string Notes
             {
+                get => this.ReadText(4, null);
+                set => this.WriteText(4, value, null);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(5, null);
+                set => this.WriteText(5, value, null);
+            }
+
+            public string TreatmentId
+            {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
+            }
+
+            public string CultivarId
+            {
+                get => this.ReadText(7, null);
+                set => this.WriteText(7, value, null);
+            }
+
+            public string SoilId
+            {
+                get => this.ReadText(8, null);
+                set => this.WriteText(8, value, null);
             }
         }
     }
@@ -1947,8 +2185,6 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             Date = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Date);
             SoilLayerTopDepthInCM = reader.SoilLayerTopDepthInCM;
             SoilLayerBaseDepthInCM = reader.SoilLayerBaseDepthInCM;
@@ -1958,13 +2194,13 @@ namespace Mas.Schema.Data
             MassNO3InKGperHA = reader.MassNO3InKGperHA;
             ConcNH4InPPM = reader.ConcNH4InPPM;
             ConcNO3InPPM = reader.ConcNO3InPPM;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             Date?.serialize(writer.Date);
             writer.SoilLayerTopDepthInCM = SoilLayerTopDepthInCM;
             writer.SoilLayerBaseDepthInCM = SoilLayerBaseDepthInCM;
@@ -1974,6 +2210,8 @@ namespace Mas.Schema.Data
             writer.MassNO3InKGperHA = MassNO3InKGperHA;
             writer.ConcNH4InPPM = ConcNH4InPPM;
             writer.ConcNO3InPPM = ConcNO3InPPM;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -1983,18 +2221,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date Date
@@ -2059,6 +2285,18 @@ namespace Mas.Schema.Data
         }
 
         = -1;
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2070,10 +2308,8 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasDate => ctx.IsStructFieldNonNull(2);
+            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasDate => ctx.IsStructFieldNonNull(0);
             public short SoilLayerTopDepthInCM => ctx.ReadDataShort(0UL, (short)-1);
             public short SoilLayerBaseDepthInCM => ctx.ReadDataShort(16UL, (short)-1);
             public double WaterConcentration => ctx.ReadDataDouble(64UL, -1);
@@ -2082,6 +2318,8 @@ namespace Mas.Schema.Data
             public double MassNO3InKGperHA => ctx.ReadDataDouble(256UL, -1);
             public double ConcNH4InPPM => ctx.ReadDataDouble(320UL, -1);
             public double ConcNO3InPPM => ctx.ReadDataDouble(384UL, -1);
+            public string ExperimentId => ctx.ReadText(1, null);
+            public string TreatmentId => ctx.ReadText(2, null);
         }
 
         public class WRITER : SerializerState
@@ -2091,22 +2329,10 @@ namespace Mas.Schema.Data
                 this.SetStruct(7, 3);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER Date
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public short SoilLayerTopDepthInCM
@@ -2156,6 +2382,18 @@ namespace Mas.Schema.Data
                 get => this.ReadDataDouble(384UL, -1);
                 set => this.WriteData(384UL, value, -1);
             }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
+            }
+
+            public string TreatmentId
+            {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
         }
     }
 
@@ -2166,8 +2404,6 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             PlantingDistribution = reader.PlantingDistribution;
             RowSpacingInCM = reader.RowSpacingInCM;
             RowDirectionInArcDeg = reader.RowDirectionInArcDeg;
@@ -2178,13 +2414,13 @@ namespace Mas.Schema.Data
             AverageEmergenceDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.AverageEmergenceDate);
             AveragePlantPopulationAtEmergenceInNoPerM2 = reader.AveragePlantPopulationAtEmergenceInNoPerM2;
             Notes = reader.Notes;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             writer.PlantingDistribution = PlantingDistribution;
             writer.RowSpacingInCM = RowSpacingInCM;
             writer.RowDirectionInArcDeg = RowDirectionInArcDeg;
@@ -2195,6 +2431,8 @@ namespace Mas.Schema.Data
             AverageEmergenceDate?.serialize(writer.AverageEmergenceDate);
             writer.AveragePlantPopulationAtEmergenceInNoPerM2 = AveragePlantPopulationAtEmergenceInNoPerM2;
             writer.Notes = Notes;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2204,18 +2442,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public string PlantingDistribution
@@ -2283,6 +2509,18 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2294,20 +2532,20 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public string PlantingDistribution => ctx.ReadText(2, null);
+            public string PlantingDistribution => ctx.ReadText(0, null);
             public double RowSpacingInCM => ctx.ReadDataDouble(0UL, -1);
             public double RowDirectionInArcDeg => ctx.ReadDataDouble(64UL, -9999);
             public short PlantingDepthInMM => ctx.ReadDataShort(128UL, (short)-1);
-            public string PlotLayout => ctx.ReadText(3, null);
-            public Mas.Schema.Common.Date.READER PlantingDate => ctx.ReadStruct(4, Mas.Schema.Common.Date.READER.create);
-            public bool HasPlantingDate => ctx.IsStructFieldNonNull(4);
+            public string PlotLayout => ctx.ReadText(1, null);
+            public Mas.Schema.Common.Date.READER PlantingDate => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
+            public bool HasPlantingDate => ctx.IsStructFieldNonNull(2);
             public short PlantPopulationAtPlantingInNoPerM2 => ctx.ReadDataShort(144UL, (short)-1);
-            public Mas.Schema.Common.Date.READER AverageEmergenceDate => ctx.ReadStruct(5, Mas.Schema.Common.Date.READER.create);
-            public bool HasAverageEmergenceDate => ctx.IsStructFieldNonNull(5);
+            public Mas.Schema.Common.Date.READER AverageEmergenceDate => ctx.ReadStruct(3, Mas.Schema.Common.Date.READER.create);
+            public bool HasAverageEmergenceDate => ctx.IsStructFieldNonNull(3);
             public short AveragePlantPopulationAtEmergenceInNoPerM2 => ctx.ReadDataShort(160UL, (short)-1);
-            public string Notes => ctx.ReadText(6, null);
+            public string Notes => ctx.ReadText(4, null);
+            public string ExperimentId => ctx.ReadText(5, null);
+            public string TreatmentId => ctx.ReadText(6, null);
         }
 
         public class WRITER : SerializerState
@@ -2317,22 +2555,10 @@ namespace Mas.Schema.Data
                 this.SetStruct(3, 7);
             }
 
-            public string ExperimentId
+            public string PlantingDistribution
             {
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
-            public string PlantingDistribution
-            {
-                get => this.ReadText(2, null);
-                set => this.WriteText(2, value, null);
             }
 
             public double RowSpacingInCM
@@ -2355,14 +2581,14 @@ namespace Mas.Schema.Data
 
             public string PlotLayout
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public Mas.Schema.Common.Date.WRITER PlantingDate
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(4);
-                set => Link(4, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
+                set => Link(2, value);
             }
 
             public short PlantPopulationAtPlantingInNoPerM2
@@ -2373,8 +2599,8 @@ namespace Mas.Schema.Data
 
             public Mas.Schema.Common.Date.WRITER AverageEmergenceDate
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(5);
-                set => Link(5, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
+                set => Link(3, value);
             }
 
             public short AveragePlantPopulationAtEmergenceInNoPerM2
@@ -2384,6 +2610,18 @@ namespace Mas.Schema.Data
             }
 
             public string Notes
+            {
+                get => this.ReadText(4, null);
+                set => this.WriteText(4, value, null);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(5, null);
+                set => this.WriteText(5, value, null);
+            }
+
+            public string TreatmentId
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
@@ -2398,25 +2636,25 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             Date = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Date);
             HarvestMethod = reader.HarvestMethod;
             HarvestArea = reader.HarvestArea;
             Notes = reader.Notes;
             Comments = reader.Comments;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             Date?.serialize(writer.Date);
             writer.HarvestMethod = HarvestMethod;
             writer.HarvestArea = HarvestArea;
             writer.Notes = Notes;
             writer.Comments = Comments;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2426,18 +2664,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date Date
@@ -2471,6 +2697,18 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2482,14 +2720,14 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasDate => ctx.IsStructFieldNonNull(2);
-            public string HarvestMethod => ctx.ReadText(3, null);
+            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasDate => ctx.IsStructFieldNonNull(0);
+            public string HarvestMethod => ctx.ReadText(1, null);
             public double HarvestArea => ctx.ReadDataDouble(0UL, -1);
-            public string Notes => ctx.ReadText(4, null);
-            public string Comments => ctx.ReadText(5, null);
+            public string Notes => ctx.ReadText(2, null);
+            public string Comments => ctx.ReadText(3, null);
+            public string ExperimentId => ctx.ReadText(4, null);
+            public string TreatmentId => ctx.ReadText(5, null);
         }
 
         public class WRITER : SerializerState
@@ -2499,28 +2737,16 @@ namespace Mas.Schema.Data
                 this.SetStruct(1, 6);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER Date
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public string HarvestMethod
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public double HarvestArea
@@ -2531,11 +2757,23 @@ namespace Mas.Schema.Data
 
             public string Notes
             {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
+
+            public string Comments
+            {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+
+            public string ExperimentId
+            {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
 
-            public string Comments
+            public string TreatmentId
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
@@ -2550,27 +2788,27 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             Date = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Date);
             Operation = reader.Operation;
             ApplicationDepth = reader.ApplicationDepth;
             Amount = reader.Amount;
             WaterNConcentrationInPerc = reader.WaterNConcentrationInPerc;
             Notes = reader.Notes;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             Date?.serialize(writer.Date);
             writer.Operation = Operation;
             writer.ApplicationDepth = ApplicationDepth;
             writer.Amount = Amount;
             writer.WaterNConcentrationInPerc = WaterNConcentrationInPerc;
             writer.Notes = Notes;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2580,18 +2818,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date Date
@@ -2633,6 +2859,18 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2644,15 +2882,15 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasDate => ctx.IsStructFieldNonNull(2);
-            public string Operation => ctx.ReadText(3, null);
+            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasDate => ctx.IsStructFieldNonNull(0);
+            public string Operation => ctx.ReadText(1, null);
             public short ApplicationDepth => ctx.ReadDataShort(0UL, (short)-9999);
             public short Amount => ctx.ReadDataShort(16UL, (short)-1);
             public double WaterNConcentrationInPerc => ctx.ReadDataDouble(64UL, -1);
-            public string Notes => ctx.ReadText(4, null);
+            public string Notes => ctx.ReadText(2, null);
+            public string ExperimentId => ctx.ReadText(3, null);
+            public string TreatmentId => ctx.ReadText(4, null);
         }
 
         public class WRITER : SerializerState
@@ -2662,28 +2900,16 @@ namespace Mas.Schema.Data
                 this.SetStruct(2, 5);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER Date
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public string Operation
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public short ApplicationDepth
@@ -2706,6 +2932,18 @@ namespace Mas.Schema.Data
 
             public string Notes
             {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+
+            public string TreatmentId
+            {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
@@ -2719,8 +2957,6 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             Date = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Date);
             ApplicationMethod = reader.ApplicationMethod;
             ApplicationDepthInCM = reader.ApplicationDepthInCM;
@@ -2729,13 +2965,13 @@ namespace Mas.Schema.Data
             AppliedNO3InKGNperHA = reader.AppliedNO3InKGNperHA;
             AppliedNH4InKGNperHA = reader.AppliedNH4InKGNperHA;
             Notes = reader.Notes;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             Date?.serialize(writer.Date);
             writer.ApplicationMethod = ApplicationMethod;
             writer.ApplicationDepthInCM = ApplicationDepthInCM;
@@ -2744,6 +2980,8 @@ namespace Mas.Schema.Data
             writer.AppliedNO3InKGNperHA = AppliedNO3InKGNperHA;
             writer.AppliedNH4InKGNperHA = AppliedNH4InKGNperHA;
             writer.Notes = Notes;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2753,18 +2991,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date Date
@@ -2819,6 +3045,18 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -2830,17 +3068,17 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasDate => ctx.IsStructFieldNonNull(2);
-            public string ApplicationMethod => ctx.ReadText(3, null);
+            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasDate => ctx.IsStructFieldNonNull(0);
+            public string ApplicationMethod => ctx.ReadText(1, null);
             public short ApplicationDepthInCM => ctx.ReadDataShort(0UL, (short)-1);
-            public string Material => ctx.ReadText(4, null);
+            public string Material => ctx.ReadText(2, null);
             public short AppliedNInKGNPerHA => ctx.ReadDataShort(16UL, (short)-1);
             public short AppliedNO3InKGNperHA => ctx.ReadDataShort(32UL, (short)-1);
             public short AppliedNH4InKGNperHA => ctx.ReadDataShort(48UL, (short)-1);
-            public string Notes => ctx.ReadText(5, null);
+            public string Notes => ctx.ReadText(3, null);
+            public string ExperimentId => ctx.ReadText(4, null);
+            public string TreatmentId => ctx.ReadText(5, null);
         }
 
         public class WRITER : SerializerState
@@ -2850,28 +3088,16 @@ namespace Mas.Schema.Data
                 this.SetStruct(1, 6);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER Date
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public string ApplicationMethod
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public short ApplicationDepthInCM
@@ -2882,8 +3108,8 @@ namespace Mas.Schema.Data
 
             public string Material
             {
-                get => this.ReadText(4, null);
-                set => this.WriteText(4, value, null);
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
             }
 
             public short AppliedNInKGNPerHA
@@ -2906,6 +3132,18 @@ namespace Mas.Schema.Data
 
             public string Notes
             {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(4, null);
+                set => this.WriteText(4, value, null);
+            }
+
+            public string TreatmentId
+            {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
@@ -2919,8 +3157,6 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             InitialMeasureDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.InitialMeasureDate);
             IncorporationDepth = reader.IncorporationDepth;
             PercentIncorporated = reader.PercentIncorporated;
@@ -2928,13 +3164,13 @@ namespace Mas.Schema.Data
             AboveGroundWeight = reader.AboveGroundWeight;
             AboveGroundNConcentrationInPerc = reader.AboveGroundNConcentrationInPerc;
             RootWeightPreviousCrop = reader.RootWeightPreviousCrop;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             InitialMeasureDate?.serialize(writer.InitialMeasureDate);
             writer.IncorporationDepth = IncorporationDepth;
             writer.PercentIncorporated = PercentIncorporated;
@@ -2942,6 +3178,8 @@ namespace Mas.Schema.Data
             writer.AboveGroundWeight = AboveGroundWeight;
             writer.AboveGroundNConcentrationInPerc = AboveGroundNConcentrationInPerc;
             writer.RootWeightPreviousCrop = RootWeightPreviousCrop;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2951,18 +3189,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date InitialMeasureDate
@@ -3012,6 +3238,18 @@ namespace Mas.Schema.Data
         }
 
         = -1;
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -3023,16 +3261,16 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER InitialMeasureDate => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasInitialMeasureDate => ctx.IsStructFieldNonNull(2);
+            public Mas.Schema.Common.Date.READER InitialMeasureDate => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasInitialMeasureDate => ctx.IsStructFieldNonNull(0);
             public short IncorporationDepth => ctx.ReadDataShort(0UL, (short)-1);
             public double PercentIncorporated => ctx.ReadDataDouble(64UL, -1);
-            public string PrevCropCode => ctx.ReadText(3, null);
+            public string PrevCropCode => ctx.ReadText(1, null);
             public double AboveGroundWeight => ctx.ReadDataDouble(128UL, -1);
             public double AboveGroundNConcentrationInPerc => ctx.ReadDataDouble(192UL, -1);
             public double RootWeightPreviousCrop => ctx.ReadDataDouble(256UL, -1);
+            public string ExperimentId => ctx.ReadText(2, null);
+            public string TreatmentId => ctx.ReadText(3, null);
         }
 
         public class WRITER : SerializerState
@@ -3042,22 +3280,10 @@ namespace Mas.Schema.Data
                 this.SetStruct(5, 4);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER InitialMeasureDate
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public short IncorporationDepth
@@ -3074,8 +3300,8 @@ namespace Mas.Schema.Data
 
             public string PrevCropCode
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public double AboveGroundWeight
@@ -3095,6 +3321,18 @@ namespace Mas.Schema.Data
                 get => this.ReadDataDouble(256UL, -1);
                 set => this.WriteData(256UL, value, -1);
             }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
+
+            public string TreatmentId
+            {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
         }
     }
 
@@ -3105,23 +3343,23 @@ namespace Mas.Schema.Data
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ExperimentId = reader.ExperimentId;
-            TreatmentId = reader.TreatmentId;
             Date = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Date);
             CodeCO2 = reader.CodeCO2;
             ValueCO2 = reader.ValueCO2;
             Notes = reader.Notes;
+            ExperimentId = reader.ExperimentId;
+            TreatmentId = reader.TreatmentId;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.ExperimentId = ExperimentId;
-            writer.TreatmentId = TreatmentId;
             Date?.serialize(writer.Date);
             writer.CodeCO2 = CodeCO2;
             writer.ValueCO2 = ValueCO2;
             writer.Notes = Notes;
+            writer.ExperimentId = ExperimentId;
+            writer.TreatmentId = TreatmentId;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -3131,18 +3369,6 @@ namespace Mas.Schema.Data
 
         public void applyDefaults()
         {
-        }
-
-        public string ExperimentId
-        {
-            get;
-            set;
-        }
-
-        public string TreatmentId
-        {
-            get;
-            set;
         }
 
         public Mas.Schema.Common.Date Date
@@ -3170,6 +3396,18 @@ namespace Mas.Schema.Data
             set;
         }
 
+        public string ExperimentId
+        {
+            get;
+            set;
+        }
+
+        public string TreatmentId
+        {
+            get;
+            set;
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -3181,13 +3419,13 @@ namespace Mas.Schema.Data
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string ExperimentId => ctx.ReadText(0, null);
-            public string TreatmentId => ctx.ReadText(1, null);
-            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
-            public bool HasDate => ctx.IsStructFieldNonNull(2);
-            public string CodeCO2 => ctx.ReadText(3, null);
+            public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+            public bool HasDate => ctx.IsStructFieldNonNull(0);
+            public string CodeCO2 => ctx.ReadText(1, null);
             public short ValueCO2 => ctx.ReadDataShort(0UL, (short)-1);
-            public string Notes => ctx.ReadText(4, null);
+            public string Notes => ctx.ReadText(2, null);
+            public string ExperimentId => ctx.ReadText(3, null);
+            public string TreatmentId => ctx.ReadText(4, null);
         }
 
         public class WRITER : SerializerState
@@ -3197,28 +3435,16 @@ namespace Mas.Schema.Data
                 this.SetStruct(1, 5);
             }
 
-            public string ExperimentId
-            {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
-            }
-
-            public string TreatmentId
-            {
-                get => this.ReadText(1, null);
-                set => this.WriteText(1, value, null);
-            }
-
             public Mas.Schema.Common.Date.WRITER Date
             {
-                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
-                set => Link(2, value);
+                get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
+                set => Link(0, value);
             }
 
             public string CodeCO2
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
             }
 
             public short ValueCO2
@@ -3228,6 +3454,18 @@ namespace Mas.Schema.Data
             }
 
             public string Notes
+            {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
+
+            public string ExperimentId
+            {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+
+            public string TreatmentId
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);

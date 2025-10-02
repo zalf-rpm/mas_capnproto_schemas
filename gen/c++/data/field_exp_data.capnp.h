@@ -12,7 +12,9 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
+#include <climate.capnp.h>
 #include <date.capnp.h>
+#include <soil.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
@@ -64,7 +66,7 @@ struct SoilMetadata {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(86836f1366e5f73f, 9, 7)
+    CAPNP_DECLARE_STRUCT_HEADER(86836f1366e5f73f, 9, 8)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -94,7 +96,7 @@ struct ExperimentDescription {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9d795a72a27f67d7, 1, 15)
+    CAPNP_DECLARE_STRUCT_HEADER(9d795a72a27f67d7, 1, 16)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -109,7 +111,7 @@ struct Treatment {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(ff1381363c7abd06, 1, 9)
+    CAPNP_DECLARE_STRUCT_HEADER(ff1381363c7abd06, 1, 20)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -139,7 +141,7 @@ struct Plot {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(a7a2210fb1e289f2, 1, 7)
+    CAPNP_DECLARE_STRUCT_HEADER(a7a2210fb1e289f2, 1, 9)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -466,8 +468,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasProfileId() const;
-  inline  ::capnp::Text::Reader getProfileId() const;
+  inline bool hasId() const;
+  inline  ::capnp::Text::Reader getId() const;
 
   inline bool hasName() const;
   inline  ::capnp::Text::Reader getName() const;
@@ -509,6 +511,11 @@ public:
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
 
+  inline bool hasProfile() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::soil::Profile::Client getProfile() const;
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -537,12 +544,12 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline bool hasProfileId();
-  inline  ::capnp::Text::Builder getProfileId();
-  inline void setProfileId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initProfileId(unsigned int size);
-  inline void adoptProfileId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownProfileId();
+  inline bool hasId();
+  inline  ::capnp::Text::Builder getId();
+  inline void setId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initId(unsigned int size);
+  inline void adoptId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownId();
 
   inline bool hasName();
   inline  ::capnp::Text::Builder getName();
@@ -619,6 +626,15 @@ public:
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
 
+  inline bool hasProfile();
+#if !CAPNP_LITE
+  inline  ::mas::schema::soil::Profile::Client getProfile();
+  inline void setProfile( ::mas::schema::soil::Profile::Client&& value);
+  inline void setProfile( ::mas::schema::soil::Profile::Client& value);
+  inline void adoptProfile(::capnp::Orphan< ::mas::schema::soil::Profile>&& value);
+  inline ::capnp::Orphan< ::mas::schema::soil::Profile> disownProfile();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -637,6 +653,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::soil::Profile::Client getProfile();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -877,6 +894,9 @@ public:
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
 
+  inline bool hasTreatments() const;
+  inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Reader getTreatments() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -1016,6 +1036,13 @@ public:
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
 
+  inline bool hasTreatments();
+  inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Builder getTreatments();
+  inline void setTreatments( ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Builder initTreatments(unsigned int size);
+  inline void adoptTreatments(::capnp::Orphan< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>> disownTreatments();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1062,17 +1089,16 @@ public:
   inline bool hasId() const;
   inline  ::capnp::Text::Reader getId() const;
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
+  inline bool hasField() const;
+  inline  ::mas::schema::data::Field::Reader getField() const;
 
-  inline bool hasFieldId() const;
-  inline  ::capnp::Text::Reader getFieldId() const;
+  inline bool hasWeatherStation() const;
+  inline  ::mas::schema::data::WeatherStation::Reader getWeatherStation() const;
 
-  inline bool hasWeatherStationId() const;
-  inline  ::capnp::Text::Reader getWeatherStationId() const;
-
-  inline bool hasWeatherStationDataset() const;
-  inline  ::capnp::Text::Reader getWeatherStationDataset() const;
+  inline bool hasWeatherStationTimeseries() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::climate::TimeSeries::Client getWeatherStationTimeseries() const;
+#endif  // !CAPNP_LITE
 
   inline bool hasName() const;
   inline  ::capnp::Text::Reader getName() const;
@@ -1103,6 +1129,42 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasPlots() const;
+  inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Reader getPlots() const;
+
+  inline bool hasResidue() const;
+  inline  ::mas::schema::data::Residue::Reader getResidue() const;
+
+  inline bool hasInitialConditionsLayers() const;
+  inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Reader getInitialConditionsLayers() const;
+
+  inline bool hasPlantingEvents() const;
+  inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Reader getPlantingEvents() const;
+
+  inline bool hasHarvestEvents() const;
+  inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Reader getHarvestEvents() const;
+
+  inline bool hasIrrigationEvents() const;
+  inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Reader getIrrigationEvents() const;
+
+  inline bool hasFertilizerEvents() const;
+  inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Reader getFertilizerEvents() const;
+
+  inline bool hasEnvironmentModifications() const;
+  inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Reader getEnvironmentModifications() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasFieldId() const;
+  inline  ::capnp::Text::Reader getFieldId() const;
+
+  inline bool hasWeatherStationId() const;
+  inline  ::capnp::Text::Reader getWeatherStationId() const;
+
+  inline bool hasWeatherStationDataset() const;
+  inline  ::capnp::Text::Reader getWeatherStationDataset() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1139,33 +1201,28 @@ public:
   inline void adoptId(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownId();
 
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+  inline bool hasField();
+  inline  ::mas::schema::data::Field::Builder getField();
+  inline void setField( ::mas::schema::data::Field::Reader value);
+  inline  ::mas::schema::data::Field::Builder initField();
+  inline void adoptField(::capnp::Orphan< ::mas::schema::data::Field>&& value);
+  inline ::capnp::Orphan< ::mas::schema::data::Field> disownField();
 
-  inline bool hasFieldId();
-  inline  ::capnp::Text::Builder getFieldId();
-  inline void setFieldId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initFieldId(unsigned int size);
-  inline void adoptFieldId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownFieldId();
+  inline bool hasWeatherStation();
+  inline  ::mas::schema::data::WeatherStation::Builder getWeatherStation();
+  inline void setWeatherStation( ::mas::schema::data::WeatherStation::Reader value);
+  inline  ::mas::schema::data::WeatherStation::Builder initWeatherStation();
+  inline void adoptWeatherStation(::capnp::Orphan< ::mas::schema::data::WeatherStation>&& value);
+  inline ::capnp::Orphan< ::mas::schema::data::WeatherStation> disownWeatherStation();
 
-  inline bool hasWeatherStationId();
-  inline  ::capnp::Text::Builder getWeatherStationId();
-  inline void setWeatherStationId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initWeatherStationId(unsigned int size);
-  inline void adoptWeatherStationId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownWeatherStationId();
-
-  inline bool hasWeatherStationDataset();
-  inline  ::capnp::Text::Builder getWeatherStationDataset();
-  inline void setWeatherStationDataset( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initWeatherStationDataset(unsigned int size);
-  inline void adoptWeatherStationDataset(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownWeatherStationDataset();
+  inline bool hasWeatherStationTimeseries();
+#if !CAPNP_LITE
+  inline  ::mas::schema::climate::TimeSeries::Client getWeatherStationTimeseries();
+  inline void setWeatherStationTimeseries( ::mas::schema::climate::TimeSeries::Client&& value);
+  inline void setWeatherStationTimeseries( ::mas::schema::climate::TimeSeries::Client& value);
+  inline void adoptWeatherStationTimeseries(::capnp::Orphan< ::mas::schema::climate::TimeSeries>&& value);
+  inline ::capnp::Orphan< ::mas::schema::climate::TimeSeries> disownWeatherStationTimeseries();
+#endif  // !CAPNP_LITE
 
   inline bool hasName();
   inline  ::capnp::Text::Builder getName();
@@ -1222,6 +1279,90 @@ public:
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
 
+  inline bool hasPlots();
+  inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Builder getPlots();
+  inline void setPlots( ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Builder initPlots(unsigned int size);
+  inline void adoptPlots(::capnp::Orphan< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>> disownPlots();
+
+  inline bool hasResidue();
+  inline  ::mas::schema::data::Residue::Builder getResidue();
+  inline void setResidue( ::mas::schema::data::Residue::Reader value);
+  inline  ::mas::schema::data::Residue::Builder initResidue();
+  inline void adoptResidue(::capnp::Orphan< ::mas::schema::data::Residue>&& value);
+  inline ::capnp::Orphan< ::mas::schema::data::Residue> disownResidue();
+
+  inline bool hasInitialConditionsLayers();
+  inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Builder getInitialConditionsLayers();
+  inline void setInitialConditionsLayers( ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Builder initInitialConditionsLayers(unsigned int size);
+  inline void adoptInitialConditionsLayers(::capnp::Orphan< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>> disownInitialConditionsLayers();
+
+  inline bool hasPlantingEvents();
+  inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Builder getPlantingEvents();
+  inline void setPlantingEvents( ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Builder initPlantingEvents(unsigned int size);
+  inline void adoptPlantingEvents(::capnp::Orphan< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>> disownPlantingEvents();
+
+  inline bool hasHarvestEvents();
+  inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Builder getHarvestEvents();
+  inline void setHarvestEvents( ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Builder initHarvestEvents(unsigned int size);
+  inline void adoptHarvestEvents(::capnp::Orphan< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>> disownHarvestEvents();
+
+  inline bool hasIrrigationEvents();
+  inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Builder getIrrigationEvents();
+  inline void setIrrigationEvents( ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Builder initIrrigationEvents(unsigned int size);
+  inline void adoptIrrigationEvents(::capnp::Orphan< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>> disownIrrigationEvents();
+
+  inline bool hasFertilizerEvents();
+  inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Builder getFertilizerEvents();
+  inline void setFertilizerEvents( ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Builder initFertilizerEvents(unsigned int size);
+  inline void adoptFertilizerEvents(::capnp::Orphan< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>> disownFertilizerEvents();
+
+  inline bool hasEnvironmentModifications();
+  inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Builder getEnvironmentModifications();
+  inline void setEnvironmentModifications( ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Builder initEnvironmentModifications(unsigned int size);
+  inline void adoptEnvironmentModifications(::capnp::Orphan< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>> disownEnvironmentModifications();
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasFieldId();
+  inline  ::capnp::Text::Builder getFieldId();
+  inline void setFieldId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initFieldId(unsigned int size);
+  inline void adoptFieldId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownFieldId();
+
+  inline bool hasWeatherStationId();
+  inline  ::capnp::Text::Builder getWeatherStationId();
+  inline void setWeatherStationId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initWeatherStationId(unsigned int size);
+  inline void adoptWeatherStationId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownWeatherStationId();
+
+  inline bool hasWeatherStationDataset();
+  inline  ::capnp::Text::Builder getWeatherStationDataset();
+  inline void setWeatherStationDataset( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initWeatherStationDataset(unsigned int size);
+  inline void adoptWeatherStationDataset(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownWeatherStationDataset();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1240,8 +1381,12 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::data::Field::Pipeline getField();
+  inline  ::mas::schema::data::WeatherStation::Pipeline getWeatherStation();
+  inline  ::mas::schema::climate::TimeSeries::Client getWeatherStationTimeseries();
   inline  ::mas::schema::common::Date::Pipeline getSimulationStartDate();
   inline  ::mas::schema::common::Date::Pipeline getSimulationEndDate();
+  inline  ::mas::schema::data::Residue::Pipeline getResidue();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -1446,17 +1591,11 @@ public:
   inline bool hasId() const;
   inline  ::capnp::Text::Reader getId() const;
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
+  inline bool hasCultivar() const;
+  inline  ::mas::schema::data::Cultivar::Reader getCultivar() const;
 
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
-  inline bool hasCultivarId() const;
-  inline  ::capnp::Text::Reader getCultivarId() const;
-
-  inline bool hasSoilId() const;
-  inline  ::capnp::Text::Reader getSoilId() const;
+  inline bool hasSoil() const;
+  inline  ::mas::schema::data::SoilMetadata::Reader getSoil() const;
 
   inline  ::int8_t getBlockNumber() const;
 
@@ -1473,6 +1612,18 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
+
+  inline bool hasCultivarId() const;
+  inline  ::capnp::Text::Reader getCultivarId() const;
+
+  inline bool hasSoilId() const;
+  inline  ::capnp::Text::Reader getSoilId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1509,33 +1660,19 @@ public:
   inline void adoptId(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownId();
 
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+  inline bool hasCultivar();
+  inline  ::mas::schema::data::Cultivar::Builder getCultivar();
+  inline void setCultivar( ::mas::schema::data::Cultivar::Reader value);
+  inline  ::mas::schema::data::Cultivar::Builder initCultivar();
+  inline void adoptCultivar(::capnp::Orphan< ::mas::schema::data::Cultivar>&& value);
+  inline ::capnp::Orphan< ::mas::schema::data::Cultivar> disownCultivar();
 
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
-
-  inline bool hasCultivarId();
-  inline  ::capnp::Text::Builder getCultivarId();
-  inline void setCultivarId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initCultivarId(unsigned int size);
-  inline void adoptCultivarId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownCultivarId();
-
-  inline bool hasSoilId();
-  inline  ::capnp::Text::Builder getSoilId();
-  inline void setSoilId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initSoilId(unsigned int size);
-  inline void adoptSoilId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownSoilId();
+  inline bool hasSoil();
+  inline  ::mas::schema::data::SoilMetadata::Builder getSoil();
+  inline void setSoil( ::mas::schema::data::SoilMetadata::Reader value);
+  inline  ::mas::schema::data::SoilMetadata::Builder initSoil();
+  inline void adoptSoil(::capnp::Orphan< ::mas::schema::data::SoilMetadata>&& value);
+  inline ::capnp::Orphan< ::mas::schema::data::SoilMetadata> disownSoil();
 
   inline  ::int8_t getBlockNumber();
   inline void setBlockNumber( ::int8_t value);
@@ -1566,6 +1703,34 @@ public:
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
 
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
+
+  inline bool hasCultivarId();
+  inline  ::capnp::Text::Builder getCultivarId();
+  inline void setCultivarId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initCultivarId(unsigned int size);
+  inline void adoptCultivarId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownCultivarId();
+
+  inline bool hasSoilId();
+  inline  ::capnp::Text::Builder getSoilId();
+  inline void setSoilId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSoilId(unsigned int size);
+  inline void adoptSoilId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSoilId();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1584,6 +1749,8 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::data::Cultivar::Pipeline getCultivar();
+  inline  ::mas::schema::data::SoilMetadata::Pipeline getSoil();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -1609,12 +1776,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasDate() const;
   inline  ::mas::schema::common::Date::Reader getDate() const;
 
@@ -1633,6 +1794,12 @@ public:
   inline double getConcNH4InPPM() const;
 
   inline double getConcNO3InPPM() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1661,20 +1828,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
   inline bool hasDate();
   inline  ::mas::schema::common::Date::Builder getDate();
@@ -1706,6 +1859,20 @@ public:
 
   inline double getConcNO3InPPM();
   inline void setConcNO3InPPM(double value);
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1751,12 +1918,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasPlantingDistribution() const;
   inline  ::capnp::Text::Reader getPlantingDistribution() const;
 
@@ -1781,6 +1942,12 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1809,20 +1976,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
   inline bool hasPlantingDistribution();
   inline  ::capnp::Text::Builder getPlantingDistribution();
@@ -1874,6 +2027,20 @@ public:
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
 
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -1919,12 +2086,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasDate() const;
   inline  ::mas::schema::common::Date::Reader getDate() const;
 
@@ -1938,6 +2099,12 @@ public:
 
   inline bool hasComments() const;
   inline  ::capnp::Text::Reader getComments() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -1966,20 +2133,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
   inline bool hasDate();
   inline  ::mas::schema::common::Date::Builder getDate();
@@ -2011,6 +2164,20 @@ public:
   inline  ::capnp::Text::Builder initComments(unsigned int size);
   inline void adoptComments(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownComments();
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2056,12 +2223,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasDate() const;
   inline  ::mas::schema::common::Date::Reader getDate() const;
 
@@ -2076,6 +2237,12 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -2104,20 +2271,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
   inline bool hasDate();
   inline  ::mas::schema::common::Date::Builder getDate();
@@ -2148,6 +2301,20 @@ public:
   inline  ::capnp::Text::Builder initNotes(unsigned int size);
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2193,12 +2360,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasDate() const;
   inline  ::mas::schema::common::Date::Reader getDate() const;
 
@@ -2218,6 +2379,12 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -2246,20 +2413,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
   inline bool hasDate();
   inline  ::mas::schema::common::Date::Builder getDate();
@@ -2300,6 +2453,20 @@ public:
   inline  ::capnp::Text::Builder initNotes(unsigned int size);
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2345,12 +2512,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasInitialMeasureDate() const;
   inline  ::mas::schema::common::Date::Reader getInitialMeasureDate() const;
 
@@ -2366,6 +2527,12 @@ public:
   inline double getAboveGroundNConcentrationInPerc() const;
 
   inline double getRootWeightPreviousCrop() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -2395,20 +2562,6 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
-
   inline bool hasInitialMeasureDate();
   inline  ::mas::schema::common::Date::Builder getInitialMeasureDate();
   inline void setInitialMeasureDate( ::mas::schema::common::Date::Reader value);
@@ -2437,6 +2590,20 @@ public:
 
   inline double getRootWeightPreviousCrop();
   inline void setRootWeightPreviousCrop(double value);
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2482,12 +2649,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId() const;
-  inline  ::capnp::Text::Reader getExperimentId() const;
-
-  inline bool hasTreatmentId() const;
-  inline  ::capnp::Text::Reader getTreatmentId() const;
-
   inline bool hasDate() const;
   inline  ::mas::schema::common::Date::Reader getDate() const;
 
@@ -2498,6 +2659,12 @@ public:
 
   inline bool hasNotes() const;
   inline  ::capnp::Text::Reader getNotes() const;
+
+  inline bool hasExperimentId() const;
+  inline  ::capnp::Text::Reader getExperimentId() const;
+
+  inline bool hasTreatmentId() const;
+  inline  ::capnp::Text::Reader getTreatmentId() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -2527,20 +2694,6 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline bool hasExperimentId();
-  inline  ::capnp::Text::Builder getExperimentId();
-  inline void setExperimentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
-  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
-
-  inline bool hasTreatmentId();
-  inline  ::capnp::Text::Builder getTreatmentId();
-  inline void setTreatmentId( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
-  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
-
   inline bool hasDate();
   inline  ::mas::schema::common::Date::Builder getDate();
   inline void setDate( ::mas::schema::common::Date::Reader value);
@@ -2564,6 +2717,20 @@ public:
   inline  ::capnp::Text::Builder initNotes(unsigned int size);
   inline void adoptNotes(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownNotes();
+
+  inline bool hasExperimentId();
+  inline  ::capnp::Text::Builder getExperimentId();
+  inline void setExperimentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initExperimentId(unsigned int size);
+  inline void adoptExperimentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownExperimentId();
+
+  inline bool hasTreatmentId();
+  inline  ::capnp::Text::Builder getTreatmentId();
+  inline void setTreatmentId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTreatmentId(unsigned int size);
+  inline void adoptTreatmentId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTreatmentId();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -2992,36 +3159,36 @@ inline ::capnp::Orphan< ::capnp::Text> WeatherStation::Builder::disownNotes() {
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
 
-inline bool SoilMetadata::Reader::hasProfileId() const {
+inline bool SoilMetadata::Reader::hasId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool SoilMetadata::Builder::hasProfileId() {
+inline bool SoilMetadata::Builder::hasId() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader SoilMetadata::Reader::getProfileId() const {
+inline  ::capnp::Text::Reader SoilMetadata::Reader::getId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder SoilMetadata::Builder::getProfileId() {
+inline  ::capnp::Text::Builder SoilMetadata::Builder::getId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void SoilMetadata::Builder::setProfileId( ::capnp::Text::Reader value) {
+inline void SoilMetadata::Builder::setId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder SoilMetadata::Builder::initProfileId(unsigned int size) {
+inline  ::capnp::Text::Builder SoilMetadata::Builder::initId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void SoilMetadata::Builder::adoptProfileId(
+inline void SoilMetadata::Builder::adoptId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> SoilMetadata::Builder::disownProfileId() {
+inline ::capnp::Orphan< ::capnp::Text> SoilMetadata::Builder::disownId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
@@ -3383,6 +3550,45 @@ inline ::capnp::Orphan< ::capnp::Text> SoilMetadata::Builder::disownNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
+
+inline bool SoilMetadata::Reader::hasProfile() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
+}
+inline bool SoilMetadata::Builder::hasProfile() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::soil::Profile::Client SoilMetadata::Reader::getProfile() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::get(_reader.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::soil::Profile::Client SoilMetadata::Builder::getProfile() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::get(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::soil::Profile::Client SoilMetadata::Pipeline::getProfile() {
+  return  ::mas::schema::soil::Profile::Client(_typeless.getPointerField(7).asCap());
+}
+inline void SoilMetadata::Builder::setProfile( ::mas::schema::soil::Profile::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::set(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void SoilMetadata::Builder::setProfile( ::mas::schema::soil::Profile::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::set(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS), cap);
+}
+inline void SoilMetadata::Builder::adoptProfile(
+    ::capnp::Orphan< ::mas::schema::soil::Profile>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::adopt(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::soil::Profile> SoilMetadata::Builder::disownProfile() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::disown(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
 
 inline bool Field::Reader::hasId() const {
   return !_reader.getPointerField(
@@ -4230,6 +4436,40 @@ inline ::capnp::Orphan< ::capnp::Text> ExperimentDescription::Builder::disownNot
       ::capnp::bounded<14>() * ::capnp::POINTERS));
 }
 
+inline bool ExperimentDescription::Reader::hasTreatments() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS).isNull();
+}
+inline bool ExperimentDescription::Builder::hasTreatments() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Reader ExperimentDescription::Reader::getTreatments() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Builder ExperimentDescription::Builder::getTreatments() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+inline void ExperimentDescription::Builder::setTreatments( ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>::Builder ExperimentDescription::Builder::initTreatments(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), size);
+}
+inline void ExperimentDescription::Builder::adoptTreatments(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>> ExperimentDescription::Builder::disownTreatments() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Treatment,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+
 inline bool Treatment::Reader::hasId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -4264,252 +4504,233 @@ inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownId() {
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Treatment::Reader::hasExperimentId() const {
+inline bool Treatment::Reader::hasField() const {
   return !_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline bool Treatment::Builder::hasExperimentId() {
+inline bool Treatment::Builder::hasField() {
   return !_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Treatment::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::data::Field::Reader Treatment::Reader::getField() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Treatment::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::data::Field::Builder Treatment::Builder::getField() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void Treatment::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::data::Field::Pipeline Treatment::Pipeline::getField() {
+  return  ::mas::schema::data::Field::Pipeline(_typeless.getPointerField(1));
+}
+#endif  // !CAPNP_LITE
+inline void Treatment::Builder::setField( ::mas::schema::data::Field::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Treatment::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+inline  ::mas::schema::data::Field::Builder Treatment::Builder::initField() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void Treatment::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+inline void Treatment::Builder::adoptField(
+    ::capnp::Orphan< ::mas::schema::data::Field>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::data::Field> Treatment::Builder::disownField() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Field>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
-inline bool Treatment::Reader::hasFieldId() const {
+inline bool Treatment::Reader::hasWeatherStation() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool Treatment::Builder::hasFieldId() {
+inline bool Treatment::Builder::hasWeatherStation() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Treatment::Reader::getFieldId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::data::WeatherStation::Reader Treatment::Reader::getWeatherStation() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Treatment::Builder::getFieldId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::data::WeatherStation::Builder Treatment::Builder::getWeatherStation() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void Treatment::Builder::setFieldId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::data::WeatherStation::Pipeline Treatment::Pipeline::getWeatherStation() {
+  return  ::mas::schema::data::WeatherStation::Pipeline(_typeless.getPointerField(2));
+}
+#endif  // !CAPNP_LITE
+inline void Treatment::Builder::setWeatherStation( ::mas::schema::data::WeatherStation::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Treatment::Builder::initFieldId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
+inline  ::mas::schema::data::WeatherStation::Builder Treatment::Builder::initWeatherStation() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void Treatment::Builder::adoptFieldId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+inline void Treatment::Builder::adoptWeatherStation(
+    ::capnp::Orphan< ::mas::schema::data::WeatherStation>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownFieldId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::data::WeatherStation> Treatment::Builder::disownWeatherStation() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::WeatherStation>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
-inline bool Treatment::Reader::hasWeatherStationId() const {
+inline bool Treatment::Reader::hasWeatherStationTimeseries() const {
   return !_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline bool Treatment::Builder::hasWeatherStationId() {
+inline bool Treatment::Builder::hasWeatherStationTimeseries() {
   return !_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Treatment::Reader::getWeatherStationId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::climate::TimeSeries::Client Treatment::Reader::getWeatherStationTimeseries() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::get(_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Treatment::Builder::getWeatherStationId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::climate::TimeSeries::Client Treatment::Builder::getWeatherStationTimeseries() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::get(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline void Treatment::Builder::setWeatherStationId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+inline  ::mas::schema::climate::TimeSeries::Client Treatment::Pipeline::getWeatherStationTimeseries() {
+  return  ::mas::schema::climate::TimeSeries::Client(_typeless.getPointerField(3).asCap());
 }
-inline  ::capnp::Text::Builder Treatment::Builder::initWeatherStationId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+inline void Treatment::Builder::setWeatherStationTimeseries( ::mas::schema::climate::TimeSeries::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Treatment::Builder::adoptWeatherStationId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+inline void Treatment::Builder::setWeatherStationTimeseries( ::mas::schema::climate::TimeSeries::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), cap);
+}
+inline void Treatment::Builder::adoptWeatherStationTimeseries(
+    ::capnp::Orphan< ::mas::schema::climate::TimeSeries>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::adopt(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownWeatherStationId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::climate::TimeSeries> Treatment::Builder::disownWeatherStationTimeseries() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::disown(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-
-inline bool Treatment::Reader::hasWeatherStationDataset() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
-}
-inline bool Treatment::Builder::hasWeatherStationDataset() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader Treatment::Reader::getWeatherStationDataset() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder Treatment::Builder::getWeatherStationDataset() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
-inline void Treatment::Builder::setWeatherStationDataset( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder Treatment::Builder::initWeatherStationDataset(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
-}
-inline void Treatment::Builder::adoptWeatherStationDataset(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownWeatherStationDataset() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
+#endif  // !CAPNP_LITE
 
 inline bool Treatment::Reader::hasName() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline bool Treatment::Builder::hasName() {
   return !_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader Treatment::Reader::getName() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder Treatment::Builder::getName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline void Treatment::Builder::setName( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder Treatment::Builder::initName(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
 }
 inline void Treatment::Builder::adoptName(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 
 inline bool Treatment::Reader::hasSimulationStartDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
 }
 inline bool Treatment::Builder::hasSimulationStartDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader Treatment::Reader::getSimulationStartDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder Treatment::Builder::getSimulationStartDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline Treatment::Pipeline::getSimulationStartDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(6));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(5));
 }
 #endif  // !CAPNP_LITE
 inline void Treatment::Builder::setSimulationStartDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder Treatment::Builder::initSimulationStartDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 inline void Treatment::Builder::adoptSimulationStartDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> Treatment::Builder::disownSimulationStartDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
 inline bool Treatment::Reader::hasSimulationEndDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
 inline bool Treatment::Builder::hasSimulationEndDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader Treatment::Reader::getSimulationEndDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS));
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder Treatment::Builder::getSimulationEndDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS));
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline Treatment::Pipeline::getSimulationEndDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(7));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(6));
 }
 #endif  // !CAPNP_LITE
 inline void Treatment::Builder::setSimulationEndDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder Treatment::Builder::initSimulationEndDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS));
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 inline void Treatment::Builder::adoptSimulationEndDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> Treatment::Builder::disownSimulationEndDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<7>() * ::capnp::POINTERS));
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
 inline bool Treatment::Reader::getIrrigationApplied() const {
@@ -4640,36 +4861,449 @@ inline void Treatment::Builder::setNumberOfBlocksOrReplicates( ::int8_t value) {
 
 inline bool Treatment::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
 inline bool Treatment::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader Treatment::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS));
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder Treatment::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS));
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
 inline void Treatment::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<7>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder Treatment::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<7>() * ::capnp::POINTERS), size);
 }
 inline void Treatment::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<8>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasPlots() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasPlots() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getPlots() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<8>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getPlots() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setPlots( ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initPlots(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptPlots(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownPlots() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::Plot,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<8>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasResidue() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasResidue() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::data::Residue::Reader Treatment::Reader::getResidue() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::get(_reader.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::data::Residue::Builder Treatment::Builder::getResidue() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::get(_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::data::Residue::Pipeline Treatment::Pipeline::getResidue() {
+  return  ::mas::schema::data::Residue::Pipeline(_typeless.getPointerField(9));
+}
+#endif  // !CAPNP_LITE
+inline void Treatment::Builder::setResidue( ::mas::schema::data::Residue::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::set(_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::data::Residue::Builder Treatment::Builder::initResidue() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::init(_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::adoptResidue(
+    ::capnp::Orphan< ::mas::schema::data::Residue>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::adopt(_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::data::Residue> Treatment::Builder::disownResidue() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Residue>::disown(_builder.getPointerField(
+      ::capnp::bounded<9>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasInitialConditionsLayers() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasInitialConditionsLayers() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getInitialConditionsLayers() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getInitialConditionsLayers() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setInitialConditionsLayers( ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initInitialConditionsLayers(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptInitialConditionsLayers(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownInitialConditionsLayers() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::InitialConditionsLayer,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<10>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasPlantingEvents() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasPlantingEvents() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getPlantingEvents() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getPlantingEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setPlantingEvents( ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initPlantingEvents(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptPlantingEvents(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownPlantingEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::PlantingEvent,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<11>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasHarvestEvents() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasHarvestEvents() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getHarvestEvents() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getHarvestEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setHarvestEvents( ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initHarvestEvents(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptHarvestEvents(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownHarvestEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::HarvestEvent,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<12>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasIrrigationEvents() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasIrrigationEvents() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getIrrigationEvents() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getIrrigationEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setIrrigationEvents( ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initIrrigationEvents(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptIrrigationEvents(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownIrrigationEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::IrrigationEvent,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<13>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasFertilizerEvents() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasFertilizerEvents() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getFertilizerEvents() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getFertilizerEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setFertilizerEvents( ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initFertilizerEvents(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptFertilizerEvents(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownFertilizerEvents() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::FertilizerEvent,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<14>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasEnvironmentModifications() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasEnvironmentModifications() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Reader Treatment::Reader::getEnvironmentModifications() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::getEnvironmentModifications() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setEnvironmentModifications( ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>::Builder Treatment::Builder::initEnvironmentModifications(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptEnvironmentModifications(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>> Treatment::Builder::disownEnvironmentModifications() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::data::EnvironmentModification,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<15>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Treatment::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Treatment::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Treatment::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<16>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasFieldId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasFieldId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Treatment::Reader::getFieldId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Treatment::Builder::getFieldId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setFieldId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Treatment::Builder::initFieldId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptFieldId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownFieldId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<17>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasWeatherStationId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasWeatherStationId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Treatment::Reader::getWeatherStationId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Treatment::Builder::getWeatherStationId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setWeatherStationId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Treatment::Builder::initWeatherStationId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptWeatherStationId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownWeatherStationId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<18>() * ::capnp::POINTERS));
+}
+
+inline bool Treatment::Reader::hasWeatherStationDataset() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS).isNull();
+}
+inline bool Treatment::Builder::hasWeatherStationDataset() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Treatment::Reader::getWeatherStationDataset() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Treatment::Builder::getWeatherStationDataset() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS));
+}
+inline void Treatment::Builder::setWeatherStationDataset( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Treatment::Builder::initWeatherStationDataset(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS), size);
+}
+inline void Treatment::Builder::adoptWeatherStationDataset(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Treatment::Builder::disownWeatherStationDataset() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<19>() * ::capnp::POINTERS));
 }
 
 inline bool Cultivar::Reader::hasId() const {
@@ -5060,140 +5694,82 @@ inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownId() {
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Plot::Reader::hasExperimentId() const {
+inline bool Plot::Reader::hasCultivar() const {
   return !_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline bool Plot::Builder::hasExperimentId() {
+inline bool Plot::Builder::hasCultivar() {
   return !_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Plot::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::data::Cultivar::Reader Plot::Reader::getCultivar() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Plot::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::data::Cultivar::Builder Plot::Builder::getCultivar() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void Plot::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::data::Cultivar::Pipeline Plot::Pipeline::getCultivar() {
+  return  ::mas::schema::data::Cultivar::Pipeline(_typeless.getPointerField(1));
+}
+#endif  // !CAPNP_LITE
+inline void Plot::Builder::setCultivar( ::mas::schema::data::Cultivar::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Plot::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+inline  ::mas::schema::data::Cultivar::Builder Plot::Builder::initCultivar() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void Plot::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+inline void Plot::Builder::adoptCultivar(
+    ::capnp::Orphan< ::mas::schema::data::Cultivar>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::data::Cultivar> Plot::Builder::disownCultivar() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::Cultivar>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
-inline bool Plot::Reader::hasTreatmentId() const {
+inline bool Plot::Reader::hasSoil() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool Plot::Builder::hasTreatmentId() {
+inline bool Plot::Builder::hasSoil() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Plot::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::data::SoilMetadata::Reader Plot::Reader::getSoil() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Plot::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::data::SoilMetadata::Builder Plot::Builder::getSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void Plot::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::data::SoilMetadata::Pipeline Plot::Pipeline::getSoil() {
+  return  ::mas::schema::data::SoilMetadata::Pipeline(_typeless.getPointerField(2));
+}
+#endif  // !CAPNP_LITE
+inline void Plot::Builder::setSoil( ::mas::schema::data::SoilMetadata::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Plot::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
-}
-inline void Plot::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline  ::mas::schema::data::SoilMetadata::Builder Plot::Builder::initSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::init(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-
-inline bool Plot::Reader::hasCultivarId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+inline void Plot::Builder::adoptSoil(
+    ::capnp::Orphan< ::mas::schema::data::SoilMetadata>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline bool Plot::Builder::hasCultivarId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader Plot::Reader::getCultivarId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder Plot::Builder::getCultivarId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
-}
-inline void Plot::Builder::setCultivarId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder Plot::Builder::initCultivarId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
-}
-inline void Plot::Builder::adoptCultivarId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownCultivarId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
-}
-
-inline bool Plot::Reader::hasSoilId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
-}
-inline bool Plot::Builder::hasSoilId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader Plot::Reader::getSoilId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder Plot::Builder::getSoilId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
-inline void Plot::Builder::setSoilId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder Plot::Builder::initSoilId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
-}
-inline void Plot::Builder::adoptSoilId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownSoilId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+inline ::capnp::Orphan< ::mas::schema::data::SoilMetadata> Plot::Builder::disownSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::data::SoilMetadata>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
 inline  ::int8_t Plot::Reader::getBlockNumber() const {
@@ -5268,177 +5844,245 @@ inline void Plot::Builder::setColumnNumber( ::int8_t value) {
 
 inline bool Plot::Reader::hasHarvestMethod() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline bool Plot::Builder::hasHarvestMethod() {
   return !_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader Plot::Reader::getHarvestMethod() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder Plot::Builder::getHarvestMethod() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline void Plot::Builder::setHarvestMethod( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder Plot::Builder::initHarvestMethod(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
 inline void Plot::Builder::adoptHarvestMethod(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownHarvestMethod() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 
 inline bool Plot::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline bool Plot::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader Plot::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder Plot::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline void Plot::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder Plot::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
 }
 inline void Plot::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownNotes() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool Plot::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool Plot::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Plot::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Plot::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void Plot::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Plot::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void Plot::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+
+inline bool Plot::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline bool Plot::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Plot::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Plot::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline void Plot::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Plot::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), size);
+}
+inline void Plot::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
-inline bool InitialConditionsLayer::Reader::hasExperimentId() const {
+inline bool Plot::Reader::hasCultivarId() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline bool InitialConditionsLayer::Builder::hasExperimentId() {
+inline bool Plot::Builder::hasCultivarId() {
   return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader InitialConditionsLayer::Reader::getExperimentId() const {
+inline  ::capnp::Text::Reader Plot::Reader::getCultivarId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::getExperimentId() {
+inline  ::capnp::Text::Builder Plot::Builder::getCultivarId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline void InitialConditionsLayer::Builder::setExperimentId( ::capnp::Text::Reader value) {
+inline void Plot::Builder::setCultivarId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<7>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::initExperimentId(unsigned int size) {
+inline  ::capnp::Text::Builder Plot::Builder::initCultivarId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<7>() * ::capnp::POINTERS), size);
 }
-inline void InitialConditionsLayer::Builder::adoptExperimentId(
+inline void Plot::Builder::adoptCultivarId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> InitialConditionsLayer::Builder::disownExperimentId() {
+inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownCultivarId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
+      ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
 
-inline bool InitialConditionsLayer::Reader::hasTreatmentId() const {
+inline bool Plot::Reader::hasSoilId() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
 }
-inline bool InitialConditionsLayer::Builder::hasTreatmentId() {
+inline bool Plot::Builder::hasSoilId() {
   return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<8>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader InitialConditionsLayer::Reader::getTreatmentId() const {
+inline  ::capnp::Text::Reader Plot::Reader::getSoilId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
+      ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::getTreatmentId() {
+inline  ::capnp::Text::Builder Plot::Builder::getSoilId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
+      ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
-inline void InitialConditionsLayer::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+inline void Plot::Builder::setSoilId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<8>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::initTreatmentId(unsigned int size) {
+inline  ::capnp::Text::Builder Plot::Builder::initSoilId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<8>() * ::capnp::POINTERS), size);
 }
-inline void InitialConditionsLayer::Builder::adoptTreatmentId(
+inline void Plot::Builder::adoptSoilId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<8>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> InitialConditionsLayer::Builder::disownTreatmentId() {
+inline ::capnp::Orphan< ::capnp::Text> Plot::Builder::disownSoilId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
+      ::capnp::bounded<8>() * ::capnp::POINTERS));
 }
 
 inline bool InitialConditionsLayer::Reader::hasDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline bool InitialConditionsLayer::Builder::hasDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader InitialConditionsLayer::Reader::getDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder InitialConditionsLayer::Builder::getDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline InitialConditionsLayer::Pipeline::getDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
 }
 #endif  // !CAPNP_LITE
 inline void InitialConditionsLayer::Builder::setDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder InitialConditionsLayer::Builder::initDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline void InitialConditionsLayer::Builder::adoptDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> InitialConditionsLayer::Builder::disownDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t InitialConditionsLayer::Reader::getSoilLayerTopDepthInCM() const {
@@ -5553,106 +6197,106 @@ inline void InitialConditionsLayer::Builder::setConcNO3InPPM(double value) {
       ::capnp::bounded<6>() * ::capnp::ELEMENTS, value, 13830554455654793216ull);
 }
 
-inline bool PlantingEvent::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool PlantingEvent::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader PlantingEvent::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder PlantingEvent::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void PlantingEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder PlantingEvent::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void PlantingEvent::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool PlantingEvent::Reader::hasTreatmentId() const {
+inline bool InitialConditionsLayer::Reader::hasExperimentId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline bool PlantingEvent::Builder::hasTreatmentId() {
+inline bool InitialConditionsLayer::Builder::hasExperimentId() {
   return !_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader PlantingEvent::Reader::getTreatmentId() const {
+inline  ::capnp::Text::Reader InitialConditionsLayer::Reader::getExperimentId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder PlantingEvent::Builder::getTreatmentId() {
+inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::getExperimentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void PlantingEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+inline void InitialConditionsLayer::Builder::setExperimentId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder PlantingEvent::Builder::initTreatmentId(unsigned int size) {
+inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::initExperimentId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
-inline void PlantingEvent::Builder::adoptTreatmentId(
+inline void InitialConditionsLayer::Builder::adoptExperimentId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownTreatmentId() {
+inline ::capnp::Orphan< ::capnp::Text> InitialConditionsLayer::Builder::disownExperimentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
-inline bool PlantingEvent::Reader::hasPlantingDistribution() const {
+inline bool InitialConditionsLayer::Reader::hasTreatmentId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool PlantingEvent::Builder::hasPlantingDistribution() {
+inline bool InitialConditionsLayer::Builder::hasTreatmentId() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader PlantingEvent::Reader::getPlantingDistribution() const {
+inline  ::capnp::Text::Reader InitialConditionsLayer::Reader::getTreatmentId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder PlantingEvent::Builder::getPlantingDistribution() {
+inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::getTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void PlantingEvent::Builder::setPlantingDistribution( ::capnp::Text::Reader value) {
+inline void InitialConditionsLayer::Builder::setTreatmentId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder PlantingEvent::Builder::initPlantingDistribution(unsigned int size) {
+inline  ::capnp::Text::Builder InitialConditionsLayer::Builder::initTreatmentId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
-inline void PlantingEvent::Builder::adoptPlantingDistribution(
+inline void InitialConditionsLayer::Builder::adoptTreatmentId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownPlantingDistribution() {
+inline ::capnp::Orphan< ::capnp::Text> InitialConditionsLayer::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline bool PlantingEvent::Reader::hasPlantingDistribution() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool PlantingEvent::Builder::hasPlantingDistribution() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader PlantingEvent::Reader::getPlantingDistribution() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::getPlantingDistribution() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void PlantingEvent::Builder::setPlantingDistribution( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::initPlantingDistribution(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void PlantingEvent::Builder::adoptPlantingDistribution(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownPlantingDistribution() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline double PlantingEvent::Reader::getRowSpacingInCM() const {
@@ -5699,75 +6343,75 @@ inline void PlantingEvent::Builder::setPlantingDepthInMM( ::int16_t value) {
 
 inline bool PlantingEvent::Reader::hasPlotLayout() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline bool PlantingEvent::Builder::hasPlotLayout() {
   return !_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader PlantingEvent::Reader::getPlotLayout() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder PlantingEvent::Builder::getPlotLayout() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline void PlantingEvent::Builder::setPlotLayout( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder PlantingEvent::Builder::initPlotLayout(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
 inline void PlantingEvent::Builder::adoptPlotLayout(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownPlotLayout() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline bool PlantingEvent::Reader::hasPlantingDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline bool PlantingEvent::Builder::hasPlantingDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader PlantingEvent::Reader::getPlantingDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder PlantingEvent::Builder::getPlantingDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline PlantingEvent::Pipeline::getPlantingDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(4));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
 }
 #endif  // !CAPNP_LITE
 inline void PlantingEvent::Builder::setPlantingDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder PlantingEvent::Builder::initPlantingDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline void PlantingEvent::Builder::adoptPlantingDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> PlantingEvent::Builder::disownPlantingDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t PlantingEvent::Reader::getPlantPopulationAtPlantingInNoPerM2() const {
@@ -5786,41 +6430,41 @@ inline void PlantingEvent::Builder::setPlantPopulationAtPlantingInNoPerM2( ::int
 
 inline bool PlantingEvent::Reader::hasAverageEmergenceDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline bool PlantingEvent::Builder::hasAverageEmergenceDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader PlantingEvent::Reader::getAverageEmergenceDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder PlantingEvent::Builder::getAverageEmergenceDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline PlantingEvent::Pipeline::getAverageEmergenceDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(5));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(3));
 }
 #endif  // !CAPNP_LITE
 inline void PlantingEvent::Builder::setAverageEmergenceDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder PlantingEvent::Builder::initAverageEmergenceDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline void PlantingEvent::Builder::adoptAverageEmergenceDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> PlantingEvent::Builder::disownAverageEmergenceDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t PlantingEvent::Reader::getAveragePlantPopulationAtEmergenceInNoPerM2() const {
@@ -5839,177 +6483,177 @@ inline void PlantingEvent::Builder::setAveragePlantPopulationAtEmergenceInNoPerM
 
 inline bool PlantingEvent::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline bool PlantingEvent::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader PlantingEvent::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder PlantingEvent::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS));
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 inline void PlantingEvent::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder PlantingEvent::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
 }
 inline void PlantingEvent::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownNotes() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool PlantingEvent::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool PlantingEvent::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader PlantingEvent::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void PlantingEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void PlantingEvent::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+
+inline bool PlantingEvent::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline bool PlantingEvent::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader PlantingEvent::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline void PlantingEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder PlantingEvent::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), size);
+}
+inline void PlantingEvent::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> PlantingEvent::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
-inline bool HarvestEvent::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool HarvestEvent::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader HarvestEvent::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder HarvestEvent::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void HarvestEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder HarvestEvent::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void HarvestEvent::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool HarvestEvent::Reader::hasTreatmentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline bool HarvestEvent::Builder::hasTreatmentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader HarvestEvent::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder HarvestEvent::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline void HarvestEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder HarvestEvent::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
-}
-inline void HarvestEvent::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-
 inline bool HarvestEvent::Reader::hasDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline bool HarvestEvent::Builder::hasDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader HarvestEvent::Reader::getDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder HarvestEvent::Builder::getDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline HarvestEvent::Pipeline::getDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
 }
 #endif  // !CAPNP_LITE
 inline void HarvestEvent::Builder::setDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder HarvestEvent::Builder::initDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline void HarvestEvent::Builder::adoptDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> HarvestEvent::Builder::disownDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline bool HarvestEvent::Reader::hasHarvestMethod() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline bool HarvestEvent::Builder::hasHarvestMethod() {
   return !_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader HarvestEvent::Reader::getHarvestMethod() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::getHarvestMethod() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline void HarvestEvent::Builder::setHarvestMethod( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::initHarvestMethod(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
 inline void HarvestEvent::Builder::adoptHarvestMethod(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownHarvestMethod() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline double HarvestEvent::Reader::getHarvestArea() const {
@@ -6028,211 +6672,211 @@ inline void HarvestEvent::Builder::setHarvestArea(double value) {
 
 inline bool HarvestEvent::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline bool HarvestEvent::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader HarvestEvent::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline void HarvestEvent::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void HarvestEvent::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
 inline bool HarvestEvent::Reader::hasComments() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline bool HarvestEvent::Builder::hasComments() {
   return !_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader HarvestEvent::Reader::getComments() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::getComments() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline void HarvestEvent::Builder::setComments( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder HarvestEvent::Builder::initComments(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
 inline void HarvestEvent::Builder::adoptComments(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownComments() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool HarvestEvent::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool HarvestEvent::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader HarvestEvent::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder HarvestEvent::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void HarvestEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder HarvestEvent::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+inline void HarvestEvent::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool HarvestEvent::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool HarvestEvent::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader HarvestEvent::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder HarvestEvent::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void HarvestEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder HarvestEvent::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void HarvestEvent::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> HarvestEvent::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
-inline bool IrrigationEvent::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool IrrigationEvent::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader IrrigationEvent::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder IrrigationEvent::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void IrrigationEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder IrrigationEvent::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void IrrigationEvent::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool IrrigationEvent::Reader::hasTreatmentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline bool IrrigationEvent::Builder::hasTreatmentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader IrrigationEvent::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder IrrigationEvent::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline void IrrigationEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder IrrigationEvent::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
-}
-inline void IrrigationEvent::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-
 inline bool IrrigationEvent::Reader::hasDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline bool IrrigationEvent::Builder::hasDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader IrrigationEvent::Reader::getDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder IrrigationEvent::Builder::getDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline IrrigationEvent::Pipeline::getDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
 }
 #endif  // !CAPNP_LITE
 inline void IrrigationEvent::Builder::setDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder IrrigationEvent::Builder::initDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline void IrrigationEvent::Builder::adoptDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> IrrigationEvent::Builder::disownDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline bool IrrigationEvent::Reader::hasOperation() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline bool IrrigationEvent::Builder::hasOperation() {
   return !_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader IrrigationEvent::Reader::getOperation() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder IrrigationEvent::Builder::getOperation() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline void IrrigationEvent::Builder::setOperation( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder IrrigationEvent::Builder::initOperation(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
 inline void IrrigationEvent::Builder::adoptOperation(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownOperation() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t IrrigationEvent::Reader::getApplicationDepth() const {
@@ -6279,177 +6923,177 @@ inline void IrrigationEvent::Builder::setWaterNConcentrationInPerc(double value)
 
 inline bool IrrigationEvent::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline bool IrrigationEvent::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader IrrigationEvent::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder IrrigationEvent::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline void IrrigationEvent::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder IrrigationEvent::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void IrrigationEvent::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
-}
-
-inline bool FertilizerEvent::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool FertilizerEvent::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader FertilizerEvent::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void FertilizerEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void FertilizerEvent::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool FertilizerEvent::Reader::hasTreatmentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline bool FertilizerEvent::Builder::hasTreatmentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader FertilizerEvent::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline void FertilizerEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
-}
-inline void FertilizerEvent::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-
-inline bool FertilizerEvent::Reader::hasDate() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
-}
-inline bool FertilizerEvent::Builder::hasDate() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
-}
-inline  ::mas::schema::common::Date::Reader FertilizerEvent::Reader::getDate() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
-}
-inline  ::mas::schema::common::Date::Builder FertilizerEvent::Builder::getDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
-}
-#if !CAPNP_LITE
-inline  ::mas::schema::common::Date::Pipeline FertilizerEvent::Pipeline::getDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
-}
-#endif  // !CAPNP_LITE
-inline void FertilizerEvent::Builder::setDate( ::mas::schema::common::Date::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
-}
-inline  ::mas::schema::common::Date::Builder FertilizerEvent::Builder::initDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
-}
-inline void FertilizerEvent::Builder::adoptDate(
-    ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::mas::schema::common::Date> FertilizerEvent::Builder::disownDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
-inline bool FertilizerEvent::Reader::hasApplicationMethod() const {
+inline bool IrrigationEvent::Reader::hasExperimentId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline bool FertilizerEvent::Builder::hasApplicationMethod() {
+inline bool IrrigationEvent::Builder::hasExperimentId() {
   return !_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader FertilizerEvent::Reader::getApplicationMethod() const {
+inline  ::capnp::Text::Reader IrrigationEvent::Reader::getExperimentId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::getApplicationMethod() {
+inline  ::capnp::Text::Builder IrrigationEvent::Builder::getExperimentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline void FertilizerEvent::Builder::setApplicationMethod( ::capnp::Text::Reader value) {
+inline void IrrigationEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder FertilizerEvent::Builder::initApplicationMethod(unsigned int size) {
+inline  ::capnp::Text::Builder IrrigationEvent::Builder::initExperimentId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
-inline void FertilizerEvent::Builder::adoptApplicationMethod(
+inline void IrrigationEvent::Builder::adoptExperimentId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownApplicationMethod() {
+inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownExperimentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool IrrigationEvent::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool IrrigationEvent::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader IrrigationEvent::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder IrrigationEvent::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void IrrigationEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder IrrigationEvent::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+inline void IrrigationEvent::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> IrrigationEvent::Builder::disownTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool FertilizerEvent::Reader::hasDate() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool FertilizerEvent::Builder::hasDate() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::Date::Reader FertilizerEvent::Reader::getDate() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::Date::Builder FertilizerEvent::Builder::getDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::Date::Pipeline FertilizerEvent::Pipeline::getDate() {
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void FertilizerEvent::Builder::setDate( ::mas::schema::common::Date::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::Date::Builder FertilizerEvent::Builder::initDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void FertilizerEvent::Builder::adoptDate(
+    ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::Date> FertilizerEvent::Builder::disownDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool FertilizerEvent::Reader::hasApplicationMethod() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool FertilizerEvent::Builder::hasApplicationMethod() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader FertilizerEvent::Reader::getApplicationMethod() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::getApplicationMethod() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void FertilizerEvent::Builder::setApplicationMethod( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::initApplicationMethod(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void FertilizerEvent::Builder::adoptApplicationMethod(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownApplicationMethod() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t FertilizerEvent::Reader::getApplicationDepthInCM() const {
@@ -6468,36 +7112,36 @@ inline void FertilizerEvent::Builder::setApplicationDepthInCM( ::int16_t value) 
 
 inline bool FertilizerEvent::Reader::hasMaterial() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline bool FertilizerEvent::Builder::hasMaterial() {
   return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader FertilizerEvent::Reader::getMaterial() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder FertilizerEvent::Builder::getMaterial() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline void FertilizerEvent::Builder::setMaterial( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder FertilizerEvent::Builder::initMaterial(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void FertilizerEvent::Builder::adoptMaterial(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownMaterial() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t FertilizerEvent::Reader::getAppliedNInKGNPerHA() const {
@@ -6544,143 +7188,143 @@ inline void FertilizerEvent::Builder::setAppliedNH4InKGNperHA( ::int16_t value) 
 
 inline bool FertilizerEvent::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline bool FertilizerEvent::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader FertilizerEvent::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder FertilizerEvent::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS));
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline void FertilizerEvent::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder FertilizerEvent::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
 inline void FertilizerEvent::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownNotes() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool FertilizerEvent::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool FertilizerEvent::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader FertilizerEvent::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void FertilizerEvent::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+inline void FertilizerEvent::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool FertilizerEvent::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool FertilizerEvent::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader FertilizerEvent::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void FertilizerEvent::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder FertilizerEvent::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void FertilizerEvent::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> FertilizerEvent::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
-inline bool Residue::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool Residue::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader Residue::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder Residue::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void Residue::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder Residue::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void Residue::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Residue::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool Residue::Reader::hasTreatmentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline bool Residue::Builder::hasTreatmentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader Residue::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder Residue::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline void Residue::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder Residue::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
-}
-inline void Residue::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> Residue::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-
 inline bool Residue::Reader::hasInitialMeasureDate() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline bool Residue::Builder::hasInitialMeasureDate() {
   return !_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 inline  ::mas::schema::common::Date::Reader Residue::Reader::getInitialMeasureDate() const {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline  ::mas::schema::common::Date::Builder Residue::Builder::getInitialMeasureDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
 inline  ::mas::schema::common::Date::Pipeline Residue::Pipeline::getInitialMeasureDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
 }
 #endif  // !CAPNP_LITE
 inline void Residue::Builder::setInitialMeasureDate( ::mas::schema::common::Date::Reader value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
 inline  ::mas::schema::common::Date::Builder Residue::Builder::initInitialMeasureDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 inline void Residue::Builder::adoptInitialMeasureDate(
     ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::mas::schema::common::Date> Residue::Builder::disownInitialMeasureDate() {
   return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t Residue::Reader::getIncorporationDepth() const {
@@ -6713,36 +7357,36 @@ inline void Residue::Builder::setPercentIncorporated(double value) {
 
 inline bool Residue::Reader::hasPrevCropCode() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline bool Residue::Builder::hasPrevCropCode() {
   return !_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader Residue::Reader::getPrevCropCode() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder Residue::Builder::getPrevCropCode() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 inline void Residue::Builder::setPrevCropCode( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder Residue::Builder::initPrevCropCode(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
 inline void Residue::Builder::adoptPrevCropCode(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> Residue::Builder::disownPrevCropCode() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS));
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline double Residue::Reader::getAboveGroundWeight() const {
@@ -6787,145 +7431,145 @@ inline void Residue::Builder::setRootWeightPreviousCrop(double value) {
       ::capnp::bounded<4>() * ::capnp::ELEMENTS, value, 13830554455654793216ull);
 }
 
-inline bool EnvironmentModification::Reader::hasExperimentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline bool EnvironmentModification::Builder::hasExperimentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader EnvironmentModification::Reader::getExperimentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::getExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-inline void EnvironmentModification::Builder::setExperimentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::initExperimentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
-}
-inline void EnvironmentModification::Builder::adoptExperimentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownExperimentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS));
-}
-
-inline bool EnvironmentModification::Reader::hasTreatmentId() const {
-  return !_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline bool EnvironmentModification::Builder::hasTreatmentId() {
-  return !_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
-}
-inline  ::capnp::Text::Reader EnvironmentModification::Reader::getTreatmentId() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::getTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-inline void EnvironmentModification::Builder::setTreatmentId( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::initTreatmentId(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
-}
-inline void EnvironmentModification::Builder::adoptTreatmentId(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
-}
-inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownTreatmentId() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS));
-}
-
-inline bool EnvironmentModification::Reader::hasDate() const {
+inline bool Residue::Reader::hasExperimentId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool EnvironmentModification::Builder::hasDate() {
+inline bool Residue::Builder::hasExperimentId() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::mas::schema::common::Date::Reader EnvironmentModification::Reader::getDate() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
+inline  ::capnp::Text::Reader Residue::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Date::Builder EnvironmentModification::Builder::getDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
+inline  ::capnp::Text::Builder Residue::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-#if !CAPNP_LITE
-inline  ::mas::schema::common::Date::Pipeline EnvironmentModification::Pipeline::getDate() {
-  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(2));
-}
-#endif  // !CAPNP_LITE
-inline void EnvironmentModification::Builder::setDate( ::mas::schema::common::Date::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
+inline void Residue::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::mas::schema::common::Date::Builder EnvironmentModification::Builder::initDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS));
+inline  ::capnp::Text::Builder Residue::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
-inline void EnvironmentModification::Builder::adoptDate(
-    ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
+inline void Residue::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::common::Date> EnvironmentModification::Builder::disownDate() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::Text> Residue::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
-inline bool EnvironmentModification::Reader::hasCodeCO2() const {
+inline bool Residue::Reader::hasTreatmentId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline bool EnvironmentModification::Builder::hasCodeCO2() {
+inline bool Residue::Builder::hasTreatmentId() {
   return !_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader EnvironmentModification::Reader::getCodeCO2() const {
+inline  ::capnp::Text::Reader Residue::Reader::getTreatmentId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::getCodeCO2() {
+inline  ::capnp::Text::Builder Residue::Builder::getTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline void EnvironmentModification::Builder::setCodeCO2( ::capnp::Text::Reader value) {
+inline void Residue::Builder::setTreatmentId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder EnvironmentModification::Builder::initCodeCO2(unsigned int size) {
+inline  ::capnp::Text::Builder Residue::Builder::initTreatmentId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
-inline void EnvironmentModification::Builder::adoptCodeCO2(
+inline void Residue::Builder::adoptTreatmentId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownCodeCO2() {
+inline ::capnp::Orphan< ::capnp::Text> Residue::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool EnvironmentModification::Reader::hasDate() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool EnvironmentModification::Builder::hasDate() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::Date::Reader EnvironmentModification::Reader::getDate() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::Date::Builder EnvironmentModification::Builder::getDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::Date::Pipeline EnvironmentModification::Pipeline::getDate() {
+  return  ::mas::schema::common::Date::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void EnvironmentModification::Builder::setDate( ::mas::schema::common::Date::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::Date::Builder EnvironmentModification::Builder::initDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void EnvironmentModification::Builder::adoptDate(
+    ::capnp::Orphan< ::mas::schema::common::Date>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::Date> EnvironmentModification::Builder::disownDate() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::Date>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool EnvironmentModification::Reader::hasCodeCO2() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool EnvironmentModification::Builder::hasCodeCO2() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader EnvironmentModification::Reader::getCodeCO2() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::getCodeCO2() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void EnvironmentModification::Builder::setCodeCO2( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::initCodeCO2(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void EnvironmentModification::Builder::adoptCodeCO2(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownCodeCO2() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline  ::int16_t EnvironmentModification::Reader::getValueCO2() const {
@@ -6944,34 +7588,102 @@ inline void EnvironmentModification::Builder::setValueCO2( ::int16_t value) {
 
 inline bool EnvironmentModification::Reader::hasNotes() const {
   return !_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline bool EnvironmentModification::Builder::hasNotes() {
   return !_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 inline  ::capnp::Text::Reader EnvironmentModification::Reader::getNotes() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline  ::capnp::Text::Builder EnvironmentModification::Builder::getNotes() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS));
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 inline void EnvironmentModification::Builder::setNotes( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 inline  ::capnp::Text::Builder EnvironmentModification::Builder::initNotes(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 inline void EnvironmentModification::Builder::adoptNotes(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
-      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownNotes() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline bool EnvironmentModification::Reader::hasExperimentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline bool EnvironmentModification::Builder::hasExperimentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader EnvironmentModification::Reader::getExperimentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::getExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline void EnvironmentModification::Builder::setExperimentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::initExperimentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+}
+inline void EnvironmentModification::Builder::adoptExperimentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownExperimentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool EnvironmentModification::Reader::hasTreatmentId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool EnvironmentModification::Builder::hasTreatmentId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader EnvironmentModification::Reader::getTreatmentId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::getTreatmentId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void EnvironmentModification::Builder::setTreatmentId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder EnvironmentModification::Builder::initTreatmentId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+inline void EnvironmentModification::Builder::adoptTreatmentId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
