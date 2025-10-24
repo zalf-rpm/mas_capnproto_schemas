@@ -194,11 +194,13 @@ interface Gateway extends(Identifiable, Restorer) {
 
   struct RegResults {
     sturdyRef               @0 :SturdyRef;
-    # the actual sturdy reference to the registered capability
+    # the actual sturdy reference to the registered capability via the Gateway
 
     heartbeat               @1 :Heartbeat;
-    # heartbeat capability to keep the sturdy ref registration alive
-    # if the heartbeat is null, you have to assume the saved capability can be lost at any time
+    # Heartbeat capability to call regularly to keep the registration alive.
+    # If heartbeat is null, then the registration was not successful.
+    # Call heartbeat at least every secsHeartbeatInterval seconds.
+    # If a heartbeat ist missed, you have to assume the saved capability can be lost at any time.
 
     secsHeartbeatInterval   @2 :UInt32;
     # interval in seconds to call the heartbeat capability
