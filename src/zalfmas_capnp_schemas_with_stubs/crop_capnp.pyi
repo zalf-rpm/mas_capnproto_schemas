@@ -1,0 +1,43 @@
+"""This is an automatically generated stub for `crop.capnp`."""
+
+from __future__ import annotations
+
+from collections.abc import Awaitable
+from typing import Any, Protocol
+
+from .common_capnp import Identifiable
+from .persistence_capnp import Persistent
+from .registry_capnp import Registry
+
+class Crop(Identifiable, Persistent, Protocol):
+    class ParametersResult(Awaitable[ParametersResult], Protocol):
+        params: Any
+
+    def parameters(self) -> ParametersResult: ...
+    class ParametersRequest(Protocol):
+        def send(self) -> Crop.ParametersResult: ...
+
+    def parameters_request(self) -> ParametersRequest: ...
+    class CultivarResult(Awaitable[CultivarResult], Protocol):
+        info: Any
+
+    def cultivar(self) -> CultivarResult: ...
+    class CultivarRequest(Protocol):
+        def send(self) -> Crop.CultivarResult: ...
+
+    def cultivar_request(self) -> CultivarRequest: ...
+    class SpeciesResult(Awaitable[SpeciesResult], Protocol):
+        info: Any
+
+    def species(self) -> SpeciesResult: ...
+    class SpeciesRequest(Protocol):
+        def send(self) -> Crop.SpeciesResult: ...
+
+    def species_request(self) -> SpeciesRequest: ...
+    class Server(Identifiable.Server, Persistent.Server):
+        def parameters(self, **kwargs) -> Awaitable[Any]: ...
+        def cultivar(self, **kwargs) -> Awaitable[Any]: ...
+        def species(self, **kwargs) -> Awaitable[Any]: ...
+
+class Service(Registry, Protocol):
+    class Server(Registry.Server): ...
