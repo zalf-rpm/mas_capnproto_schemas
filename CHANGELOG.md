@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.38](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.37...v0.1.38) (2025-11-04)
+
+
+### Features
+
+* removed commented interface ([57d1864](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/57d186455b31846ef5ae965a6b7046a0bd8190cc))
+
 ## [0.1.37](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.36...v0.1.37) (2025-09-29)
 
 
