@@ -10,6 +10,7 @@ import (
 	context "context"
 	common "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/common"
 	persistence "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/persistence"
+	service "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/service"
 	strconv "strconv"
 )
 
@@ -894,12 +895,12 @@ type Channel_StartupInfo struct{ capnp.Struct }
 const Channel_StartupInfo_TypeID = 0xe3d7a3237f175028
 
 func NewChannel_StartupInfo(s *capnp.Segment) (Channel_StartupInfo, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 3})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 6})
 	return Channel_StartupInfo{st}, err
 }
 
 func NewRootChannel_StartupInfo(s *capnp.Segment) (Channel_StartupInfo, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 3})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 6})
 	return Channel_StartupInfo{st}, err
 }
 
@@ -947,6 +948,24 @@ func (s Channel_StartupInfo) SetChannelSR(v string) error {
 	return s.Struct.SetText(0, v)
 }
 
+func (s Channel_StartupInfo) Channel() Channel {
+	p, _ := s.Struct.Ptr(3)
+	return Channel{Client: p.Interface().Client()}
+}
+
+func (s Channel_StartupInfo) HasChannel() bool {
+	return s.Struct.HasPtr(3)
+}
+
+func (s Channel_StartupInfo) SetChannel(v Channel) error {
+	if !v.Client.IsValid() {
+		return s.Struct.SetPtr(3, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
+	return s.Struct.SetPtr(3, in.ToPtr())
+}
+
 func (s Channel_StartupInfo) ReaderSRs() (capnp.TextList, error) {
 	p, err := s.Struct.Ptr(1)
 	return capnp.TextList{List: p.List()}, err
@@ -968,6 +987,30 @@ func (s Channel_StartupInfo) NewReaderSRs(n int32) (capnp.TextList, error) {
 		return capnp.TextList{}, err
 	}
 	err = s.Struct.SetPtr(1, l.List.ToPtr())
+	return l, err
+}
+
+func (s Channel_StartupInfo) Readers() (capnp.PointerList, error) {
+	p, err := s.Struct.Ptr(4)
+	return capnp.PointerList{List: p.List()}, err
+}
+
+func (s Channel_StartupInfo) HasReaders() bool {
+	return s.Struct.HasPtr(4)
+}
+
+func (s Channel_StartupInfo) SetReaders(v capnp.PointerList) error {
+	return s.Struct.SetPtr(4, v.List.ToPtr())
+}
+
+// NewReaders sets the readers field to a newly
+// allocated capnp.PointerList, preferring placement in s's segment.
+func (s Channel_StartupInfo) NewReaders(n int32) (capnp.PointerList, error) {
+	l, err := capnp.NewPointerList(s.Struct.Segment(), n)
+	if err != nil {
+		return capnp.PointerList{}, err
+	}
+	err = s.Struct.SetPtr(4, l.List.ToPtr())
 	return l, err
 }
 
@@ -995,12 +1038,36 @@ func (s Channel_StartupInfo) NewWriterSRs(n int32) (capnp.TextList, error) {
 	return l, err
 }
 
+func (s Channel_StartupInfo) Writers() (capnp.PointerList, error) {
+	p, err := s.Struct.Ptr(5)
+	return capnp.PointerList{List: p.List()}, err
+}
+
+func (s Channel_StartupInfo) HasWriters() bool {
+	return s.Struct.HasPtr(5)
+}
+
+func (s Channel_StartupInfo) SetWriters(v capnp.PointerList) error {
+	return s.Struct.SetPtr(5, v.List.ToPtr())
+}
+
+// NewWriters sets the writers field to a newly
+// allocated capnp.PointerList, preferring placement in s's segment.
+func (s Channel_StartupInfo) NewWriters(n int32) (capnp.PointerList, error) {
+	l, err := capnp.NewPointerList(s.Struct.Segment(), n)
+	if err != nil {
+		return capnp.PointerList{}, err
+	}
+	err = s.Struct.SetPtr(5, l.List.ToPtr())
+	return l, err
+}
+
 // Channel_StartupInfo_List is a list of Channel_StartupInfo.
 type Channel_StartupInfo_List struct{ capnp.List }
 
 // NewChannel_StartupInfo creates a new list of Channel_StartupInfo.
 func NewChannel_StartupInfo_List(s *capnp.Segment, sz int32) (Channel_StartupInfo_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 3}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 6}, sz)
 	return Channel_StartupInfo_List{l}, err
 }
 
@@ -1023,6 +1090,10 @@ type Channel_StartupInfo_Future struct{ *capnp.Future }
 func (p Channel_StartupInfo_Future) Struct() (Channel_StartupInfo, error) {
 	s, err := p.Future.Struct()
 	return Channel_StartupInfo{s}, err
+}
+
+func (p Channel_StartupInfo_Future) Channel() Channel {
+	return Channel{Client: p.Future.Field(3, nil).Client()}
 }
 
 type Channel_Reader struct{ Client *capnp.Client }
@@ -1078,6 +1149,38 @@ func (c Channel_Reader) ReadIfMsg(ctx context.Context, params func(Channel_Reade
 	ans, release := c.Client.SendCall(ctx, s)
 	return Channel_Msg_Future{Future: ans.Future()}, release
 }
+func (c Channel_Reader) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(common.Identifiable_info_Params{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return common.IdInformation_Future{Future: ans.Future()}, release
+}
+func (c Channel_Reader) Save(ctx context.Context, params func(persistence.Persistent_SaveParams) error) (persistence.Persistent_SaveResults_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(persistence.Persistent_SaveParams{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return persistence.Persistent_SaveResults_Future{Future: ans.Future()}, release
+}
 
 func (c Channel_Reader) AddRef() Channel_Reader {
 	return Channel_Reader{
@@ -1096,6 +1199,10 @@ type Channel_Reader_Server interface {
 	Close(context.Context, Channel_Reader_close) error
 
 	ReadIfMsg(context.Context, Channel_Reader_readIfMsg) error
+
+	Info(context.Context, common.Identifiable_info) error
+
+	Save(context.Context, persistence.Persistent_save) error
 }
 
 // Channel_Reader_NewServer creates a new Server from an implementation of Channel_Reader_Server.
@@ -1114,7 +1221,7 @@ func Channel_Reader_ServerToClient(s Channel_Reader_Server, policy *server.Polic
 // This can be used to create a more complicated Server.
 func Channel_Reader_Methods(methods []server.Method, s Channel_Reader_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 3)
+		methods = make([]server.Method, 0, 5)
 	}
 
 	methods = append(methods, server.Method{
@@ -1150,6 +1257,30 @@ func Channel_Reader_Methods(methods []server.Method, s Channel_Reader_Server) []
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
 			return s.ReadIfMsg(ctx, Channel_Reader_readIfMsg{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Info(ctx, common.Identifiable_info{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Save(ctx, persistence.Persistent_save{call})
 		},
 	})
 
@@ -1480,6 +1611,38 @@ func (c Channel_Writer) WriteIfSpace(ctx context.Context, params func(Channel_Ms
 	ans, release := c.Client.SendCall(ctx, s)
 	return Channel_Writer_writeIfSpace_Results_Future{Future: ans.Future()}, release
 }
+func (c Channel_Writer) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(common.Identifiable_info_Params{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return common.IdInformation_Future{Future: ans.Future()}, release
+}
+func (c Channel_Writer) Save(ctx context.Context, params func(persistence.Persistent_SaveParams) error) (persistence.Persistent_SaveResults_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(persistence.Persistent_SaveParams{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return persistence.Persistent_SaveResults_Future{Future: ans.Future()}, release
+}
 
 func (c Channel_Writer) AddRef() Channel_Writer {
 	return Channel_Writer{
@@ -1498,6 +1661,10 @@ type Channel_Writer_Server interface {
 	Close(context.Context, Channel_Writer_close) error
 
 	WriteIfSpace(context.Context, Channel_Writer_writeIfSpace) error
+
+	Info(context.Context, common.Identifiable_info) error
+
+	Save(context.Context, persistence.Persistent_save) error
 }
 
 // Channel_Writer_NewServer creates a new Server from an implementation of Channel_Writer_Server.
@@ -1516,7 +1683,7 @@ func Channel_Writer_ServerToClient(s Channel_Writer_Server, policy *server.Polic
 // This can be used to create a more complicated Server.
 func Channel_Writer_Methods(methods []server.Method, s Channel_Writer_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 3)
+		methods = make([]server.Method, 0, 5)
 	}
 
 	methods = append(methods, server.Method{
@@ -1552,6 +1719,30 @@ func Channel_Writer_Methods(methods []server.Method, s Channel_Writer_Server) []
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
 			return s.WriteIfSpace(ctx, Channel_Writer_writeIfSpace{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Info(ctx, common.Identifiable_info{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xc1a7daa0dc36cb65,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:Persistent",
+			MethodName:    "save",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Save(ctx, persistence.Persistent_save{call})
 		},
 	})
 
@@ -2609,208 +2800,376 @@ func (p Channel_close_Results_Future) Struct() (Channel_close_Results, error) {
 	return Channel_close_Results{s}, err
 }
 
-type NewPortInfo struct{ capnp.Struct }
-type NewPortInfo_Which uint16
+type StartChannelsService struct{ Client *capnp.Client }
 
-const (
-	NewPortInfo_Which_inPortReaderCap  NewPortInfo_Which = 0
-	NewPortInfo_Which_inPortReaderSR   NewPortInfo_Which = 1
-	NewPortInfo_Which_outPortWriterCap NewPortInfo_Which = 2
-	NewPortInfo_Which_outPortWriterSR  NewPortInfo_Which = 3
-)
+// StartChannelsService_TypeID is the unique identifier for the type StartChannelsService.
+const StartChannelsService_TypeID = 0xd0cd6d829b810229
 
-func (w NewPortInfo_Which) String() string {
-	const s = "inPortReaderCapinPortReaderSRoutPortWriterCapoutPortWriterSR"
-	switch w {
-	case NewPortInfo_Which_inPortReaderCap:
-		return s[0:15]
-	case NewPortInfo_Which_inPortReaderSR:
-		return s[15:29]
-	case NewPortInfo_Which_outPortWriterCap:
-		return s[29:45]
-	case NewPortInfo_Which_outPortWriterSR:
-		return s[45:60]
-
+func (c StartChannelsService) Start(ctx context.Context, params func(StartChannelsService_Params) error) (StartChannelsService_start_Results_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xd0cd6d829b810229,
+			MethodID:      0,
+			InterfaceName: "fbp.capnp:StartChannelsService",
+			MethodName:    "start",
+		},
 	}
-	return "NewPortInfo_Which(" + strconv.FormatUint(uint64(w), 10) + ")"
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 8, PointerCount: 3}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(StartChannelsService_Params{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return StartChannelsService_start_Results_Future{Future: ans.Future()}, release
+}
+func (c StartChannelsService) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(common.Identifiable_info_Params{Struct: s}) }
+	}
+	ans, release := c.Client.SendCall(ctx, s)
+	return common.IdInformation_Future{Future: ans.Future()}, release
 }
 
-// NewPortInfo_TypeID is the unique identifier for the type NewPortInfo.
-const NewPortInfo_TypeID = 0xa2dcae494290639e
-
-func NewNewPortInfo(s *capnp.Segment) (NewPortInfo, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
-	return NewPortInfo{st}, err
+func (c StartChannelsService) AddRef() StartChannelsService {
+	return StartChannelsService{
+		Client: c.Client.AddRef(),
+	}
 }
 
-func NewRootNewPortInfo(s *capnp.Segment) (NewPortInfo, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
-	return NewPortInfo{st}, err
+func (c StartChannelsService) Release() {
+	c.Client.Release()
 }
 
-func ReadRootNewPortInfo(msg *capnp.Message) (NewPortInfo, error) {
+// A StartChannelsService_Server is a StartChannelsService with a local implementation.
+type StartChannelsService_Server interface {
+	Start(context.Context, StartChannelsService_start) error
+
+	Info(context.Context, common.Identifiable_info) error
+}
+
+// StartChannelsService_NewServer creates a new Server from an implementation of StartChannelsService_Server.
+func StartChannelsService_NewServer(s StartChannelsService_Server, policy *server.Policy) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(StartChannelsService_Methods(nil, s), s, c, policy)
+}
+
+// StartChannelsService_ServerToClient creates a new Client from an implementation of StartChannelsService_Server.
+// The caller is responsible for calling Release on the returned Client.
+func StartChannelsService_ServerToClient(s StartChannelsService_Server, policy *server.Policy) StartChannelsService {
+	return StartChannelsService{Client: capnp.NewClient(StartChannelsService_NewServer(s, policy))}
+}
+
+// StartChannelsService_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func StartChannelsService_Methods(methods []server.Method, s StartChannelsService_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 2)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xd0cd6d829b810229,
+			MethodID:      0,
+			InterfaceName: "fbp.capnp:StartChannelsService",
+			MethodName:    "start",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Start(ctx, StartChannelsService_start{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xb2afd1cb599c48d5,
+			MethodID:      0,
+			InterfaceName: "common.capnp:Identifiable",
+			MethodName:    "info",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Info(ctx, common.Identifiable_info{call})
+		},
+	})
+
+	return methods
+}
+
+// StartChannelsService_start holds the state for a server call to StartChannelsService.start.
+// See server.Call for documentation.
+type StartChannelsService_start struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c StartChannelsService_start) Args() StartChannelsService_Params {
+	return StartChannelsService_Params{Struct: c.Call.Args()}
+}
+
+// AllocResults allocates the results struct.
+func (c StartChannelsService_start) AllocResults() (StartChannelsService_start_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return StartChannelsService_start_Results{Struct: r}, err
+}
+
+type StartChannelsService_Params struct{ capnp.Struct }
+
+// StartChannelsService_Params_TypeID is the unique identifier for the type StartChannelsService_Params.
+const StartChannelsService_Params_TypeID = 0x9576b9a98d58fba2
+
+func NewStartChannelsService_Params(s *capnp.Segment) (StartChannelsService_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
+	return StartChannelsService_Params{st}, err
+}
+
+func NewRootStartChannelsService_Params(s *capnp.Segment) (StartChannelsService_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
+	return StartChannelsService_Params{st}, err
+}
+
+func ReadRootStartChannelsService_Params(msg *capnp.Message) (StartChannelsService_Params, error) {
 	root, err := msg.Root()
-	return NewPortInfo{root.Struct()}, err
+	return StartChannelsService_Params{root.Struct()}, err
 }
 
-func (s NewPortInfo) String() string {
-	str, _ := text.Marshal(0xa2dcae494290639e, s.Struct)
+func (s StartChannelsService_Params) String() string {
+	str, _ := text.Marshal(0x9576b9a98d58fba2, s.Struct)
 	return str
 }
 
-func (s NewPortInfo) Which() NewPortInfo_Which {
-	return NewPortInfo_Which(s.Struct.Uint16(0))
-}
-func (s NewPortInfo) Name() (string, error) {
+func (s StartChannelsService_Params) Name() (string, error) {
 	p, err := s.Struct.Ptr(0)
 	return p.Text(), err
 }
 
-func (s NewPortInfo) HasName() bool {
+func (s StartChannelsService_Params) HasName() bool {
 	return s.Struct.HasPtr(0)
 }
 
-func (s NewPortInfo) NameBytes() ([]byte, error) {
+func (s StartChannelsService_Params) NameBytes() ([]byte, error) {
 	p, err := s.Struct.Ptr(0)
 	return p.TextBytes(), err
 }
 
-func (s NewPortInfo) SetName(v string) error {
+func (s StartChannelsService_Params) SetName(v string) error {
 	return s.Struct.SetText(0, v)
 }
 
-func (s NewPortInfo) InPortReaderCap() Channel_Reader {
-	if s.Struct.Uint16(0) != 0 {
-		panic("Which() != inPortReaderCap")
-	}
-	p, _ := s.Struct.Ptr(1)
-	return Channel_Reader{Client: p.Interface().Client()}
+func (s StartChannelsService_Params) NoOfChannels() uint16 {
+	return s.Struct.Uint16(0) ^ 1
 }
 
-func (s NewPortInfo) HasInPortReaderCap() bool {
-	if s.Struct.Uint16(0) != 0 {
-		return false
-	}
+func (s StartChannelsService_Params) SetNoOfChannels(v uint16) {
+	s.Struct.SetUint16(0, v^1)
+}
+
+func (s StartChannelsService_Params) NoOfReaders() uint16 {
+	return s.Struct.Uint16(2) ^ 1
+}
+
+func (s StartChannelsService_Params) SetNoOfReaders(v uint16) {
+	s.Struct.SetUint16(2, v^1)
+}
+
+func (s StartChannelsService_Params) NoOfWriters() uint16 {
+	return s.Struct.Uint16(4) ^ 1
+}
+
+func (s StartChannelsService_Params) SetNoOfWriters(v uint16) {
+	s.Struct.SetUint16(4, v^1)
+}
+
+func (s StartChannelsService_Params) ReaderSrts() (capnp.TextList, error) {
+	p, err := s.Struct.Ptr(1)
+	return capnp.TextList{List: p.List()}, err
+}
+
+func (s StartChannelsService_Params) HasReaderSrts() bool {
 	return s.Struct.HasPtr(1)
 }
 
-func (s NewPortInfo) SetInPortReaderCap(v Channel_Reader) error {
-	s.Struct.SetUint16(0, 0)
-	if !v.Client.IsValid() {
-		return s.Struct.SetPtr(1, capnp.Ptr{})
+func (s StartChannelsService_Params) SetReaderSrts(v capnp.TextList) error {
+	return s.Struct.SetPtr(1, v.List.ToPtr())
+}
+
+// NewReaderSrts sets the readerSrts field to a newly
+// allocated capnp.TextList, preferring placement in s's segment.
+func (s StartChannelsService_Params) NewReaderSrts(n int32) (capnp.TextList, error) {
+	l, err := capnp.NewTextList(s.Struct.Segment(), n)
+	if err != nil {
+		return capnp.TextList{}, err
 	}
-	seg := s.Segment()
-	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
-	return s.Struct.SetPtr(1, in.ToPtr())
+	err = s.Struct.SetPtr(1, l.List.ToPtr())
+	return l, err
 }
 
-func (s NewPortInfo) InPortReaderSR() (string, error) {
-	if s.Struct.Uint16(0) != 1 {
-		panic("Which() != inPortReaderSR")
+func (s StartChannelsService_Params) WriterSrts() (capnp.TextList, error) {
+	p, err := s.Struct.Ptr(2)
+	return capnp.TextList{List: p.List()}, err
+}
+
+func (s StartChannelsService_Params) HasWriterSrts() bool {
+	return s.Struct.HasPtr(2)
+}
+
+func (s StartChannelsService_Params) SetWriterSrts(v capnp.TextList) error {
+	return s.Struct.SetPtr(2, v.List.ToPtr())
+}
+
+// NewWriterSrts sets the writerSrts field to a newly
+// allocated capnp.TextList, preferring placement in s's segment.
+func (s StartChannelsService_Params) NewWriterSrts(n int32) (capnp.TextList, error) {
+	l, err := capnp.NewTextList(s.Struct.Segment(), n)
+	if err != nil {
+		return capnp.TextList{}, err
 	}
-	p, err := s.Struct.Ptr(1)
-	return p.Text(), err
+	err = s.Struct.SetPtr(2, l.List.ToPtr())
+	return l, err
 }
 
-func (s NewPortInfo) HasInPortReaderSR() bool {
-	if s.Struct.Uint16(0) != 1 {
-		return false
-	}
-	return s.Struct.HasPtr(1)
+func (s StartChannelsService_Params) BufferSize() uint16 {
+	return s.Struct.Uint16(6) ^ 1
 }
 
-func (s NewPortInfo) InPortReaderSRBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
-	return p.TextBytes(), err
+func (s StartChannelsService_Params) SetBufferSize(v uint16) {
+	s.Struct.SetUint16(6, v^1)
 }
 
-func (s NewPortInfo) SetInPortReaderSR(v string) error {
-	s.Struct.SetUint16(0, 1)
-	return s.Struct.SetText(1, v)
+// StartChannelsService_Params_List is a list of StartChannelsService_Params.
+type StartChannelsService_Params_List struct{ capnp.List }
+
+// NewStartChannelsService_Params creates a new list of StartChannelsService_Params.
+func NewStartChannelsService_Params_List(s *capnp.Segment, sz int32) (StartChannelsService_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3}, sz)
+	return StartChannelsService_Params_List{l}, err
 }
 
-func (s NewPortInfo) OutPortWriterCap() Channel_Writer {
-	if s.Struct.Uint16(0) != 2 {
-		panic("Which() != outPortWriterCap")
-	}
-	p, _ := s.Struct.Ptr(1)
-	return Channel_Writer{Client: p.Interface().Client()}
+func (s StartChannelsService_Params_List) At(i int) StartChannelsService_Params {
+	return StartChannelsService_Params{s.List.Struct(i)}
 }
 
-func (s NewPortInfo) HasOutPortWriterCap() bool {
-	if s.Struct.Uint16(0) != 2 {
-		return false
-	}
-	return s.Struct.HasPtr(1)
+func (s StartChannelsService_Params_List) Set(i int, v StartChannelsService_Params) error {
+	return s.List.SetStruct(i, v.Struct)
 }
 
-func (s NewPortInfo) SetOutPortWriterCap(v Channel_Writer) error {
-	s.Struct.SetUint16(0, 2)
-	if !v.Client.IsValid() {
-		return s.Struct.SetPtr(1, capnp.Ptr{})
-	}
-	seg := s.Segment()
-	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
-	return s.Struct.SetPtr(1, in.ToPtr())
-}
-
-func (s NewPortInfo) OutPortWriterSR() (string, error) {
-	if s.Struct.Uint16(0) != 3 {
-		panic("Which() != outPortWriterSR")
-	}
-	p, err := s.Struct.Ptr(1)
-	return p.Text(), err
-}
-
-func (s NewPortInfo) HasOutPortWriterSR() bool {
-	if s.Struct.Uint16(0) != 3 {
-		return false
-	}
-	return s.Struct.HasPtr(1)
-}
-
-func (s NewPortInfo) OutPortWriterSRBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
-	return p.TextBytes(), err
-}
-
-func (s NewPortInfo) SetOutPortWriterSR(v string) error {
-	s.Struct.SetUint16(0, 3)
-	return s.Struct.SetText(1, v)
-}
-
-// NewPortInfo_List is a list of NewPortInfo.
-type NewPortInfo_List struct{ capnp.List }
-
-// NewNewPortInfo creates a new list of NewPortInfo.
-func NewNewPortInfo_List(s *capnp.Segment, sz int32) (NewPortInfo_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
-	return NewPortInfo_List{l}, err
-}
-
-func (s NewPortInfo_List) At(i int) NewPortInfo { return NewPortInfo{s.List.Struct(i)} }
-
-func (s NewPortInfo_List) Set(i int, v NewPortInfo) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s NewPortInfo_List) String() string {
-	str, _ := text.MarshalList(0xa2dcae494290639e, s.List)
+func (s StartChannelsService_Params_List) String() string {
+	str, _ := text.MarshalList(0x9576b9a98d58fba2, s.List)
 	return str
 }
 
-// NewPortInfo_Future is a wrapper for a NewPortInfo promised by a client call.
-type NewPortInfo_Future struct{ *capnp.Future }
+// StartChannelsService_Params_Future is a wrapper for a StartChannelsService_Params promised by a client call.
+type StartChannelsService_Params_Future struct{ *capnp.Future }
 
-func (p NewPortInfo_Future) Struct() (NewPortInfo, error) {
+func (p StartChannelsService_Params_Future) Struct() (StartChannelsService_Params, error) {
 	s, err := p.Future.Struct()
-	return NewPortInfo{s}, err
+	return StartChannelsService_Params{s}, err
 }
 
-func (p NewPortInfo_Future) InPortReaderCap() Channel_Reader {
-	return Channel_Reader{Client: p.Future.Field(1, nil).Client()}
+type StartChannelsService_start_Results struct{ capnp.Struct }
+
+// StartChannelsService_start_Results_TypeID is the unique identifier for the type StartChannelsService_start_Results.
+const StartChannelsService_start_Results_TypeID = 0xde5975c83de2b10c
+
+func NewStartChannelsService_start_Results(s *capnp.Segment) (StartChannelsService_start_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return StartChannelsService_start_Results{st}, err
 }
 
-func (p NewPortInfo_Future) OutPortWriterCap() Channel_Writer {
-	return Channel_Writer{Client: p.Future.Field(1, nil).Client()}
+func NewRootStartChannelsService_start_Results(s *capnp.Segment) (StartChannelsService_start_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return StartChannelsService_start_Results{st}, err
+}
+
+func ReadRootStartChannelsService_start_Results(msg *capnp.Message) (StartChannelsService_start_Results, error) {
+	root, err := msg.Root()
+	return StartChannelsService_start_Results{root.Struct()}, err
+}
+
+func (s StartChannelsService_start_Results) String() string {
+	str, _ := text.Marshal(0xde5975c83de2b10c, s.Struct)
+	return str
+}
+
+func (s StartChannelsService_start_Results) StartupInfos() (Channel_StartupInfo_List, error) {
+	p, err := s.Struct.Ptr(0)
+	return Channel_StartupInfo_List{List: p.List()}, err
+}
+
+func (s StartChannelsService_start_Results) HasStartupInfos() bool {
+	return s.Struct.HasPtr(0)
+}
+
+func (s StartChannelsService_start_Results) SetStartupInfos(v Channel_StartupInfo_List) error {
+	return s.Struct.SetPtr(0, v.List.ToPtr())
+}
+
+// NewStartupInfos sets the startupInfos field to a newly
+// allocated Channel_StartupInfo_List, preferring placement in s's segment.
+func (s StartChannelsService_start_Results) NewStartupInfos(n int32) (Channel_StartupInfo_List, error) {
+	l, err := NewChannel_StartupInfo_List(s.Struct.Segment(), n)
+	if err != nil {
+		return Channel_StartupInfo_List{}, err
+	}
+	err = s.Struct.SetPtr(0, l.List.ToPtr())
+	return l, err
+}
+
+func (s StartChannelsService_start_Results) Stop() service.Stoppable {
+	p, _ := s.Struct.Ptr(1)
+	return service.Stoppable{Client: p.Interface().Client()}
+}
+
+func (s StartChannelsService_start_Results) HasStop() bool {
+	return s.Struct.HasPtr(1)
+}
+
+func (s StartChannelsService_start_Results) SetStop(v service.Stoppable) error {
+	if !v.Client.IsValid() {
+		return s.Struct.SetPtr(1, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
+	return s.Struct.SetPtr(1, in.ToPtr())
+}
+
+// StartChannelsService_start_Results_List is a list of StartChannelsService_start_Results.
+type StartChannelsService_start_Results_List struct{ capnp.List }
+
+// NewStartChannelsService_start_Results creates a new list of StartChannelsService_start_Results.
+func NewStartChannelsService_start_Results_List(s *capnp.Segment, sz int32) (StartChannelsService_start_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return StartChannelsService_start_Results_List{l}, err
+}
+
+func (s StartChannelsService_start_Results_List) At(i int) StartChannelsService_start_Results {
+	return StartChannelsService_start_Results{s.List.Struct(i)}
+}
+
+func (s StartChannelsService_start_Results_List) Set(i int, v StartChannelsService_start_Results) error {
+	return s.List.SetStruct(i, v.Struct)
+}
+
+func (s StartChannelsService_start_Results_List) String() string {
+	str, _ := text.MarshalList(0xde5975c83de2b10c, s.List)
+	return str
+}
+
+// StartChannelsService_start_Results_Future is a wrapper for a StartChannelsService_start_Results promised by a client call.
+type StartChannelsService_start_Results_Future struct{ *capnp.Future }
+
+func (p StartChannelsService_start_Results_Future) Struct() (StartChannelsService_start_Results, error) {
+	s, err := p.Future.Struct()
+	return StartChannelsService_start_Results{s}, err
+}
+
+func (p StartChannelsService_start_Results_Future) Stop() service.Stoppable {
+	return service.Stoppable{Client: p.Future.Field(1, nil).Client()}
 }
 
 type PortInfos struct{ capnp.Struct }
@@ -3063,44 +3422,219 @@ func (p PortInfos_NameAndSR_Future) Struct() (PortInfos_NameAndSR, error) {
 	return PortInfos_NameAndSR{s}, err
 }
 
-type Component struct{ Client *capnp.Client }
+type Component struct{ capnp.Struct }
 
 // Component_TypeID is the unique identifier for the type Component.
 const Component_TypeID = 0xd717ff7d6815a6b0
 
-func (c Component) Start(ctx context.Context, params func(Component_start_Params) error) (Component_start_Results_Future, capnp.ReleaseFunc) {
+func NewComponent(s *capnp.Segment) (Component, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5})
+	return Component{st}, err
+}
+
+func NewRootComponent(s *capnp.Segment) (Component, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5})
+	return Component{st}, err
+}
+
+func ReadRootComponent(msg *capnp.Message) (Component, error) {
+	root, err := msg.Root()
+	return Component{root.Struct()}, err
+}
+
+func (s Component) String() string {
+	str, _ := text.Marshal(0xd717ff7d6815a6b0, s.Struct)
+	return str
+}
+
+func (s Component) Info() (common.IdInformation, error) {
+	p, err := s.Struct.Ptr(0)
+	return common.IdInformation{Struct: p.Struct()}, err
+}
+
+func (s Component) HasInfo() bool {
+	return s.Struct.HasPtr(0)
+}
+
+func (s Component) SetInfo(v common.IdInformation) error {
+	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+}
+
+// NewInfo sets the info field to a newly
+// allocated common.IdInformation struct, preferring placement in s's segment.
+func (s Component) NewInfo() (common.IdInformation, error) {
+	ss, err := common.NewIdInformation(s.Struct.Segment())
+	if err != nil {
+		return common.IdInformation{}, err
+	}
+	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	return ss, err
+}
+
+func (s Component) Type() Component_ComponentType {
+	return Component_ComponentType(s.Struct.Uint16(0))
+}
+
+func (s Component) SetType(v Component_ComponentType) {
+	s.Struct.SetUint16(0, uint16(v))
+}
+
+func (s Component) InPorts() (Component_Port_List, error) {
+	p, err := s.Struct.Ptr(1)
+	return Component_Port_List{List: p.List()}, err
+}
+
+func (s Component) HasInPorts() bool {
+	return s.Struct.HasPtr(1)
+}
+
+func (s Component) SetInPorts(v Component_Port_List) error {
+	return s.Struct.SetPtr(1, v.List.ToPtr())
+}
+
+// NewInPorts sets the inPorts field to a newly
+// allocated Component_Port_List, preferring placement in s's segment.
+func (s Component) NewInPorts(n int32) (Component_Port_List, error) {
+	l, err := NewComponent_Port_List(s.Struct.Segment(), n)
+	if err != nil {
+		return Component_Port_List{}, err
+	}
+	err = s.Struct.SetPtr(1, l.List.ToPtr())
+	return l, err
+}
+
+func (s Component) OutPorts() (Component_Port_List, error) {
+	p, err := s.Struct.Ptr(2)
+	return Component_Port_List{List: p.List()}, err
+}
+
+func (s Component) HasOutPorts() bool {
+	return s.Struct.HasPtr(2)
+}
+
+func (s Component) SetOutPorts(v Component_Port_List) error {
+	return s.Struct.SetPtr(2, v.List.ToPtr())
+}
+
+// NewOutPorts sets the outPorts field to a newly
+// allocated Component_Port_List, preferring placement in s's segment.
+func (s Component) NewOutPorts(n int32) (Component_Port_List, error) {
+	l, err := NewComponent_Port_List(s.Struct.Segment(), n)
+	if err != nil {
+		return Component_Port_List{}, err
+	}
+	err = s.Struct.SetPtr(2, l.List.ToPtr())
+	return l, err
+}
+
+func (s Component) Run() Component_Runnable {
+	p, _ := s.Struct.Ptr(3)
+	return Component_Runnable{Client: p.Interface().Client()}
+}
+
+func (s Component) HasRun() bool {
+	return s.Struct.HasPtr(3)
+}
+
+func (s Component) SetRun(v Component_Runnable) error {
+	if !v.Client.IsValid() {
+		return s.Struct.SetPtr(3, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
+	return s.Struct.SetPtr(3, in.ToPtr())
+}
+
+func (s Component) DefaultConfig() (string, error) {
+	p, err := s.Struct.Ptr(4)
+	return p.Text(), err
+}
+
+func (s Component) HasDefaultConfig() bool {
+	return s.Struct.HasPtr(4)
+}
+
+func (s Component) DefaultConfigBytes() ([]byte, error) {
+	p, err := s.Struct.Ptr(4)
+	return p.TextBytes(), err
+}
+
+func (s Component) SetDefaultConfig(v string) error {
+	return s.Struct.SetText(4, v)
+}
+
+// Component_List is a list of Component.
+type Component_List struct{ capnp.List }
+
+// NewComponent creates a new list of Component.
+func NewComponent_List(s *capnp.Segment, sz int32) (Component_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5}, sz)
+	return Component_List{l}, err
+}
+
+func (s Component_List) At(i int) Component { return Component{s.List.Struct(i)} }
+
+func (s Component_List) Set(i int, v Component) error { return s.List.SetStruct(i, v.Struct) }
+
+func (s Component_List) String() string {
+	str, _ := text.MarshalList(0xd717ff7d6815a6b0, s.List)
+	return str
+}
+
+// Component_Future is a wrapper for a Component promised by a client call.
+type Component_Future struct{ *capnp.Future }
+
+func (p Component_Future) Struct() (Component, error) {
+	s, err := p.Future.Struct()
+	return Component{s}, err
+}
+
+func (p Component_Future) Info() common.IdInformation_Future {
+	return common.IdInformation_Future{Future: p.Future.Field(0, nil)}
+}
+
+func (p Component_Future) Run() Component_Runnable {
+	return Component_Runnable{Client: p.Future.Field(3, nil).Client()}
+}
+
+type Component_Runnable struct{ Client *capnp.Client }
+
+// Component_Runnable_TypeID is the unique identifier for the type Component_Runnable.
+const Component_Runnable_TypeID = 0xcb17668f2d39c70f
+
+func (c Component_Runnable) Start(ctx context.Context, params func(Component_Runnable_start_Params) error) (Component_Runnable_start_Results_Future, capnp.ReleaseFunc) {
 	s := capnp.Send{
 		Method: capnp.Method{
-			InterfaceID:   0xd717ff7d6815a6b0,
+			InterfaceID:   0xcb17668f2d39c70f,
 			MethodID:      0,
-			InterfaceName: "fbp.capnp:Component",
+			InterfaceName: "fbp.capnp:Component.Runnable",
 			MethodName:    "start",
 		},
 	}
 	if params != nil {
-		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_start_Params{Struct: s}) }
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 2}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_Runnable_start_Params{Struct: s}) }
 	}
 	ans, release := c.Client.SendCall(ctx, s)
-	return Component_start_Results_Future{Future: ans.Future()}, release
+	return Component_Runnable_start_Results_Future{Future: ans.Future()}, release
 }
-func (c Component) Stop(ctx context.Context, params func(Component_stop_Params) error) (Component_stop_Results_Future, capnp.ReleaseFunc) {
+func (c Component_Runnable) Stop(ctx context.Context, params func(Component_Runnable_stop_Params) error) (Component_Runnable_stop_Results_Future, capnp.ReleaseFunc) {
 	s := capnp.Send{
 		Method: capnp.Method{
-			InterfaceID:   0xd717ff7d6815a6b0,
+			InterfaceID:   0xcb17668f2d39c70f,
 			MethodID:      1,
-			InterfaceName: "fbp.capnp:Component",
+			InterfaceName: "fbp.capnp:Component.Runnable",
 			MethodName:    "stop",
 		},
 	}
 	if params != nil {
 		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_stop_Params{Struct: s}) }
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Component_Runnable_stop_Params{Struct: s}) }
 	}
 	ans, release := c.Client.SendCall(ctx, s)
-	return Component_stop_Results_Future{Future: ans.Future()}, release
+	return Component_Runnable_stop_Results_Future{Future: ans.Future()}, release
 }
-func (c Component) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
+func (c Component_Runnable) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
 	s := capnp.Send{
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
@@ -3117,65 +3651,65 @@ func (c Component) Info(ctx context.Context, params func(common.Identifiable_inf
 	return common.IdInformation_Future{Future: ans.Future()}, release
 }
 
-func (c Component) AddRef() Component {
-	return Component{
+func (c Component_Runnable) AddRef() Component_Runnable {
+	return Component_Runnable{
 		Client: c.Client.AddRef(),
 	}
 }
 
-func (c Component) Release() {
+func (c Component_Runnable) Release() {
 	c.Client.Release()
 }
 
-// A Component_Server is a Component with a local implementation.
-type Component_Server interface {
-	Start(context.Context, Component_start) error
+// A Component_Runnable_Server is a Component_Runnable with a local implementation.
+type Component_Runnable_Server interface {
+	Start(context.Context, Component_Runnable_start) error
 
-	Stop(context.Context, Component_stop) error
+	Stop(context.Context, Component_Runnable_stop) error
 
 	Info(context.Context, common.Identifiable_info) error
 }
 
-// Component_NewServer creates a new Server from an implementation of Component_Server.
-func Component_NewServer(s Component_Server, policy *server.Policy) *server.Server {
+// Component_Runnable_NewServer creates a new Server from an implementation of Component_Runnable_Server.
+func Component_Runnable_NewServer(s Component_Runnable_Server, policy *server.Policy) *server.Server {
 	c, _ := s.(server.Shutdowner)
-	return server.New(Component_Methods(nil, s), s, c, policy)
+	return server.New(Component_Runnable_Methods(nil, s), s, c, policy)
 }
 
-// Component_ServerToClient creates a new Client from an implementation of Component_Server.
+// Component_Runnable_ServerToClient creates a new Client from an implementation of Component_Runnable_Server.
 // The caller is responsible for calling Release on the returned Client.
-func Component_ServerToClient(s Component_Server, policy *server.Policy) Component {
-	return Component{Client: capnp.NewClient(Component_NewServer(s, policy))}
+func Component_Runnable_ServerToClient(s Component_Runnable_Server, policy *server.Policy) Component_Runnable {
+	return Component_Runnable{Client: capnp.NewClient(Component_Runnable_NewServer(s, policy))}
 }
 
-// Component_Methods appends Methods to a slice that invoke the methods on s.
+// Component_Runnable_Methods appends Methods to a slice that invoke the methods on s.
 // This can be used to create a more complicated Server.
-func Component_Methods(methods []server.Method, s Component_Server) []server.Method {
+func Component_Runnable_Methods(methods []server.Method, s Component_Runnable_Server) []server.Method {
 	if cap(methods) == 0 {
 		methods = make([]server.Method, 0, 3)
 	}
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xd717ff7d6815a6b0,
+			InterfaceID:   0xcb17668f2d39c70f,
 			MethodID:      0,
-			InterfaceName: "fbp.capnp:Component",
+			InterfaceName: "fbp.capnp:Component.Runnable",
 			MethodName:    "start",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.Start(ctx, Component_start{call})
+			return s.Start(ctx, Component_Runnable_start{call})
 		},
 	})
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xd717ff7d6815a6b0,
+			InterfaceID:   0xcb17668f2d39c70f,
 			MethodID:      1,
-			InterfaceName: "fbp.capnp:Component",
+			InterfaceName: "fbp.capnp:Component.Runnable",
 			MethodName:    "stop",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.Stop(ctx, Component_stop{call})
+			return s.Stop(ctx, Component_Runnable_stop{call})
 		},
 	})
 
@@ -3194,455 +3728,781 @@ func Component_Methods(methods []server.Method, s Component_Server) []server.Met
 	return methods
 }
 
-// Component_start holds the state for a server call to Component.start.
+// Component_Runnable_start holds the state for a server call to Component_Runnable.start.
 // See server.Call for documentation.
-type Component_start struct {
+type Component_Runnable_start struct {
 	*server.Call
 }
 
 // Args returns the call's arguments.
-func (c Component_start) Args() Component_start_Params {
-	return Component_start_Params{Struct: c.Call.Args()}
+func (c Component_Runnable_start) Args() Component_Runnable_start_Params {
+	return Component_Runnable_start_Params{Struct: c.Call.Args()}
 }
 
 // AllocResults allocates the results struct.
-func (c Component_start) AllocResults() (Component_start_Results, error) {
+func (c Component_Runnable_start) AllocResults() (Component_Runnable_start_Results, error) {
 	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_start_Results{Struct: r}, err
+	return Component_Runnable_start_Results{Struct: r}, err
 }
 
-// Component_stop holds the state for a server call to Component.stop.
+// Component_Runnable_stop holds the state for a server call to Component_Runnable.stop.
 // See server.Call for documentation.
-type Component_stop struct {
+type Component_Runnable_stop struct {
 	*server.Call
 }
 
 // Args returns the call's arguments.
-func (c Component_stop) Args() Component_stop_Params {
-	return Component_stop_Params{Struct: c.Call.Args()}
+func (c Component_Runnable_stop) Args() Component_Runnable_stop_Params {
+	return Component_Runnable_stop_Params{Struct: c.Call.Args()}
 }
 
 // AllocResults allocates the results struct.
-func (c Component_stop) AllocResults() (Component_stop_Results, error) {
+func (c Component_Runnable_stop) AllocResults() (Component_Runnable_stop_Results, error) {
 	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_stop_Results{Struct: r}, err
+	return Component_Runnable_stop_Results{Struct: r}, err
 }
 
-type Component_start_Params struct{ capnp.Struct }
+type Component_Runnable_start_Params struct{ capnp.Struct }
 
-// Component_start_Params_TypeID is the unique identifier for the type Component_start_Params.
-const Component_start_Params_TypeID = 0xf5b257d7fba7ed60
+// Component_Runnable_start_Params_TypeID is the unique identifier for the type Component_Runnable_start_Params.
+const Component_Runnable_start_Params_TypeID = 0xdeb75f08b2540532
 
-func NewComponent_start_Params(s *capnp.Segment) (Component_start_Params, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return Component_start_Params{st}, err
+func NewComponent_Runnable_start_Params(s *capnp.Segment) (Component_Runnable_start_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Component_Runnable_start_Params{st}, err
 }
 
-func NewRootComponent_start_Params(s *capnp.Segment) (Component_start_Params, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return Component_start_Params{st}, err
+func NewRootComponent_Runnable_start_Params(s *capnp.Segment) (Component_Runnable_start_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Component_Runnable_start_Params{st}, err
 }
 
-func ReadRootComponent_start_Params(msg *capnp.Message) (Component_start_Params, error) {
+func ReadRootComponent_Runnable_start_Params(msg *capnp.Message) (Component_Runnable_start_Params, error) {
 	root, err := msg.Root()
-	return Component_start_Params{root.Struct()}, err
+	return Component_Runnable_start_Params{root.Struct()}, err
 }
 
-func (s Component_start_Params) String() string {
-	str, _ := text.Marshal(0xf5b257d7fba7ed60, s.Struct)
+func (s Component_Runnable_start_Params) String() string {
+	str, _ := text.Marshal(0xdeb75f08b2540532, s.Struct)
 	return str
 }
 
-func (s Component_start_Params) PortInfosReaderSr() (string, error) {
+func (s Component_Runnable_start_Params) PortInfosReaderSr() (string, error) {
 	p, err := s.Struct.Ptr(0)
 	return p.Text(), err
 }
 
-func (s Component_start_Params) HasPortInfosReaderSr() bool {
+func (s Component_Runnable_start_Params) HasPortInfosReaderSr() bool {
 	return s.Struct.HasPtr(0)
 }
 
-func (s Component_start_Params) PortInfosReaderSrBytes() ([]byte, error) {
+func (s Component_Runnable_start_Params) PortInfosReaderSrBytes() ([]byte, error) {
 	p, err := s.Struct.Ptr(0)
 	return p.TextBytes(), err
 }
 
-func (s Component_start_Params) SetPortInfosReaderSr(v string) error {
+func (s Component_Runnable_start_Params) SetPortInfosReaderSr(v string) error {
 	return s.Struct.SetText(0, v)
 }
 
-// Component_start_Params_List is a list of Component_start_Params.
-type Component_start_Params_List struct{ capnp.List }
-
-// NewComponent_start_Params creates a new list of Component_start_Params.
-func NewComponent_start_Params_List(s *capnp.Segment, sz int32) (Component_start_Params_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
-	return Component_start_Params_List{l}, err
+func (s Component_Runnable_start_Params) Name() (string, error) {
+	p, err := s.Struct.Ptr(1)
+	return p.Text(), err
 }
 
-func (s Component_start_Params_List) At(i int) Component_start_Params {
-	return Component_start_Params{s.List.Struct(i)}
+func (s Component_Runnable_start_Params) HasName() bool {
+	return s.Struct.HasPtr(1)
 }
 
-func (s Component_start_Params_List) Set(i int, v Component_start_Params) error {
+func (s Component_Runnable_start_Params) NameBytes() ([]byte, error) {
+	p, err := s.Struct.Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s Component_Runnable_start_Params) SetName(v string) error {
+	return s.Struct.SetText(1, v)
+}
+
+// Component_Runnable_start_Params_List is a list of Component_Runnable_start_Params.
+type Component_Runnable_start_Params_List struct{ capnp.List }
+
+// NewComponent_Runnable_start_Params creates a new list of Component_Runnable_start_Params.
+func NewComponent_Runnable_start_Params_List(s *capnp.Segment, sz int32) (Component_Runnable_start_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return Component_Runnable_start_Params_List{l}, err
+}
+
+func (s Component_Runnable_start_Params_List) At(i int) Component_Runnable_start_Params {
+	return Component_Runnable_start_Params{s.List.Struct(i)}
+}
+
+func (s Component_Runnable_start_Params_List) Set(i int, v Component_Runnable_start_Params) error {
 	return s.List.SetStruct(i, v.Struct)
 }
 
-func (s Component_start_Params_List) String() string {
-	str, _ := text.MarshalList(0xf5b257d7fba7ed60, s.List)
+func (s Component_Runnable_start_Params_List) String() string {
+	str, _ := text.MarshalList(0xdeb75f08b2540532, s.List)
 	return str
 }
 
-// Component_start_Params_Future is a wrapper for a Component_start_Params promised by a client call.
-type Component_start_Params_Future struct{ *capnp.Future }
+// Component_Runnable_start_Params_Future is a wrapper for a Component_Runnable_start_Params promised by a client call.
+type Component_Runnable_start_Params_Future struct{ *capnp.Future }
 
-func (p Component_start_Params_Future) Struct() (Component_start_Params, error) {
+func (p Component_Runnable_start_Params_Future) Struct() (Component_Runnable_start_Params, error) {
 	s, err := p.Future.Struct()
-	return Component_start_Params{s}, err
+	return Component_Runnable_start_Params{s}, err
 }
 
-type Component_start_Results struct{ capnp.Struct }
+type Component_Runnable_start_Results struct{ capnp.Struct }
 
-// Component_start_Results_TypeID is the unique identifier for the type Component_start_Results.
-const Component_start_Results_TypeID = 0xda58608ec3b1dfa6
+// Component_Runnable_start_Results_TypeID is the unique identifier for the type Component_Runnable_start_Results.
+const Component_Runnable_start_Results_TypeID = 0xbb18da359652a59c
 
-func NewComponent_start_Results(s *capnp.Segment) (Component_start_Results, error) {
+func NewComponent_Runnable_start_Results(s *capnp.Segment) (Component_Runnable_start_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_start_Results{st}, err
+	return Component_Runnable_start_Results{st}, err
 }
 
-func NewRootComponent_start_Results(s *capnp.Segment) (Component_start_Results, error) {
+func NewRootComponent_Runnable_start_Results(s *capnp.Segment) (Component_Runnable_start_Results, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_start_Results{st}, err
+	return Component_Runnable_start_Results{st}, err
 }
 
-func ReadRootComponent_start_Results(msg *capnp.Message) (Component_start_Results, error) {
+func ReadRootComponent_Runnable_start_Results(msg *capnp.Message) (Component_Runnable_start_Results, error) {
 	root, err := msg.Root()
-	return Component_start_Results{root.Struct()}, err
+	return Component_Runnable_start_Results{root.Struct()}, err
 }
 
-func (s Component_start_Results) String() string {
-	str, _ := text.Marshal(0xda58608ec3b1dfa6, s.Struct)
+func (s Component_Runnable_start_Results) String() string {
+	str, _ := text.Marshal(0xbb18da359652a59c, s.Struct)
 	return str
 }
 
-func (s Component_start_Results) Success() bool {
+func (s Component_Runnable_start_Results) Success() bool {
 	return s.Struct.Bit(0)
 }
 
-func (s Component_start_Results) SetSuccess(v bool) {
+func (s Component_Runnable_start_Results) SetSuccess(v bool) {
 	s.Struct.SetBit(0, v)
 }
 
-// Component_start_Results_List is a list of Component_start_Results.
-type Component_start_Results_List struct{ capnp.List }
+// Component_Runnable_start_Results_List is a list of Component_Runnable_start_Results.
+type Component_Runnable_start_Results_List struct{ capnp.List }
 
-// NewComponent_start_Results creates a new list of Component_start_Results.
-func NewComponent_start_Results_List(s *capnp.Segment, sz int32) (Component_start_Results_List, error) {
+// NewComponent_Runnable_start_Results creates a new list of Component_Runnable_start_Results.
+func NewComponent_Runnable_start_Results_List(s *capnp.Segment, sz int32) (Component_Runnable_start_Results_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
-	return Component_start_Results_List{l}, err
+	return Component_Runnable_start_Results_List{l}, err
 }
 
-func (s Component_start_Results_List) At(i int) Component_start_Results {
-	return Component_start_Results{s.List.Struct(i)}
+func (s Component_Runnable_start_Results_List) At(i int) Component_Runnable_start_Results {
+	return Component_Runnable_start_Results{s.List.Struct(i)}
 }
 
-func (s Component_start_Results_List) Set(i int, v Component_start_Results) error {
+func (s Component_Runnable_start_Results_List) Set(i int, v Component_Runnable_start_Results) error {
 	return s.List.SetStruct(i, v.Struct)
 }
 
-func (s Component_start_Results_List) String() string {
-	str, _ := text.MarshalList(0xda58608ec3b1dfa6, s.List)
+func (s Component_Runnable_start_Results_List) String() string {
+	str, _ := text.MarshalList(0xbb18da359652a59c, s.List)
 	return str
 }
 
-// Component_start_Results_Future is a wrapper for a Component_start_Results promised by a client call.
-type Component_start_Results_Future struct{ *capnp.Future }
+// Component_Runnable_start_Results_Future is a wrapper for a Component_Runnable_start_Results promised by a client call.
+type Component_Runnable_start_Results_Future struct{ *capnp.Future }
 
-func (p Component_start_Results_Future) Struct() (Component_start_Results, error) {
+func (p Component_Runnable_start_Results_Future) Struct() (Component_Runnable_start_Results, error) {
 	s, err := p.Future.Struct()
-	return Component_start_Results{s}, err
+	return Component_Runnable_start_Results{s}, err
 }
 
-type Component_stop_Params struct{ capnp.Struct }
+type Component_Runnable_stop_Params struct{ capnp.Struct }
 
-// Component_stop_Params_TypeID is the unique identifier for the type Component_stop_Params.
-const Component_stop_Params_TypeID = 0xbe5bb9ba1de54674
+// Component_Runnable_stop_Params_TypeID is the unique identifier for the type Component_Runnable_stop_Params.
+const Component_Runnable_stop_Params_TypeID = 0xe6ba083a247c91ee
 
-func NewComponent_stop_Params(s *capnp.Segment) (Component_stop_Params, error) {
+func NewComponent_Runnable_stop_Params(s *capnp.Segment) (Component_Runnable_stop_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Component_stop_Params{st}, err
+	return Component_Runnable_stop_Params{st}, err
 }
 
-func NewRootComponent_stop_Params(s *capnp.Segment) (Component_stop_Params, error) {
+func NewRootComponent_Runnable_stop_Params(s *capnp.Segment) (Component_Runnable_stop_Params, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Component_stop_Params{st}, err
+	return Component_Runnable_stop_Params{st}, err
 }
 
-func ReadRootComponent_stop_Params(msg *capnp.Message) (Component_stop_Params, error) {
+func ReadRootComponent_Runnable_stop_Params(msg *capnp.Message) (Component_Runnable_stop_Params, error) {
 	root, err := msg.Root()
-	return Component_stop_Params{root.Struct()}, err
+	return Component_Runnable_stop_Params{root.Struct()}, err
 }
 
-func (s Component_stop_Params) String() string {
-	str, _ := text.Marshal(0xbe5bb9ba1de54674, s.Struct)
+func (s Component_Runnable_stop_Params) String() string {
+	str, _ := text.Marshal(0xe6ba083a247c91ee, s.Struct)
 	return str
 }
 
-// Component_stop_Params_List is a list of Component_stop_Params.
-type Component_stop_Params_List struct{ capnp.List }
+// Component_Runnable_stop_Params_List is a list of Component_Runnable_stop_Params.
+type Component_Runnable_stop_Params_List struct{ capnp.List }
 
-// NewComponent_stop_Params creates a new list of Component_stop_Params.
-func NewComponent_stop_Params_List(s *capnp.Segment, sz int32) (Component_stop_Params_List, error) {
+// NewComponent_Runnable_stop_Params creates a new list of Component_Runnable_stop_Params.
+func NewComponent_Runnable_stop_Params_List(s *capnp.Segment, sz int32) (Component_Runnable_stop_Params_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return Component_stop_Params_List{l}, err
+	return Component_Runnable_stop_Params_List{l}, err
 }
 
-func (s Component_stop_Params_List) At(i int) Component_stop_Params {
-	return Component_stop_Params{s.List.Struct(i)}
+func (s Component_Runnable_stop_Params_List) At(i int) Component_Runnable_stop_Params {
+	return Component_Runnable_stop_Params{s.List.Struct(i)}
 }
 
-func (s Component_stop_Params_List) Set(i int, v Component_stop_Params) error {
+func (s Component_Runnable_stop_Params_List) Set(i int, v Component_Runnable_stop_Params) error {
 	return s.List.SetStruct(i, v.Struct)
 }
 
-func (s Component_stop_Params_List) String() string {
-	str, _ := text.MarshalList(0xbe5bb9ba1de54674, s.List)
+func (s Component_Runnable_stop_Params_List) String() string {
+	str, _ := text.MarshalList(0xe6ba083a247c91ee, s.List)
 	return str
 }
 
-// Component_stop_Params_Future is a wrapper for a Component_stop_Params promised by a client call.
-type Component_stop_Params_Future struct{ *capnp.Future }
+// Component_Runnable_stop_Params_Future is a wrapper for a Component_Runnable_stop_Params promised by a client call.
+type Component_Runnable_stop_Params_Future struct{ *capnp.Future }
 
-func (p Component_stop_Params_Future) Struct() (Component_stop_Params, error) {
+func (p Component_Runnable_stop_Params_Future) Struct() (Component_Runnable_stop_Params, error) {
 	s, err := p.Future.Struct()
-	return Component_stop_Params{s}, err
+	return Component_Runnable_stop_Params{s}, err
 }
 
-type Component_stop_Results struct{ capnp.Struct }
+type Component_Runnable_stop_Results struct{ capnp.Struct }
 
-// Component_stop_Results_TypeID is the unique identifier for the type Component_stop_Results.
-const Component_stop_Results_TypeID = 0xbe0c6a5a76e75105
+// Component_Runnable_stop_Results_TypeID is the unique identifier for the type Component_Runnable_stop_Results.
+const Component_Runnable_stop_Results_TypeID = 0xcbf00f9ba87ee17e
 
-func NewComponent_stop_Results(s *capnp.Segment) (Component_stop_Results, error) {
+func NewComponent_Runnable_stop_Results(s *capnp.Segment) (Component_Runnable_stop_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_stop_Results{st}, err
+	return Component_Runnable_stop_Results{st}, err
 }
 
-func NewRootComponent_stop_Results(s *capnp.Segment) (Component_stop_Results, error) {
+func NewRootComponent_Runnable_stop_Results(s *capnp.Segment) (Component_Runnable_stop_Results, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
-	return Component_stop_Results{st}, err
+	return Component_Runnable_stop_Results{st}, err
 }
 
-func ReadRootComponent_stop_Results(msg *capnp.Message) (Component_stop_Results, error) {
+func ReadRootComponent_Runnable_stop_Results(msg *capnp.Message) (Component_Runnable_stop_Results, error) {
 	root, err := msg.Root()
-	return Component_stop_Results{root.Struct()}, err
+	return Component_Runnable_stop_Results{root.Struct()}, err
 }
 
-func (s Component_stop_Results) String() string {
-	str, _ := text.Marshal(0xbe0c6a5a76e75105, s.Struct)
+func (s Component_Runnable_stop_Results) String() string {
+	str, _ := text.Marshal(0xcbf00f9ba87ee17e, s.Struct)
 	return str
 }
 
-func (s Component_stop_Results) Success() bool {
+func (s Component_Runnable_stop_Results) Success() bool {
 	return s.Struct.Bit(0)
 }
 
-func (s Component_stop_Results) SetSuccess(v bool) {
+func (s Component_Runnable_stop_Results) SetSuccess(v bool) {
 	s.Struct.SetBit(0, v)
 }
 
-// Component_stop_Results_List is a list of Component_stop_Results.
-type Component_stop_Results_List struct{ capnp.List }
+// Component_Runnable_stop_Results_List is a list of Component_Runnable_stop_Results.
+type Component_Runnable_stop_Results_List struct{ capnp.List }
 
-// NewComponent_stop_Results creates a new list of Component_stop_Results.
-func NewComponent_stop_Results_List(s *capnp.Segment, sz int32) (Component_stop_Results_List, error) {
+// NewComponent_Runnable_stop_Results creates a new list of Component_Runnable_stop_Results.
+func NewComponent_Runnable_stop_Results_List(s *capnp.Segment, sz int32) (Component_Runnable_stop_Results_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
-	return Component_stop_Results_List{l}, err
+	return Component_Runnable_stop_Results_List{l}, err
 }
 
-func (s Component_stop_Results_List) At(i int) Component_stop_Results {
-	return Component_stop_Results{s.List.Struct(i)}
+func (s Component_Runnable_stop_Results_List) At(i int) Component_Runnable_stop_Results {
+	return Component_Runnable_stop_Results{s.List.Struct(i)}
 }
 
-func (s Component_stop_Results_List) Set(i int, v Component_stop_Results) error {
+func (s Component_Runnable_stop_Results_List) Set(i int, v Component_Runnable_stop_Results) error {
 	return s.List.SetStruct(i, v.Struct)
 }
 
-func (s Component_stop_Results_List) String() string {
-	str, _ := text.MarshalList(0xbe0c6a5a76e75105, s.List)
+func (s Component_Runnable_stop_Results_List) String() string {
+	str, _ := text.MarshalList(0xcbf00f9ba87ee17e, s.List)
 	return str
 }
 
-// Component_stop_Results_Future is a wrapper for a Component_stop_Results promised by a client call.
-type Component_stop_Results_Future struct{ *capnp.Future }
+// Component_Runnable_stop_Results_Future is a wrapper for a Component_Runnable_stop_Results promised by a client call.
+type Component_Runnable_stop_Results_Future struct{ *capnp.Future }
 
-func (p Component_stop_Results_Future) Struct() (Component_stop_Results, error) {
+func (p Component_Runnable_stop_Results_Future) Struct() (Component_Runnable_stop_Results, error) {
 	s, err := p.Future.Struct()
-	return Component_stop_Results{s}, err
+	return Component_Runnable_stop_Results{s}, err
 }
 
-const schema_bf602c4868dbb22f = "x\xda\xb4X\x7fp\x14\xe5\xf9\x7f\x9e\xdd;6\xb9\xfc" +
-	"\xb8{o/\xf2%\xe3yC\x0c\xa3\xdf\xa8\xb1&\xd6" +
-	"\x8ei\x9d\xe4\x12\xe2\x105\xf6\xf6N\x05i\x9c\xb2\xb9" +
-	"\xdb\x84`rw\xd9\xdd\x98&\xad\xa2\x8c\x8eE\xabm" +
-	"\x98:\x0ae@h\xe5G\xa7\x14\x890\x15\xcb \x8c" +
-	"\x11\xca\x8f\xb1\xe04\xc5\xc10%\xb5h\x7f\xc0\xb4\x80" +
-	"\xd8\xa1\x85l\xe7}\xf7\xf6n/w\x11\xc2\x8c\xff\xdd" +
-	"\xed\xfb\xbc\xcf\xcf\xcf\xfb|\x9e\xf7\xfd\xda\xddB\x03w" +
-	"\x87s\xa3\x0f@\xfa\x97s\x861\xb7\xe1\xf0\xda\xcd\xb3" +
-	"O-\x072\x0b\x01\x1c\x82\x07k\xefv\x85\x11\x1cF" +
-	"s\xd9?v\x8c\xdc\xd9\xfa\x02H>Dc\xd3\x1f*" +
-	"6o\xfe\xe7\xc9\xd3\xd0\xcc\x09\x1c\x808\xc7uN\xbc" +
-	"\xc3%\x00\x88\xb7\xb9\xb6\x02\x1a\x87_\xddu~\xc5\xd0" +
-	"\xbe\x17\x81xy\xe3\xaf\xdb\xce\xdd~\xcb{\xed\xab\x01" +
-	"\xc0\x83\xe2\xa8\xeb\xa08\xee\x12\xc4qW@t\x16\xed" +
-	"\x17/\x16\x09\x00F\xad\xf8\xc4\xe07o\xf0\xac\x00\xc9" +
-	"\x8b\x96\xe5\xf1\xa2:\x04\x14\xffVT\x0fh\xfc.\xf8" +
-	"\xa3\xb3\xb1\xbf\xdf\xfcS\x9bg\x85\xc55\xd4\xb3\xd5\xf7" +
-	"\x90\xbd\xb8\xe5\xa3Wl[\xc5\xb3E\xff\x01\x14/\xb0" +
-	"\x9di\xf3\xc4\xc5\x1b\xb7\x0f\x7f\xbcx\xde\xad\x8b\xde5" +
-	"}\xf1\x17\xaf\x10\xe7\x14\xcf\x07\xa8U\x8a\x9fG\xf1\xe1" +
-	"\xd2\x9bD\xa5\xd4m|\xbar\xe4\xe4Pd\xcd\x1a " +
-	"%h\xfc\xbemUr\xc4\xef\xda\x0aN\x9e\xc6\xf7h" +
-	"\xe92\xf1\xb1R\xf3\x17\x8dtM\xf4'\x8d-\xbf\x1e" +
-	"[\x0f\x92\x0b1\xa3\xbe\x99\x13\x1c\x00\xe2\xd9\xd2a\xf1" +
-	"\"\x95\xae\xbdP\x1a@@\xa3i\xf8\xe4g\x07\x9f?" +
-	"\xb6\x09\x88\x97\xcbNL\xed\x80\xc7\x85\xe2r\x0fU\xfd" +
-	"\x9c\xe7\x1b`\xb3\x9c\xad\xda\xc9Q\x91\xe5\x9e%\xe2K" +
-	"\x9e\x9b\x00\xc4u\x1e\xea\xc7\x86\xd3\x07\x0e\x1f0\xbe\xbe" +
-	"\x0d\x88\x17\x01\x9cH\x13\xd4J\\4\x81\x0f\x13\x9a\x86" +
-	"\xf2e\x91w\xd7\x15L\xbceK\xe0rRG\x13\xf8" +
-	"T\xdbkk:#\xdf\xdfn\xdf\xdakn\x1d`[" +
-	"O\xd4-h\xdeq\xd7k\xdb\xed\xc5\xd9B\x06\xa9\xc0" +
-	"N&\x10\xba\xe1\x9e\xe3/\xbd6\xf6\x8eM\xf7\x19\xc2" +
-	"\x8a\xe3\x94>{b\xe1\x92\xe2\xdd\x0c6t\x09\xa0v" +
-	"\xd4\xd4}\x82m\xd5\xef=\xe5\x7fg\xe7wv\x03\xf1" +
-	"Y\xeb\x97\x09G\xb7\x16\x8e/\xfe\xe4N\xbf\xbc\xdbt" +
-	"\xcbD\x84\xb9\xf2\xc6-/~\xbc\xf2\xb1\xda=6s" +
-	"\xef\x93*\xba2\xa3\xe6P\xfd\xc2\xf8\xa5=\xb6=[" +
-	"\xc82\xba\xf2\x0cwt\xf9\x8f\x9b\xae\xdf\x07\xd2\xact" +
-	"\x0c+\x89J\x1dy\x839r`\xc1\xcb\xe3Cc\xdc" +
-	"\xa1,\xa5,?\xbf\x89\x8a\xee?\xae\x12\x0eg)e" +
-	"\x8eT\xbe\xe2;\xfdv\xe5\xda\x0fl{\x86\xcc=\x1f" +
-	"iMCO=S\xff\xa1m\xcf\x00)\xa7+\xd5\xbf" +
-	"<\xb2\xebs\xef\x8eQ\x96\xcc\x0c\x04\x9aQ\xe0=(" +
-	"\xcadX\xec\"\xb4\xc0\x0a\xa1e}sC\xd9\xe2'" +
-	"\x8d\x99\xc7&\x81\x17\xc5\xcbd\xbd\xe8\xf4RA\xf4>" +
-	"/J\xde\x99\x00\xc6\x86?m{\xef\xe5E\x0b\x8e\xdb" +
-	"\x93\x1d\xf4zi\x8c-^\x1a\xe3\xcd\xa1\x99Ko\xfc" +
-	"\xf9\xb1O\xa8m\x1b\xfc\x9c<=3]\xdesb\x1f" +
-	"\xd5X\xdb\xebeX\x1dq\x1c\x8f\x9d8 |j\x8b" +
-	"\xe1\x80\xc8\xe2N\x1f\x7f\xe2\xca\x01\xe6\x16q\xbd\xb8C" +
-	"\x9c\x09 \xee\x15\xfb\x01\x8d\xc0\xfa\xb9=o}7y" +
-	"~\x92,R\xd9\xa0O\x15\x9b}\xe6/\xea\xdfo_" +
-	"})\xf0!\xea\xe7SH\xe4\xa8I\xd9WA\x03\xe8" +
-	"\xf2Qe\x8b\xcel\xfc\xef\xb1\xf9\xc3\x17L\xb40%" +
-	"\xb5g|\x0cN\x17\x98\x86\x07\xe7\x8d\xfd\xec\xcf\x07\x9f" +
-	"\xfd\x02H\x09\x979@\x80\xa2\xbfl\x858\xa7\x8c\x9a" +
-	"\x9a]\xf6m@c\xed\xfeM\xdb\xc5}\x13\xff\xce\xd3" +
-	"\xa1\x82e\x07\xc5\xd62Al-\x0b\x88\xbde\xfbE" +
-	"\xe5:\xda\xa1n\xbc\xb5\xf7\xe4h\xc1\x92\x09[6Z" +
-	"\xafkD\xf8\xc2\xe8hOVG\xe5d\xdc\x91\xack" +
-	"Z,\xc7\xe3JwuX\x91c\x8aZ\xad*r\xac" +
-	"\xa5\xa3U\xeb\xac\x0c\xc9\xaa\xdc\x83ZZ\x96K\xd6\x85" +
-	"\x12\xaa\xde\x12\xefHh\xd5\x0f\xca=J \x18\x8fE" +
-	"\xc2!D\xa9\x98w\x008\x10\x804W\x01H\x0d<" +
-	"J\x0fp\xe8G\xc3@VV\xd2R\x0e \xcd\xe5Q" +
-	"\x0aq\xe8\xe7&\xe8g\x0e\x80\xb4V\x00H\xf3x\x94" +
-	"b\x1c\xba\xe3r\x8f\x82\xc5\xc0a1 \xaf\xa9\xd6O" +
-	"AS5,\x05\x0c\xf1\xc8>\x95\x02\xda]\xcav\x1f" +
-	"\x80\xba\xe3@\xce\xf8`\xe8\xec\xc4\xc0\xc6\xd89\x90\x1c" +
-	"\x1c\x06}t/\x10\\hPy*\x0b<\x95\x96\x8a" +
-	"y'@\xfat\xa2\x85t\"U\x01\x04\x1f\xc0`\x1b" +
-	"\x92\x1e\x01\xb9t/G\xab'\x11\xb9\x06 \xd8\x86\xc1" +
-	"n$O\x0a\x88i\x1e\xca\xe8\xe8\x0d\x03\x04\x93\x18|" +
-	"\x1a\xc9\x90\xe0\xa6\x89%\x18\xa0\xeed\x8a\xc7\x92\x93\xef" +
-	"c\x03\x06\xa2\xdd\x09M\x99\xce\x0e\xc3\xaa\x1d`\xe7t" +
-	"\xf6\x850\x93Q>\x93QM\xd1\x1b\xfb::\x145" +
-	"\xd25\xa8T\xd638h\x92\xc3,5\")\xa1\xa5" +
-	".\xe0Q\xf2q\xe8\xd6\xba\x06\x15,\x04\x0e\x0b\xa9\xce" +
-	"|\xeaR\xf8bQU\x86\x02L[\xbeB\x9a\x02y" +
-	"\xcc\xad\x02\x90<<J\xd7sh\xf4\xcb]\xfa\xbd\x09" +
-	"\xb5\x19{\x92\xfa\x00\xf5\x92WTD\xe0\x9c\x886x" +
-	"\xa0\xa5\x15\xbb\xd9\x08\x90a\xb2\xd9\x83\x99\xa6FfW" +
-	"d\xba\x0c\xf1\xb7\xdb&\x01\x7f\x9d\xed\xd0\xcd\xaa3\x9a" +
-	"\xa8o\x11\xa5\x07\xea\xe5\xb8\xde\x15\xd5\x84V\xad\xd3\x88" +
-	"\xe8\xb2\xaa\xf7%[@\x88w$\xea\xcd0\xeb\xe7\xab" +
-	"]\xba\xa2J\xff\xc7\xe0eM\x0ah\x1dH\xb2M\x05" +
-	"\x08\xbe\x89\xc1=H\x8eR\xf0X}\x0b-N$\xef" +
-	"\xd7\x01\x04\xf7`\xf0\x08\x92q\x0a@\x8bZ\xd0\xa2>" +
-	"2J%\x8e`\xf0$\x92\xb3\x02\xf2\xe9\xfe\x8dVK" +
-	"\"\xa7(\x00\xff\x82\xc1\xcfQt\xa2\x80\x8e4+\xa2" +
-	"E:\xe4\xe20@\xf0\x126\x15#\x8a~\x14\xd0\x99" +
-	"\x9eM\xd0\xe2\x10\x91`\x0d\x00\x95h\xba\x1eQ\xbc\x0d" +
-	"\x05\xc3\x82\x06\x04\x188\xa6\x03\xb6z\x95%hZ[" +
-	"\xfaY2\xa7u\x14\x94x,\x99\xe8\x8a\xeb\x80\xda\xb4" +
-	"\xf6i\x8a\x1e\xec\xd3\x13M\x98\xaa\xb4\x1c`\x85\xfej" +
-	"\x0f\xaeT\x80h\x8c\xce[\xfd\xe8\xa1\xa3[\x87\x01\xc0" +
-	"P\x0e\xdd5\xf6\xfa\xf1\x8d{\x01 \xe8@\x82^|" +
-	"\xc4\x0e\xea\x96P\xf5\xfd\x8f\xc0\xa4\xc6[\x91i\xbc\x04" +
-	"\xad\xb6[\x95i\xbb\x84\xe3RM\xb7&\xd5t\x1f\xe2" +
-	"Px\\\x19\xb0\x1a\xad;\xa6hQ\xebO\xe0\x09\xb9" +
-	"\xbbOA/p\xe8\xcd>Q\x0f*\xfd\xa1\x84\x1a`" +
-	"<@]\xf0\xa5]x\x92Z\xfb\x1e\x8f\xd2\xb3Y\xbd" +
-	"\xff\x99e\x00\xd2\xd3<J\xbb\xb2z\xff\xceA\x00\xe9" +
-	"m\x1e\xa5\x11\x0e\xfd\xfce\xfa\x99\x07 {_\x00\x90" +
-	"Fx\x0c#\x87~\xc7%\xfa\xd9\x01@.S%\x97" +
-	"x\x8c\x14\xe0$\xaa0\xba\xe2\x94\x96\xc2\x0aR\\5" +
-	"\xc9I@\x929\xc24\xbd9Y\xa7\x85\x98)\xd1\xae" +
-	"\xc2X\xc5cg]$6\x95POuF\xc2i[" +
-	"\x89>\x9d\xae\xccG\x86Hj\x8cZK\xf7\x88k\xb3" +
-	"\x96\xad4\x12\x86\xb4\xb9<m\xd4jAf\x032\xf9" +
-	"\xae\x80%\x94T0\x85\x85\xe5\x00BG{\x92\x8f'" +
-	"\xd2\xfb\xc1MA\xc3`\x96\xb9(\x14\x96\xdbF\x0fg" +
-	"\x15\x7f\xff#\xee\x87\x06\x92\x8a\x1dS\x0bS\xf0YD" +
-	"\xe1\x93*\xe7c\x8d\x00\xd2\x02\x93\xb3)\xce8D\"" +
-	"\xd3\xca\xb7\xf1(-\xe6\xd0\x90u]\xedj\xef\xd3\x81" +
-	"W\xd2\xc4\xed\xc9\xd8\x05\xa4\x1f\x97F\x13q]\x89\xeb" +
-	"\x16\xc2\xdc\xfa@RAw\xc6#@t\xe7\xcf\x80\xd9" +
-	"@*\xc3\x8a\xd6\xd7\xadk\x00\x16G\x00\x90\x12o\x8a" +
-	"\x92n\xe6\x10\xd5+\xe2\x80\xc6\xc3*p%\xba\x0a\xd7" +
-	"\x9b\xc6\xf2\x09\x9a\xcd\xe9\xca\xee\xf4_\x11(9\xee8" +
-	"\xb2\xc8\x98\xf5\xa5\xac\xeaOfIj\xb2<c\x92\x8f" +
-	"j\xe8\xce\x90\xde\xd46\xa7H\xb4\xc9aS06\x95" +
-	"K\xf4$\x13q%\xaeWkz\"\x99?\x03\x8d\x99" +
-	"\x19a\xa9\xd6\x17\x8d*\x9aFy:\x8b\xa6\x8brT" +
-	"\x99a\x81%\x90\x93\xec)\xd7mCleHvg" +
-	"y\xec\xbaR6\xad\x00r\xd5\xa62\xc1\xac\xb7tD" +
-	"\x92rT\xa9\x0c+\x01&>\xddh\xa7Jp\x0e\xc6" +
-	"\x84\xc93\xd1\xd5\xf9\xf7\xa5`\xb5hQc)\xe4m" +
-	"\xd9I\xcfJ\x81\xee\xeaV\xad3E.\xc5\x86av" +
-	"\x82\x9a\x0c\xbb\x94\xe0\x84\x91K/%\xdce#\x97_" +
-	",\x1a\xc1\xac~\xc8\x0e|,\x11W`F \x9eh" +
-	"\xd5:aF\x96\x1f\x0c\x0c\x82\x12\xd7Ysc#\x94" +
-	"u\x8bB\xeb\xc2H\xee\xa8\x01\x8e\xcc\xa1\xc3\x93u\x1f" +
-	"G\xeb\xe6NfU\x01GJ\x84\x80FG\xb3\x06t" +
-	"SP5\xd0{A6\xcdN\x81eY\xd5S\xb9\xc6" +
-	"iW\xd76\xc8\x9asa \x99\x87(i_\xfd\x01" +
-	"\x8f\xd2\x0f)W;\xccd>G\xf9\xf0Y\x1e\xa5_" +
-	"p\x88)\xaa^\x17\x06\x90^\xe7Q\xfa\x15\x87\x84O" +
-	"1\xe4f\xfaq\x93I\x9c\xc4\xc1\x99\xfc\xb8\x97~\xdc" +
-	"\xc3\xa34\xc6\xa1\xd1\x9e\x1a\xdb\x81\xb7\x86r@#:" +
-	"iv\xbd\xfa\xd6\x105\x03\x8a\x00f\x88\xd0l\xc2\x94" +
-	"\xabr.g\xfdi\x1a\x9b\xf2\xde\xe6\xcc\xe9\xe69'" +
-	"\xda\xbcj\x0a\x1d\x09\x8d\x95-\xfd\x96G0l\xd0\xcb" +
-	"'\xbd{\x02\x86\xa5\x82tV\xff\x9f\xd6\xa7\x92G\xa9" +
-	"\xc16\x01\xdds\x1f\x80\xf4-\x1e\xa5\x05\x1c.5i" +
-	"\xddFJi\xad&)YL\xacQ\x8cN)\x94&" +
-	"\xd5@\xb2\xae\xa5%\xc4.\x9c\xf9A2\x89\xe3\xbe\xfc" +
-	"@R\xc4\x09\xb4\x9f\xd8\"\xf2\xa6\"\x9ak\x8b(\xe8" +
-	"ME\xd46-\x8e\xbb\x16\xfe\xc9s.Ru\xca\xea" +
-	"\xf1+l\x17\xb3d\xea\x85\x005\xb3\x15GP\xcd\x99" +
-	"f\xcc\x09\xf6\xa1\x81$*\xac\xcd0\xa8\xfb\xefc\xd3" +
-	"\xcb\xacv\x00\xe4H\xd9\x12\x00C\xd3\xe5xLVc" +
-	"\xf4\xa8&\x92J\xbcQ\x95\xa3 <\xae\xe8&\x96\x1b" +
-	"U\x19\xdcQ\xfa7\xcf\xe13;\xe2\xd5=\x07P\xd9" +
-	"\xac\xe7\x00\xebj\x88\xd6c\x19\x91j\xb2\x9f\x03\xac\xd7" +
-	"C\xb4\x9e\xe0r\x9e\x03\xd2:\xacW<\xd2\xbb\xc4\xf6" +
-	"\x1c\x10`\xa7\xe4+~\x0f\xb0\xf8\x0a\xdc\x94\xb1\xae\xf5" +
-	"I\xc01\xd5\x93\x80\xc5G\xff\x0b\x00\x00\xff\xffE\xb2" +
-	"\xcf\x7f"
+type Component_ComponentType uint16
+
+// Component_ComponentType_TypeID is the unique identifier for the type Component_ComponentType.
+const Component_ComponentType_TypeID = 0xc6976ac75246b450
+
+// Values of Component_ComponentType.
+const (
+	Component_ComponentType_standard Component_ComponentType = 0
+	Component_ComponentType_iip      Component_ComponentType = 1
+	Component_ComponentType_subflow  Component_ComponentType = 2
+	Component_ComponentType_view     Component_ComponentType = 3
+)
+
+// String returns the enum's constant name.
+func (c Component_ComponentType) String() string {
+	switch c {
+	case Component_ComponentType_standard:
+		return "standard"
+	case Component_ComponentType_iip:
+		return "iip"
+	case Component_ComponentType_subflow:
+		return "subflow"
+	case Component_ComponentType_view:
+		return "view"
+
+	default:
+		return ""
+	}
+}
+
+// Component_ComponentTypeFromString returns the enum value with a name,
+// or the zero value if there's no such value.
+func Component_ComponentTypeFromString(c string) Component_ComponentType {
+	switch c {
+	case "standard":
+		return Component_ComponentType_standard
+	case "iip":
+		return Component_ComponentType_iip
+	case "subflow":
+		return Component_ComponentType_subflow
+	case "view":
+		return Component_ComponentType_view
+
+	default:
+		return 0
+	}
+}
+
+type Component_ComponentType_List struct{ capnp.List }
+
+func NewComponent_ComponentType_List(s *capnp.Segment, sz int32) (Component_ComponentType_List, error) {
+	l, err := capnp.NewUInt16List(s, sz)
+	return Component_ComponentType_List{l.List}, err
+}
+
+func (l Component_ComponentType_List) At(i int) Component_ComponentType {
+	ul := capnp.UInt16List{List: l.List}
+	return Component_ComponentType(ul.At(i))
+}
+
+func (l Component_ComponentType_List) Set(i int, v Component_ComponentType) {
+	ul := capnp.UInt16List{List: l.List}
+	ul.Set(i, uint16(v))
+}
+
+type Component_Port struct{ capnp.Struct }
+
+// Component_Port_TypeID is the unique identifier for the type Component_Port.
+const Component_Port_TypeID = 0xc28d2829add1cd72
+
+func NewComponent_Port(s *capnp.Segment) (Component_Port, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return Component_Port{st}, err
+}
+
+func NewRootComponent_Port(s *capnp.Segment) (Component_Port, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return Component_Port{st}, err
+}
+
+func ReadRootComponent_Port(msg *capnp.Message) (Component_Port, error) {
+	root, err := msg.Root()
+	return Component_Port{root.Struct()}, err
+}
+
+func (s Component_Port) String() string {
+	str, _ := text.Marshal(0xc28d2829add1cd72, s.Struct)
+	return str
+}
+
+func (s Component_Port) Name() (string, error) {
+	p, err := s.Struct.Ptr(0)
+	return p.Text(), err
+}
+
+func (s Component_Port) HasName() bool {
+	return s.Struct.HasPtr(0)
+}
+
+func (s Component_Port) NameBytes() ([]byte, error) {
+	p, err := s.Struct.Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s Component_Port) SetName(v string) error {
+	return s.Struct.SetText(0, v)
+}
+
+func (s Component_Port) ContentType() (string, error) {
+	p, err := s.Struct.Ptr(1)
+	return p.Text(), err
+}
+
+func (s Component_Port) HasContentType() bool {
+	return s.Struct.HasPtr(1)
+}
+
+func (s Component_Port) ContentTypeBytes() ([]byte, error) {
+	p, err := s.Struct.Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s Component_Port) SetContentType(v string) error {
+	return s.Struct.SetText(1, v)
+}
+
+func (s Component_Port) Type() Component_Port_PortType {
+	return Component_Port_PortType(s.Struct.Uint16(0))
+}
+
+func (s Component_Port) SetType(v Component_Port_PortType) {
+	s.Struct.SetUint16(0, uint16(v))
+}
+
+// Component_Port_List is a list of Component_Port.
+type Component_Port_List struct{ capnp.List }
+
+// NewComponent_Port creates a new list of Component_Port.
+func NewComponent_Port_List(s *capnp.Segment, sz int32) (Component_Port_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
+	return Component_Port_List{l}, err
+}
+
+func (s Component_Port_List) At(i int) Component_Port { return Component_Port{s.List.Struct(i)} }
+
+func (s Component_Port_List) Set(i int, v Component_Port) error { return s.List.SetStruct(i, v.Struct) }
+
+func (s Component_Port_List) String() string {
+	str, _ := text.MarshalList(0xc28d2829add1cd72, s.List)
+	return str
+}
+
+// Component_Port_Future is a wrapper for a Component_Port promised by a client call.
+type Component_Port_Future struct{ *capnp.Future }
+
+func (p Component_Port_Future) Struct() (Component_Port, error) {
+	s, err := p.Future.Struct()
+	return Component_Port{s}, err
+}
+
+type Component_Port_PortType uint16
+
+// Component_Port_PortType_TypeID is the unique identifier for the type Component_Port_PortType.
+const Component_Port_PortType_TypeID = 0xf58d7a7318a06224
+
+// Values of Component_Port_PortType.
+const (
+	Component_Port_PortType_standard Component_Port_PortType = 0
+)
+
+// String returns the enum's constant name.
+func (c Component_Port_PortType) String() string {
+	switch c {
+	case Component_Port_PortType_standard:
+		return "standard"
+
+	default:
+		return ""
+	}
+}
+
+// Component_Port_PortTypeFromString returns the enum value with a name,
+// or the zero value if there's no such value.
+func Component_Port_PortTypeFromString(c string) Component_Port_PortType {
+	switch c {
+	case "standard":
+		return Component_Port_PortType_standard
+
+	default:
+		return 0
+	}
+}
+
+type Component_Port_PortType_List struct{ capnp.List }
+
+func NewComponent_Port_PortType_List(s *capnp.Segment, sz int32) (Component_Port_PortType_List, error) {
+	l, err := capnp.NewUInt16List(s, sz)
+	return Component_Port_PortType_List{l.List}, err
+}
+
+func (l Component_Port_PortType_List) At(i int) Component_Port_PortType {
+	ul := capnp.UInt16List{List: l.List}
+	return Component_Port_PortType(ul.At(i))
+}
+
+func (l Component_Port_PortType_List) Set(i int, v Component_Port_PortType) {
+	ul := capnp.UInt16List{List: l.List}
+	ul.Set(i, uint16(v))
+}
+
+type Component_Port_ContentType uint16
+
+// Component_Port_ContentType_TypeID is the unique identifier for the type Component_Port_ContentType.
+const Component_Port_ContentType_TypeID = 0xf30610cf0ed94a2f
+
+// Values of Component_Port_ContentType.
+const (
+	Component_Port_ContentType_structuredText Component_Port_ContentType = 0
+)
+
+// String returns the enum's constant name.
+func (c Component_Port_ContentType) String() string {
+	switch c {
+	case Component_Port_ContentType_structuredText:
+		return "structuredText"
+
+	default:
+		return ""
+	}
+}
+
+// Component_Port_ContentTypeFromString returns the enum value with a name,
+// or the zero value if there's no such value.
+func Component_Port_ContentTypeFromString(c string) Component_Port_ContentType {
+	switch c {
+	case "structuredText":
+		return Component_Port_ContentType_structuredText
+
+	default:
+		return 0
+	}
+}
+
+type Component_Port_ContentType_List struct{ capnp.List }
+
+func NewComponent_Port_ContentType_List(s *capnp.Segment, sz int32) (Component_Port_ContentType_List, error) {
+	l, err := capnp.NewUInt16List(s, sz)
+	return Component_Port_ContentType_List{l.List}, err
+}
+
+func (l Component_Port_ContentType_List) At(i int) Component_Port_ContentType {
+	ul := capnp.UInt16List{List: l.List}
+	return Component_Port_ContentType(ul.At(i))
+}
+
+func (l Component_Port_ContentType_List) Set(i int, v Component_Port_ContentType) {
+	ul := capnp.UInt16List{List: l.List}
+	ul.Set(i, uint16(v))
+}
+
+const schema_bf602c4868dbb22f = "x\xda\xb4Y}\x90S\xd7u?\xe7=i\xdf.#" +
+	"Y{\xf5\xa4\xb2_\x8a\xea\xf52\x86\x8d\xbdvv\xe3" +
+	"\xa4\xd9\x86Y\xb4\xebM\xd9\xb5q\xf6I\xd8\xc6\x0c\x19" +
+	"G+=-\"\xbb\x92\xd0\x93\xa0\xbb-P3\xc9x" +
+	"hB=\xcb\xc45\xd8\xc4vh\x93@g26\x04" +
+	"&v\xe26\xd0\xf2aXH 5\xb5!\x90\x81\xa4" +
+	"\xb8I\x8a\xdb\x02\xa6\x1f\xa9\xe1u\xce}\x1fz\xd2j" +
+	"\x0d\xdb\xd6\xffIW\xe7\xdes\xee\xef\x9e\xf3;\x1f\xba" +
+	"\xff\xa1\xbaE\xc2'\xdc\xd9\x06\x80X\x0b\xbak\xf4\x07" +
+	"\x17\x1d\x7fi\xd7\x9d\x976\x01kD\x00\x97T\x8f]" +
+	"!O\x14\xc1\xa5\xf7\x07\xffy\xdf\xc1O.\xf9SP" +
+	"\x02\x88\xfa\xce\xb7Zw\xed\xfa\xd7\x0b\x97\xa1_\x90\x04" +
+	"\x00\xb9\xcesU\x0ez$\x00\x99y^\x01\xd4\x8f?" +
+	"\xf7\xc6\xb5-\x93\x87\xbf\x0a\xcc/\xea\xbf\xda}\xf5\xbe" +
+	"\x8f\xff\xdd\xf0v\x00\xa8G\xf9u\xcf1\xf9\x90G\x92" +
+	"\x0fy\xc2\xf2\xaf=G\xe4\xf3\xde\xbb\x01\xf4.y\xcd" +
+	"\xc4\xef\x7f\xac~\x0b(~\xb44\x9f\xf6v#\xa0|" +
+	"\xde\xdb\x03\xa8\xbf\x19\xf9\xda\x95\xe4o\xe6\x7f\xdda\xd9" +
+	"\x0do'Y\xb6\xe3\xbf\x97m\xde\xf5\xfa\x9agA\x09" +
+	"#\xea\x0b\x84\xa7^\xd88v\xe2$\xb8E\x09\xa0\xeb" +
+	"\x92\xb7\x13\xe5\xeb^\xfax\xc5\xfb\x0c\x02\xea\xdb\x17\xb2" +
+	"\x03\xf8\xddw\x9euh\x92w\xfb~\x0b(\xef\xf3\x91" +
+	"\"\xdbZ6G\xd4\xef\xdb\xf3\xb3\x95\x8b\xef\xf9\xe2\x8f" +
+	"\x0c\xd3\xcf\xfb\xb6\xc8\x97|\x8f\x03t\xcd\xab\x7f\x1a\xe5" +
+	"\xa0\xffny\x9e\xdf\xa7\xbf\xbb\xed\xe0\x85\xc9\xd8\x8b/" +
+	"\x02\xf3\xa2\xfe\x93\x15\xcf\xe7\x0e\x86\xe6\xbcb\xe8\x97\x1b" +
+	"\xfd\x1b\xe5\x90\xdf\xf8D\xc0\xf4\xed\xb9\xf0O\xc7\x9e~" +
+	"{'0\xbfP\x0eL\xd7n\xff\x1c\x94\x0fp\xd9\xbf" +
+	"\xf6\x7f\x1a\x1cG)s\x10K\xa6\xb8\x05\x129\xe0_" +
+	"%\x1f\xf2\xdf\x0d \x9f\xe1\x07\x7f\xfb\xf2\xd1\xe3G\xf5" +
+	"\x07v\x03\xf3#\x80\x1b\x09\xa0\xaf\xc8s\x08\xc0\xcd2" +
+	"\xdd\xabic\xecG\xdf\xac\xbd\xf9=\x07\x80\x07\xe4n" +
+	"\x02p\xfd\x8a\xad/\x8e\xc4\xfeh\xafs\xeb.c\xeb" +
+	"n\xbe\xf5|\xf7\xb2\xfe}\x9f\xda\xba\xd7\xf98\x97\xe4" +
+	"\x09\x12\xb8\xc2\x05\x86>\xb6\xf0\xec\xe6\xad\xe7~\xe08" +
+	"{^\x80?\xce\xf6oE\xff\xfc\x81\xb3\x0d?\x04%" +
+	"dl\x05\xe8\xf2\x06\x96\xd3\xd6\xc6\x00m\xad\xbb\xb8\xf2" +
+	"\x97\x9f\x0c\xc5\xff\xc6P\xce\xb7~& \xd0\xd6o}" +
+	"\xfc\xab?\xdb\xf6\x85\xae\xfdN_\x0c\xb4\xd3/5\x9d" +
+	"S=\xcb3\x1f\xecw\xecq\x076\xd2/\xf9\x13\xa7" +
+	"\xbe\xbb`\xfe\xe6\xbf5\xbc\xf4\xd5o\x07W\xae\xd3\xe7" +
+	"\xbemBvE>&\xdf\x90\x09\xb2\xc6\x00A\xf6\x94" +
+	"pj\xd33}-\x87Ai\xb4\xaf\xb5/\x90'\xdb" +
+	"\x0ep\xdb\x86\xf6~.zd\xd5s\x87\x81\x05\x84\xd2" +
+	"a\x80]\x17\x03~\x94\xaf\x04\xe8\xd0\xf7\x02#\x80\xfa" +
+	"\xd1e\x7fvq\xf2\x9c0\xe5\xb05\x18\xe4\xe0\xfa\x8e" +
+	"|\xe6\xdegRs\xa7\x80\x05D\xe7\x19\xf2\x8d\xc0o" +
+	"\xe4\xba \x1d\xe1\x0e>-?\x1a\x9c\x0b\xa0\xaf\xbf\xb8" +
+	"~\xe7\x0b\xbe\x7f\x9br\xa2\xd5\x1f\x8c\x92EJ\x90," +
+	"\xfa~B\xf6\xfd\xc3\xf3\xd2q\xc7\xcdW\x079Zm" +
+	"\xcf\x06.\xbf\xd6\xf6\xd2\x8f\x1d\x16<jX`GD" +
+	"\xb9C\xa3\xbc0\xf8[y\x80\xf4\xcaJ\xf0\x0f\xe4q" +
+	"n\xc1;Z\xdf\xe4\xfa\xa7z~\xeaP\x90\x0e6\xd1" +
+	"1\x1d\x7fu\xf2\x8d\xf7\xfd\xfbNs'(\xb9n?" +
+	"Jb=\x99\xb7G~\x82\xdf\xe6\xd1 ak\xdf\xb4" +
+	"\xc2w\xdd\x1c\xb3\xe0\x0e\xf9z\xf0\xd3\x00]\xa1\xdfy" +
+	"\x9cb\xd2\xb3\xfb\x17\x0b\xdf,>\xf1s`a\xf2@" +
+	"z\xad\xae\xc9\xb9\xab\xe8\xde\xdf\x98\xbb\x16P\xeft/" +
+	"\xddS\xfb\xe4\xf7\x7f\x0e,d\x0bx\x1b80\x8d\x0d" +
+	"$0\x7fh\xee\x86\xbb\xfe\xe2\xed_\x92u\x8e\xc0r" +
+	"\xd7Px\xafk\xb8*oj\xa0=_i8B\xfa" +
+	"\x0e\xba\xce&\xcf\x1f\x95\xdeu\xdc\xb2\xae\x99\xc3\xf8/" +
+	"\x93\x7f\xdc\xd6]\xfb\x83w\x0dE\xfc\x01\xdek\x1a\xa4" +
+	"_l\xcacs\xa6\x05\xe3\x99\xa6\x1d\xf2\xc5&B\xf2" +
+	"\xbd&\xb2\xe6\xbe\xc13w\xfc\xa4\xbe\xe6\x1a\xb0F\xa1" +
+	"\xe4\x93\x80]c\xcd\xed(\xafk\xa6=\xe3\xcda@" +
+	"=\xbc\xe3\xc1\xb1\xef=\x99\xbbVq*\x92\xc4\xea\xe6" +
+	"\xbc\\l6>\xd1\xe3\xff\xf0\xb9\xcd\xe1\x9fb\xe1\x9a" +
+	"\x19\xa7\x02\x99=\xd9\xdcJ lk&\xb5m\xc3/" +
+	"7h\x13\x9b\xafOS\x1bj\xf1\xa3|o\x0b\x1d\xb5" +
+	"\xa0\x85\xd4>\xb2\xf8\xdc\x0b\xbf8\xf6\xe5\x7f\x07\xe6\x15" +
+	"J<\x03(\xdf\xd9\xb2E^\xc0\x05\xe7\xb5|\x1eP" +
+	"\x7f\xe9\xc8\xce\xbd\xf2\xe1\x9b\xffQ\x85\xc8\xfb[\x8e\xc9" +
+	"J\x8b$+-a\xb9\xd8rDN\x87\x88\xc8\xef\xba" +
+	"g\xf5\x85\xd3\xb5\xabn:\xa0\x8d\x87z\x11th\xd5" +
+	"S\xc3\xb9\x8eD<\x97q\xe5\xba\xfbV\xc63\x19u" +
+	"\xb4#\xaa\xc6\x93j\xbe#\xaf\xc6\x93\x03\xa9%\xdaH" +
+	"\xdbP<\x1f\x1fC\xcd\x96\x15r\xddC\xd9|a " +
+	"\x93\xcaj\x1d\x8f\xc4\xc7\xd4p$\x93\x8cE\x87\x10\x15" +
+	"\x8f\xe8\x02p!\x00\xebo\x07P\x16\x89\xa8<,`" +
+	"\x08u\x1d\x03\x14>l\xa0\x09@yPDeH\xc0" +
+	"\x90p\x93\x96\x05\x00\xb6\xa4\x15@Y,\xa2\x92\x14\xd0" +
+	"\x97\x89\x8f\xa9\xe8\x01\x01=\x80\xa2\x96\xb7>JZ^" +
+	"\xc3;\x00\x87D\xe4Kw\x00:M*7\x1f\x80\xcc" +
+	"q\xa1\xa0\xffx\xf2\xca\xcd\xf1\xef$\xaf\x82\xe2\x120" +
+	"\x12\xa0\xbd\xc0p\xb9N\xf2$\x0b\"I+\x1e\xd1\x0d" +
+	"`\x13\x1cZ\xa1\xc5\x94v\x80\xc8\xc3\x18Y\x81lL" +
+	"B\xc1Nzh\x917\x8bw\x02DV`d\x14\xd9" +
+	":\x09\xd1N\xd8\xa53VG\x01\"9\x8c\xfc\x09\xb2" +
+	"I\xc9G\xc02\x0c\x939\xa5\xe7\xe3\xe0T[\\\x84" +
+	"\xe1\xc4hVSg\xb3C\xb7\xde\x0epd6\xfb\x94" +
+	"ZD\xfd\xf4\xe2\xedOL\x9dze\x0f\x00\xe8\xea\xd4" +
+	"\xa7\xce\xbd|\xf6;\x07\xe8\xb3\x05\xb5X\x82ZS\x0b" +
+	"\xbd\xc5TJ\xcd\xc7\xd2\x13j[\x0f\xf7\x13Mq\x19" +
+	">\x80\xc8\xbc\xe4\x03\xb5\"*\x01\x01}ZzB\xc5" +
+	":\x10\xb0\x8e\x94U;\xcet<~\xdd\xb6\xa10?" +
+	"\xcd)\x17+\xc4\xf3\x05SX\x8b\xa9\xf95\xe9\x84\xda" +
+	"a\xca\xd1k\xb7\xd8\xce\xb7\x8f\x14\xbf*\xa2\xf2\x86\x80" +
+	"H\x9e\x87\xc8^_\x05\xa0\xbc&\xa2rP@&\x90" +
+	"\xdf!\xb2\x03\xc3\x00\xca~\x11\x95\xe3\x022Q\x08\xa0" +
+	"\x88\xc8\x8e\xd2\xe2\x9b\"*o\x09\xc8\\\x18@\x17\x00" +
+	";\xb5\x1c@9)\xa2rY@\xe6\x16\x02\xe8\x06`" +
+	"\xbf\xa6\xc5_\x89\x18s\xa1\x80\xacF\x0c`\x0d\xa2\x8c" +
+	"\xb8\x1c \x8a\"\xc6<X\xe1\xcez&\xfb\xf9\x14]" +
+	"\x01|t\x09\x94@pKh\xaeso\x94\xd4|\xc5" +
+	"\xf2\xe3\xf9t\xa1b9\xcf\x91\x8a\xe5A,L\x0b\x89" +
+	"\xb5\xf9ta\xa6\xdf\x86\xcd\xd7\x02qB-\x9dV%" +
+	"\x88\x8c7\xa8\xf2\xa2\xcf\x03(\xf5\"*-\x02\xeak" +
+	"\xe3\xe9\xc2\xe7\xb2\xf9~\x1c\xcb\x15\xc6\xc9\x11D5\x8f" +
+	"\x08\x82\x1b\x9d\xa7\xa2u*\x8e\xf2\x0a\xa0Tn\xdd9" +
+	"Q\xca`\xec\xce\xd6R\xc2`\xa1aG\xb9\x1a\xeav" +
+	"P^c\xb7\xdeG\xb6\xc5\xd41\xe8\x89g\x0a\xe9\x84" +
+	"&-\xd1Ft\xee\x1b\xc5\xdc\x00H\x99T\xb6\xc7\xf0" +
+	"\xa4\x9e\xc79\x14J\x03\x0fm\xab\x9cE\x8b\x0e\xd9\xee" +
+	"<@\xe4U\x8c\xecGv\x8a\x02\xd7JAh\x15n" +
+	"\xecP7@d?FN\"\xbbH\xc1oUFh" +
+	"\xd5g\xec4I\x9c\xc4\xc8\x05dW$\x14\xedd\x8d" +
+	"Vf`\x97(\xf8\xff\x11#\xef\xa3\xecF\x09]v" +
+	"\xe9\x86V\xcd\xc4\xfek\x0f@\xe4\x03\xec\xf3 \xca!" +
+	"\x94\xd0mW\xc4hU\x172\xc3N\x00\x92\xe8kA" +
+	"\x94\xefEI\xb7\xa2\x0f\xc2<\xfef\x13\xe8=\x86\x03" +
+	"\xcdj\x8b\xe1W\xb3\xa2!5\x93\xcce\xd3\x99\x02\xa0" +
+	"6\xab}\x9aZ\x88\x14\x0b\xd9>4_:\x1e\xe6\x0f" +
+	"\xfd\xd1\x92\xe6\x87\x91_\xc4\x85\x0c\xfd\xf8\x98\xd3\xa9\x07" +
+	"\x86:\x1ez\x0c*\x92^k)\xe91\xb4R^{" +
+	")\xe51A0\x13^\xa7\x99\xf0\x96\x0a(}I\x1d" +
+	"\xb7\x08\xc2\x97T\xb5\x84\xf5%\xbc&>ZT\xd1\x0f" +
+	"\x02\xfa\x1d\x11\xe5\xa0L+\x16\x8cH0\x92^-W" +
+	"\xc0Z\x01\x10Y]\x13\x80\x94\x1a\xce\x89\x99\xac\xbd\x1f" +
+	"|d=\xbfo\xa9O\xaakrT \xeev\xf1\xa1" +
+	"\xc7|K\xc7s\xaa\xf3r\xcb\xcd{|\xd1$PZ" +
+	"\xfcB/\x80\xb2\xccH\xdch\x92j\x9c.\xbcBD" +
+	"e\xa5\x80z\xbcP\xc8\xa7\x87\x8b\x05\x10U\x9b\x8e\xea" +
+	"Kz\x01iqC\"\x9b)\xa8\x99\x82uU_a" +
+	"<\xa7\xa2\xafd\x11 \xfa\xaa#`xr[T\xd5" +
+	"\x8a\xa3\x05\x0d\xc0\"+\x00\xe6\xf5\x9b\xe9g\xbe\x80\x98" +
+	"GV\xe2\x14z\xef\xaan\x80\xac\xba\x96\xb2\xd4\x14\xed" +
+	"1\x94U\x134\xa2\xe4\xd6\xe6\xacEVb\xb5\xdb3" +
+	"\xc7U\x96xy\x80\x94\xbd~%]\x93\xca\xa6\x92J" +
+	"1\xa1\xa1\xaf\xc4\xbe3\xeb\x9c\x01h\x83Lg\xc8\xce" +
+	"d[v,\x97\xcd\xa8\x99BG\xb4\x98\xc9\xc4\x87G" +
+	"\xd5\x0e\x8dH\xd9\xc0B,\x94\xd9\xd5[*\x0c6h" +
+	"\xc5DB\xd54\xca\x1ce\x89C\x9a\x86\xaaq?\xb0" +
+	"\x04\xaa\x96\xacmCq_\x99i\xb5\xb7\x82\xcdz+" +
+	"\xc7\xb1\xf6U\xa8\xce%S\xd1Y\xc9\xd7\x0d:\xba\x89" +
+	"\xbaa\x9d\x84(V\x884\xfa\x0cG^\x0aRE\xf0" +
+	"\xb4Wc\x86\xe1\x12\x09\xa0`\x04\x0f\xd5\x9b\xca\xc3\"" +
+	"*\xcb*K\x87\x84\xf3h\x9b/\xccH\xb1\xad\xab\x88" +
+	"\x14\xd7\xb4\x07\xe4X\x0e\xa4b\xb9xBm\x8b\xaaa" +
+	"~\xf9\xd9\xbe\x8d\xe8\x04\xc9\xfe\xb4t<\x87*QP" +
+	"=\xa7\xa0\x05\x83\x9c\x82\xe6\x11\x13\x09,\xd4\x0b\x80\"" +
+	"\x0b\xb6\x03\xe8Z!\x9eI\xc6\xf3I\x00\x90\xd2\xe9\xdc" +
+	"\x06\xad8\x9c\x1a\xcd\xae\xf5\xadI\xabko\xe9{\xd3" +
+	"\xc2O\xa8t>\x1fy\x1f\xa7B\x9e\xf9\xadN\x15\xad" +
+	"\xc9\x07\xfbD'\x08l\x1e\xe5|\xab\xb9D\xab\xcfg" +
+	"\x8d\xed 0\xaf\x14\xe6\xce\xbb\x08}Z!\x9b[D" +
+	"\xadDyv\xb8\x95\xe7gs\xa6c\xe1\xff\xc5\xf1\xcd" +
+	"\x1bO\xf7\xd0*oZ\x15\x98\xf2\x9a\xb9\xc7(\x9a\xf9" +
+	"e\xec\x19\x1d\xc3\xee\x12s\x10^\xd6/h\xcd\x00\x18" +
+	"#\xbc\xdc6&3\x82\xe1x2+\xf7k<jE" +
+	"G@\xda\x05ax\xb4c\x896bfP\x8f\xae\x1b" +
+	"\x81\xd2Y\x0a\x14/\xde\xd4\xa7\xe7P\xafpC\x9f\x9e" +
+	"D\xad\\\xe9\x1c\x84\x00\xf0d\x92\xccfT\xa8\x09g" +
+	"\xb2K\xb4\x11\xa8)\xb3\x83\xbf\x9c\xa4f\x0a\x8a\x07\xd1" +
+	"1\x18b\x83\x8eI\x13\xcb\x97:w\xc6\xdau\xeb\x95" +
+	"\x8dx7\xde\x1e\xc2\x9c\x02|\xc4\x05J\x83\xfd\xde\xdb" +
+	"\xc8\xee\xaf\x8b\xa8\xbcl6\"\x00\xec\x1b\xb4\xb6UD" +
+	"\xe5/\xadF\x04\x80}\x93\x1cc\xbb\x88\xcakV#" +
+	"Bm\xcc \x80\xb2WD\xe5$5\"\xa2\xd1\x88\x9c" +
+	"hut'n\x97\xd1\x88\x9c\xca\x9b\xdd\xc99\x01}" +
+	"\xe9L*\x8b\xf5\xfa\xdf\x9f\x15oN\xad\x9fz\x8b\x82" +
+	"\xb0\xbe\xc4\x14\xf6\xbd\x0c\xa6\xd8\x90\xce\x90\xcd\x8e\xdc\xec" +
+	"\x98R\xf0\xa6![,p\x09\x82s&!)_\xcc" +
+	" +\x01Hq\x0f\xa8'\xd5T\xbc8Z\xe8\x83p" +
+	"6\x93J\x8f\xd8T\xe6\x08\x9e\xaaM\x9d\x9d8|\x9c" +
+	"\x9cjm<\x17P\x137_D\xe5A\x07\x8dF\x08" +
+	"\xd0\xcf\x8a\xa8,\x16P\xd7\xacF\xc0\x97Ie\x1d\xb7" +
+	"\xb2\x9b\x0b\xc3`\x1e\xd6\xc8\xf45[:\xeeZ\x96|" +
+	"\xf2\x84e\xf1\xed$4s\x1e\xe24k\x0b\x80r\x8f" +
+	"\x88\xca\xef9\xccz\x80\xcc\xba_D\xe5\xb3\x02\xea9" +
+	"s`\x82\x9a\x91\xabbh\xcf5\xcaY\xbeJ3f" +
+	"\xf46\xe1\x1c\xed\xa7h\xf9][\xaf\xdd\x94\x9e#\xbd" +
+	".C\xef\x99\x09\x00\xe5\x1d\x11\x95\xff4\xb3\x0a\x00\xbb" +
+	"\x1e\x05P\xde\x171\x8afKK\xeeu\x83\x16?\x10" +
+	"1\xd6\xc0\xbbW\x81\xfb\x97\x1c\xc4(@\x8c:\xe1\xd8" +
+	"\xfd\xb4.\x8a\xdc\xc5\xe4{\xb1\x17 6\x9f\xd6\x93h" +
+	"\xba^\x0d\x80\x1c\xe7\xeb+h\xfdk\xb4.\xb9\x03|" +
+	"T\xb6\x89\xaf\x7f\x99\xd6\xf7\xa2P\xd1{\xf29\x00\xe5" +
+	"\xb4\x8a^\xee\xf6+\x94\x84\x01N\x0c0jcg\xb6" +
+	"\xc5Q\xc0\x99\xba\xe2*?m0OB\xe6$\x8e*" +
+	"\xaa\xa9s\x98K\xd4\x87|{%\xd30\xc0\x0d\x86\x01" +
+	"\xb6\x86\xdb\xaa8\xc9\x04\xc3:\xc7\xbe\xdb(\x0d\x9d\xe3" +
+	"\xaf\xdai\xf5\xf0\xf4Ri\x86$e\x0a\x82\x93\x16\x8d" +
+	"\xe9\x9e\x94\xcaj\x9c\xe9\xed\xff\x99\x18F\xf5G\xe2c" +
+	"j$\x93$\xdc\x9d\x01@\xf4\xd5&\xa2\xb2\xc8\x11\x00" +
+	"\x0b\x07\xcd\xb8\\&T\xa1\x19\xfb\xd4\x0f\xa3\x99J\xa1" +
+	"\xaa\xf5\x07m\xeb0\x0b/\xde\xb4\x98\xa3?\x00\xe6\x9e" +
+	"\xe0\xd5F\xbe\x98(\x14\xf3\xd0\xa3&\x97\xaa\x7fX(" +
+	"5B\xe1\\\xf7\xc0\xc0\x10\x17\xaf\x9e\xa2+\xfa\x92\x0f" +
+	"Ot\x94\xa6\xa5\x0a\xbe\xf2\x9b\xb8\x94\xf1\x95\xdf\xc4e" +
+	"\xc5\xac\xfa\x92\xffM\xcf0\x1d'\xb3XE'H\x83" +
+	"\xe5%YE\x97kK{\xb8t\xc8\xa8\xea\x1a\x87y" +
+	"U\x17\\U\xb17\x9bS3\xbd\xf9x\x02\xa4/\xa9" +
+	"\x05#\xbe{\xf3q\xf0%\xe8k\x15r3*\x98\xdb" +
+	"\x1b\xd7\xf2I\x98s\\k\x8d\x8f\xd0\xfa\xab\x85)\x9d" +
+	"\xe5\xe3Z\xebo0\xb4\xfe\x0e\x9a6\xae\xb5\xcf\xb0\xfe" +
+	"{b\xabW9\xc6\xb5a\x1e\x9b\x1f\xf1\xbc\xd6\xaa\xc9" +
+	"\xc1GU\xf9\xff\xfb\xc8\xd65\xd3\xc8\xd6*,\xff'" +
+	"\x00\x00\xff\xff\x02\xd5\xa8\x19"
 
 func init() {
 	schemas.Register(schema_bf602c4868dbb22f,
@@ -3651,10 +4511,10 @@ func init() {
 		0x8bc69192f3bc97cc,
 		0x92101e3b7a761333,
 		0x9428ea64f18c41c8,
+		0x9576b9a98d58fba2,
 		0x95d8ad01c1113d9c,
 		0x9c62c32b2ff2b1e8,
 		0x9e9e5391e0c499e6,
-		0xa2dcae494290639e,
 		0xa8d787cae7e0b243,
 		0xaf0a1dc4709a5ccf,
 		0xb135ffc9ccc9eca6,
@@ -3662,25 +4522,32 @@ func init() {
 		0xb47b53679e985c7e,
 		0xb49836b545583add,
 		0xbadc988dda3d1e50,
-		0xbe0c6a5a76e75105,
-		0xbe5bb9ba1de54674,
+		0xbb18da359652a59c,
 		0xbe611d34e368e109,
 		0xc0335d99db8b2ba5,
 		0xc0fc6e5a3fcb3206,
+		0xc28d2829add1cd72,
 		0xc61c438f89d10281,
+		0xc6976ac75246b450,
 		0xcb02dc91e18e58c9,
+		0xcb17668f2d39c70f,
+		0xcbf00f9ba87ee17e,
 		0xcc079ad60f1363b7,
 		0xce9f24b8ec149524,
+		0xd0cd6d829b810229,
 		0xd23f817e914373d8,
 		0xd5b512f4bcd0aa2e,
 		0xd717ff7d6815a6b0,
-		0xda58608ec3b1dfa6,
+		0xde5975c83de2b10c,
+		0xdeb75f08b2540532,
 		0xe3d7a3237f175028,
 		0xe607c9dd64da04c4,
+		0xe6ba083a247c91ee,
 		0xece0efa9a922d4a8,
+		0xf30610cf0ed94a2f,
 		0xf3705fb36d44a21f,
 		0xf37401d21f8d97bb,
-		0xf5b257d7fba7ed60,
+		0xf58d7a7318a06224,
 		0xf684cae29bdc484e,
 		0xf7fec613b4a8c79f,
 		0xfe6a08d5e0712c23)

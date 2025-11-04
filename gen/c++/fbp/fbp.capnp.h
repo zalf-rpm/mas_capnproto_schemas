@@ -81,6 +81,7 @@ enum class ComponentType_c6976ac75246b450: uint16_t {
   STANDARD,
   IIP,
   SUBFLOW,
+  VIEW,
 };
 CAPNP_DECLARE_ENUM(ComponentType, c6976ac75246b450);
 CAPNP_DECLARE_SCHEMA(c28d2829add1cd72);

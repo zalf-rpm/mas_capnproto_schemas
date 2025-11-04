@@ -176,6 +176,7 @@ struct Component {
         standard    @0; # standard FBP component
         iip         @1; # initial information packet
         subflow     @2; # represents a subflow
+        view        @3; # is a view component
     }
 
     struct Port {

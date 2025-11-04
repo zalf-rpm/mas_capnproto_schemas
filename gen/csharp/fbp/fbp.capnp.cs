@@ -3072,7 +3072,8 @@ namespace Mas.Schema.Fbp
         {
             standard,
             iip,
-            subflow
+            subflow,
+            view
         }
 
         [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc28d2829add1cd72UL)]
@@ -3194,13 +3195,6 @@ namespace Mas.Schema.Fbp
         {
             async Task<IDisposable> AwaitProxy() => (await task).Item2;
             return (Mas.Schema.Service.IStoppable)CapabilityReflection.CreateProxy<Mas.Schema.Service.IStoppable>(Impatient.Access(task, Path_mas_schema_fbp_StartChannelsService_start_Stop, AwaitProxy()));
-        }
-
-        static readonly MemberAccessPath Path_mas_schema_fbp_ComponentService_component_Comp_Run = new MemberAccessPath(0U, 3U);
-        public static Mas.Schema.Fbp.Component.IRunnable Comp_Run(this Task<Mas.Schema.Fbp.Component> task)
-        {
-            async Task<IDisposable> AwaitProxy() => (await task).Run;
-            return (Mas.Schema.Fbp.Component.IRunnable)CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Component.IRunnable>(Impatient.Access(task, Path_mas_schema_fbp_ComponentService_component_Comp_Run, AwaitProxy()));
         }
     }
 }
