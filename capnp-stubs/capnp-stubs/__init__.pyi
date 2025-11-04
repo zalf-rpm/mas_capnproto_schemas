@@ -25,7 +25,59 @@ T = TypeVar("T")
 T_co = TypeVar("T_co", covariant=True)
 
 class KjException(Exception):
-    """Exception raised by Cap'n Proto operations."""
+    """Exception raised by Cap'n Proto operations.
+
+    KjException is a wrapper of the internal C++ exception type.
+    It contains an enum named `Type` and several properties providing
+    information about the exception.
+    """
+
+    class Type:
+        """Exception type enumeration."""
+
+        FAILED: str
+        OVERLOADED: str
+        DISCONNECTED: str
+        UNIMPLEMENTED: str
+        OTHER: str
+        reverse_mapping: dict[int, str]
+
+    message: str | None
+    nature: str | None
+    durability: str | None
+    wrapper: Any
+
+    @property
+    def file(self) -> str:
+        """Source file where the exception occurred."""
+        ...
+
+    @property
+    def line(self) -> int:
+        """Line number where the exception occurred."""
+        ...
+
+    @property
+    def type(self) -> str | None:
+        """Exception type (one of the Type enum values)."""
+        ...
+
+    @property
+    def description(self) -> str:
+        """Human-readable description of the exception."""
+        ...
+
+    def __init__(
+        self,
+        message: str | None = None,
+        nature: str | None = None,
+        durability: str | None = None,
+        wrapper: Any = None,
+        type: str | None = None,
+    ) -> None: ...
+    def _to_python(self) -> Exception:
+        """Convert to a more specific Python exception if appropriate."""
+        ...
 
 class NestedNode(Protocol):
     name: str
@@ -385,9 +437,65 @@ class _DynamicStructBuilder(Protocol):
         """
         ...
 
-class _ListSchema(Protocol):
+class _EnumSchema:
+    """Schema for enum types.
+
+    Provides access to enum schema information.
+    """
+
+    enumerants: dict[str, int]
     node: SchemaNode
-    elementType: TypeReader
+
+class _InterfaceSchema:
+    """Schema for interface types.
+
+    Provides access to interface schema information.
+    """
+
+    method_names: tuple[str, ...]
+    method_names_inherited: set[str]
+
+class _ListSchema:
+    """Schema for list types.
+
+    Can be instantiated to create list schemas for different element types.
+    """
+
+    elementType: (
+        TypeReader
+        | _StructSchema
+        | _EnumSchema
+        | _InterfaceSchema
+        | _ListSchema
+        | _SchemaType
+    )
+
+    def __init__(
+        self,
+        schema: (
+            _StructSchema
+            | _EnumSchema
+            | _InterfaceSchema
+            | _ListSchema
+            | _SchemaType
+            | StructSchema
+            | Any
+            | None
+        ) = None,
+    ) -> None:
+        """Create a list schema for the given element type.
+
+        Args:
+            schema: Element type schema. Can be:
+                - A struct schema (_StructSchema or StructSchema)
+                - An enum schema (_EnumSchema)
+                - An interface schema (_InterfaceSchema)
+                - Another list schema (_ListSchema) for nested lists
+                - A primitive type (_SchemaType, e.g., capnp.types.Int8)
+                - Any object with a .schema attribute
+                - None (creates uninitialized schema)
+        """
+        ...
 
     def as_struct(self) -> StructRuntime: ...
     def get_nested(self, name: str) -> StructSchema: ...
@@ -634,7 +742,10 @@ class _CapnpLibCapnpModule:
     _DynamicListBuilder: type[_DynamicListBuilder]
 
     # Schema types
+    _EnumSchema: type[_EnumSchema]
+    _InterfaceSchema: type[_InterfaceSchema]
     _ListSchema: type[_ListSchema]
+    _SchemaType: type[_SchemaType]
     _StructSchema: type[_StructSchema]
 
     # RPC types
@@ -670,6 +781,40 @@ class _CapnpLib:
     capnp: _CapnpLibCapnpModule
 
 lib: _CapnpLib
+
+class _SchemaType:
+    """Internal schema type representation.
+
+    This class represents Cap'n Proto primitive types.
+    Instances are used for type comparisons and type checking.
+    """
+
+    pass
+
+class _CapnpTypesModule:
+    """The capnp.types module.
+
+    Provides singleton instances of _SchemaType for each primitive Cap'n Proto type.
+    These are used for type checking and comparison.
+    """
+
+    Void: _SchemaType
+    Bool: _SchemaType
+    Int8: _SchemaType
+    Int16: _SchemaType
+    Int32: _SchemaType
+    Int64: _SchemaType
+    UInt8: _SchemaType
+    UInt16: _SchemaType
+    UInt32: _SchemaType
+    UInt64: _SchemaType
+    Float32: _SchemaType
+    Float64: _SchemaType
+    Text: _SchemaType
+    Data: _SchemaType
+    AnyPointer: _SchemaType
+
+types: _CapnpTypesModule
 
 class _DynamicListBuilder(Generic[T]):
     """Generic list builder type returned by init() for list fields.
@@ -916,7 +1061,10 @@ __all__ = [
     "_DynamicListReader",
     "_DynamicStructBuilder",
     "_DynamicStructReader",
+    "_EnumSchema",
+    "_InterfaceSchema",
     "_ListSchema",
+    "_SchemaType",
     "_StructSchema",
     # RPC types
     "_Request",
@@ -941,6 +1089,7 @@ __all__ = [
     "register_type",
     "remove_import_hook",
     "run",
-    # Module
+    # Modules
     "lib",
+    "types",
 ]
