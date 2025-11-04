@@ -6,42 +6,52 @@ This package provides type information for the pycapnp library, enabling
 static type checkers like mypy and Pyright to understand the Cap'n Proto
 Python bindings.
 
-## Installation for Development
+## Important Note
 
-Since stub files need to be installed alongside the actual pycapnp package,
-use the provided install script:
+**These stubs are for type checking only and should NOT be included in your runtime package distribution.**
 
-```bash
-./install_stubs.sh
-```
-
-This script copies the `.pyi` stub files into the pycapnp installation directory,
-making them available to type checkers without interfering with runtime behavior.
-
-## Installation for Production
-
-```bash
-pip install capnp-stubs
-```
-
-Note: The package will install stub files directly into the `capnp` package directory.
+The stubs should be kept separate from your main package to avoid conflicts with the actual pycapnp implementation.
 
 ## Usage
 
-Once installed, type checkers will automatically discover and use these stubs
-when analyzing code that imports `capnp`.
+### For IDE / Type Checking (Development)
+
+Your IDE (VS Code, PyCharm, etc.) will automatically use these stubs for type checking as long as they exist in the repository. No installation needed.
+
+### For pycapnp Usage
+
+pycapnp's public API is accessed via `capnp.lib.capnp`:
 
 ```python
-import capnp  # Now fully typed!
+from capnp.lib import capnp
 
-parser = capnp.SchemaParser()
-module = parser.load("schema.capnp")
+# Now you can use all pycapnp functions:
+capnp.load("schema.capnp")
+capnp.run(my_coroutine())
+
+# Or use the context manager:
+with capnp.kj_loop():
+    # Your async code here
+    pass
 ```
+
+## Methods Available
+
+The stubs include all pycapnp 2.2.1 methods:
+- `run()` - Run async coroutines with KJ event loop
+- `kj_loop()` - Context manager for KJ event loop  
+- `load()` - Load Cap'n Proto schema files
+- `TwoPartyClient` / `TwoPartyServer` - RPC classes
+- And many more...
+
+## Methods NOT Yet Available
+
+These methods are stubbed but not implemented in pycapnp 2.2.1:
+- `getTimer()` - May be available in future versions
+- `remove_event_loop()` - May be available in future versions
 
 ## Structure
 
 The stub package provides:
-- `capnp/__init__.pyi` - Main module stubs
-- `capnp/lib/__init__.pyi` - Lib submodule stubs
-- `capnp/lib/capnp.pyi` - Implementation class stubs
+- `capnp/__init__.pyi` - Main module stubs (type hints only, no `__init__.py`)
 - `capnp/py.typed` - PEP 561 marker file
