@@ -9,6 +9,7 @@ Compatible with: pycapnp >= 2.0.0
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import (
     Awaitable,
     Callable,
@@ -821,10 +822,14 @@ class _DynamicListBuilder(Generic[T]):
 
     This class wraps the Cap'n Proto C++ DynamicList::Builder.
     Provides list-like interface for building Cap'n Proto list fields.
+
+    For struct element types, both T instances and dict[str, Any] are accepted
+    for convenient initialization, e.g.:
+        list_builder[0] = {"field": value}
     """
     def __len__(self) -> int: ...
     def __getitem__(self, index: int) -> T: ...
-    def __setitem__(self, index: int, value: T) -> None: ...
+    def __setitem__(self, index: int, value: T | dict[str, Any]) -> None: ...
     def __iter__(self) -> Iterator[T]: ...
     def adopt(self, index: int, orphan: Any) -> None:
         """Adopt an orphaned message at the given index."""
@@ -899,23 +904,6 @@ class TwoPartyServer:
         """Wait until the connection is disconnected."""
         ...
 
-class Server:
-    """Server returned by AsyncIoStream.create_server."""
-    async def serve_forever(self) -> None:
-        """Run the server until cancelled."""
-        ...
-    async def wait_closed(self) -> None:
-        """Wait until the server is closed."""
-        ...
-    def close(self) -> None:
-        """Close the server."""
-        ...
-    def is_serving(self) -> bool:
-        """Return True if the server is actively serving."""
-        ...
-    async def __aenter__(self) -> Server: ...
-    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None: ...
-
 class AsyncIoStream:
     """Async I/O stream wrapper for Cap'n Proto RPC.
 
@@ -958,7 +946,7 @@ class AsyncIoStream:
         host: str | None = None,
         port: int | None = None,
         **kwargs: Any,
-    ) -> Server:
+    ) -> asyncio.Server:
         """Create an async TCP server.
 
         Args:
@@ -977,7 +965,7 @@ class AsyncIoStream:
         callback: Callable[[AsyncIoStream], Awaitable[None]],
         path: str | None = None,
         **kwargs: Any,
-    ) -> Server:
+    ) -> asyncio.Server:
         """Create an async Unix domain socket server.
 
         Args:
@@ -1075,7 +1063,6 @@ __all__ = [
     "CastableBootstrap",
     "TwoPartyClient",
     "TwoPartyServer",
-    "Server",
     "AsyncIoStream",
     # Exceptions
     "KjException",
