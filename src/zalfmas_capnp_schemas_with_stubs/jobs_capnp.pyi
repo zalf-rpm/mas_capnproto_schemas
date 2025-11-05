@@ -79,10 +79,20 @@ class Service(Identifiable, Persistent, Protocol):
     class NextjobResult(Awaitable[NextjobResult], Protocol):
         job: JobReader
 
+    class NextjobResultsBuilder(Protocol):
+        job: JobBuilder
+
+    class NextjobCallContext(Protocol):
+        results: Service.NextjobResultsBuilder
+
     def nextJob(self) -> NextjobResult: ...
     class NextjobRequest(Protocol):
         def send(self) -> Service.NextjobResult: ...
 
     def nextJob_request(self) -> NextjobRequest: ...
+    @classmethod
+    def _new_client(cls, server: Service.Server) -> Service: ...
     class Server(Identifiable.Server, Persistent.Server):
-        def nextJob(self, **kwargs) -> Awaitable[Job]: ...
+        def nextJob(
+            self, _context: Service.NextjobCallContext, **kwargs: Any
+        ) -> Awaitable[Job]: ...

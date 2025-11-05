@@ -224,7 +224,7 @@ class LayerReader(Layer):
 
 class LayerBuilder(Layer):
     @property
-    def properties(self) -> _DynamicListBuilder[Layer.PropertyBuilder]: ...
+    def properties(self) -> Sequence[Layer.PropertyBuilder]: ...
     @properties.setter
     def properties(
         self,
@@ -242,7 +242,7 @@ class LayerBuilder(Layer):
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> LayerBuilder: ...
     def init(
-        self: Any, name: Literal["properties"], size: int = ...
+        self, name: Literal["properties"], size: int = ...
     ) -> _DynamicListBuilder[Layer.PropertyBuilder]: ...
     def copy(self) -> LayerBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -458,7 +458,7 @@ class ProfileDataReader(ProfileData):
 
 class ProfileDataBuilder(ProfileData):
     @property
-    def layers(self) -> _DynamicListBuilder[LayerBuilder]: ...
+    def layers(self) -> Sequence[LayerBuilder]: ...
     @layers.setter
     def layers(
         self,
@@ -471,7 +471,7 @@ class ProfileDataBuilder(ProfileData):
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> ProfileDataBuilder: ...
     def init(
-        self: Any, name: Literal["layers"], size: int = ...
+        self, name: Literal["layers"], size: int = ...
     ) -> _DynamicListBuilder[LayerBuilder]: ...
     def copy(self) -> ProfileDataBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -484,24 +484,42 @@ class ProfileDataBuilder(ProfileData):
     def write_packed(file: BufferedWriter) -> None: ...
 
 class Profile(Identifiable, Persistent, Protocol):
+    class DataCallContext(Protocol):
+        results: ProfileDataBuilder
+
     def data(self) -> Awaitable[ProfileDataReader]: ...
     class DataRequest(Protocol):
         def send(self) -> Awaitable[ProfileDataReader]: ...
 
     def data_request(self) -> DataRequest: ...
+    class GeolocationCallContext(Protocol):
+        results: LatLonCoordBuilder
+
     def geoLocation(self) -> Awaitable[LatLonCoordReader]: ...
     class GeolocationRequest(Protocol):
         def send(self) -> Awaitable[LatLonCoordReader]: ...
 
     def geoLocation_request(self) -> GeolocationRequest: ...
+    @classmethod
+    def _new_client(cls, server: Profile.Server) -> Profile: ...
     class Server(Identifiable.Server, Persistent.Server):
-        def data(self, **kwargs) -> Awaitable[ProfileData]: ...
-        def geoLocation(self, **kwargs) -> Awaitable[LatLonCoord]: ...
+        def data(
+            self, _context: Profile.DataCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
+        def geoLocation(
+            self, _context: Profile.GeolocationCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
 
 class Service(Identifiable, Persistent, Protocol):
     class Stream(Protocol):
         class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
             profiles: Sequence[Profile]
+
+        class NextprofilesResultsBuilder(Protocol):
+            profiles: Sequence[Profile]
+
+        class NextprofilesCallContext(Protocol):
+            results: Service.Stream.NextprofilesResultsBuilder
 
         def nextProfiles(self, maxCount: int) -> NextprofilesResult: ...
         class NextprofilesRequest(Protocol):
@@ -509,10 +527,18 @@ class Service(Identifiable, Persistent, Protocol):
             def send(self) -> Service.Stream.NextprofilesResult: ...
 
         def nextProfiles_request(self) -> NextprofilesRequest: ...
+        @classmethod
+        def _new_client(cls, server: Service.Stream.Server) -> Service.Stream: ...
         class Server:
             def nextProfiles(
-                self, maxCount: int, **kwargs
+                self,
+                maxCount: int,
+                _context: Service.Stream.NextprofilesCallContext,
+                **kwargs: Any,
             ) -> Awaitable[Sequence[Profile]]: ...
+
+    class CheckavailableparametersCallContext(Protocol):
+        results: Query.ResultBuilder
 
     def checkAvailableParameters(
         self,
@@ -533,6 +559,13 @@ class Service(Identifiable, Persistent, Protocol):
         mandatory: Sequence[PropertyName]
         optional: Sequence[PropertyName]
 
+    class GetallavailableparametersResultsBuilder(Protocol):
+        mandatory: Sequence[PropertyName]
+        optional: Sequence[PropertyName]
+
+    class GetallavailableparametersCallContext(Protocol):
+        results: Service.GetallavailableparametersResultsBuilder
+
     def getAllAvailableParameters(
         self, onlyRawData: bool
     ) -> GetallavailableparametersResult: ...
@@ -543,6 +576,12 @@ class Service(Identifiable, Persistent, Protocol):
     def getAllAvailableParameters_request(self) -> GetallavailableparametersRequest: ...
     class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
         profiles: Sequence[Profile]
+
+    class ClosestprofilesatResultsBuilder(Protocol):
+        profiles: Sequence[Profile]
+
+    class ClosestprofilesatCallContext(Protocol):
+        results: Service.ClosestprofilesatResultsBuilder
 
     def closestProfilesAt(
         self, coord: LatLonCoord | dict[str, Any], query: Query | dict[str, Any]
@@ -555,6 +594,12 @@ class Service(Identifiable, Persistent, Protocol):
     def closestProfilesAt_request(self) -> ClosestprofilesatRequest: ...
     class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
         allProfiles: Service.Stream
+
+    class StreamallprofilesResultsBuilder(Protocol):
+        allProfiles: Service.Stream
+
+    class StreamallprofilesCallContext(Protocol):
+        results: Service.StreamallprofilesResultsBuilder
 
     def streamAllProfiles(
         self,
@@ -569,24 +614,35 @@ class Service(Identifiable, Persistent, Protocol):
         def send(self) -> Service.StreamallprofilesResult: ...
 
     def streamAllProfiles_request(self) -> StreamallprofilesRequest: ...
+    @classmethod
+    def _new_client(cls, server: Service.Server) -> Service: ...
     class Server(Identifiable.Server, Persistent.Server):
         def checkAvailableParameters(
             self,
             mandatory: Sequence[PropertyName],
             optional: Sequence[PropertyName],
             onlyRawData: bool,
-            **kwargs,
-        ) -> Awaitable[Query.Result]: ...
+            _context: Service.CheckavailableparametersCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[None]: ...
         def getAllAvailableParameters(
-            self, onlyRawData: bool, **kwargs
-        ) -> Awaitable[Service.GetallavailableparametersResult]: ...
+            self,
+            onlyRawData: bool,
+            _context: Service.GetallavailableparametersCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[tuple[Sequence[PropertyName], Sequence[PropertyName]]]: ...
         def closestProfilesAt(
-            self, coord: LatLonCoordReader, query: QueryReader, **kwargs
+            self,
+            coord: LatLonCoordReader,
+            query: QueryReader,
+            _context: Service.ClosestprofilesatCallContext,
+            **kwargs: Any,
         ) -> Awaitable[Sequence[Profile]]: ...
         def streamAllProfiles(
             self,
             mandatory: Sequence[PropertyName],
             optional: Sequence[PropertyName],
             onlyRawData: bool,
-            **kwargs,
+            _context: Service.StreamallprofilesCallContext,
+            **kwargs: Any,
         ) -> Awaitable[Service.Stream | Service.Stream.Server]: ...

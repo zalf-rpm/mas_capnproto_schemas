@@ -14,6 +14,7 @@ from .climate_capnp import TimeSeries
 from .common_capnp import (
     Identifiable,
     IdInformation,
+    IdInformationBuilder,
     IdInformationReader,
 )
 from .management_capnp import Event, EventBuilder, EventReader
@@ -158,7 +159,7 @@ class StatBuilder(Stat):
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> StatBuilder: ...
     def init(
-        self: Any, name: Literal["vs"], size: int = ...
+        self, name: Literal["vs"], size: int = ...
     ) -> _DynamicListBuilder[float]: ...
     def copy(self) -> StatBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -225,7 +226,7 @@ class XYPlusResultBuilder(XYPlusResult):
         self, value: XYResult | XYResultBuilder | XYResultReader | dict[str, Any]
     ) -> None: ...
     @property
-    def stats(self) -> _DynamicListBuilder[StatBuilder]: ...
+    def stats(self) -> Sequence[StatBuilder]: ...
     @stats.setter
     def stats(
         self,
@@ -254,6 +255,12 @@ class ClimateInstance(Identifiable, Protocol):
     class RunResult(Awaitable[RunResult], Protocol):
         result: XYResultReader
 
+    class RunResultsBuilder(Protocol):
+        result: XYResultBuilder
+
+    class RunCallContext(Protocol):
+        results: ClimateInstance.RunResultsBuilder
+
     def run(self, timeSeries: Any) -> RunResult: ...
     class RunRequest(Protocol):
         timeSeries: Any
@@ -263,15 +270,33 @@ class ClimateInstance(Identifiable, Protocol):
     class RunsetResult(Awaitable[RunsetResult], Protocol):
         result: XYPlusResultReader
 
+    class RunsetResultsBuilder(Protocol):
+        result: XYPlusResultBuilder
+
+    class RunsetCallContext(Protocol):
+        results: ClimateInstance.RunsetResultsBuilder
+
     def runSet(self, dataset: Any) -> RunsetResult: ...
     class RunsetRequest(Protocol):
         dataset: Any
         def send(self) -> ClimateInstance.RunsetResult: ...
 
     def runSet_request(self) -> RunsetRequest: ...
+    @classmethod
+    def _new_client(cls, server: ClimateInstance.Server) -> ClimateInstance: ...
     class Server(Identifiable.Server):
-        def run(self, timeSeries: Any, **kwargs) -> Awaitable[XYResult]: ...
-        def runSet(self, dataset: Any, **kwargs) -> Awaitable[XYPlusResult]: ...
+        def run(
+            self,
+            timeSeries: Any,
+            _context: ClimateInstance.RunCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[XYResult]: ...
+        def runSet(
+            self,
+            dataset: Any,
+            _context: ClimateInstance.RunsetCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[XYPlusResult]: ...
 
 class Env(Generic[_RestInput]):
     @property
@@ -337,7 +362,7 @@ class EnvBuilder(Env, Generic[_RestInput]):
     @soilProfile.setter
     def soilProfile(self, value: Profile | Profile.Server) -> None: ...
     @property
-    def mgmtEvents(self) -> _DynamicListBuilder[EventBuilder]: ...
+    def mgmtEvents(self) -> Sequence[EventBuilder]: ...
     @mgmtEvents.setter
     def mgmtEvents(
         self,
@@ -346,7 +371,7 @@ class EnvBuilder(Env, Generic[_RestInput]):
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> EnvBuilder: ...
     def init(
-        self: Any, name: Literal["mgmtEvents"], size: int = ...
+        self, name: Literal["mgmtEvents"], size: int = ...
     ) -> _DynamicListBuilder[EventBuilder]: ...
     def copy(self) -> EnvBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -362,30 +387,63 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
     class RunResult(Awaitable[RunResult], Protocol):
         result: Any
 
+    class RunResultsBuilder(Protocol):
+        result: Any
+
+    class RunCallContext(Protocol):
+        results: EnvInstance.RunResultsBuilder
+
     def run(self, env: Env[Any] | dict[str, Any]) -> RunResult: ...
     class RunRequest(Protocol):
         env: EnvBuilder[Any]
         def send(self) -> EnvInstance.RunResult: ...
 
     def run_request(self) -> RunRequest: ...
+    @classmethod
+    def _new_client(cls, server: EnvInstance.Server) -> EnvInstance: ...
     class Server(Identifiable.Server, Persistent.Server, Stoppable.Server):
-        def run(self, env: EnvReader[Any], **kwargs) -> Awaitable[Any]: ...
+        def run(
+            self,
+            env: EnvReader[Any],
+            _context: EnvInstance.RunCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[Any]: ...
 
 class EnvInstanceProxy(EnvInstance, Protocol):
     class Unregister(Protocol):
         class UnregisterResult(Awaitable[UnregisterResult], Protocol):
             success: bool
 
+        class UnregisterResultsBuilder(Protocol):
+            success: bool
+
+        class UnregisterCallContext(Protocol):
+            results: EnvInstanceProxy.Unregister.UnregisterResultsBuilder
+
         def unregister(self) -> UnregisterResult: ...
         class UnregisterRequest(Protocol):
             def send(self) -> EnvInstanceProxy.Unregister.UnregisterResult: ...
 
         def unregister_request(self) -> UnregisterRequest: ...
+        @classmethod
+        def _new_client(
+            cls, server: EnvInstanceProxy.Unregister.Server
+        ) -> EnvInstanceProxy.Unregister: ...
         class Server:
-            def unregister(self, **kwargs) -> Awaitable[bool]: ...
+            def unregister(
+                self,
+                _context: EnvInstanceProxy.Unregister.UnregisterCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[bool]: ...
 
     class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
         unregister: EnvInstanceProxy.Unregister
+
+    class RegisterenvinstanceResultsBuilder(Protocol):
+        unregister: EnvInstanceProxy.Unregister
+
+    class RegisterenvinstanceCallContext(Protocol):
+        results: EnvInstanceProxy.RegisterenvinstanceResultsBuilder
 
     def registerEnvInstance(
         self, instance: EnvInstance
@@ -395,14 +453,22 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         def send(self) -> EnvInstanceProxy.RegisterenvinstanceResult: ...
 
     def registerEnvInstance_request(self) -> RegisterenvinstanceRequest: ...
+    @classmethod
+    def _new_client(cls, server: EnvInstanceProxy.Server) -> EnvInstanceProxy: ...
     class Server(EnvInstance.Server):
         def registerEnvInstance(
-            self, instance: EnvInstance, **kwargs
+            self,
+            instance: EnvInstance,
+            _context: EnvInstanceProxy.RegisterenvinstanceCallContext,
+            **kwargs: Any,
         ) -> Awaitable[
             EnvInstanceProxy.Unregister | EnvInstanceProxy.Unregister.Server
         ]: ...
 
 class InstanceFactory(Identifiable, Protocol):
+    class ModelinfoCallContext(Protocol):
+        results: IdInformationBuilder
+
     def modelInfo(self) -> Awaitable[IdInformationReader]: ...
     class ModelinfoRequest(Protocol):
         def send(self) -> Awaitable[IdInformationReader]: ...
@@ -410,6 +476,12 @@ class InstanceFactory(Identifiable, Protocol):
     def modelInfo_request(self) -> ModelinfoRequest: ...
     class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
         instance: Identifiable
+
+    class NewinstanceResultsBuilder(Protocol):
+        instance: Identifiable
+
+    class NewinstanceCallContext(Protocol):
+        results: InstanceFactory.NewinstanceResultsBuilder
 
     def newInstance(self) -> NewinstanceResult: ...
     class NewinstanceRequest(Protocol):
@@ -419,17 +491,30 @@ class InstanceFactory(Identifiable, Protocol):
     class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
         instances: Sequence[Identifiable]
 
+    class NewinstancesResultsBuilder(Protocol):
+        instances: Sequence[Identifiable]
+
+    class NewinstancesCallContext(Protocol):
+        results: InstanceFactory.NewinstancesResultsBuilder
+
     def newInstances(self, numberOfInstances: int) -> NewinstancesResult: ...
     class NewinstancesRequest(Protocol):
         numberOfInstances: int
         def send(self) -> InstanceFactory.NewinstancesResult: ...
 
     def newInstances_request(self) -> NewinstancesRequest: ...
+    @classmethod
+    def _new_client(cls, server: InstanceFactory.Server) -> InstanceFactory: ...
     class Server(Identifiable.Server):
-        def modelInfo(self, **kwargs) -> Awaitable[IdInformation]: ...
+        def modelInfo(
+            self, _context: InstanceFactory.ModelinfoCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
         def newInstance(
-            self, **kwargs
+            self, _context: InstanceFactory.NewinstanceCallContext, **kwargs: Any
         ) -> Awaitable[Identifiable | Identifiable.Server]: ...
         def newInstances(
-            self, numberOfInstances: int, **kwargs
+            self,
+            numberOfInstances: int,
+            _context: InstanceFactory.NewinstancesCallContext,
+            **kwargs: Any,
         ) -> Awaitable[Sequence[Identifiable]]: ...

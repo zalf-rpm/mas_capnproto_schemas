@@ -216,7 +216,7 @@ class AddressBuilder(Address):
     def host(self, value: str) -> None: ...
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> AddressBuilder: ...
-    def init(self: Any, name: Literal["ip6"]) -> Address.Ip6Builder: ...
+    def init(self, name: Literal["ip6"]) -> Address.Ip6Builder: ...
     def copy(self) -> AddressBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -514,13 +514,22 @@ class SturdyRefBuilder(SturdyRef):
     def write_packed(file: BufferedWriter) -> None: ...
 
 class Heartbeat(Protocol):
+    class BeatResultsBuilder(Protocol): ...
+
+    class BeatCallContext(Protocol):
+        results: Heartbeat.BeatResultsBuilder
+
     def beat(self) -> Awaitable[None]: ...
     class BeatRequest(Protocol):
         def send(self) -> Awaitable[None]: ...
 
     def beat_request(self) -> BeatRequest: ...
+    @classmethod
+    def _new_client(cls, server: Heartbeat.Server) -> Heartbeat: ...
     class Server:
-        def beat(self, **kwargs) -> Awaitable[None]: ...
+        def beat(
+            self, _context: Heartbeat.BeatCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
 
 class Persistent(Protocol):
     class SaveParams:
@@ -578,7 +587,7 @@ class Persistent(Protocol):
         ) -> None: ...
         @staticmethod
         def from_dict(dictionary: dict[str, Any]) -> Persistent.SaveParamsBuilder: ...
-        def init(self: Any, name: Literal["sealFor"]) -> SturdyRef.OwnerBuilder: ...
+        def init(self, name: Literal["sealFor"]) -> SturdyRef.OwnerBuilder: ...
         def copy(self) -> Persistent.SaveParamsBuilder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
@@ -674,13 +683,30 @@ class Persistent(Protocol):
         class ReleaseResult(Awaitable[ReleaseResult], Protocol):
             success: bool
 
+        class ReleaseResultsBuilder(Protocol):
+            success: bool
+
+        class ReleaseCallContext(Protocol):
+            results: Persistent.ReleaseSturdyRef.ReleaseResultsBuilder
+
         def release(self) -> ReleaseResult: ...
         class ReleaseRequest(Protocol):
             def send(self) -> Persistent.ReleaseSturdyRef.ReleaseResult: ...
 
         def release_request(self) -> ReleaseRequest: ...
+        @classmethod
+        def _new_client(
+            cls, server: Persistent.ReleaseSturdyRef.Server
+        ) -> Persistent.ReleaseSturdyRef: ...
         class Server:
-            def release(self, **kwargs) -> Awaitable[bool]: ...
+            def release(
+                self,
+                _context: Persistent.ReleaseSturdyRef.ReleaseCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[bool]: ...
+
+    class SaveCallContext(Protocol):
+        results: Persistent.SaveResultsBuilder
 
     def save(
         self, sealFor: SturdyRef.Owner | dict[str, Any]
@@ -690,10 +716,15 @@ class Persistent(Protocol):
         def send(self) -> Awaitable[Persistent.SaveResultsReader]: ...
 
     def save_request(self) -> SaveRequest: ...
+    @classmethod
+    def _new_client(cls, server: Persistent.Server) -> Persistent: ...
     class Server:
         def save(
-            self, sealFor: SturdyRef.OwnerReader, **kwargs
-        ) -> Awaitable[Persistent.SaveResults]: ...
+            self,
+            sealFor: SturdyRef.OwnerReader,
+            _context: Persistent.SaveCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[None]: ...
 
 class Restorer(Protocol):
     class RestoreParams:
@@ -788,6 +819,12 @@ class Restorer(Protocol):
     class RestoreResult(Awaitable[RestoreResult], Protocol):
         cap: Any
 
+    class RestoreResultsBuilder(Protocol):
+        cap: Any
+
+    class RestoreCallContext(Protocol):
+        results: Restorer.RestoreResultsBuilder
+
     def restore(
         self,
         localRef: SturdyRef.Token | dict[str, Any],
@@ -799,12 +836,15 @@ class Restorer(Protocol):
         def send(self) -> Restorer.RestoreResult: ...
 
     def restore_request(self) -> RestoreRequest: ...
+    @classmethod
+    def _new_client(cls, server: Restorer.Server) -> Restorer: ...
     class Server:
         def restore(
             self,
             localRef: SturdyRef.TokenReader,
             sealedBy: SturdyRef.OwnerReader,
-            **kwargs,
+            _context: Restorer.RestoreCallContext,
+            **kwargs: Any,
         ) -> Awaitable[Any]: ...
 
 class HostPortResolver(Identifiable, Restorer, Protocol):
@@ -901,6 +941,13 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
             heartbeat: Heartbeat
             secsHeartbeatInterval: int
 
+        class RegisterResultsBuilder(Protocol):
+            heartbeat: Heartbeat
+            secsHeartbeatInterval: int
+
+        class RegisterCallContext(Protocol):
+            results: HostPortResolver.Registrar.RegisterResultsBuilder
+
         def register(
             self,
             base64VatId: str,
@@ -918,6 +965,10 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
             def send(self) -> HostPortResolver.Registrar.RegisterResult: ...
 
         def register_request(self) -> RegisterRequest: ...
+        @classmethod
+        def _new_client(
+            cls, server: HostPortResolver.Registrar.Server
+        ) -> HostPortResolver.Registrar: ...
         class Server:
             def register(
                 self,
@@ -926,12 +977,20 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
                 port: int,
                 alias: str,
                 identityProof: bytes,
-                **kwargs,
-            ) -> Awaitable[HostPortResolver.Registrar.RegisterResult]: ...
+                _context: HostPortResolver.Registrar.RegisterCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[tuple[Heartbeat, int]]: ...
 
     class ResolveResult(Awaitable[ResolveResult], Protocol):
         host: str
         port: int
+
+    class ResolveResultsBuilder(Protocol):
+        host: str
+        port: int
+
+    class ResolveCallContext(Protocol):
+        results: HostPortResolver.ResolveResultsBuilder
 
     def resolve(self, id: str) -> ResolveResult: ...
     class ResolveRequest(Protocol):
@@ -939,10 +998,12 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
         def send(self) -> HostPortResolver.ResolveResult: ...
 
     def resolve_request(self) -> ResolveRequest: ...
+    @classmethod
+    def _new_client(cls, server: HostPortResolver.Server) -> HostPortResolver: ...
     class Server(Identifiable.Server, Restorer.Server):
         def resolve(
-            self, id: str, **kwargs
-        ) -> Awaitable[HostPortResolver.ResolveResult]: ...
+            self, id: str, _context: HostPortResolver.ResolveCallContext, **kwargs: Any
+        ) -> Awaitable[tuple[str, int]]: ...
 
 class Gateway(Identifiable, Restorer, Protocol):
     class RegResults:
@@ -1010,7 +1071,7 @@ class Gateway(Identifiable, Restorer, Protocol):
         def secsHeartbeatInterval(self, value: int) -> None: ...
         @staticmethod
         def from_dict(dictionary: dict[str, Any]) -> Gateway.RegResultsBuilder: ...
-        def init(self: Any, name: Literal["sturdyRef"]) -> SturdyRefBuilder: ...
+        def init(self, name: Literal["sturdyRef"]) -> SturdyRefBuilder: ...
         def copy(self) -> Gateway.RegResultsBuilder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
@@ -1021,11 +1082,18 @@ class Gateway(Identifiable, Restorer, Protocol):
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
+    class RegisterCallContext(Protocol):
+        results: Gateway.RegResultsBuilder
+
     def register(self, cap: Any) -> Awaitable[Gateway.RegResultsReader]: ...
     class RegisterRequest(Protocol):
         cap: Any
         def send(self) -> Awaitable[Gateway.RegResultsReader]: ...
 
     def register_request(self) -> RegisterRequest: ...
+    @classmethod
+    def _new_client(cls, server: Gateway.Server) -> Gateway: ...
     class Server(Identifiable.Server, Restorer.Server):
-        def register(self, cap: Any, **kwargs) -> Awaitable[Gateway.RegResults]: ...
+        def register(
+            self, cap: Any, _context: Gateway.RegisterCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...

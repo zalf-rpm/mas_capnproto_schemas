@@ -146,7 +146,7 @@ class IPReader(IP):
 
 class IPBuilder(IP):
     @property
-    def attributes(self) -> _DynamicListBuilder[IP.KVBuilder]: ...
+    def attributes(self) -> Sequence[IP.KVBuilder]: ...
     @attributes.setter
     def attributes(
         self,
@@ -165,7 +165,7 @@ class IPBuilder(IP):
     @staticmethod
     def from_dict(dictionary: dict[str, Any]) -> IPBuilder: ...
     def init(
-        self: Any, name: Literal["attributes"], size: int = ...
+        self, name: Literal["attributes"], size: int = ...
     ) -> _DynamicListBuilder[IP.KVBuilder]: ...
     def copy(self) -> IPBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -310,27 +310,51 @@ class Channel(Identifiable, Persistent, Protocol):
         def write_packed(file: BufferedWriter) -> None: ...
 
     class Reader(Identifiable, Persistent, Protocol):
+        class ReadCallContext(Protocol):
+            results: Channel.MsgBuilder
+
         def read(self) -> Awaitable[Channel.MsgReader]: ...
         class ReadRequest(Protocol):
             def send(self) -> Awaitable[Channel.MsgReader]: ...
 
         def read_request(self) -> ReadRequest: ...
+        class CloseResultsBuilder(Protocol): ...
+
+        class CloseCallContext(Protocol):
+            results: Channel.Reader.CloseResultsBuilder
+
         def close(self) -> Awaitable[None]: ...
         class CloseRequest(Protocol):
             def send(self) -> Awaitable[None]: ...
 
         def close_request(self) -> CloseRequest: ...
+        class ReadifmsgCallContext(Protocol):
+            results: Channel.MsgBuilder
+
         def readIfMsg(self) -> Awaitable[Channel.MsgReader]: ...
         class ReadifmsgRequest(Protocol):
             def send(self) -> Awaitable[Channel.MsgReader]: ...
 
         def readIfMsg_request(self) -> ReadifmsgRequest: ...
+        @classmethod
+        def _new_client(cls, server: Channel.Reader.Server) -> Channel.Reader: ...
         class Server(Identifiable.Server, Persistent.Server):
-            def read(self, **kwargs) -> Awaitable[Channel.Msg]: ...
-            def close(self, **kwargs) -> Awaitable[None]: ...
-            def readIfMsg(self, **kwargs) -> Awaitable[Channel.Msg]: ...
+            def read(
+                self, _context: Channel.Reader.ReadCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
+            def close(
+                self, _context: Channel.Reader.CloseCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
+            def readIfMsg(
+                self, _context: Channel.Reader.ReadifmsgCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
 
     class Writer(Identifiable, Persistent, Protocol):
+        class WriteResultsBuilder(Protocol): ...
+
+        class WriteCallContext(Protocol):
+            results: Channel.Writer.WriteResultsBuilder
+
         def write(self, value: Any, done: None, noMsg: None) -> Awaitable[None]: ...
         class WriteRequest(Protocol):
             value: Any
@@ -339,6 +363,11 @@ class Channel(Identifiable, Persistent, Protocol):
             def send(self) -> Awaitable[None]: ...
 
         def write_request(self) -> WriteRequest: ...
+        class CloseResultsBuilder(Protocol): ...
+
+        class CloseCallContext(Protocol):
+            results: Channel.Writer.CloseResultsBuilder
+
         def close(self) -> Awaitable[None]: ...
         class CloseRequest(Protocol):
             def send(self) -> Awaitable[None]: ...
@@ -346,6 +375,12 @@ class Channel(Identifiable, Persistent, Protocol):
         def close_request(self) -> CloseRequest: ...
         class WriteifspaceResult(Awaitable[WriteifspaceResult], Protocol):
             success: bool
+
+        class WriteifspaceResultsBuilder(Protocol):
+            success: bool
+
+        class WriteifspaceCallContext(Protocol):
+            results: Channel.Writer.WriteifspaceResultsBuilder
 
         def writeIfSpace(
             self, value: Any, done: None, noMsg: None
@@ -357,13 +392,27 @@ class Channel(Identifiable, Persistent, Protocol):
             def send(self) -> Channel.Writer.WriteifspaceResult: ...
 
         def writeIfSpace_request(self) -> WriteifspaceRequest: ...
+        @classmethod
+        def _new_client(cls, server: Channel.Writer.Server) -> Channel.Writer: ...
         class Server(Identifiable.Server, Persistent.Server):
             def write(
-                self, value: Any, done: None, noMsg: None, **kwargs
+                self,
+                value: Any,
+                done: None,
+                noMsg: None,
+                _context: Channel.Writer.WriteCallContext,
+                **kwargs: Any,
             ) -> Awaitable[None]: ...
-            def close(self, **kwargs) -> Awaitable[None]: ...
+            def close(
+                self, _context: Channel.Writer.CloseCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
             def writeIfSpace(
-                self, value: Any, done: None, noMsg: None, **kwargs
+                self,
+                value: Any,
+                done: None,
+                noMsg: None,
+                _context: Channel.Writer.WriteifspaceCallContext,
+                **kwargs: Any,
             ) -> Awaitable[bool]: ...
 
     class StartupInfo:
@@ -490,6 +539,11 @@ class Channel(Identifiable, Persistent, Protocol):
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
+    class SetbuffersizeResultsBuilder(Protocol): ...
+
+    class SetbuffersizeCallContext(Protocol):
+        results: Channel.SetbuffersizeResultsBuilder
+
     def setBufferSize(self, size: int) -> Awaitable[None]: ...
     class SetbuffersizeRequest(Protocol):
         size: int
@@ -499,6 +553,12 @@ class Channel(Identifiable, Persistent, Protocol):
     class ReaderResult(Awaitable[ReaderResult], Protocol):
         r: Channel.Reader
 
+    class ReaderResultsBuilder(Protocol):
+        r: Channel.Reader
+
+    class ReaderCallContext(Protocol):
+        results: Channel.ReaderResultsBuilder
+
     def reader(self) -> ReaderResult: ...
     class ReaderRequest(Protocol):
         def send(self) -> Channel.ReaderResult: ...
@@ -506,6 +566,12 @@ class Channel(Identifiable, Persistent, Protocol):
     def reader_request(self) -> ReaderRequest: ...
     class WriterResult(Awaitable[WriterResult], Protocol):
         w: Channel.Writer
+
+    class WriterResultsBuilder(Protocol):
+        w: Channel.Writer
+
+    class WriterCallContext(Protocol):
+        results: Channel.WriterResultsBuilder
 
     def writer(self) -> WriterResult: ...
     class WriterRequest(Protocol):
@@ -516,11 +582,23 @@ class Channel(Identifiable, Persistent, Protocol):
         r: Channel.Reader
         w: Channel.Writer
 
+    class EndpointsResultsBuilder(Protocol):
+        r: Channel.Reader
+        w: Channel.Writer
+
+    class EndpointsCallContext(Protocol):
+        results: Channel.EndpointsResultsBuilder
+
     def endpoints(self) -> EndpointsResult: ...
     class EndpointsRequest(Protocol):
         def send(self) -> Channel.EndpointsResult: ...
 
     def endpoints_request(self) -> EndpointsRequest: ...
+    class SetautoclosesemanticsResultsBuilder(Protocol): ...
+
+    class SetautoclosesemanticsCallContext(Protocol):
+        results: Channel.SetautoclosesemanticsResultsBuilder
+
     def setAutoCloseSemantics(
         self, cs: Channel.CloseSemantics | Literal["fbp", "no"]
     ) -> Awaitable[None]: ...
@@ -529,25 +607,44 @@ class Channel(Identifiable, Persistent, Protocol):
         def send(self) -> Awaitable[None]: ...
 
     def setAutoCloseSemantics_request(self) -> SetautoclosesemanticsRequest: ...
+    class CloseResultsBuilder(Protocol): ...
+
+    class CloseCallContext(Protocol):
+        results: Channel.CloseResultsBuilder
+
     def close(self, waitForEmptyBuffer: bool) -> Awaitable[None]: ...
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> Awaitable[None]: ...
 
     def close_request(self) -> CloseRequest: ...
+    @classmethod
+    def _new_client(cls, server: Channel.Server) -> Channel: ...
     class Server(Identifiable.Server, Persistent.Server):
-        def setBufferSize(self, size: int, **kwargs) -> Awaitable[None]: ...
+        def setBufferSize(
+            self, size: int, _context: Channel.SetbuffersizeCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
         def reader(
-            self, **kwargs
+            self, _context: Channel.ReaderCallContext, **kwargs: Any
         ) -> Awaitable[Channel.Reader | Channel.Reader.Server]: ...
         def writer(
-            self, **kwargs
+            self, _context: Channel.WriterCallContext, **kwargs: Any
         ) -> Awaitable[Channel.Writer | Channel.Writer.Server]: ...
-        def endpoints(self, **kwargs) -> Awaitable[Channel.EndpointsResult]: ...
+        def endpoints(
+            self, _context: Channel.EndpointsCallContext, **kwargs: Any
+        ) -> Awaitable[tuple[Channel.Reader, Channel.Writer]]: ...
         def setAutoCloseSemantics(
-            self, cs: Channel.CloseSemantics | Literal["fbp", "no"], **kwargs
+            self,
+            cs: Channel.CloseSemantics | Literal["fbp", "no"],
+            _context: Channel.SetautoclosesemanticsCallContext,
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
-        def close(self, waitForEmptyBuffer: bool, **kwargs) -> Awaitable[None]: ...
+        def close(
+            self,
+            waitForEmptyBuffer: bool,
+            _context: Channel.CloseCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[None]: ...
 
 class StartChannelsService(Identifiable, Protocol):
     class Params:
@@ -663,6 +760,13 @@ class StartChannelsService(Identifiable, Protocol):
         startupInfos: Sequence[Channel.StartupInfoReader]
         stop: Any
 
+    class StartResultsBuilder(Protocol):
+        startupInfos: Sequence[Channel.StartupInfoBuilder]
+        stop: Any
+
+    class StartCallContext(Protocol):
+        results: StartChannelsService.StartResultsBuilder
+
     def start(
         self,
         name: str,
@@ -684,6 +788,10 @@ class StartChannelsService(Identifiable, Protocol):
         def send(self) -> StartChannelsService.StartResult: ...
 
     def start_request(self) -> StartRequest: ...
+    @classmethod
+    def _new_client(
+        cls, server: StartChannelsService.Server
+    ) -> StartChannelsService: ...
     class Server(Identifiable.Server):
         def start(
             self,
@@ -694,8 +802,9 @@ class StartChannelsService(Identifiable, Protocol):
             readerSrts: Sequence[str],
             writerSrts: Sequence[str],
             bufferSize: int,
-            **kwargs,
-        ) -> Awaitable[StartChannelsService.StartResult]: ...
+            _context: StartChannelsService.StartCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[Any]: ...
 
 class PortInfos:
     class NameAndSR:
@@ -760,7 +869,7 @@ class PortInfos:
         @staticmethod
         def from_dict(dictionary: dict[str, Any]) -> PortInfos.NameAndSRBuilder: ...
         def init(
-            self: Any, name: Literal["srs"], size: int = ...
+            self, name: Literal["srs"], size: int = ...
         ) -> _DynamicListBuilder[str]: ...
         def copy(self) -> PortInfos.NameAndSRBuilder: ...
         def to_bytes(self) -> bytes: ...
@@ -823,7 +932,7 @@ class PortInfosReader(PortInfos):
 
 class PortInfosBuilder(PortInfos):
     @property
-    def inPorts(self) -> _DynamicListBuilder[PortInfos.NameAndSRBuilder]: ...
+    def inPorts(self) -> Sequence[PortInfos.NameAndSRBuilder]: ...
     @inPorts.setter
     def inPorts(
         self,
@@ -833,7 +942,7 @@ class PortInfosBuilder(PortInfos):
         | Sequence[dict[str, Any]],
     ) -> None: ...
     @property
-    def outPorts(self) -> _DynamicListBuilder[PortInfos.NameAndSRBuilder]: ...
+    def outPorts(self) -> Sequence[PortInfos.NameAndSRBuilder]: ...
     @outPorts.setter
     def outPorts(
         self,
@@ -868,6 +977,12 @@ class Component:
         class StartResult(Awaitable[StartResult], Protocol):
             success: bool
 
+        class StartResultsBuilder(Protocol):
+            success: bool
+
+        class StartCallContext(Protocol):
+            results: Component.Runnable.StartResultsBuilder
+
         def start(self, portInfosReaderSr: str, name: str) -> StartResult: ...
         class StartRequest(Protocol):
             portInfosReaderSr: str
@@ -878,16 +993,32 @@ class Component:
         class StopResult(Awaitable[StopResult], Protocol):
             success: bool
 
+        class StopResultsBuilder(Protocol):
+            success: bool
+
+        class StopCallContext(Protocol):
+            results: Component.Runnable.StopResultsBuilder
+
         def stop(self) -> StopResult: ...
         class StopRequest(Protocol):
             def send(self) -> Component.Runnable.StopResult: ...
 
         def stop_request(self) -> StopRequest: ...
+        @classmethod
+        def _new_client(
+            cls, server: Component.Runnable.Server
+        ) -> Component.Runnable: ...
         class Server(Identifiable.Server):
             def start(
-                self, portInfosReaderSr: str, name: str, **kwargs
+                self,
+                portInfosReaderSr: str,
+                name: str,
+                _context: Component.Runnable.StartCallContext,
+                **kwargs: Any,
             ) -> Awaitable[bool]: ...
-            def stop(self, **kwargs) -> Awaitable[bool]: ...
+            def stop(
+                self, _context: Component.Runnable.StopCallContext, **kwargs: Any
+            ) -> Awaitable[bool]: ...
 
     class ComponentType(Enum):
         standard = "standard"
@@ -1058,7 +1189,7 @@ class ComponentBuilder(Component):
         value: Component.ComponentType | Literal["standard", "iip", "subflow", "view"],
     ) -> None: ...
     @property
-    def inPorts(self) -> _DynamicListBuilder[Component.PortBuilder]: ...
+    def inPorts(self) -> Sequence[Component.PortBuilder]: ...
     @inPorts.setter
     def inPorts(
         self,
@@ -1066,7 +1197,7 @@ class ComponentBuilder(Component):
         | Sequence[dict[str, Any]],
     ) -> None: ...
     @property
-    def outPorts(self) -> _DynamicListBuilder[Component.PortBuilder]: ...
+    def outPorts(self) -> Sequence[Component.PortBuilder]: ...
     @outPorts.setter
     def outPorts(
         self,

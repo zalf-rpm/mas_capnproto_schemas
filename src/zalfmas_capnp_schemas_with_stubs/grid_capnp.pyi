@@ -445,15 +445,26 @@ class Grid(Identifiable, Persistent, Protocol):
         class SendcellsResult(Awaitable[SendcellsResult], Protocol):
             locations: Sequence[Grid.LocationReader]
 
+        class SendcellsResultsBuilder(Protocol):
+            locations: Sequence[Grid.LocationBuilder]
+
+        class SendcellsCallContext(Protocol):
+            results: Grid.Callback.SendcellsResultsBuilder
+
         def sendCells(self, maxCount: int) -> SendcellsResult: ...
         class SendcellsRequest(Protocol):
             maxCount: int
             def send(self) -> Grid.Callback.SendcellsResult: ...
 
         def sendCells_request(self) -> SendcellsRequest: ...
+        @classmethod
+        def _new_client(cls, server: Grid.Callback.Server) -> Grid.Callback: ...
         class Server:
             def sendCells(
-                self, maxCount: int, **kwargs
+                self,
+                maxCount: int,
+                _context: Grid.Callback.SendcellsCallContext,
+                **kwargs: Any,
             ) -> Awaitable[Sequence[Grid.Location]]: ...
 
     class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
@@ -461,6 +472,15 @@ class Grid(Identifiable, Persistent, Protocol):
         tl: Grid.RowColReader
         br: Grid.RowColReader
         aggParts: Sequence[Grid.AggregationPartReader]
+
+    class ClosestvalueatResultsBuilder(Protocol):
+        val: Grid.ValueBuilder
+        tl: Grid.RowColBuilder
+        br: Grid.RowColBuilder
+        aggParts: Sequence[Grid.AggregationPartBuilder]
+
+    class ClosestvalueatCallContext(Protocol):
+        results: Grid.ClosestvalueatResultsBuilder
 
     def closestValueAt(
         self,
@@ -502,6 +522,12 @@ class Grid(Identifiable, Persistent, Protocol):
     class ResolutionResult(Awaitable[ResolutionResult], Protocol):
         res: Grid.ResolutionReader
 
+    class ResolutionResultsBuilder(Protocol):
+        res: Grid.ResolutionBuilder
+
+    class ResolutionCallContext(Protocol):
+        results: Grid.ResolutionResultsBuilder
+
     def resolution(self) -> ResolutionResult: ...
     class ResolutionRequest(Protocol):
         def send(self) -> Grid.ResolutionResult: ...
@@ -511,6 +537,13 @@ class Grid(Identifiable, Persistent, Protocol):
         rows: int
         cols: int
 
+    class DimensionResultsBuilder(Protocol):
+        rows: int
+        cols: int
+
+    class DimensionCallContext(Protocol):
+        results: Grid.DimensionResultsBuilder
+
     def dimension(self) -> DimensionResult: ...
     class DimensionRequest(Protocol):
         def send(self) -> Grid.DimensionResult: ...
@@ -518,6 +551,12 @@ class Grid(Identifiable, Persistent, Protocol):
     def dimension_request(self) -> DimensionRequest: ...
     class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
         nodata: Grid.ValueReader
+
+    class NodatavalueResultsBuilder(Protocol):
+        nodata: Grid.ValueBuilder
+
+    class NodatavalueCallContext(Protocol):
+        results: Grid.NodatavalueResultsBuilder
 
     def noDataValue(self) -> NodatavalueResult: ...
     class NodatavalueRequest(Protocol):
@@ -527,6 +566,13 @@ class Grid(Identifiable, Persistent, Protocol):
     class ValueatResult(Awaitable[ValueatResult], Protocol):
         val: Grid.ValueReader
         aggParts: Sequence[Grid.AggregationPartReader]
+
+    class ValueatResultsBuilder(Protocol):
+        val: Grid.ValueBuilder
+        aggParts: Sequence[Grid.AggregationPartBuilder]
+
+    class ValueatCallContext(Protocol):
+        results: Grid.ValueatResultsBuilder
 
     def valueAt(
         self,
@@ -569,6 +615,15 @@ class Grid(Identifiable, Persistent, Protocol):
         br: LatLonCoordReader
         bl: LatLonCoordReader
 
+    class LatlonboundsResultsBuilder(Protocol):
+        tl: LatLonCoordBuilder
+        tr: LatLonCoordBuilder
+        br: LatLonCoordBuilder
+        bl: LatLonCoordBuilder
+
+    class LatlonboundsCallContext(Protocol):
+        results: Grid.LatlonboundsResultsBuilder
+
     def latLonBounds(self, useCellCenter: bool) -> LatlonboundsResult: ...
     class LatlonboundsRequest(Protocol):
         useCellCenter: bool
@@ -577,6 +632,12 @@ class Grid(Identifiable, Persistent, Protocol):
     def latLonBounds_request(self) -> LatlonboundsRequest: ...
     class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
         callback: Grid.Callback
+
+    class StreamcellsResultsBuilder(Protocol):
+        callback: Grid.Callback
+
+    class StreamcellsCallContext(Protocol):
+        results: Grid.StreamcellsResultsBuilder
 
     def streamCells(
         self,
@@ -592,11 +653,19 @@ class Grid(Identifiable, Persistent, Protocol):
     class UnitResult(Awaitable[UnitResult], Protocol):
         unit: str
 
+    class UnitResultsBuilder(Protocol):
+        unit: str
+
+    class UnitCallContext(Protocol):
+        results: Grid.UnitResultsBuilder
+
     def unit(self) -> UnitResult: ...
     class UnitRequest(Protocol):
         def send(self) -> Grid.UnitResult: ...
 
     def unit_request(self) -> UnitRequest: ...
+    @classmethod
+    def _new_client(cls, server: Grid.Server) -> Grid: ...
     class Server(Identifiable.Server, Persistent.Server):
         def closestValueAt(
             self,
@@ -624,11 +693,20 @@ class Grid(Identifiable, Persistent, Protocol):
             ],
             returnRowCols: bool,
             includeAggParts: bool,
-            **kwargs,
-        ) -> Awaitable[Grid.ClosestvalueatResult]: ...
-        def resolution(self, **kwargs) -> Awaitable[Grid.Resolution]: ...
-        def dimension(self, **kwargs) -> Awaitable[Grid.DimensionResult]: ...
-        def noDataValue(self, **kwargs) -> Awaitable[Grid.Value]: ...
+            _context: Grid.ClosestvalueatCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            tuple[Grid.Value, Grid.RowCol, Grid.RowCol, Sequence[Grid.AggregationPart]]
+        ]: ...
+        def resolution(
+            self, _context: Grid.ResolutionCallContext, **kwargs: Any
+        ) -> Awaitable[Grid.Resolution]: ...
+        def dimension(
+            self, _context: Grid.DimensionCallContext, **kwargs: Any
+        ) -> Awaitable[tuple[int, int]]: ...
+        def noDataValue(
+            self, _context: Grid.NodatavalueCallContext, **kwargs: Any
+        ) -> Awaitable[Grid.Value]: ...
         def valueAt(
             self,
             row: int,
@@ -654,12 +732,22 @@ class Grid(Identifiable, Persistent, Protocol):
                 "iMax",
             ],
             includeAggParts: bool,
-            **kwargs,
-        ) -> Awaitable[Grid.ValueatResult]: ...
+            _context: Grid.ValueatCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[tuple[Grid.Value, Sequence[Grid.AggregationPart]]]: ...
         def latLonBounds(
-            self, useCellCenter: bool, **kwargs
-        ) -> Awaitable[Grid.LatlonboundsResult]: ...
+            self,
+            useCellCenter: bool,
+            _context: Grid.LatlonboundsCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[tuple[LatLonCoord, LatLonCoord, LatLonCoord, LatLonCoord]]: ...
         def streamCells(
-            self, topLeft: Grid.RowColReader, bottomRight: Grid.RowColReader, **kwargs
+            self,
+            topLeft: Grid.RowColReader,
+            bottomRight: Grid.RowColReader,
+            _context: Grid.StreamcellsCallContext,
+            **kwargs: Any,
         ) -> Awaitable[Grid.Callback | Grid.Callback.Server]: ...
-        def unit(self, **kwargs) -> Awaitable[str]: ...
+        def unit(
+            self, _context: Grid.UnitCallContext, **kwargs: Any
+        ) -> Awaitable[str]: ...
