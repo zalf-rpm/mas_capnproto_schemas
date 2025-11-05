@@ -544,7 +544,7 @@ class EventBuilder(Event):
 
 class Fertilizer(Identifiable, Persistent, Protocol):
     class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-        nutrients: Sequence[Nutrient]
+        nutrients: Sequence[NutrientReader]
 
     def nutrients(self) -> NutrientsResult: ...
     class NutrientsRequest(Protocol):
@@ -1848,7 +1848,7 @@ class FertilizerService(Registry, Protocol):
 
 class Service(Identifiable, Protocol):
     class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-        mgmt: Sequence[Event]
+        mgmt: Sequence[EventReader]
 
     def managementAt(self, lat: float, lon: float) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):

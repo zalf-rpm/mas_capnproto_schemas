@@ -14,6 +14,7 @@ from .climate_capnp import TimeSeries
 from .common_capnp import (
     Identifiable,
     IdInformation,
+    IdInformationReader,
 )
 from .management_capnp import Event, EventBuilder, EventReader
 from .persistence_capnp import Persistent
@@ -251,7 +252,7 @@ class XYPlusResultBuilder(XYPlusResult):
 
 class ClimateInstance(Identifiable, Protocol):
     class RunResult(Awaitable[RunResult], Protocol):
-        result: XYResult
+        result: XYResultReader
 
     def run(self, timeSeries: Any) -> RunResult: ...
     class RunRequest(Protocol):
@@ -260,7 +261,7 @@ class ClimateInstance(Identifiable, Protocol):
 
     def run_request(self) -> RunRequest: ...
     class RunsetResult(Awaitable[RunsetResult], Protocol):
-        result: XYPlusResult
+        result: XYPlusResultReader
 
     def runSet(self, dataset: Any) -> RunsetResult: ...
     class RunsetRequest(Protocol):
@@ -402,14 +403,9 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         ]: ...
 
 class InstanceFactory(Identifiable, Protocol):
-    class ModelinfoResult(Awaitable[ModelinfoResult], Protocol):
-        id: str
-        name: str
-        description: str
-
-    def modelInfo(self) -> ModelinfoResult: ...
+    def modelInfo(self) -> Awaitable[IdInformationReader]: ...
     class ModelinfoRequest(Protocol):
-        def send(self) -> InstanceFactory.ModelinfoResult: ...
+        def send(self) -> Awaitable[IdInformationReader]: ...
 
     def modelInfo_request(self) -> ModelinfoRequest: ...
     class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):

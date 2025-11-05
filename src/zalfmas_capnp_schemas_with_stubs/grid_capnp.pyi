@@ -443,7 +443,7 @@ class Grid(Identifiable, Persistent, Protocol):
 
     class Callback(Protocol):
         class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-            locations: Sequence[Grid.Location]
+            locations: Sequence[Grid.LocationReader]
 
         def sendCells(self, maxCount: int) -> SendcellsResult: ...
         class SendcellsRequest(Protocol):
@@ -457,10 +457,10 @@ class Grid(Identifiable, Persistent, Protocol):
             ) -> Awaitable[Sequence[Grid.Location]]: ...
 
     class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
-        val: Grid.Value
-        tl: Grid.RowCol
-        br: Grid.RowCol
-        aggParts: Sequence[Grid.AggregationPart]
+        val: Grid.ValueReader
+        tl: Grid.RowColReader
+        br: Grid.RowColReader
+        aggParts: Sequence[Grid.AggregationPartReader]
 
     def closestValueAt(
         self,
@@ -500,7 +500,7 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def closestValueAt_request(self) -> ClosestvalueatRequest: ...
     class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-        res: Grid.Resolution
+        res: Grid.ResolutionReader
 
     def resolution(self) -> ResolutionResult: ...
     class ResolutionRequest(Protocol):
@@ -517,7 +517,7 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def dimension_request(self) -> DimensionRequest: ...
     class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
-        nodata: Grid.Value
+        nodata: Grid.ValueReader
 
     def noDataValue(self) -> NodatavalueResult: ...
     class NodatavalueRequest(Protocol):
@@ -525,8 +525,8 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def noDataValue_request(self) -> NodatavalueRequest: ...
     class ValueatResult(Awaitable[ValueatResult], Protocol):
-        val: Grid.Value
-        aggParts: Sequence[Grid.AggregationPart]
+        val: Grid.ValueReader
+        aggParts: Sequence[Grid.AggregationPartReader]
 
     def valueAt(
         self,
@@ -564,10 +564,10 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def valueAt_request(self) -> ValueatRequest: ...
     class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-        tl: LatLonCoord
-        tr: LatLonCoord
-        br: LatLonCoord
-        bl: LatLonCoord
+        tl: LatLonCoordReader
+        tr: LatLonCoordReader
+        br: LatLonCoordReader
+        bl: LatLonCoordReader
 
     def latLonBounds(self, useCellCenter: bool) -> LatlonboundsResult: ...
     class LatlonboundsRequest(Protocol):

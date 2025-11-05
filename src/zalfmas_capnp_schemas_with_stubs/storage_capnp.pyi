@@ -356,7 +356,7 @@ class Store(Identifiable, Persistent, Protocol):
 
             def getKey_request(self) -> GetkeyRequest: ...
             class GetvalueResult(Awaitable[GetvalueResult], Protocol):
-                value: Store.Container.Entry.Value
+                value: Store.Container.Entry.ValueReader
                 isUnset: bool
 
             def getValue(self) -> GetvalueResult: ...
@@ -470,7 +470,7 @@ class Store(Identifiable, Persistent, Protocol):
 
         def downloadEntries_request(self) -> DownloadentriesRequest: ...
         class ListentriesResult(Awaitable[ListentriesResult], Protocol):
-            entries: Sequence[Store.Container.KeyAndEntry]
+            entries: Sequence[Store.Container.KeyAndEntryReader]
 
         def listEntries(self) -> ListentriesResult: ...
         class ListentriesRequest(Protocol):
@@ -726,7 +726,7 @@ class Store(Identifiable, Persistent, Protocol):
 
     def containerWithId_request(self) -> ContainerwithidRequest: ...
     class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
-        containers: Sequence[Store.InfoAndContainer]
+        containers: Sequence[Store.InfoAndContainerReader]
 
     def listContainers(self) -> ListcontainersResult: ...
     class ListcontainersRequest(Protocol):

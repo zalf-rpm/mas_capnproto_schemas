@@ -77,7 +77,7 @@ class JobBuilder(Job, Generic[_Payload]):
 
 class Service(Identifiable, Persistent, Protocol):
     class NextjobResult(Awaitable[NextjobResult], Protocol):
-        job: Job
+        job: JobReader
 
     def nextJob(self) -> NextjobResult: ...
     class NextjobRequest(Protocol):

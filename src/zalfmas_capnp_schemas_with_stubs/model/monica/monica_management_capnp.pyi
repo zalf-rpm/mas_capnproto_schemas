@@ -2535,7 +2535,7 @@ class ParamsBuilder(Params):
 
 class Service(Identifiable, Protocol):
     class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-        mgmt: Sequence[Event]
+        mgmt: Sequence[EventReader]
 
     def managementAt(self, lat: float, lon: float) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):

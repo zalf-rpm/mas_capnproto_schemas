@@ -10,6 +10,7 @@ from typing import Any, BinaryIO, Literal, Protocol
 from .common_capnp import (
     Identifiable,
     IdInformation,
+    IdInformationReader,
 )
 from .persistence_capnp import Restorer, VatId, VatIdBuilder, VatIdReader
 
@@ -166,19 +167,14 @@ class Registry(Identifiable, Protocol):
         def send(self) -> Registry.SupportedcategoriesResult: ...
 
     def supportedCategories_request(self) -> SupportedcategoriesRequest: ...
-    class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
-        id: str
-        name: str
-        description: str
-
-    def categoryInfo(self, categoryId: str) -> CategoryinfoResult: ...
+    def categoryInfo(self, categoryId: str) -> Awaitable[IdInformationReader]: ...
     class CategoryinfoRequest(Protocol):
         categoryId: str
-        def send(self) -> Registry.CategoryinfoResult: ...
+        def send(self) -> Awaitable[IdInformationReader]: ...
 
     def categoryInfo_request(self) -> CategoryinfoRequest: ...
     class EntriesResult(Awaitable[EntriesResult], Protocol):
-        entries: Sequence[Registry.Entry]
+        entries: Sequence[Registry.EntryReader]
 
     def entries(self, categoryId: str) -> EntriesResult: ...
     class EntriesRequest(Protocol):
