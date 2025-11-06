@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.40](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.39...v0.1.40) (2025-11-06)
+
+
+### Bug Fixes
+
+* try to fix project structure to not get confused with the relative imports of the pycapnp files ([3012ff5](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/3012ff5870317212908b4648125f36c148bf3f42))
+
 ## [0.1.39](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.38...v0.1.39) (2025-11-06)
 
 
