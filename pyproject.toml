@@ -13,7 +13,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 packages = [
-  { include = "zalfmas_capnp_schemas_with_stubs", from = "src" },
-  { include = "zalfmas_capnp_schemas", from = "." },
   { include = "capnp-stubs", from = "capnp-stubs" },
+  { include = "zalfmas_capnp_schemas" },
+  { include = "zalfmas_capnp_schemas_with_stubs" },
 ]
