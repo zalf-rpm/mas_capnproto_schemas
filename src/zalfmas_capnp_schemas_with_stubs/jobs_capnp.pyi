@@ -91,7 +91,9 @@ class Service(Identifiable, Persistent, Protocol):
 
     def nextJob_request(self) -> NextjobRequest: ...
     @classmethod
-    def _new_client(cls, server: Service.Server) -> Service: ...
+    def _new_client(
+        cls, server: Service.Server | Identifiable.Server | Persistent.Server
+    ) -> Service: ...
     class Server(Identifiable.Server, Persistent.Server):
         def nextJob(
             self, _context: Service.NextjobCallContext, **kwargs: Any

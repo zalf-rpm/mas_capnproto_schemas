@@ -6,7 +6,16 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, Literal, Protocol, TypeVar, overload
+from typing import (
+    Any,
+    BinaryIO,
+    Generic,
+    Literal,
+    NamedTuple,
+    Protocol,
+    TypeVar,
+    overload,
+)
 
 from capnp import _DynamicListBuilder
 
@@ -283,7 +292,9 @@ class ClimateInstance(Identifiable, Protocol):
 
     def runSet_request(self) -> RunsetRequest: ...
     @classmethod
-    def _new_client(cls, server: ClimateInstance.Server) -> ClimateInstance: ...
+    def _new_client(
+        cls, server: ClimateInstance.Server | Identifiable.Server
+    ) -> ClimateInstance: ...
     class Server(Identifiable.Server):
         def run(
             self,
@@ -400,7 +411,13 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
 
     def run_request(self) -> RunRequest: ...
     @classmethod
-    def _new_client(cls, server: EnvInstance.Server) -> EnvInstance: ...
+    def _new_client(
+        cls,
+        server: EnvInstance.Server
+        | Identifiable.Server
+        | Persistent.Server
+        | Stoppable.Server,
+    ) -> EnvInstance: ...
     class Server(Identifiable.Server, Persistent.Server, Stoppable.Server):
         def run(
             self,
@@ -454,7 +471,14 @@ class EnvInstanceProxy(EnvInstance, Protocol):
 
     def registerEnvInstance_request(self) -> RegisterenvinstanceRequest: ...
     @classmethod
-    def _new_client(cls, server: EnvInstanceProxy.Server) -> EnvInstanceProxy: ...
+    def _new_client(
+        cls,
+        server: EnvInstanceProxy.Server
+        | EnvInstance.Server
+        | Identifiable.Server
+        | Persistent.Server
+        | Stoppable.Server,
+    ) -> EnvInstanceProxy: ...
     class Server(EnvInstance.Server):
         def registerEnvInstance(
             self,
@@ -466,12 +490,17 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         ]: ...
 
 class InstanceFactory(Identifiable, Protocol):
-    class ModelinfoCallContext(Protocol):
-        results: IdInformationBuilder
+    class ModelinfoResult(Protocol):
+        id: str
+        name: str
+        description: str
 
-    def modelInfo(self) -> Awaitable[IdInformationReader]: ...
+    class ModelinfoCallContext(Protocol):
+        results: InstanceFactory.ModelinfoResult
+
+    def modelInfo(self) -> Awaitable[InstanceFactory.ModelinfoResult]: ...
     class ModelinfoRequest(Protocol):
-        def send(self) -> Awaitable[IdInformationReader]: ...
+        def send(self) -> Awaitable[InstanceFactory.ModelinfoResult]: ...
 
     def modelInfo_request(self) -> ModelinfoRequest: ...
     class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
@@ -504,11 +533,18 @@ class InstanceFactory(Identifiable, Protocol):
 
     def newInstances_request(self) -> NewinstancesRequest: ...
     @classmethod
-    def _new_client(cls, server: InstanceFactory.Server) -> InstanceFactory: ...
+    def _new_client(
+        cls, server: InstanceFactory.Server | Identifiable.Server
+    ) -> InstanceFactory: ...
     class Server(Identifiable.Server):
+        class ModelinfoResult(NamedTuple):
+            id: str
+            name: str
+            description: str
+
         def modelInfo(
             self, _context: InstanceFactory.ModelinfoCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[InstanceFactory.Server.ModelinfoResult]: ...
         def newInstance(
             self, _context: InstanceFactory.NewinstanceCallContext, **kwargs: Any
         ) -> Awaitable[Identifiable | Identifiable.Server]: ...

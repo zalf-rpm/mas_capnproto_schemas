@@ -6,7 +6,16 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, Literal, Protocol, TypeVar, overload
+from typing import (
+    Any,
+    BinaryIO,
+    Generic,
+    Literal,
+    NamedTuple,
+    Protocol,
+    TypeVar,
+    overload,
+)
 
 from capnp import _DynamicListBuilder
 
@@ -84,20 +93,30 @@ class IdInformationBuilder(IdInformation):
     def write_packed(file: BufferedWriter) -> None: ...
 
 class Identifiable(Protocol):
-    class InfoCallContext(Protocol):
-        results: IdInformationBuilder
+    class InfoResult(Protocol):
+        id: str
+        name: str
+        description: str
 
-    def info(self) -> Awaitable[IdInformationReader]: ...
+    class InfoCallContext(Protocol):
+        results: Identifiable.InfoResult
+
+    def info(self) -> Awaitable[Identifiable.InfoResult]: ...
     class InfoRequest(Protocol):
-        def send(self) -> Awaitable[IdInformationReader]: ...
+        def send(self) -> Awaitable[Identifiable.InfoResult]: ...
 
     def info_request(self) -> InfoRequest: ...
     @classmethod
     def _new_client(cls, server: Identifiable.Server) -> Identifiable: ...
     class Server:
+        class InfoResult(NamedTuple):
+            id: str
+            name: str
+            description: str
+
         def info(
             self, _context: Identifiable.InfoCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Identifiable.Server.InfoResult]: ...
 
 class StructuredText:
     class Type(Enum):
@@ -718,5 +737,7 @@ class Holder(Protocol):
 
 class IdentifiableHolder(Identifiable, Holder, Protocol):
     @classmethod
-    def _new_client(cls, server: IdentifiableHolder.Server) -> IdentifiableHolder: ...
+    def _new_client(
+        cls, server: IdentifiableHolder.Server | Holder.Server | Identifiable.Server
+    ) -> IdentifiableHolder: ...
     class Server(Identifiable.Server, Holder.Server): ...

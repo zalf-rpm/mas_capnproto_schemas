@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, Protocol, overload
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, overload
 
 from .common_capnp import Identifiable
 
@@ -705,26 +705,34 @@ class Persistent(Protocol):
                 **kwargs: Any,
             ) -> Awaitable[bool]: ...
 
+    class SaveResult(Protocol):
+        sturdyRef: SturdyRefReader
+        unsaveSR: SturdyRefReader
+
     class SaveCallContext(Protocol):
-        results: Persistent.SaveResultsBuilder
+        results: Persistent.SaveResult
 
     def save(
         self, sealFor: SturdyRef.Owner | dict[str, Any]
-    ) -> Awaitable[Persistent.SaveResultsReader]: ...
+    ) -> Awaitable[Persistent.SaveResult]: ...
     class SaveRequest(Protocol):
         sealFor: SturdyRef.OwnerBuilder
-        def send(self) -> Awaitable[Persistent.SaveResultsReader]: ...
+        def send(self) -> Awaitable[Persistent.SaveResult]: ...
 
     def save_request(self) -> SaveRequest: ...
     @classmethod
     def _new_client(cls, server: Persistent.Server) -> Persistent: ...
     class Server:
+        class SaveResult(NamedTuple):
+            sturdyRef: SturdyRef
+            unsaveSR: SturdyRef
+
         def save(
             self,
             sealFor: SturdyRef.OwnerReader,
             _context: Persistent.SaveCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Persistent.Server.SaveResult]: ...
 
 class Restorer(Protocol):
     class RestoreParams:
@@ -999,7 +1007,9 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
 
     def resolve_request(self) -> ResolveRequest: ...
     @classmethod
-    def _new_client(cls, server: HostPortResolver.Server) -> HostPortResolver: ...
+    def _new_client(
+        cls, server: HostPortResolver.Server | Identifiable.Server | Restorer.Server
+    ) -> HostPortResolver: ...
     class Server(Identifiable.Server, Restorer.Server):
         def resolve(
             self, id: str, _context: HostPortResolver.ResolveCallContext, **kwargs: Any
@@ -1082,18 +1092,30 @@ class Gateway(Identifiable, Restorer, Protocol):
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    class RegisterCallContext(Protocol):
-        results: Gateway.RegResultsBuilder
+    class RegisterResult(Protocol):
+        sturdyRef: SturdyRefReader
+        heartbeat: Heartbeat
+        secsHeartbeatInterval: int
 
-    def register(self, cap: Any) -> Awaitable[Gateway.RegResultsReader]: ...
+    class RegisterCallContext(Protocol):
+        results: Gateway.RegisterResult
+
+    def register(self, cap: Any) -> Awaitable[Gateway.RegisterResult]: ...
     class RegisterRequest(Protocol):
         cap: Any
-        def send(self) -> Awaitable[Gateway.RegResultsReader]: ...
+        def send(self) -> Awaitable[Gateway.RegisterResult]: ...
 
     def register_request(self) -> RegisterRequest: ...
     @classmethod
-    def _new_client(cls, server: Gateway.Server) -> Gateway: ...
+    def _new_client(
+        cls, server: Gateway.Server | Identifiable.Server | Restorer.Server
+    ) -> Gateway: ...
     class Server(Identifiable.Server, Restorer.Server):
+        class RegisterResult(NamedTuple):
+            sturdyRef: SturdyRef
+            heartbeat: Heartbeat
+            secsHeartbeatInterval: int
+
         def register(
             self, cap: Any, _context: Gateway.RegisterCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Gateway.Server.RegisterResult]: ...

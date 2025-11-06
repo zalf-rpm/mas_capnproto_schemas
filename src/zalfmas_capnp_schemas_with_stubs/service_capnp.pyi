@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, Literal, Protocol, TypeVar
+from typing import Any, BinaryIO, Generic, Literal, NamedTuple, Protocol, TypeVar
 
 from capnp import _DynamicListBuilder
 
@@ -72,7 +72,7 @@ class Admin(Identifiable, Protocol):
 
     def updateIdentity_request(self) -> UpdateidentityRequest: ...
     @classmethod
-    def _new_client(cls, server: Admin.Server) -> Admin: ...
+    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> Admin: ...
     class Server(Identifiable.Server):
         def heartbeat(
             self, _context: Admin.HeartbeatCallContext, **kwargs: Any
@@ -110,7 +110,9 @@ class SimpleFactory(Identifiable, Protocol):
 
     def create_request(self) -> CreateRequest: ...
     @classmethod
-    def _new_client(cls, server: SimpleFactory.Server) -> SimpleFactory: ...
+    def _new_client(
+        cls, server: SimpleFactory.Server | Identifiable.Server
+    ) -> SimpleFactory: ...
     class Server(Identifiable.Server):
         def create(
             self, _context: SimpleFactory.CreateCallContext, **kwargs: Any
@@ -270,20 +272,25 @@ class Factory(Identifiable, Protocol):
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
+    class CreateResult(Protocol):
+        adminCap: Any
+        serviceCaps: Sequence[Identifiable]
+        error: str
+
     class CreateCallContext(Protocol):
-        results: Factory.AccessInfoBuilder
+        results: Factory.CreateResult
 
     def create(
         self,
         timeoutSeconds: int,
         interfaceNameToRegistrySR: Sequence[Pair[str, str]],
         msgPayload: Any,
-    ) -> Awaitable[Factory.AccessInfoReader]: ...
+    ) -> Awaitable[Factory.CreateResult]: ...
     class CreateRequest(Protocol):
         timeoutSeconds: int
         interfaceNameToRegistrySR: Sequence[Pair[str, str]]
         msgPayload: Any
-        def send(self) -> Awaitable[Factory.AccessInfoReader]: ...
+        def send(self) -> Awaitable[Factory.CreateResult]: ...
 
     def create_request(self) -> CreateRequest: ...
     class ServiceinterfacenamesResult(Awaitable[ServiceinterfacenamesResult], Protocol):
@@ -301,8 +308,13 @@ class Factory(Identifiable, Protocol):
 
     def serviceInterfaceNames_request(self) -> ServiceinterfacenamesRequest: ...
     @classmethod
-    def _new_client(cls, server: Factory.Server) -> Factory: ...
+    def _new_client(cls, server: Factory.Server | Identifiable.Server) -> Factory: ...
     class Server(Identifiable.Server):
+        class CreateResult(NamedTuple):
+            adminCap: Any
+            serviceCaps: Sequence[Identifiable]
+            error: str
+
         def create(
             self,
             timeoutSeconds: int,
@@ -310,7 +322,7 @@ class Factory(Identifiable, Protocol):
             msgPayload: Any,
             _context: Factory.CreateCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Factory.Server.CreateResult]: ...
         def serviceInterfaceNames(
             self, _context: Factory.ServiceinterfacenamesCallContext, **kwargs: Any
         ) -> Awaitable[Sequence[str]]: ...

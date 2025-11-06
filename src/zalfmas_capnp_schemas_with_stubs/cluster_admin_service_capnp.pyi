@@ -75,7 +75,7 @@ class Cluster:
         def availableModels_request(self) -> AvailablemodelsRequest: ...
         @classmethod
         def _new_client(
-            cls, server: Cluster.AdminMaster.Server
+            cls, server: Cluster.AdminMaster.Server | Identifiable.Server
         ) -> Cluster.AdminMaster: ...
         class Server(Identifiable.Server):
             def registerModelInstanceFactory(
@@ -108,7 +108,7 @@ class Cluster:
         def availableModels_request(self) -> AvailablemodelsRequest: ...
         @classmethod
         def _new_client(
-            cls, server: Cluster.UserMaster.Server
+            cls, server: Cluster.UserMaster.Server | Identifiable.Server
         ) -> Cluster.UserMaster: ...
         class Server(Identifiable.Server):
             def availableModels(
@@ -203,7 +203,9 @@ class Cluster:
 
         def reserveNumberOfCores_request(self) -> ReservenumberofcoresRequest: ...
         @classmethod
-        def _new_client(cls, server: Cluster.Runtime.Server) -> Cluster.Runtime: ...
+        def _new_client(
+            cls, server: Cluster.Runtime.Server | Identifiable.Server
+        ) -> Cluster.Runtime: ...
         class Server(Identifiable.Server):
             def registerModelInstanceFactory(
                 self,
@@ -460,7 +462,7 @@ class Cluster:
         def restoreSturdyRef_request(self) -> RestoresturdyrefRequest: ...
         @classmethod
         def _new_client(
-            cls, server: Cluster.ModelInstanceFactory.Server
+            cls, server: Cluster.ModelInstanceFactory.Server | Identifiable.Server
         ) -> Cluster.ModelInstanceFactory: ...
         class Server(Identifiable.Server):
             def newInstance(

@@ -6,7 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, Protocol, overload
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, overload
 
 from capnp import _DynamicListBuilder
 
@@ -484,31 +484,49 @@ class ProfileDataBuilder(ProfileData):
     def write_packed(file: BufferedWriter) -> None: ...
 
 class Profile(Identifiable, Persistent, Protocol):
-    class DataCallContext(Protocol):
-        results: ProfileDataBuilder
+    class DataResult(Protocol):
+        layers: Sequence[LayerReader]
+        percentageOfArea: float
 
-    def data(self) -> Awaitable[ProfileDataReader]: ...
+    class DataCallContext(Protocol):
+        results: Profile.DataResult
+
+    def data(self) -> Awaitable[Profile.DataResult]: ...
     class DataRequest(Protocol):
-        def send(self) -> Awaitable[ProfileDataReader]: ...
+        def send(self) -> Awaitable[Profile.DataResult]: ...
 
     def data_request(self) -> DataRequest: ...
-    class GeolocationCallContext(Protocol):
-        results: LatLonCoordBuilder
+    class GeolocationResult(Protocol):
+        lat: float
+        lon: float
 
-    def geoLocation(self) -> Awaitable[LatLonCoordReader]: ...
+    class GeolocationCallContext(Protocol):
+        results: Profile.GeolocationResult
+
+    def geoLocation(self) -> Awaitable[Profile.GeolocationResult]: ...
     class GeolocationRequest(Protocol):
-        def send(self) -> Awaitable[LatLonCoordReader]: ...
+        def send(self) -> Awaitable[Profile.GeolocationResult]: ...
 
     def geoLocation_request(self) -> GeolocationRequest: ...
     @classmethod
-    def _new_client(cls, server: Profile.Server) -> Profile: ...
+    def _new_client(
+        cls, server: Profile.Server | Identifiable.Server | Persistent.Server
+    ) -> Profile: ...
     class Server(Identifiable.Server, Persistent.Server):
+        class DataResult(NamedTuple):
+            layers: Sequence[Layer]
+            percentageOfArea: float
+
+        class GeolocationResult(NamedTuple):
+            lat: float
+            lon: float
+
         def data(
             self, _context: Profile.DataCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Profile.Server.DataResult]: ...
         def geoLocation(
             self, _context: Profile.GeolocationCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Profile.Server.GeolocationResult]: ...
 
 class Service(Identifiable, Persistent, Protocol):
     class Stream(Protocol):
@@ -537,20 +555,25 @@ class Service(Identifiable, Persistent, Protocol):
                 **kwargs: Any,
             ) -> Awaitable[Sequence[Profile]]: ...
 
+    class CheckavailableparametersResult(Protocol):
+        failed: bool
+        mandatory: Sequence[PropertyName]
+        optional: Sequence[PropertyName]
+
     class CheckavailableparametersCallContext(Protocol):
-        results: Query.ResultBuilder
+        results: Service.CheckavailableparametersResult
 
     def checkAvailableParameters(
         self,
         mandatory: Sequence[PropertyName],
         optional: Sequence[PropertyName],
         onlyRawData: bool,
-    ) -> Awaitable[Query.ResultReader]: ...
+    ) -> Awaitable[Service.CheckavailableparametersResult]: ...
     class CheckavailableparametersRequest(Protocol):
         mandatory: Sequence[PropertyName]
         optional: Sequence[PropertyName]
         onlyRawData: bool
-        def send(self) -> Awaitable[Query.ResultReader]: ...
+        def send(self) -> Awaitable[Service.CheckavailableparametersResult]: ...
 
     def checkAvailableParameters_request(self) -> CheckavailableparametersRequest: ...
     class GetallavailableparametersResult(
@@ -615,8 +638,15 @@ class Service(Identifiable, Persistent, Protocol):
 
     def streamAllProfiles_request(self) -> StreamallprofilesRequest: ...
     @classmethod
-    def _new_client(cls, server: Service.Server) -> Service: ...
+    def _new_client(
+        cls, server: Service.Server | Identifiable.Server | Persistent.Server
+    ) -> Service: ...
     class Server(Identifiable.Server, Persistent.Server):
+        class CheckavailableparametersResult(NamedTuple):
+            failed: bool
+            mandatory: Sequence[PropertyName]
+            optional: Sequence[PropertyName]
+
         def checkAvailableParameters(
             self,
             mandatory: Sequence[PropertyName],
@@ -624,7 +654,7 @@ class Service(Identifiable, Persistent, Protocol):
             onlyRawData: bool,
             _context: Service.CheckavailableparametersCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Service.Server.CheckavailableparametersResult]: ...
         def getAllAvailableParameters(
             self,
             onlyRawData: bool,

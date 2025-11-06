@@ -665,7 +665,9 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def unit_request(self) -> UnitRequest: ...
     @classmethod
-    def _new_client(cls, server: Grid.Server) -> Grid: ...
+    def _new_client(
+        cls, server: Grid.Server | Identifiable.Server | Persistent.Server
+    ) -> Grid: ...
     class Server(Identifiable.Server, Persistent.Server):
         def closestValueAt(
             self,

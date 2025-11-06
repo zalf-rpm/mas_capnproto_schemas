@@ -6,7 +6,16 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, Literal, Protocol, TypeVar, overload
+from typing import (
+    Any,
+    BinaryIO,
+    Generic,
+    Literal,
+    NamedTuple,
+    Protocol,
+    TypeVar,
+    overload,
+)
 
 from capnp import _DynamicListBuilder
 
@@ -310,12 +319,18 @@ class Channel(Identifiable, Persistent, Protocol):
         def write_packed(file: BufferedWriter) -> None: ...
 
     class Reader(Identifiable, Persistent, Protocol):
-        class ReadCallContext(Protocol):
-            results: Channel.MsgBuilder
+        class ReadResult(Protocol):
+            value: Any
+            done: None
+            noMsg: None
+            def which(self) -> Literal["value", "done", "noMsg"]: ...
 
-        def read(self) -> Awaitable[Channel.MsgReader]: ...
+        class ReadCallContext(Protocol):
+            results: Channel.Reader.ReadResult
+
+        def read(self) -> Awaitable[Channel.Reader.ReadResult]: ...
         class ReadRequest(Protocol):
-            def send(self) -> Awaitable[Channel.MsgReader]: ...
+            def send(self) -> Awaitable[Channel.Reader.ReadResult]: ...
 
         def read_request(self) -> ReadRequest: ...
         class CloseResultsBuilder(Protocol): ...
@@ -328,26 +343,44 @@ class Channel(Identifiable, Persistent, Protocol):
             def send(self) -> Awaitable[None]: ...
 
         def close_request(self) -> CloseRequest: ...
-        class ReadifmsgCallContext(Protocol):
-            results: Channel.MsgBuilder
+        class ReadifmsgResult(Protocol):
+            value: Any
+            done: None
+            noMsg: None
+            def which(self) -> Literal["value", "done", "noMsg"]: ...
 
-        def readIfMsg(self) -> Awaitable[Channel.MsgReader]: ...
+        class ReadifmsgCallContext(Protocol):
+            results: Channel.Reader.ReadifmsgResult
+
+        def readIfMsg(self) -> Awaitable[Channel.Reader.ReadifmsgResult]: ...
         class ReadifmsgRequest(Protocol):
-            def send(self) -> Awaitable[Channel.MsgReader]: ...
+            def send(self) -> Awaitable[Channel.Reader.ReadifmsgResult]: ...
 
         def readIfMsg_request(self) -> ReadifmsgRequest: ...
         @classmethod
-        def _new_client(cls, server: Channel.Reader.Server) -> Channel.Reader: ...
+        def _new_client(
+            cls, server: Channel.Reader.Server | Identifiable.Server | Persistent.Server
+        ) -> Channel.Reader: ...
         class Server(Identifiable.Server, Persistent.Server):
+            class ReadResult(NamedTuple):
+                value: Any
+                done: None
+                noMsg: None
+
+            class ReadifmsgResult(NamedTuple):
+                value: Any
+                done: None
+                noMsg: None
+
             def read(
                 self, _context: Channel.Reader.ReadCallContext, **kwargs: Any
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[Channel.Reader.Server.ReadResult]: ...
             def close(
                 self, _context: Channel.Reader.CloseCallContext, **kwargs: Any
             ) -> Awaitable[None]: ...
             def readIfMsg(
                 self, _context: Channel.Reader.ReadifmsgCallContext, **kwargs: Any
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[Channel.Reader.Server.ReadifmsgResult]: ...
 
     class Writer(Identifiable, Persistent, Protocol):
         class WriteResultsBuilder(Protocol): ...
@@ -393,7 +426,9 @@ class Channel(Identifiable, Persistent, Protocol):
 
         def writeIfSpace_request(self) -> WriteifspaceRequest: ...
         @classmethod
-        def _new_client(cls, server: Channel.Writer.Server) -> Channel.Writer: ...
+        def _new_client(
+            cls, server: Channel.Writer.Server | Identifiable.Server | Persistent.Server
+        ) -> Channel.Writer: ...
         class Server(Identifiable.Server, Persistent.Server):
             def write(
                 self,
@@ -619,7 +654,9 @@ class Channel(Identifiable, Persistent, Protocol):
 
     def close_request(self) -> CloseRequest: ...
     @classmethod
-    def _new_client(cls, server: Channel.Server) -> Channel: ...
+    def _new_client(
+        cls, server: Channel.Server | Identifiable.Server | Persistent.Server
+    ) -> Channel: ...
     class Server(Identifiable.Server, Persistent.Server):
         def setBufferSize(
             self, size: int, _context: Channel.SetbuffersizeCallContext, **kwargs: Any
@@ -790,7 +827,7 @@ class StartChannelsService(Identifiable, Protocol):
     def start_request(self) -> StartRequest: ...
     @classmethod
     def _new_client(
-        cls, server: StartChannelsService.Server
+        cls, server: StartChannelsService.Server | Identifiable.Server
     ) -> StartChannelsService: ...
     class Server(Identifiable.Server):
         def start(
@@ -1006,7 +1043,7 @@ class Component:
         def stop_request(self) -> StopRequest: ...
         @classmethod
         def _new_client(
-            cls, server: Component.Runnable.Server
+            cls, server: Component.Runnable.Server | Identifiable.Server
         ) -> Component.Runnable: ...
         class Server(Identifiable.Server):
             def start(

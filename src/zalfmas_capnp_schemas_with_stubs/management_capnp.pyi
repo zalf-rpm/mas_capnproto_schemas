@@ -572,7 +572,9 @@ class Fertilizer(Identifiable, Persistent, Protocol):
 
     def parameters_request(self) -> ParametersRequest: ...
     @classmethod
-    def _new_client(cls, server: Fertilizer.Server) -> Fertilizer: ...
+    def _new_client(
+        cls, server: Fertilizer.Server | Identifiable.Server | Persistent.Server
+    ) -> Fertilizer: ...
     class Server(Identifiable.Server, Persistent.Server):
         def nutrients(
             self, _context: Fertilizer.NutrientsCallContext, **kwargs: Any
@@ -1863,7 +1865,9 @@ class ParamsBuilder(Params):
 
 class FertilizerService(Registry, Protocol):
     @classmethod
-    def _new_client(cls, server: FertilizerService.Server) -> FertilizerService: ...
+    def _new_client(
+        cls, server: FertilizerService.Server | Identifiable.Server | Registry.Server
+    ) -> FertilizerService: ...
     class Server(Registry.Server): ...
 
 class Service(Identifiable, Protocol):
@@ -1884,7 +1888,7 @@ class Service(Identifiable, Protocol):
 
     def managementAt_request(self) -> ManagementatRequest: ...
     @classmethod
-    def _new_client(cls, server: Service.Server) -> Service: ...
+    def _new_client(cls, server: Service.Server | Identifiable.Server) -> Service: ...
     class Server(Identifiable.Server):
         def managementAt(
             self,

@@ -6,7 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, Protocol, overload
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, overload
 
 from capnp import _DynamicListBuilder
 
@@ -518,15 +518,20 @@ class Metadata:
         def write_packed(file: BufferedWriter) -> None: ...
 
     class Information(Protocol):
+        class ForoneResult(Protocol):
+            id: str
+            name: str
+            description: str
+
         class ForoneCallContext(Protocol):
-            results: IdInformationBuilder
+            results: Metadata.Information.ForoneResult
 
         def forOne(
             self, entry: Metadata.Entry | dict[str, Any]
-        ) -> Awaitable[IdInformationReader]: ...
+        ) -> Awaitable[Metadata.Information.ForoneResult]: ...
         class ForoneRequest(Protocol):
             entry: Metadata.EntryBuilder
-            def send(self) -> Awaitable[IdInformationReader]: ...
+            def send(self) -> Awaitable[Metadata.Information.ForoneResult]: ...
 
         def forOne_request(self) -> ForoneRequest: ...
         class ForallResult(Awaitable[ForallResult], Protocol):
@@ -548,12 +553,17 @@ class Metadata:
             cls, server: Metadata.Information.Server
         ) -> Metadata.Information: ...
         class Server:
+            class ForoneResult(NamedTuple):
+                id: str
+                name: str
+                description: str
+
             def forOne(
                 self,
                 entry: Metadata.EntryReader,
                 _context: Metadata.Information.ForoneCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[Metadata.Information.Server.ForoneResult]: ...
             def forAll(
                 self, _context: Metadata.Information.ForallCallContext, **kwargs: Any
             ) -> Awaitable[Any]: ...
@@ -655,6 +665,17 @@ class Dataset(Identifiable, Persistent, Protocol):
             cls, server: Dataset.GetLocationsCallback.Server
         ) -> Dataset.GetLocationsCallback: ...
         class Server:
+            class MetadataResult(NamedTuple):
+                entries: Sequence[Metadata.Entry]
+                info: Metadata.Information
+
+            class LocationResult(NamedTuple):
+                id: IdInformation
+                heightNN: float
+                latlon: LatLonCoord
+                timeSeries: TimeSeries
+                customData: Sequence[Location.KV]
+
             def nextLocations(
                 self,
                 maxCount: int,
@@ -662,12 +683,16 @@ class Dataset(Identifiable, Persistent, Protocol):
                 **kwargs: Any,
             ) -> Awaitable[Sequence[Location]]: ...
 
-    class MetadataCallContext(Protocol):
-        results: MetadataBuilder
+    class MetadataResult(Protocol):
+        entries: Sequence[Metadata.EntryReader]
+        info: Metadata.Information
 
-    def metadata(self) -> Awaitable[MetadataReader]: ...
+    class MetadataCallContext(Protocol):
+        results: Dataset.MetadataResult
+
+    def metadata(self) -> Awaitable[Dataset.MetadataResult]: ...
     class MetadataRequest(Protocol):
-        def send(self) -> Awaitable[MetadataReader]: ...
+        def send(self) -> Awaitable[Dataset.MetadataResult]: ...
 
     def metadata_request(self) -> MetadataRequest: ...
     class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
@@ -732,11 +757,17 @@ class Dataset(Identifiable, Persistent, Protocol):
 
     def streamLocations_request(self) -> StreamlocationsRequest: ...
     @classmethod
-    def _new_client(cls, server: Dataset.Server) -> Dataset: ...
+    def _new_client(
+        cls, server: Dataset.Server | Identifiable.Server | Persistent.Server
+    ) -> Dataset: ...
     class Server(Identifiable.Server, Persistent.Server):
+        class MetadataResult(NamedTuple):
+            entries: Sequence[Metadata.Entry]
+            info: Metadata.Information
+
         def metadata(
             self, _context: Dataset.MetadataCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Dataset.Server.MetadataResult]: ...
         def closestTimeSeriesAt(
             self,
             latlon: LatLonCoordReader,
@@ -871,25 +902,49 @@ class TimeSeries(Identifiable, Persistent, Protocol):
         def send(self) -> TimeSeries.SubheaderResult: ...
 
     def subheader_request(self) -> SubheaderRequest: ...
-    class MetadataCallContext(Protocol):
-        results: MetadataBuilder
+    class MetadataResult(Protocol):
+        entries: Sequence[Metadata.EntryReader]
+        info: Metadata.Information
 
-    def metadata(self) -> Awaitable[MetadataReader]: ...
+    class MetadataCallContext(Protocol):
+        results: TimeSeries.MetadataResult
+
+    def metadata(self) -> Awaitable[TimeSeries.MetadataResult]: ...
     class MetadataRequest(Protocol):
-        def send(self) -> Awaitable[MetadataReader]: ...
+        def send(self) -> Awaitable[TimeSeries.MetadataResult]: ...
 
     def metadata_request(self) -> MetadataRequest: ...
-    class LocationCallContext(Protocol):
-        results: LocationBuilder
+    class LocationResult(Protocol):
+        id: IdInformationReader
+        heightNN: float
+        latlon: LatLonCoordReader
+        timeSeries: TimeSeries
+        customData: Sequence[Location.KVReader]
 
-    def location(self) -> Awaitable[LocationReader]: ...
+    class LocationCallContext(Protocol):
+        results: TimeSeries.LocationResult
+
+    def location(self) -> Awaitable[TimeSeries.LocationResult]: ...
     class LocationRequest(Protocol):
-        def send(self) -> Awaitable[LocationReader]: ...
+        def send(self) -> Awaitable[TimeSeries.LocationResult]: ...
 
     def location_request(self) -> LocationRequest: ...
     @classmethod
-    def _new_client(cls, server: TimeSeries.Server) -> TimeSeries: ...
+    def _new_client(
+        cls, server: TimeSeries.Server | Identifiable.Server | Persistent.Server
+    ) -> TimeSeries: ...
     class Server(Identifiable.Server, Persistent.Server):
+        class MetadataResult(NamedTuple):
+            entries: Sequence[Metadata.Entry]
+            info: Metadata.Information
+
+        class LocationResult(NamedTuple):
+            id: IdInformation
+            heightNN: float
+            latlon: LatLonCoord
+            timeSeries: TimeSeries
+            customData: Sequence[Location.KV]
+
         def resolution(
             self, _context: TimeSeries.ResolutionCallContext, **kwargs: Any
         ) -> Awaitable[TimeSeries.Resolution]: ...
@@ -920,10 +975,10 @@ class TimeSeries(Identifiable, Persistent, Protocol):
         ) -> Awaitable[TimeSeries | TimeSeries.Server]: ...
         def metadata(
             self, _context: TimeSeries.MetadataCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[TimeSeries.Server.MetadataResult]: ...
         def location(
             self, _context: TimeSeries.LocationCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[TimeSeries.Server.LocationResult]: ...
 
 class Location:
     class KV:
@@ -1349,7 +1404,9 @@ class Service(Identifiable, Persistent, Protocol):
 
     def getDatasetsFor_request(self) -> GetdatasetsforRequest: ...
     @classmethod
-    def _new_client(cls, server: Service.Server) -> Service: ...
+    def _new_client(
+        cls, server: Service.Server | Identifiable.Server | Persistent.Server
+    ) -> Service: ...
     class Server(Identifiable.Server, Persistent.Server):
         def getAvailableDatasets(
             self, _context: Service.GetavailabledatasetsCallContext, **kwargs: Any
@@ -1471,7 +1528,7 @@ class CSVTimeSeriesFactory(Identifiable, Protocol):
     def create_request(self) -> CreateRequest: ...
     @classmethod
     def _new_client(
-        cls, server: CSVTimeSeriesFactory.Server
+        cls, server: CSVTimeSeriesFactory.Server | Identifiable.Server
     ) -> CSVTimeSeriesFactory: ...
     class Server(Identifiable.Server):
         def create(
@@ -1706,7 +1763,11 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
     def replaceWrappedTimeSeries_request(self) -> ReplacewrappedtimeseriesRequest: ...
     @classmethod
     def _new_client(
-        cls, server: AlterTimeSeriesWrapper.Server
+        cls,
+        server: AlterTimeSeriesWrapper.Server
+        | Identifiable.Server
+        | Persistent.Server
+        | TimeSeries.Server,
     ) -> AlterTimeSeriesWrapper: ...
     class Server(TimeSeries.Server):
         def wrappedTimeSeries(
@@ -1778,7 +1839,7 @@ class AlterTimeSeriesWrapperFactory(Identifiable, Protocol):
     def wrap_request(self) -> WrapRequest: ...
     @classmethod
     def _new_client(
-        cls, server: AlterTimeSeriesWrapperFactory.Server
+        cls, server: AlterTimeSeriesWrapperFactory.Server | Identifiable.Server
     ) -> AlterTimeSeriesWrapperFactory: ...
     class Server(Identifiable.Server):
         def wrap(

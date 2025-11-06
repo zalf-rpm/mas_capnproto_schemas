@@ -53,7 +53,9 @@ class Crop(Identifiable, Persistent, Protocol):
 
     def species_request(self) -> SpeciesRequest: ...
     @classmethod
-    def _new_client(cls, server: Crop.Server) -> Crop: ...
+    def _new_client(
+        cls, server: Crop.Server | Identifiable.Server | Persistent.Server
+    ) -> Crop: ...
     class Server(Identifiable.Server, Persistent.Server):
         def parameters(
             self, _context: Crop.ParametersCallContext, **kwargs: Any
@@ -67,5 +69,7 @@ class Crop(Identifiable, Persistent, Protocol):
 
 class Service(Registry, Protocol):
     @classmethod
-    def _new_client(cls, server: Service.Server) -> Service: ...
+    def _new_client(
+        cls, server: Service.Server | Identifiable.Server | Registry.Server
+    ) -> Service: ...
     class Server(Registry.Server): ...

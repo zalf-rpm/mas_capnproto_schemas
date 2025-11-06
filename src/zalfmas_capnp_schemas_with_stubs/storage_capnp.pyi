@@ -596,7 +596,10 @@ class Store(Identifiable, Persistent, Protocol):
 
         def addEntry_request(self) -> AddentryRequest: ...
         @classmethod
-        def _new_client(cls, server: Store.Container.Server) -> Store.Container: ...
+        def _new_client(
+            cls,
+            server: Store.Container.Server | Identifiable.Server | Persistent.Server,
+        ) -> Store.Container: ...
         class Server(Identifiable.Server, Persistent.Server):
             def export(
                 self, _context: Store.Container.ExportCallContext, **kwargs: Any
@@ -876,7 +879,9 @@ class Store(Identifiable, Persistent, Protocol):
 
     def importContainer_request(self) -> ImportcontainerRequest: ...
     @classmethod
-    def _new_client(cls, server: Store.Server) -> Store: ...
+    def _new_client(
+        cls, server: Store.Server | Identifiable.Server | Persistent.Server
+    ) -> Store: ...
     class Server(Identifiable.Server, Persistent.Server):
         def newContainer(
             self,

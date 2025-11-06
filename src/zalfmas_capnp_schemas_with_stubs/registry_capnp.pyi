@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, Protocol
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol
 
 from .common_capnp import (
     Identifiable,
@@ -98,7 +98,7 @@ class Admin(Identifiable, Protocol):
 
     def registry_request(self) -> RegistryRequest: ...
     @classmethod
-    def _new_client(cls, server: Admin.Server) -> Admin: ...
+    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> Admin: ...
     class Server(Identifiable.Server):
         def addCategory(
             self,
@@ -223,13 +223,20 @@ class Registry(Identifiable, Protocol):
         def send(self) -> Registry.SupportedcategoriesResult: ...
 
     def supportedCategories_request(self) -> SupportedcategoriesRequest: ...
-    class CategoryinfoCallContext(Protocol):
-        results: IdInformationBuilder
+    class CategoryinfoResult(Protocol):
+        id: str
+        name: str
+        description: str
 
-    def categoryInfo(self, categoryId: str) -> Awaitable[IdInformationReader]: ...
+    class CategoryinfoCallContext(Protocol):
+        results: Registry.CategoryinfoResult
+
+    def categoryInfo(
+        self, categoryId: str
+    ) -> Awaitable[Registry.CategoryinfoResult]: ...
     class CategoryinfoRequest(Protocol):
         categoryId: str
-        def send(self) -> Awaitable[IdInformationReader]: ...
+        def send(self) -> Awaitable[Registry.CategoryinfoResult]: ...
 
     def categoryInfo_request(self) -> CategoryinfoRequest: ...
     class EntriesResult(Awaitable[EntriesResult], Protocol):
@@ -248,8 +255,13 @@ class Registry(Identifiable, Protocol):
 
     def entries_request(self) -> EntriesRequest: ...
     @classmethod
-    def _new_client(cls, server: Registry.Server) -> Registry: ...
+    def _new_client(cls, server: Registry.Server | Identifiable.Server) -> Registry: ...
     class Server(Identifiable.Server):
+        class CategoryinfoResult(NamedTuple):
+            id: str
+            name: str
+            description: str
+
         def supportedCategories(
             self, _context: Registry.SupportedcategoriesCallContext, **kwargs: Any
         ) -> Awaitable[Any]: ...
@@ -258,7 +270,7 @@ class Registry(Identifiable, Protocol):
             categoryId: str,
             _context: Registry.CategoryinfoCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[Registry.Server.CategoryinfoResult]: ...
         def entries(
             self, categoryId: str, _context: Registry.EntriesCallContext, **kwargs: Any
         ) -> Awaitable[Sequence[Registry.Entry]]: ...
@@ -477,7 +489,9 @@ class Registrar(Identifiable, Protocol):
 
     def register_request(self) -> RegisterRequest: ...
     @classmethod
-    def _new_client(cls, server: Registrar.Server) -> Registrar: ...
+    def _new_client(
+        cls, server: Registrar.Server | Identifiable.Server
+    ) -> Registrar: ...
     class Server(Identifiable.Server):
         def register(
             self,
