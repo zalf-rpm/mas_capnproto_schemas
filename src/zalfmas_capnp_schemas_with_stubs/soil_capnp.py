@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `soil.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -29,3 +30,14 @@ ProfileReader = Profile
 Service = capnp.load(module_file, imports=import_path).Service
 ServiceBuilder = Service
 ServiceReader = Service
+
+Profile.Server.DataResult = NamedTuple(
+    "DataResult", [("layers", object), ("percentageOfArea", object)]
+)
+Profile.Server.GeolocationResult = NamedTuple(
+    "GeolocationResult", [("lat", object), ("lon", object)]
+)
+Service.Server.CheckavailableparametersResult = NamedTuple(
+    "CheckavailableparametersResult",
+    [("failed", object), ("mandatory", object), ("optional", object)],
+)

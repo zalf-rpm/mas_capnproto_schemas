@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `climate.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -51,3 +52,36 @@ AlterTimeSeriesWrapperFactory = capnp.load(
 ).AlterTimeSeriesWrapperFactory
 AlterTimeSeriesWrapperFactoryBuilder = AlterTimeSeriesWrapperFactory
 AlterTimeSeriesWrapperFactoryReader = AlterTimeSeriesWrapperFactory
+
+Dataset.Server.MetadataResult = NamedTuple(
+    "MetadataResult", [("entries", object), ("info", object)]
+)
+Dataset.GetLocationsCallback.Server.LocationResult = NamedTuple(
+    "LocationResult",
+    [
+        ("id", object),
+        ("heightNN", object),
+        ("latlon", object),
+        ("timeSeries", object),
+        ("customData", object),
+    ],
+)
+Dataset.GetLocationsCallback.Server.MetadataResult = NamedTuple(
+    "MetadataResult", [("entries", object), ("info", object)]
+)
+Metadata.Information.Server.ForoneResult = NamedTuple(
+    "ForoneResult", [("id", object), ("name", object), ("description", object)]
+)
+TimeSeries.Server.LocationResult = NamedTuple(
+    "LocationResult",
+    [
+        ("id", object),
+        ("heightNN", object),
+        ("latlon", object),
+        ("timeSeries", object),
+        ("customData", object),
+    ],
+)
+TimeSeries.Server.MetadataResult = NamedTuple(
+    "MetadataResult", [("entries", object), ("info", object)]
+)

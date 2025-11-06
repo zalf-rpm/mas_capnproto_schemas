@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `model.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -38,3 +39,7 @@ EnvInstanceProxyReader = EnvInstanceProxy
 InstanceFactory = capnp.load(module_file, imports=import_path).InstanceFactory
 InstanceFactoryBuilder = InstanceFactory
 InstanceFactoryReader = InstanceFactory
+
+InstanceFactory.Server.ModelinfoResult = NamedTuple(
+    "ModelinfoResult", [("id", object), ("name", object), ("description", object)]
+)

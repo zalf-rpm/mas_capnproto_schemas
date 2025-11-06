@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `service.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -26,3 +27,7 @@ FactoryReader = Factory
 Stoppable = capnp.load(module_file, imports=import_path).Stoppable
 StoppableBuilder = Stoppable
 StoppableReader = Stoppable
+
+Factory.Server.CreateResult = NamedTuple(
+    "CreateResult", [("adminCap", object), ("serviceCaps", object), ("error", object)]
+)

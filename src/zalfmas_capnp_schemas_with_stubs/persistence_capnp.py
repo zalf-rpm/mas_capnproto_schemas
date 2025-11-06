@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `persistence.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -41,3 +42,11 @@ HostPortResolverReader = HostPortResolver
 Gateway = capnp.load(module_file, imports=import_path).Gateway
 GatewayBuilder = Gateway
 GatewayReader = Gateway
+
+Gateway.Server.RegisterResult = NamedTuple(
+    "RegisterResult",
+    [("sturdyRef", object), ("heartbeat", object), ("secsHeartbeatInterval", object)],
+)
+Persistent.Server.SaveResult = NamedTuple(
+    "SaveResult", [("sturdyRef", object), ("unsaveSR", object)]
+)

@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `fbp.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -32,3 +33,10 @@ PortInfosReader = PortInfos
 Component = capnp.load(module_file, imports=import_path).Component
 ComponentBuilder = Component
 ComponentReader = Component
+
+Channel.Reader.Server.ReadResult = NamedTuple(
+    "ReadResult", [("value", object), ("done", object), ("noMsg", object)]
+)
+Channel.Reader.Server.ReadifmsgResult = NamedTuple(
+    "ReadifmsgResult", [("value", object), ("done", object), ("noMsg", object)]
+)

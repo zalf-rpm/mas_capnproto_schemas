@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `common.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -31,3 +32,7 @@ HolderReader = Holder
 IdentifiableHolder = capnp.load(module_file, imports=import_path).IdentifiableHolder
 IdentifiableHolderBuilder = IdentifiableHolder
 IdentifiableHolderReader = IdentifiableHolder
+
+Identifiable.Server.InfoResult = NamedTuple(
+    "InfoResult", [("id", object), ("name", object), ("description", object)]
+)

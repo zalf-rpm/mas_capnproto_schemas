@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `registry.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -23,3 +24,7 @@ RegistryReader = Registry
 Registrar = capnp.load(module_file, imports=import_path).Registrar
 RegistrarBuilder = Registrar
 RegistrarReader = Registrar
+
+Registry.Server.CategoryinfoResult = NamedTuple(
+    "CategoryinfoResult", [("id", object), ("name", object), ("description", object)]
+)
