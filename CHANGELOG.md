@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.39](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.38...v0.1.39) (2025-11-06)
+
+
+### Features
+
+* add additional package for schemas with stubs for type checking… ([#14](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/14)) ([8814246](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/88142462fc1ecd0c483fdacc0b0258e17dc0e0b2))
+
 ## [0.1.38](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.37...v0.1.38) (2025-11-04)
 
 
