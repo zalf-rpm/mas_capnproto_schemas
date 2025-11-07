@@ -374,13 +374,13 @@ class Channel(Identifiable, Persistent, Protocol):
 
             def read(
                 self, _context: Channel.Reader.ReadCallContext, **kwargs: Any
-            ) -> Awaitable[Channel.Reader.Server.ReadResult]: ...
+            ) -> Awaitable[Channel.Reader.Server.ReadResult | None]: ...
             def close(
                 self, _context: Channel.Reader.CloseCallContext, **kwargs: Any
             ) -> Awaitable[None]: ...
             def readIfMsg(
                 self, _context: Channel.Reader.ReadifmsgCallContext, **kwargs: Any
-            ) -> Awaitable[Channel.Reader.Server.ReadifmsgResult]: ...
+            ) -> Awaitable[Channel.Reader.Server.ReadifmsgResult | None]: ...
 
     class Writer(Identifiable, Persistent, Protocol):
         class WriteResultsBuilder(Protocol): ...
@@ -388,7 +388,12 @@ class Channel(Identifiable, Persistent, Protocol):
         class WriteCallContext(Protocol):
             results: Channel.Writer.WriteResultsBuilder
 
-        def write(self, value: Any, done: None, noMsg: None) -> Awaitable[None]: ...
+        def write(
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
+        ) -> Awaitable[None]: ...
         class WriteRequest(Protocol):
             value: Any
             done: None
@@ -416,7 +421,10 @@ class Channel(Identifiable, Persistent, Protocol):
             results: Channel.Writer.WriteifspaceResultsBuilder
 
         def writeIfSpace(
-            self, value: Any, done: None, noMsg: None
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
         ) -> WriteifspaceResult: ...
         class WriteifspaceRequest(Protocol):
             value: Any
@@ -448,7 +456,7 @@ class Channel(Identifiable, Persistent, Protocol):
                 noMsg: None,
                 _context: Channel.Writer.WriteifspaceCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
 
     class StartupInfo:
         @property
@@ -579,7 +587,7 @@ class Channel(Identifiable, Persistent, Protocol):
     class SetbuffersizeCallContext(Protocol):
         results: Channel.SetbuffersizeResultsBuilder
 
-    def setBufferSize(self, size: int) -> Awaitable[None]: ...
+    def setBufferSize(self, size: int | None = None) -> Awaitable[None]: ...
     class SetbuffersizeRequest(Protocol):
         size: int
         def send(self) -> Awaitable[None]: ...
@@ -635,7 +643,7 @@ class Channel(Identifiable, Persistent, Protocol):
         results: Channel.SetautoclosesemanticsResultsBuilder
 
     def setAutoCloseSemantics(
-        self, cs: Channel.CloseSemantics | Literal["fbp", "no"]
+        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] | None = None
     ) -> Awaitable[None]: ...
     class SetautoclosesemanticsRequest(Protocol):
         cs: Channel.CloseSemantics
@@ -647,7 +655,7 @@ class Channel(Identifiable, Persistent, Protocol):
     class CloseCallContext(Protocol):
         results: Channel.CloseResultsBuilder
 
-    def close(self, waitForEmptyBuffer: bool) -> Awaitable[None]: ...
+    def close(self, waitForEmptyBuffer: bool | None = None) -> Awaitable[None]: ...
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> Awaitable[None]: ...
@@ -663,13 +671,13 @@ class Channel(Identifiable, Persistent, Protocol):
         ) -> Awaitable[None]: ...
         def reader(
             self, _context: Channel.ReaderCallContext, **kwargs: Any
-        ) -> Awaitable[Channel.Reader | Channel.Reader.Server]: ...
+        ) -> Awaitable[Channel.Reader | Channel.Reader.Server | None]: ...
         def writer(
             self, _context: Channel.WriterCallContext, **kwargs: Any
-        ) -> Awaitable[Channel.Writer | Channel.Writer.Server]: ...
+        ) -> Awaitable[Channel.Writer | Channel.Writer.Server | None]: ...
         def endpoints(
             self, _context: Channel.EndpointsCallContext, **kwargs: Any
-        ) -> Awaitable[tuple[Channel.Reader, Channel.Writer]]: ...
+        ) -> Awaitable[tuple[Channel.Reader, Channel.Writer] | None]: ...
         def setAutoCloseSemantics(
             self,
             cs: Channel.CloseSemantics | Literal["fbp", "no"],
@@ -806,13 +814,13 @@ class StartChannelsService(Identifiable, Protocol):
 
     def start(
         self,
-        name: str,
-        noOfChannels: int,
-        noOfReaders: int,
-        noOfWriters: int,
-        readerSrts: Sequence[str],
-        writerSrts: Sequence[str],
-        bufferSize: int,
+        name: str | None = None,
+        noOfChannels: int | None = None,
+        noOfReaders: int | None = None,
+        noOfWriters: int | None = None,
+        readerSrts: Sequence[str] | None = None,
+        writerSrts: Sequence[str] | None = None,
+        bufferSize: int | None = None,
     ) -> StartResult: ...
     class StartRequest(Protocol):
         name: str
@@ -841,7 +849,7 @@ class StartChannelsService(Identifiable, Protocol):
             bufferSize: int,
             _context: StartChannelsService.StartCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class PortInfos:
     class NameAndSR:
@@ -1020,7 +1028,9 @@ class Component:
         class StartCallContext(Protocol):
             results: Component.Runnable.StartResultsBuilder
 
-        def start(self, portInfosReaderSr: str, name: str) -> StartResult: ...
+        def start(
+            self, portInfosReaderSr: str | None = None, name: str | None = None
+        ) -> StartResult: ...
         class StartRequest(Protocol):
             portInfosReaderSr: str
             name: str
@@ -1052,10 +1062,10 @@ class Component:
                 name: str,
                 _context: Component.Runnable.StartCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
             def stop(
                 self, _context: Component.Runnable.StopCallContext, **kwargs: Any
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
 
     class ComponentType(Enum):
         standard = "standard"

@@ -703,7 +703,7 @@ class Persistent(Protocol):
                 self,
                 _context: Persistent.ReleaseSturdyRef.ReleaseCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
 
     class SaveResult(Protocol):
         sturdyRef: SturdyRefReader
@@ -713,7 +713,7 @@ class Persistent(Protocol):
         results: Persistent.SaveResult
 
     def save(
-        self, sealFor: SturdyRef.Owner | dict[str, Any]
+        self, sealFor: SturdyRef.Owner | dict[str, Any] | None = None
     ) -> Awaitable[Persistent.SaveResult]: ...
     class SaveRequest(Protocol):
         sealFor: SturdyRef.OwnerBuilder
@@ -732,7 +732,7 @@ class Persistent(Protocol):
             sealFor: SturdyRef.OwnerReader,
             _context: Persistent.SaveCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Persistent.Server.SaveResult]: ...
+        ) -> Awaitable[Persistent.Server.SaveResult | None]: ...
 
 class Restorer(Protocol):
     class RestoreParams:
@@ -835,8 +835,8 @@ class Restorer(Protocol):
 
     def restore(
         self,
-        localRef: SturdyRef.Token | dict[str, Any],
-        sealedBy: SturdyRef.Owner | dict[str, Any],
+        localRef: SturdyRef.Token | dict[str, Any] | None = None,
+        sealedBy: SturdyRef.Owner | dict[str, Any] | None = None,
     ) -> RestoreResult: ...
     class RestoreRequest(Protocol):
         localRef: SturdyRef.TokenBuilder
@@ -853,7 +853,7 @@ class Restorer(Protocol):
             sealedBy: SturdyRef.OwnerReader,
             _context: Restorer.RestoreCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class HostPortResolver(Identifiable, Restorer, Protocol):
     class Registrar(Protocol):
@@ -958,11 +958,11 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
 
         def register(
             self,
-            base64VatId: str,
-            host: str,
-            port: int,
-            alias: str,
-            identityProof: bytes,
+            base64VatId: str | None = None,
+            host: str | None = None,
+            port: int | None = None,
+            alias: str | None = None,
+            identityProof: bytes | None = None,
         ) -> RegisterResult: ...
         class RegisterRequest(Protocol):
             base64VatId: str
@@ -987,7 +987,7 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
                 identityProof: bytes,
                 _context: HostPortResolver.Registrar.RegisterCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[tuple[Heartbeat, int]]: ...
+            ) -> Awaitable[tuple[Heartbeat, int] | None]: ...
 
     class ResolveResult(Awaitable[ResolveResult], Protocol):
         host: str
@@ -1000,7 +1000,7 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
     class ResolveCallContext(Protocol):
         results: HostPortResolver.ResolveResultsBuilder
 
-    def resolve(self, id: str) -> ResolveResult: ...
+    def resolve(self, id: str | None = None) -> ResolveResult: ...
     class ResolveRequest(Protocol):
         id: str
         def send(self) -> HostPortResolver.ResolveResult: ...
@@ -1013,7 +1013,7 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
     class Server(Identifiable.Server, Restorer.Server):
         def resolve(
             self, id: str, _context: HostPortResolver.ResolveCallContext, **kwargs: Any
-        ) -> Awaitable[tuple[str, int]]: ...
+        ) -> Awaitable[tuple[str, int] | None]: ...
 
 class Gateway(Identifiable, Restorer, Protocol):
     class RegResults:
@@ -1100,7 +1100,7 @@ class Gateway(Identifiable, Restorer, Protocol):
     class RegisterCallContext(Protocol):
         results: Gateway.RegisterResult
 
-    def register(self, cap: Any) -> Awaitable[Gateway.RegisterResult]: ...
+    def register(self, cap: Any | None = None) -> Awaitable[Gateway.RegisterResult]: ...
     class RegisterRequest(Protocol):
         cap: Any
         def send(self) -> Awaitable[Gateway.RegisterResult]: ...
@@ -1118,4 +1118,4 @@ class Gateway(Identifiable, Restorer, Protocol):
 
         def register(
             self, cap: Any, _context: Gateway.RegisterCallContext, **kwargs: Any
-        ) -> Awaitable[Gateway.Server.RegisterResult]: ...
+        ) -> Awaitable[Gateway.Server.RegisterResult | None]: ...

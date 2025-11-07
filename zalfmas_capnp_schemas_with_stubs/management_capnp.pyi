@@ -578,10 +578,10 @@ class Fertilizer(Identifiable, Persistent, Protocol):
     class Server(Identifiable.Server, Persistent.Server):
         def nutrients(
             self, _context: Fertilizer.NutrientsCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Nutrient]]: ...
+        ) -> Awaitable[Sequence[Nutrient] | None]: ...
         def parameters(
             self, _context: Fertilizer.ParametersCallContext, **kwargs: Any
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class Nutrient:
     class Name(Enum):
@@ -1880,7 +1880,9 @@ class Service(Identifiable, Protocol):
     class ManagementatCallContext(Protocol):
         results: Service.ManagementatResultsBuilder
 
-    def managementAt(self, lat: float, lon: float) -> ManagementatResult: ...
+    def managementAt(
+        self, lat: float | None = None, lon: float | None = None
+    ) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):
         lat: float
         lon: float
@@ -1896,4 +1898,4 @@ class Service(Identifiable, Protocol):
             lon: float,
             _context: Service.ManagementatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Event]]: ...
+        ) -> Awaitable[Sequence[Event] | None]: ...

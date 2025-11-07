@@ -2543,7 +2543,9 @@ class Service(Identifiable, Protocol):
     class ManagementatCallContext(Protocol):
         results: Service.ManagementatResultsBuilder
 
-    def managementAt(self, lat: float, lon: float) -> ManagementatResult: ...
+    def managementAt(
+        self, lat: float | None = None, lon: float | None = None
+    ) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):
         lat: float
         lon: float
@@ -2559,4 +2561,4 @@ class Service(Identifiable, Protocol):
             lon: float,
             _context: Service.ManagementatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Event]]: ...
+        ) -> Awaitable[Sequence[Event] | None]: ...

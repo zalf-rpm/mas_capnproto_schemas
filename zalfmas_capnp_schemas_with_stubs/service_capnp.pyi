@@ -29,7 +29,7 @@ class Admin(Identifiable, Protocol):
     class SettimeoutCallContext(Protocol):
         results: Admin.SettimeoutResultsBuilder
 
-    def setTimeout(self, seconds: int) -> Awaitable[None]: ...
+    def setTimeout(self, seconds: int | None = None) -> Awaitable[None]: ...
     class SettimeoutRequest(Protocol):
         seconds: int
         def send(self) -> Awaitable[None]: ...
@@ -64,7 +64,9 @@ class Admin(Identifiable, Protocol):
     class UpdateidentityCallContext(Protocol):
         results: Admin.UpdateidentityResultsBuilder
 
-    def updateIdentity(self, oldId: str, newInfo: Any) -> Awaitable[None]: ...
+    def updateIdentity(
+        self, oldId: str | None = None, newInfo: Any | None = None
+    ) -> Awaitable[None]: ...
     class UpdateidentityRequest(Protocol):
         oldId: str
         newInfo: Any
@@ -85,7 +87,7 @@ class Admin(Identifiable, Protocol):
         ) -> Awaitable[None]: ...
         def identities(
             self, _context: Admin.IdentitiesCallContext, **kwargs: Any
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
         def updateIdentity(
             self,
             oldId: str,
@@ -116,7 +118,7 @@ class SimpleFactory(Identifiable, Protocol):
     class Server(Identifiable.Server):
         def create(
             self, _context: SimpleFactory.CreateCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Identifiable]]: ...
+        ) -> Awaitable[Sequence[Identifiable] | None]: ...
 
 class Factory(Identifiable, Protocol):
     class CreateParams(Generic[Factory_Payload]):
@@ -282,9 +284,9 @@ class Factory(Identifiable, Protocol):
 
     def create(
         self,
-        timeoutSeconds: int,
-        interfaceNameToRegistrySR: Sequence[Pair[str, str]],
-        msgPayload: Any,
+        timeoutSeconds: int | None = None,
+        interfaceNameToRegistrySR: Sequence[Pair[str, str]] | None = None,
+        msgPayload: Any | None = None,
     ) -> Awaitable[Factory.CreateResult]: ...
     class CreateRequest(Protocol):
         timeoutSeconds: int
@@ -322,10 +324,10 @@ class Factory(Identifiable, Protocol):
             msgPayload: Any,
             _context: Factory.CreateCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Factory.Server.CreateResult]: ...
+        ) -> Awaitable[Factory.Server.CreateResult | None]: ...
         def serviceInterfaceNames(
             self, _context: Factory.ServiceinterfacenamesCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[str]]: ...
+        ) -> Awaitable[Sequence[str] | None]: ...
 
 class Stoppable(Protocol):
     class StopResult(Awaitable[StopResult], Protocol):
@@ -347,4 +349,4 @@ class Stoppable(Protocol):
     class Server:
         def stop(
             self, _context: Stoppable.StopCallContext, **kwargs: Any
-        ) -> Awaitable[bool]: ...
+        ) -> Awaitable[bool | None]: ...

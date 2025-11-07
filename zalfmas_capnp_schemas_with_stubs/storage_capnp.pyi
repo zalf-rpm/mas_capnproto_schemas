@@ -387,7 +387,7 @@ class Store(Identifiable, Persistent, Protocol):
                 results: Store.Container.Entry.SetvalueResultsBuilder
 
             def setValue(
-                self, value: Store.Container.Entry.Value | dict[str, Any]
+                self, value: Store.Container.Entry.Value | dict[str, Any] | None = None
             ) -> SetvalueResult: ...
             class SetvalueRequest(Protocol):
                 value: Store.Container.Entry.ValueBuilder
@@ -403,18 +403,18 @@ class Store(Identifiable, Persistent, Protocol):
                     self,
                     _context: Store.Container.Entry.GetkeyCallContext,
                     **kwargs: Any,
-                ) -> Awaitable[str]: ...
+                ) -> Awaitable[str | None]: ...
                 def getValue(
                     self,
                     _context: Store.Container.Entry.GetvalueCallContext,
                     **kwargs: Any,
-                ) -> Awaitable[tuple[Store.Container.Entry.Value, bool]]: ...
+                ) -> Awaitable[tuple[Store.Container.Entry.Value, bool] | None]: ...
                 def setValue(
                     self,
                     value: Store.Container.Entry.ValueReader,
                     _context: Store.Container.Entry.SetvalueCallContext,
                     **kwargs: Any,
-                ) -> Awaitable[bool]: ...
+                ) -> Awaitable[bool | None]: ...
 
         class KeyAndEntry:
             @property
@@ -536,7 +536,7 @@ class Store(Identifiable, Persistent, Protocol):
         class GetentryCallContext(Protocol):
             results: Store.Container.GetentryResultsBuilder
 
-        def getEntry(self, key: str) -> GetentryResult: ...
+        def getEntry(self, key: str | None = None) -> GetentryResult: ...
         class GetentryRequest(Protocol):
             key: str
             def send(self) -> Store.Container.GetentryResult: ...
@@ -551,7 +551,7 @@ class Store(Identifiable, Persistent, Protocol):
         class RemoveentryCallContext(Protocol):
             results: Store.Container.RemoveentryResultsBuilder
 
-        def removeEntry(self, key: str) -> RemoveentryResult: ...
+        def removeEntry(self, key: str | None = None) -> RemoveentryResult: ...
         class RemoveentryRequest(Protocol):
             key: str
             def send(self) -> Store.Container.RemoveentryResult: ...
@@ -584,9 +584,9 @@ class Store(Identifiable, Persistent, Protocol):
 
         def addEntry(
             self,
-            key: str,
-            value: Store.Container.Entry.Value | dict[str, Any],
-            replaceExisting: bool,
+            key: str | None = None,
+            value: Store.Container.Entry.Value | dict[str, Any] | None = None,
+            replaceExisting: bool | None = None,
         ) -> AddentryResult: ...
         class AddentryRequest(Protocol):
             key: str
@@ -603,30 +603,32 @@ class Store(Identifiable, Persistent, Protocol):
         class Server(Identifiable.Server, Persistent.Server):
             def export(
                 self, _context: Store.Container.ExportCallContext, **kwargs: Any
-            ) -> Awaitable[str]: ...
+            ) -> Awaitable[str | None]: ...
             def downloadEntries(
                 self,
                 _context: Store.Container.DownloadentriesCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[Any]: ...
+            ) -> Awaitable[Any | None]: ...
             def listEntries(
                 self, _context: Store.Container.ListentriesCallContext, **kwargs: Any
-            ) -> Awaitable[Sequence[Store.Container.KeyAndEntry]]: ...
+            ) -> Awaitable[Sequence[Store.Container.KeyAndEntry] | None]: ...
             def getEntry(
                 self,
                 key: str,
                 _context: Store.Container.GetentryCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[Store.Container.Entry | Store.Container.Entry.Server]: ...
+            ) -> Awaitable[
+                Store.Container.Entry | Store.Container.Entry.Server | None
+            ]: ...
             def removeEntry(
                 self,
                 key: str,
                 _context: Store.Container.RemoveentryCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
             def clear(
                 self, _context: Store.Container.ClearCallContext, **kwargs: Any
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
             def addEntry(
                 self,
                 key: str,
@@ -634,7 +636,7 @@ class Store(Identifiable, Persistent, Protocol):
                 replaceExisting: bool,
                 _context: Store.Container.AddentryCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[tuple[Store.Container.Entry, bool]]: ...
+            ) -> Awaitable[tuple[Store.Container.Entry, bool] | None]: ...
 
     class InfoAndContainer:
         @property
@@ -812,7 +814,9 @@ class Store(Identifiable, Persistent, Protocol):
     class NewcontainerCallContext(Protocol):
         results: Store.NewcontainerResultsBuilder
 
-    def newContainer(self, name: str, description: str) -> NewcontainerResult: ...
+    def newContainer(
+        self, name: str | None = None, description: str | None = None
+    ) -> NewcontainerResult: ...
     class NewcontainerRequest(Protocol):
         name: str
         description: str
@@ -828,7 +832,7 @@ class Store(Identifiable, Persistent, Protocol):
     class ContainerwithidCallContext(Protocol):
         results: Store.ContainerwithidResultsBuilder
 
-    def containerWithId(self, id: str) -> ContainerwithidResult: ...
+    def containerWithId(self, id: str | None = None) -> ContainerwithidResult: ...
     class ContainerwithidRequest(Protocol):
         id: str
         def send(self) -> Store.ContainerwithidResult: ...
@@ -857,7 +861,7 @@ class Store(Identifiable, Persistent, Protocol):
     class RemovecontainerCallContext(Protocol):
         results: Store.RemovecontainerResultsBuilder
 
-    def removeContainer(self, id: str) -> RemovecontainerResult: ...
+    def removeContainer(self, id: str | None = None) -> RemovecontainerResult: ...
     class RemovecontainerRequest(Protocol):
         id: str
         def send(self) -> Store.RemovecontainerResult: ...
@@ -872,7 +876,7 @@ class Store(Identifiable, Persistent, Protocol):
     class ImportcontainerCallContext(Protocol):
         results: Store.ImportcontainerResultsBuilder
 
-    def importContainer(self, json: str) -> ImportcontainerResult: ...
+    def importContainer(self, json: str | None = None) -> ImportcontainerResult: ...
     class ImportcontainerRequest(Protocol):
         json: str
         def send(self) -> Store.ImportcontainerResult: ...
@@ -889,16 +893,16 @@ class Store(Identifiable, Persistent, Protocol):
             description: str,
             _context: Store.NewcontainerCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Store.Container | Store.Container.Server]: ...
+        ) -> Awaitable[Store.Container | Store.Container.Server | None]: ...
         def containerWithId(
             self, id: str, _context: Store.ContainerwithidCallContext, **kwargs: Any
-        ) -> Awaitable[Store.Container | Store.Container.Server]: ...
+        ) -> Awaitable[Store.Container | Store.Container.Server | None]: ...
         def listContainers(
             self, _context: Store.ListcontainersCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Store.InfoAndContainer]]: ...
+        ) -> Awaitable[Sequence[Store.InfoAndContainer] | None]: ...
         def removeContainer(
             self, id: str, _context: Store.RemovecontainerCallContext, **kwargs: Any
-        ) -> Awaitable[bool]: ...
+        ) -> Awaitable[bool | None]: ...
         def importContainer(
             self, json: str, _context: Store.ImportcontainerCallContext, **kwargs: Any
-        ) -> Awaitable[Store.Container | Store.Container.Server]: ...
+        ) -> Awaitable[Store.Container | Store.Container.Server | None]: ...

@@ -116,7 +116,7 @@ class Identifiable(Protocol):
 
         def info(
             self, _context: Identifiable.InfoCallContext, **kwargs: Any
-        ) -> Awaitable[Identifiable.Server.InfoResult]: ...
+        ) -> Awaitable[Identifiable.Server.InfoResult | None]: ...
 
 class StructuredText:
     class Type(Enum):
@@ -733,7 +733,7 @@ class Holder(Protocol):
     class Server:
         def value(
             self, _context: Holder.ValueCallContext, **kwargs: Any
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class IdentifiableHolder(Identifiable, Holder, Protocol):
     @classmethod

@@ -19,7 +19,12 @@ class DWLABImport(Protocol):
     class ImportdataCallContext(Protocol):
         results: DWLABImport.ImportdataResultsBuilder
 
-    def importData(self, id: str, dwla: bytes, dwlb: bytes) -> ImportdataResult: ...
+    def importData(
+        self,
+        id: str | None = None,
+        dwla: bytes | None = None,
+        dwlb: bytes | None = None,
+    ) -> ImportdataResult: ...
     class ImportdataRequest(Protocol):
         id: str
         dwla: bytes
@@ -37,4 +42,4 @@ class DWLABImport(Protocol):
             dwlb: bytes,
             _context: DWLABImport.ImportdataCallContext,
             **kwargs: Any,
-        ) -> Awaitable[tuple[str, bool, bool]]: ...
+        ) -> Awaitable[tuple[str, bool, bool] | None]: ...

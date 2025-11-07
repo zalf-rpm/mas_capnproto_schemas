@@ -25,7 +25,9 @@ class Admin(Identifiable, Protocol):
     class AddcategoryCallContext(Protocol):
         results: Admin.AddcategoryResultsBuilder
 
-    def addCategory(self, category: Any, upsert: bool) -> AddcategoryResult: ...
+    def addCategory(
+        self, category: Any | None = None, upsert: bool | None = None
+    ) -> AddcategoryResult: ...
     class AddcategoryRequest(Protocol):
         category: Any
         upsert: bool
@@ -42,7 +44,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.RemovecategoryResultsBuilder
 
     def removeCategory(
-        self, categoryId: str, moveObjectsToCategoryId: str
+        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
     ) -> RemovecategoryResult: ...
     class RemovecategoryRequest(Protocol):
         categoryId: str
@@ -60,7 +62,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.MoveobjectsResultsBuilder
 
     def moveObjects(
-        self, objectIds: Sequence[str], toCatId: str
+        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
     ) -> MoveobjectsResult: ...
     class MoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
@@ -77,7 +79,9 @@ class Admin(Identifiable, Protocol):
     class RemoveobjectsCallContext(Protocol):
         results: Admin.RemoveobjectsResultsBuilder
 
-    def removeObjects(self, objectIds: Sequence[str]) -> RemoveobjectsResult: ...
+    def removeObjects(
+        self, objectIds: Sequence[str] | None = None
+    ) -> RemoveobjectsResult: ...
     class RemoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         def send(self) -> Admin.RemoveobjectsResult: ...
@@ -106,30 +110,30 @@ class Admin(Identifiable, Protocol):
             upsert: bool,
             _context: Admin.AddcategoryCallContext,
             **kwargs: Any,
-        ) -> Awaitable[bool]: ...
+        ) -> Awaitable[bool | None]: ...
         def removeCategory(
             self,
             categoryId: str,
             moveObjectsToCategoryId: str,
             _context: Admin.RemovecategoryCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Identifiable]]: ...
+        ) -> Awaitable[Sequence[Identifiable] | None]: ...
         def moveObjects(
             self,
             objectIds: Sequence[str],
             toCatId: str,
             _context: Admin.MoveobjectsCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[str]]: ...
+        ) -> Awaitable[Sequence[str] | None]: ...
         def removeObjects(
             self,
             objectIds: Sequence[str],
             _context: Admin.RemoveobjectsCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Identifiable]]: ...
+        ) -> Awaitable[Sequence[Identifiable] | None]: ...
         def registry(
             self, _context: Admin.RegistryCallContext, **kwargs: Any
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class Registry(Identifiable, Protocol):
     class Entry:
@@ -232,7 +236,7 @@ class Registry(Identifiable, Protocol):
         results: Registry.CategoryinfoResult
 
     def categoryInfo(
-        self, categoryId: str
+        self, categoryId: str | None = None
     ) -> Awaitable[Registry.CategoryinfoResult]: ...
     class CategoryinfoRequest(Protocol):
         categoryId: str
@@ -248,7 +252,7 @@ class Registry(Identifiable, Protocol):
     class EntriesCallContext(Protocol):
         results: Registry.EntriesResultsBuilder
 
-    def entries(self, categoryId: str) -> EntriesResult: ...
+    def entries(self, categoryId: str | None = None) -> EntriesResult: ...
     class EntriesRequest(Protocol):
         categoryId: str
         def send(self) -> Registry.EntriesResult: ...
@@ -264,16 +268,16 @@ class Registry(Identifiable, Protocol):
 
         def supportedCategories(
             self, _context: Registry.SupportedcategoriesCallContext, **kwargs: Any
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
         def categoryInfo(
             self,
             categoryId: str,
             _context: Registry.CategoryinfoCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Registry.Server.CategoryinfoResult]: ...
+        ) -> Awaitable[Registry.Server.CategoryinfoResult | None]: ...
         def entries(
             self, categoryId: str, _context: Registry.EntriesCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Registry.Entry]]: ...
+        ) -> Awaitable[Sequence[Registry.Entry] | None]: ...
 
 class Registrar(Identifiable, Protocol):
     class CrossDomainRestore:
@@ -460,7 +464,7 @@ class Registrar(Identifiable, Protocol):
                 self,
                 _context: Registrar.Unregister.UnregisterCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
 
     class RegisterResult(Awaitable[RegisterResult], Protocol):
         unreg: Registrar.Unregister
@@ -475,10 +479,10 @@ class Registrar(Identifiable, Protocol):
 
     def register(
         self,
-        cap: Identifiable,
-        regName: str,
-        categoryId: str,
-        xDomain: Registrar.CrossDomainRestore | dict[str, Any],
+        cap: Identifiable | None = None,
+        regName: str | None = None,
+        categoryId: str | None = None,
+        xDomain: Registrar.CrossDomainRestore | dict[str, Any] | None = None,
     ) -> RegisterResult: ...
     class RegisterRequest(Protocol):
         cap: Identifiable
@@ -501,4 +505,4 @@ class Registrar(Identifiable, Protocol):
             xDomain: Registrar.CrossDomainRestoreReader,
             _context: Registrar.RegisterCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...

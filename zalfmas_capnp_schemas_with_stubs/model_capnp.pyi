@@ -270,7 +270,7 @@ class ClimateInstance(Identifiable, Protocol):
     class RunCallContext(Protocol):
         results: ClimateInstance.RunResultsBuilder
 
-    def run(self, timeSeries: Any) -> RunResult: ...
+    def run(self, timeSeries: Any | None = None) -> RunResult: ...
     class RunRequest(Protocol):
         timeSeries: Any
         def send(self) -> ClimateInstance.RunResult: ...
@@ -285,7 +285,7 @@ class ClimateInstance(Identifiable, Protocol):
     class RunsetCallContext(Protocol):
         results: ClimateInstance.RunsetResultsBuilder
 
-    def runSet(self, dataset: Any) -> RunsetResult: ...
+    def runSet(self, dataset: Any | None = None) -> RunsetResult: ...
     class RunsetRequest(Protocol):
         dataset: Any
         def send(self) -> ClimateInstance.RunsetResult: ...
@@ -301,13 +301,13 @@ class ClimateInstance(Identifiable, Protocol):
             timeSeries: Any,
             _context: ClimateInstance.RunCallContext,
             **kwargs: Any,
-        ) -> Awaitable[XYResult]: ...
+        ) -> Awaitable[XYResult | None]: ...
         def runSet(
             self,
             dataset: Any,
             _context: ClimateInstance.RunsetCallContext,
             **kwargs: Any,
-        ) -> Awaitable[XYPlusResult]: ...
+        ) -> Awaitable[XYPlusResult | None]: ...
 
 class Env(Generic[_RestInput]):
     @property
@@ -404,7 +404,7 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
     class RunCallContext(Protocol):
         results: EnvInstance.RunResultsBuilder
 
-    def run(self, env: Env[Any] | dict[str, Any]) -> RunResult: ...
+    def run(self, env: Env[Any] | dict[str, Any] | None = None) -> RunResult: ...
     class RunRequest(Protocol):
         env: EnvBuilder[Any]
         def send(self) -> EnvInstance.RunResult: ...
@@ -424,7 +424,7 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
             env: EnvReader[Any],
             _context: EnvInstance.RunCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Any]: ...
+        ) -> Awaitable[Any | None]: ...
 
 class EnvInstanceProxy(EnvInstance, Protocol):
     class Unregister(Protocol):
@@ -451,7 +451,7 @@ class EnvInstanceProxy(EnvInstance, Protocol):
                 self,
                 _context: EnvInstanceProxy.Unregister.UnregisterCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[bool]: ...
+            ) -> Awaitable[bool | None]: ...
 
     class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
         unregister: EnvInstanceProxy.Unregister
@@ -463,7 +463,7 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         results: EnvInstanceProxy.RegisterenvinstanceResultsBuilder
 
     def registerEnvInstance(
-        self, instance: EnvInstance
+        self, instance: EnvInstance | None = None
     ) -> RegisterenvinstanceResult: ...
     class RegisterenvinstanceRequest(Protocol):
         instance: EnvInstance
@@ -486,7 +486,7 @@ class EnvInstanceProxy(EnvInstance, Protocol):
             _context: EnvInstanceProxy.RegisterenvinstanceCallContext,
             **kwargs: Any,
         ) -> Awaitable[
-            EnvInstanceProxy.Unregister | EnvInstanceProxy.Unregister.Server
+            EnvInstanceProxy.Unregister | EnvInstanceProxy.Unregister.Server | None
         ]: ...
 
 class InstanceFactory(Identifiable, Protocol):
@@ -526,7 +526,9 @@ class InstanceFactory(Identifiable, Protocol):
     class NewinstancesCallContext(Protocol):
         results: InstanceFactory.NewinstancesResultsBuilder
 
-    def newInstances(self, numberOfInstances: int) -> NewinstancesResult: ...
+    def newInstances(
+        self, numberOfInstances: int | None = None
+    ) -> NewinstancesResult: ...
     class NewinstancesRequest(Protocol):
         numberOfInstances: int
         def send(self) -> InstanceFactory.NewinstancesResult: ...
@@ -544,13 +546,13 @@ class InstanceFactory(Identifiable, Protocol):
 
         def modelInfo(
             self, _context: InstanceFactory.ModelinfoCallContext, **kwargs: Any
-        ) -> Awaitable[InstanceFactory.Server.ModelinfoResult]: ...
+        ) -> Awaitable[InstanceFactory.Server.ModelinfoResult | None]: ...
         def newInstance(
             self, _context: InstanceFactory.NewinstanceCallContext, **kwargs: Any
-        ) -> Awaitable[Identifiable | Identifiable.Server]: ...
+        ) -> Awaitable[Identifiable | Identifiable.Server | None]: ...
         def newInstances(
             self,
             numberOfInstances: int,
             _context: InstanceFactory.NewinstancesCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Identifiable]]: ...
+        ) -> Awaitable[Sequence[Identifiable] | None]: ...
