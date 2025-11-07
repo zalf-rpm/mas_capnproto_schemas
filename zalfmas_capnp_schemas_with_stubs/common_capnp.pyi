@@ -45,7 +45,6 @@ class IdInformation:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         description: str | None = None,
@@ -152,7 +151,6 @@ class StructuredText:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             none: None | None = None,
             json: None | None = None,
             xml: None | None = None,
@@ -229,7 +227,6 @@ class StructuredText:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         value: str | None = None,
         structure: StructuredText.StructureBuilder | dict[str, Any] | None = None,
         type: StructuredText.Type
@@ -312,7 +309,6 @@ class Pair(Generic[Value_F, Value_S]):
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         fst: Value_F | None = None,
         snd: Value_S | None = None,
     ) -> PairBuilder: ...
@@ -465,7 +461,6 @@ class Value:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         f64: float | None = None,
         f32: float | None = None,
         i64: int | None = None,

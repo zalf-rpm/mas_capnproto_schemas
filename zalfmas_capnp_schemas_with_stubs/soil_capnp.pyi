@@ -69,7 +69,6 @@ class Layer:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             name: PropertyName
             | Literal[
                 "soilType",
@@ -196,7 +195,6 @@ class Layer:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         properties: Sequence[Layer.PropertyBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -278,7 +276,6 @@ class Query:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             failed: bool | None = None,
             mandatory: Sequence[PropertyName] | None = None,
             optional: Sequence[PropertyName] | None = None,
@@ -356,7 +353,6 @@ class Query:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         mandatory: Sequence[PropertyName] | None = None,
         optional: Sequence[PropertyName] | None = None,
         onlyRawData: bool | None = None,
@@ -433,7 +429,6 @@ class ProfileData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None,
         percentageOfArea: float | None = None,
     ) -> ProfileDataBuilder: ...
@@ -544,7 +539,7 @@ class Service(Identifiable, Persistent, Protocol):
             maxCount: int
             def send(self) -> Service.Stream.NextprofilesResult: ...
 
-        def nextProfiles_request(self) -> NextprofilesRequest: ...
+        def nextProfiles_request(self, maxCount: int = 0) -> NextprofilesRequest: ...
         @classmethod
         def _new_client(cls, server: Service.Stream.Server) -> Service.Stream: ...
         class Server:
@@ -574,8 +569,22 @@ class Service(Identifiable, Persistent, Protocol):
         optional: Sequence[PropertyName]
         onlyRawData: bool
         def send(self) -> Awaitable[Service.CheckavailableparametersResult]: ...
+        @overload
+        def init(
+            self, name: Literal["mandatory"], size: int
+        ) -> _DynamicListBuilder[PropertyName]: ...
+        @overload
+        def init(
+            self, name: Literal["optional"], size: int
+        ) -> _DynamicListBuilder[PropertyName]: ...
+        def init(self, name: str, size: int = ...) -> Any: ...
 
-    def checkAvailableParameters_request(self) -> CheckavailableparametersRequest: ...
+    def checkAvailableParameters_request(
+        self,
+        mandatory: Sequence[PropertyName] = [],
+        optional: Sequence[PropertyName] = [],
+        onlyRawData: bool = False,
+    ) -> CheckavailableparametersRequest: ...
     class GetallavailableparametersResult(
         Awaitable[GetallavailableparametersResult], Protocol
     ):
@@ -596,7 +605,9 @@ class Service(Identifiable, Persistent, Protocol):
         onlyRawData: bool
         def send(self) -> Service.GetallavailableparametersResult: ...
 
-    def getAllAvailableParameters_request(self) -> GetallavailableparametersRequest: ...
+    def getAllAvailableParameters_request(
+        self, onlyRawData: bool = False
+    ) -> GetallavailableparametersRequest: ...
     class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
         profiles: Sequence[Profile]
 
@@ -615,8 +626,17 @@ class Service(Identifiable, Persistent, Protocol):
         coord: LatLonCoordBuilder
         query: QueryBuilder
         def send(self) -> Service.ClosestprofilesatResult: ...
+        @overload
+        def init(self, name: Literal["coord"]) -> LatLonCoordBuilder: ...
+        @overload
+        def init(self, name: Literal["query"]) -> QueryBuilder: ...
+        def init(self, name: str, size: int = ...) -> Any: ...
 
-    def closestProfilesAt_request(self) -> ClosestprofilesatRequest: ...
+    def closestProfilesAt_request(
+        self,
+        coord: LatLonCoord | dict[str, Any] = {},
+        query: Query | dict[str, Any] = {},
+    ) -> ClosestprofilesatRequest: ...
     class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
         allProfiles: Service.Stream
 
@@ -637,8 +657,22 @@ class Service(Identifiable, Persistent, Protocol):
         optional: Sequence[PropertyName]
         onlyRawData: bool
         def send(self) -> Service.StreamallprofilesResult: ...
+        @overload
+        def init(
+            self, name: Literal["mandatory"], size: int
+        ) -> _DynamicListBuilder[PropertyName]: ...
+        @overload
+        def init(
+            self, name: Literal["optional"], size: int
+        ) -> _DynamicListBuilder[PropertyName]: ...
+        def init(self, name: str, size: int = ...) -> Any: ...
 
-    def streamAllProfiles_request(self) -> StreamallprofilesRequest: ...
+    def streamAllProfiles_request(
+        self,
+        mandatory: Sequence[PropertyName] = [],
+        optional: Sequence[PropertyName] = [],
+        onlyRawData: bool = False,
+    ) -> StreamallprofilesRequest: ...
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Persistent.Server

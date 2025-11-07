@@ -58,7 +58,6 @@ class ILRDates:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         sowing: DateBuilder | dict[str, Any] | None = None,
         earliestSowing: DateBuilder | dict[str, Any] | None = None,
         latestSowing: DateBuilder | dict[str, Any] | None = None,
@@ -212,7 +211,6 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             external: Event.ExternalType
             | Literal[
                 "sowing",
@@ -314,7 +312,6 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             date: DateBuilder | dict[str, Any] | None = None,
         ) -> Event.AtBuilder: ...
         @staticmethod
@@ -382,7 +379,6 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             earliest: DateBuilder | dict[str, Any] | None = None,
             latest: DateBuilder | dict[str, Any] | None = None,
         ) -> Event.BetweenBuilder: ...
@@ -459,7 +455,6 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             event: Event.TypeBuilder | dict[str, Any] | None = None,
             days: int | None = None,
         ) -> Event.AfterBuilder: ...
@@ -547,7 +542,6 @@ class Event:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         type: Event.ExternalType
         | Literal[
             "sowing",
@@ -705,7 +699,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 key: Element
                 | Literal[
                     "tmin",
@@ -813,7 +806,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             data: Sequence[Params.DailyWeather.KVBuilder]
             | Sequence[dict[str, Any]]
             | None = None,
@@ -888,7 +880,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             cultivar: str | None = None,
             plantDensity: int | None = None,
             crop: Crop | Crop.Server | None = None,
@@ -959,7 +950,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 soilDepthForAveraging: float | None = None,
                 daysInSoilTempWindow: int | None = None,
                 sowingIfAboveAvgSoilTemp: float | None = None,
@@ -1051,7 +1041,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             minTempThreshold: float | None = None,
             daysInTempWindow: int | None = None,
             minPercentASW: float | None = None,
@@ -1192,7 +1181,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 optCarbonConservation: bool | None = None,
                 cropImpactOnHumusBalance: float | None = None,
                 cropUsage: Params.Harvest.CropUsage
@@ -1285,7 +1273,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             exported: bool | None = None,
             optCarbMgmtData: Params.Harvest.OptCarbonMgmtDataBuilder
             | dict[str, Any]
@@ -1370,7 +1357,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             minPercentASW: float | None = None,
             maxPercentASW: float | None = None,
             max3dayPrecipSum: float | None = None,
@@ -1484,7 +1470,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 organ: PlantOrgan
                 | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]
                 | None = None,
@@ -1574,7 +1559,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             cuttingSpec: Sequence[Params.Cutting.SpecBuilder]
             | Sequence[dict[str, Any]]
             | None = None,
@@ -1659,7 +1643,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 id: str | None = None,
                 name: str | None = None,
                 carbamid: float | None = None,
@@ -1741,7 +1724,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             partition: Params.MineralFertilization.ParametersBuilder
             | dict[str, Any]
             | None = None,
@@ -1826,7 +1808,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             nDemand: float | None = None,
             partition: Params.MineralFertilization.ParametersBuilder
             | dict[str, Any]
@@ -1939,7 +1920,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 aomDryMatterContent: float | None = None,
                 aomNH4Content: float | None = None,
                 aomNO3Content: float | None = None,
@@ -2074,7 +2054,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 params: Params.OrganicFertilization.OrganicMatterParametersBuilder
                 | dict[str, Any]
                 | None = None,
@@ -2165,7 +2144,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             params: Params.OrganicFertilization.ParametersBuilder
             | dict[str, Any]
             | None = None,
@@ -2245,9 +2223,7 @@ class Params:
         ) -> Params.TillageReader: ...
         @staticmethod
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            depth: float | None = None,
+            num_first_segment_words: int | None = None, depth: float | None = None
         ) -> Params.TillageBuilder: ...
         @staticmethod
         def read(
@@ -2305,7 +2281,6 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 nitrateConcentration: float | None = None,
                 sulfateConcentration: float | None = None,
             ) -> Params.Irrigation.ParametersBuilder: ...
@@ -2370,7 +2345,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             amount: float | None = None,
             params: Params.Irrigation.ParametersBuilder | dict[str, Any] | None = None,
         ) -> Params.IrrigationBuilder: ...
@@ -2444,7 +2418,6 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             noOfPreviousDaysSerializedClimateData: int | None = None,
             asJson: bool | None = None,
         ) -> Params.SaveStateBuilder: ...
@@ -2500,9 +2473,7 @@ class Params:
         nesting_limit: int | None = ...,
     ) -> ParamsReader: ...
     @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
-    ) -> ParamsBuilder: ...
+    def new_message(num_first_segment_words: int | None = None) -> ParamsBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,
@@ -2551,7 +2522,9 @@ class Service(Identifiable, Protocol):
         lon: float
         def send(self) -> Service.ManagementatResult: ...
 
-    def managementAt_request(self) -> ManagementatRequest: ...
+    def managementAt_request(
+        self, lat: float = 0.0, lon: float = 0.0
+    ) -> ManagementatRequest: ...
     @classmethod
     def _new_client(cls, server: Service.Server | Identifiable.Server) -> Service: ...
     class Server(Identifiable.Server):

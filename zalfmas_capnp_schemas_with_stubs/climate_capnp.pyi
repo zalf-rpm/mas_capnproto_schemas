@@ -87,7 +87,6 @@ class EnsembleMember:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         r: int | None = None,
         i: int | None = None,
         p: int | None = None,
@@ -169,7 +168,9 @@ class Metadata:
             typeId: str
             def send(self) -> Metadata.Supported.SupportedvaluesResult: ...
 
-        def supportedValues_request(self) -> SupportedvaluesRequest: ...
+        def supportedValues_request(
+            self, typeId: str = ""
+        ) -> SupportedvaluesRequest: ...
         @classmethod
         def _new_client(
             cls, server: Metadata.Supported.Server
@@ -214,7 +215,6 @@ class Metadata:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             text: str | None = None,
             float: float | None = None,
             int: int | None = None,
@@ -340,7 +340,6 @@ class Metadata:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             gcm: GCM
             | Literal[
                 "cccmaCanEsm2",
@@ -532,8 +531,11 @@ class Metadata:
         class ForoneRequest(Protocol):
             entry: Metadata.EntryBuilder
             def send(self) -> Awaitable[Metadata.Information.ForoneResult]: ...
+            def init(self, name: Literal["entry"]) -> Metadata.EntryBuilder: ...
 
-        def forOne_request(self) -> ForoneRequest: ...
+        def forOne_request(
+            self, entry: Metadata.Entry | dict[str, Any] = {}
+        ) -> ForoneRequest: ...
         class ForallResult(Awaitable[ForallResult], Protocol):
             all: Any
 
@@ -588,7 +590,6 @@ class Metadata:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         entries: Sequence[Metadata.EntryBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -659,7 +660,7 @@ class Dataset(Identifiable, Persistent, Protocol):
             maxCount: int
             def send(self) -> Dataset.GetLocationsCallback.NextlocationsResult: ...
 
-        def nextLocations_request(self) -> NextlocationsRequest: ...
+        def nextLocations_request(self, maxCount: int = 0) -> NextlocationsRequest: ...
         @classmethod
         def _new_client(
             cls, server: Dataset.GetLocationsCallback.Server
@@ -710,8 +711,11 @@ class Dataset(Identifiable, Persistent, Protocol):
     class ClosesttimeseriesatRequest(Protocol):
         latlon: LatLonCoordBuilder
         def send(self) -> Dataset.ClosesttimeseriesatResult: ...
+        def init(self, name: Literal["latlon"]) -> LatLonCoordBuilder: ...
 
-    def closestTimeSeriesAt_request(self) -> ClosesttimeseriesatRequest: ...
+    def closestTimeSeriesAt_request(
+        self, latlon: LatLonCoord | dict[str, Any] = {}
+    ) -> ClosesttimeseriesatRequest: ...
     class TimeseriesatResult(Awaitable[TimeseriesatResult], Protocol):
         timeSeries: TimeSeries
 
@@ -726,7 +730,7 @@ class Dataset(Identifiable, Persistent, Protocol):
         locationId: str
         def send(self) -> Dataset.TimeseriesatResult: ...
 
-    def timeSeriesAt_request(self) -> TimeseriesatRequest: ...
+    def timeSeriesAt_request(self, locationId: str = "") -> TimeseriesatRequest: ...
     class LocationsResult(Awaitable[LocationsResult], Protocol):
         locations: Sequence[LocationReader]
 
@@ -757,7 +761,9 @@ class Dataset(Identifiable, Persistent, Protocol):
         startAfterLocationId: str
         def send(self) -> Dataset.StreamlocationsResult: ...
 
-    def streamLocations_request(self) -> StreamlocationsRequest: ...
+    def streamLocations_request(
+        self, startAfterLocationId: str = ""
+    ) -> StreamlocationsRequest: ...
     @classmethod
     def _new_client(
         cls, server: Dataset.Server | Identifiable.Server | Persistent.Server
@@ -887,8 +893,15 @@ class TimeSeries(Identifiable, Persistent, Protocol):
         start: DateBuilder
         end: DateBuilder
         def send(self) -> TimeSeries.SubrangeResult: ...
+        @overload
+        def init(self, name: Literal["start"]) -> DateBuilder: ...
+        @overload
+        def init(self, name: Literal["end"]) -> DateBuilder: ...
+        def init(self, name: str, size: int = ...) -> Any: ...
 
-    def subrange_request(self) -> SubrangeRequest: ...
+    def subrange_request(
+        self, start: Date | dict[str, Any] = {}, end: Date | dict[str, Any] = {}
+    ) -> SubrangeRequest: ...
     class SubheaderResult(Awaitable[SubheaderResult], Protocol):
         timeSeries: TimeSeries
 
@@ -903,7 +916,7 @@ class TimeSeries(Identifiable, Persistent, Protocol):
         elements: Any
         def send(self) -> TimeSeries.SubheaderResult: ...
 
-    def subheader_request(self) -> SubheaderRequest: ...
+    def subheader_request(self, elements: Any = ...) -> SubheaderRequest: ...
     class MetadataResult(Protocol):
         entries: Sequence[Metadata.EntryReader]
         info: Metadata.Information
@@ -1004,7 +1017,6 @@ class Location:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             key: str | None = None,
             value: Any | None = None,
         ) -> Location.KVBuilder: ...
@@ -1077,7 +1089,6 @@ class Location:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: IdInformationBuilder | dict[str, Any] | None = None,
         heightNN: float | None = None,
         latlon: LatLonCoordBuilder | dict[str, Any] | None = None,
@@ -1186,7 +1197,6 @@ class MetaPlusData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         meta: MetadataBuilder | dict[str, Any] | None = None,
         data: Dataset | Dataset.Server | None = None,
     ) -> MetaPlusDataBuilder: ...
@@ -1288,7 +1298,6 @@ class TimeSeriesData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         data: Sequence[Sequence[float]] | None = None,
         isTransposed: bool | None = None,
         header: Sequence[Element] | None = None,
@@ -1403,8 +1412,11 @@ class Service(Identifiable, Persistent, Protocol):
     class GetdatasetsforRequest(Protocol):
         template: MetadataBuilder
         def send(self) -> Service.GetdatasetsforResult: ...
+        def init(self, name: Literal["template"]) -> MetadataBuilder: ...
 
-    def getDatasetsFor_request(self) -> GetdatasetsforRequest: ...
+    def getDatasetsFor_request(
+        self, template: Metadata | dict[str, Any] = {}
+    ) -> GetdatasetsforRequest: ...
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Persistent.Server
@@ -1446,7 +1458,6 @@ class CSVTimeSeriesFactory(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             sep: str | None = None,
             headerMap: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
             skipLinesToHeader: int | None = None,
@@ -1528,8 +1539,15 @@ class CSVTimeSeriesFactory(Identifiable, Protocol):
         csvData: str
         config: CSVTimeSeriesFactory.CSVConfigBuilder
         def send(self) -> CSVTimeSeriesFactory.CreateResult: ...
+        def init(
+            self, name: Literal["config"]
+        ) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
 
-    def create_request(self) -> CreateRequest: ...
+    def create_request(
+        self,
+        csvData: str = "",
+        config: CSVTimeSeriesFactory.CSVConfig | dict[str, Any] = {},
+    ) -> CreateRequest: ...
     @classmethod
     def _new_client(
         cls, server: CSVTimeSeriesFactory.Server | Identifiable.Server
@@ -1571,7 +1589,6 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             element: Element
             | Literal[
                 "tmin",
@@ -1717,8 +1734,15 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
         desc: AlterTimeSeriesWrapper.AlteredBuilder
         asNewTimeSeries: bool
         def send(self) -> AlterTimeSeriesWrapper.AlterResult: ...
+        def init(
+            self, name: Literal["desc"]
+        ) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
 
-    def alter_request(self) -> AlterRequest: ...
+    def alter_request(
+        self,
+        desc: AlterTimeSeriesWrapper.Altered | dict[str, Any] = {},
+        asNewTimeSeries: bool = False,
+    ) -> AlterRequest: ...
     class RemoveResultsBuilder(Protocol): ...
 
     class RemoveCallContext(Protocol):
@@ -1753,7 +1777,31 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
         alteredElement: Element
         def send(self) -> Awaitable[None]: ...
 
-    def remove_request(self) -> RemoveRequest: ...
+    def remove_request(
+        self,
+        alteredElement: Element
+        | Literal[
+            "tmin",
+            "tavg",
+            "tmax",
+            "precip",
+            "globrad",
+            "wind",
+            "sunhours",
+            "cloudamount",
+            "relhumid",
+            "airpress",
+            "vaporpress",
+            "co2",
+            "o3",
+            "et0",
+            "dewpointTemp",
+            "specificHumidity",
+            "snowfallFlux",
+            "surfaceDownwellingLongwaveRadiation",
+            "potET",
+        ] = "tmin",
+    ) -> RemoveRequest: ...
     class ReplacewrappedtimeseriesResultsBuilder(Protocol): ...
 
     class ReplacewrappedtimeseriesCallContext(Protocol):
@@ -1766,7 +1814,9 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
         timeSeries: TimeSeries
         def send(self) -> Awaitable[None]: ...
 
-    def replaceWrappedTimeSeries_request(self) -> ReplacewrappedtimeseriesRequest: ...
+    def replaceWrappedTimeSeries_request(
+        self, timeSeries: TimeSeries = ...
+    ) -> ReplacewrappedtimeseriesRequest: ...
     @classmethod
     def _new_client(
         cls,
@@ -1842,7 +1892,7 @@ class AlterTimeSeriesWrapperFactory(Identifiable, Protocol):
         timeSeries: TimeSeries
         def send(self) -> AlterTimeSeriesWrapperFactory.WrapResult: ...
 
-    def wrap_request(self) -> WrapRequest: ...
+    def wrap_request(self, timeSeries: TimeSeries = ...) -> WrapRequest: ...
     @classmethod
     def _new_client(
         cls, server: AlterTimeSeriesWrapperFactory.Server | Identifiable.Server

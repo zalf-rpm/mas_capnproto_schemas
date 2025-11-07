@@ -7,6 +7,8 @@ from contextlib import contextmanager
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, NamedTuple, Protocol
 
+from capnp import _DynamicListBuilder
+
 from .common_capnp import (
     Identifiable,
     IdInformation,
@@ -33,7 +35,9 @@ class Admin(Identifiable, Protocol):
         upsert: bool
         def send(self) -> Admin.AddcategoryResult: ...
 
-    def addCategory_request(self) -> AddcategoryRequest: ...
+    def addCategory_request(
+        self, category: Any = ..., upsert: bool = False
+    ) -> AddcategoryRequest: ...
     class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
         removedObjects: Sequence[Identifiable]
 
@@ -51,7 +55,9 @@ class Admin(Identifiable, Protocol):
         moveObjectsToCategoryId: str
         def send(self) -> Admin.RemovecategoryResult: ...
 
-    def removeCategory_request(self) -> RemovecategoryRequest: ...
+    def removeCategory_request(
+        self, categoryId: str = "", moveObjectsToCategoryId: str = ""
+    ) -> RemovecategoryRequest: ...
     class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
         movedObjectIds: Sequence[str]
 
@@ -68,8 +74,13 @@ class Admin(Identifiable, Protocol):
         objectIds: Sequence[str]
         toCatId: str
         def send(self) -> Admin.MoveobjectsResult: ...
+        def init(
+            self, name: Literal["objectIds"], size: int
+        ) -> _DynamicListBuilder[str]: ...
 
-    def moveObjects_request(self) -> MoveobjectsRequest: ...
+    def moveObjects_request(
+        self, objectIds: Sequence[str] = [], toCatId: str = ""
+    ) -> MoveobjectsRequest: ...
     class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
         removedObjects: Sequence[Identifiable]
 
@@ -83,8 +94,13 @@ class Admin(Identifiable, Protocol):
     class RemoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         def send(self) -> Admin.RemoveobjectsResult: ...
+        def init(
+            self, name: Literal["objectIds"], size: int
+        ) -> _DynamicListBuilder[str]: ...
 
-    def removeObjects_request(self) -> RemoveobjectsRequest: ...
+    def removeObjects_request(
+        self, objectIds: Sequence[str] = []
+    ) -> RemoveobjectsRequest: ...
     class RegistryResult(Awaitable[RegistryResult], Protocol):
         registry: Any
 
@@ -159,7 +175,6 @@ class Registry(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             categoryId: str | None = None,
             ref: Identifiable | Identifiable.Server | None = None,
             name: str | None = None,
@@ -240,7 +255,7 @@ class Registry(Identifiable, Protocol):
         categoryId: str
         def send(self) -> Awaitable[Registry.CategoryinfoResult]: ...
 
-    def categoryInfo_request(self) -> CategoryinfoRequest: ...
+    def categoryInfo_request(self, categoryId: str = "") -> CategoryinfoRequest: ...
     class EntriesResult(Awaitable[EntriesResult], Protocol):
         entries: Sequence[Registry.EntryReader]
 
@@ -255,7 +270,7 @@ class Registry(Identifiable, Protocol):
         categoryId: str
         def send(self) -> Registry.EntriesResult: ...
 
-    def entries_request(self) -> EntriesRequest: ...
+    def entries_request(self, categoryId: str = "") -> EntriesRequest: ...
     @classmethod
     def _new_client(cls, server: Registry.Server | Identifiable.Server) -> Registry: ...
     class Server(Identifiable.Server):
@@ -300,7 +315,6 @@ class Registrar(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             vatId: VatIdBuilder | dict[str, Any] | None = None,
             restorer: Restorer | Restorer.Server | None = None,
         ) -> Registrar.CrossDomainRestoreBuilder: ...
@@ -375,7 +389,6 @@ class Registrar(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             cap: Identifiable | Identifiable.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
@@ -488,8 +501,17 @@ class Registrar(Identifiable, Protocol):
         categoryId: str
         xDomain: Registrar.CrossDomainRestoreBuilder
         def send(self) -> Registrar.RegisterResult: ...
+        def init(
+            self, name: Literal["xDomain"]
+        ) -> Registrar.CrossDomainRestoreBuilder: ...
 
-    def register_request(self) -> RegisterRequest: ...
+    def register_request(
+        self,
+        cap: Identifiable = ...,
+        regName: str = "",
+        categoryId: str = "",
+        xDomain: Registrar.CrossDomainRestore | dict[str, Any] = {},
+    ) -> RegisterRequest: ...
     @classmethod
     def _new_client(
         cls, server: Registrar.Server | Identifiable.Server

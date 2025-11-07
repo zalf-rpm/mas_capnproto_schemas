@@ -54,7 +54,6 @@ class XYResult:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         xs: Sequence[float] | None = None,
         ys: Sequence[float] | None = None,
     ) -> XYResultBuilder: ...
@@ -133,7 +132,6 @@ class Stat:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         type: Stat.Type | Literal["min", "max", "sd", "avg", "median"] | None = None,
         vs: Sequence[float] | None = None,
     ) -> StatBuilder: ...
@@ -202,7 +200,6 @@ class XYPlusResult:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         xy: XYResultBuilder | dict[str, Any] | None = None,
         stats: Sequence[StatBuilder] | Sequence[dict[str, Any]] | None = None,
     ) -> XYPlusResultBuilder: ...
@@ -275,7 +272,7 @@ class ClimateInstance(Identifiable, Protocol):
         timeSeries: Any
         def send(self) -> ClimateInstance.RunResult: ...
 
-    def run_request(self) -> RunRequest: ...
+    def run_request(self, timeSeries: Any = ...) -> RunRequest: ...
     class RunsetResult(Awaitable[RunsetResult], Protocol):
         result: XYPlusResultReader
 
@@ -290,7 +287,7 @@ class ClimateInstance(Identifiable, Protocol):
         dataset: Any
         def send(self) -> ClimateInstance.RunsetResult: ...
 
-    def runSet_request(self) -> RunsetRequest: ...
+    def runSet_request(self, dataset: Any = ...) -> RunsetRequest: ...
     @classmethod
     def _new_client(
         cls, server: ClimateInstance.Server | Identifiable.Server
@@ -334,7 +331,6 @@ class Env(Generic[_RestInput]):
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         rest: _RestInput | None = None,
         timeSeries: TimeSeries | TimeSeries.Server | None = None,
         soilProfile: Profile | Profile.Server | None = None,
@@ -408,8 +404,9 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
     class RunRequest(Protocol):
         env: EnvBuilder[Any]
         def send(self) -> EnvInstance.RunResult: ...
+        def init(self, name: Literal["env"]) -> EnvBuilder[Any]: ...
 
-    def run_request(self) -> RunRequest: ...
+    def run_request(self, env: Env[Any] | dict[str, Any] = {}) -> RunRequest: ...
     @classmethod
     def _new_client(
         cls,
@@ -469,7 +466,9 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         instance: EnvInstance
         def send(self) -> EnvInstanceProxy.RegisterenvinstanceResult: ...
 
-    def registerEnvInstance_request(self) -> RegisterenvinstanceRequest: ...
+    def registerEnvInstance_request(
+        self, instance: EnvInstance = ...
+    ) -> RegisterenvinstanceRequest: ...
     @classmethod
     def _new_client(
         cls,
@@ -531,7 +530,9 @@ class InstanceFactory(Identifiable, Protocol):
         numberOfInstances: int
         def send(self) -> InstanceFactory.NewinstancesResult: ...
 
-    def newInstances_request(self) -> NewinstancesRequest: ...
+    def newInstances_request(
+        self, numberOfInstances: int = 0
+    ) -> NewinstancesRequest: ...
     @classmethod
     def _new_client(
         cls, server: InstanceFactory.Server | Identifiable.Server

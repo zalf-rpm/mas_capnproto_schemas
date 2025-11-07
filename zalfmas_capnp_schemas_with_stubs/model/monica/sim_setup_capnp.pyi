@@ -80,7 +80,6 @@ class Setup:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         runId: int | None = None,
         sowingTime: str | None = None,
         harvestTime: str | None = None,

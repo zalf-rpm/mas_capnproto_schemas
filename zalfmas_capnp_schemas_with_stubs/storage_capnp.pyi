@@ -125,7 +125,6 @@ class Store(Identifiable, Persistent, Protocol):
                 @staticmethod
                 def new_message(
                     num_first_segment_words: int | None = None,
-                    allocate_seg_callable: Any = None,
                     boolValue: bool | None = None,
                     boolListValue: Sequence[bool] | None = None,
                     int8Value: int | None = None,
@@ -392,8 +391,13 @@ class Store(Identifiable, Persistent, Protocol):
             class SetvalueRequest(Protocol):
                 value: Store.Container.Entry.ValueBuilder
                 def send(self) -> Store.Container.Entry.SetvalueResult: ...
+                def init(
+                    self, name: Literal["value"]
+                ) -> Store.Container.Entry.ValueBuilder: ...
 
-            def setValue_request(self) -> SetvalueRequest: ...
+            def setValue_request(
+                self, value: Store.Container.Entry.Value | dict[str, Any] = {}
+            ) -> SetvalueRequest: ...
             @classmethod
             def _new_client(
                 cls, server: Store.Container.Entry.Server
@@ -437,7 +441,6 @@ class Store(Identifiable, Persistent, Protocol):
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 key: str | None = None,
                 entry: Store.Container.Entry
                 | Store.Container.Entry.Server
@@ -541,7 +544,7 @@ class Store(Identifiable, Persistent, Protocol):
             key: str
             def send(self) -> Store.Container.GetentryResult: ...
 
-        def getEntry_request(self) -> GetentryRequest: ...
+        def getEntry_request(self, key: str = "") -> GetentryRequest: ...
         class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
             success: bool
 
@@ -556,7 +559,7 @@ class Store(Identifiable, Persistent, Protocol):
             key: str
             def send(self) -> Store.Container.RemoveentryResult: ...
 
-        def removeEntry_request(self) -> RemoveentryRequest: ...
+        def removeEntry_request(self, key: str = "") -> RemoveentryRequest: ...
         class ClearResult(Awaitable[ClearResult], Protocol):
             success: bool
 
@@ -593,8 +596,16 @@ class Store(Identifiable, Persistent, Protocol):
             value: Store.Container.Entry.ValueBuilder
             replaceExisting: bool
             def send(self) -> Store.Container.AddentryResult: ...
+            def init(
+                self, name: Literal["value"]
+            ) -> Store.Container.Entry.ValueBuilder: ...
 
-        def addEntry_request(self) -> AddentryRequest: ...
+        def addEntry_request(
+            self,
+            key: str = "",
+            value: Store.Container.Entry.Value | dict[str, Any] = {},
+            replaceExisting: bool = False,
+        ) -> AddentryRequest: ...
         @classmethod
         def _new_client(
             cls,
@@ -661,7 +672,6 @@ class Store(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             id: str | None = None,
             name: str | None = None,
             container: Store.Container | Store.Container.Server | None = None,
@@ -734,7 +744,6 @@ class Store(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             info: IdInformationBuilder | dict[str, Any] | None = None,
             entries: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
             isAnyValue: Sequence[bool] | None = None,
@@ -822,7 +831,9 @@ class Store(Identifiable, Persistent, Protocol):
         description: str
         def send(self) -> Store.NewcontainerResult: ...
 
-    def newContainer_request(self) -> NewcontainerRequest: ...
+    def newContainer_request(
+        self, name: str = "", description: str = ""
+    ) -> NewcontainerRequest: ...
     class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
         container: Store.Container
 
@@ -837,7 +848,7 @@ class Store(Identifiable, Persistent, Protocol):
         id: str
         def send(self) -> Store.ContainerwithidResult: ...
 
-    def containerWithId_request(self) -> ContainerwithidRequest: ...
+    def containerWithId_request(self, id: str = "") -> ContainerwithidRequest: ...
     class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
         containers: Sequence[Store.InfoAndContainerReader]
 
@@ -866,7 +877,7 @@ class Store(Identifiable, Persistent, Protocol):
         id: str
         def send(self) -> Store.RemovecontainerResult: ...
 
-    def removeContainer_request(self) -> RemovecontainerRequest: ...
+    def removeContainer_request(self, id: str = "") -> RemovecontainerRequest: ...
     class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
         container: Store.Container
 
@@ -881,7 +892,7 @@ class Store(Identifiable, Persistent, Protocol):
         json: str
         def send(self) -> Store.ImportcontainerResult: ...
 
-    def importContainer_request(self) -> ImportcontainerRequest: ...
+    def importContainer_request(self, json: str = "") -> ImportcontainerRequest: ...
     @classmethod
     def _new_client(
         cls, server: Store.Server | Identifiable.Server | Persistent.Server

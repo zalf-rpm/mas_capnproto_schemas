@@ -81,9 +81,7 @@ class MaybeBool:
     ) -> MaybeBoolReader: ...
     @staticmethod
     def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        value: bool | None = None,
+        num_first_segment_words: int | None = None, value: bool | None = None
     ) -> MaybeBoolBuilder: ...
     @staticmethod
     def read(
@@ -619,7 +617,6 @@ class CropModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         frostKillOn: bool | None = None,
         ktko: float | None = None,
         ktkc: float | None = None,
@@ -2143,7 +2140,6 @@ class AOMProperties:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         aomSlow: float | None = None,
         aomFast: float | None = None,
         aomSlowDecRatetoSMBSlow: float | None = None,
@@ -2328,7 +2324,6 @@ class SoilLayerState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         layerThickness: float | None = None,
         soilWaterFlux: float | None = None,
         voAOMPool: Sequence[AOMPropertiesBuilder]
@@ -2493,7 +2488,6 @@ class SoilColumnState:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             fp: Params.MineralFertilization.ParametersBuilder
             | dict[str, Any]
             | None = None,
@@ -2636,7 +2630,6 @@ class SoilColumnState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         vsSurfaceWaterStorage: float | None = None,
         vsInterceptionStorage: float | None = None,
         vmGroundwaterTable: int | None = None,
@@ -2875,7 +2868,6 @@ class SoilTemperatureModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         soilSurfaceTemperature: float | None = None,
         moduleParams: SoilTemperatureModuleParametersBuilder
         | dict[str, Any]
@@ -3122,7 +3114,6 @@ class FrostModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         pmHydraulicConductivityRedux: float | None = None,
         frostDepth: float | None = None,
         accumulatedFrostDepth: float | None = None,
@@ -3264,7 +3255,6 @@ class SnowModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         snowRetentionCapacityMax: float | None = None,
         snowDensity: float | None = None,
         snowDepth: float | None = None,
@@ -3550,7 +3540,6 @@ class SoilMoistureModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         frostComponent: FrostModuleStateBuilder | dict[str, Any] | None = None,
         snowComponent: SnowModuleStateBuilder | dict[str, Any] | None = None,
         xSACriticalSoilMoisture: float | None = None,
@@ -4118,7 +4107,6 @@ class SoilOrganicModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         incorporation: bool | None = None,
         totalDenitrification: float | None = None,
         moduleParams: SoilOrganicModuleParametersBuilder | dict[str, Any] | None = None,
@@ -4502,7 +4490,6 @@ class SoilTransportModuleState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         pcMinimumAvailableN: float | None = None,
         moduleParams: SoilTransportModuleParametersBuilder
         | dict[str, Any]
@@ -4705,7 +4692,6 @@ class MonicaModelState:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             acd: int | None = None,
             value: float | None = None,
         ) -> MonicaModelState.ACDToValueBuilder: ...
@@ -4862,7 +4848,6 @@ class MonicaModelState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         sitePs: SiteParametersBuilder | dict[str, Any] | None = None,
         cultivationMethodCount: int | None = None,
         envPs: EnvironmentParametersBuilder | dict[str, Any] | None = None,
@@ -5247,7 +5232,6 @@ class RuntimeState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         modelState: MonicaModelStateBuilder | dict[str, Any] | None = None,
     ) -> RuntimeStateBuilder: ...
     @staticmethod
@@ -5355,7 +5339,6 @@ class CropState:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         automaticHarvestParams: AutomaticHarvestParametersBuilder
         | dict[str, Any]
         | None = None,
@@ -5558,7 +5541,6 @@ class ICData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         noCrop: None | None = None,
         height: float | None = None,
         lait: float | None = None,

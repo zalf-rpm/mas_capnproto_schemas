@@ -57,7 +57,7 @@ class Cluster:
             ) -> Cluster.AdminMaster.RegistermodelinstancefactoryResult: ...
 
         def registerModelInstanceFactory_request(
-            self,
+            self, aModelId: str = "", aFactory: Any = ...
         ) -> RegistermodelinstancefactoryRequest: ...
         class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
             factories: Any
@@ -138,7 +138,7 @@ class Cluster:
             def send(self) -> Cluster.Runtime.RegistermodelinstancefactoryResult: ...
 
         def registerModelInstanceFactory_request(
-            self,
+            self, aModelId: str = "", aFactory: Any = ...
         ) -> RegistermodelinstancefactoryRequest: ...
         class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
             factories: Any
@@ -201,7 +201,9 @@ class Cluster:
             aModelId: str
             def send(self) -> Cluster.Runtime.ReservenumberofcoresResult: ...
 
-        def reserveNumberOfCores_request(self) -> ReservenumberofcoresRequest: ...
+        def reserveNumberOfCores_request(
+            self, reserveCores: int = 0, aModelId: str = ""
+        ) -> ReservenumberofcoresRequest: ...
         @classmethod
         def _new_client(
             cls, server: Cluster.Runtime.Server | Identifiable.Server
@@ -256,7 +258,6 @@ class Cluster:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             input: str | None = None,
             output: str | None = None,
         ) -> Cluster.ZmqPipelineAddressesBuilder: ...
@@ -366,7 +367,9 @@ class Cluster:
             numberOfInstances: int
             def send(self) -> Cluster.ModelInstanceFactory.NewinstancesResult: ...
 
-        def newInstances_request(self) -> NewinstancesRequest: ...
+        def newInstances_request(
+            self, numberOfInstances: int = 0
+        ) -> NewinstancesRequest: ...
         class NewcloudviazmqpipelineproxiesResult(
             Awaitable[NewcloudviazmqpipelineproxiesResult], Protocol
         ):
@@ -390,7 +393,7 @@ class Cluster:
             ) -> Cluster.ModelInstanceFactory.NewcloudviazmqpipelineproxiesResult: ...
 
         def newCloudViaZmqPipelineProxies_request(
-            self,
+            self, numberOfInstances: int = 0
         ) -> NewcloudviazmqpipelineproxiesRequest: ...
         class NewcloudviaproxyResult(Awaitable[NewcloudviaproxyResult], Protocol):
             proxy: Cluster.ValueHolder
@@ -408,7 +411,9 @@ class Cluster:
             numberOfInstances: int
             def send(self) -> Cluster.ModelInstanceFactory.NewcloudviaproxyResult: ...
 
-        def newCloudViaProxy_request(self) -> NewcloudviaproxyRequest: ...
+        def newCloudViaProxy_request(
+            self, numberOfInstances: int = 0
+        ) -> NewcloudviaproxyRequest: ...
         class ModelidResult(Awaitable[ModelidResult], Protocol):
             id: str
 
@@ -444,7 +449,9 @@ class Cluster:
                 self,
             ) -> Cluster.ModelInstanceFactory.RegistermodelinstanceResult: ...
 
-        def registerModelInstance_request(self) -> RegistermodelinstanceRequest: ...
+        def registerModelInstance_request(
+            self, instance: Any = ..., registrationToken: str = ""
+        ) -> RegistermodelinstanceRequest: ...
         class RestoresturdyrefResult(Awaitable[RestoresturdyrefResult], Protocol):
             cap: Cluster.ValueHolder
 
@@ -459,7 +466,9 @@ class Cluster:
             sturdyRef: str
             def send(self) -> Cluster.ModelInstanceFactory.RestoresturdyrefResult: ...
 
-        def restoreSturdyRef_request(self) -> RestoresturdyrefRequest: ...
+        def restoreSturdyRef_request(
+            self, sturdyRef: str = ""
+        ) -> RestoresturdyrefRequest: ...
         @classmethod
         def _new_client(
             cls, server: Cluster.ModelInstanceFactory.Server | Identifiable.Server
@@ -521,9 +530,7 @@ class Cluster:
         nesting_limit: int | None = ...,
     ) -> ClusterReader: ...
     @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
-    ) -> ClusterBuilder: ...
+    def new_message(num_first_segment_words: int | None = None) -> ClusterBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,

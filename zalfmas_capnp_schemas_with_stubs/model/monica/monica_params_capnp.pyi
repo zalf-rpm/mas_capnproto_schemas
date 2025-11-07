@@ -141,7 +141,6 @@ class SpeciesParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         speciesId: str | None = None,
         carboxylationPathway: int | None = None,
         defaultRadiationUseEfficiency: float | None = None,
@@ -508,7 +507,6 @@ class YieldComponent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         organId: int | None = None,
         yieldPercentage: float | None = None,
         yieldDryMatter: float | None = None,
@@ -650,7 +648,6 @@ class CultivarParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         cultivarId: str | None = None,
         description: str | None = None,
         perennial: bool | None = None,
@@ -980,7 +977,6 @@ class CropParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         speciesParams: SpeciesParametersBuilder | dict[str, Any] | None = None,
         cultivarParams: CultivarParametersBuilder | dict[str, Any] | None = None,
     ) -> CropParametersBuilder: ...
@@ -1071,7 +1067,6 @@ class CropResidueParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         params: Params.OrganicFertilization.OrganicMatterParametersBuilder
         | dict[str, Any]
         | None = None,
@@ -1157,7 +1152,6 @@ class CropSpec:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         cropParams: CropParametersBuilder | dict[str, Any] | None = None,
         residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
     ) -> CropSpecBuilder: ...
@@ -1247,7 +1241,6 @@ class AutomaticHarvestParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         harvestTime: AutomaticHarvestParameters.HarvestTime
         | Literal["maturity", "unknown"]
         | None = None,
@@ -1317,7 +1310,6 @@ class NMinCropParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         samplingDepth: float | None = None,
         nTarget: float | None = None,
         nTarget30: float | None = None,
@@ -1387,7 +1379,6 @@ class NMinApplicationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         min: float | None = None,
         max: float | None = None,
         delayInDays: int | None = None,
@@ -1485,7 +1476,6 @@ class SoilParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         soilSandContent: float | None = None,
         soilClayContent: float | None = None,
         soilpH: float | None = None,
@@ -1626,7 +1616,6 @@ class AutomaticIrrigationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         params: Params.Irrigation.ParametersBuilder | dict[str, Any] | None = None,
         amount: float | None = None,
         threshold: float | None = None,
@@ -1723,7 +1712,6 @@ class SiteParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         latitude: float | None = None,
         slope: float | None = None,
         heightNN: float | None = None,
@@ -1843,7 +1831,6 @@ class EnvironmentParameters:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             year: int | None = None,
             value: float | None = None,
         ) -> EnvironmentParameters.YearToValueBuilder: ...
@@ -1927,7 +1914,6 @@ class EnvironmentParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         albedo: float | None = None,
         atmosphericCO2: float | None = None,
         atmosphericCO2s: Sequence[EnvironmentParameters.YearToValueBuilder]
@@ -2081,7 +2067,6 @@ class MeasuredGroundwaterTableInformation:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             date: DateBuilder | dict[str, Any] | None = None,
             value: float | None = None,
         ) -> MeasuredGroundwaterTableInformation.DateToValueBuilder: ...
@@ -2156,7 +2141,6 @@ class MeasuredGroundwaterTableInformation:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         groundwaterInformationAvailable: bool | None = None,
         groundwaterInfo: Sequence[
             MeasuredGroundwaterTableInformation.DateToValueBuilder
@@ -2293,7 +2277,6 @@ class SimulationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         startDate: DateBuilder | dict[str, Any] | None = None,
         endDate: DateBuilder | dict[str, Any] | None = None,
         nitrogenResponseOn: bool | None = None,
@@ -2535,7 +2518,6 @@ class CropModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         canopyReflectionCoefficient: float | None = None,
         referenceMaxAssimilationRate: float | None = None,
         referenceLeafAreaIndex: float | None = None,
@@ -2747,7 +2729,6 @@ class SoilMoistureModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         criticalMoistureDepth: float | None = None,
         saturatedHydraulicConductivity: float | None = None,
         surfaceRoughness: float | None = None,
@@ -2996,7 +2977,6 @@ class SticsParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         useN2O: bool | None = None,
         useNit: bool | None = None,
         useDenit: bool | None = None,
@@ -3315,7 +3295,6 @@ class SoilOrganicModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         somSlowDecCoeffStandard: float | None = None,
         somFastDecCoeffStandard: float | None = None,
         smbSlowMaintRateStandard: float | None = None,
@@ -3584,7 +3563,6 @@ class SoilTemperatureModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         nTau: float | None = None,
         initialSurfaceTemperature: float | None = None,
         baseTemperature: float | None = None,
@@ -3708,7 +3686,6 @@ class SoilTransportModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         dispersionLength: float | None = None,
         ad: float | None = None,
         diffusionCoefficientStandard: float | None = None,
@@ -3785,7 +3762,6 @@ class Voc:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
                 speciesId: int | None = None,
                 emission: float | None = None,
             ) -> Voc.Emissions.SpeciesIdToEmissionBuilder: ...
@@ -3857,7 +3833,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             speciesIdToIsopreneEmission: Sequence[
                 Voc.Emissions.SpeciesIdToEmissionBuilder
             ]
@@ -4031,7 +4006,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             id: int | None = None,
             efMonos: float | None = None,
             efMono: float | None = None,
@@ -4250,7 +4224,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             kc: float | None = None,
             ko: float | None = None,
             oi: float | None = None,
@@ -4367,7 +4340,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             rad: float | None = None,
             rad24: float | None = None,
             rad240: float | None = None,
@@ -4467,7 +4439,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             par: float | None = None,
             par24: float | None = None,
             par240: float | None = None,
@@ -4537,7 +4508,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             tempK: float | None = None,
             tempK24: float | None = None,
             tempK240: float | None = None,
@@ -4605,7 +4575,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             efIso: float | None = None,
             efMono: float | None = None,
         ) -> Voc.EnzymeActivityTBuilder: ...
@@ -4679,7 +4648,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             foliageLayer: int | None = None,
             pho: Voc.PhotosynthTBuilder | dict[str, Any] | None = None,
             fol: Voc.FoliageTBuilder | dict[str, Any] | None = None,
@@ -4783,7 +4751,6 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             isoprene: float | None = None,
             monoterp: float | None = None,
         ) -> Voc.LeafEmissionsBuilder: ...
@@ -4839,9 +4806,7 @@ class Voc:
         nesting_limit: int | None = ...,
     ) -> VocReader: ...
     @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
-    ) -> VocBuilder: ...
+    def new_message(num_first_segment_words: int | None = None) -> VocBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,

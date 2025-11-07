@@ -30,7 +30,6 @@ class Date:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         year: int | None = None,
         month: int | None = None,
         day: int | None = None,

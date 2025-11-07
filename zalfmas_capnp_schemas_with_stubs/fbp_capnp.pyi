@@ -53,7 +53,6 @@ class IP:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             key: str | None = None,
             desc: str | None = None,
             value: Any | None = None,
@@ -127,7 +126,6 @@ class IP:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         attributes: Sequence[IP.KVBuilder] | Sequence[dict[str, Any]] | None = None,
         content: Any | None = None,
         type: IP.Type
@@ -204,9 +202,7 @@ class IIP:
     ) -> IIPReader: ...
     @staticmethod
     def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        content: Any | None = None,
+        num_first_segment_words: int | None = None, content: Any | None = None
     ) -> IIPBuilder: ...
     @staticmethod
     def read(
@@ -271,7 +267,6 @@ class Channel(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             value: Channel_V | None = None,
             done: None | None = None,
             noMsg: None | None = None,
@@ -397,7 +392,9 @@ class Channel(Identifiable, Persistent, Protocol):
             noMsg: None
             def send(self) -> Awaitable[None]: ...
 
-        def write_request(self) -> WriteRequest: ...
+        def write_request(
+            self, value: Any = ..., done: None = None, noMsg: None = None
+        ) -> WriteRequest: ...
         class CloseResultsBuilder(Protocol): ...
 
         class CloseCallContext(Protocol):
@@ -426,7 +423,9 @@ class Channel(Identifiable, Persistent, Protocol):
             noMsg: None
             def send(self) -> Channel.Writer.WriteifspaceResult: ...
 
-        def writeIfSpace_request(self) -> WriteifspaceRequest: ...
+        def writeIfSpace_request(
+            self, value: Any = ..., done: None = None, noMsg: None = None
+        ) -> WriteifspaceRequest: ...
         @classmethod
         def _new_client(
             cls, server: Channel.Writer.Server | Identifiable.Server | Persistent.Server
@@ -485,7 +484,6 @@ class Channel(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             bufferSize: int | None = None,
             closeSemantics: Channel.CloseSemantics | Literal["fbp", "no"] | None = None,
             channelSR: str | None = None,
@@ -586,7 +584,7 @@ class Channel(Identifiable, Persistent, Protocol):
         size: int
         def send(self) -> Awaitable[None]: ...
 
-    def setBufferSize_request(self) -> SetbuffersizeRequest: ...
+    def setBufferSize_request(self, size: int = 0) -> SetbuffersizeRequest: ...
     class ReaderResult(Awaitable[ReaderResult], Protocol):
         r: Channel.Reader
 
@@ -643,7 +641,9 @@ class Channel(Identifiable, Persistent, Protocol):
         cs: Channel.CloseSemantics
         def send(self) -> Awaitable[None]: ...
 
-    def setAutoCloseSemantics_request(self) -> SetautoclosesemanticsRequest: ...
+    def setAutoCloseSemantics_request(
+        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] = "fbp"
+    ) -> SetautoclosesemanticsRequest: ...
     class CloseResultsBuilder(Protocol): ...
 
     class CloseCallContext(Protocol):
@@ -654,7 +654,7 @@ class Channel(Identifiable, Persistent, Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> Awaitable[None]: ...
 
-    def close_request(self) -> CloseRequest: ...
+    def close_request(self, waitForEmptyBuffer: bool = False) -> CloseRequest: ...
     @classmethod
     def _new_client(
         cls, server: Channel.Server | Identifiable.Server | Persistent.Server
@@ -717,7 +717,6 @@ class StartChannelsService(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             name: str | None = None,
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
@@ -825,8 +824,26 @@ class StartChannelsService(Identifiable, Protocol):
         writerSrts: Sequence[str]
         bufferSize: int
         def send(self) -> StartChannelsService.StartResult: ...
+        @overload
+        def init(
+            self, name: Literal["readerSrts"], size: int
+        ) -> _DynamicListBuilder[str]: ...
+        @overload
+        def init(
+            self, name: Literal["writerSrts"], size: int
+        ) -> _DynamicListBuilder[str]: ...
+        def init(self, name: str, size: int = ...) -> Any: ...
 
-    def start_request(self) -> StartRequest: ...
+    def start_request(
+        self,
+        name: str = "",
+        noOfChannels: int = 0,
+        noOfReaders: int = 0,
+        noOfWriters: int = 0,
+        readerSrts: Sequence[str] = [],
+        writerSrts: Sequence[str] = [],
+        bufferSize: int = 0,
+    ) -> StartRequest: ...
     @classmethod
     def _new_client(
         cls, server: StartChannelsService.Server | Identifiable.Server
@@ -870,7 +887,6 @@ class PortInfos:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             name: str | None = None,
             sr: str | None = None,
             srs: Sequence[str] | None = None,
@@ -940,7 +956,6 @@ class PortInfos:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         inPorts: Sequence[PortInfos.NameAndSRBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -1028,7 +1043,9 @@ class Component:
             name: str
             def send(self) -> Component.Runnable.StartResult: ...
 
-        def start_request(self) -> StartRequest: ...
+        def start_request(
+            self, portInfosReaderSr: str = "", name: str = ""
+        ) -> StartRequest: ...
         class StopResult(Awaitable[StopResult], Protocol):
             success: bool
 
@@ -1094,7 +1111,6 @@ class Component:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
             name: str | None = None,
             contentType: str | None = None,
             type: Component.Port.PortType | Literal["standard"] | None = None,
@@ -1172,7 +1188,6 @@ class Component:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         info: IdInformationBuilder | dict[str, Any] | None = None,
         type: Component.ComponentType
         | Literal["standard", "iip", "subflow", "view"]

@@ -64,7 +64,6 @@ class WeatherStation:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         instituteName: str | None = None,
@@ -236,7 +235,6 @@ class SoilMetadata:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         source: str | None = None,
@@ -404,7 +402,6 @@ class Field:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         latitudeInDecDeg: float | None = None,
@@ -535,7 +532,6 @@ class Cultivar:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         accessionId: str | None = None,
@@ -672,7 +668,6 @@ class Plot:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         cultivar: CultivarBuilder | dict[str, Any] | None = None,
         soil: SoilMetadataBuilder | dict[str, Any] | None = None,
@@ -824,7 +819,6 @@ class Residue:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         initialMeasureDate: DateBuilder | dict[str, Any] | None = None,
         incorporationDepth: int | None = None,
         percentIncorporated: float | None = None,
@@ -946,7 +940,6 @@ class InitialConditionsLayer:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         soilLayerTopDepthInCM: int | None = None,
         soilLayerBaseDepthInCM: int | None = None,
@@ -1082,7 +1075,6 @@ class PlantingEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         plantingDistribution: str | None = None,
         rowSpacingInCM: float | None = None,
         rowDirectionInArcDeg: float | None = None,
@@ -1219,7 +1211,6 @@ class HarvestEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         harvestMethod: str | None = None,
         harvestArea: float | None = None,
@@ -1323,7 +1314,6 @@ class IrrigationEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         operation: str | None = None,
         applicationDepth: int | None = None,
@@ -1436,7 +1426,6 @@ class FertilizerEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         applicationMethod: str | None = None,
         applicationDepthInCM: int | None = None,
@@ -1551,7 +1540,6 @@ class EnvironmentModification:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         codeCO2: str | None = None,
         valueCO2: int | None = None,
@@ -1702,7 +1690,6 @@ class Treatment:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         field: FieldBuilder | dict[str, Any] | None = None,
         weatherStation: WeatherStationBuilder | dict[str, Any] | None = None,
@@ -2062,7 +2049,6 @@ class ExperimentDescription:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
         id: str | None = None,
         suiteId: str | None = None,
         name: str | None = None,
