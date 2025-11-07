@@ -164,9 +164,7 @@ class Metadata:
         class SupportedvaluesCallContext(Protocol):
             results: Metadata.Supported.SupportedvaluesResultsBuilder
 
-        def supportedValues(
-            self, typeId: str | None = None
-        ) -> SupportedvaluesResult: ...
+        def supportedValues(self, typeId: str = "") -> SupportedvaluesResult: ...
         class SupportedvaluesRequest(Protocol):
             typeId: str
             def send(self) -> Metadata.Supported.SupportedvaluesResult: ...
@@ -529,7 +527,7 @@ class Metadata:
             results: Metadata.Information.ForoneResult
 
         def forOne(
-            self, entry: Metadata.Entry | dict[str, Any] | None = None
+            self, entry: Metadata.Entry | dict[str, Any] = {}
         ) -> Awaitable[Metadata.Information.ForoneResult]: ...
         class ForoneRequest(Protocol):
             entry: Metadata.EntryBuilder
@@ -656,7 +654,7 @@ class Dataset(Identifiable, Persistent, Protocol):
         class NextlocationsCallContext(Protocol):
             results: Dataset.GetLocationsCallback.NextlocationsResultsBuilder
 
-        def nextLocations(self, maxCount: int | None = None) -> NextlocationsResult: ...
+        def nextLocations(self, maxCount: int = 0) -> NextlocationsResult: ...
         class NextlocationsRequest(Protocol):
             maxCount: int
             def send(self) -> Dataset.GetLocationsCallback.NextlocationsResult: ...
@@ -707,7 +705,7 @@ class Dataset(Identifiable, Persistent, Protocol):
         results: Dataset.ClosesttimeseriesatResultsBuilder
 
     def closestTimeSeriesAt(
-        self, latlon: LatLonCoord | dict[str, Any] | None = None
+        self, latlon: LatLonCoord | dict[str, Any] = {}
     ) -> ClosesttimeseriesatResult: ...
     class ClosesttimeseriesatRequest(Protocol):
         latlon: LatLonCoordBuilder
@@ -723,7 +721,7 @@ class Dataset(Identifiable, Persistent, Protocol):
     class TimeseriesatCallContext(Protocol):
         results: Dataset.TimeseriesatResultsBuilder
 
-    def timeSeriesAt(self, locationId: str | None = None) -> TimeseriesatResult: ...
+    def timeSeriesAt(self, locationId: str = "") -> TimeseriesatResult: ...
     class TimeseriesatRequest(Protocol):
         locationId: str
         def send(self) -> Dataset.TimeseriesatResult: ...
@@ -753,7 +751,7 @@ class Dataset(Identifiable, Persistent, Protocol):
         results: Dataset.StreamlocationsResultsBuilder
 
     def streamLocations(
-        self, startAfterLocationId: str | None = None
+        self, startAfterLocationId: str = ""
     ) -> StreamlocationsResult: ...
     class StreamlocationsRequest(Protocol):
         startAfterLocationId: str
@@ -883,9 +881,7 @@ class TimeSeries(Identifiable, Persistent, Protocol):
         results: TimeSeries.SubrangeResultsBuilder
 
     def subrange(
-        self,
-        start: Date | dict[str, Any] | None = None,
-        end: Date | dict[str, Any] | None = None,
+        self, start: Date | dict[str, Any] = {}, end: Date | dict[str, Any] = {}
     ) -> SubrangeResult: ...
     class SubrangeRequest(Protocol):
         start: DateBuilder
@@ -902,7 +898,7 @@ class TimeSeries(Identifiable, Persistent, Protocol):
     class SubheaderCallContext(Protocol):
         results: TimeSeries.SubheaderResultsBuilder
 
-    def subheader(self, elements: Any | None = None) -> SubheaderResult: ...
+    def subheader(self, elements: Any = ...) -> SubheaderResult: ...
     class SubheaderRequest(Protocol):
         elements: Any
         def send(self) -> TimeSeries.SubheaderResult: ...
@@ -1402,7 +1398,7 @@ class Service(Identifiable, Persistent, Protocol):
         results: Service.GetdatasetsforResultsBuilder
 
     def getDatasetsFor(
-        self, template: Metadata | dict[str, Any] | None = None
+        self, template: Metadata | dict[str, Any] = {}
     ) -> GetdatasetsforResult: ...
     class GetdatasetsforRequest(Protocol):
         template: MetadataBuilder
@@ -1525,8 +1521,8 @@ class CSVTimeSeriesFactory(Identifiable, Protocol):
 
     def create(
         self,
-        csvData: str | None = None,
-        config: CSVTimeSeriesFactory.CSVConfig | dict[str, Any] | None = None,
+        csvData: str = "",
+        config: CSVTimeSeriesFactory.CSVConfig | dict[str, Any] = {},
     ) -> CreateResult: ...
     class CreateRequest(Protocol):
         csvData: str
@@ -1714,8 +1710,8 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
 
     def alter(
         self,
-        desc: AlterTimeSeriesWrapper.Altered | dict[str, Any] | None = None,
-        asNewTimeSeries: bool | None = None,
+        desc: AlterTimeSeriesWrapper.Altered | dict[str, Any] = {},
+        asNewTimeSeries: bool = False,
     ) -> AlterResult: ...
     class AlterRequest(Protocol):
         desc: AlterTimeSeriesWrapper.AlteredBuilder
@@ -1751,8 +1747,7 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
             "snowfallFlux",
             "surfaceDownwellingLongwaveRadiation",
             "potET",
-        ]
-        | None = None,
+        ] = "tmin",
     ) -> Awaitable[None]: ...
     class RemoveRequest(Protocol):
         alteredElement: Element
@@ -1765,7 +1760,7 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
         results: AlterTimeSeriesWrapper.ReplacewrappedtimeseriesResultsBuilder
 
     def replaceWrappedTimeSeries(
-        self, timeSeries: TimeSeries | None = None
+        self, timeSeries: TimeSeries = ...
     ) -> Awaitable[None]: ...
     class ReplacewrappedtimeseriesRequest(Protocol):
         timeSeries: TimeSeries
@@ -1842,7 +1837,7 @@ class AlterTimeSeriesWrapperFactory(Identifiable, Protocol):
     class WrapCallContext(Protocol):
         results: AlterTimeSeriesWrapperFactory.WrapResultsBuilder
 
-    def wrap(self, timeSeries: TimeSeries | None = None) -> WrapResult: ...
+    def wrap(self, timeSeries: TimeSeries = ...) -> WrapResult: ...
     class WrapRequest(Protocol):
         timeSeries: TimeSeries
         def send(self) -> AlterTimeSeriesWrapperFactory.WrapResult: ...

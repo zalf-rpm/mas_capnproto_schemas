@@ -539,7 +539,7 @@ class Service(Identifiable, Persistent, Protocol):
         class NextprofilesCallContext(Protocol):
             results: Service.Stream.NextprofilesResultsBuilder
 
-        def nextProfiles(self, maxCount: int | None = None) -> NextprofilesResult: ...
+        def nextProfiles(self, maxCount: int = 0) -> NextprofilesResult: ...
         class NextprofilesRequest(Protocol):
             maxCount: int
             def send(self) -> Service.Stream.NextprofilesResult: ...
@@ -565,9 +565,9 @@ class Service(Identifiable, Persistent, Protocol):
 
     def checkAvailableParameters(
         self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
+        mandatory: Sequence[PropertyName] = [],
+        optional: Sequence[PropertyName] = [],
+        onlyRawData: bool = False,
     ) -> Awaitable[Service.CheckavailableparametersResult]: ...
     class CheckavailableparametersRequest(Protocol):
         mandatory: Sequence[PropertyName]
@@ -590,7 +590,7 @@ class Service(Identifiable, Persistent, Protocol):
         results: Service.GetallavailableparametersResultsBuilder
 
     def getAllAvailableParameters(
-        self, onlyRawData: bool | None = None
+        self, onlyRawData: bool = False
     ) -> GetallavailableparametersResult: ...
     class GetallavailableparametersRequest(Protocol):
         onlyRawData: bool
@@ -608,8 +608,8 @@ class Service(Identifiable, Persistent, Protocol):
 
     def closestProfilesAt(
         self,
-        coord: LatLonCoord | dict[str, Any] | None = None,
-        query: Query | dict[str, Any] | None = None,
+        coord: LatLonCoord | dict[str, Any] = {},
+        query: Query | dict[str, Any] = {},
     ) -> ClosestprofilesatResult: ...
     class ClosestprofilesatRequest(Protocol):
         coord: LatLonCoordBuilder
@@ -628,9 +628,9 @@ class Service(Identifiable, Persistent, Protocol):
 
     def streamAllProfiles(
         self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
+        mandatory: Sequence[PropertyName] = [],
+        optional: Sequence[PropertyName] = [],
+        onlyRawData: bool = False,
     ) -> StreamallprofilesResult: ...
     class StreamallprofilesRequest(Protocol):
         mandatory: Sequence[PropertyName]

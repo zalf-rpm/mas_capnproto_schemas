@@ -270,7 +270,7 @@ class ClimateInstance(Identifiable, Protocol):
     class RunCallContext(Protocol):
         results: ClimateInstance.RunResultsBuilder
 
-    def run(self, timeSeries: Any | None = None) -> RunResult: ...
+    def run(self, timeSeries: Any = ...) -> RunResult: ...
     class RunRequest(Protocol):
         timeSeries: Any
         def send(self) -> ClimateInstance.RunResult: ...
@@ -285,7 +285,7 @@ class ClimateInstance(Identifiable, Protocol):
     class RunsetCallContext(Protocol):
         results: ClimateInstance.RunsetResultsBuilder
 
-    def runSet(self, dataset: Any | None = None) -> RunsetResult: ...
+    def runSet(self, dataset: Any = ...) -> RunsetResult: ...
     class RunsetRequest(Protocol):
         dataset: Any
         def send(self) -> ClimateInstance.RunsetResult: ...
@@ -404,7 +404,7 @@ class EnvInstance(Identifiable, Persistent, Stoppable, Protocol):
     class RunCallContext(Protocol):
         results: EnvInstance.RunResultsBuilder
 
-    def run(self, env: Env[Any] | dict[str, Any] | None = None) -> RunResult: ...
+    def run(self, env: Env[Any] | dict[str, Any] = {}) -> RunResult: ...
     class RunRequest(Protocol):
         env: EnvBuilder[Any]
         def send(self) -> EnvInstance.RunResult: ...
@@ -463,7 +463,7 @@ class EnvInstanceProxy(EnvInstance, Protocol):
         results: EnvInstanceProxy.RegisterenvinstanceResultsBuilder
 
     def registerEnvInstance(
-        self, instance: EnvInstance | None = None
+        self, instance: EnvInstance = ...
     ) -> RegisterenvinstanceResult: ...
     class RegisterenvinstanceRequest(Protocol):
         instance: EnvInstance
@@ -526,9 +526,7 @@ class InstanceFactory(Identifiable, Protocol):
     class NewinstancesCallContext(Protocol):
         results: InstanceFactory.NewinstancesResultsBuilder
 
-    def newInstances(
-        self, numberOfInstances: int | None = None
-    ) -> NewinstancesResult: ...
+    def newInstances(self, numberOfInstances: int = 0) -> NewinstancesResult: ...
     class NewinstancesRequest(Protocol):
         numberOfInstances: int
         def send(self) -> InstanceFactory.NewinstancesResult: ...

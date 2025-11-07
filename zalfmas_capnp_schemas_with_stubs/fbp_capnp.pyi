@@ -389,10 +389,7 @@ class Channel(Identifiable, Persistent, Protocol):
             results: Channel.Writer.WriteResultsBuilder
 
         def write(
-            self,
-            value: Any | None = None,
-            done: None | None = None,
-            noMsg: None | None = None,
+            self, value: Any = ..., done: None = None, noMsg: None = None
         ) -> Awaitable[None]: ...
         class WriteRequest(Protocol):
             value: Any
@@ -421,10 +418,7 @@ class Channel(Identifiable, Persistent, Protocol):
             results: Channel.Writer.WriteifspaceResultsBuilder
 
         def writeIfSpace(
-            self,
-            value: Any | None = None,
-            done: None | None = None,
-            noMsg: None | None = None,
+            self, value: Any = ..., done: None = None, noMsg: None = None
         ) -> WriteifspaceResult: ...
         class WriteifspaceRequest(Protocol):
             value: Any
@@ -587,7 +581,7 @@ class Channel(Identifiable, Persistent, Protocol):
     class SetbuffersizeCallContext(Protocol):
         results: Channel.SetbuffersizeResultsBuilder
 
-    def setBufferSize(self, size: int | None = None) -> Awaitable[None]: ...
+    def setBufferSize(self, size: int = 0) -> Awaitable[None]: ...
     class SetbuffersizeRequest(Protocol):
         size: int
         def send(self) -> Awaitable[None]: ...
@@ -643,7 +637,7 @@ class Channel(Identifiable, Persistent, Protocol):
         results: Channel.SetautoclosesemanticsResultsBuilder
 
     def setAutoCloseSemantics(
-        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] | None = None
+        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] = "fbp"
     ) -> Awaitable[None]: ...
     class SetautoclosesemanticsRequest(Protocol):
         cs: Channel.CloseSemantics
@@ -655,7 +649,7 @@ class Channel(Identifiable, Persistent, Protocol):
     class CloseCallContext(Protocol):
         results: Channel.CloseResultsBuilder
 
-    def close(self, waitForEmptyBuffer: bool | None = None) -> Awaitable[None]: ...
+    def close(self, waitForEmptyBuffer: bool = False) -> Awaitable[None]: ...
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> Awaitable[None]: ...
@@ -814,13 +808,13 @@ class StartChannelsService(Identifiable, Protocol):
 
     def start(
         self,
-        name: str | None = None,
-        noOfChannels: int | None = None,
-        noOfReaders: int | None = None,
-        noOfWriters: int | None = None,
-        readerSrts: Sequence[str] | None = None,
-        writerSrts: Sequence[str] | None = None,
-        bufferSize: int | None = None,
+        name: str = "",
+        noOfChannels: int = 0,
+        noOfReaders: int = 0,
+        noOfWriters: int = 0,
+        readerSrts: Sequence[str] = [],
+        writerSrts: Sequence[str] = [],
+        bufferSize: int = 0,
     ) -> StartResult: ...
     class StartRequest(Protocol):
         name: str
@@ -1028,9 +1022,7 @@ class Component:
         class StartCallContext(Protocol):
             results: Component.Runnable.StartResultsBuilder
 
-        def start(
-            self, portInfosReaderSr: str | None = None, name: str | None = None
-        ) -> StartResult: ...
+        def start(self, portInfosReaderSr: str = "", name: str = "") -> StartResult: ...
         class StartRequest(Protocol):
             portInfosReaderSr: str
             name: str

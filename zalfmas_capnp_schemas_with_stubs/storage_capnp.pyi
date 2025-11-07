@@ -387,7 +387,7 @@ class Store(Identifiable, Persistent, Protocol):
                 results: Store.Container.Entry.SetvalueResultsBuilder
 
             def setValue(
-                self, value: Store.Container.Entry.Value | dict[str, Any] | None = None
+                self, value: Store.Container.Entry.Value | dict[str, Any] = {}
             ) -> SetvalueResult: ...
             class SetvalueRequest(Protocol):
                 value: Store.Container.Entry.ValueBuilder
@@ -536,7 +536,7 @@ class Store(Identifiable, Persistent, Protocol):
         class GetentryCallContext(Protocol):
             results: Store.Container.GetentryResultsBuilder
 
-        def getEntry(self, key: str | None = None) -> GetentryResult: ...
+        def getEntry(self, key: str = "") -> GetentryResult: ...
         class GetentryRequest(Protocol):
             key: str
             def send(self) -> Store.Container.GetentryResult: ...
@@ -551,7 +551,7 @@ class Store(Identifiable, Persistent, Protocol):
         class RemoveentryCallContext(Protocol):
             results: Store.Container.RemoveentryResultsBuilder
 
-        def removeEntry(self, key: str | None = None) -> RemoveentryResult: ...
+        def removeEntry(self, key: str = "") -> RemoveentryResult: ...
         class RemoveentryRequest(Protocol):
             key: str
             def send(self) -> Store.Container.RemoveentryResult: ...
@@ -584,9 +584,9 @@ class Store(Identifiable, Persistent, Protocol):
 
         def addEntry(
             self,
-            key: str | None = None,
-            value: Store.Container.Entry.Value | dict[str, Any] | None = None,
-            replaceExisting: bool | None = None,
+            key: str = "",
+            value: Store.Container.Entry.Value | dict[str, Any] = {},
+            replaceExisting: bool = False,
         ) -> AddentryResult: ...
         class AddentryRequest(Protocol):
             key: str
@@ -815,7 +815,7 @@ class Store(Identifiable, Persistent, Protocol):
         results: Store.NewcontainerResultsBuilder
 
     def newContainer(
-        self, name: str | None = None, description: str | None = None
+        self, name: str = "", description: str = ""
     ) -> NewcontainerResult: ...
     class NewcontainerRequest(Protocol):
         name: str
@@ -832,7 +832,7 @@ class Store(Identifiable, Persistent, Protocol):
     class ContainerwithidCallContext(Protocol):
         results: Store.ContainerwithidResultsBuilder
 
-    def containerWithId(self, id: str | None = None) -> ContainerwithidResult: ...
+    def containerWithId(self, id: str = "") -> ContainerwithidResult: ...
     class ContainerwithidRequest(Protocol):
         id: str
         def send(self) -> Store.ContainerwithidResult: ...
@@ -861,7 +861,7 @@ class Store(Identifiable, Persistent, Protocol):
     class RemovecontainerCallContext(Protocol):
         results: Store.RemovecontainerResultsBuilder
 
-    def removeContainer(self, id: str | None = None) -> RemovecontainerResult: ...
+    def removeContainer(self, id: str = "") -> RemovecontainerResult: ...
     class RemovecontainerRequest(Protocol):
         id: str
         def send(self) -> Store.RemovecontainerResult: ...
@@ -876,7 +876,7 @@ class Store(Identifiable, Persistent, Protocol):
     class ImportcontainerCallContext(Protocol):
         results: Store.ImportcontainerResultsBuilder
 
-    def importContainer(self, json: str | None = None) -> ImportcontainerResult: ...
+    def importContainer(self, json: str = "") -> ImportcontainerResult: ...
     class ImportcontainerRequest(Protocol):
         json: str
         def send(self) -> Store.ImportcontainerResult: ...

@@ -713,7 +713,7 @@ class Persistent(Protocol):
         results: Persistent.SaveResult
 
     def save(
-        self, sealFor: SturdyRef.Owner | dict[str, Any] | None = None
+        self, sealFor: SturdyRef.Owner | dict[str, Any] = {}
     ) -> Awaitable[Persistent.SaveResult]: ...
     class SaveRequest(Protocol):
         sealFor: SturdyRef.OwnerBuilder
@@ -835,8 +835,8 @@ class Restorer(Protocol):
 
     def restore(
         self,
-        localRef: SturdyRef.Token | dict[str, Any] | None = None,
-        sealedBy: SturdyRef.Owner | dict[str, Any] | None = None,
+        localRef: SturdyRef.Token | dict[str, Any] = {},
+        sealedBy: SturdyRef.Owner | dict[str, Any] = {},
     ) -> RestoreResult: ...
     class RestoreRequest(Protocol):
         localRef: SturdyRef.TokenBuilder
@@ -958,11 +958,11 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
 
         def register(
             self,
-            base64VatId: str | None = None,
-            host: str | None = None,
-            port: int | None = None,
-            alias: str | None = None,
-            identityProof: bytes | None = None,
+            base64VatId: str = "",
+            host: str = "",
+            port: int = 0,
+            alias: str = "",
+            identityProof: bytes = b"",
         ) -> RegisterResult: ...
         class RegisterRequest(Protocol):
             base64VatId: str
@@ -1000,7 +1000,7 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
     class ResolveCallContext(Protocol):
         results: HostPortResolver.ResolveResultsBuilder
 
-    def resolve(self, id: str | None = None) -> ResolveResult: ...
+    def resolve(self, id: str = "") -> ResolveResult: ...
     class ResolveRequest(Protocol):
         id: str
         def send(self) -> HostPortResolver.ResolveResult: ...
@@ -1100,7 +1100,7 @@ class Gateway(Identifiable, Restorer, Protocol):
     class RegisterCallContext(Protocol):
         results: Gateway.RegisterResult
 
-    def register(self, cap: Any | None = None) -> Awaitable[Gateway.RegisterResult]: ...
+    def register(self, cap: Any = ...) -> Awaitable[Gateway.RegisterResult]: ...
     class RegisterRequest(Protocol):
         cap: Any
         def send(self) -> Awaitable[Gateway.RegisterResult]: ...

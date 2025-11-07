@@ -451,7 +451,7 @@ class Grid(Identifiable, Persistent, Protocol):
         class SendcellsCallContext(Protocol):
             results: Grid.Callback.SendcellsResultsBuilder
 
-        def sendCells(self, maxCount: int | None = None) -> SendcellsResult: ...
+        def sendCells(self, maxCount: int = 0) -> SendcellsResult: ...
         class SendcellsRequest(Protocol):
             maxCount: int
             def send(self) -> Grid.Callback.SendcellsResult: ...
@@ -484,9 +484,9 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def closestValueAt(
         self,
-        latlonCoord: LatLonCoord | dict[str, Any] | None = None,
-        ignoreNoData: bool | None = None,
-        resolution: Grid.Resolution | dict[str, Any] | None = None,
+        latlonCoord: LatLonCoord | dict[str, Any] = {},
+        ignoreNoData: bool = False,
+        resolution: Grid.Resolution | dict[str, Any] = {},
         agg: Aggregation
         | Literal[
             "none",
@@ -505,10 +505,9 @@ class Grid(Identifiable, Persistent, Protocol):
             "iMin",
             "wMax",
             "iMax",
-        ]
-        | None = None,
-        returnRowCols: bool | None = None,
-        includeAggParts: bool | None = None,
+        ] = "none",
+        returnRowCols: bool = False,
+        includeAggParts: bool = False,
     ) -> ClosestvalueatResult: ...
     class ClosestvalueatRequest(Protocol):
         latlonCoord: LatLonCoordBuilder
@@ -577,9 +576,9 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def valueAt(
         self,
-        row: int | None = None,
-        col: int | None = None,
-        resolution: Grid.Resolution | dict[str, Any] | None = None,
+        row: int = 0,
+        col: int = 0,
+        resolution: Grid.Resolution | dict[str, Any] = {},
         agg: Aggregation
         | Literal[
             "none",
@@ -598,9 +597,8 @@ class Grid(Identifiable, Persistent, Protocol):
             "iMin",
             "wMax",
             "iMax",
-        ]
-        | None = None,
-        includeAggParts: bool | None = None,
+        ] = "none",
+        includeAggParts: bool = False,
     ) -> ValueatResult: ...
     class ValueatRequest(Protocol):
         row: int
@@ -626,7 +624,7 @@ class Grid(Identifiable, Persistent, Protocol):
     class LatlonboundsCallContext(Protocol):
         results: Grid.LatlonboundsResultsBuilder
 
-    def latLonBounds(self, useCellCenter: bool | None = None) -> LatlonboundsResult: ...
+    def latLonBounds(self, useCellCenter: bool = False) -> LatlonboundsResult: ...
     class LatlonboundsRequest(Protocol):
         useCellCenter: bool
         def send(self) -> Grid.LatlonboundsResult: ...
@@ -643,8 +641,8 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def streamCells(
         self,
-        topLeft: Grid.RowCol | dict[str, Any] | None = None,
-        bottomRight: Grid.RowCol | dict[str, Any] | None = None,
+        topLeft: Grid.RowCol | dict[str, Any] = {},
+        bottomRight: Grid.RowCol | dict[str, Any] = {},
     ) -> StreamcellsResult: ...
     class StreamcellsRequest(Protocol):
         topLeft: Grid.RowColBuilder

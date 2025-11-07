@@ -29,7 +29,7 @@ class Admin(Identifiable, Protocol):
     class SettimeoutCallContext(Protocol):
         results: Admin.SettimeoutResultsBuilder
 
-    def setTimeout(self, seconds: int | None = None) -> Awaitable[None]: ...
+    def setTimeout(self, seconds: int = 0) -> Awaitable[None]: ...
     class SettimeoutRequest(Protocol):
         seconds: int
         def send(self) -> Awaitable[None]: ...
@@ -65,7 +65,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.UpdateidentityResultsBuilder
 
     def updateIdentity(
-        self, oldId: str | None = None, newInfo: Any | None = None
+        self, oldId: str = "", newInfo: Any = ...
     ) -> Awaitable[None]: ...
     class UpdateidentityRequest(Protocol):
         oldId: str
@@ -284,9 +284,9 @@ class Factory(Identifiable, Protocol):
 
     def create(
         self,
-        timeoutSeconds: int | None = None,
-        interfaceNameToRegistrySR: Sequence[Pair[str, str]] | None = None,
-        msgPayload: Any | None = None,
+        timeoutSeconds: int = 0,
+        interfaceNameToRegistrySR: Sequence[Pair[str, str]] = [],
+        msgPayload: Any = ...,
     ) -> Awaitable[Factory.CreateResult]: ...
     class CreateRequest(Protocol):
         timeoutSeconds: int

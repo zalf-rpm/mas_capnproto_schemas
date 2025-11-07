@@ -26,7 +26,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.AddcategoryResultsBuilder
 
     def addCategory(
-        self, category: Any | None = None, upsert: bool | None = None
+        self, category: Any = ..., upsert: bool = False
     ) -> AddcategoryResult: ...
     class AddcategoryRequest(Protocol):
         category: Any
@@ -44,7 +44,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.RemovecategoryResultsBuilder
 
     def removeCategory(
-        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
+        self, categoryId: str = "", moveObjectsToCategoryId: str = ""
     ) -> RemovecategoryResult: ...
     class RemovecategoryRequest(Protocol):
         categoryId: str
@@ -62,7 +62,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.MoveobjectsResultsBuilder
 
     def moveObjects(
-        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
+        self, objectIds: Sequence[str] = [], toCatId: str = ""
     ) -> MoveobjectsResult: ...
     class MoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
@@ -79,9 +79,7 @@ class Admin(Identifiable, Protocol):
     class RemoveobjectsCallContext(Protocol):
         results: Admin.RemoveobjectsResultsBuilder
 
-    def removeObjects(
-        self, objectIds: Sequence[str] | None = None
-    ) -> RemoveobjectsResult: ...
+    def removeObjects(self, objectIds: Sequence[str] = []) -> RemoveobjectsResult: ...
     class RemoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         def send(self) -> Admin.RemoveobjectsResult: ...
@@ -236,7 +234,7 @@ class Registry(Identifiable, Protocol):
         results: Registry.CategoryinfoResult
 
     def categoryInfo(
-        self, categoryId: str | None = None
+        self, categoryId: str = ""
     ) -> Awaitable[Registry.CategoryinfoResult]: ...
     class CategoryinfoRequest(Protocol):
         categoryId: str
@@ -252,7 +250,7 @@ class Registry(Identifiable, Protocol):
     class EntriesCallContext(Protocol):
         results: Registry.EntriesResultsBuilder
 
-    def entries(self, categoryId: str | None = None) -> EntriesResult: ...
+    def entries(self, categoryId: str = "") -> EntriesResult: ...
     class EntriesRequest(Protocol):
         categoryId: str
         def send(self) -> Registry.EntriesResult: ...
@@ -479,10 +477,10 @@ class Registrar(Identifiable, Protocol):
 
     def register(
         self,
-        cap: Identifiable | None = None,
-        regName: str | None = None,
-        categoryId: str | None = None,
-        xDomain: Registrar.CrossDomainRestore | dict[str, Any] | None = None,
+        cap: Identifiable = ...,
+        regName: str = "",
+        categoryId: str = "",
+        xDomain: Registrar.CrossDomainRestore | dict[str, Any] = {},
     ) -> RegisterResult: ...
     class RegisterRequest(Protocol):
         cap: Identifiable

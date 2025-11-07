@@ -2544,7 +2544,7 @@ class Service(Identifiable, Protocol):
         results: Service.ManagementatResultsBuilder
 
     def managementAt(
-        self, lat: float | None = None, lon: float | None = None
+        self, lat: float = 0.0, lon: float = 0.0
     ) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):
         lat: float
