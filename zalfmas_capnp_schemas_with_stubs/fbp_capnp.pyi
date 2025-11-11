@@ -17,8 +17,6 @@ from typing import (
     overload,
 )
 
-from capnp import _DynamicListBuilder
-
 from .common_capnp import (
     Identifiable,
     IdInformation,
@@ -53,6 +51,7 @@ class IP:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             key: str | None = None,
             desc: str | None = None,
             value: Any | None = None,
@@ -126,6 +125,7 @@ class IP:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         attributes: Sequence[IP.KVBuilder] | Sequence[dict[str, Any]] | None = None,
         content: Any | None = None,
         type: IP.Type
@@ -173,7 +173,7 @@ class IPBuilder(IP):
     def from_dict(dictionary: dict[str, Any]) -> IPBuilder: ...
     def init(
         self, name: Literal["attributes"], size: int = ...
-    ) -> _DynamicListBuilder[IP.KVBuilder]: ...
+    ) -> Sequence[IP.KVBuilder]: ...
     def copy(self) -> IPBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -202,7 +202,9 @@ class IIP:
     ) -> IIPReader: ...
     @staticmethod
     def new_message(
-        num_first_segment_words: int | None = None, content: Any | None = None
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        content: Any | None = None,
     ) -> IIPBuilder: ...
     @staticmethod
     def read(
@@ -267,6 +269,7 @@ class Channel(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             value: Channel_V | None = None,
             done: None | None = None,
             noMsg: None | None = None,
@@ -372,7 +375,7 @@ class Channel(Identifiable, Persistent, Protocol):
             ) -> Awaitable[Channel.Reader.Server.ReadResult | None]: ...
             def close(
                 self, _context: Channel.Reader.CloseCallContext, **kwargs: Any
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[None | None]: ...
             def readIfMsg(
                 self, _context: Channel.Reader.ReadifmsgCallContext, **kwargs: Any
             ) -> Awaitable[Channel.Reader.Server.ReadifmsgResult | None]: ...
@@ -384,7 +387,10 @@ class Channel(Identifiable, Persistent, Protocol):
             results: Channel.Writer.WriteResultsBuilder
 
         def write(
-            self, value: Any = ..., done: None = None, noMsg: None = None
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
         ) -> Awaitable[None]: ...
         class WriteRequest(Protocol):
             value: Any
@@ -393,7 +399,10 @@ class Channel(Identifiable, Persistent, Protocol):
             def send(self) -> Awaitable[None]: ...
 
         def write_request(
-            self, value: Any = ..., done: None = None, noMsg: None = None
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
         ) -> WriteRequest: ...
         class CloseResultsBuilder(Protocol): ...
 
@@ -415,7 +424,10 @@ class Channel(Identifiable, Persistent, Protocol):
             results: Channel.Writer.WriteifspaceResultsBuilder
 
         def writeIfSpace(
-            self, value: Any = ..., done: None = None, noMsg: None = None
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
         ) -> WriteifspaceResult: ...
         class WriteifspaceRequest(Protocol):
             value: Any
@@ -424,7 +436,10 @@ class Channel(Identifiable, Persistent, Protocol):
             def send(self) -> Channel.Writer.WriteifspaceResult: ...
 
         def writeIfSpace_request(
-            self, value: Any = ..., done: None = None, noMsg: None = None
+            self,
+            value: Any | None = None,
+            done: None | None = None,
+            noMsg: None | None = None,
         ) -> WriteifspaceRequest: ...
         @classmethod
         def _new_client(
@@ -438,10 +453,10 @@ class Channel(Identifiable, Persistent, Protocol):
                 noMsg: None,
                 _context: Channel.Writer.WriteCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[None | None]: ...
             def close(
                 self, _context: Channel.Writer.CloseCallContext, **kwargs: Any
-            ) -> Awaitable[None]: ...
+            ) -> Awaitable[None | None]: ...
             def writeIfSpace(
                 self,
                 value: Any,
@@ -484,6 +499,7 @@ class Channel(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             bufferSize: int | None = None,
             closeSemantics: Channel.CloseSemantics | Literal["fbp", "no"] | None = None,
             channelSR: str | None = None,
@@ -550,19 +566,19 @@ class Channel(Identifiable, Persistent, Protocol):
         @overload
         def init(
             self: Any, name: Literal["readerSRs"], size: int = ...
-        ) -> _DynamicListBuilder[str]: ...
+        ) -> Sequence[str]: ...
         @overload
         def init(
             self: Any, name: Literal["writerSRs"], size: int = ...
-        ) -> _DynamicListBuilder[str]: ...
+        ) -> Sequence[str]: ...
         @overload
         def init(
             self: Any, name: Literal["readers"], size: int = ...
-        ) -> _DynamicListBuilder[Channel.Reader]: ...
+        ) -> Sequence[Channel.Reader]: ...
         @overload
         def init(
             self: Any, name: Literal["writers"], size: int = ...
-        ) -> _DynamicListBuilder[Channel.Writer]: ...
+        ) -> Sequence[Channel.Writer]: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
         def copy(self) -> Channel.StartupInfoBuilder: ...
         def to_bytes(self) -> bytes: ...
@@ -579,12 +595,14 @@ class Channel(Identifiable, Persistent, Protocol):
     class SetbuffersizeCallContext(Protocol):
         results: Channel.SetbuffersizeResultsBuilder
 
-    def setBufferSize(self, size: int = 0) -> Awaitable[None]: ...
+    def setBufferSize(self, size: int | None = None) -> Awaitable[None]: ...
     class SetbuffersizeRequest(Protocol):
         size: int
         def send(self) -> Awaitable[None]: ...
 
-    def setBufferSize_request(self, size: int = 0) -> SetbuffersizeRequest: ...
+    def setBufferSize_request(
+        self, size: int | None = None
+    ) -> SetbuffersizeRequest: ...
     class ReaderResult(Awaitable[ReaderResult], Protocol):
         r: Channel.Reader
 
@@ -635,26 +653,26 @@ class Channel(Identifiable, Persistent, Protocol):
         results: Channel.SetautoclosesemanticsResultsBuilder
 
     def setAutoCloseSemantics(
-        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] = "fbp"
+        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] | None = None
     ) -> Awaitable[None]: ...
     class SetautoclosesemanticsRequest(Protocol):
         cs: Channel.CloseSemantics
         def send(self) -> Awaitable[None]: ...
 
     def setAutoCloseSemantics_request(
-        self, cs: Channel.CloseSemantics | Literal["fbp", "no"] = "fbp"
+        self, cs: Channel.CloseSemantics | None = None
     ) -> SetautoclosesemanticsRequest: ...
     class CloseResultsBuilder(Protocol): ...
 
     class CloseCallContext(Protocol):
         results: Channel.CloseResultsBuilder
 
-    def close(self, waitForEmptyBuffer: bool = False) -> Awaitable[None]: ...
+    def close(self, waitForEmptyBuffer: bool | None = None) -> Awaitable[None]: ...
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> Awaitable[None]: ...
 
-    def close_request(self, waitForEmptyBuffer: bool = False) -> CloseRequest: ...
+    def close_request(self, waitForEmptyBuffer: bool | None = None) -> CloseRequest: ...
     @classmethod
     def _new_client(
         cls, server: Channel.Server | Identifiable.Server | Persistent.Server
@@ -662,7 +680,7 @@ class Channel(Identifiable, Persistent, Protocol):
     class Server(Identifiable.Server, Persistent.Server):
         def setBufferSize(
             self, size: int, _context: Channel.SetbuffersizeCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[None | None]: ...
         def reader(
             self, _context: Channel.ReaderCallContext, **kwargs: Any
         ) -> Awaitable[Channel.Reader | Channel.Reader.Server | None]: ...
@@ -677,13 +695,13 @@ class Channel(Identifiable, Persistent, Protocol):
             cs: Channel.CloseSemantics | Literal["fbp", "no"],
             _context: Channel.SetautoclosesemanticsCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[None | None]: ...
         def close(
             self,
             waitForEmptyBuffer: bool,
             _context: Channel.CloseCallContext,
             **kwargs: Any,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[None | None]: ...
 
 class StartChannelsService(Identifiable, Protocol):
     class Params:
@@ -717,6 +735,7 @@ class StartChannelsService(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             name: str | None = None,
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
@@ -778,11 +797,11 @@ class StartChannelsService(Identifiable, Protocol):
         @overload
         def init(
             self: Any, name: Literal["readerSrts"], size: int = ...
-        ) -> _DynamicListBuilder[str]: ...
+        ) -> Sequence[str]: ...
         @overload
         def init(
             self: Any, name: Literal["writerSrts"], size: int = ...
-        ) -> _DynamicListBuilder[str]: ...
+        ) -> Sequence[str]: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
         def copy(self) -> StartChannelsService.ParamsBuilder: ...
         def to_bytes(self) -> bytes: ...
@@ -807,13 +826,13 @@ class StartChannelsService(Identifiable, Protocol):
 
     def start(
         self,
-        name: str = "",
-        noOfChannels: int = 0,
-        noOfReaders: int = 0,
-        noOfWriters: int = 0,
-        readerSrts: Sequence[str] = [],
-        writerSrts: Sequence[str] = [],
-        bufferSize: int = 0,
+        name: str | None = None,
+        noOfChannels: int | None = None,
+        noOfReaders: int | None = None,
+        noOfWriters: int | None = None,
+        readerSrts: Sequence[str] | None = None,
+        writerSrts: Sequence[str] | None = None,
+        bufferSize: int | None = None,
     ) -> StartResult: ...
     class StartRequest(Protocol):
         name: str
@@ -823,26 +842,26 @@ class StartChannelsService(Identifiable, Protocol):
         readerSrts: Sequence[str]
         writerSrts: Sequence[str]
         bufferSize: int
-        def send(self) -> StartChannelsService.StartResult: ...
         @overload
         def init(
-            self, name: Literal["readerSrts"], size: int
-        ) -> _DynamicListBuilder[str]: ...
+            self, name: Literal["readerSrts"], size: int = ...
+        ) -> Sequence[str]: ...
         @overload
         def init(
-            self, name: Literal["writerSrts"], size: int
-        ) -> _DynamicListBuilder[str]: ...
+            self, name: Literal["writerSrts"], size: int = ...
+        ) -> Sequence[str]: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> StartChannelsService.StartResult: ...
 
     def start_request(
         self,
-        name: str = "",
-        noOfChannels: int = 0,
-        noOfReaders: int = 0,
-        noOfWriters: int = 0,
-        readerSrts: Sequence[str] = [],
-        writerSrts: Sequence[str] = [],
-        bufferSize: int = 0,
+        name: str | None = None,
+        noOfChannels: int | None = None,
+        noOfReaders: int | None = None,
+        noOfWriters: int | None = None,
+        readerSrts: Sequence[str] | None = None,
+        writerSrts: Sequence[str] | None = None,
+        bufferSize: int | None = None,
     ) -> StartRequest: ...
     @classmethod
     def _new_client(
@@ -887,6 +906,7 @@ class PortInfos:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             name: str | None = None,
             sr: str | None = None,
             srs: Sequence[str] | None = None,
@@ -923,9 +943,7 @@ class PortInfos:
         def srs(self, value: Sequence[str]) -> None: ...
         @staticmethod
         def from_dict(dictionary: dict[str, Any]) -> PortInfos.NameAndSRBuilder: ...
-        def init(
-            self, name: Literal["srs"], size: int = ...
-        ) -> _DynamicListBuilder[str]: ...
+        def init(self, name: Literal["srs"], size: int = ...) -> Sequence[str]: ...
         def copy(self) -> PortInfos.NameAndSRBuilder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
@@ -956,6 +974,7 @@ class PortInfos:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         inPorts: Sequence[PortInfos.NameAndSRBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -1010,11 +1029,11 @@ class PortInfosBuilder(PortInfos):
     @overload
     def init(
         self: Any, name: Literal["inPorts"], size: int = ...
-    ) -> _DynamicListBuilder[PortInfos.NameAndSRBuilder]: ...
+    ) -> Sequence[PortInfos.NameAndSRBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["outPorts"], size: int = ...
-    ) -> _DynamicListBuilder[PortInfos.NameAndSRBuilder]: ...
+    ) -> Sequence[PortInfos.NameAndSRBuilder]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> PortInfosBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -1037,14 +1056,16 @@ class Component:
         class StartCallContext(Protocol):
             results: Component.Runnable.StartResultsBuilder
 
-        def start(self, portInfosReaderSr: str = "", name: str = "") -> StartResult: ...
+        def start(
+            self, portInfosReaderSr: str | None = None, name: str | None = None
+        ) -> StartResult: ...
         class StartRequest(Protocol):
             portInfosReaderSr: str
             name: str
             def send(self) -> Component.Runnable.StartResult: ...
 
         def start_request(
-            self, portInfosReaderSr: str = "", name: str = ""
+            self, portInfosReaderSr: str | None = None, name: str | None = None
         ) -> StartRequest: ...
         class StopResult(Awaitable[StopResult], Protocol):
             success: bool
@@ -1111,6 +1132,7 @@ class Component:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             name: str | None = None,
             contentType: str | None = None,
             type: Component.Port.PortType | Literal["standard"] | None = None,
@@ -1188,6 +1210,7 @@ class Component:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         info: IdInformationBuilder | dict[str, Any] | None = None,
         type: Component.ComponentType
         | Literal["standard", "iip", "subflow", "view"]
@@ -1273,11 +1296,11 @@ class ComponentBuilder(Component):
     @overload
     def init(
         self: Any, name: Literal["inPorts"], size: int = ...
-    ) -> _DynamicListBuilder[Component.PortBuilder]: ...
+    ) -> Sequence[Component.PortBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["outPorts"], size: int = ...
-    ) -> _DynamicListBuilder[Component.PortBuilder]: ...
+    ) -> Sequence[Component.PortBuilder]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> ComponentBuilder: ...
     def to_bytes(self) -> bytes: ...

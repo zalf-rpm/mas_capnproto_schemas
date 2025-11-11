@@ -29,7 +29,9 @@ class Persistent(Protocol):
         ) -> Persistent.SaveParamsReader: ...
         @staticmethod
         def new_message(
-            num_first_segment_words: int | None = None, sealFor: Any | None = None
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            sealFor: Any | None = None,
         ) -> Persistent.SaveParamsBuilder: ...
         @staticmethod
         def read(
@@ -84,6 +86,7 @@ class Persistent(Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             sturdyRef: Persistent_SturdyRef | None = None,
         ) -> Persistent.SaveResultsBuilder: ...
         @staticmethod
@@ -126,12 +129,12 @@ class Persistent(Protocol):
     class SaveCallContext(Protocol):
         results: Persistent.SaveResult
 
-    def save(self, sealFor: Any = ...) -> Awaitable[Persistent.SaveResult]: ...
+    def save(self, sealFor: Any | None = None) -> Awaitable[Persistent.SaveResult]: ...
     class SaveRequest(Protocol):
         sealFor: Any
         def send(self) -> Awaitable[Persistent.SaveResult]: ...
 
-    def save_request(self, sealFor: Any = ...) -> SaveRequest: ...
+    def save_request(self, sealFor: Any | None = None) -> SaveRequest: ...
     @classmethod
     def _new_client(cls, server: Persistent.Server) -> Persistent: ...
     class Server:

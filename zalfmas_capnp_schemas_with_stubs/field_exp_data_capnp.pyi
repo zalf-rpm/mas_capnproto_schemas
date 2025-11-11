@@ -7,8 +7,6 @@ from contextlib import contextmanager
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, overload
 
-from capnp import _DynamicListBuilder
-
 from .climate_capnp import TimeSeries
 from .date_capnp import Date, DateBuilder, DateReader
 from .soil_capnp import Profile
@@ -64,6 +62,7 @@ class WeatherStation:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         instituteName: str | None = None,
@@ -235,6 +234,7 @@ class SoilMetadata:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         source: str | None = None,
@@ -402,6 +402,7 @@ class Field:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         latitudeInDecDeg: float | None = None,
@@ -532,6 +533,7 @@ class Cultivar:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         name: str | None = None,
         accessionId: str | None = None,
@@ -668,6 +670,7 @@ class Plot:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         cultivar: CultivarBuilder | dict[str, Any] | None = None,
         soil: SoilMetadataBuilder | dict[str, Any] | None = None,
@@ -819,6 +822,7 @@ class Residue:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         initialMeasureDate: DateBuilder | dict[str, Any] | None = None,
         incorporationDepth: int | None = None,
         percentIncorporated: float | None = None,
@@ -940,6 +944,7 @@ class InitialConditionsLayer:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         soilLayerTopDepthInCM: int | None = None,
         soilLayerBaseDepthInCM: int | None = None,
@@ -1075,6 +1080,7 @@ class PlantingEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         plantingDistribution: str | None = None,
         rowSpacingInCM: float | None = None,
         rowDirectionInArcDeg: float | None = None,
@@ -1211,6 +1217,7 @@ class HarvestEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         harvestMethod: str | None = None,
         harvestArea: float | None = None,
@@ -1314,6 +1321,7 @@ class IrrigationEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         operation: str | None = None,
         applicationDepth: int | None = None,
@@ -1426,6 +1434,7 @@ class FertilizerEvent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         applicationMethod: str | None = None,
         applicationDepthInCM: int | None = None,
@@ -1540,6 +1549,7 @@ class EnvironmentModification:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         date: DateBuilder | dict[str, Any] | None = None,
         codeCO2: str | None = None,
         valueCO2: int | None = None,
@@ -1690,6 +1700,7 @@ class Treatment:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         field: FieldBuilder | dict[str, Any] | None = None,
         weatherStation: WeatherStationBuilder | dict[str, Any] | None = None,
@@ -1960,31 +1971,31 @@ class TreatmentBuilder(Treatment):
     @overload
     def init(
         self: Any, name: Literal["plots"], size: int = ...
-    ) -> _DynamicListBuilder[PlotBuilder]: ...
+    ) -> Sequence[PlotBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["initialConditionsLayers"], size: int = ...
-    ) -> _DynamicListBuilder[InitialConditionsLayerBuilder]: ...
+    ) -> Sequence[InitialConditionsLayerBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["plantingEvents"], size: int = ...
-    ) -> _DynamicListBuilder[PlantingEventBuilder]: ...
+    ) -> Sequence[PlantingEventBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["harvestEvents"], size: int = ...
-    ) -> _DynamicListBuilder[HarvestEventBuilder]: ...
+    ) -> Sequence[HarvestEventBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["irrigationEvents"], size: int = ...
-    ) -> _DynamicListBuilder[IrrigationEventBuilder]: ...
+    ) -> Sequence[IrrigationEventBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["fertilizerEvents"], size: int = ...
-    ) -> _DynamicListBuilder[FertilizerEventBuilder]: ...
+    ) -> Sequence[FertilizerEventBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["environmentModifications"], size: int = ...
-    ) -> _DynamicListBuilder[EnvironmentModificationBuilder]: ...
+    ) -> Sequence[EnvironmentModificationBuilder]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> TreatmentBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -2049,6 +2060,7 @@ class ExperimentDescription:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         suiteId: str | None = None,
         name: str | None = None,
@@ -2168,7 +2180,7 @@ class ExperimentDescriptionBuilder(ExperimentDescription):
     def from_dict(dictionary: dict[str, Any]) -> ExperimentDescriptionBuilder: ...
     def init(
         self, name: Literal["treatments"], size: int = ...
-    ) -> _DynamicListBuilder[TreatmentBuilder]: ...
+    ) -> Sequence[TreatmentBuilder]: ...
     def copy(self) -> ExperimentDescriptionBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...

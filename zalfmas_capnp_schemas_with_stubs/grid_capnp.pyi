@@ -57,6 +57,7 @@ class Grid(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             f: float | None = None,
             i: int | None = None,
             ui: int | None = None,
@@ -130,6 +131,7 @@ class Grid(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             meter: int | None = None,
             degree: float | None = None,
         ) -> Grid.ResolutionBuilder: ...
@@ -192,6 +194,7 @@ class Grid(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             row: int | None = None,
             col: int | None = None,
         ) -> Grid.RowColBuilder: ...
@@ -263,6 +266,7 @@ class Grid(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             value: Grid.ValueBuilder | dict[str, Any] | None = None,
             rowCol: Grid.RowColBuilder | dict[str, Any] | None = None,
             areaFrac: float | None = None,
@@ -362,6 +366,7 @@ class Grid(Identifiable, Persistent, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             latLonCoord: LatLonCoordBuilder | dict[str, Any] | None = None,
             rowCol: Grid.RowColBuilder | dict[str, Any] | None = None,
             value: Grid.ValueBuilder | dict[str, Any] | None = None,
@@ -446,12 +451,14 @@ class Grid(Identifiable, Persistent, Protocol):
         class SendcellsCallContext(Protocol):
             results: Grid.Callback.SendcellsResultsBuilder
 
-        def sendCells(self, maxCount: int = 0) -> SendcellsResult: ...
+        def sendCells(self, maxCount: int | None = None) -> SendcellsResult: ...
         class SendcellsRequest(Protocol):
             maxCount: int
             def send(self) -> Grid.Callback.SendcellsResult: ...
 
-        def sendCells_request(self, maxCount: int = 0) -> SendcellsRequest: ...
+        def sendCells_request(
+            self, maxCount: int | None = None
+        ) -> SendcellsRequest: ...
         @classmethod
         def _new_client(cls, server: Grid.Callback.Server) -> Grid.Callback: ...
         class Server:
@@ -479,9 +486,9 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def closestValueAt(
         self,
-        latlonCoord: LatLonCoord | dict[str, Any] = {},
-        ignoreNoData: bool = False,
-        resolution: Grid.Resolution | dict[str, Any] = {},
+        latlonCoord: LatLonCoord | dict[str, Any] | None = None,
+        ignoreNoData: bool | None = None,
+        resolution: Grid.Resolution | dict[str, Any] | None = None,
         agg: Aggregation
         | Literal[
             "none",
@@ -500,9 +507,10 @@ class Grid(Identifiable, Persistent, Protocol):
             "iMin",
             "wMax",
             "iMax",
-        ] = "none",
-        returnRowCols: bool = False,
-        includeAggParts: bool = False,
+        ]
+        | None = None,
+        returnRowCols: bool | None = None,
+        includeAggParts: bool | None = None,
     ) -> ClosestvalueatResult: ...
     class ClosestvalueatRequest(Protocol):
         latlonCoord: LatLonCoordBuilder
@@ -511,39 +519,21 @@ class Grid(Identifiable, Persistent, Protocol):
         agg: Aggregation
         returnRowCols: bool
         includeAggParts: bool
-        def send(self) -> Grid.ClosestvalueatResult: ...
         @overload
         def init(self, name: Literal["latlonCoord"]) -> LatLonCoordBuilder: ...
         @overload
         def init(self, name: Literal["resolution"]) -> Grid.ResolutionBuilder: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Grid.ClosestvalueatResult: ...
 
     def closestValueAt_request(
         self,
-        latlonCoord: LatLonCoord | dict[str, Any] = {},
-        ignoreNoData: bool = False,
-        resolution: Grid.Resolution | dict[str, Any] = {},
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ] = "none",
-        returnRowCols: bool = False,
-        includeAggParts: bool = False,
+        latlonCoord: LatLonCoord | dict[str, Any] | None = None,
+        ignoreNoData: bool | None = None,
+        resolution: Grid.Resolution | dict[str, Any] | None = None,
+        agg: Aggregation | None = None,
+        returnRowCols: bool | None = None,
+        includeAggParts: bool | None = None,
     ) -> ClosestvalueatRequest: ...
     class ResolutionResult(Awaitable[ResolutionResult], Protocol):
         res: Grid.ResolutionReader
@@ -602,9 +592,9 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def valueAt(
         self,
-        row: int = 0,
-        col: int = 0,
-        resolution: Grid.Resolution | dict[str, Any] = {},
+        row: int | None = None,
+        col: int | None = None,
+        resolution: Grid.Resolution | dict[str, Any] | None = None,
         agg: Aggregation
         | Literal[
             "none",
@@ -623,8 +613,9 @@ class Grid(Identifiable, Persistent, Protocol):
             "iMin",
             "wMax",
             "iMax",
-        ] = "none",
-        includeAggParts: bool = False,
+        ]
+        | None = None,
+        includeAggParts: bool | None = None,
     ) -> ValueatResult: ...
     class ValueatRequest(Protocol):
         row: int
@@ -632,34 +623,16 @@ class Grid(Identifiable, Persistent, Protocol):
         resolution: Grid.ResolutionBuilder
         agg: Aggregation
         includeAggParts: bool
-        def send(self) -> Grid.ValueatResult: ...
         def init(self, name: Literal["resolution"]) -> Grid.ResolutionBuilder: ...
+        def send(self) -> Grid.ValueatResult: ...
 
     def valueAt_request(
         self,
-        row: int = 0,
-        col: int = 0,
-        resolution: Grid.Resolution | dict[str, Any] = {},
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ] = "none",
-        includeAggParts: bool = False,
+        row: int | None = None,
+        col: int | None = None,
+        resolution: Grid.Resolution | dict[str, Any] | None = None,
+        agg: Aggregation | None = None,
+        includeAggParts: bool | None = None,
     ) -> ValueatRequest: ...
     class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
         tl: LatLonCoordReader
@@ -676,13 +649,13 @@ class Grid(Identifiable, Persistent, Protocol):
     class LatlonboundsCallContext(Protocol):
         results: Grid.LatlonboundsResultsBuilder
 
-    def latLonBounds(self, useCellCenter: bool = False) -> LatlonboundsResult: ...
+    def latLonBounds(self, useCellCenter: bool | None = None) -> LatlonboundsResult: ...
     class LatlonboundsRequest(Protocol):
         useCellCenter: bool
         def send(self) -> Grid.LatlonboundsResult: ...
 
     def latLonBounds_request(
-        self, useCellCenter: bool = False
+        self, useCellCenter: bool | None = None
     ) -> LatlonboundsRequest: ...
     class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
         callback: Grid.Callback
@@ -695,23 +668,23 @@ class Grid(Identifiable, Persistent, Protocol):
 
     def streamCells(
         self,
-        topLeft: Grid.RowCol | dict[str, Any] = {},
-        bottomRight: Grid.RowCol | dict[str, Any] = {},
+        topLeft: Grid.RowCol | dict[str, Any] | None = None,
+        bottomRight: Grid.RowCol | dict[str, Any] | None = None,
     ) -> StreamcellsResult: ...
     class StreamcellsRequest(Protocol):
         topLeft: Grid.RowColBuilder
         bottomRight: Grid.RowColBuilder
-        def send(self) -> Grid.StreamcellsResult: ...
         @overload
         def init(self, name: Literal["topLeft"]) -> Grid.RowColBuilder: ...
         @overload
         def init(self, name: Literal["bottomRight"]) -> Grid.RowColBuilder: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Grid.StreamcellsResult: ...
 
     def streamCells_request(
         self,
-        topLeft: Grid.RowCol | dict[str, Any] = {},
-        bottomRight: Grid.RowCol | dict[str, Any] = {},
+        topLeft: Grid.RowCol | dict[str, Any] | None = None,
+        bottomRight: Grid.RowCol | dict[str, Any] | None = None,
     ) -> StreamcellsRequest: ...
     class UnitResult(Awaitable[UnitResult], Protocol):
         unit: str

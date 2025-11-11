@@ -7,8 +7,6 @@ from contextlib import contextmanager
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, NamedTuple, Protocol
 
-from capnp import _DynamicListBuilder
-
 from .common_capnp import (
     Identifiable,
     IdInformation,
@@ -28,16 +26,14 @@ class Admin(Identifiable, Protocol):
         results: Admin.AddcategoryResultsBuilder
 
     def addCategory(
-        self, category: Any = ..., upsert: bool = False
+        self, category: Any = None, upsert: bool | None = None
     ) -> AddcategoryResult: ...
     class AddcategoryRequest(Protocol):
         category: Any
         upsert: bool
         def send(self) -> Admin.AddcategoryResult: ...
 
-    def addCategory_request(
-        self, category: Any = ..., upsert: bool = False
-    ) -> AddcategoryRequest: ...
+    def addCategory_request(self, upsert: bool | None = None) -> AddcategoryRequest: ...
     class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
         removedObjects: Sequence[Identifiable]
 
@@ -48,7 +44,7 @@ class Admin(Identifiable, Protocol):
         results: Admin.RemovecategoryResultsBuilder
 
     def removeCategory(
-        self, categoryId: str = "", moveObjectsToCategoryId: str = ""
+        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
     ) -> RemovecategoryResult: ...
     class RemovecategoryRequest(Protocol):
         categoryId: str
@@ -56,7 +52,7 @@ class Admin(Identifiable, Protocol):
         def send(self) -> Admin.RemovecategoryResult: ...
 
     def removeCategory_request(
-        self, categoryId: str = "", moveObjectsToCategoryId: str = ""
+        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
     ) -> RemovecategoryRequest: ...
     class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
         movedObjectIds: Sequence[str]
@@ -68,18 +64,18 @@ class Admin(Identifiable, Protocol):
         results: Admin.MoveobjectsResultsBuilder
 
     def moveObjects(
-        self, objectIds: Sequence[str] = [], toCatId: str = ""
+        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
     ) -> MoveobjectsResult: ...
     class MoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         toCatId: str
-        def send(self) -> Admin.MoveobjectsResult: ...
         def init(
-            self, name: Literal["objectIds"], size: int
-        ) -> _DynamicListBuilder[str]: ...
+            self, name: Literal["objectIds"], size: int = ...
+        ) -> Sequence[str]: ...
+        def send(self) -> Admin.MoveobjectsResult: ...
 
     def moveObjects_request(
-        self, objectIds: Sequence[str] = [], toCatId: str = ""
+        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
     ) -> MoveobjectsRequest: ...
     class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
         removedObjects: Sequence[Identifiable]
@@ -90,16 +86,18 @@ class Admin(Identifiable, Protocol):
     class RemoveobjectsCallContext(Protocol):
         results: Admin.RemoveobjectsResultsBuilder
 
-    def removeObjects(self, objectIds: Sequence[str] = []) -> RemoveobjectsResult: ...
+    def removeObjects(
+        self, objectIds: Sequence[str] | None = None
+    ) -> RemoveobjectsResult: ...
     class RemoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
-        def send(self) -> Admin.RemoveobjectsResult: ...
         def init(
-            self, name: Literal["objectIds"], size: int
-        ) -> _DynamicListBuilder[str]: ...
+            self, name: Literal["objectIds"], size: int = ...
+        ) -> Sequence[str]: ...
+        def send(self) -> Admin.RemoveobjectsResult: ...
 
     def removeObjects_request(
-        self, objectIds: Sequence[str] = []
+        self, objectIds: Sequence[str] | None = None
     ) -> RemoveobjectsRequest: ...
     class RegistryResult(Awaitable[RegistryResult], Protocol):
         registry: Any
@@ -175,6 +173,7 @@ class Registry(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             categoryId: str | None = None,
             ref: Identifiable | Identifiable.Server | None = None,
             name: str | None = None,
@@ -249,13 +248,15 @@ class Registry(Identifiable, Protocol):
         results: Registry.CategoryinfoResult
 
     def categoryInfo(
-        self, categoryId: str = ""
+        self, categoryId: str | None = None
     ) -> Awaitable[Registry.CategoryinfoResult]: ...
     class CategoryinfoRequest(Protocol):
         categoryId: str
         def send(self) -> Awaitable[Registry.CategoryinfoResult]: ...
 
-    def categoryInfo_request(self, categoryId: str = "") -> CategoryinfoRequest: ...
+    def categoryInfo_request(
+        self, categoryId: str | None = None
+    ) -> CategoryinfoRequest: ...
     class EntriesResult(Awaitable[EntriesResult], Protocol):
         entries: Sequence[Registry.EntryReader]
 
@@ -265,12 +266,12 @@ class Registry(Identifiable, Protocol):
     class EntriesCallContext(Protocol):
         results: Registry.EntriesResultsBuilder
 
-    def entries(self, categoryId: str = "") -> EntriesResult: ...
+    def entries(self, categoryId: str | None = None) -> EntriesResult: ...
     class EntriesRequest(Protocol):
         categoryId: str
         def send(self) -> Registry.EntriesResult: ...
 
-    def entries_request(self, categoryId: str = "") -> EntriesRequest: ...
+    def entries_request(self, categoryId: str | None = None) -> EntriesRequest: ...
     @classmethod
     def _new_client(cls, server: Registry.Server | Identifiable.Server) -> Registry: ...
     class Server(Identifiable.Server):
@@ -315,6 +316,7 @@ class Registrar(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             vatId: VatIdBuilder | dict[str, Any] | None = None,
             restorer: Restorer | Restorer.Server | None = None,
         ) -> Registrar.CrossDomainRestoreBuilder: ...
@@ -389,6 +391,7 @@ class Registrar(Identifiable, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             cap: Identifiable | Identifiable.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
@@ -490,27 +493,27 @@ class Registrar(Identifiable, Protocol):
 
     def register(
         self,
-        cap: Identifiable = ...,
-        regName: str = "",
-        categoryId: str = "",
-        xDomain: Registrar.CrossDomainRestore | dict[str, Any] = {},
+        cap: Identifiable | None = None,
+        regName: str | None = None,
+        categoryId: str | None = None,
+        xDomain: Registrar.CrossDomainRestore | dict[str, Any] | None = None,
     ) -> RegisterResult: ...
     class RegisterRequest(Protocol):
         cap: Identifiable
         regName: str
         categoryId: str
         xDomain: Registrar.CrossDomainRestoreBuilder
-        def send(self) -> Registrar.RegisterResult: ...
         def init(
             self, name: Literal["xDomain"]
         ) -> Registrar.CrossDomainRestoreBuilder: ...
+        def send(self) -> Registrar.RegisterResult: ...
 
     def register_request(
         self,
-        cap: Identifiable = ...,
-        regName: str = "",
-        categoryId: str = "",
-        xDomain: Registrar.CrossDomainRestore | dict[str, Any] = {},
+        cap: Identifiable | None = None,
+        regName: str | None = None,
+        categoryId: str | None = None,
+        xDomain: Registrar.CrossDomainRestore | dict[str, Any] | None = None,
     ) -> RegisterRequest: ...
     @classmethod
     def _new_client(

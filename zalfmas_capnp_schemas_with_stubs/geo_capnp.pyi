@@ -36,7 +36,9 @@ class EPSG:
         nesting_limit: int | None = ...,
     ) -> EPSGReader: ...
     @staticmethod
-    def new_message(num_first_segment_words: int | None = None) -> EPSGBuilder: ...
+    def new_message(
+        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
+    ) -> EPSGBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,
@@ -92,6 +94,7 @@ class UTMCoord:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         zone: int | None = None,
         latitudeBand: str | None = None,
         r: float | None = None,
@@ -164,6 +167,7 @@ class LatLonCoord:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         lat: float | None = None,
         lon: float | None = None,
     ) -> LatLonCoordBuilder: ...
@@ -228,6 +232,7 @@ class GKCoord:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         meridianNo: int | None = None,
         r: float | None = None,
         h: float | None = None,
@@ -295,6 +300,7 @@ class Point2D:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         x: float | None = None,
         y: float | None = None,
     ) -> Point2DBuilder: ...
@@ -357,6 +363,7 @@ class RowCol:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         row: int | None = None,
         col: int | None = None,
     ) -> RowColBuilder: ...
@@ -437,6 +444,7 @@ class Coord:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         gk: GKCoordBuilder | dict[str, Any] | None = None,
         latlon: LatLonCoordBuilder | dict[str, Any] | None = None,
         utm: UTMCoordBuilder | dict[str, Any] | None = None,
@@ -546,6 +554,7 @@ class RectBounds(Generic[_CoordinateType]):
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         tl: _CoordinateType | None = None,
         br: _CoordinateType | None = None,
     ) -> RectBoundsBuilder: ...

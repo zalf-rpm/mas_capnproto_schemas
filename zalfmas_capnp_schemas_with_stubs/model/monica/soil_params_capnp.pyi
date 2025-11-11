@@ -7,8 +7,6 @@ from contextlib import contextmanager
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal
 
-from capnp import _DynamicListBuilder
-
 class SoilCharacteristicData:
     class Data:
         @property
@@ -37,6 +35,7 @@ class SoilCharacteristicData:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             soilType: str | None = None,
             soilRawDensity: int | None = None,
             airCapacity: int | None = None,
@@ -113,6 +112,7 @@ class SoilCharacteristicData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         list: Sequence[SoilCharacteristicData.DataBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -153,7 +153,7 @@ class SoilCharacteristicDataBuilder(SoilCharacteristicData):
     def from_dict(dictionary: dict[str, Any]) -> SoilCharacteristicDataBuilder: ...
     def init(
         self, name: Literal["list"], size: int = ...
-    ) -> _DynamicListBuilder[SoilCharacteristicData.DataBuilder]: ...
+    ) -> Sequence[SoilCharacteristicData.DataBuilder]: ...
     def copy(self) -> SoilCharacteristicDataBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -192,6 +192,7 @@ class SoilCharacteristicModifier:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             soilType: str | None = None,
             organicMatter: float | None = None,
             airCapacity: int | None = None,
@@ -268,6 +269,7 @@ class SoilCharacteristicModifier:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         list: Sequence[SoilCharacteristicModifier.DataBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -308,7 +310,7 @@ class SoilCharacteristicModifierBuilder(SoilCharacteristicModifier):
     def from_dict(dictionary: dict[str, Any]) -> SoilCharacteristicModifierBuilder: ...
     def init(
         self, name: Literal["list"], size: int = ...
-    ) -> _DynamicListBuilder[SoilCharacteristicModifier.DataBuilder]: ...
+    ) -> Sequence[SoilCharacteristicModifier.DataBuilder]: ...
     def copy(self) -> SoilCharacteristicModifierBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -343,6 +345,7 @@ class CapillaryRiseRate:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             soilType: str | None = None,
             distance: int | None = None,
             rate: float | None = None,
@@ -407,6 +410,7 @@ class CapillaryRiseRate:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         list: Sequence[CapillaryRiseRate.DataBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -447,7 +451,7 @@ class CapillaryRiseRateBuilder(CapillaryRiseRate):
     def from_dict(dictionary: dict[str, Any]) -> CapillaryRiseRateBuilder: ...
     def init(
         self, name: Literal["list"], size: int = ...
-    ) -> _DynamicListBuilder[CapillaryRiseRate.DataBuilder]: ...
+    ) -> Sequence[CapillaryRiseRate.DataBuilder]: ...
     def copy(self) -> CapillaryRiseRateBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...

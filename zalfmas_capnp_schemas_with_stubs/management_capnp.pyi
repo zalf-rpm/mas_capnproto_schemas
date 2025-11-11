@@ -8,8 +8,6 @@ from enum import Enum
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, Protocol, overload
 
-from capnp import _DynamicListBuilder
-
 from .common_capnp import (
     Identifiable,
     IdInformation,
@@ -84,6 +82,7 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             external: Event.ExternalType
             | Literal[
                 "sowing",
@@ -179,6 +178,7 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             date: DateBuilder | dict[str, Any] | None = None,
         ) -> Event.AtBuilder: ...
         @staticmethod
@@ -246,6 +246,7 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             earliest: DateBuilder | dict[str, Any] | None = None,
             latest: DateBuilder | dict[str, Any] | None = None,
         ) -> Event.BetweenBuilder: ...
@@ -322,6 +323,7 @@ class Event:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             event: Event.TypeBuilder | dict[str, Any] | None = None,
             days: int | None = None,
         ) -> Event.AfterBuilder: ...
@@ -409,6 +411,7 @@ class Event:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         type: Event.ExternalType
         | Literal[
             "sowing",
@@ -619,6 +622,7 @@ class Nutrient:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         nutrient: Nutrient.Name
         | Literal[
             "urea",
@@ -721,6 +725,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             cultivar: str | None = None,
             plantDensity: int | None = None,
             crop: Crop | Crop.Server | None = None,
@@ -791,6 +796,7 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
                 soilDepthForAveraging: float | None = None,
                 daysInSoilTempWindow: int | None = None,
                 sowingIfAboveAvgSoilTemp: float | None = None,
@@ -882,6 +888,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             minTempThreshold: float | None = None,
             daysInTempWindow: int | None = None,
             minPercentASW: float | None = None,
@@ -1022,6 +1029,7 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
                 optCarbonConservation: bool | None = None,
                 cropImpactOnHumusBalance: float | None = None,
                 cropUsage: Params.Harvest.CropUsage
@@ -1114,6 +1122,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             exported: bool | None = None,
             optCarbMgmtData: Params.Harvest.OptCarbonMgmtDataBuilder
             | dict[str, Any]
@@ -1198,6 +1207,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             minPercentASW: float | None = None,
             maxPercentASW: float | None = None,
             max3dayPrecipSum: float | None = None,
@@ -1311,6 +1321,7 @@ class Params:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
                 organ: PlantOrgan
                 | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]
                 | None = None,
@@ -1400,6 +1411,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             cuttingSpec: Sequence[Params.Cutting.SpecBuilder]
             | Sequence[dict[str, Any]]
             | None = None,
@@ -1445,7 +1457,7 @@ class Params:
         def from_dict(dictionary: dict[str, Any]) -> Params.CuttingBuilder: ...
         def init(
             self, name: Literal["cuttingSpec"], size: int = ...
-        ) -> _DynamicListBuilder[Params.Cutting.SpecBuilder]: ...
+        ) -> Sequence[Params.Cutting.SpecBuilder]: ...
         def copy(self) -> Params.CuttingBuilder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
@@ -1477,6 +1489,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             fertilizer: Fertilizer | Fertilizer.Server | None = None,
             amount: float | None = None,
         ) -> Params.MineralFertilizationBuilder: ...
@@ -1545,6 +1558,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             nDemand: float | None = None,
             fertilizer: Fertilizer | Fertilizer.Server | None = None,
             depth: float | None = None,
@@ -1621,6 +1635,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             fertilizer: Fertilizer | Fertilizer.Server | None = None,
             amount: float | None = None,
             incorporation: bool | None = None,
@@ -1687,7 +1702,9 @@ class Params:
         ) -> Params.TillageReader: ...
         @staticmethod
         def new_message(
-            num_first_segment_words: int | None = None, depth: float | None = None
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            depth: float | None = None,
         ) -> Params.TillageBuilder: ...
         @staticmethod
         def read(
@@ -1744,6 +1761,7 @@ class Params:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             amount: float | None = None,
             nutrientConcentrations: Sequence[NutrientBuilder]
             | Sequence[dict[str, Any]]
@@ -1785,7 +1803,7 @@ class Params:
         def from_dict(dictionary: dict[str, Any]) -> Params.IrrigationBuilder: ...
         def init(
             self, name: Literal["nutrientConcentrations"], size: int = ...
-        ) -> _DynamicListBuilder[NutrientBuilder]: ...
+        ) -> Sequence[NutrientBuilder]: ...
         def copy(self) -> Params.IrrigationBuilder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
@@ -1810,7 +1828,9 @@ class Params:
         nesting_limit: int | None = ...,
     ) -> ParamsReader: ...
     @staticmethod
-    def new_message(num_first_segment_words: int | None = None) -> ParamsBuilder: ...
+    def new_message(
+        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
+    ) -> ParamsBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,
@@ -1859,7 +1879,7 @@ class Service(Identifiable, Protocol):
         results: Service.ManagementatResultsBuilder
 
     def managementAt(
-        self, lat: float = 0.0, lon: float = 0.0
+        self, lat: float | None = None, lon: float | None = None
     ) -> ManagementatResult: ...
     class ManagementatRequest(Protocol):
         lat: float
@@ -1867,7 +1887,7 @@ class Service(Identifiable, Protocol):
         def send(self) -> Service.ManagementatResult: ...
 
     def managementAt_request(
-        self, lat: float = 0.0, lon: float = 0.0
+        self, lat: float | None = None, lon: float | None = None
     ) -> ManagementatRequest: ...
     @classmethod
     def _new_client(cls, server: Service.Server | Identifiable.Server) -> Service: ...

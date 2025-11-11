@@ -8,8 +8,6 @@ from enum import Enum
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, overload
 
-from capnp import _DynamicListBuilder
-
 from .common_capnp import Identifiable
 from .geo_capnp import LatLonCoord, LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import Persistent
@@ -69,6 +67,7 @@ class Layer:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             name: PropertyName
             | Literal[
                 "soilType",
@@ -195,6 +194,7 @@ class Layer:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         properties: Sequence[Layer.PropertyBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
@@ -241,7 +241,7 @@ class LayerBuilder(Layer):
     def from_dict(dictionary: dict[str, Any]) -> LayerBuilder: ...
     def init(
         self, name: Literal["properties"], size: int = ...
-    ) -> _DynamicListBuilder[Layer.PropertyBuilder]: ...
+    ) -> Sequence[Layer.PropertyBuilder]: ...
     def copy(self) -> LayerBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -276,6 +276,7 @@ class Query:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             failed: bool | None = None,
             mandatory: Sequence[PropertyName] | None = None,
             optional: Sequence[PropertyName] | None = None,
@@ -315,11 +316,11 @@ class Query:
         @overload
         def init(
             self: Any, name: Literal["mandatory"], size: int = ...
-        ) -> _DynamicListBuilder[PropertyName]: ...
+        ) -> Sequence[PropertyName]: ...
         @overload
         def init(
             self: Any, name: Literal["optional"], size: int = ...
-        ) -> _DynamicListBuilder[PropertyName]: ...
+        ) -> Sequence[PropertyName]: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
         def copy(self) -> Query.ResultBuilder: ...
         def to_bytes(self) -> bytes: ...
@@ -353,6 +354,7 @@ class Query:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         mandatory: Sequence[PropertyName] | None = None,
         optional: Sequence[PropertyName] | None = None,
         onlyRawData: bool | None = None,
@@ -392,11 +394,11 @@ class QueryBuilder(Query):
     @overload
     def init(
         self: Any, name: Literal["mandatory"], size: int = ...
-    ) -> _DynamicListBuilder[PropertyName]: ...
+    ) -> Sequence[PropertyName]: ...
     @overload
     def init(
         self: Any, name: Literal["optional"], size: int = ...
-    ) -> _DynamicListBuilder[PropertyName]: ...
+    ) -> Sequence[PropertyName]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> QueryBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -429,6 +431,7 @@ class ProfileData:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None,
         percentageOfArea: float | None = None,
     ) -> ProfileDataBuilder: ...
@@ -467,7 +470,7 @@ class ProfileDataBuilder(ProfileData):
     def from_dict(dictionary: dict[str, Any]) -> ProfileDataBuilder: ...
     def init(
         self, name: Literal["layers"], size: int = ...
-    ) -> _DynamicListBuilder[LayerBuilder]: ...
+    ) -> Sequence[LayerBuilder]: ...
     def copy(self) -> ProfileDataBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -534,12 +537,14 @@ class Service(Identifiable, Persistent, Protocol):
         class NextprofilesCallContext(Protocol):
             results: Service.Stream.NextprofilesResultsBuilder
 
-        def nextProfiles(self, maxCount: int = 0) -> NextprofilesResult: ...
+        def nextProfiles(self, maxCount: int | None = None) -> NextprofilesResult: ...
         class NextprofilesRequest(Protocol):
             maxCount: int
             def send(self) -> Service.Stream.NextprofilesResult: ...
 
-        def nextProfiles_request(self, maxCount: int = 0) -> NextprofilesRequest: ...
+        def nextProfiles_request(
+            self, maxCount: int | None = None
+        ) -> NextprofilesRequest: ...
         @classmethod
         def _new_client(cls, server: Service.Stream.Server) -> Service.Stream: ...
         class Server:
@@ -560,30 +565,30 @@ class Service(Identifiable, Persistent, Protocol):
 
     def checkAvailableParameters(
         self,
-        mandatory: Sequence[PropertyName] = [],
-        optional: Sequence[PropertyName] = [],
-        onlyRawData: bool = False,
+        mandatory: Sequence[PropertyName] | None = None,
+        optional: Sequence[PropertyName] | None = None,
+        onlyRawData: bool | None = None,
     ) -> Awaitable[Service.CheckavailableparametersResult]: ...
     class CheckavailableparametersRequest(Protocol):
         mandatory: Sequence[PropertyName]
         optional: Sequence[PropertyName]
         onlyRawData: bool
-        def send(self) -> Awaitable[Service.CheckavailableparametersResult]: ...
         @overload
         def init(
-            self, name: Literal["mandatory"], size: int
-        ) -> _DynamicListBuilder[PropertyName]: ...
+            self, name: Literal["mandatory"], size: int = ...
+        ) -> Sequence[PropertyName]: ...
         @overload
         def init(
-            self, name: Literal["optional"], size: int
-        ) -> _DynamicListBuilder[PropertyName]: ...
+            self, name: Literal["optional"], size: int = ...
+        ) -> Sequence[PropertyName]: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Awaitable[Service.CheckavailableparametersResult]: ...
 
     def checkAvailableParameters_request(
         self,
-        mandatory: Sequence[PropertyName] = [],
-        optional: Sequence[PropertyName] = [],
-        onlyRawData: bool = False,
+        mandatory: Sequence[PropertyName] | None = None,
+        optional: Sequence[PropertyName] | None = None,
+        onlyRawData: bool | None = None,
     ) -> CheckavailableparametersRequest: ...
     class GetallavailableparametersResult(
         Awaitable[GetallavailableparametersResult], Protocol
@@ -599,14 +604,14 @@ class Service(Identifiable, Persistent, Protocol):
         results: Service.GetallavailableparametersResultsBuilder
 
     def getAllAvailableParameters(
-        self, onlyRawData: bool = False
+        self, onlyRawData: bool | None = None
     ) -> GetallavailableparametersResult: ...
     class GetallavailableparametersRequest(Protocol):
         onlyRawData: bool
         def send(self) -> Service.GetallavailableparametersResult: ...
 
     def getAllAvailableParameters_request(
-        self, onlyRawData: bool = False
+        self, onlyRawData: bool | None = None
     ) -> GetallavailableparametersRequest: ...
     class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
         profiles: Sequence[Profile]
@@ -619,23 +624,23 @@ class Service(Identifiable, Persistent, Protocol):
 
     def closestProfilesAt(
         self,
-        coord: LatLonCoord | dict[str, Any] = {},
-        query: Query | dict[str, Any] = {},
+        coord: LatLonCoord | dict[str, Any] | None = None,
+        query: Query | dict[str, Any] | None = None,
     ) -> ClosestprofilesatResult: ...
     class ClosestprofilesatRequest(Protocol):
         coord: LatLonCoordBuilder
         query: QueryBuilder
-        def send(self) -> Service.ClosestprofilesatResult: ...
         @overload
         def init(self, name: Literal["coord"]) -> LatLonCoordBuilder: ...
         @overload
         def init(self, name: Literal["query"]) -> QueryBuilder: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Service.ClosestprofilesatResult: ...
 
     def closestProfilesAt_request(
         self,
-        coord: LatLonCoord | dict[str, Any] = {},
-        query: Query | dict[str, Any] = {},
+        coord: LatLonCoord | dict[str, Any] | None = None,
+        query: Query | dict[str, Any] | None = None,
     ) -> ClosestprofilesatRequest: ...
     class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
         allProfiles: Service.Stream
@@ -648,30 +653,30 @@ class Service(Identifiable, Persistent, Protocol):
 
     def streamAllProfiles(
         self,
-        mandatory: Sequence[PropertyName] = [],
-        optional: Sequence[PropertyName] = [],
-        onlyRawData: bool = False,
+        mandatory: Sequence[PropertyName] | None = None,
+        optional: Sequence[PropertyName] | None = None,
+        onlyRawData: bool | None = None,
     ) -> StreamallprofilesResult: ...
     class StreamallprofilesRequest(Protocol):
         mandatory: Sequence[PropertyName]
         optional: Sequence[PropertyName]
         onlyRawData: bool
-        def send(self) -> Service.StreamallprofilesResult: ...
         @overload
         def init(
-            self, name: Literal["mandatory"], size: int
-        ) -> _DynamicListBuilder[PropertyName]: ...
+            self, name: Literal["mandatory"], size: int = ...
+        ) -> Sequence[PropertyName]: ...
         @overload
         def init(
-            self, name: Literal["optional"], size: int
-        ) -> _DynamicListBuilder[PropertyName]: ...
+            self, name: Literal["optional"], size: int = ...
+        ) -> Sequence[PropertyName]: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Service.StreamallprofilesResult: ...
 
     def streamAllProfiles_request(
         self,
-        mandatory: Sequence[PropertyName] = [],
-        optional: Sequence[PropertyName] = [],
-        onlyRawData: bool = False,
+        mandatory: Sequence[PropertyName] | None = None,
+        optional: Sequence[PropertyName] | None = None,
+        onlyRawData: bool | None = None,
     ) -> StreamallprofilesRequest: ...
     @classmethod
     def _new_client(

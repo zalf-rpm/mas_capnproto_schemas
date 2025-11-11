@@ -33,6 +33,7 @@ class Job(Generic[_Payload]):
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         data: _Payload | None = None,
         noFurtherJobs: bool | None = None,
     ) -> JobBuilder: ...

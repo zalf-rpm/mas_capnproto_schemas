@@ -8,8 +8,6 @@ from enum import Enum
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal
 
-from capnp import _DynamicListBuilder
-
 class ResultId(Enum):
     primaryYield = "primaryYield"
     dryMatter = "dryMatter"
@@ -61,6 +59,7 @@ class RestInput:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         useDevTrend: bool | None = None,
         useCO2Increase: bool | None = None,
         dgm: float | None = None,
@@ -179,6 +178,7 @@ class Result:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             id: ResultId
             | Literal[
                 "primaryYield",
@@ -262,6 +262,7 @@ class Result:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         cultivar: str | None = None,
         isNoData: bool | None = None,
         values: Sequence[Result.ResultToValueBuilder]
@@ -312,7 +313,7 @@ class ResultBuilder(Result):
     def from_dict(dictionary: dict[str, Any]) -> ResultBuilder: ...
     def init(
         self, name: Literal["values"], size: int = ...
-    ) -> _DynamicListBuilder[Result.ResultToValueBuilder]: ...
+    ) -> Sequence[Result.ResultToValueBuilder]: ...
     def copy(self) -> ResultBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -346,6 +347,7 @@ class Output:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             year: int | None = None,
             result: ResultBuilder | dict[str, Any] | None = None,
         ) -> Output.YearToResultBuilder: ...
@@ -416,6 +418,7 @@ class Output:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: str | None = None,
         runFailed: bool | None = None,
         reason: str | None = None,
@@ -469,7 +472,7 @@ class OutputBuilder(Output):
     def from_dict(dictionary: dict[str, Any]) -> OutputBuilder: ...
     def init(
         self, name: Literal["results"], size: int = ...
-    ) -> _DynamicListBuilder[Output.YearToResultBuilder]: ...
+    ) -> Sequence[Output.YearToResultBuilder]: ...
     def copy(self) -> OutputBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...

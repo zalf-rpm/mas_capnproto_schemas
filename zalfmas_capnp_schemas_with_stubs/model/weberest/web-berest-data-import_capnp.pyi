@@ -20,7 +20,10 @@ class DWLABImport(Protocol):
         results: DWLABImport.ImportdataResultsBuilder
 
     def importData(
-        self, id: str = "", dwla: bytes = b"", dwlb: bytes = b""
+        self,
+        id: str | None = None,
+        dwla: bytes | None = None,
+        dwlb: bytes | None = None,
     ) -> ImportdataResult: ...
     class ImportdataRequest(Protocol):
         id: str
@@ -29,7 +32,10 @@ class DWLABImport(Protocol):
         def send(self) -> DWLABImport.ImportdataResult: ...
 
     def importData_request(
-        self, id: str = "", dwla: bytes = b"", dwlb: bytes = b""
+        self,
+        id: str | None = None,
+        dwla: bytes | None = None,
+        dwlb: bytes | None = None,
     ) -> ImportdataRequest: ...
     @classmethod
     def _new_client(cls, server: DWLABImport.Server) -> DWLABImport: ...

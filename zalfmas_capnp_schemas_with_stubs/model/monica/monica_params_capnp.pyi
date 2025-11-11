@@ -8,8 +8,6 @@ from enum import Enum
 from io import BufferedWriter
 from typing import Any, BinaryIO, Literal, overload
 
-from capnp import _DynamicListBuilder
-
 from ...climate_capnp import RCP
 from ...date_capnp import Date, DateBuilder, DateReader
 from .monica_management_capnp import Params
@@ -141,6 +139,7 @@ class SpeciesParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         speciesId: str | None = None,
         carboxylationPathway: int | None = None,
         defaultRadiationUseEfficiency: float | None = None,
@@ -440,39 +439,39 @@ class SpeciesParametersBuilder(SpeciesParameters):
     @overload
     def init(
         self: Any, name: Literal["baseTemperature"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["organMaintenanceRespiration"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["organGrowthRespiration"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["stageMaxRootNConcentration"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["initialOrganBiomass"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["criticalOxygenContent"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["stageMobilFromStorageCoeff"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["abovegroundOrgan"], size: int = ...
-    ) -> _DynamicListBuilder[bool]: ...
+    ) -> Sequence[bool]: ...
     @overload
     def init(
         self: Any, name: Literal["storageOrgan"], size: int = ...
-    ) -> _DynamicListBuilder[bool]: ...
+    ) -> Sequence[bool]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> SpeciesParametersBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -507,6 +506,7 @@ class YieldComponent:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         organId: int | None = None,
         yieldPercentage: float | None = None,
         yieldDryMatter: float | None = None,
@@ -648,6 +648,7 @@ class CultivarParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         cultivarId: str | None = None,
         description: str | None = None,
         perennial: bool | None = None,
@@ -891,55 +892,55 @@ class CultivarParametersBuilder(CultivarParameters):
     @overload
     def init(
         self: Any, name: Literal["assimilatePartitioningCoeff"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["organSenescenceRate"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["baseDaylength"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["optimumTemperature"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["daylengthRequirement"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["droughtStressThreshold"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["specificLeafArea"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["stageKcFactor"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["stageTemperatureSum"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["vernalisationRequirement"], size: int = ...
-    ) -> _DynamicListBuilder[float]: ...
+    ) -> Sequence[float]: ...
     @overload
     def init(
         self: Any, name: Literal["organIdsForPrimaryYield"], size: int = ...
-    ) -> _DynamicListBuilder[YieldComponentBuilder]: ...
+    ) -> Sequence[YieldComponentBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["organIdsForSecondaryYield"], size: int = ...
-    ) -> _DynamicListBuilder[YieldComponentBuilder]: ...
+    ) -> Sequence[YieldComponentBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["organIdsForCutting"], size: int = ...
-    ) -> _DynamicListBuilder[YieldComponentBuilder]: ...
+    ) -> Sequence[YieldComponentBuilder]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> CultivarParametersBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -977,6 +978,7 @@ class CropParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         speciesParams: SpeciesParametersBuilder | dict[str, Any] | None = None,
         cultivarParams: CultivarParametersBuilder | dict[str, Any] | None = None,
     ) -> CropParametersBuilder: ...
@@ -1067,6 +1069,7 @@ class CropResidueParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         params: Params.OrganicFertilization.OrganicMatterParametersBuilder
         | dict[str, Any]
         | None = None,
@@ -1152,6 +1155,7 @@ class CropSpec:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         cropParams: CropParametersBuilder | dict[str, Any] | None = None,
         residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
     ) -> CropSpecBuilder: ...
@@ -1241,6 +1245,7 @@ class AutomaticHarvestParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         harvestTime: AutomaticHarvestParameters.HarvestTime
         | Literal["maturity", "unknown"]
         | None = None,
@@ -1310,6 +1315,7 @@ class NMinCropParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         samplingDepth: float | None = None,
         nTarget: float | None = None,
         nTarget30: float | None = None,
@@ -1379,6 +1385,7 @@ class NMinApplicationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         min: float | None = None,
         max: float | None = None,
         delayInDays: int | None = None,
@@ -1476,6 +1483,7 @@ class SoilParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         soilSandContent: float | None = None,
         soilClayContent: float | None = None,
         soilpH: float | None = None,
@@ -1616,6 +1624,7 @@ class AutomaticIrrigationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         params: Params.Irrigation.ParametersBuilder | dict[str, Any] | None = None,
         amount: float | None = None,
         threshold: float | None = None,
@@ -1712,6 +1721,7 @@ class SiteParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         latitude: float | None = None,
         slope: float | None = None,
         heightNN: float | None = None,
@@ -1798,7 +1808,7 @@ class SiteParametersBuilder(SiteParameters):
     def from_dict(dictionary: dict[str, Any]) -> SiteParametersBuilder: ...
     def init(
         self, name: Literal["soilParameters"], size: int = ...
-    ) -> _DynamicListBuilder[SoilParametersBuilder]: ...
+    ) -> Sequence[SoilParametersBuilder]: ...
     def copy(self) -> SiteParametersBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -1831,6 +1841,7 @@ class EnvironmentParameters:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             year: int | None = None,
             value: float | None = None,
         ) -> EnvironmentParameters.YearToValueBuilder: ...
@@ -1914,6 +1925,7 @@ class EnvironmentParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         albedo: float | None = None,
         atmosphericCO2: float | None = None,
         atmosphericCO2s: Sequence[EnvironmentParameters.YearToValueBuilder]
@@ -2028,11 +2040,11 @@ class EnvironmentParametersBuilder(EnvironmentParameters):
     @overload
     def init(
         self: Any, name: Literal["atmosphericCO2s"], size: int = ...
-    ) -> _DynamicListBuilder[EnvironmentParameters.YearToValueBuilder]: ...
+    ) -> Sequence[EnvironmentParameters.YearToValueBuilder]: ...
     @overload
     def init(
         self: Any, name: Literal["atmosphericO3s"], size: int = ...
-    ) -> _DynamicListBuilder[EnvironmentParameters.YearToValueBuilder]: ...
+    ) -> Sequence[EnvironmentParameters.YearToValueBuilder]: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
     def copy(self) -> EnvironmentParametersBuilder: ...
     def to_bytes(self) -> bytes: ...
@@ -2067,6 +2079,7 @@ class MeasuredGroundwaterTableInformation:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             date: DateBuilder | dict[str, Any] | None = None,
             value: float | None = None,
         ) -> MeasuredGroundwaterTableInformation.DateToValueBuilder: ...
@@ -2141,6 +2154,7 @@ class MeasuredGroundwaterTableInformation:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         groundwaterInformationAvailable: bool | None = None,
         groundwaterInfo: Sequence[
             MeasuredGroundwaterTableInformation.DateToValueBuilder
@@ -2194,9 +2208,7 @@ class MeasuredGroundwaterTableInformationBuilder(MeasuredGroundwaterTableInforma
     ) -> MeasuredGroundwaterTableInformationBuilder: ...
     def init(
         self, name: Literal["groundwaterInfo"], size: int = ...
-    ) -> _DynamicListBuilder[
-        MeasuredGroundwaterTableInformation.DateToValueBuilder
-    ]: ...
+    ) -> Sequence[MeasuredGroundwaterTableInformation.DateToValueBuilder]: ...
     def copy(self) -> MeasuredGroundwaterTableInformationBuilder: ...
     def to_bytes(self) -> bytes: ...
     def to_bytes_packed(self) -> bytes: ...
@@ -2277,6 +2289,7 @@ class SimulationParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         startDate: DateBuilder | dict[str, Any] | None = None,
         endDate: DateBuilder | dict[str, Any] | None = None,
         nitrogenResponseOn: bool | None = None,
@@ -2518,6 +2531,7 @@ class CropModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         canopyReflectionCoefficient: float | None = None,
         referenceMaxAssimilationRate: float | None = None,
         referenceLeafAreaIndex: float | None = None,
@@ -2729,6 +2743,7 @@ class SoilMoistureModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         criticalMoistureDepth: float | None = None,
         saturatedHydraulicConductivity: float | None = None,
         surfaceRoughness: float | None = None,
@@ -2977,6 +2992,7 @@ class SticsParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         useN2O: bool | None = None,
         useNit: bool | None = None,
         useDenit: bool | None = None,
@@ -3295,6 +3311,7 @@ class SoilOrganicModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         somSlowDecCoeffStandard: float | None = None,
         somFastDecCoeffStandard: float | None = None,
         smbSlowMaintRateStandard: float | None = None,
@@ -3563,6 +3580,7 @@ class SoilTemperatureModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         nTau: float | None = None,
         initialSurfaceTemperature: float | None = None,
         baseTemperature: float | None = None,
@@ -3686,6 +3704,7 @@ class SoilTransportModuleParameters:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         dispersionLength: float | None = None,
         ad: float | None = None,
         diffusionCoefficientStandard: float | None = None,
@@ -3762,6 +3781,7 @@ class Voc:
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
                 speciesId: int | None = None,
                 emission: float | None = None,
             ) -> Voc.Emissions.SpeciesIdToEmissionBuilder: ...
@@ -3833,6 +3853,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             speciesIdToIsopreneEmission: Sequence[
                 Voc.Emissions.SpeciesIdToEmissionBuilder
             ]
@@ -3913,11 +3934,11 @@ class Voc:
         @overload
         def init(
             self: Any, name: Literal["speciesIdToIsopreneEmission"], size: int = ...
-        ) -> _DynamicListBuilder[Voc.Emissions.SpeciesIdToEmissionBuilder]: ...
+        ) -> Sequence[Voc.Emissions.SpeciesIdToEmissionBuilder]: ...
         @overload
         def init(
             self: Any, name: Literal["speciesIdToMonoterpeneEmission"], size: int = ...
-        ) -> _DynamicListBuilder[Voc.Emissions.SpeciesIdToEmissionBuilder]: ...
+        ) -> Sequence[Voc.Emissions.SpeciesIdToEmissionBuilder]: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
         def copy(self) -> Voc.EmissionsBuilder: ...
         def to_bytes(self) -> bytes: ...
@@ -4006,6 +4027,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             id: int | None = None,
             efMonos: float | None = None,
             efMono: float | None = None,
@@ -4224,6 +4246,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             kc: float | None = None,
             ko: float | None = None,
             oi: float | None = None,
@@ -4340,6 +4363,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             rad: float | None = None,
             rad24: float | None = None,
             rad240: float | None = None,
@@ -4439,6 +4463,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             par: float | None = None,
             par24: float | None = None,
             par240: float | None = None,
@@ -4508,6 +4533,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             tempK: float | None = None,
             tempK24: float | None = None,
             tempK240: float | None = None,
@@ -4575,6 +4601,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             efIso: float | None = None,
             efMono: float | None = None,
         ) -> Voc.EnzymeActivityTBuilder: ...
@@ -4648,6 +4675,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             foliageLayer: int | None = None,
             pho: Voc.PhotosynthTBuilder | dict[str, Any] | None = None,
             fol: Voc.FoliageTBuilder | dict[str, Any] | None = None,
@@ -4751,6 +4779,7 @@ class Voc:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             isoprene: float | None = None,
             monoterp: float | None = None,
         ) -> Voc.LeafEmissionsBuilder: ...
@@ -4806,7 +4835,9 @@ class Voc:
         nesting_limit: int | None = ...,
     ) -> VocReader: ...
     @staticmethod
-    def new_message(num_first_segment_words: int | None = None) -> VocBuilder: ...
+    def new_message(
+        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
+    ) -> VocBuilder: ...
     @staticmethod
     def read(
         file: BinaryIO,

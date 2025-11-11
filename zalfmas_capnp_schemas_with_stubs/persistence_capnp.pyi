@@ -34,6 +34,7 @@ class VatId:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         publicKey0: int | None = None,
         publicKey1: int | None = None,
         publicKey2: int | None = None,
@@ -107,6 +108,7 @@ class Address:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             lower64: int | None = None,
             upper64: int | None = None,
         ) -> Address.Ip6Builder: ...
@@ -172,6 +174,7 @@ class Address:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         ip6: Address.Ip6Builder | dict[str, Any] | None = None,
         port: int | None = None,
         host: str | None = None,
@@ -250,6 +253,7 @@ class VatPath:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         id: VatIdBuilder | dict[str, Any] | None = None,
         address: AddressBuilder | dict[str, Any] | None = None,
     ) -> VatPathBuilder: ...
@@ -323,7 +327,9 @@ class SturdyRef:
         ) -> SturdyRef.OwnerReader: ...
         @staticmethod
         def new_message(
-            num_first_segment_words: int | None = None, guid: str | None = None
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            guid: str | None = None,
         ) -> SturdyRef.OwnerBuilder: ...
         @staticmethod
         def read(
@@ -381,6 +387,7 @@ class SturdyRef:
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             text: str | None = None,
             data: bytes | None = None,
         ) -> SturdyRef.TokenBuilder: ...
@@ -447,6 +454,7 @@ class SturdyRef:
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
         vat: VatPathBuilder | dict[str, Any] | None = None,
         localRef: SturdyRef.TokenBuilder | dict[str, Any] | None = None,
     ) -> SturdyRefBuilder: ...
@@ -521,7 +529,7 @@ class Heartbeat(Protocol):
     class Server:
         def beat(
             self, _context: Heartbeat.BeatCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[None | None]: ...
 
 class Persistent(Protocol):
     class SaveParams:
@@ -544,6 +552,7 @@ class Persistent(Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             sealFor: SturdyRef.OwnerBuilder | dict[str, Any] | None = None,
         ) -> Persistent.SaveParamsBuilder: ...
         @staticmethod
@@ -615,6 +624,7 @@ class Persistent(Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             sturdyRef: SturdyRefBuilder | dict[str, Any] | None = None,
             unsaveSR: SturdyRefBuilder | dict[str, Any] | None = None,
         ) -> Persistent.SaveResultsBuilder: ...
@@ -703,15 +713,15 @@ class Persistent(Protocol):
         results: Persistent.SaveResult
 
     def save(
-        self, sealFor: SturdyRef.Owner | dict[str, Any] = {}
+        self, sealFor: SturdyRef.Owner | dict[str, Any] | None = None
     ) -> Awaitable[Persistent.SaveResult]: ...
     class SaveRequest(Protocol):
         sealFor: SturdyRef.OwnerBuilder
-        def send(self) -> Awaitable[Persistent.SaveResult]: ...
         def init(self, name: Literal["sealFor"]) -> SturdyRef.OwnerBuilder: ...
+        def send(self) -> Awaitable[Persistent.SaveResult]: ...
 
     def save_request(
-        self, sealFor: SturdyRef.Owner | dict[str, Any] = {}
+        self, sealFor: SturdyRef.Owner | dict[str, Any] | None = None
     ) -> SaveRequest: ...
     @classmethod
     def _new_client(cls, server: Persistent.Server) -> Persistent: ...
@@ -754,6 +764,7 @@ class Restorer(Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             localRef: SturdyRef.TokenBuilder | dict[str, Any] | None = None,
             sealedBy: SturdyRef.OwnerBuilder | dict[str, Any] | None = None,
         ) -> Restorer.RestoreParamsBuilder: ...
@@ -827,23 +838,23 @@ class Restorer(Protocol):
 
     def restore(
         self,
-        localRef: SturdyRef.Token | dict[str, Any] = {},
-        sealedBy: SturdyRef.Owner | dict[str, Any] = {},
+        localRef: SturdyRef.Token | dict[str, Any] | None = None,
+        sealedBy: SturdyRef.Owner | dict[str, Any] | None = None,
     ) -> RestoreResult: ...
     class RestoreRequest(Protocol):
         localRef: SturdyRef.TokenBuilder
         sealedBy: SturdyRef.OwnerBuilder
-        def send(self) -> Restorer.RestoreResult: ...
         @overload
         def init(self, name: Literal["localRef"]) -> SturdyRef.TokenBuilder: ...
         @overload
         def init(self, name: Literal["sealedBy"]) -> SturdyRef.OwnerBuilder: ...
         def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Restorer.RestoreResult: ...
 
     def restore_request(
         self,
-        localRef: SturdyRef.Token | dict[str, Any] = {},
-        sealedBy: SturdyRef.Owner | dict[str, Any] = {},
+        localRef: SturdyRef.Token | dict[str, Any] | None = None,
+        sealedBy: SturdyRef.Owner | dict[str, Any] | None = None,
     ) -> RestoreRequest: ...
     @classmethod
     def _new_client(cls, server: Restorer.Server) -> Restorer: ...
@@ -885,6 +896,7 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
             @staticmethod
             def new_message(
                 num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
                 base64VatId: str | None = None,
                 host: str | None = None,
                 port: int | None = None,
@@ -958,11 +970,11 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
 
         def register(
             self,
-            base64VatId: str = "",
-            host: str = "",
-            port: int = 0,
-            alias: str = "",
-            identityProof: bytes = b"",
+            base64VatId: str | None = None,
+            host: str | None = None,
+            port: int | None = None,
+            alias: str | None = None,
+            identityProof: bytes | None = None,
         ) -> RegisterResult: ...
         class RegisterRequest(Protocol):
             base64VatId: str
@@ -974,11 +986,11 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
 
         def register_request(
             self,
-            base64VatId: str = "",
-            host: str = "",
-            port: int = 0,
-            alias: str = "",
-            identityProof: bytes = b"",
+            base64VatId: str | None = None,
+            host: str | None = None,
+            port: int | None = None,
+            alias: str | None = None,
+            identityProof: bytes | None = None,
         ) -> RegisterRequest: ...
         @classmethod
         def _new_client(
@@ -1007,12 +1019,12 @@ class HostPortResolver(Identifiable, Restorer, Protocol):
     class ResolveCallContext(Protocol):
         results: HostPortResolver.ResolveResultsBuilder
 
-    def resolve(self, id: str = "") -> ResolveResult: ...
+    def resolve(self, id: str | None = None) -> ResolveResult: ...
     class ResolveRequest(Protocol):
         id: str
         def send(self) -> HostPortResolver.ResolveResult: ...
 
-    def resolve_request(self, id: str = "") -> ResolveRequest: ...
+    def resolve_request(self, id: str | None = None) -> ResolveRequest: ...
     @classmethod
     def _new_client(
         cls, server: HostPortResolver.Server | Identifiable.Server | Restorer.Server
@@ -1047,6 +1059,7 @@ class Gateway(Identifiable, Restorer, Protocol):
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
             sturdyRef: SturdyRefBuilder | dict[str, Any] | None = None,
             heartbeat: Heartbeat | Heartbeat.Server | None = None,
             secsHeartbeatInterval: int | None = None,
@@ -1106,12 +1119,12 @@ class Gateway(Identifiable, Restorer, Protocol):
     class RegisterCallContext(Protocol):
         results: Gateway.RegisterResult
 
-    def register(self, cap: Any = ...) -> Awaitable[Gateway.RegisterResult]: ...
+    def register(self, cap: Any | None = None) -> Awaitable[Gateway.RegisterResult]: ...
     class RegisterRequest(Protocol):
         cap: Any
         def send(self) -> Awaitable[Gateway.RegisterResult]: ...
 
-    def register_request(self, cap: Any = ...) -> RegisterRequest: ...
+    def register_request(self, cap: Any | None = None) -> RegisterRequest: ...
     @classmethod
     def _new_client(
         cls, server: Gateway.Server | Identifiable.Server | Restorer.Server
