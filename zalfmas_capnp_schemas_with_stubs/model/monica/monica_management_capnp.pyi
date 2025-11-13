@@ -95,8 +95,8 @@ class ILRDates:
     @overload
     def init(self, name: Literal["latestHarvest"]) -> Date: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -235,8 +235,8 @@ class Event:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["external", "internal"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -316,8 +316,8 @@ class Event:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["date"]) -> Date: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -394,8 +394,8 @@ class Event:
         @overload
         def init(self, name: Literal["latest"]) -> Date: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -463,8 +463,8 @@ class Event:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["event"]) -> Event.Type: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -602,8 +602,8 @@ class Event:
     @overload
     def init(self, name: Literal["after"]) -> Event.After: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -721,8 +721,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -810,8 +810,8 @@ class Params:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -882,8 +882,8 @@ class Params:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -959,8 +959,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -1094,8 +1094,8 @@ class Params:
         @overload
         def init(self, name: Literal["sowing"]) -> Params.Sowing: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1206,8 +1206,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -1285,8 +1285,8 @@ class Params:
         def init(
             self, name: Literal["optCarbMgmtData"]
         ) -> Params.Harvest.OptCarbonMgmtData: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1387,8 +1387,8 @@ class Params:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["harvest"]) -> Params.Harvest: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1500,8 +1500,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -1578,8 +1578,8 @@ class Params:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1672,8 +1672,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -1750,8 +1750,8 @@ class Params:
         def init(
             self, name: Literal["partition"]
         ) -> Params.MineralFertilization.Parameters: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1842,8 +1842,8 @@ class Params:
         def init(
             self, name: Literal["partition"]
         ) -> Params.MineralFertilization.Parameters: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1988,8 +1988,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -2093,8 +2093,8 @@ class Params:
             def init(
                 self, name: Literal["params"]
             ) -> Params.OrganicFertilization.OrganicMatterParameters: ...
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -2177,8 +2177,8 @@ class Params:
         def init(
             self, name: Literal["params"]
         ) -> Params.OrganicFertilization.Parameters: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -2239,8 +2239,8 @@ class Params:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -2308,8 +2308,8 @@ class Params:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -2379,8 +2379,8 @@ class Params:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["params"]) -> Params.Irrigation.Parameters: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -2444,8 +2444,8 @@ class Params:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -2494,8 +2494,8 @@ class Params:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

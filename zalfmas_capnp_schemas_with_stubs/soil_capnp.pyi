@@ -118,8 +118,8 @@ class Layer:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -219,8 +219,8 @@ class Layer:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -306,8 +306,8 @@ class Query:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -384,8 +384,8 @@ class Query:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -457,8 +457,8 @@ class ProfileData:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

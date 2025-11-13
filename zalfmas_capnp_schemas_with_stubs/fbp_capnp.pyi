@@ -64,8 +64,8 @@ class IP:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -146,8 +146,8 @@ class IP:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -209,8 +209,8 @@ class IIP:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -287,8 +287,8 @@ class Channel:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["value", "done", "noMsg"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -583,8 +583,8 @@ class Channel:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -835,8 +835,8 @@ class StartChannelsService:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -995,8 +995,8 @@ class PortInfos:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["sr", "srs"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1075,8 +1075,8 @@ class PortInfos:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1231,8 +1231,8 @@ class Component:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1346,8 +1346,8 @@ class Component:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["info"]) -> IdInformation: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

@@ -342,8 +342,8 @@ class Store:
                     "dataListValue",
                     "anyValue",
                 ]: ...
-                @staticmethod
                 @contextmanager
+                @staticmethod
                 def from_bytes(
                     data: bytes,
                     traversal_limit_in_words: int | None = ...,
@@ -540,8 +540,8 @@ class Store:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -829,8 +829,8 @@ class Store:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -921,8 +921,8 @@ class Store:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["info"]) -> IdInformation: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,

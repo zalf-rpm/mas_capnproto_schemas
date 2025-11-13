@@ -62,8 +62,8 @@ class SoilCharacteristicData:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -130,8 +130,8 @@ class SoilCharacteristicData:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -220,8 +220,8 @@ class SoilCharacteristicModifier:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -291,8 +291,8 @@ class SoilCharacteristicModifier:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -369,8 +369,8 @@ class CapillaryRiseRate:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -435,8 +435,8 @@ class CapillaryRiseRate:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

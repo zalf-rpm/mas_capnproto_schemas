@@ -96,8 +96,8 @@ class EnsembleMember:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -255,8 +255,8 @@ class Metadata:
 
         def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
         def init(self, name: Literal["date"]) -> Date: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -489,8 +489,8 @@ class Metadata:
         @overload
         def init(self, name: Literal["end"]) -> Date: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -666,8 +666,8 @@ class Metadata:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1142,8 +1142,8 @@ class Location:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1244,8 +1244,8 @@ class Location:
     @overload
     def init(self, name: Literal["latlon"]) -> LatLonCoord: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1343,8 +1343,8 @@ class MetaPlusData:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["meta"]) -> Metadata: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1478,8 +1478,8 @@ class TimeSeriesData:
     @overload
     def init(self, name: Literal["endDate"]) -> Date: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1633,8 +1633,8 @@ class CSVTimeSeriesFactory:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -1791,8 +1791,8 @@ class AlterTimeSeriesWrapper:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,

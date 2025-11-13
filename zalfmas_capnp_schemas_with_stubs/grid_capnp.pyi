@@ -77,8 +77,8 @@ class Grid:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["f", "i", "ui", "no"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -147,8 +147,8 @@ class Grid:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["meter", "degree"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -212,8 +212,8 @@ class Grid:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -305,8 +305,8 @@ class Grid:
         @overload
         def init(self, name: Literal["rowCol"]) -> Grid.RowCol: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -400,8 +400,8 @@ class Grid:
         @overload
         def init(self, name: Literal["value"]) -> Grid.Value: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,

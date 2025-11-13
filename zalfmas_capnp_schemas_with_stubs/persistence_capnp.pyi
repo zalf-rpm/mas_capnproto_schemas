@@ -53,8 +53,8 @@ class VatId:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -124,8 +124,8 @@ class Address:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -199,8 +199,8 @@ class Address:
 
     def which(self) -> Literal["ip6", "host"]: ...
     def init(self, name: Literal["ip6"]) -> Address.Ip6: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -278,8 +278,8 @@ class VatPath:
     @overload
     def init(self, name: Literal["address"]) -> Address: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -341,8 +341,8 @@ class SturdyRef:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -408,8 +408,8 @@ class SturdyRef:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["text", "data"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -485,8 +485,8 @@ class SturdyRef:
     @overload
     def init(self, name: Literal["localRef"]) -> SturdyRef.Token: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -575,8 +575,8 @@ class Persistent:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["sealFor"]) -> SturdyRef.Owner: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -655,8 +655,8 @@ class Persistent:
         @overload
         def init(self, name: Literal["unsaveSR"]) -> SturdyRef: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -822,8 +822,8 @@ class Restorer:
         @overload
         def init(self, name: Literal["sealedBy"]) -> SturdyRef.Owner: ...
         def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -960,8 +960,8 @@ class HostPortResolver:
                 @staticmethod
                 def write_packed(file: BufferedWriter) -> None: ...
 
-            @staticmethod
             @contextmanager
+            @staticmethod
             def from_bytes(
                 data: bytes,
                 traversal_limit_in_words: int | None = ...,
@@ -1135,8 +1135,8 @@ class Gateway:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["sturdyRef"]) -> SturdyRef: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,

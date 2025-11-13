@@ -212,8 +212,8 @@ class Registry:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -377,8 +377,8 @@ class Registrar:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["vatId"]) -> VatId: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -465,8 +465,8 @@ class Registrar:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def init(self, name: Literal["xDomain"]) -> Registrar.CrossDomainRestore: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,

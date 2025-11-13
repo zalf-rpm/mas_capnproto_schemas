@@ -55,8 +55,8 @@ class MaybeBool:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1754,8 +1754,8 @@ class CropModuleState:
     @overload
     def init(self, name: Literal["residueParams"]) -> CropResidueParameters: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -2172,8 +2172,8 @@ class AOMProperties:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -2349,8 +2349,8 @@ class SoilLayerState:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["sps"]) -> SoilParameters: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -2482,8 +2482,8 @@ class SoilColumnState:
         def init(
             self, name: Literal["fp"]
         ) -> Params.MineralFertilization.Parameters: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -2684,8 +2684,8 @@ class SoilColumnState:
     @overload
     def init(self, name: Literal["cropModule"]) -> CropModuleState: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -2947,8 +2947,8 @@ class SoilTemperatureModuleState:
     @overload
     def init(self, name: Literal["soilColumnVtBottomLayer"]) -> SoilLayerState: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -3083,8 +3083,8 @@ class FrostModuleState:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -3265,8 +3265,8 @@ class SnowModuleState:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -3836,8 +3836,8 @@ class SoilMoistureModuleState:
     @overload
     def init(self, name: Literal["moduleParams"]) -> SoilMoistureModuleParameters: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -4292,8 +4292,8 @@ class SoilOrganicModuleState:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["moduleParams"]) -> SoilOrganicModuleParameters: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -4552,8 +4552,8 @@ class SoilTransportModuleState:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["moduleParams"]) -> SoilTransportModuleParameters: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -4641,8 +4641,8 @@ class MonicaModelState:
             @staticmethod
             def write_packed(file: BufferedWriter) -> None: ...
 
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -5048,8 +5048,8 @@ class MonicaModelState:
     @overload
     def init(self, name: Literal["currentStepDate"]) -> Date: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -5151,8 +5151,8 @@ class RuntimeState:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["modelState"]) -> MonicaModelState: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -5352,8 +5352,8 @@ class CropState:
     @overload
     def init(self, name: Literal["residueParams"]) -> CropResidueParameters: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -5440,8 +5440,8 @@ class ICData:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def which(self) -> Literal["noCrop", "height", "lait"]: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

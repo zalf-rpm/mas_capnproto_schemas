@@ -133,8 +133,8 @@ class WeatherStation:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -316,8 +316,8 @@ class SoilMetadata:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -459,8 +459,8 @@ class Field:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -589,8 +589,8 @@ class Cultivar:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -750,8 +750,8 @@ class Plot:
     @overload
     def init(self, name: Literal["soil"]) -> SoilMetadata: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -874,8 +874,8 @@ class Residue:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["initialMeasureDate"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1003,8 +1003,8 @@ class InitialConditionsLayer:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["date"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1152,8 +1152,8 @@ class PlantingEvent:
     @overload
     def init(self, name: Literal["averageEmergenceDate"]) -> Date: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1260,8 +1260,8 @@ class HarvestEvent:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["date"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1369,8 +1369,8 @@ class IrrigationEvent:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["date"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1491,8 +1491,8 @@ class FertilizerEvent:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["date"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1593,8 +1593,8 @@ class EnvironmentModification:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["date"]) -> Date: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -1927,8 +1927,8 @@ class Treatment:
     @overload
     def init(self, name: Literal["residue"]) -> Residue: ...
     def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -2135,8 +2135,8 @@ class ExperimentDescription:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,

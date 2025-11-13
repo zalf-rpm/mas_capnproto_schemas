@@ -59,8 +59,8 @@ class IdInformation:
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -185,8 +185,8 @@ class StructuredText:
             def write_packed(file: BufferedWriter) -> None: ...
 
         def which(self) -> Literal["none", "json", "xml", "toml"]: ...
-        @staticmethod
         @contextmanager
+        @staticmethod
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
@@ -268,8 +268,8 @@ class StructuredText:
         def write_packed(file: BufferedWriter) -> None: ...
 
     def init(self, name: Literal["structure"]) -> StructuredText.Structure: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -337,8 +337,8 @@ class Pair(Generic[Value_F, Value_S]):
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
@@ -730,8 +730,8 @@ class Value:
         "lcap",
         "lpair",
     ]: ...
-    @staticmethod
     @contextmanager
+    @staticmethod
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
