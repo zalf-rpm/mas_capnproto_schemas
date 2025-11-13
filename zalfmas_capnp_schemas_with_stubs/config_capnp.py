@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `config.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -11,5 +12,7 @@ module_file = os.path.abspath(
 )
 import_path = [here, os.path.join(here, "../zalfmas_capnp_schemas")]
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
+
+Service.Server.NextconfigResultTuple = NamedTuple(
+    "NextconfigResultTuple", [("config", object), ("noFurtherConfigs", object)]
+)

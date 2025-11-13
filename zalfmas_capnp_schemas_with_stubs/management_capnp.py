@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `management.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -15,20 +16,18 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Event = capnp.load(module_file, imports=import_path).Event
-EventBuilder = Event
-EventReader = Event
 Params = capnp.load(module_file, imports=import_path).Params
-ParamsBuilder = Params
-ParamsReader = Params
 Fertilizer = capnp.load(module_file, imports=import_path).Fertilizer
-FertilizerBuilder = Fertilizer
-FertilizerReader = Fertilizer
 Nutrient = capnp.load(module_file, imports=import_path).Nutrient
-NutrientBuilder = Nutrient
-NutrientReader = Nutrient
 FertilizerService = capnp.load(module_file, imports=import_path).FertilizerService
-FertilizerServiceBuilder = FertilizerService
-FertilizerServiceReader = FertilizerService
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
+
+Fertilizer.Server.NutrientsResultTuple = NamedTuple(
+    "NutrientsResultTuple", [("nutrients", object)]
+)
+Fertilizer.Server.ParametersResultTuple = NamedTuple(
+    "ParametersResultTuple", [("params", object)]
+)
+Service.Server.ManagementatResultTuple = NamedTuple(
+    "ManagementatResultTuple", [("mgmt", object)]
+)

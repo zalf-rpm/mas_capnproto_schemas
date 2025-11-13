@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `crop.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -13,8 +14,10 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Crop = capnp.load(module_file, imports=import_path).Crop
-CropBuilder = Crop
-CropReader = Crop
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
+
+Crop.Server.CultivarResultTuple = NamedTuple("CultivarResultTuple", [])
+Crop.Server.ParametersResultTuple = NamedTuple(
+    "ParametersResultTuple", [("params", object)]
+)
+Crop.Server.SpeciesResultTuple = NamedTuple("SpeciesResultTuple", [])

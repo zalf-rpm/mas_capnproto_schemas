@@ -6,20 +6,21 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, overload
-
-from .common_capnp import (
-    Identifiable,
-    IdInformation,
-    IdInformationBuilder,
-    IdInformationReader,
-    Pair,
-    PairBuilder,
-    PairReader,
+from typing import (
+    Any,
+    BinaryIO,
+    Literal,
+    NamedTuple,
+    Protocol,
+    Self,
+    TypeAlias,
+    overload,
 )
-from .date_capnp import Date, DateBuilder, DateReader
-from .geo_capnp import LatLonCoord, LatLonCoordBuilder, LatLonCoordReader
-from .persistence_capnp import Persistent
+
+from .common_capnp import Identifiable, IdentifiableClient, IdInformation, Pair
+from .date_capnp import Date
+from .geo_capnp import LatLonCoord
+from .persistence_capnp import Persistent, PersistentClient
 
 class GCM(Enum):
     cccmaCanEsm2 = "cccmaCanEsm2"
@@ -60,28 +61,63 @@ class RCP(Enum):
     rcp70 = "rcp70"
     rcp85 = "rcp85"
 
+EnsembleMemberBuilder: TypeAlias = EnsembleMember.Builder
+EnsembleMemberReader: TypeAlias = EnsembleMember.Reader
+
 class EnsembleMember:
-    @property
-    def r(self) -> int: ...
-    @property
-    def i(self) -> int: ...
-    @property
-    def p(self) -> int: ...
-    @property
-    def f(self) -> int: ...
+    class Reader:
+        @property
+        def r(self) -> int: ...
+        @property
+        def i(self) -> int: ...
+        @property
+        def p(self) -> int: ...
+        @property
+        def f(self) -> int: ...
+        def as_builder(self) -> EnsembleMember.Builder: ...
+
+    class Builder:
+        @property
+        def r(self) -> int: ...
+        @r.setter
+        def r(self, value: int) -> None: ...
+        @property
+        def i(self) -> int: ...
+        @i.setter
+        def i(self, value: int) -> None: ...
+        @property
+        def p(self) -> int: ...
+        @p.setter
+        def p(self, value: int) -> None: ...
+        @property
+        def f(self) -> int: ...
+        @f.setter
+        def f(self, value: int) -> None: ...
+        @staticmethod
+        def from_dict(dictionary: dict[str, Any]) -> EnsembleMember.Builder: ...
+        def copy(self) -> EnsembleMember.Builder: ...
+        def to_bytes(self) -> bytes: ...
+        def to_bytes_packed(self) -> bytes: ...
+        def to_segments(self) -> list[bytes]: ...
+        def as_reader(self) -> EnsembleMember.Reader: ...
+        @staticmethod
+        def write(file: BufferedWriter) -> None: ...
+        @staticmethod
+        def write_packed(file: BufferedWriter) -> None: ...
+
     @staticmethod
     @contextmanager
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> Iterator[EnsembleMemberReader]: ...
+    ) -> Iterator[EnsembleMember.Reader]: ...
     @staticmethod
     def from_bytes_packed(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> EnsembleMemberReader: ...
+    ) -> EnsembleMember.Reader: ...
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
@@ -90,114 +126,136 @@ class EnsembleMember:
         i: int | None = None,
         p: int | None = None,
         f: int | None = None,
-    ) -> EnsembleMemberBuilder: ...
+    ) -> EnsembleMember.Builder: ...
     @staticmethod
     def read(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> EnsembleMemberReader: ...
+    ) -> EnsembleMember.Reader: ...
     @staticmethod
     def read_packed(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> EnsembleMemberReader: ...
+    ) -> EnsembleMember.Reader: ...
     def to_dict(self) -> dict[str, Any]: ...
 
-class EnsembleMemberReader(EnsembleMember):
-    def as_builder(self) -> EnsembleMemberBuilder: ...
-
-class EnsembleMemberBuilder(EnsembleMember):
-    @property
-    def r(self) -> int: ...
-    @r.setter
-    def r(self, value: int) -> None: ...
-    @property
-    def i(self) -> int: ...
-    @i.setter
-    def i(self, value: int) -> None: ...
-    @property
-    def p(self) -> int: ...
-    @p.setter
-    def p(self, value: int) -> None: ...
-    @property
-    def f(self) -> int: ...
-    @f.setter
-    def f(self, value: int) -> None: ...
-    @staticmethod
-    def from_dict(dictionary: dict[str, Any]) -> EnsembleMemberBuilder: ...
-    def copy(self) -> EnsembleMemberBuilder: ...
-    def to_bytes(self) -> bytes: ...
-    def to_bytes_packed(self) -> bytes: ...
-    def to_segments(self) -> list[bytes]: ...
-    def as_reader(self) -> EnsembleMemberReader: ...
-    @staticmethod
-    def write(file: BufferedWriter) -> None: ...
-    @staticmethod
-    def write_packed(file: BufferedWriter) -> None: ...
+MetadataBuilder: TypeAlias = Metadata.Builder
+MetadataReader: TypeAlias = Metadata.Reader
 
 class Metadata:
-    class Supported(Protocol):
-        class CategoriesResult(Awaitable[CategoriesResult], Protocol):
-            types: Any
-
-        class CategoriesResultsBuilder(Protocol):
-            types: Any
-
-        class CategoriesCallContext(Protocol):
-            results: Metadata.Supported.CategoriesResultsBuilder
-
-        def categories(self) -> CategoriesResult: ...
+    class Supported:
         class CategoriesRequest(Protocol):
             def send(self) -> Metadata.Supported.CategoriesResult: ...
 
-        def categories_request(self) -> CategoriesRequest: ...
-        class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
-            values: Any
+        class CategoriesResult(Awaitable[CategoriesResult], Protocol):
+            types: Any
 
-        class SupportedvaluesResultsBuilder(Protocol):
-            values: Any
-
-        class SupportedvaluesCallContext(Protocol):
-            results: Metadata.Supported.SupportedvaluesResultsBuilder
-
-        def supportedValues(
-            self, typeId: str | None = None
-        ) -> SupportedvaluesResult: ...
         class SupportedvaluesRequest(Protocol):
             typeId: str
             def send(self) -> Metadata.Supported.SupportedvaluesResult: ...
 
-        def supportedValues_request(
-            self, typeId: str | None = None
-        ) -> SupportedvaluesRequest: ...
+        class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
+            values: Any
+
         @classmethod
         def _new_client(
             cls, server: Metadata.Supported.Server
-        ) -> Metadata.Supported: ...
-        class Server:
+        ) -> "Metadata.SupportedClient": ...
+        class Server(Protocol):
+            class CategoriesResultTuple(NamedTuple):
+                pass
+
+            class SupportedvaluesResultTuple(NamedTuple):
+                pass
+
+            class CategoriesCallContext(Protocol):
+                results: Metadata.Supported.CategoriesResult
+
+            class SupportedvaluesCallContext(Protocol):
+                results: Metadata.Supported.SupportedvaluesResult
+
             def categories(
-                self, _context: Metadata.Supported.CategoriesCallContext, **kwargs: Any
-            ) -> Awaitable[Any | None]: ...
+                self,
+                _context: Metadata.Supported.Server.CategoriesCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[Metadata.Supported.Server.CategoriesResultTuple | None]: ...
             def supportedValues(
                 self,
                 typeId: str,
-                _context: Metadata.Supported.SupportedvaluesCallContext,
+                _context: Metadata.Supported.Server.SupportedvaluesCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[Any | None]: ...
+            ) -> Awaitable[
+                Metadata.Supported.Server.SupportedvaluesResultTuple | None
+            ]: ...
+            def __enter__(self) -> Self: ...
+            def __exit__(self, *args: Any) -> None: ...
 
+    class SupportedClient(Protocol):
+        def categories(self) -> Metadata.Supported.CategoriesResult: ...
+        def supportedValues(
+            self, typeId: str | None = None
+        ) -> Metadata.Supported.SupportedvaluesResult: ...
+        def categories_request(self) -> Metadata.Supported.CategoriesRequest: ...
+        def supportedValues_request(
+            self, typeId: str | None = None
+        ) -> Metadata.Supported.SupportedvaluesRequest: ...
+
+    ValueBuilder: TypeAlias = Value.Builder
+    ValueReader: TypeAlias = Value.Reader
     class Value:
-        @property
-        def text(self) -> str: ...
-        @property
-        def float(self) -> float: ...
-        @property
-        def int(self) -> int: ...
-        @property
-        def bool(self) -> bool: ...
-        @property
-        def date(self) -> Date: ...
+        class Reader:
+            @property
+            def text(self) -> str: ...
+            @property
+            def float(self) -> float: ...
+            @property
+            def int(self) -> int: ...
+            @property
+            def bool(self) -> bool: ...
+            @property
+            def date(self) -> Date.Reader: ...
+            def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
+            def as_builder(self) -> Metadata.Value.Builder: ...
+
+        class Builder:
+            @property
+            def text(self) -> str: ...
+            @text.setter
+            def text(self, value: str) -> None: ...
+            @property
+            def float(self) -> float: ...
+            @float.setter
+            def float(self, value: float) -> None: ...
+            @property
+            def int(self) -> int: ...
+            @int.setter
+            def int(self, value: int) -> None: ...
+            @property
+            def bool(self) -> bool: ...
+            @bool.setter
+            def bool(self, value: bool) -> None: ...
+            @property
+            def date(self) -> Date.Builder: ...
+            @date.setter
+            def date(
+                self, value: Date.Builder | Date.Reader | dict[str, Any]
+            ) -> None: ...
+            def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
+            @staticmethod
+            def from_dict(dictionary: dict[str, Any]) -> Metadata.Value.Builder: ...
+            def init(self, name: Literal["date"]) -> Date.Builder: ...
+            def copy(self) -> Metadata.Value.Builder: ...
+            def to_bytes(self) -> bytes: ...
+            def to_bytes_packed(self) -> bytes: ...
+            def to_segments(self) -> list[bytes]: ...
+            def as_reader(self) -> Metadata.Value.Reader: ...
+            @staticmethod
+            def write(file: BufferedWriter) -> None: ...
+            @staticmethod
+            def write_packed(file: BufferedWriter) -> None: ...
+
         def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
         def init(self, name: Literal["date"]) -> Date: ...
         @staticmethod
@@ -206,13 +264,13 @@ class Metadata:
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Iterator[Metadata.ValueReader]: ...
+        ) -> Iterator[Metadata.Value.Reader]: ...
         @staticmethod
         def from_bytes_packed(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.ValueReader: ...
+        ) -> Metadata.Value.Reader: ...
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
@@ -221,88 +279,196 @@ class Metadata:
             float: float | None = None,
             int: int | None = None,
             bool: bool | None = None,
-            date: DateBuilder | dict[str, Any] | None = None,
-        ) -> Metadata.ValueBuilder: ...
+            date: Date.Builder | dict[str, Any] | None = None,
+        ) -> Metadata.Value.Builder: ...
         @staticmethod
         def read(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.ValueReader: ...
+        ) -> Metadata.Value.Reader: ...
         @staticmethod
         def read_packed(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.ValueReader: ...
+        ) -> Metadata.Value.Reader: ...
         def to_dict(self) -> dict[str, Any]: ...
 
-    class ValueReader(Metadata.Value):
-        @property
-        def date(self) -> DateReader: ...
-        def as_builder(self) -> Metadata.ValueBuilder: ...
-
-    class ValueBuilder(Metadata.Value):
-        @property
-        def text(self) -> str: ...
-        @text.setter
-        def text(self, value: str) -> None: ...
-        @property
-        def float(self) -> float: ...
-        @float.setter
-        def float(self, value: float) -> None: ...
-        @property
-        def int(self) -> int: ...
-        @int.setter
-        def int(self, value: int) -> None: ...
-        @property
-        def bool(self) -> bool: ...
-        @bool.setter
-        def bool(self, value: bool) -> None: ...
-        @property
-        def date(self) -> DateBuilder: ...
-        @date.setter
-        def date(
-            self, value: Date | DateBuilder | DateReader | dict[str, Any]
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Metadata.ValueBuilder: ...
-        def init(self, name: Literal["date"]) -> DateBuilder: ...
-        def copy(self) -> Metadata.ValueBuilder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Metadata.ValueReader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
-
+    EntryBuilder: TypeAlias = Entry.Builder
+    EntryReader: TypeAlias = Entry.Reader
     class Entry:
-        @property
-        def gcm(self) -> GCM: ...
-        @property
-        def rcm(self) -> RCM: ...
-        @property
-        def historical(self) -> None: ...
-        @property
-        def rcp(self) -> RCP: ...
-        @property
-        def ssp(self) -> SSP: ...
-        @property
-        def ensMem(self) -> EnsembleMember: ...
-        @property
-        def version(self) -> str: ...
-        @property
-        def start(self) -> Date: ...
-        @property
-        def end(self) -> Date: ...
-        @property
-        def co2(self) -> float: ...
-        @property
-        def picontrol(self) -> None: ...
-        @property
-        def description(self) -> str: ...
+        class Reader:
+            @property
+            def gcm(self) -> GCM: ...
+            @property
+            def rcm(self) -> RCM: ...
+            @property
+            def historical(self) -> None: ...
+            @property
+            def rcp(self) -> RCP: ...
+            @property
+            def ssp(self) -> SSP: ...
+            @property
+            def ensMem(self) -> EnsembleMember.Reader: ...
+            @property
+            def version(self) -> str: ...
+            @property
+            def start(self) -> Date.Reader: ...
+            @property
+            def end(self) -> Date.Reader: ...
+            @property
+            def co2(self) -> float: ...
+            @property
+            def picontrol(self) -> None: ...
+            @property
+            def description(self) -> str: ...
+            def which(
+                self,
+            ) -> Literal[
+                "gcm",
+                "rcm",
+                "historical",
+                "rcp",
+                "ssp",
+                "ensMem",
+                "version",
+                "start",
+                "end",
+                "co2",
+                "picontrol",
+                "description",
+            ]: ...
+            def as_builder(self) -> Metadata.Entry.Builder: ...
+
+        class Builder:
+            @property
+            def gcm(self) -> GCM: ...
+            @gcm.setter
+            def gcm(
+                self,
+                value: GCM
+                | Literal[
+                    "cccmaCanEsm2",
+                    "ichecEcEarth",
+                    "ipslIpslCm5AMr",
+                    "mirocMiroc5",
+                    "mpiMMpiEsmLr",
+                    "gfdlEsm4",
+                    "ipslCm6aLr",
+                    "mpiEsm12Hr",
+                    "mriEsm20",
+                    "ukesm10Ll",
+                    "gswp3W5E5",
+                    "mohcHadGem2Es",
+                ],
+            ) -> None: ...
+            @property
+            def rcm(self) -> RCM: ...
+            @rcm.setter
+            def rcm(
+                self,
+                value: RCM
+                | Literal[
+                    "clmcomCclm4817",
+                    "gericsRemo2015",
+                    "knmiRacmo22E",
+                    "smhiRca4",
+                    "clmcomBtuCclm4817",
+                    "mpiCscRemo2009",
+                    "uhohWrf361H",
+                ],
+            ) -> None: ...
+            @property
+            def historical(self) -> None: ...
+            @historical.setter
+            def historical(self, value: None) -> None: ...
+            @property
+            def rcp(self) -> RCP: ...
+            @rcp.setter
+            def rcp(
+                self,
+                value: RCP
+                | Literal[
+                    "rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"
+                ],
+            ) -> None: ...
+            @property
+            def ssp(self) -> SSP: ...
+            @ssp.setter
+            def ssp(
+                self, value: SSP | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]
+            ) -> None: ...
+            @property
+            def ensMem(self) -> EnsembleMember.Builder: ...
+            @ensMem.setter
+            def ensMem(
+                self,
+                value: EnsembleMember.Builder | EnsembleMember.Reader | dict[str, Any],
+            ) -> None: ...
+            @property
+            def version(self) -> str: ...
+            @version.setter
+            def version(self, value: str) -> None: ...
+            @property
+            def start(self) -> Date.Builder: ...
+            @start.setter
+            def start(
+                self, value: Date.Builder | Date.Reader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def end(self) -> Date.Builder: ...
+            @end.setter
+            def end(
+                self, value: Date.Builder | Date.Reader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def co2(self) -> float: ...
+            @co2.setter
+            def co2(self, value: float) -> None: ...
+            @property
+            def picontrol(self) -> None: ...
+            @picontrol.setter
+            def picontrol(self, value: None) -> None: ...
+            @property
+            def description(self) -> str: ...
+            @description.setter
+            def description(self, value: str) -> None: ...
+            def which(
+                self,
+            ) -> Literal[
+                "gcm",
+                "rcm",
+                "historical",
+                "rcp",
+                "ssp",
+                "ensMem",
+                "version",
+                "start",
+                "end",
+                "co2",
+                "picontrol",
+                "description",
+            ]: ...
+            @staticmethod
+            def from_dict(dictionary: dict[str, Any]) -> Metadata.Entry.Builder: ...
+            @overload
+            def init(self: Any, name: Literal["ensMem"]) -> EnsembleMember.Builder: ...
+            @overload
+            def init(self: Any, name: Literal["start"]) -> Date.Builder: ...
+            @overload
+            def init(self: Any, name: Literal["end"]) -> Date.Builder: ...
+            def init(self: Any, name: str, size: int = ...) -> Any: ...
+            def copy(self) -> Metadata.Entry.Builder: ...
+            def to_bytes(self) -> bytes: ...
+            def to_bytes_packed(self) -> bytes: ...
+            def to_segments(self) -> list[bytes]: ...
+            def as_reader(self) -> Metadata.Entry.Reader: ...
+            @staticmethod
+            def write(file: BufferedWriter) -> None: ...
+            @staticmethod
+            def write_packed(file: BufferedWriter) -> None: ...
+
         def which(
             self,
         ) -> Literal[
@@ -332,13 +498,13 @@ class Metadata:
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Iterator[Metadata.EntryReader]: ...
+        ) -> Iterator[Metadata.Entry.Reader]: ...
         @staticmethod
         def from_bytes_packed(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.EntryReader: ...
+        ) -> Metadata.Entry.Reader: ...
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
@@ -375,712 +541,646 @@ class Metadata:
             | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"]
             | None = None,
             ssp: SSP | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"] | None = None,
-            ensMem: EnsembleMemberBuilder | dict[str, Any] | None = None,
+            ensMem: EnsembleMember.Builder | dict[str, Any] | None = None,
             version: str | None = None,
-            start: DateBuilder | dict[str, Any] | None = None,
-            end: DateBuilder | dict[str, Any] | None = None,
+            start: Date.Builder | dict[str, Any] | None = None,
+            end: Date.Builder | dict[str, Any] | None = None,
             co2: float | None = None,
             picontrol: None | None = None,
             description: str | None = None,
-        ) -> Metadata.EntryBuilder: ...
+        ) -> Metadata.Entry.Builder: ...
         @staticmethod
         def read(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.EntryReader: ...
+        ) -> Metadata.Entry.Reader: ...
         @staticmethod
         def read_packed(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Metadata.EntryReader: ...
+        ) -> Metadata.Entry.Reader: ...
         def to_dict(self) -> dict[str, Any]: ...
 
-    class EntryReader(Metadata.Entry):
-        @property
-        def ensMem(self) -> EnsembleMemberReader: ...
-        @property
-        def start(self) -> DateReader: ...
-        @property
-        def end(self) -> DateReader: ...
-        def as_builder(self) -> Metadata.EntryBuilder: ...
+    class Information:
+        class ForoneRequest(Protocol):
+            entry: Metadata.Entry.Builder
+            @overload
+            def init(self, name: Literal["entry"]) -> Metadata.Entry.Builder: ...
+            @overload
+            def init(self, name: str, size: int = ...) -> Any: ...
+            def send(self) -> Metadata.Information.ForoneResult: ...
 
-    class EntryBuilder(Metadata.Entry):
+        class ForoneResult(Awaitable[ForoneResult], Protocol):
+            id: str
+            name: str
+            description: str
+
+        class ForallRequest(Protocol):
+            def send(self) -> Metadata.Information.ForallResult: ...
+
+        class ForallResult(Awaitable[ForallResult], Protocol):
+            all: Any
+
+        @classmethod
+        def _new_client(
+            cls, server: Metadata.Information.Server
+        ) -> "Metadata.InformationClient": ...
+        class Server(Protocol):
+            class ForoneResultTuple(NamedTuple):
+                id: str
+                name: str
+                description: str
+
+            class ForallResultTuple(NamedTuple):
+                pass
+
+            class ForoneCallContext(Protocol):
+                results: Metadata.Information.ForoneResult
+
+            class ForallCallContext(Protocol):
+                results: Metadata.Information.ForallResult
+
+            def forOne(
+                self,
+                entry: Metadata.Entry.Reader,
+                _context: Metadata.Information.Server.ForoneCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[Metadata.Information.Server.ForoneResultTuple | None]: ...
+            def forAll(
+                self,
+                _context: Metadata.Information.Server.ForallCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[Metadata.Information.Server.ForallResultTuple | None]: ...
+            def __enter__(self) -> Self: ...
+            def __exit__(self, *args: Any) -> None: ...
+
+    class InformationClient(Protocol):
+        def forOne(
+            self, entry: Metadata.Entry | dict[str, Any] | None = None
+        ) -> Metadata.Information.ForoneResult: ...
+        def forAll(self) -> Metadata.Information.ForallResult: ...
+        def forOne_request(
+            self, entry: Metadata.Entry.Builder | None = None
+        ) -> Metadata.Information.ForoneRequest: ...
+        def forAll_request(self) -> Metadata.Information.ForallRequest: ...
+
+    class Reader:
         @property
-        def gcm(self) -> GCM: ...
-        @gcm.setter
-        def gcm(
+        def entries(self) -> Sequence[Metadata.Entry.Reader]: ...
+        @property
+        def info(self) -> Metadata.InformationClient: ...
+        def as_builder(self) -> Metadata.Builder: ...
+
+    class Builder:
+        @property
+        def entries(self) -> Sequence[Metadata.Entry.Builder]: ...
+        @entries.setter
+        def entries(
             self,
-            value: GCM
-            | Literal[
-                "cccmaCanEsm2",
-                "ichecEcEarth",
-                "ipslIpslCm5AMr",
-                "mirocMiroc5",
-                "mpiMMpiEsmLr",
-                "gfdlEsm4",
-                "ipslCm6aLr",
-                "mpiEsm12Hr",
-                "mriEsm20",
-                "ukesm10Ll",
-                "gswp3W5E5",
-                "mohcHadGem2Es",
-            ],
+            value: Sequence[Metadata.Entry.Builder | Metadata.Entry.Reader]
+            | Sequence[dict[str, Any]],
         ) -> None: ...
         @property
-        def rcm(self) -> RCM: ...
-        @rcm.setter
-        def rcm(
-            self,
-            value: RCM
-            | Literal[
-                "clmcomCclm4817",
-                "gericsRemo2015",
-                "knmiRacmo22E",
-                "smhiRca4",
-                "clmcomBtuCclm4817",
-                "mpiCscRemo2009",
-                "uhohWrf361H",
-            ],
+        def info(self) -> Metadata.InformationClient: ...
+        @info.setter
+        def info(
+            self, value: Metadata.InformationClient | Metadata.Information.Server
         ) -> None: ...
-        @property
-        def historical(self) -> None: ...
-        @historical.setter
-        def historical(self, value: None) -> None: ...
-        @property
-        def rcp(self) -> RCP: ...
-        @rcp.setter
-        def rcp(
-            self,
-            value: RCP
-            | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"],
-        ) -> None: ...
-        @property
-        def ssp(self) -> SSP: ...
-        @ssp.setter
-        def ssp(
-            self, value: SSP | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]
-        ) -> None: ...
-        @property
-        def ensMem(self) -> EnsembleMemberBuilder: ...
-        @ensMem.setter
-        def ensMem(
-            self,
-            value: EnsembleMember
-            | EnsembleMemberBuilder
-            | EnsembleMemberReader
-            | dict[str, Any],
-        ) -> None: ...
-        @property
-        def version(self) -> str: ...
-        @version.setter
-        def version(self, value: str) -> None: ...
-        @property
-        def start(self) -> DateBuilder: ...
-        @start.setter
-        def start(
-            self, value: Date | DateBuilder | DateReader | dict[str, Any]
-        ) -> None: ...
-        @property
-        def end(self) -> DateBuilder: ...
-        @end.setter
-        def end(
-            self, value: Date | DateBuilder | DateReader | dict[str, Any]
-        ) -> None: ...
-        @property
-        def co2(self) -> float: ...
-        @co2.setter
-        def co2(self, value: float) -> None: ...
-        @property
-        def picontrol(self) -> None: ...
-        @picontrol.setter
-        def picontrol(self, value: None) -> None: ...
-        @property
-        def description(self) -> str: ...
-        @description.setter
-        def description(self, value: str) -> None: ...
         @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Metadata.EntryBuilder: ...
-        @overload
-        def init(self: Any, name: Literal["ensMem"]) -> EnsembleMemberBuilder: ...
-        @overload
-        def init(self: Any, name: Literal["start"]) -> DateBuilder: ...
-        @overload
-        def init(self: Any, name: Literal["end"]) -> DateBuilder: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        def copy(self) -> Metadata.EntryBuilder: ...
+        def from_dict(dictionary: dict[str, Any]) -> Metadata.Builder: ...
+        def init(
+            self, name: Literal["entries"], size: int = ...
+        ) -> Sequence[Metadata.Entry.Builder]: ...
+        def copy(self) -> Metadata.Builder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
         def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Metadata.EntryReader: ...
+        def as_reader(self) -> Metadata.Reader: ...
         @staticmethod
         def write(file: BufferedWriter) -> None: ...
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    class Information(Protocol):
-        class ForoneResult(Protocol):
-            id: str
-            name: str
-            description: str
-
-        class ForoneCallContext(Protocol):
-            results: Metadata.Information.ForoneResult
-
-        def forOne(
-            self, entry: Metadata.Entry | dict[str, Any] | None = None
-        ) -> Awaitable[Metadata.Information.ForoneResult]: ...
-        class ForoneRequest(Protocol):
-            entry: Metadata.EntryBuilder
-            def init(self, name: Literal["entry"]) -> Metadata.EntryBuilder: ...
-            def send(self) -> Awaitable[Metadata.Information.ForoneResult]: ...
-
-        def forOne_request(
-            self, entry: Metadata.Entry | dict[str, Any] | None = None
-        ) -> ForoneRequest: ...
-        class ForallResult(Awaitable[ForallResult], Protocol):
-            all: Any
-
-        class ForallResultsBuilder(Protocol):
-            all: Any
-
-        class ForallCallContext(Protocol):
-            results: Metadata.Information.ForallResultsBuilder
-
-        def forAll(self) -> ForallResult: ...
-        class ForallRequest(Protocol):
-            def send(self) -> Metadata.Information.ForallResult: ...
-
-        def forAll_request(self) -> ForallRequest: ...
-        @classmethod
-        def _new_client(
-            cls, server: Metadata.Information.Server
-        ) -> Metadata.Information: ...
-        class Server:
-            class ForoneResult(NamedTuple):
-                id: str
-                name: str
-                description: str
-
-            def forOne(
-                self,
-                entry: Metadata.EntryReader,
-                _context: Metadata.Information.ForoneCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[Metadata.Information.Server.ForoneResult | None]: ...
-            def forAll(
-                self, _context: Metadata.Information.ForallCallContext, **kwargs: Any
-            ) -> Awaitable[Any | None]: ...
-
-    @property
-    def entries(self) -> Sequence[Metadata.Entry]: ...
-    @property
-    def info(self) -> Metadata.Information: ...
     @staticmethod
     @contextmanager
     def from_bytes(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> Iterator[MetadataReader]: ...
+    ) -> Iterator[Metadata.Reader]: ...
     @staticmethod
     def from_bytes_packed(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetadataReader: ...
+    ) -> Metadata.Reader: ...
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        entries: Sequence[Metadata.EntryBuilder]
+        entries: Sequence[Metadata.Entry.Builder]
         | Sequence[dict[str, Any]]
         | None = None,
-        info: Metadata.Information | Metadata.Information.Server | None = None,
-    ) -> MetadataBuilder: ...
+        info: Metadata.InformationClient | Metadata.Information.Server | None = None,
+    ) -> Metadata.Builder: ...
     @staticmethod
     def read(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetadataReader: ...
+    ) -> Metadata.Reader: ...
     @staticmethod
     def read_packed(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetadataReader: ...
+    ) -> Metadata.Reader: ...
     def to_dict(self) -> dict[str, Any]: ...
 
-class MetadataReader(Metadata):
-    @property
-    def entries(self) -> Sequence[Metadata.EntryReader]: ...
-    def as_builder(self) -> MetadataBuilder: ...
-
-class MetadataBuilder(Metadata):
-    @property
-    def entries(self) -> Sequence[Metadata.EntryBuilder]: ...
-    @entries.setter
-    def entries(
-        self,
-        value: Sequence[Metadata.Entry | Metadata.EntryBuilder | Metadata.EntryReader]
-        | Sequence[dict[str, Any]],
-    ) -> None: ...
-    @property
-    def info(self) -> Metadata.Information: ...
-    @info.setter
-    def info(
-        self, value: Metadata.Information | Metadata.Information.Server
-    ) -> None: ...
-    @staticmethod
-    def from_dict(dictionary: dict[str, Any]) -> MetadataBuilder: ...
-    def init(
-        self, name: Literal["entries"], size: int = ...
-    ) -> Sequence[Metadata.EntryBuilder]: ...
-    def copy(self) -> MetadataBuilder: ...
-    def to_bytes(self) -> bytes: ...
-    def to_bytes_packed(self) -> bytes: ...
-    def to_segments(self) -> list[bytes]: ...
-    def as_reader(self) -> MetadataReader: ...
-    @staticmethod
-    def write(file: BufferedWriter) -> None: ...
-    @staticmethod
-    def write_packed(file: BufferedWriter) -> None: ...
-
-class Dataset(Identifiable, Persistent, Protocol):
-    class GetLocationsCallback(Protocol):
-        class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
-            locations: Sequence[LocationReader]
-
-        class NextlocationsResultsBuilder(Protocol):
-            locations: Sequence[LocationBuilder]
-
-        class NextlocationsCallContext(Protocol):
-            results: Dataset.GetLocationsCallback.NextlocationsResultsBuilder
-
-        def nextLocations(self, maxCount: int | None = None) -> NextlocationsResult: ...
+class Dataset:
+    class GetLocationsCallback:
         class NextlocationsRequest(Protocol):
             maxCount: int
             def send(self) -> Dataset.GetLocationsCallback.NextlocationsResult: ...
 
-        def nextLocations_request(
-            self, maxCount: int | None = None
-        ) -> NextlocationsRequest: ...
+        class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
+            locations: Sequence[Location.Builder | Location.Reader]
+
         @classmethod
         def _new_client(
             cls, server: Dataset.GetLocationsCallback.Server
-        ) -> Dataset.GetLocationsCallback: ...
-        class Server:
-            class MetadataResult(NamedTuple):
-                entries: Sequence[Metadata.Entry]
-                info: Metadata.Information
+        ) -> "Dataset.GetLocationsCallbackClient": ...
+        class Server(Protocol):
+            class NextlocationsResultTuple(NamedTuple):
+                locations: Sequence[Location]
 
-            class LocationResult(NamedTuple):
-                id: IdInformation
-                heightNN: float
-                latlon: LatLonCoord
-                timeSeries: TimeSeries
-                customData: Sequence[Location.KV]
+            class NextlocationsCallContext(Protocol):
+                results: Dataset.GetLocationsCallback.NextlocationsResult
 
             def nextLocations(
                 self,
                 maxCount: int,
-                _context: Dataset.GetLocationsCallback.NextlocationsCallContext,
+                _context: Dataset.GetLocationsCallback.Server.NextlocationsCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[Sequence[Location] | None]: ...
+            ) -> Awaitable[
+                Dataset.GetLocationsCallback.Server.NextlocationsResultTuple | None
+            ]: ...
+            def __enter__(self) -> Self: ...
+            def __exit__(self, *args: Any) -> None: ...
 
-    class MetadataResult(Protocol):
-        entries: Sequence[Metadata.EntryReader]
-        info: Metadata.Information
+    class GetLocationsCallbackClient(Protocol):
+        def nextLocations(
+            self, maxCount: int | None = None
+        ) -> Dataset.GetLocationsCallback.NextlocationsResult: ...
+        def nextLocations_request(
+            self, maxCount: int | None = None
+        ) -> Dataset.GetLocationsCallback.NextlocationsRequest: ...
 
-    class MetadataCallContext(Protocol):
-        results: Dataset.MetadataResult
-
-    def metadata(self) -> Awaitable[Dataset.MetadataResult]: ...
     class MetadataRequest(Protocol):
-        def send(self) -> Awaitable[Dataset.MetadataResult]: ...
+        def send(self) -> Dataset.MetadataResult: ...
 
-    def metadata_request(self) -> MetadataRequest: ...
-    class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
-        timeSeries: TimeSeries
+    class MetadataResult(Awaitable[MetadataResult], Protocol):
+        entries: Sequence[Metadata.Entry.Builder | Metadata.Entry.Reader]
+        info: Metadata.InformationClient
 
-    class ClosesttimeseriesatResultsBuilder(Protocol):
-        timeSeries: TimeSeries
-
-    class ClosesttimeseriesatCallContext(Protocol):
-        results: Dataset.ClosesttimeseriesatResultsBuilder
-
-    def closestTimeSeriesAt(
-        self, latlon: LatLonCoord | dict[str, Any] | None = None
-    ) -> ClosesttimeseriesatResult: ...
     class ClosesttimeseriesatRequest(Protocol):
-        latlon: LatLonCoordBuilder
-        def init(self, name: Literal["latlon"]) -> LatLonCoordBuilder: ...
+        latlon: LatLonCoord.Builder
+        @overload
+        def init(self, name: Literal["latlon"]) -> LatLonCoord.Builder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> Dataset.ClosesttimeseriesatResult: ...
 
-    def closestTimeSeriesAt_request(
-        self, latlon: LatLonCoord | dict[str, Any] | None = None
-    ) -> ClosesttimeseriesatRequest: ...
-    class TimeseriesatResult(Awaitable[TimeseriesatResult], Protocol):
-        timeSeries: TimeSeries
+    class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
+        timeSeries: TimeSeriesClient
 
-    class TimeseriesatResultsBuilder(Protocol):
-        timeSeries: TimeSeries
-
-    class TimeseriesatCallContext(Protocol):
-        results: Dataset.TimeseriesatResultsBuilder
-
-    def timeSeriesAt(self, locationId: str | None = None) -> TimeseriesatResult: ...
     class TimeseriesatRequest(Protocol):
         locationId: str
         def send(self) -> Dataset.TimeseriesatResult: ...
 
-    def timeSeriesAt_request(
-        self, locationId: str | None = None
-    ) -> TimeseriesatRequest: ...
-    class LocationsResult(Awaitable[LocationsResult], Protocol):
-        locations: Sequence[LocationReader]
+    class TimeseriesatResult(Awaitable[TimeseriesatResult], Protocol):
+        timeSeries: TimeSeriesClient
 
-    class LocationsResultsBuilder(Protocol):
-        locations: Sequence[LocationBuilder]
-
-    class LocationsCallContext(Protocol):
-        results: Dataset.LocationsResultsBuilder
-
-    def locations(self) -> LocationsResult: ...
     class LocationsRequest(Protocol):
         def send(self) -> Dataset.LocationsResult: ...
 
-    def locations_request(self) -> LocationsRequest: ...
-    class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
-        locationsCallback: Dataset.GetLocationsCallback
+    class LocationsResult(Awaitable[LocationsResult], Protocol):
+        locations: Sequence[Location.Builder | Location.Reader]
 
-    class StreamlocationsResultsBuilder(Protocol):
-        locationsCallback: Dataset.GetLocationsCallback
-
-    class StreamlocationsCallContext(Protocol):
-        results: Dataset.StreamlocationsResultsBuilder
-
-    def streamLocations(
-        self, startAfterLocationId: str | None = None
-    ) -> StreamlocationsResult: ...
     class StreamlocationsRequest(Protocol):
         startAfterLocationId: str
         def send(self) -> Dataset.StreamlocationsResult: ...
 
-    def streamLocations_request(
-        self, startAfterLocationId: str | None = None
-    ) -> StreamlocationsRequest: ...
+    class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
+        locationsCallback: Dataset.GetLocationsCallbackClient
+
     @classmethod
     def _new_client(
         cls, server: Dataset.Server | Identifiable.Server | Persistent.Server
-    ) -> Dataset: ...
+    ) -> "DatasetClient": ...
     class Server(Identifiable.Server, Persistent.Server):
-        class MetadataResult(NamedTuple):
+        class MetadataResultTuple(NamedTuple):
             entries: Sequence[Metadata.Entry]
-            info: Metadata.Information
+            info: Metadata.Information.Server
+
+        class ClosesttimeseriesatResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class TimeseriesatResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class LocationsResultTuple(NamedTuple):
+            locations: Sequence[Location]
+
+        class StreamlocationsResultTuple(NamedTuple):
+            locationsCallback: Dataset.GetLocationsCallback.Server
+
+        class MetadataCallContext(Protocol):
+            results: Dataset.MetadataResult
+
+        class ClosesttimeseriesatCallContext(Protocol):
+            results: Dataset.ClosesttimeseriesatResult
+
+        class TimeseriesatCallContext(Protocol):
+            results: Dataset.TimeseriesatResult
+
+        class LocationsCallContext(Protocol):
+            results: Dataset.LocationsResult
+
+        class StreamlocationsCallContext(Protocol):
+            results: Dataset.StreamlocationsResult
 
         def metadata(
-            self, _context: Dataset.MetadataCallContext, **kwargs: Any
-        ) -> Awaitable[Dataset.Server.MetadataResult | None]: ...
+            self, _context: Dataset.Server.MetadataCallContext, **kwargs: Any
+        ) -> Awaitable[Dataset.Server.MetadataResultTuple | None]: ...
         def closestTimeSeriesAt(
             self,
-            latlon: LatLonCoordReader,
-            _context: Dataset.ClosesttimeseriesatCallContext,
+            latlon: LatLonCoord.Reader,
+            _context: Dataset.Server.ClosesttimeseriesatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
+        ) -> Awaitable[
+            TimeSeries.Server | Dataset.Server.ClosesttimeseriesatResultTuple | None
+        ]: ...
         def timeSeriesAt(
             self,
             locationId: str,
-            _context: Dataset.TimeseriesatCallContext,
+            _context: Dataset.Server.TimeseriesatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
+        ) -> Awaitable[
+            TimeSeries.Server | Dataset.Server.TimeseriesatResultTuple | None
+        ]: ...
         def locations(
-            self, _context: Dataset.LocationsCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Location] | None]: ...
+            self, _context: Dataset.Server.LocationsCallContext, **kwargs: Any
+        ) -> Awaitable[Dataset.Server.LocationsResultTuple | None]: ...
         def streamLocations(
             self,
             startAfterLocationId: str,
-            _context: Dataset.StreamlocationsCallContext,
+            _context: Dataset.Server.StreamlocationsCallContext,
             **kwargs: Any,
         ) -> Awaitable[
-            Dataset.GetLocationsCallback | Dataset.GetLocationsCallback.Server | None
+            Dataset.GetLocationsCallback.Server
+            | Dataset.Server.StreamlocationsResultTuple
+            | None
         ]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
 
-class TimeSeries(Identifiable, Persistent, Protocol):
+class TimeSeries:
     class Resolution(Enum):
         daily = "daily"
         hourly = "hourly"
 
-    class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-        resolution: TimeSeries.Resolution
-
-    class ResolutionResultsBuilder(Protocol):
-        resolution: TimeSeries.Resolution
-
-    class ResolutionCallContext(Protocol):
-        results: TimeSeries.ResolutionResultsBuilder
-
-    def resolution(self) -> ResolutionResult: ...
     class ResolutionRequest(Protocol):
         def send(self) -> TimeSeries.ResolutionResult: ...
 
-    def resolution_request(self) -> ResolutionRequest: ...
-    class RangeResult(Awaitable[RangeResult], Protocol):
-        startDate: DateReader
-        endDate: DateReader
+    class ResolutionResult(Awaitable[ResolutionResult], Protocol):
+        resolution: TimeSeries.Resolution
 
-    class RangeResultsBuilder(Protocol):
-        startDate: DateBuilder
-        endDate: DateBuilder
-
-    class RangeCallContext(Protocol):
-        results: TimeSeries.RangeResultsBuilder
-
-    def range(self) -> RangeResult: ...
     class RangeRequest(Protocol):
         def send(self) -> TimeSeries.RangeResult: ...
 
-    def range_request(self) -> RangeRequest: ...
-    class HeaderResult(Awaitable[HeaderResult], Protocol):
-        header: Any
+    class RangeResult(Awaitable[RangeResult], Protocol):
+        startDate: Date.Builder | Date.Reader
+        endDate: Date.Builder | Date.Reader
 
-    class HeaderResultsBuilder(Protocol):
-        header: Any
-
-    class HeaderCallContext(Protocol):
-        results: TimeSeries.HeaderResultsBuilder
-
-    def header(self) -> HeaderResult: ...
     class HeaderRequest(Protocol):
         def send(self) -> TimeSeries.HeaderResult: ...
 
-    def header_request(self) -> HeaderRequest: ...
-    class DataResult(Awaitable[DataResult], Protocol):
-        data: Sequence[Sequence[float]]
+    class HeaderResult(Awaitable[HeaderResult], Protocol):
+        header: Any
 
-    class DataResultsBuilder(Protocol):
-        data: Sequence[Sequence[float]]
-
-    class DataCallContext(Protocol):
-        results: TimeSeries.DataResultsBuilder
-
-    def data(self) -> DataResult: ...
     class DataRequest(Protocol):
         def send(self) -> TimeSeries.DataResult: ...
 
-    def data_request(self) -> DataRequest: ...
-    class DatatResult(Awaitable[DatatResult], Protocol):
+    class DataResult(Awaitable[DataResult], Protocol):
         data: Sequence[Sequence[float]]
 
-    class DatatResultsBuilder(Protocol):
-        data: Sequence[Sequence[float]]
-
-    class DatatCallContext(Protocol):
-        results: TimeSeries.DatatResultsBuilder
-
-    def dataT(self) -> DatatResult: ...
     class DatatRequest(Protocol):
         def send(self) -> TimeSeries.DatatResult: ...
 
-    def dataT_request(self) -> DatatRequest: ...
+    class DatatResult(Awaitable[DatatResult], Protocol):
+        data: Sequence[Sequence[float]]
+
+    class SubrangeRequest(Protocol):
+        start: Date.Builder
+        end: Date.Builder
+        @overload
+        def init(self, name: Literal["start"]) -> Date.Builder: ...
+        @overload
+        def init(self, name: Literal["end"]) -> Date.Builder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> TimeSeries.SubrangeResult: ...
+
     class SubrangeResult(Awaitable[SubrangeResult], Protocol):
-        timeSeries: TimeSeries
+        timeSeries: TimeSeriesClient
 
-    class SubrangeResultsBuilder(Protocol):
-        timeSeries: TimeSeries
+    class SubheaderRequest(Protocol):
+        def send(self) -> TimeSeries.SubheaderResult: ...
 
-    class SubrangeCallContext(Protocol):
-        results: TimeSeries.SubrangeResultsBuilder
+    class SubheaderResult(Awaitable[SubheaderResult], Protocol):
+        timeSeries: TimeSeriesClient
 
+    class MetadataRequest(Protocol):
+        def send(self) -> TimeSeries.MetadataResult: ...
+
+    class MetadataResult(Awaitable[MetadataResult], Protocol):
+        entries: Sequence[Metadata.Entry.Builder | Metadata.Entry.Reader]
+        info: Metadata.InformationClient
+
+    class LocationRequest(Protocol):
+        def send(self) -> TimeSeries.LocationResult: ...
+
+    class LocationResult(Awaitable[LocationResult], Protocol):
+        id: IdInformation.Builder | IdInformation.Reader
+        heightNN: float
+        latlon: LatLonCoord.Builder | LatLonCoord.Reader
+        timeSeries: TimeSeriesClient
+        customData: Sequence[Location.KV.Builder | Location.KV.Reader]
+
+    @classmethod
+    def _new_client(
+        cls, server: TimeSeries.Server | Identifiable.Server | Persistent.Server
+    ) -> "TimeSeriesClient": ...
+    class Server(Identifiable.Server, Persistent.Server):
+        class ResolutionResultTuple(NamedTuple):
+            resolution: TimeSeries.Resolution
+
+        class RangeResultTuple(NamedTuple):
+            startDate: Date.Builder | Date.Reader
+            endDate: Date.Builder | Date.Reader
+
+        class HeaderResultTuple(NamedTuple):
+            pass
+
+        class DataResultTuple(NamedTuple):
+            data: Sequence[Sequence[float]]
+
+        class DatatResultTuple(NamedTuple):
+            data: Sequence[Sequence[float]]
+
+        class SubrangeResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class SubheaderResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class MetadataResultTuple(NamedTuple):
+            entries: Sequence[Metadata.Entry]
+            info: Metadata.Information.Server
+
+        class LocationResultTuple(NamedTuple):
+            id: IdInformation.Builder | IdInformation.Reader
+            heightNN: float
+            latlon: LatLonCoord.Builder | LatLonCoord.Reader
+            timeSeries: TimeSeries.Server
+            customData: Sequence[Location.KV]
+
+        class ResolutionCallContext(Protocol):
+            results: TimeSeries.ResolutionResult
+
+        class RangeCallContext(Protocol):
+            results: TimeSeries.RangeResult
+
+        class HeaderCallContext(Protocol):
+            results: TimeSeries.HeaderResult
+
+        class DataCallContext(Protocol):
+            results: TimeSeries.DataResult
+
+        class DatatCallContext(Protocol):
+            results: TimeSeries.DatatResult
+
+        class SubrangeCallContext(Protocol):
+            results: TimeSeries.SubrangeResult
+
+        class SubheaderCallContext(Protocol):
+            results: TimeSeries.SubheaderResult
+
+        class MetadataCallContext(Protocol):
+            results: TimeSeries.MetadataResult
+
+        class LocationCallContext(Protocol):
+            results: TimeSeries.LocationResult
+
+        def resolution(
+            self, _context: TimeSeries.Server.ResolutionCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.ResolutionResultTuple | None]: ...
+        def range(
+            self, _context: TimeSeries.Server.RangeCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.RangeResultTuple | None]: ...
+        def header(
+            self, _context: TimeSeries.Server.HeaderCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.HeaderResultTuple | None]: ...
+        def data(
+            self, _context: TimeSeries.Server.DataCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.DataResultTuple | None]: ...
+        def dataT(
+            self, _context: TimeSeries.Server.DatatCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.DatatResultTuple | None]: ...
+        def subrange(
+            self,
+            start: Date.Reader,
+            end: Date.Reader,
+            _context: TimeSeries.Server.SubrangeCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            TimeSeries.Server | TimeSeries.Server.SubrangeResultTuple | None
+        ]: ...
+        def subheader(
+            self, _context: TimeSeries.Server.SubheaderCallContext, **kwargs: Any
+        ) -> Awaitable[
+            TimeSeries.Server | TimeSeries.Server.SubheaderResultTuple | None
+        ]: ...
+        def metadata(
+            self, _context: TimeSeries.Server.MetadataCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.MetadataResultTuple | None]: ...
+        def location(
+            self, _context: TimeSeries.Server.LocationCallContext, **kwargs: Any
+        ) -> Awaitable[TimeSeries.Server.LocationResultTuple | None]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
+
+class TimeSeriesClient(IdentifiableClient, PersistentClient):
+    def resolution(self) -> TimeSeries.ResolutionResult: ...
+    def range(self) -> TimeSeries.RangeResult: ...
+    def header(self) -> TimeSeries.HeaderResult: ...
+    def data(self) -> TimeSeries.DataResult: ...
+    def dataT(self) -> TimeSeries.DatatResult: ...
     def subrange(
         self,
         start: Date | dict[str, Any] | None = None,
         end: Date | dict[str, Any] | None = None,
-    ) -> SubrangeResult: ...
-    class SubrangeRequest(Protocol):
-        start: DateBuilder
-        end: DateBuilder
-        @overload
-        def init(self, name: Literal["start"]) -> DateBuilder: ...
-        @overload
-        def init(self, name: Literal["end"]) -> DateBuilder: ...
-        def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> TimeSeries.SubrangeResult: ...
-
+    ) -> TimeSeries.SubrangeResult: ...
+    def subheader(self) -> TimeSeries.SubheaderResult: ...
+    def metadata(self) -> TimeSeries.MetadataResult: ...
+    def location(self) -> TimeSeries.LocationResult: ...
+    def resolution_request(self) -> TimeSeries.ResolutionRequest: ...
+    def range_request(self) -> TimeSeries.RangeRequest: ...
+    def header_request(self) -> TimeSeries.HeaderRequest: ...
+    def data_request(self) -> TimeSeries.DataRequest: ...
+    def dataT_request(self) -> TimeSeries.DatatRequest: ...
     def subrange_request(
-        self,
-        start: Date | dict[str, Any] | None = None,
-        end: Date | dict[str, Any] | None = None,
-    ) -> SubrangeRequest: ...
-    class SubheaderResult(Awaitable[SubheaderResult], Protocol):
-        timeSeries: TimeSeries
+        self, start: Date.Builder | None = None, end: Date.Builder | None = None
+    ) -> TimeSeries.SubrangeRequest: ...
+    def subheader_request(self) -> TimeSeries.SubheaderRequest: ...
+    def metadata_request(self) -> TimeSeries.MetadataRequest: ...
+    def location_request(self) -> TimeSeries.LocationRequest: ...
 
-    class SubheaderResultsBuilder(Protocol):
-        timeSeries: TimeSeries
-
-    class SubheaderCallContext(Protocol):
-        results: TimeSeries.SubheaderResultsBuilder
-
-    def subheader(self, elements: Any = None) -> SubheaderResult: ...
-    class SubheaderRequest(Protocol):
-        elements: Any
-        def send(self) -> TimeSeries.SubheaderResult: ...
-
-    def subheader_request(self) -> SubheaderRequest: ...
-    class MetadataResult(Protocol):
-        entries: Sequence[Metadata.EntryReader]
-        info: Metadata.Information
-
-    class MetadataCallContext(Protocol):
-        results: TimeSeries.MetadataResult
-
-    def metadata(self) -> Awaitable[TimeSeries.MetadataResult]: ...
-    class MetadataRequest(Protocol):
-        def send(self) -> Awaitable[TimeSeries.MetadataResult]: ...
-
-    def metadata_request(self) -> MetadataRequest: ...
-    class LocationResult(Protocol):
-        id: IdInformationReader
-        heightNN: float
-        latlon: LatLonCoordReader
-        timeSeries: TimeSeries
-        customData: Sequence[Location.KVReader]
-
-    class LocationCallContext(Protocol):
-        results: TimeSeries.LocationResult
-
-    def location(self) -> Awaitable[TimeSeries.LocationResult]: ...
-    class LocationRequest(Protocol):
-        def send(self) -> Awaitable[TimeSeries.LocationResult]: ...
-
-    def location_request(self) -> LocationRequest: ...
-    @classmethod
-    def _new_client(
-        cls, server: TimeSeries.Server | Identifiable.Server | Persistent.Server
-    ) -> TimeSeries: ...
-    class Server(Identifiable.Server, Persistent.Server):
-        class MetadataResult(NamedTuple):
-            entries: Sequence[Metadata.Entry]
-            info: Metadata.Information
-
-        class LocationResult(NamedTuple):
-            id: IdInformation
-            heightNN: float
-            latlon: LatLonCoord
-            timeSeries: TimeSeries
-            customData: Sequence[Location.KV]
-
-        def resolution(
-            self, _context: TimeSeries.ResolutionCallContext, **kwargs: Any
-        ) -> Awaitable[TimeSeries.Resolution | None]: ...
-        def range(
-            self, _context: TimeSeries.RangeCallContext, **kwargs: Any
-        ) -> Awaitable[tuple[Date, Date] | None]: ...
-        def header(
-            self, _context: TimeSeries.HeaderCallContext, **kwargs: Any
-        ) -> Awaitable[Any | None]: ...
-        def data(
-            self, _context: TimeSeries.DataCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Sequence[float]] | None]: ...
-        def dataT(
-            self, _context: TimeSeries.DatatCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[Sequence[float]] | None]: ...
-        def subrange(
-            self,
-            start: DateReader,
-            end: DateReader,
-            _context: TimeSeries.SubrangeCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
-        def subheader(
-            self,
-            elements: Any,
-            _context: TimeSeries.SubheaderCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
-        def metadata(
-            self, _context: TimeSeries.MetadataCallContext, **kwargs: Any
-        ) -> Awaitable[TimeSeries.Server.MetadataResult | None]: ...
-        def location(
-            self, _context: TimeSeries.LocationCallContext, **kwargs: Any
-        ) -> Awaitable[TimeSeries.Server.LocationResult | None]: ...
+LocationBuilder: TypeAlias = Location.Builder
+LocationReader: TypeAlias = Location.Reader
 
 class Location:
+    KVBuilder: TypeAlias = KV.Builder
+    KVReader: TypeAlias = KV.Reader
     class KV:
-        @property
-        def key(self) -> str: ...
-        @property
-        def value(self) -> Any: ...
+        class Reader:
+            @property
+            def key(self) -> str: ...
+            @property
+            def value(self) -> Any: ...
+            def as_builder(self) -> Location.KV.Builder: ...
+
+        class Builder:
+            @property
+            def key(self) -> str: ...
+            @key.setter
+            def key(self, value: str) -> None: ...
+            @property
+            def value(self) -> Any: ...
+            @value.setter
+            def value(self, value: Any) -> None: ...
+            @staticmethod
+            def from_dict(dictionary: dict[str, Any]) -> Location.KV.Builder: ...
+            def copy(self) -> Location.KV.Builder: ...
+            def to_bytes(self) -> bytes: ...
+            def to_bytes_packed(self) -> bytes: ...
+            def to_segments(self) -> list[bytes]: ...
+            def as_reader(self) -> Location.KV.Reader: ...
+            @staticmethod
+            def write(file: BufferedWriter) -> None: ...
+            @staticmethod
+            def write_packed(file: BufferedWriter) -> None: ...
+
         @staticmethod
         @contextmanager
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Iterator[Location.KVReader]: ...
+        ) -> Iterator[Location.KV.Reader]: ...
         @staticmethod
         def from_bytes_packed(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Location.KVReader: ...
+        ) -> Location.KV.Reader: ...
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             key: str | None = None,
             value: Any | None = None,
-        ) -> Location.KVBuilder: ...
+        ) -> Location.KV.Builder: ...
         @staticmethod
         def read(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Location.KVReader: ...
+        ) -> Location.KV.Reader: ...
         @staticmethod
         def read_packed(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Location.KVReader: ...
+        ) -> Location.KV.Reader: ...
         def to_dict(self) -> dict[str, Any]: ...
 
-    class KVReader(Location.KV):
-        def as_builder(self) -> Location.KVBuilder: ...
+    class Reader:
+        @property
+        def id(self) -> IdInformation.Reader: ...
+        @property
+        def heightNN(self) -> float: ...
+        @property
+        def latlon(self) -> LatLonCoord.Reader: ...
+        @property
+        def timeSeries(self) -> TimeSeriesClient: ...
+        @property
+        def customData(self) -> Sequence[Location.KV.Reader]: ...
+        def as_builder(self) -> Location.Builder: ...
 
-    class KVBuilder(Location.KV):
+    class Builder:
         @property
-        def key(self) -> str: ...
-        @key.setter
-        def key(self, value: str) -> None: ...
+        def id(self) -> IdInformation.Builder: ...
+        @id.setter
+        def id(
+            self, value: IdInformation.Builder | IdInformation.Reader | dict[str, Any]
+        ) -> None: ...
         @property
-        def value(self) -> Any: ...
-        @value.setter
-        def value(self, value: Any) -> None: ...
+        def heightNN(self) -> float: ...
+        @heightNN.setter
+        def heightNN(self, value: float) -> None: ...
+        @property
+        def latlon(self) -> LatLonCoord.Builder: ...
+        @latlon.setter
+        def latlon(
+            self, value: LatLonCoord.Builder | LatLonCoord.Reader | dict[str, Any]
+        ) -> None: ...
+        @property
+        def timeSeries(self) -> TimeSeriesClient: ...
+        @timeSeries.setter
+        def timeSeries(self, value: TimeSeriesClient | TimeSeries.Server) -> None: ...
+        @property
+        def customData(self) -> Sequence[Location.KV.Builder]: ...
+        @customData.setter
+        def customData(
+            self,
+            value: Sequence[Location.KV.Builder | Location.KV.Reader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Location.KVBuilder: ...
-        def copy(self) -> Location.KVBuilder: ...
+        def from_dict(dictionary: dict[str, Any]) -> Location.Builder: ...
+        @overload
+        def init(self: Any, name: Literal["id"]) -> IdInformation.Builder: ...
+        @overload
+        def init(self: Any, name: Literal["latlon"]) -> LatLonCoord.Builder: ...
+        @overload
+        def init(
+            self: Any, name: Literal["customData"], size: int = ...
+        ) -> Sequence[Location.KV.Builder]: ...
+        def init(self: Any, name: str, size: int = ...) -> Any: ...
+        def copy(self) -> Location.Builder: ...
         def to_bytes(self) -> bytes: ...
         def to_bytes_packed(self) -> bytes: ...
         def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Location.KVReader: ...
+        def as_reader(self) -> Location.Reader: ...
         @staticmethod
         def write(file: BufferedWriter) -> None: ...
         @staticmethod
         def write_packed(file: BufferedWriter) -> None: ...
 
-    @property
-    def id(self) -> IdInformation: ...
-    @property
-    def heightNN(self) -> float: ...
-    @property
-    def latlon(self) -> LatLonCoord: ...
-    @property
-    def timeSeries(self) -> TimeSeries: ...
-    @property
-    def customData(self) -> Sequence[Location.KV]: ...
     @overload
     def init(self, name: Literal["id"]) -> IdInformation: ...
     @overload
@@ -1092,108 +1192,98 @@ class Location:
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> Iterator[LocationReader]: ...
+    ) -> Iterator[Location.Reader]: ...
     @staticmethod
     def from_bytes_packed(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> LocationReader: ...
+    ) -> Location.Reader: ...
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        id: IdInformationBuilder | dict[str, Any] | None = None,
+        id: IdInformation.Builder | dict[str, Any] | None = None,
         heightNN: float | None = None,
-        latlon: LatLonCoordBuilder | dict[str, Any] | None = None,
-        timeSeries: TimeSeries | TimeSeries.Server | None = None,
-        customData: Sequence[Location.KVBuilder]
+        latlon: LatLonCoord.Builder | dict[str, Any] | None = None,
+        timeSeries: TimeSeriesClient | TimeSeries.Server | None = None,
+        customData: Sequence[Location.KV.Builder]
         | Sequence[dict[str, Any]]
         | None = None,
-    ) -> LocationBuilder: ...
+    ) -> Location.Builder: ...
     @staticmethod
     def read(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> LocationReader: ...
+    ) -> Location.Reader: ...
     @staticmethod
     def read_packed(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> LocationReader: ...
+    ) -> Location.Reader: ...
     def to_dict(self) -> dict[str, Any]: ...
 
-class LocationReader(Location):
-    @property
-    def id(self) -> IdInformationReader: ...
-    @property
-    def latlon(self) -> LatLonCoordReader: ...
-    @property
-    def customData(self) -> Sequence[Location.KVReader]: ...
-    def as_builder(self) -> LocationBuilder: ...
+class DatasetClient(IdentifiableClient, PersistentClient):
+    def metadata(self) -> Dataset.MetadataResult: ...
+    def closestTimeSeriesAt(
+        self, latlon: LatLonCoord | dict[str, Any] | None = None
+    ) -> Dataset.ClosesttimeseriesatResult: ...
+    def timeSeriesAt(
+        self, locationId: str | None = None
+    ) -> Dataset.TimeseriesatResult: ...
+    def locations(self) -> Dataset.LocationsResult: ...
+    def streamLocations(
+        self, startAfterLocationId: str | None = None
+    ) -> Dataset.StreamlocationsResult: ...
+    def metadata_request(self) -> Dataset.MetadataRequest: ...
+    def closestTimeSeriesAt_request(
+        self, latlon: LatLonCoord.Builder | None = None
+    ) -> Dataset.ClosesttimeseriesatRequest: ...
+    def timeSeriesAt_request(
+        self, locationId: str | None = None
+    ) -> Dataset.TimeseriesatRequest: ...
+    def locations_request(self) -> Dataset.LocationsRequest: ...
+    def streamLocations_request(
+        self, startAfterLocationId: str | None = None
+    ) -> Dataset.StreamlocationsRequest: ...
 
-class LocationBuilder(Location):
-    @property
-    def id(self) -> IdInformationBuilder: ...
-    @id.setter
-    def id(
-        self,
-        value: IdInformation
-        | IdInformationBuilder
-        | IdInformationReader
-        | dict[str, Any],
-    ) -> None: ...
-    @property
-    def heightNN(self) -> float: ...
-    @heightNN.setter
-    def heightNN(self, value: float) -> None: ...
-    @property
-    def latlon(self) -> LatLonCoordBuilder: ...
-    @latlon.setter
-    def latlon(
-        self,
-        value: LatLonCoord | LatLonCoordBuilder | LatLonCoordReader | dict[str, Any],
-    ) -> None: ...
-    @property
-    def timeSeries(self) -> TimeSeries: ...
-    @timeSeries.setter
-    def timeSeries(self, value: TimeSeries | TimeSeries.Server) -> None: ...
-    @property
-    def customData(self) -> Sequence[Location.KVBuilder]: ...
-    @customData.setter
-    def customData(
-        self,
-        value: Sequence[Location.KV | Location.KVBuilder | Location.KVReader]
-        | Sequence[dict[str, Any]],
-    ) -> None: ...
-    @staticmethod
-    def from_dict(dictionary: dict[str, Any]) -> LocationBuilder: ...
-    @overload
-    def init(self: Any, name: Literal["id"]) -> IdInformationBuilder: ...
-    @overload
-    def init(self: Any, name: Literal["latlon"]) -> LatLonCoordBuilder: ...
-    @overload
-    def init(
-        self: Any, name: Literal["customData"], size: int = ...
-    ) -> Sequence[Location.KVBuilder]: ...
-    def init(self: Any, name: str, size: int = ...) -> Any: ...
-    def copy(self) -> LocationBuilder: ...
-    def to_bytes(self) -> bytes: ...
-    def to_bytes_packed(self) -> bytes: ...
-    def to_segments(self) -> list[bytes]: ...
-    def as_reader(self) -> LocationReader: ...
-    @staticmethod
-    def write(file: BufferedWriter) -> None: ...
-    @staticmethod
-    def write_packed(file: BufferedWriter) -> None: ...
+MetaPlusDataBuilder: TypeAlias = MetaPlusData.Builder
+MetaPlusDataReader: TypeAlias = MetaPlusData.Reader
 
 class MetaPlusData:
-    @property
-    def meta(self) -> Metadata: ...
-    @property
-    def data(self) -> Dataset: ...
+    class Reader:
+        @property
+        def meta(self) -> Metadata.Reader: ...
+        @property
+        def data(self) -> DatasetClient: ...
+        def as_builder(self) -> MetaPlusData.Builder: ...
+
+    class Builder:
+        @property
+        def meta(self) -> Metadata.Builder: ...
+        @meta.setter
+        def meta(
+            self, value: Metadata.Builder | Metadata.Reader | dict[str, Any]
+        ) -> None: ...
+        @property
+        def data(self) -> DatasetClient: ...
+        @data.setter
+        def data(self, value: DatasetClient | Dataset.Server) -> None: ...
+        @staticmethod
+        def from_dict(dictionary: dict[str, Any]) -> MetaPlusData.Builder: ...
+        def init(self, name: Literal["meta"]) -> Metadata.Builder: ...
+        def copy(self) -> MetaPlusData.Builder: ...
+        def to_bytes(self) -> bytes: ...
+        def to_bytes_packed(self) -> bytes: ...
+        def to_segments(self) -> list[bytes]: ...
+        def as_reader(self) -> MetaPlusData.Reader: ...
+        @staticmethod
+        def write(file: BufferedWriter) -> None: ...
+        @staticmethod
+        def write_packed(file: BufferedWriter) -> None: ...
+
     def init(self, name: Literal["meta"]) -> Metadata: ...
     @staticmethod
     @contextmanager
@@ -1201,62 +1291,33 @@ class MetaPlusData:
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> Iterator[MetaPlusDataReader]: ...
+    ) -> Iterator[MetaPlusData.Reader]: ...
     @staticmethod
     def from_bytes_packed(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetaPlusDataReader: ...
+    ) -> MetaPlusData.Reader: ...
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        meta: MetadataBuilder | dict[str, Any] | None = None,
-        data: Dataset | Dataset.Server | None = None,
-    ) -> MetaPlusDataBuilder: ...
+        meta: Metadata.Builder | dict[str, Any] | None = None,
+        data: DatasetClient | Dataset.Server | None = None,
+    ) -> MetaPlusData.Builder: ...
     @staticmethod
     def read(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetaPlusDataReader: ...
+    ) -> MetaPlusData.Reader: ...
     @staticmethod
     def read_packed(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> MetaPlusDataReader: ...
+    ) -> MetaPlusData.Reader: ...
     def to_dict(self) -> dict[str, Any]: ...
-
-class MetaPlusDataReader(MetaPlusData):
-    @property
-    def meta(self) -> MetadataReader: ...
-    def as_builder(self) -> MetaPlusDataBuilder: ...
-
-class MetaPlusDataBuilder(MetaPlusData):
-    @property
-    def meta(self) -> MetadataBuilder: ...
-    @meta.setter
-    def meta(
-        self, value: Metadata | MetadataBuilder | MetadataReader | dict[str, Any]
-    ) -> None: ...
-    @property
-    def data(self) -> Dataset: ...
-    @data.setter
-    def data(self, value: Dataset | Dataset.Server) -> None: ...
-    @staticmethod
-    def from_dict(dictionary: dict[str, Any]) -> MetaPlusDataBuilder: ...
-    def init(self, name: Literal["meta"]) -> MetadataBuilder: ...
-    def copy(self) -> MetaPlusDataBuilder: ...
-    def to_bytes(self) -> bytes: ...
-    def to_bytes_packed(self) -> bytes: ...
-    def to_segments(self) -> list[bytes]: ...
-    def as_reader(self) -> MetaPlusDataReader: ...
-    @staticmethod
-    def write(file: BufferedWriter) -> None: ...
-    @staticmethod
-    def write_packed(file: BufferedWriter) -> None: ...
 
 class Element(Enum):
     tmin = "tmin"
@@ -1279,19 +1340,81 @@ class Element(Enum):
     surfaceDownwellingLongwaveRadiation = "surfaceDownwellingLongwaveRadiation"
     potET = "potET"
 
+TimeSeriesDataBuilder: TypeAlias = TimeSeriesData.Builder
+TimeSeriesDataReader: TypeAlias = TimeSeriesData.Reader
+
 class TimeSeriesData:
-    @property
-    def data(self) -> Sequence[Sequence[float]]: ...
-    @property
-    def isTransposed(self) -> bool: ...
-    @property
-    def header(self) -> Sequence[Element]: ...
-    @property
-    def startDate(self) -> Date: ...
-    @property
-    def endDate(self) -> Date: ...
-    @property
-    def resolution(self) -> TimeSeries.Resolution: ...
+    class Reader:
+        @property
+        def data(self) -> Sequence[Sequence[float]]: ...
+        @property
+        def isTransposed(self) -> bool: ...
+        @property
+        def header(self) -> Sequence[Element]: ...
+        @property
+        def startDate(self) -> Date.Reader: ...
+        @property
+        def endDate(self) -> Date.Reader: ...
+        @property
+        def resolution(self) -> TimeSeries.Resolution: ...
+        def as_builder(self) -> TimeSeriesData.Builder: ...
+
+    class Builder:
+        @property
+        def data(self) -> Sequence[Sequence[float]]: ...
+        @data.setter
+        def data(self, value: Sequence[Sequence[float]]) -> None: ...
+        @property
+        def isTransposed(self) -> bool: ...
+        @isTransposed.setter
+        def isTransposed(self, value: bool) -> None: ...
+        @property
+        def header(self) -> Sequence[Element]: ...
+        @header.setter
+        def header(self, value: Sequence[Element]) -> None: ...
+        @property
+        def startDate(self) -> Date.Builder: ...
+        @startDate.setter
+        def startDate(
+            self, value: Date.Builder | Date.Reader | dict[str, Any]
+        ) -> None: ...
+        @property
+        def endDate(self) -> Date.Builder: ...
+        @endDate.setter
+        def endDate(
+            self, value: Date.Builder | Date.Reader | dict[str, Any]
+        ) -> None: ...
+        @property
+        def resolution(self) -> TimeSeries.Resolution: ...
+        @resolution.setter
+        def resolution(
+            self, value: TimeSeries.Resolution | Literal["daily", "hourly"]
+        ) -> None: ...
+        @staticmethod
+        def from_dict(dictionary: dict[str, Any]) -> TimeSeriesData.Builder: ...
+        @overload
+        def init(self: Any, name: Literal["startDate"]) -> Date.Builder: ...
+        @overload
+        def init(self: Any, name: Literal["endDate"]) -> Date.Builder: ...
+        @overload
+        def init(
+            self: Any, name: Literal["data"], size: int = ...
+        ) -> Sequence[float]: ...
+        @overload
+        def init(
+            self: Any, name: Literal["header"], size: int = ...
+        ) -> Sequence[Element]: ...
+        def init(self: Any, name: str, size: int = ...) -> Any: ...
+        def copy(self) -> TimeSeriesData.Builder: ...
+        def to_bytes(self) -> bytes: ...
+        def to_bytes_packed(self) -> bytes: ...
+        def to_segments(self) -> list[bytes]: ...
+        def as_reader(self) -> TimeSeriesData.Reader: ...
+        @staticmethod
+        def write(file: BufferedWriter) -> None: ...
+        @staticmethod
+        def write_packed(file: BufferedWriter) -> None: ...
+
     @overload
     def init(self, name: Literal["startDate"]) -> Date: ...
     @overload
@@ -1303,13 +1426,13 @@ class TimeSeriesData:
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> Iterator[TimeSeriesDataReader]: ...
+    ) -> Iterator[TimeSeriesData.Reader]: ...
     @staticmethod
     def from_bytes_packed(
         data: bytes,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> TimeSeriesDataReader: ...
+    ) -> TimeSeriesData.Reader: ...
     @staticmethod
     def new_message(
         num_first_segment_words: int | None = None,
@@ -1317,290 +1440,304 @@ class TimeSeriesData:
         data: Sequence[Sequence[float]] | None = None,
         isTransposed: bool | None = None,
         header: Sequence[Element] | None = None,
-        startDate: DateBuilder | dict[str, Any] | None = None,
-        endDate: DateBuilder | dict[str, Any] | None = None,
+        startDate: Date.Builder | dict[str, Any] | None = None,
+        endDate: Date.Builder | dict[str, Any] | None = None,
         resolution: TimeSeries.Resolution | Literal["daily", "hourly"] | None = None,
-    ) -> TimeSeriesDataBuilder: ...
+    ) -> TimeSeriesData.Builder: ...
     @staticmethod
     def read(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> TimeSeriesDataReader: ...
+    ) -> TimeSeriesData.Reader: ...
     @staticmethod
     def read_packed(
         file: BinaryIO,
         traversal_limit_in_words: int | None = ...,
         nesting_limit: int | None = ...,
-    ) -> TimeSeriesDataReader: ...
+    ) -> TimeSeriesData.Reader: ...
     def to_dict(self) -> dict[str, Any]: ...
 
-class TimeSeriesDataReader(TimeSeriesData):
-    @property
-    def startDate(self) -> DateReader: ...
-    @property
-    def endDate(self) -> DateReader: ...
-    def as_builder(self) -> TimeSeriesDataBuilder: ...
-
-class TimeSeriesDataBuilder(TimeSeriesData):
-    @property
-    def data(self) -> Sequence[Sequence[float]]: ...
-    @data.setter
-    def data(self, value: Sequence[Sequence[float]]) -> None: ...
-    @property
-    def isTransposed(self) -> bool: ...
-    @isTransposed.setter
-    def isTransposed(self, value: bool) -> None: ...
-    @property
-    def header(self) -> Sequence[Element]: ...
-    @header.setter
-    def header(self, value: Sequence[Element]) -> None: ...
-    @property
-    def startDate(self) -> DateBuilder: ...
-    @startDate.setter
-    def startDate(
-        self, value: Date | DateBuilder | DateReader | dict[str, Any]
-    ) -> None: ...
-    @property
-    def endDate(self) -> DateBuilder: ...
-    @endDate.setter
-    def endDate(
-        self, value: Date | DateBuilder | DateReader | dict[str, Any]
-    ) -> None: ...
-    @property
-    def resolution(self) -> TimeSeries.Resolution: ...
-    @resolution.setter
-    def resolution(
-        self, value: TimeSeries.Resolution | Literal["daily", "hourly"]
-    ) -> None: ...
-    @staticmethod
-    def from_dict(dictionary: dict[str, Any]) -> TimeSeriesDataBuilder: ...
-    @overload
-    def init(self: Any, name: Literal["startDate"]) -> DateBuilder: ...
-    @overload
-    def init(self: Any, name: Literal["endDate"]) -> DateBuilder: ...
-    @overload
-    def init(self: Any, name: Literal["data"], size: int = ...) -> Sequence[float]: ...
-    @overload
-    def init(
-        self: Any, name: Literal["header"], size: int = ...
-    ) -> Sequence[Element]: ...
-    def init(self: Any, name: str, size: int = ...) -> Any: ...
-    def copy(self) -> TimeSeriesDataBuilder: ...
-    def to_bytes(self) -> bytes: ...
-    def to_bytes_packed(self) -> bytes: ...
-    def to_segments(self) -> list[bytes]: ...
-    def as_reader(self) -> TimeSeriesDataReader: ...
-    @staticmethod
-    def write(file: BufferedWriter) -> None: ...
-    @staticmethod
-    def write_packed(file: BufferedWriter) -> None: ...
-
-class Service(Identifiable, Persistent, Protocol):
-    class GetavailabledatasetsResult(Awaitable[GetavailabledatasetsResult], Protocol):
-        datasets: Sequence[MetaPlusDataReader]
-
-    class GetavailabledatasetsResultsBuilder(Protocol):
-        datasets: Sequence[MetaPlusDataBuilder]
-
-    class GetavailabledatasetsCallContext(Protocol):
-        results: Service.GetavailabledatasetsResultsBuilder
-
-    def getAvailableDatasets(self) -> GetavailabledatasetsResult: ...
+class Service:
     class GetavailabledatasetsRequest(Protocol):
         def send(self) -> Service.GetavailabledatasetsResult: ...
 
-    def getAvailableDatasets_request(self) -> GetavailabledatasetsRequest: ...
+    class GetavailabledatasetsResult(Awaitable[GetavailabledatasetsResult], Protocol):
+        datasets: Sequence[MetaPlusData.Builder | MetaPlusData.Reader]
+
+    class GetdatasetsforRequest(Protocol):
+        template: Metadata.Builder
+        @overload
+        def init(self, name: Literal["template"]) -> Metadata.Builder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> Service.GetdatasetsforResult: ...
+
     class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
         datasets: Sequence[Dataset]
 
-    class GetdatasetsforResultsBuilder(Protocol):
-        datasets: Sequence[Dataset]
-
-    class GetdatasetsforCallContext(Protocol):
-        results: Service.GetdatasetsforResultsBuilder
-
-    def getDatasetsFor(
-        self, template: Metadata | dict[str, Any] | None = None
-    ) -> GetdatasetsforResult: ...
-    class GetdatasetsforRequest(Protocol):
-        template: MetadataBuilder
-        def init(self, name: Literal["template"]) -> MetadataBuilder: ...
-        def send(self) -> Service.GetdatasetsforResult: ...
-
-    def getDatasetsFor_request(
-        self, template: Metadata | dict[str, Any] | None = None
-    ) -> GetdatasetsforRequest: ...
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Persistent.Server
-    ) -> Service: ...
+    ) -> "ServiceClient": ...
     class Server(Identifiable.Server, Persistent.Server):
+        class GetavailabledatasetsResultTuple(NamedTuple):
+            datasets: Sequence[MetaPlusData]
+
+        class GetdatasetsforResultTuple(NamedTuple):
+            datasets: Sequence[Dataset]
+
+        class GetavailabledatasetsCallContext(Protocol):
+            results: Service.GetavailabledatasetsResult
+
+        class GetdatasetsforCallContext(Protocol):
+            results: Service.GetdatasetsforResult
+
         def getAvailableDatasets(
-            self, _context: Service.GetavailabledatasetsCallContext, **kwargs: Any
-        ) -> Awaitable[Sequence[MetaPlusData] | None]: ...
+            self,
+            _context: Service.Server.GetavailabledatasetsCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[Service.Server.GetavailabledatasetsResultTuple | None]: ...
         def getDatasetsFor(
             self,
-            template: MetadataReader,
-            _context: Service.GetdatasetsforCallContext,
+            template: Metadata.Reader,
+            _context: Service.Server.GetdatasetsforCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Sequence[Dataset] | None]: ...
+        ) -> Awaitable[Service.Server.GetdatasetsforResultTuple | None]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
 
-class CSVTimeSeriesFactory(Identifiable, Protocol):
+class ServiceClient(IdentifiableClient, PersistentClient):
+    def getAvailableDatasets(self) -> Service.GetavailabledatasetsResult: ...
+    def getDatasetsFor(
+        self, template: Metadata | dict[str, Any] | None = None
+    ) -> Service.GetdatasetsforResult: ...
+    def getAvailableDatasets_request(self) -> Service.GetavailabledatasetsRequest: ...
+    def getDatasetsFor_request(
+        self, template: Metadata.Builder | None = None
+    ) -> Service.GetdatasetsforRequest: ...
+
+class CSVTimeSeriesFactory:
+    CSVConfigBuilder: TypeAlias = CSVConfig.Builder
+    CSVConfigReader: TypeAlias = CSVConfig.Reader
     class CSVConfig:
-        @property
-        def sep(self) -> str: ...
-        @property
-        def headerMap(self) -> Sequence[Pair]: ...
-        @property
-        def skipLinesToHeader(self) -> int: ...
-        @property
-        def skipLinesFromHeaderToData(self) -> int: ...
+        class Reader:
+            @property
+            def sep(self) -> str: ...
+            @property
+            def headerMap(self) -> Sequence[Pair.Reader]: ...
+            @property
+            def skipLinesToHeader(self) -> int: ...
+            @property
+            def skipLinesFromHeaderToData(self) -> int: ...
+            def as_builder(self) -> CSVTimeSeriesFactory.CSVConfig.Builder: ...
+
+        class Builder:
+            @property
+            def sep(self) -> str: ...
+            @sep.setter
+            def sep(self, value: str) -> None: ...
+            @property
+            def headerMap(self) -> Sequence[Pair.Builder]: ...
+            @headerMap.setter
+            def headerMap(
+                self,
+                value: Sequence[Pair.Builder | Pair.Reader] | Sequence[dict[str, Any]],
+            ) -> None: ...
+            @property
+            def skipLinesToHeader(self) -> int: ...
+            @skipLinesToHeader.setter
+            def skipLinesToHeader(self, value: int) -> None: ...
+            @property
+            def skipLinesFromHeaderToData(self) -> int: ...
+            @skipLinesFromHeaderToData.setter
+            def skipLinesFromHeaderToData(self, value: int) -> None: ...
+            @staticmethod
+            def from_dict(
+                dictionary: dict[str, Any],
+            ) -> CSVTimeSeriesFactory.CSVConfig.Builder: ...
+            def init(
+                self, name: Literal["headerMap"], size: int = ...
+            ) -> Sequence[Pair.Builder]: ...
+            def copy(self) -> CSVTimeSeriesFactory.CSVConfig.Builder: ...
+            def to_bytes(self) -> bytes: ...
+            def to_bytes_packed(self) -> bytes: ...
+            def to_segments(self) -> list[bytes]: ...
+            def as_reader(self) -> CSVTimeSeriesFactory.CSVConfig.Reader: ...
+            @staticmethod
+            def write(file: BufferedWriter) -> None: ...
+            @staticmethod
+            def write_packed(file: BufferedWriter) -> None: ...
+
         @staticmethod
         @contextmanager
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Iterator[CSVTimeSeriesFactory.CSVConfigReader]: ...
+        ) -> Iterator[CSVTimeSeriesFactory.CSVConfig.Reader]: ...
         @staticmethod
         def from_bytes_packed(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> CSVTimeSeriesFactory.CSVConfigReader: ...
+        ) -> CSVTimeSeriesFactory.CSVConfig.Reader: ...
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             sep: str | None = None,
-            headerMap: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
+            headerMap: Sequence[Pair.Builder] | Sequence[dict[str, Any]] | None = None,
             skipLinesToHeader: int | None = None,
             skipLinesFromHeaderToData: int | None = None,
-        ) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
+        ) -> CSVTimeSeriesFactory.CSVConfig.Builder: ...
         @staticmethod
         def read(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> CSVTimeSeriesFactory.CSVConfigReader: ...
+        ) -> CSVTimeSeriesFactory.CSVConfig.Reader: ...
         @staticmethod
         def read_packed(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> CSVTimeSeriesFactory.CSVConfigReader: ...
+        ) -> CSVTimeSeriesFactory.CSVConfig.Reader: ...
         def to_dict(self) -> dict[str, Any]: ...
 
-    class CSVConfigReader(CSVTimeSeriesFactory.CSVConfig):
-        @property
-        def headerMap(self) -> Sequence[PairReader]: ...
-        def as_builder(self) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
-
-    class CSVConfigBuilder(CSVTimeSeriesFactory.CSVConfig):
-        @property
-        def sep(self) -> str: ...
-        @sep.setter
-        def sep(self, value: str) -> None: ...
-        @property
-        def headerMap(self) -> Sequence[PairBuilder]: ...
-        @headerMap.setter
-        def headerMap(
-            self,
-            value: Sequence[Pair | PairBuilder | PairReader] | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @property
-        def skipLinesToHeader(self) -> int: ...
-        @skipLinesToHeader.setter
-        def skipLinesToHeader(self, value: int) -> None: ...
-        @property
-        def skipLinesFromHeaderToData(self) -> int: ...
-        @skipLinesFromHeaderToData.setter
-        def skipLinesFromHeaderToData(self, value: int) -> None: ...
-        @staticmethod
-        def from_dict(
-            dictionary: dict[str, Any],
-        ) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
+    class CreateRequest(Protocol):
+        csvData: str
+        config: CSVTimeSeriesFactory.CSVConfig.Builder
+        @overload
         def init(
-            self, name: Literal["headerMap"], size: int = ...
-        ) -> Sequence[PairBuilder]: ...
-        def copy(self) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> CSVTimeSeriesFactory.CSVConfigReader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+            self, name: Literal["config"]
+        ) -> CSVTimeSeriesFactory.CSVConfig.Builder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> CSVTimeSeriesFactory.CreateResult: ...
 
     class CreateResult(Awaitable[CreateResult], Protocol):
-        timeseries: TimeSeries
+        timeseries: TimeSeriesClient
         error: str
 
-    class CreateResultsBuilder(Protocol):
-        timeseries: TimeSeries
-        error: str
+    @classmethod
+    def _new_client(
+        cls, server: CSVTimeSeriesFactory.Server | Identifiable.Server
+    ) -> "CSVTimeSeriesFactoryClient": ...
+    class Server(Identifiable.Server):
+        class CreateResultTuple(NamedTuple):
+            timeseries: TimeSeries.Server
+            error: str
 
-    class CreateCallContext(Protocol):
-        results: CSVTimeSeriesFactory.CreateResultsBuilder
+        class CreateCallContext(Protocol):
+            results: CSVTimeSeriesFactory.CreateResult
 
+        def create(
+            self,
+            csvData: str,
+            config: CSVTimeSeriesFactory.CSVConfig.Reader,
+            _context: CSVTimeSeriesFactory.Server.CreateCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[CSVTimeSeriesFactory.Server.CreateResultTuple | None]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
+
+class CSVTimeSeriesFactoryClient(IdentifiableClient):
     def create(
         self,
         csvData: str | None = None,
         config: CSVTimeSeriesFactory.CSVConfig | dict[str, Any] | None = None,
-    ) -> CreateResult: ...
-    class CreateRequest(Protocol):
-        csvData: str
-        config: CSVTimeSeriesFactory.CSVConfigBuilder
-        def init(
-            self, name: Literal["config"]
-        ) -> CSVTimeSeriesFactory.CSVConfigBuilder: ...
-        def send(self) -> CSVTimeSeriesFactory.CreateResult: ...
-
+    ) -> CSVTimeSeriesFactory.CreateResult: ...
     def create_request(
         self,
         csvData: str | None = None,
-        config: CSVTimeSeriesFactory.CSVConfig | dict[str, Any] | None = None,
-    ) -> CreateRequest: ...
-    @classmethod
-    def _new_client(
-        cls, server: CSVTimeSeriesFactory.Server | Identifiable.Server
-    ) -> CSVTimeSeriesFactory: ...
-    class Server(Identifiable.Server):
-        def create(
-            self,
-            csvData: str,
-            config: CSVTimeSeriesFactory.CSVConfigReader,
-            _context: CSVTimeSeriesFactory.CreateCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[tuple[TimeSeries, str] | None]: ...
+        config: CSVTimeSeriesFactory.CSVConfig.Builder | None = None,
+    ) -> CSVTimeSeriesFactory.CreateRequest: ...
 
-class AlterTimeSeriesWrapper(TimeSeries, Protocol):
+class AlterTimeSeriesWrapper:
+    AlteredBuilder: TypeAlias = Altered.Builder
+    AlteredReader: TypeAlias = Altered.Reader
     class Altered:
         class AlterType(Enum):
             add = "add"
             mul = "mul"
 
-        @property
-        def element(self) -> Element: ...
-        @property
-        def value(self) -> float: ...
-        @property
-        def type(self) -> AlterTimeSeriesWrapper.Altered.AlterType: ...
+        class Reader:
+            @property
+            def element(self) -> Element: ...
+            @property
+            def value(self) -> float: ...
+            @property
+            def type(self) -> AlterTimeSeriesWrapper.Altered.AlterType: ...
+            def as_builder(self) -> AlterTimeSeriesWrapper.Altered.Builder: ...
+
+        class Builder:
+            @property
+            def element(self) -> Element: ...
+            @element.setter
+            def element(
+                self,
+                value: Element
+                | Literal[
+                    "tmin",
+                    "tavg",
+                    "tmax",
+                    "precip",
+                    "globrad",
+                    "wind",
+                    "sunhours",
+                    "cloudamount",
+                    "relhumid",
+                    "airpress",
+                    "vaporpress",
+                    "co2",
+                    "o3",
+                    "et0",
+                    "dewpointTemp",
+                    "specificHumidity",
+                    "snowfallFlux",
+                    "surfaceDownwellingLongwaveRadiation",
+                    "potET",
+                ],
+            ) -> None: ...
+            @property
+            def value(self) -> float: ...
+            @value.setter
+            def value(self, value: float) -> None: ...
+            @property
+            def type(self) -> AlterTimeSeriesWrapper.Altered.AlterType: ...
+            @type.setter
+            def type(
+                self,
+                value: AlterTimeSeriesWrapper.Altered.AlterType | Literal["add", "mul"],
+            ) -> None: ...
+            @staticmethod
+            def from_dict(
+                dictionary: dict[str, Any],
+            ) -> AlterTimeSeriesWrapper.Altered.Builder: ...
+            def copy(self) -> AlterTimeSeriesWrapper.Altered.Builder: ...
+            def to_bytes(self) -> bytes: ...
+            def to_bytes_packed(self) -> bytes: ...
+            def to_segments(self) -> list[bytes]: ...
+            def as_reader(self) -> AlterTimeSeriesWrapper.Altered.Reader: ...
+            @staticmethod
+            def write(file: BufferedWriter) -> None: ...
+            @staticmethod
+            def write_packed(file: BufferedWriter) -> None: ...
+
         @staticmethod
         @contextmanager
         def from_bytes(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> Iterator[AlterTimeSeriesWrapper.AlteredReader]: ...
+        ) -> Iterator[AlterTimeSeriesWrapper.Altered.Reader]: ...
         @staticmethod
         def from_bytes_packed(
             data: bytes,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> AlterTimeSeriesWrapper.AlteredReader: ...
+        ) -> AlterTimeSeriesWrapper.Altered.Reader: ...
         @staticmethod
         def new_message(
             num_first_segment_words: int | None = None,
@@ -1632,31 +1769,139 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
             type: AlterTimeSeriesWrapper.Altered.AlterType
             | Literal["add", "mul"]
             | None = None,
-        ) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
+        ) -> AlterTimeSeriesWrapper.Altered.Builder: ...
         @staticmethod
         def read(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> AlterTimeSeriesWrapper.AlteredReader: ...
+        ) -> AlterTimeSeriesWrapper.Altered.Reader: ...
         @staticmethod
         def read_packed(
             file: BinaryIO,
             traversal_limit_in_words: int | None = ...,
             nesting_limit: int | None = ...,
-        ) -> AlterTimeSeriesWrapper.AlteredReader: ...
+        ) -> AlterTimeSeriesWrapper.Altered.Reader: ...
         def to_dict(self) -> dict[str, Any]: ...
 
-    class AlteredReader(AlterTimeSeriesWrapper.Altered):
-        def as_builder(self) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
+    class WrappedtimeseriesRequest(Protocol):
+        def send(self) -> AlterTimeSeriesWrapper.WrappedtimeseriesResult: ...
 
-    class AlteredBuilder(AlterTimeSeriesWrapper.Altered):
-        @property
-        def element(self) -> Element: ...
-        @element.setter
-        def element(
+    class WrappedtimeseriesResult(Awaitable[WrappedtimeseriesResult], Protocol):
+        timeSeries: TimeSeriesClient
+
+    class AlteredelementsRequest(Protocol):
+        def send(self) -> AlterTimeSeriesWrapper.AlteredelementsResult: ...
+
+    class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
+        list: Sequence[
+            AlterTimeSeriesWrapper.Altered.Builder
+            | AlterTimeSeriesWrapper.Altered.Reader
+        ]
+
+    class AlterRequest(Protocol):
+        desc: AlterTimeSeriesWrapper.Altered.Builder
+        asNewTimeSeries: bool
+        @overload
+        def init(
+            self, name: Literal["desc"]
+        ) -> AlterTimeSeriesWrapper.Altered.Builder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
+        def send(self) -> AlterTimeSeriesWrapper.AlterResult: ...
+
+    class AlterResult(Awaitable[AlterResult], Protocol):
+        timeSeries: TimeSeriesClient
+
+    class RemoveRequest(Protocol):
+        alteredElement: (
+            Element
+            | Literal[
+                "tmin",
+                "tavg",
+                "tmax",
+                "precip",
+                "globrad",
+                "wind",
+                "sunhours",
+                "cloudamount",
+                "relhumid",
+                "airpress",
+                "vaporpress",
+                "co2",
+                "o3",
+                "et0",
+                "dewpointTemp",
+                "specificHumidity",
+                "snowfallFlux",
+                "surfaceDownwellingLongwaveRadiation",
+                "potET",
+            ]
+        )
+        def send(self) -> None: ...
+
+    class ReplacewrappedtimeseriesRequest(Protocol):
+        timeSeries: TimeSeries | TimeSeries.Server
+        def send(self) -> None: ...
+
+    @classmethod
+    def _new_client(
+        cls,
+        server: AlterTimeSeriesWrapper.Server
+        | Identifiable.Server
+        | Persistent.Server
+        | TimeSeries.Server,
+    ) -> "AlterTimeSeriesWrapperClient": ...
+    class Server(TimeSeries.Server):
+        class WrappedtimeseriesResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class AlteredelementsResultTuple(NamedTuple):
+            list: Sequence[AlterTimeSeriesWrapper.Altered]
+
+        class AlterResultTuple(NamedTuple):
+            timeSeries: TimeSeries.Server
+
+        class WrappedtimeseriesCallContext(Protocol):
+            results: AlterTimeSeriesWrapper.WrappedtimeseriesResult
+
+        class AlteredelementsCallContext(Protocol):
+            results: AlterTimeSeriesWrapper.AlteredelementsResult
+
+        class AlterCallContext(Protocol):
+            results: AlterTimeSeriesWrapper.AlterResult
+
+        class RemoveCallContext(Protocol): ...
+        class ReplacewrappedtimeseriesCallContext(Protocol): ...
+
+        def wrappedTimeSeries(
             self,
-            value: Element
+            _context: AlterTimeSeriesWrapper.Server.WrappedtimeseriesCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            TimeSeries.Server
+            | AlterTimeSeriesWrapper.Server.WrappedtimeseriesResultTuple
+            | None
+        ]: ...
+        def alteredElements(
+            self,
+            _context: AlterTimeSeriesWrapper.Server.AlteredelementsCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            AlterTimeSeriesWrapper.Server.AlteredelementsResultTuple | None
+        ]: ...
+        def alter(
+            self,
+            desc: AlterTimeSeriesWrapper.Altered.Reader,
+            asNewTimeSeries: bool,
+            _context: AlterTimeSeriesWrapper.Server.AlterCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            TimeSeries.Server | AlterTimeSeriesWrapper.Server.AlterResultTuple | None
+        ]: ...
+        def remove(
+            self,
+            alteredElement: Element
             | Literal[
                 "tmin",
                 "tavg",
@@ -1678,92 +1923,26 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
                 "surfaceDownwellingLongwaveRadiation",
                 "potET",
             ],
-        ) -> None: ...
-        @property
-        def value(self) -> float: ...
-        @value.setter
-        def value(self, value: float) -> None: ...
-        @property
-        def type(self) -> AlterTimeSeriesWrapper.Altered.AlterType: ...
-        @type.setter
-        def type(
+            _context: AlterTimeSeriesWrapper.Server.RemoveCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[None]: ...
+        def replaceWrappedTimeSeries(
             self,
-            value: AlterTimeSeriesWrapper.Altered.AlterType | Literal["add", "mul"],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(
-            dictionary: dict[str, Any],
-        ) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
-        def copy(self) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> AlterTimeSeriesWrapper.AlteredReader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+            timeSeries: TimeSeries,
+            _context: AlterTimeSeriesWrapper.Server.ReplacewrappedtimeseriesCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[None]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
 
-    class WrappedtimeseriesResult(Awaitable[WrappedtimeseriesResult], Protocol):
-        timeSeries: TimeSeries
-
-    class WrappedtimeseriesResultsBuilder(Protocol):
-        timeSeries: TimeSeries
-
-    class WrappedtimeseriesCallContext(Protocol):
-        results: AlterTimeSeriesWrapper.WrappedtimeseriesResultsBuilder
-
-    def wrappedTimeSeries(self) -> WrappedtimeseriesResult: ...
-    class WrappedtimeseriesRequest(Protocol):
-        def send(self) -> AlterTimeSeriesWrapper.WrappedtimeseriesResult: ...
-
-    def wrappedTimeSeries_request(self) -> WrappedtimeseriesRequest: ...
-    class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
-        list: Sequence[AlterTimeSeriesWrapper.AlteredReader]
-
-    class AlteredelementsResultsBuilder(Protocol):
-        list: Sequence[AlterTimeSeriesWrapper.AlteredBuilder]
-
-    class AlteredelementsCallContext(Protocol):
-        results: AlterTimeSeriesWrapper.AlteredelementsResultsBuilder
-
-    def alteredElements(self) -> AlteredelementsResult: ...
-    class AlteredelementsRequest(Protocol):
-        def send(self) -> AlterTimeSeriesWrapper.AlteredelementsResult: ...
-
-    def alteredElements_request(self) -> AlteredelementsRequest: ...
-    class AlterResult(Awaitable[AlterResult], Protocol):
-        timeSeries: TimeSeries
-
-    class AlterResultsBuilder(Protocol):
-        timeSeries: TimeSeries
-
-    class AlterCallContext(Protocol):
-        results: AlterTimeSeriesWrapper.AlterResultsBuilder
-
+class AlterTimeSeriesWrapperClient(TimeSeriesClient):
+    def wrappedTimeSeries(self) -> AlterTimeSeriesWrapper.WrappedtimeseriesResult: ...
+    def alteredElements(self) -> AlterTimeSeriesWrapper.AlteredelementsResult: ...
     def alter(
         self,
         desc: AlterTimeSeriesWrapper.Altered | dict[str, Any] | None = None,
         asNewTimeSeries: bool | None = None,
-    ) -> AlterResult: ...
-    class AlterRequest(Protocol):
-        desc: AlterTimeSeriesWrapper.AlteredBuilder
-        asNewTimeSeries: bool
-        def init(
-            self, name: Literal["desc"]
-        ) -> AlterTimeSeriesWrapper.AlteredBuilder: ...
-        def send(self) -> AlterTimeSeriesWrapper.AlterResult: ...
-
-    def alter_request(
-        self,
-        desc: AlterTimeSeriesWrapper.Altered | dict[str, Any] | None = None,
-        asNewTimeSeries: bool | None = None,
-    ) -> AlterRequest: ...
-    class RemoveResultsBuilder(Protocol): ...
-
-    class RemoveCallContext(Protocol):
-        results: AlterTimeSeriesWrapper.RemoveResultsBuilder
-
+    ) -> AlterTimeSeriesWrapper.AlterResult: ...
     def remove(
         self,
         alteredElement: Element
@@ -1789,115 +1968,87 @@ class AlterTimeSeriesWrapper(TimeSeries, Protocol):
             "potET",
         ]
         | None = None,
-    ) -> Awaitable[None]: ...
-    class RemoveRequest(Protocol):
-        alteredElement: Element
-        def send(self) -> Awaitable[None]: ...
-
-    def remove_request(
-        self, alteredElement: Element | None = None
-    ) -> RemoveRequest: ...
-    class ReplacewrappedtimeseriesResultsBuilder(Protocol): ...
-
-    class ReplacewrappedtimeseriesCallContext(Protocol):
-        results: AlterTimeSeriesWrapper.ReplacewrappedtimeseriesResultsBuilder
-
+    ) -> None: ...
     def replaceWrappedTimeSeries(
-        self, timeSeries: TimeSeries | None = None
-    ) -> Awaitable[None]: ...
-    class ReplacewrappedtimeseriesRequest(Protocol):
-        timeSeries: TimeSeries
-        def send(self) -> Awaitable[None]: ...
-
+        self, timeSeries: TimeSeries | TimeSeries.Server | None = None
+    ) -> None: ...
+    def wrappedTimeSeries_request(
+        self,
+    ) -> AlterTimeSeriesWrapper.WrappedtimeseriesRequest: ...
+    def alteredElements_request(
+        self,
+    ) -> AlterTimeSeriesWrapper.AlteredelementsRequest: ...
+    def alter_request(
+        self,
+        desc: AlterTimeSeriesWrapper.Altered.Builder | None = None,
+        asNewTimeSeries: bool | None = None,
+    ) -> AlterTimeSeriesWrapper.AlterRequest: ...
+    def remove_request(
+        self,
+        alteredElement: Element
+        | Literal[
+            "tmin",
+            "tavg",
+            "tmax",
+            "precip",
+            "globrad",
+            "wind",
+            "sunhours",
+            "cloudamount",
+            "relhumid",
+            "airpress",
+            "vaporpress",
+            "co2",
+            "o3",
+            "et0",
+            "dewpointTemp",
+            "specificHumidity",
+            "snowfallFlux",
+            "surfaceDownwellingLongwaveRadiation",
+            "potET",
+        ]
+        | None = None,
+    ) -> AlterTimeSeriesWrapper.RemoveRequest: ...
     def replaceWrappedTimeSeries_request(
-        self, timeSeries: TimeSeries | None = None
-    ) -> ReplacewrappedtimeseriesRequest: ...
-    @classmethod
-    def _new_client(
-        cls,
-        server: AlterTimeSeriesWrapper.Server
-        | Identifiable.Server
-        | Persistent.Server
-        | TimeSeries.Server,
-    ) -> AlterTimeSeriesWrapper: ...
-    class Server(TimeSeries.Server):
-        def wrappedTimeSeries(
-            self,
-            _context: AlterTimeSeriesWrapper.WrappedtimeseriesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
-        def alteredElements(
-            self,
-            _context: AlterTimeSeriesWrapper.AlteredelementsCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Sequence[AlterTimeSeriesWrapper.Altered] | None]: ...
-        def alter(
-            self,
-            desc: AlterTimeSeriesWrapper.AlteredReader,
-            asNewTimeSeries: bool,
-            _context: AlterTimeSeriesWrapper.AlterCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[TimeSeries | TimeSeries.Server | None]: ...
-        def remove(
-            self,
-            alteredElement: Element
-            | Literal[
-                "tmin",
-                "tavg",
-                "tmax",
-                "precip",
-                "globrad",
-                "wind",
-                "sunhours",
-                "cloudamount",
-                "relhumid",
-                "airpress",
-                "vaporpress",
-                "co2",
-                "o3",
-                "et0",
-                "dewpointTemp",
-                "specificHumidity",
-                "snowfallFlux",
-                "surfaceDownwellingLongwaveRadiation",
-                "potET",
-            ],
-            _context: AlterTimeSeriesWrapper.RemoveCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[None | None]: ...
-        def replaceWrappedTimeSeries(
-            self,
-            timeSeries: TimeSeries,
-            _context: AlterTimeSeriesWrapper.ReplacewrappedtimeseriesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[None | None]: ...
+        self, timeSeries: TimeSeries | TimeSeries.Server | None = None
+    ) -> AlterTimeSeriesWrapper.ReplacewrappedtimeseriesRequest: ...
 
-class AlterTimeSeriesWrapperFactory(Identifiable, Protocol):
-    class WrapResult(Awaitable[WrapResult], Protocol):
-        wrapper: AlterTimeSeriesWrapper
-
-    class WrapResultsBuilder(Protocol):
-        wrapper: AlterTimeSeriesWrapper
-
-    class WrapCallContext(Protocol):
-        results: AlterTimeSeriesWrapperFactory.WrapResultsBuilder
-
-    def wrap(self, timeSeries: TimeSeries | None = None) -> WrapResult: ...
+class AlterTimeSeriesWrapperFactory:
     class WrapRequest(Protocol):
-        timeSeries: TimeSeries
+        timeSeries: TimeSeries | TimeSeries.Server
         def send(self) -> AlterTimeSeriesWrapperFactory.WrapResult: ...
 
-    def wrap_request(self, timeSeries: TimeSeries | None = None) -> WrapRequest: ...
+    class WrapResult(Awaitable[WrapResult], Protocol):
+        wrapper: AlterTimeSeriesWrapperClient
+
     @classmethod
     def _new_client(
         cls, server: AlterTimeSeriesWrapperFactory.Server | Identifiable.Server
-    ) -> AlterTimeSeriesWrapperFactory: ...
+    ) -> "AlterTimeSeriesWrapperFactoryClient": ...
     class Server(Identifiable.Server):
+        class WrapResultTuple(NamedTuple):
+            wrapper: AlterTimeSeriesWrapper.Server
+
+        class WrapCallContext(Protocol):
+            results: AlterTimeSeriesWrapperFactory.WrapResult
+
         def wrap(
             self,
             timeSeries: TimeSeries,
-            _context: AlterTimeSeriesWrapperFactory.WrapCallContext,
+            _context: AlterTimeSeriesWrapperFactory.Server.WrapCallContext,
             **kwargs: Any,
         ) -> Awaitable[
-            AlterTimeSeriesWrapper | AlterTimeSeriesWrapper.Server | None
+            AlterTimeSeriesWrapper.Server
+            | AlterTimeSeriesWrapperFactory.Server.WrapResultTuple
+            | None
         ]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
+
+class AlterTimeSeriesWrapperFactoryClient(IdentifiableClient):
+    def wrap(
+        self, timeSeries: TimeSeries | TimeSeries.Server | None = None
+    ) -> AlterTimeSeriesWrapperFactory.WrapResult: ...
+    def wrap_request(
+        self, timeSeries: TimeSeries | TimeSeries.Server | None = None
+    ) -> AlterTimeSeriesWrapperFactory.WrapRequest: ...

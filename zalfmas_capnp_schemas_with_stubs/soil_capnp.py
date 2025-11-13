@@ -14,28 +14,31 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Layer = capnp.load(module_file, imports=import_path).Layer
-LayerBuilder = Layer
-LayerReader = Layer
 Query = capnp.load(module_file, imports=import_path).Query
-QueryBuilder = Query
-QueryReader = Query
 ProfileData = capnp.load(module_file, imports=import_path).ProfileData
-ProfileDataBuilder = ProfileData
-ProfileDataReader = ProfileData
 Profile = capnp.load(module_file, imports=import_path).Profile
-ProfileBuilder = Profile
-ProfileReader = Profile
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
 
-Profile.Server.DataResult = NamedTuple(
-    "DataResult", [("layers", object), ("percentageOfArea", object)]
+Profile.Server.DataResultTuple = NamedTuple(
+    "DataResultTuple", [("layers", object), ("percentageOfArea", object)]
 )
-Profile.Server.GeolocationResult = NamedTuple(
-    "GeolocationResult", [("lat", object), ("lon", object)]
+Profile.Server.GeolocationResultTuple = NamedTuple(
+    "GeolocationResultTuple", [("lat", object), ("lon", object)]
 )
-Service.Server.CheckavailableparametersResult = NamedTuple(
-    "CheckavailableparametersResult",
+Service.Server.CheckavailableparametersResultTuple = NamedTuple(
+    "CheckavailableparametersResultTuple",
     [("failed", object), ("mandatory", object), ("optional", object)],
+)
+Service.Server.ClosestprofilesatResultTuple = NamedTuple(
+    "ClosestprofilesatResultTuple", [("profiles", object)]
+)
+Service.Server.GetallavailableparametersResultTuple = NamedTuple(
+    "GetallavailableparametersResultTuple",
+    [("mandatory", object), ("optional", object)],
+)
+Service.Server.StreamallprofilesResultTuple = NamedTuple(
+    "StreamallprofilesResultTuple", [("allProfiles", object)]
+)
+Service.Stream.Server.NextprofilesResultTuple = NamedTuple(
+    "NextprofilesResultTuple", [("profiles", object)]
 )

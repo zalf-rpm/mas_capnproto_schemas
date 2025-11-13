@@ -2,74 +2,83 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator
-from typing import Any, Protocol
+from collections.abc import Awaitable
+from typing import Any, NamedTuple, Protocol, Self
 
-from .common_capnp import Identifiable
-from .persistence_capnp import Persistent
-from .registry_capnp import Registry
+from .common_capnp import Identifiable, IdentifiableClient
+from .persistence_capnp import Persistent, PersistentClient
+from .registry_capnp import Registry, RegistryClient
 
-class Crop(Identifiable, Persistent, Protocol):
-    class ParametersResult(Awaitable[ParametersResult], Protocol):
-        params: Any
-
-    class ParametersResultsBuilder(Protocol):
-        params: Any
-
-    class ParametersCallContext(Protocol):
-        results: Crop.ParametersResultsBuilder
-
-    def parameters(self) -> ParametersResult: ...
+class Crop:
     class ParametersRequest(Protocol):
         def send(self) -> Crop.ParametersResult: ...
 
-    def parameters_request(self) -> ParametersRequest: ...
-    class CultivarResult(Awaitable[CultivarResult], Protocol):
-        info: Any
+    class ParametersResult(Awaitable[ParametersResult], Protocol):
+        params: Any
 
-    class CultivarResultsBuilder(Protocol):
-        info: Any
-
-    class CultivarCallContext(Protocol):
-        results: Crop.CultivarResultsBuilder
-
-    def cultivar(self) -> CultivarResult: ...
     class CultivarRequest(Protocol):
         def send(self) -> Crop.CultivarResult: ...
 
-    def cultivar_request(self) -> CultivarRequest: ...
-    class SpeciesResult(Awaitable[SpeciesResult], Protocol):
+    class CultivarResult(Awaitable[CultivarResult], Protocol):
         info: Any
 
-    class SpeciesResultsBuilder(Protocol):
-        info: Any
-
-    class SpeciesCallContext(Protocol):
-        results: Crop.SpeciesResultsBuilder
-
-    def species(self) -> SpeciesResult: ...
     class SpeciesRequest(Protocol):
         def send(self) -> Crop.SpeciesResult: ...
 
-    def species_request(self) -> SpeciesRequest: ...
+    class SpeciesResult(Awaitable[SpeciesResult], Protocol):
+        info: Any
+
     @classmethod
     def _new_client(
         cls, server: Crop.Server | Identifiable.Server | Persistent.Server
-    ) -> Crop: ...
+    ) -> "CropClient": ...
     class Server(Identifiable.Server, Persistent.Server):
-        def parameters(
-            self, _context: Crop.ParametersCallContext, **kwargs: Any
-        ) -> Awaitable[Any | None]: ...
-        def cultivar(
-            self, _context: Crop.CultivarCallContext, **kwargs: Any
-        ) -> Awaitable[Any | None]: ...
-        def species(
-            self, _context: Crop.SpeciesCallContext, **kwargs: Any
-        ) -> Awaitable[Any | None]: ...
+        class ParametersResultTuple(NamedTuple):
+            params: Any
 
-class Service(Registry, Protocol):
+        class CultivarResultTuple(NamedTuple):
+            pass
+
+        class SpeciesResultTuple(NamedTuple):
+            pass
+
+        class ParametersCallContext(Protocol):
+            results: Crop.ParametersResult
+
+        class CultivarCallContext(Protocol):
+            results: Crop.CultivarResult
+
+        class SpeciesCallContext(Protocol):
+            results: Crop.SpeciesResult
+
+        def parameters(
+            self, _context: Crop.Server.ParametersCallContext, **kwargs: Any
+        ) -> Awaitable[Crop.Server.ParametersResultTuple | None]: ...
+        def cultivar(
+            self, _context: Crop.Server.CultivarCallContext, **kwargs: Any
+        ) -> Awaitable[Crop.Server.CultivarResultTuple | None]: ...
+        def species(
+            self, _context: Crop.Server.SpeciesCallContext, **kwargs: Any
+        ) -> Awaitable[Crop.Server.SpeciesResultTuple | None]: ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
+
+class CropClient(IdentifiableClient, PersistentClient):
+    def parameters(self) -> Crop.ParametersResult: ...
+    def cultivar(self) -> Crop.CultivarResult: ...
+    def species(self) -> Crop.SpeciesResult: ...
+    def parameters_request(self) -> Crop.ParametersRequest: ...
+    def cultivar_request(self) -> Crop.CultivarRequest: ...
+    def species_request(self) -> Crop.SpeciesRequest: ...
+
+class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Registry.Server
-    ) -> Service: ...
-    class Server(Registry.Server): ...
+    ) -> "ServiceClient": ...
+    class Server(Registry.Server):
+        ...
+        def __enter__(self) -> Self: ...
+        def __exit__(self, *args: Any) -> None: ...
+
+class ServiceClient(RegistryClient): ...

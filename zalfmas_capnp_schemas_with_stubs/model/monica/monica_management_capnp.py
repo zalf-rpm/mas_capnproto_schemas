@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `monica_management.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -17,14 +18,10 @@ import_path = [
     os.path.join(here, "../../../zalfmas_capnp_schemas"),
 ]
 ILRDates = capnp.load(module_file, imports=import_path).ILRDates
-ILRDatesBuilder = ILRDates
-ILRDatesReader = ILRDates
 Event = capnp.load(module_file, imports=import_path).Event
-EventBuilder = Event
-EventReader = Event
 Params = capnp.load(module_file, imports=import_path).Params
-ParamsBuilder = Params
-ParamsReader = Params
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
+
+Service.Server.ManagementatResultTuple = NamedTuple(
+    "ManagementatResultTuple", [("mgmt", object)]
+)

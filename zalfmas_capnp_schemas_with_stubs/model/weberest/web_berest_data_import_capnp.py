@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `web-berest-data-import.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -14,5 +15,8 @@ module_file = os.path.abspath(
 )
 import_path = [here, os.path.join(here, "../../../zalfmas_capnp_schemas")]
 DWLABImport = capnp.load(module_file, imports=import_path).DWLABImport
-DWLABImportBuilder = DWLABImport
-DWLABImportReader = DWLABImport
+
+DWLABImport.Server.ImportdataResultTuple = NamedTuple(
+    "ImportdataResultTuple",
+    [("id", object), ("successA", object), ("successB", object)],
+)

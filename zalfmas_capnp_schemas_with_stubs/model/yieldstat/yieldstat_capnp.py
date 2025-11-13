@@ -11,11 +11,5 @@ module_file = os.path.abspath(
 )
 import_path = [here, os.path.join(here, "../../../zalfmas_capnp_schemas")]
 RestInput = capnp.load(module_file, imports=import_path).RestInput
-RestInputBuilder = RestInput
-RestInputReader = RestInput
 Result = capnp.load(module_file, imports=import_path).Result
-ResultBuilder = Result
-ResultReader = Result
 Output = capnp.load(module_file, imports=import_path).Output
-OutputBuilder = Output
-OutputReader = Output

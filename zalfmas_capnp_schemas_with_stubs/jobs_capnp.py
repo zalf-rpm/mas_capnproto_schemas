@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `jobs.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -13,8 +14,6 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Job = capnp.load(module_file, imports=import_path).Job
-JobBuilder = Job
-JobReader = Job
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
+
+Service.Server.NextjobResultTuple = NamedTuple("NextjobResultTuple", [("job", object)])

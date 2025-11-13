@@ -16,48 +16,75 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 EnsembleMember = capnp.load(module_file, imports=import_path).EnsembleMember
-EnsembleMemberBuilder = EnsembleMember
-EnsembleMemberReader = EnsembleMember
 Metadata = capnp.load(module_file, imports=import_path).Metadata
-MetadataBuilder = Metadata
-MetadataReader = Metadata
 Dataset = capnp.load(module_file, imports=import_path).Dataset
-DatasetBuilder = Dataset
-DatasetReader = Dataset
 Location = capnp.load(module_file, imports=import_path).Location
-LocationBuilder = Location
-LocationReader = Location
 TimeSeries = capnp.load(module_file, imports=import_path).TimeSeries
-TimeSeriesBuilder = TimeSeries
-TimeSeriesReader = TimeSeries
 MetaPlusData = capnp.load(module_file, imports=import_path).MetaPlusData
-MetaPlusDataBuilder = MetaPlusData
-MetaPlusDataReader = MetaPlusData
 TimeSeriesData = capnp.load(module_file, imports=import_path).TimeSeriesData
-TimeSeriesDataBuilder = TimeSeriesData
-TimeSeriesDataReader = TimeSeriesData
 Service = capnp.load(module_file, imports=import_path).Service
-ServiceBuilder = Service
-ServiceReader = Service
 CSVTimeSeriesFactory = capnp.load(module_file, imports=import_path).CSVTimeSeriesFactory
-CSVTimeSeriesFactoryBuilder = CSVTimeSeriesFactory
-CSVTimeSeriesFactoryReader = CSVTimeSeriesFactory
 AlterTimeSeriesWrapper = capnp.load(
     module_file, imports=import_path
 ).AlterTimeSeriesWrapper
-AlterTimeSeriesWrapperBuilder = AlterTimeSeriesWrapper
-AlterTimeSeriesWrapperReader = AlterTimeSeriesWrapper
 AlterTimeSeriesWrapperFactory = capnp.load(
     module_file, imports=import_path
 ).AlterTimeSeriesWrapperFactory
-AlterTimeSeriesWrapperFactoryBuilder = AlterTimeSeriesWrapperFactory
-AlterTimeSeriesWrapperFactoryReader = AlterTimeSeriesWrapperFactory
 
-Dataset.Server.MetadataResult = NamedTuple(
-    "MetadataResult", [("entries", object), ("info", object)]
+AlterTimeSeriesWrapper.Server.AlterResultTuple = NamedTuple(
+    "AlterResultTuple", [("timeSeries", object)]
 )
-Dataset.GetLocationsCallback.Server.LocationResult = NamedTuple(
-    "LocationResult",
+AlterTimeSeriesWrapper.Server.AlteredelementsResultTuple = NamedTuple(
+    "AlteredelementsResultTuple", [("list", object)]
+)
+AlterTimeSeriesWrapper.Server.WrappedtimeseriesResultTuple = NamedTuple(
+    "WrappedtimeseriesResultTuple", [("timeSeries", object)]
+)
+AlterTimeSeriesWrapperFactory.Server.WrapResultTuple = NamedTuple(
+    "WrapResultTuple", [("wrapper", object)]
+)
+CSVTimeSeriesFactory.Server.CreateResultTuple = NamedTuple(
+    "CreateResultTuple", [("timeseries", object), ("error", object)]
+)
+Dataset.Server.ClosesttimeseriesatResultTuple = NamedTuple(
+    "ClosesttimeseriesatResultTuple", [("timeSeries", object)]
+)
+Dataset.Server.LocationsResultTuple = NamedTuple(
+    "LocationsResultTuple", [("locations", object)]
+)
+Dataset.Server.MetadataResultTuple = NamedTuple(
+    "MetadataResultTuple", [("entries", object), ("info", object)]
+)
+Dataset.Server.StreamlocationsResultTuple = NamedTuple(
+    "StreamlocationsResultTuple", [("locationsCallback", object)]
+)
+Dataset.Server.TimeseriesatResultTuple = NamedTuple(
+    "TimeseriesatResultTuple", [("timeSeries", object)]
+)
+Dataset.GetLocationsCallback.Server.NextlocationsResultTuple = NamedTuple(
+    "NextlocationsResultTuple", [("locations", object)]
+)
+Metadata.Information.Server.ForallResultTuple = NamedTuple("ForallResultTuple", [])
+Metadata.Information.Server.ForoneResultTuple = NamedTuple(
+    "ForoneResultTuple", [("id", object), ("name", object), ("description", object)]
+)
+Metadata.Supported.Server.CategoriesResultTuple = NamedTuple(
+    "CategoriesResultTuple", []
+)
+Metadata.Supported.Server.SupportedvaluesResultTuple = NamedTuple(
+    "SupportedvaluesResultTuple", []
+)
+Service.Server.GetavailabledatasetsResultTuple = NamedTuple(
+    "GetavailabledatasetsResultTuple", [("datasets", object)]
+)
+Service.Server.GetdatasetsforResultTuple = NamedTuple(
+    "GetdatasetsforResultTuple", [("datasets", object)]
+)
+TimeSeries.Server.DataResultTuple = NamedTuple("DataResultTuple", [("data", object)])
+TimeSeries.Server.DatatResultTuple = NamedTuple("DatatResultTuple", [("data", object)])
+TimeSeries.Server.HeaderResultTuple = NamedTuple("HeaderResultTuple", [])
+TimeSeries.Server.LocationResultTuple = NamedTuple(
+    "LocationResultTuple",
     [
         ("id", object),
         ("heightNN", object),
@@ -66,22 +93,18 @@ Dataset.GetLocationsCallback.Server.LocationResult = NamedTuple(
         ("customData", object),
     ],
 )
-Dataset.GetLocationsCallback.Server.MetadataResult = NamedTuple(
-    "MetadataResult", [("entries", object), ("info", object)]
+TimeSeries.Server.MetadataResultTuple = NamedTuple(
+    "MetadataResultTuple", [("entries", object), ("info", object)]
 )
-Metadata.Information.Server.ForoneResult = NamedTuple(
-    "ForoneResult", [("id", object), ("name", object), ("description", object)]
+TimeSeries.Server.RangeResultTuple = NamedTuple(
+    "RangeResultTuple", [("startDate", object), ("endDate", object)]
 )
-TimeSeries.Server.LocationResult = NamedTuple(
-    "LocationResult",
-    [
-        ("id", object),
-        ("heightNN", object),
-        ("latlon", object),
-        ("timeSeries", object),
-        ("customData", object),
-    ],
+TimeSeries.Server.ResolutionResultTuple = NamedTuple(
+    "ResolutionResultTuple", [("resolution", object)]
 )
-TimeSeries.Server.MetadataResult = NamedTuple(
-    "MetadataResult", [("entries", object), ("info", object)]
+TimeSeries.Server.SubheaderResultTuple = NamedTuple(
+    "SubheaderResultTuple", [("timeSeries", object)]
+)
+TimeSeries.Server.SubrangeResultTuple = NamedTuple(
+    "SubrangeResultTuple", [("timeSeries", object)]
 )

@@ -16,18 +16,19 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Admin = capnp.load(module_file, imports=import_path).Admin
-AdminBuilder = Admin
-AdminReader = Admin
 SimpleFactory = capnp.load(module_file, imports=import_path).SimpleFactory
-SimpleFactoryBuilder = SimpleFactory
-SimpleFactoryReader = SimpleFactory
 Factory = capnp.load(module_file, imports=import_path).Factory
-FactoryBuilder = Factory
-FactoryReader = Factory
 Stoppable = capnp.load(module_file, imports=import_path).Stoppable
-StoppableBuilder = Stoppable
-StoppableReader = Stoppable
 
-Factory.Server.CreateResult = NamedTuple(
-    "CreateResult", [("adminCap", object), ("serviceCaps", object), ("error", object)]
+Admin.Server.IdentitiesResultTuple = NamedTuple("IdentitiesResultTuple", [])
+Factory.Server.CreateResultTuple = NamedTuple(
+    "CreateResultTuple",
+    [("adminCap", object), ("serviceCaps", object), ("error", object)],
 )
+Factory.Server.ServiceinterfacenamesResultTuple = NamedTuple(
+    "ServiceinterfacenamesResultTuple", [("names", object)]
+)
+SimpleFactory.Server.CreateResultTuple = NamedTuple(
+    "CreateResultTuple", [("caps", object)]
+)
+Stoppable.Server.StopResultTuple = NamedTuple("StopResultTuple", [("success", object)])

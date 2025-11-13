@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `cluster_admin_service.capnp`."""
 
 import os
+from typing import NamedTuple
 
 import capnp
 
@@ -15,5 +16,55 @@ import_path = [
     os.path.join(here, "../zalfmas_capnp_schemas"),
 ]
 Cluster = capnp.load(module_file, imports=import_path).Cluster
-ClusterBuilder = Cluster
-ClusterReader = Cluster
+
+Cluster.AdminMaster.Server.AvailablemodelsResultTuple = NamedTuple(
+    "AvailablemodelsResultTuple", []
+)
+Cluster.AdminMaster.Server.RegistermodelinstancefactoryResultTuple = NamedTuple(
+    "RegistermodelinstancefactoryResultTuple", [("unregister", object)]
+)
+Cluster.ModelInstanceFactory.Server.ModelidResultTuple = NamedTuple(
+    "ModelidResultTuple", [("id", object)]
+)
+Cluster.ModelInstanceFactory.Server.NewcloudviaproxyResultTuple = NamedTuple(
+    "NewcloudviaproxyResultTuple", [("proxy", object)]
+)
+Cluster.ModelInstanceFactory.Server.NewcloudviazmqpipelineproxiesResultTuple = (
+    NamedTuple("NewcloudviazmqpipelineproxiesResultTuple", [("proxyAddresses", object)])
+)
+Cluster.ModelInstanceFactory.Server.NewinstanceResultTuple = NamedTuple(
+    "NewinstanceResultTuple", [("instance", object)]
+)
+Cluster.ModelInstanceFactory.Server.NewinstancesResultTuple = NamedTuple(
+    "NewinstancesResultTuple", [("instances", object)]
+)
+Cluster.ModelInstanceFactory.Server.RegistermodelinstanceResultTuple = NamedTuple(
+    "RegistermodelinstanceResultTuple", [("unregister", object)]
+)
+Cluster.ModelInstanceFactory.Server.RestoresturdyrefResultTuple = NamedTuple(
+    "RestoresturdyrefResultTuple", [("cap", object)]
+)
+Cluster.Runtime.Server.AvailablemodelsResultTuple = NamedTuple(
+    "AvailablemodelsResultTuple", []
+)
+Cluster.Runtime.Server.FreenumberofcoresResultTuple = NamedTuple(
+    "FreenumberofcoresResultTuple", [("cores", object)]
+)
+Cluster.Runtime.Server.NumberofcoresResultTuple = NamedTuple(
+    "NumberofcoresResultTuple", [("cores", object)]
+)
+Cluster.Runtime.Server.RegistermodelinstancefactoryResultTuple = NamedTuple(
+    "RegistermodelinstancefactoryResultTuple", [("unregister", object)]
+)
+Cluster.Runtime.Server.ReservenumberofcoresResultTuple = NamedTuple(
+    "ReservenumberofcoresResultTuple", [("reservedCores", object)]
+)
+Cluster.Unregister.Server.UnregisterResultTuple = NamedTuple(
+    "UnregisterResultTuple", [("success", object)]
+)
+Cluster.UserMaster.Server.AvailablemodelsResultTuple = NamedTuple(
+    "AvailablemodelsResultTuple", []
+)
+Cluster.ValueHolder.Server.ValueResultTuple = NamedTuple(
+    "ValueResultTuple", [("val", object)]
+)

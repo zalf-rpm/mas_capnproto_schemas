@@ -3,7 +3,7 @@ name = "zalfmas-capnp-schemas"
 version = "0.1.40"
 description = ""
 readme = "README.md"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.10,<3.14"
 authors = [{ name = "Michael Berg-Mohnicke", email = "michael.berg@zalf.de" }]
 dependencies = ["pycapnp >=2.2.1,<3.0.0"]
 
@@ -13,7 +13,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 packages = [
-  { include = "capnp-stubs", from = "capnp-stubs" },
+  { include = "capnp-stubs" },
   { include = "zalfmas_capnp_schemas" },
   { include = "zalfmas_capnp_schemas_with_stubs" },
 ]

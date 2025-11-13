@@ -12,7 +12,7 @@ module_file = os.path.abspath(
 )
 import_path = [here, os.path.join(here, "../../zalfmas_capnp_schemas")]
 Persistent = capnp.load(module_file, imports=import_path).Persistent
-PersistentBuilder = Persistent
-PersistentReader = Persistent
 
-Persistent.Server.SaveResult = NamedTuple("SaveResult", [("sturdyRef", object)])
+Persistent.Server.SaveResultTuple = NamedTuple(
+    "SaveResultTuple", [("sturdyRef", object)]
+)
