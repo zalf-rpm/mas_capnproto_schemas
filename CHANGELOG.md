@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.1.41](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.40...v0.1.41) (2025-11-13)
+
+
+### Features
+
+* add proper _context methods ([e342e9a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/e342e9ae714ad7df8dc44e09032d566167559285))
+* expand the request object ([10e1442](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/10e1442a72bd90a262a7b15e034957bfbc6344e5))
+* explicit default values for primitives according to capnp ([8b6f365](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/8b6f3655dcc8d9a0cd94e394753c1b2a216a04ab))
+* move in augmented stubs package and update python stubs ([e6ee1d8](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/e6ee1d89b36981e8800d55c9da371510c6c95ca4))
+
+
+### Bug Fixes
+
+* recompile to allow None returns on server and have optional parameter values ([9e5a62c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/9e5a62c558d20eb7de1f639864a892e80155e6d5))
+* small issues and move back to Sequence for now ([1db4fad](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/1db4fad1f268bad03a77f50b446ae0261900daba))
+* sorting of decorators ([a5582c2](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/a5582c20d5a16e68b8681085f600a49ea58b548d))
+
 ## [0.1.40](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.39...v0.1.40) (2025-11-06)
 
 
