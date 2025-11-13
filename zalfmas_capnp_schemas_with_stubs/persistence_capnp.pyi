@@ -5,16 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from .common_capnp import Identifiable, IdentifiableClient
 
@@ -533,15 +524,17 @@ class Heartbeat:
         def send(self) -> None: ...
 
     @classmethod
-    def _new_client(cls, server: Heartbeat.Server) -> "HeartbeatClient": ...
+    def _new_client(cls, server: Heartbeat.Server) -> HeartbeatClient: ...
     class Server(Protocol):
-        class BeatCallContext(Protocol): ...
+        class BeatCallContext(Protocol):
+            params: Heartbeat.BeatRequest
 
         def beat(
             self, _context: Heartbeat.Server.BeatCallContext, **kwargs: Any
         ) -> Awaitable[None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def beat_context(
+            self, context: Heartbeat.Server.BeatCallContext
+        ) -> Awaitable[None]: ...
 
 class HeartbeatClient(Protocol):
     def beat(self) -> None: ...
@@ -706,12 +699,13 @@ class Persistent:
         @classmethod
         def _new_client(
             cls, server: Persistent.ReleaseSturdyRef.Server
-        ) -> "Persistent.ReleaseSturdyRefClient": ...
+        ) -> Persistent.ReleaseSturdyRefClient: ...
         class Server(Protocol):
             class ReleaseResultTuple(NamedTuple):
                 success: bool
 
             class ReleaseCallContext(Protocol):
+                params: Persistent.ReleaseSturdyRef.ReleaseRequest
                 results: Persistent.ReleaseSturdyRef.ReleaseResult
 
             def release(
@@ -721,8 +715,9 @@ class Persistent:
             ) -> Awaitable[
                 bool | Persistent.ReleaseSturdyRef.Server.ReleaseResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def release_context(
+                self, context: Persistent.ReleaseSturdyRef.Server.ReleaseCallContext
+            ) -> Awaitable[None]: ...
 
     class ReleaseSturdyRefClient(Protocol):
         def release(self) -> Persistent.ReleaseSturdyRef.ReleaseResult: ...
@@ -741,13 +736,14 @@ class Persistent:
         unsaveSR: SturdyRef.Builder | SturdyRef.Reader
 
     @classmethod
-    def _new_client(cls, server: Persistent.Server) -> "PersistentClient": ...
+    def _new_client(cls, server: Persistent.Server) -> PersistentClient: ...
     class Server(Protocol):
         class SaveResultTuple(NamedTuple):
             sturdyRef: SturdyRef.Builder | SturdyRef.Reader
             unsaveSR: SturdyRef.Builder | SturdyRef.Reader
 
         class SaveCallContext(Protocol):
+            params: Persistent.SaveRequest
             results: Persistent.SaveResult
 
         def save(
@@ -756,8 +752,9 @@ class Persistent:
             _context: Persistent.Server.SaveCallContext,
             **kwargs: Any,
         ) -> Awaitable[Persistent.Server.SaveResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def save_context(
+            self, context: Persistent.Server.SaveCallContext
+        ) -> Awaitable[None]: ...
 
 class PersistentClient(Protocol):
     def save(
@@ -874,12 +871,13 @@ class Restorer:
         cap: Any
 
     @classmethod
-    def _new_client(cls, server: Restorer.Server) -> "RestorerClient": ...
+    def _new_client(cls, server: Restorer.Server) -> RestorerClient: ...
     class Server(Protocol):
         class RestoreResultTuple(NamedTuple):
             cap: Any
 
         class RestoreCallContext(Protocol):
+            params: Restorer.RestoreRequest
             results: Restorer.RestoreResult
 
         def restore(
@@ -889,8 +887,9 @@ class Restorer:
             _context: Restorer.Server.RestoreCallContext,
             **kwargs: Any,
         ) -> Awaitable[Restorer.Server.RestoreResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def restore_context(
+            self, context: Restorer.Server.RestoreCallContext
+        ) -> Awaitable[None]: ...
 
 class RestorerClient(Protocol):
     def restore(
@@ -1013,13 +1012,14 @@ class HostPortResolver:
         @classmethod
         def _new_client(
             cls, server: HostPortResolver.Registrar.Server
-        ) -> "HostPortResolver.RegistrarClient": ...
+        ) -> HostPortResolver.RegistrarClient: ...
         class Server(Protocol):
             class RegisterResultTuple(NamedTuple):
                 heartbeat: Heartbeat.Server
                 secsHeartbeatInterval: int
 
             class RegisterCallContext(Protocol):
+                params: HostPortResolver.Registrar.RegisterRequest
                 results: HostPortResolver.Registrar.RegisterResult
 
             def register(
@@ -1034,8 +1034,9 @@ class HostPortResolver:
             ) -> Awaitable[
                 HostPortResolver.Registrar.Server.RegisterResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def register_context(
+                self, context: HostPortResolver.Registrar.Server.RegisterCallContext
+            ) -> Awaitable[None]: ...
 
     class RegistrarClient(Protocol):
         def register(
@@ -1066,13 +1067,14 @@ class HostPortResolver:
     @classmethod
     def _new_client(
         cls, server: HostPortResolver.Server | Identifiable.Server | Restorer.Server
-    ) -> "HostPortResolverClient": ...
+    ) -> HostPortResolverClient: ...
     class Server(Identifiable.Server, Restorer.Server):
         class ResolveResultTuple(NamedTuple):
             host: str
             port: int
 
         class ResolveCallContext(Protocol):
+            params: HostPortResolver.ResolveRequest
             results: HostPortResolver.ResolveResult
 
         def resolve(
@@ -1081,8 +1083,9 @@ class HostPortResolver:
             _context: HostPortResolver.Server.ResolveCallContext,
             **kwargs: Any,
         ) -> Awaitable[HostPortResolver.Server.ResolveResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def resolve_context(
+            self, context: HostPortResolver.Server.ResolveCallContext
+        ) -> Awaitable[None]: ...
 
 class HostPortResolverClient(IdentifiableClient, RestorerClient):
     def resolve(self, id: str | None = None) -> HostPortResolver.ResolveResult: ...
@@ -1179,7 +1182,7 @@ class Gateway:
     @classmethod
     def _new_client(
         cls, server: Gateway.Server | Identifiable.Server | Restorer.Server
-    ) -> "GatewayClient": ...
+    ) -> GatewayClient: ...
     class Server(Identifiable.Server, Restorer.Server):
         class RegisterResultTuple(NamedTuple):
             sturdyRef: SturdyRef.Builder | SturdyRef.Reader
@@ -1187,13 +1190,15 @@ class Gateway:
             secsHeartbeatInterval: int
 
         class RegisterCallContext(Protocol):
+            params: Gateway.RegisterRequest
             results: Gateway.RegisterResult
 
         def register(
             self, cap: Any, _context: Gateway.Server.RegisterCallContext, **kwargs: Any
         ) -> Awaitable[Gateway.Server.RegisterResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def register_context(
+            self, context: Gateway.Server.RegisterCallContext
+        ) -> Awaitable[None]: ...
 
 class GatewayClient(IdentifiableClient, RestorerClient):
     def register(self, cap: Any | None = None) -> Gateway.RegisterResult: ...

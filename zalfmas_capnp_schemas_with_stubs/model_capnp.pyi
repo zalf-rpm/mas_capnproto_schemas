@@ -13,7 +13,6 @@ from typing import (
     Literal,
     NamedTuple,
     Protocol,
-    Self,
     TypeAlias,
     TypeVar,
     overload,
@@ -273,7 +272,7 @@ class ClimateInstance:
     @classmethod
     def _new_client(
         cls, server: ClimateInstance.Server | Identifiable.Server
-    ) -> "ClimateInstanceClient": ...
+    ) -> ClimateInstanceClient: ...
     class Server(Identifiable.Server):
         class RunResultTuple(NamedTuple):
             result: XYResult.Builder | XYResult.Reader
@@ -282,19 +281,25 @@ class ClimateInstance:
             result: XYPlusResult.Builder | XYPlusResult.Reader
 
         class RunCallContext(Protocol):
+            params: ClimateInstance.RunRequest
             results: ClimateInstance.RunResult
 
         class RunsetCallContext(Protocol):
+            params: ClimateInstance.RunsetRequest
             results: ClimateInstance.RunsetResult
 
         def run(
             self, _context: ClimateInstance.Server.RunCallContext, **kwargs: Any
         ) -> Awaitable[ClimateInstance.Server.RunResultTuple | None]: ...
+        def run_context(
+            self, context: ClimateInstance.Server.RunCallContext
+        ) -> Awaitable[None]: ...
         def runSet(
             self, _context: ClimateInstance.Server.RunsetCallContext, **kwargs: Any
         ) -> Awaitable[ClimateInstance.Server.RunsetResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def runSet_context(
+            self, context: ClimateInstance.Server.RunsetCallContext
+        ) -> Awaitable[None]: ...
 
 class ClimateInstanceClient(IdentifiableClient):
     def run(self) -> ClimateInstance.RunResult: ...
@@ -407,12 +412,13 @@ class EnvInstance:
         | Identifiable.Server
         | Persistent.Server
         | Stoppable.Server,
-    ) -> "EnvInstanceClient": ...
+    ) -> EnvInstanceClient: ...
     class Server(Identifiable.Server, Persistent.Server, Stoppable.Server):
         class RunResultTuple(NamedTuple):
             result: Any
 
         class RunCallContext(Protocol):
+            params: EnvInstance.RunRequest
             results: EnvInstance.RunResult
 
         def run(
@@ -421,8 +427,9 @@ class EnvInstance:
             _context: EnvInstance.Server.RunCallContext,
             **kwargs: Any,
         ) -> Awaitable[EnvInstance.Server.RunResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def run_context(
+            self, context: EnvInstance.Server.RunCallContext
+        ) -> Awaitable[None]: ...
 
 class EnvInstanceClient(IdentifiableClient, PersistentClient, StoppableClient):
     def run(
@@ -443,12 +450,13 @@ class EnvInstanceProxy:
         @classmethod
         def _new_client(
             cls, server: EnvInstanceProxy.Unregister.Server
-        ) -> "EnvInstanceProxy.UnregisterClient": ...
+        ) -> EnvInstanceProxy.UnregisterClient: ...
         class Server(Protocol):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
             class UnregisterCallContext(Protocol):
+                params: EnvInstanceProxy.Unregister.UnregisterRequest
                 results: EnvInstanceProxy.Unregister.UnregisterResult
 
             def unregister(
@@ -458,8 +466,9 @@ class EnvInstanceProxy:
             ) -> Awaitable[
                 bool | EnvInstanceProxy.Unregister.Server.UnregisterResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def unregister_context(
+                self, context: EnvInstanceProxy.Unregister.Server.UnregisterCallContext
+            ) -> Awaitable[None]: ...
 
     class UnregisterClient(Protocol):
         def unregister(self) -> EnvInstanceProxy.Unregister.UnregisterResult: ...
@@ -482,12 +491,13 @@ class EnvInstanceProxy:
         | Identifiable.Server
         | Persistent.Server
         | Stoppable.Server,
-    ) -> "EnvInstanceProxyClient": ...
+    ) -> EnvInstanceProxyClient: ...
     class Server(EnvInstance.Server):
         class RegisterenvinstanceResultTuple(NamedTuple):
             unregister: EnvInstanceProxy.Unregister.Server
 
         class RegisterenvinstanceCallContext(Protocol):
+            params: EnvInstanceProxy.RegisterenvinstanceRequest
             results: EnvInstanceProxy.RegisterenvinstanceResult
 
         def registerEnvInstance(
@@ -500,8 +510,9 @@ class EnvInstanceProxy:
             | EnvInstanceProxy.Server.RegisterenvinstanceResultTuple
             | None
         ]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def registerEnvInstance_context(
+            self, context: EnvInstanceProxy.Server.RegisterenvinstanceCallContext
+        ) -> Awaitable[None]: ...
 
 class EnvInstanceProxyClient(EnvInstanceClient):
     def registerEnvInstance(
@@ -536,7 +547,7 @@ class InstanceFactory:
     @classmethod
     def _new_client(
         cls, server: InstanceFactory.Server | Identifiable.Server
-    ) -> "InstanceFactoryClient": ...
+    ) -> InstanceFactoryClient: ...
     class Server(Identifiable.Server):
         class ModelinfoResultTuple(NamedTuple):
             id: str
@@ -550,30 +561,40 @@ class InstanceFactory:
             instances: Sequence[Identifiable]
 
         class ModelinfoCallContext(Protocol):
+            params: InstanceFactory.ModelinfoRequest
             results: InstanceFactory.ModelinfoResult
 
         class NewinstanceCallContext(Protocol):
+            params: InstanceFactory.NewinstanceRequest
             results: InstanceFactory.NewinstanceResult
 
         class NewinstancesCallContext(Protocol):
+            params: InstanceFactory.NewinstancesRequest
             results: InstanceFactory.NewinstancesResult
 
         def modelInfo(
             self, _context: InstanceFactory.Server.ModelinfoCallContext, **kwargs: Any
         ) -> Awaitable[InstanceFactory.Server.ModelinfoResultTuple | None]: ...
+        def modelInfo_context(
+            self, context: InstanceFactory.Server.ModelinfoCallContext
+        ) -> Awaitable[None]: ...
         def newInstance(
             self, _context: InstanceFactory.Server.NewinstanceCallContext, **kwargs: Any
         ) -> Awaitable[
             Identifiable.Server | InstanceFactory.Server.NewinstanceResultTuple | None
         ]: ...
+        def newInstance_context(
+            self, context: InstanceFactory.Server.NewinstanceCallContext
+        ) -> Awaitable[None]: ...
         def newInstances(
             self,
             numberOfInstances: int,
             _context: InstanceFactory.Server.NewinstancesCallContext,
             **kwargs: Any,
         ) -> Awaitable[InstanceFactory.Server.NewinstancesResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def newInstances_context(
+            self, context: InstanceFactory.Server.NewinstancesCallContext
+        ) -> Awaitable[None]: ...
 
 class InstanceFactoryClient(IdentifiableClient):
     def modelInfo(self) -> InstanceFactory.ModelinfoResult: ...

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable
-from typing import Any, NamedTuple, Protocol, Self
+from typing import Any, NamedTuple, Protocol
 
 class DWLABImport:
     class ImportdataRequest(Protocol):
@@ -18,7 +18,7 @@ class DWLABImport:
         successB: bool
 
     @classmethod
-    def _new_client(cls, server: DWLABImport.Server) -> "DWLABImportClient": ...
+    def _new_client(cls, server: DWLABImport.Server) -> DWLABImportClient: ...
     class Server(Protocol):
         class ImportdataResultTuple(NamedTuple):
             id: str
@@ -26,6 +26,7 @@ class DWLABImport:
             successB: bool
 
         class ImportdataCallContext(Protocol):
+            params: DWLABImport.ImportdataRequest
             results: DWLABImport.ImportdataResult
 
         def importData(
@@ -36,8 +37,9 @@ class DWLABImport:
             _context: DWLABImport.Server.ImportdataCallContext,
             **kwargs: Any,
         ) -> Awaitable[DWLABImport.Server.ImportdataResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def importData_context(
+            self, context: DWLABImport.Server.ImportdataCallContext
+        ) -> Awaitable[None]: ...
 
 class DWLABImportClient(Protocol):
     def importData(

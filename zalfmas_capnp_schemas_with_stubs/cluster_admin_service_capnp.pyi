@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import Any, BinaryIO, NamedTuple, Protocol, Self, TypeAlias
+from typing import Any, BinaryIO, NamedTuple, Protocol, TypeAlias
 
 from .common_capnp import Identifiable, IdentifiableClient
 
@@ -23,12 +23,13 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.Unregister.Server
-        ) -> "Cluster.UnregisterClient": ...
+        ) -> Cluster.UnregisterClient: ...
         class Server(Protocol):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
             class UnregisterCallContext(Protocol):
+                params: Cluster.Unregister.UnregisterRequest
                 results: Cluster.Unregister.UnregisterResult
 
             def unregister(
@@ -38,8 +39,9 @@ class Cluster:
             ) -> Awaitable[
                 bool | Cluster.Unregister.Server.UnregisterResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def unregister_context(
+                self, context: Cluster.Unregister.Server.UnregisterCallContext
+            ) -> Awaitable[None]: ...
 
     class UnregisterClient(Protocol):
         def unregister(self) -> Cluster.Unregister.UnregisterResult: ...
@@ -66,7 +68,7 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.AdminMaster.Server | Identifiable.Server
-        ) -> "Cluster.AdminMasterClient": ...
+        ) -> Cluster.AdminMasterClient: ...
         class Server(Identifiable.Server):
             class RegistermodelinstancefactoryResultTuple(NamedTuple):
                 unregister: Cluster.Unregister.Server
@@ -75,9 +77,11 @@ class Cluster:
                 pass
 
             class RegistermodelinstancefactoryCallContext(Protocol):
+                params: Cluster.AdminMaster.RegistermodelinstancefactoryRequest
                 results: Cluster.AdminMaster.RegistermodelinstancefactoryResult
 
             class AvailablemodelsCallContext(Protocol):
+                params: Cluster.AdminMaster.AvailablemodelsRequest
                 results: Cluster.AdminMaster.AvailablemodelsResult
 
             def registerModelInstanceFactory(
@@ -90,6 +94,10 @@ class Cluster:
                 | Cluster.AdminMaster.Server.RegistermodelinstancefactoryResultTuple
                 | None
             ]: ...
+            def registerModelInstanceFactory_context(
+                self,
+                context: Cluster.AdminMaster.Server.RegistermodelinstancefactoryCallContext,
+            ) -> Awaitable[None]: ...
             def availableModels(
                 self,
                 _context: Cluster.AdminMaster.Server.AvailablemodelsCallContext,
@@ -97,8 +105,9 @@ class Cluster:
             ) -> Awaitable[
                 Cluster.AdminMaster.Server.AvailablemodelsResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def availableModels_context(
+                self, context: Cluster.AdminMaster.Server.AvailablemodelsCallContext
+            ) -> Awaitable[None]: ...
 
     class AdminMasterClient(IdentifiableClient):
         def registerModelInstanceFactory(
@@ -122,12 +131,13 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.UserMaster.Server | Identifiable.Server
-        ) -> "Cluster.UserMasterClient": ...
+        ) -> Cluster.UserMasterClient: ...
         class Server(Identifiable.Server):
             class AvailablemodelsResultTuple(NamedTuple):
                 pass
 
             class AvailablemodelsCallContext(Protocol):
+                params: Cluster.UserMaster.AvailablemodelsRequest
                 results: Cluster.UserMaster.AvailablemodelsResult
 
             def availableModels(
@@ -137,8 +147,9 @@ class Cluster:
             ) -> Awaitable[
                 Cluster.UserMaster.Server.AvailablemodelsResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def availableModels_context(
+                self, context: Cluster.UserMaster.Server.AvailablemodelsCallContext
+            ) -> Awaitable[None]: ...
 
     class UserMasterClient(IdentifiableClient):
         def availableModels(self) -> Cluster.UserMaster.AvailablemodelsResult: ...
@@ -187,7 +198,7 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.Runtime.Server | Identifiable.Server
-        ) -> "Cluster.RuntimeClient": ...
+        ) -> Cluster.RuntimeClient: ...
         class Server(Identifiable.Server):
             class RegistermodelinstancefactoryResultTuple(NamedTuple):
                 unregister: Cluster.Unregister.Server
@@ -205,18 +216,23 @@ class Cluster:
                 reservedCores: int
 
             class RegistermodelinstancefactoryCallContext(Protocol):
+                params: Cluster.Runtime.RegistermodelinstancefactoryRequest
                 results: Cluster.Runtime.RegistermodelinstancefactoryResult
 
             class AvailablemodelsCallContext(Protocol):
+                params: Cluster.Runtime.AvailablemodelsRequest
                 results: Cluster.Runtime.AvailablemodelsResult
 
             class NumberofcoresCallContext(Protocol):
+                params: Cluster.Runtime.NumberofcoresRequest
                 results: Cluster.Runtime.NumberofcoresResult
 
             class FreenumberofcoresCallContext(Protocol):
+                params: Cluster.Runtime.FreenumberofcoresRequest
                 results: Cluster.Runtime.FreenumberofcoresResult
 
             class ReservenumberofcoresCallContext(Protocol):
+                params: Cluster.Runtime.ReservenumberofcoresRequest
                 results: Cluster.Runtime.ReservenumberofcoresResult
 
             def registerModelInstanceFactory(
@@ -229,6 +245,10 @@ class Cluster:
                 | Cluster.Runtime.Server.RegistermodelinstancefactoryResultTuple
                 | None
             ]: ...
+            def registerModelInstanceFactory_context(
+                self,
+                context: Cluster.Runtime.Server.RegistermodelinstancefactoryCallContext,
+            ) -> Awaitable[None]: ...
             def availableModels(
                 self,
                 _context: Cluster.Runtime.Server.AvailablemodelsCallContext,
@@ -236,6 +256,9 @@ class Cluster:
             ) -> Awaitable[
                 Cluster.Runtime.Server.AvailablemodelsResultTuple | None
             ]: ...
+            def availableModels_context(
+                self, context: Cluster.Runtime.Server.AvailablemodelsCallContext
+            ) -> Awaitable[None]: ...
             def numberOfCores(
                 self,
                 _context: Cluster.Runtime.Server.NumberofcoresCallContext,
@@ -243,6 +266,9 @@ class Cluster:
             ) -> Awaitable[
                 int | Cluster.Runtime.Server.NumberofcoresResultTuple | None
             ]: ...
+            def numberOfCores_context(
+                self, context: Cluster.Runtime.Server.NumberofcoresCallContext
+            ) -> Awaitable[None]: ...
             def freeNumberOfCores(
                 self,
                 _context: Cluster.Runtime.Server.FreenumberofcoresCallContext,
@@ -250,6 +276,9 @@ class Cluster:
             ) -> Awaitable[
                 int | Cluster.Runtime.Server.FreenumberofcoresResultTuple | None
             ]: ...
+            def freeNumberOfCores_context(
+                self, context: Cluster.Runtime.Server.FreenumberofcoresCallContext
+            ) -> Awaitable[None]: ...
             def reserveNumberOfCores(
                 self,
                 reserveCores: int,
@@ -259,8 +288,9 @@ class Cluster:
             ) -> Awaitable[
                 int | Cluster.Runtime.Server.ReservenumberofcoresResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def reserveNumberOfCores_context(
+                self, context: Cluster.Runtime.Server.ReservenumberofcoresCallContext
+            ) -> Awaitable[None]: ...
 
     class RuntimeClient(IdentifiableClient):
         def registerModelInstanceFactory(
@@ -364,28 +394,34 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.ValueHolder.Server
-        ) -> "Cluster.ValueHolderClient": ...
+        ) -> Cluster.ValueHolderClient: ...
         class Server(Protocol):
             class ValueResultTuple(NamedTuple):
                 val: Any
 
             class ValueCallContext(Protocol):
+                params: Cluster.ValueHolder.ValueRequest
                 results: Cluster.ValueHolder.ValueResult
 
-            class ReleaseCallContext(Protocol): ...
+            class ReleaseCallContext(Protocol):
+                params: Cluster.ValueHolder.ReleaseRequest
 
             def value(
                 self,
                 _context: Cluster.ValueHolder.Server.ValueCallContext,
                 **kwargs: Any,
             ) -> Awaitable[Cluster.ValueHolder.Server.ValueResultTuple | None]: ...
+            def value_context(
+                self, context: Cluster.ValueHolder.Server.ValueCallContext
+            ) -> Awaitable[None]: ...
             def release(
                 self,
                 _context: Cluster.ValueHolder.Server.ReleaseCallContext,
                 **kwargs: Any,
             ) -> Awaitable[None]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def release_context(
+                self, context: Cluster.ValueHolder.Server.ReleaseCallContext
+            ) -> Awaitable[None]: ...
 
     class ValueHolderClient(Protocol):
         def value(self) -> Cluster.ValueHolder.ValueResult: ...
@@ -453,7 +489,7 @@ class Cluster:
         @classmethod
         def _new_client(
             cls, server: Cluster.ModelInstanceFactory.Server | Identifiable.Server
-        ) -> "Cluster.ModelInstanceFactoryClient": ...
+        ) -> Cluster.ModelInstanceFactoryClient: ...
         class Server(Identifiable.Server):
             class NewinstanceResultTuple(NamedTuple):
                 instance: Cluster.ValueHolder.Server
@@ -477,26 +513,35 @@ class Cluster:
                 cap: Cluster.ValueHolder.Server
 
             class NewinstanceCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.NewinstanceRequest
                 results: Cluster.ModelInstanceFactory.NewinstanceResult
 
             class NewinstancesCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.NewinstancesRequest
                 results: Cluster.ModelInstanceFactory.NewinstancesResult
 
             class NewcloudviazmqpipelineproxiesCallContext(Protocol):
+                params: (
+                    Cluster.ModelInstanceFactory.NewcloudviazmqpipelineproxiesRequest
+                )
                 results: (
                     Cluster.ModelInstanceFactory.NewcloudviazmqpipelineproxiesResult
                 )
 
             class NewcloudviaproxyCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.NewcloudviaproxyRequest
                 results: Cluster.ModelInstanceFactory.NewcloudviaproxyResult
 
             class ModelidCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.ModelidRequest
                 results: Cluster.ModelInstanceFactory.ModelidResult
 
             class RegistermodelinstanceCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.RegistermodelinstanceRequest
                 results: Cluster.ModelInstanceFactory.RegistermodelinstanceResult
 
             class RestoresturdyrefCallContext(Protocol):
+                params: Cluster.ModelInstanceFactory.RestoresturdyrefRequest
                 results: Cluster.ModelInstanceFactory.RestoresturdyrefResult
 
             def newInstance(
@@ -508,6 +553,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.NewinstanceResultTuple
                 | None
             ]: ...
+            def newInstance_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.NewinstanceCallContext,
+            ) -> Awaitable[None]: ...
             def newInstances(
                 self,
                 numberOfInstances: int,
@@ -518,6 +567,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.NewinstancesResultTuple
                 | None
             ]: ...
+            def newInstances_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.NewinstancesCallContext,
+            ) -> Awaitable[None]: ...
             def newCloudViaZmqPipelineProxies(
                 self,
                 numberOfInstances: int,
@@ -528,6 +581,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.NewcloudviazmqpipelineproxiesResultTuple
                 | None
             ]: ...
+            def newCloudViaZmqPipelineProxies_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.NewcloudviazmqpipelineproxiesCallContext,
+            ) -> Awaitable[None]: ...
             def newCloudViaProxy(
                 self,
                 numberOfInstances: int,
@@ -538,6 +595,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.NewcloudviaproxyResultTuple
                 | None
             ]: ...
+            def newCloudViaProxy_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.NewcloudviaproxyCallContext,
+            ) -> Awaitable[None]: ...
             def modelId(
                 self,
                 _context: Cluster.ModelInstanceFactory.Server.ModelidCallContext,
@@ -545,6 +606,9 @@ class Cluster:
             ) -> Awaitable[
                 str | Cluster.ModelInstanceFactory.Server.ModelidResultTuple | None
             ]: ...
+            def modelId_context(
+                self, context: Cluster.ModelInstanceFactory.Server.ModelidCallContext
+            ) -> Awaitable[None]: ...
             def registerModelInstance(
                 self,
                 instance: Any,
@@ -556,6 +620,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.RegistermodelinstanceResultTuple
                 | None
             ]: ...
+            def registerModelInstance_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.RegistermodelinstanceCallContext,
+            ) -> Awaitable[None]: ...
             def restoreSturdyRef(
                 self,
                 sturdyRef: str,
@@ -566,8 +634,10 @@ class Cluster:
                 | Cluster.ModelInstanceFactory.Server.RestoresturdyrefResultTuple
                 | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def restoreSturdyRef_context(
+                self,
+                context: Cluster.ModelInstanceFactory.Server.RestoresturdyrefCallContext,
+            ) -> Awaitable[None]: ...
 
     class ModelInstanceFactoryClient(IdentifiableClient):
         def newInstance(self) -> Cluster.ModelInstanceFactory.NewinstanceResult: ...

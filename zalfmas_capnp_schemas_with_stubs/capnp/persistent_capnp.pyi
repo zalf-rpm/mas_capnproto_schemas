@@ -5,16 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Generic,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    TypeVar,
-)
+from typing import Any, BinaryIO, Generic, NamedTuple, Protocol, TypeAlias, TypeVar
 
 Persistent_Owner = TypeVar("Persistent_Owner")
 Persistent_SturdyRef = TypeVar("Persistent_SturdyRef")
@@ -148,12 +139,13 @@ class Persistent:
         sturdyRef: Any
 
     @classmethod
-    def _new_client(cls, server: Persistent.Server) -> "PersistentClient": ...
+    def _new_client(cls, server: Persistent.Server) -> PersistentClient: ...
     class Server(Protocol):
         class SaveResultTuple(NamedTuple):
             sturdyRef: Any
 
         class SaveCallContext(Protocol):
+            params: Persistent.SaveRequest
             results: Persistent.SaveResult
 
         def save(
@@ -162,8 +154,9 @@ class Persistent:
             _context: Persistent.Server.SaveCallContext,
             **kwargs: Any,
         ) -> Awaitable[Persistent.Server.SaveResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def save_context(
+            self, context: Persistent.Server.SaveCallContext
+        ) -> Awaitable[None]: ...
 
 class PersistentClient(Protocol):
     def save(self, sealFor: Any | None = None) -> Persistent.SaveResult: ...

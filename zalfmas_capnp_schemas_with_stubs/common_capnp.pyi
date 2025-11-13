@@ -13,7 +13,6 @@ from typing import (
     Literal,
     NamedTuple,
     Protocol,
-    Self,
     TypeAlias,
     TypeVar,
     overload,
@@ -105,7 +104,7 @@ class Identifiable:
         description: str
 
     @classmethod
-    def _new_client(cls, server: Identifiable.Server) -> "IdentifiableClient": ...
+    def _new_client(cls, server: Identifiable.Server) -> IdentifiableClient: ...
     class Server(Protocol):
         class InfoResultTuple(NamedTuple):
             id: str
@@ -113,13 +112,15 @@ class Identifiable:
             description: str
 
         class InfoCallContext(Protocol):
+            params: Identifiable.InfoRequest
             results: Identifiable.InfoResult
 
         def info(
             self, _context: Identifiable.Server.InfoCallContext, **kwargs: Any
         ) -> Awaitable[Identifiable.Server.InfoResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def info_context(
+            self, context: Identifiable.Server.InfoCallContext
+        ) -> Awaitable[None]: ...
 
 class IdentifiableClient(Protocol):
     def info(self) -> Identifiable.InfoResult: ...
@@ -799,19 +800,21 @@ class Holder:
         value: Any
 
     @classmethod
-    def _new_client(cls, server: Holder.Server) -> "HolderClient": ...
+    def _new_client(cls, server: Holder.Server) -> HolderClient: ...
     class Server(Protocol):
         class ValueResultTuple(NamedTuple):
             value: Any
 
         class ValueCallContext(Protocol):
+            params: Holder.ValueRequest
             results: Holder.ValueResult
 
         def value(
             self, _context: Holder.Server.ValueCallContext, **kwargs: Any
         ) -> Awaitable[Holder.Server.ValueResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def value_context(
+            self, context: Holder.Server.ValueCallContext
+        ) -> Awaitable[None]: ...
 
 class HolderClient(Protocol):
     def value(self) -> Holder.ValueResult: ...
@@ -821,10 +824,7 @@ class IdentifiableHolder:
     @classmethod
     def _new_client(
         cls, server: IdentifiableHolder.Server | Holder.Server | Identifiable.Server
-    ) -> "IdentifiableHolderClient": ...
-    class Server(Identifiable.Server, Holder.Server):
-        ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+    ) -> IdentifiableHolderClient: ...
+    class Server(Identifiable.Server, Holder.Server): ...
 
 class IdentifiableHolderClient(IdentifiableClient, HolderClient): ...

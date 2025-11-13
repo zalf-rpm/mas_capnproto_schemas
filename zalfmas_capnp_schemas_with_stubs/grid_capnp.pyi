@@ -6,16 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from .common_capnp import Identifiable, IdentifiableClient
 from .geo_capnp import LatLonCoord
@@ -453,12 +444,13 @@ class Grid:
             locations: Sequence[Grid.Location.Builder | Grid.Location.Reader]
 
         @classmethod
-        def _new_client(cls, server: Grid.Callback.Server) -> "Grid.CallbackClient": ...
+        def _new_client(cls, server: Grid.Callback.Server) -> Grid.CallbackClient: ...
         class Server(Protocol):
             class SendcellsResultTuple(NamedTuple):
                 locations: Sequence[Grid.Location]
 
             class SendcellsCallContext(Protocol):
+                params: Grid.Callback.SendcellsRequest
                 results: Grid.Callback.SendcellsResult
 
             def sendCells(
@@ -467,8 +459,9 @@ class Grid:
                 _context: Grid.Callback.Server.SendcellsCallContext,
                 **kwargs: Any,
             ) -> Awaitable[Grid.Callback.Server.SendcellsResultTuple | None]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def sendCells_context(
+                self, context: Grid.Callback.Server.SendcellsCallContext
+            ) -> Awaitable[None]: ...
 
     class CallbackClient(Protocol):
         def sendCells(
@@ -607,7 +600,7 @@ class Grid:
     @classmethod
     def _new_client(
         cls, server: Grid.Server | Identifiable.Server | Persistent.Server
-    ) -> "GridClient": ...
+    ) -> GridClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class ClosestvalueatResultTuple(NamedTuple):
             val: Grid.Value.Builder | Grid.Value.Reader
@@ -642,27 +635,35 @@ class Grid:
             unit: str
 
         class ClosestvalueatCallContext(Protocol):
+            params: Grid.ClosestvalueatRequest
             results: Grid.ClosestvalueatResult
 
         class ResolutionCallContext(Protocol):
+            params: Grid.ResolutionRequest
             results: Grid.ResolutionResult
 
         class DimensionCallContext(Protocol):
+            params: Grid.DimensionRequest
             results: Grid.DimensionResult
 
         class NodatavalueCallContext(Protocol):
+            params: Grid.NodatavalueRequest
             results: Grid.NodatavalueResult
 
         class ValueatCallContext(Protocol):
+            params: Grid.ValueatRequest
             results: Grid.ValueatResult
 
         class LatlonboundsCallContext(Protocol):
+            params: Grid.LatlonboundsRequest
             results: Grid.LatlonboundsResult
 
         class StreamcellsCallContext(Protocol):
+            params: Grid.StreamcellsRequest
             results: Grid.StreamcellsResult
 
         class UnitCallContext(Protocol):
+            params: Grid.UnitRequest
             results: Grid.UnitResult
 
         def closestValueAt(
@@ -694,15 +695,27 @@ class Grid:
             _context: Grid.Server.ClosestvalueatCallContext,
             **kwargs: Any,
         ) -> Awaitable[Grid.Server.ClosestvalueatResultTuple | None]: ...
+        def closestValueAt_context(
+            self, context: Grid.Server.ClosestvalueatCallContext
+        ) -> Awaitable[None]: ...
         def resolution(
             self, _context: Grid.Server.ResolutionCallContext, **kwargs: Any
         ) -> Awaitable[Grid.Server.ResolutionResultTuple | None]: ...
+        def resolution_context(
+            self, context: Grid.Server.ResolutionCallContext
+        ) -> Awaitable[None]: ...
         def dimension(
             self, _context: Grid.Server.DimensionCallContext, **kwargs: Any
         ) -> Awaitable[Grid.Server.DimensionResultTuple | None]: ...
+        def dimension_context(
+            self, context: Grid.Server.DimensionCallContext
+        ) -> Awaitable[None]: ...
         def noDataValue(
             self, _context: Grid.Server.NodatavalueCallContext, **kwargs: Any
         ) -> Awaitable[Grid.Server.NodatavalueResultTuple | None]: ...
+        def noDataValue_context(
+            self, context: Grid.Server.NodatavalueCallContext
+        ) -> Awaitable[None]: ...
         def valueAt(
             self,
             row: int,
@@ -731,12 +744,18 @@ class Grid:
             _context: Grid.Server.ValueatCallContext,
             **kwargs: Any,
         ) -> Awaitable[Grid.Server.ValueatResultTuple | None]: ...
+        def valueAt_context(
+            self, context: Grid.Server.ValueatCallContext
+        ) -> Awaitable[None]: ...
         def latLonBounds(
             self,
             useCellCenter: bool,
             _context: Grid.Server.LatlonboundsCallContext,
             **kwargs: Any,
         ) -> Awaitable[Grid.Server.LatlonboundsResultTuple | None]: ...
+        def latLonBounds_context(
+            self, context: Grid.Server.LatlonboundsCallContext
+        ) -> Awaitable[None]: ...
         def streamCells(
             self,
             topLeft: Grid.RowCol.Reader,
@@ -746,11 +765,15 @@ class Grid:
         ) -> Awaitable[
             Grid.Callback.Server | Grid.Server.StreamcellsResultTuple | None
         ]: ...
+        def streamCells_context(
+            self, context: Grid.Server.StreamcellsCallContext
+        ) -> Awaitable[None]: ...
         def unit(
             self, _context: Grid.Server.UnitCallContext, **kwargs: Any
         ) -> Awaitable[str | Grid.Server.UnitResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def unit_context(
+            self, context: Grid.Server.UnitCallContext
+        ) -> Awaitable[None]: ...
 
 class GridClient(IdentifiableClient, PersistentClient):
     def closestValueAt(

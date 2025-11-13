@@ -6,16 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from .common_capnp import Identifiable, IdentifiableClient, IdInformation
 from .crop_capnp import Crop, CropClient
@@ -549,7 +540,7 @@ class Fertilizer:
     @classmethod
     def _new_client(
         cls, server: Fertilizer.Server | Identifiable.Server | Persistent.Server
-    ) -> "FertilizerClient": ...
+    ) -> FertilizerClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class NutrientsResultTuple(NamedTuple):
             nutrients: Sequence[Nutrient]
@@ -558,19 +549,25 @@ class Fertilizer:
             params: Any
 
         class NutrientsCallContext(Protocol):
+            params: Fertilizer.NutrientsRequest
             results: Fertilizer.NutrientsResult
 
         class ParametersCallContext(Protocol):
+            params: Fertilizer.ParametersRequest
             results: Fertilizer.ParametersResult
 
         def nutrients(
             self, _context: Fertilizer.Server.NutrientsCallContext, **kwargs: Any
         ) -> Awaitable[Fertilizer.Server.NutrientsResultTuple | None]: ...
+        def nutrients_context(
+            self, context: Fertilizer.Server.NutrientsCallContext
+        ) -> Awaitable[None]: ...
         def parameters(
             self, _context: Fertilizer.Server.ParametersCallContext, **kwargs: Any
         ) -> Awaitable[Fertilizer.Server.ParametersResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def parameters_context(
+            self, context: Fertilizer.Server.ParametersCallContext
+        ) -> Awaitable[None]: ...
 
 NutrientBuilder: TypeAlias = Nutrient.Builder
 NutrientReader: TypeAlias = Nutrient.Reader
@@ -1885,11 +1882,8 @@ class FertilizerService:
     @classmethod
     def _new_client(
         cls, server: FertilizerService.Server | Identifiable.Server | Registry.Server
-    ) -> "FertilizerServiceClient": ...
-    class Server(Registry.Server):
-        ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+    ) -> FertilizerServiceClient: ...
+    class Server(Registry.Server): ...
 
 class FertilizerServiceClient(RegistryClient): ...
 
@@ -1905,12 +1899,13 @@ class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server
-    ) -> "ServiceClient": ...
+    ) -> ServiceClient: ...
     class Server(Identifiable.Server):
         class ManagementatResultTuple(NamedTuple):
             mgmt: Sequence[Event]
 
         class ManagementatCallContext(Protocol):
+            params: Service.ManagementatRequest
             results: Service.ManagementatResult
 
         def managementAt(
@@ -1920,8 +1915,9 @@ class Service:
             _context: Service.Server.ManagementatCallContext,
             **kwargs: Any,
         ) -> Awaitable[Service.Server.ManagementatResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def managementAt_context(
+            self, context: Service.Server.ManagementatCallContext
+        ) -> Awaitable[None]: ...
 
 class ServiceClient(IdentifiableClient):
     def managementAt(

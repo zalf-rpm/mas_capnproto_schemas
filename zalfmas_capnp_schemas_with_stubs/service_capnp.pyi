@@ -12,7 +12,6 @@ from typing import (
     Literal,
     NamedTuple,
     Protocol,
-    Self,
     TypeAlias,
     TypeVar,
     overload,
@@ -44,24 +43,32 @@ class Admin:
         def send(self) -> None: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Admin.Server | Identifiable.Server
-    ) -> "AdminClient": ...
+    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> AdminClient: ...
     class Server(Identifiable.Server):
         class IdentitiesResultTuple(NamedTuple):
             pass
 
-        class HeartbeatCallContext(Protocol): ...
-        class SettimeoutCallContext(Protocol): ...
-        class StopCallContext(Protocol): ...
+        class HeartbeatCallContext(Protocol):
+            params: Admin.HeartbeatRequest
+
+        class SettimeoutCallContext(Protocol):
+            params: Admin.SettimeoutRequest
+
+        class StopCallContext(Protocol):
+            params: Admin.StopRequest
 
         class IdentitiesCallContext(Protocol):
+            params: Admin.IdentitiesRequest
             results: Admin.IdentitiesResult
 
-        class UpdateidentityCallContext(Protocol): ...
+        class UpdateidentityCallContext(Protocol):
+            params: Admin.UpdateidentityRequest
 
         def heartbeat(
             self, _context: Admin.Server.HeartbeatCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
+        def heartbeat_context(
+            self, context: Admin.Server.HeartbeatCallContext
         ) -> Awaitable[None]: ...
         def setTimeout(
             self,
@@ -69,20 +76,30 @@ class Admin:
             _context: Admin.Server.SettimeoutCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
+        def setTimeout_context(
+            self, context: Admin.Server.SettimeoutCallContext
+        ) -> Awaitable[None]: ...
         def stop(
             self, _context: Admin.Server.StopCallContext, **kwargs: Any
+        ) -> Awaitable[None]: ...
+        def stop_context(
+            self, context: Admin.Server.StopCallContext
         ) -> Awaitable[None]: ...
         def identities(
             self, _context: Admin.Server.IdentitiesCallContext, **kwargs: Any
         ) -> Awaitable[Admin.Server.IdentitiesResultTuple | None]: ...
+        def identities_context(
+            self, context: Admin.Server.IdentitiesCallContext
+        ) -> Awaitable[None]: ...
         def updateIdentity(
             self,
             oldId: str,
             _context: Admin.Server.UpdateidentityCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def updateIdentity_context(
+            self, context: Admin.Server.UpdateidentityCallContext
+        ) -> Awaitable[None]: ...
 
 class AdminClient(IdentifiableClient):
     def heartbeat(self) -> None: ...
@@ -110,19 +127,21 @@ class SimpleFactory:
     @classmethod
     def _new_client(
         cls, server: SimpleFactory.Server | Identifiable.Server
-    ) -> "SimpleFactoryClient": ...
+    ) -> SimpleFactoryClient: ...
     class Server(Identifiable.Server):
         class CreateResultTuple(NamedTuple):
             caps: Sequence[Identifiable]
 
         class CreateCallContext(Protocol):
+            params: SimpleFactory.CreateRequest
             results: SimpleFactory.CreateResult
 
         def create(
             self, _context: SimpleFactory.Server.CreateCallContext, **kwargs: Any
         ) -> Awaitable[SimpleFactory.Server.CreateResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def create_context(
+            self, context: SimpleFactory.Server.CreateCallContext
+        ) -> Awaitable[None]: ...
 
 class SimpleFactoryClient(IdentifiableClient):
     def create(self) -> SimpleFactory.CreateResult: ...
@@ -312,7 +331,7 @@ class Factory:
     @classmethod
     def _new_client(
         cls, server: Factory.Server | Identifiable.Server
-    ) -> "FactoryClient": ...
+    ) -> FactoryClient: ...
     class Server(Identifiable.Server):
         class CreateResultTuple(NamedTuple):
             adminCap: Any
@@ -323,9 +342,11 @@ class Factory:
             names: Sequence[str]
 
         class CreateCallContext(Protocol):
+            params: Factory.CreateRequest
             results: Factory.CreateResult
 
         class ServiceinterfacenamesCallContext(Protocol):
+            params: Factory.ServiceinterfacenamesRequest
             results: Factory.ServiceinterfacenamesResult
 
         def create(
@@ -336,13 +357,17 @@ class Factory:
             _context: Factory.Server.CreateCallContext,
             **kwargs: Any,
         ) -> Awaitable[Factory.Server.CreateResultTuple | None]: ...
+        def create_context(
+            self, context: Factory.Server.CreateCallContext
+        ) -> Awaitable[None]: ...
         def serviceInterfaceNames(
             self,
             _context: Factory.Server.ServiceinterfacenamesCallContext,
             **kwargs: Any,
         ) -> Awaitable[Factory.Server.ServiceinterfacenamesResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def serviceInterfaceNames_context(
+            self, context: Factory.Server.ServiceinterfacenamesCallContext
+        ) -> Awaitable[None]: ...
 
 class FactoryClient(IdentifiableClient):
     def create(
@@ -372,19 +397,21 @@ class Stoppable:
         success: bool
 
     @classmethod
-    def _new_client(cls, server: Stoppable.Server) -> "StoppableClient": ...
+    def _new_client(cls, server: Stoppable.Server) -> StoppableClient: ...
     class Server(Protocol):
         class StopResultTuple(NamedTuple):
             success: bool
 
         class StopCallContext(Protocol):
+            params: Stoppable.StopRequest
             results: Stoppable.StopResult
 
         def stop(
             self, _context: Stoppable.Server.StopCallContext, **kwargs: Any
         ) -> Awaitable[bool | Stoppable.Server.StopResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def stop_context(
+            self, context: Stoppable.Server.StopCallContext
+        ) -> Awaitable[None]: ...
 
 class StoppableClient(Protocol):
     def stop(self) -> Stoppable.StopResult: ...

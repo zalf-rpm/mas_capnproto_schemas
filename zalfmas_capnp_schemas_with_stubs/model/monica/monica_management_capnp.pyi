@@ -6,16 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from ...climate_capnp import Element
 from ...common_capnp import Identifiable, IdentifiableClient, IdInformation
@@ -2546,12 +2537,13 @@ class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server
-    ) -> "ServiceClient": ...
+    ) -> ServiceClient: ...
     class Server(Identifiable.Server):
         class ManagementatResultTuple(NamedTuple):
             mgmt: Sequence[Event]
 
         class ManagementatCallContext(Protocol):
+            params: Service.ManagementatRequest
             results: Service.ManagementatResult
 
         def managementAt(
@@ -2561,8 +2553,9 @@ class Service:
             _context: Service.Server.ManagementatCallContext,
             **kwargs: Any,
         ) -> Awaitable[Service.Server.ManagementatResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def managementAt_context(
+            self, context: Service.Server.ManagementatCallContext
+        ) -> Awaitable[None]: ...
 
 class ServiceClient(IdentifiableClient):
     def managementAt(

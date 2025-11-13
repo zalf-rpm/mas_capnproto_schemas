@@ -13,7 +13,6 @@ from typing import (
     Literal,
     NamedTuple,
     Protocol,
-    Self,
     TypeAlias,
     TypeVar,
     overload,
@@ -348,7 +347,7 @@ class Channel:
         @classmethod
         def _new_client(
             cls, server: Channel.Reader.Server | Identifiable.Server | Persistent.Server
-        ) -> "Channel.ReaderClient": ...
+        ) -> Channel.ReaderClient: ...
         class Server(Identifiable.Server, Persistent.Server):
             class ReadResultTuple(NamedTuple):
                 value: Any
@@ -361,26 +360,36 @@ class Channel:
                 noMsg: None
 
             class ReadCallContext(Protocol):
+                params: Channel.Reader.ReadRequest
                 results: Channel.Reader.ReadResult
 
-            class CloseCallContext(Protocol): ...
+            class CloseCallContext(Protocol):
+                params: Channel.Reader.CloseRequest
 
             class ReadifmsgCallContext(Protocol):
+                params: Channel.Reader.ReadifmsgRequest
                 results: Channel.Reader.ReadifmsgResult
 
             def read(
                 self, _context: Channel.Reader.Server.ReadCallContext, **kwargs: Any
             ) -> Awaitable[Channel.Reader.Server.ReadResultTuple | None]: ...
+            def read_context(
+                self, context: Channel.Reader.Server.ReadCallContext
+            ) -> Awaitable[None]: ...
             def close(
                 self, _context: Channel.Reader.Server.CloseCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
+            def close_context(
+                self, context: Channel.Reader.Server.CloseCallContext
             ) -> Awaitable[None]: ...
             def readIfMsg(
                 self,
                 _context: Channel.Reader.Server.ReadifmsgCallContext,
                 **kwargs: Any,
             ) -> Awaitable[Channel.Reader.Server.ReadifmsgResultTuple | None]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def readIfMsg_context(
+                self, context: Channel.Reader.Server.ReadifmsgCallContext
+            ) -> Awaitable[None]: ...
 
     class ReaderClient(IdentifiableClient, PersistentClient):
         def read(self) -> Channel.Reader.ReadResult: ...
@@ -412,15 +421,19 @@ class Channel:
         @classmethod
         def _new_client(
             cls, server: Channel.Writer.Server | Identifiable.Server | Persistent.Server
-        ) -> "Channel.WriterClient": ...
+        ) -> Channel.WriterClient: ...
         class Server(Identifiable.Server, Persistent.Server):
             class WriteifspaceResultTuple(NamedTuple):
                 success: bool
 
-            class WriteCallContext(Protocol): ...
-            class CloseCallContext(Protocol): ...
+            class WriteCallContext(Protocol):
+                params: Channel.Writer.WriteRequest
+
+            class CloseCallContext(Protocol):
+                params: Channel.Writer.CloseRequest
 
             class WriteifspaceCallContext(Protocol):
+                params: Channel.Writer.WriteifspaceRequest
                 results: Channel.Writer.WriteifspaceResult
 
             def write(
@@ -431,8 +444,14 @@ class Channel:
                 _context: Channel.Writer.Server.WriteCallContext,
                 **kwargs: Any,
             ) -> Awaitable[None]: ...
+            def write_context(
+                self, context: Channel.Writer.Server.WriteCallContext
+            ) -> Awaitable[None]: ...
             def close(
                 self, _context: Channel.Writer.Server.CloseCallContext, **kwargs: Any
+            ) -> Awaitable[None]: ...
+            def close_context(
+                self, context: Channel.Writer.Server.CloseCallContext
             ) -> Awaitable[None]: ...
             def writeIfSpace(
                 self,
@@ -444,8 +463,9 @@ class Channel:
             ) -> Awaitable[
                 bool | Channel.Writer.Server.WriteifspaceResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def writeIfSpace_context(
+                self, context: Channel.Writer.Server.WriteifspaceCallContext
+            ) -> Awaitable[None]: ...
 
     class WriterClient(IdentifiableClient, PersistentClient):
         def write(
@@ -637,7 +657,7 @@ class Channel:
     @classmethod
     def _new_client(
         cls, server: Channel.Server | Identifiable.Server | Persistent.Server
-    ) -> "ChannelClient": ...
+    ) -> ChannelClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class ReaderResultTuple(NamedTuple):
             r: Channel.Reader.Server
@@ -649,19 +669,26 @@ class Channel:
             r: Channel.Reader.Server
             w: Channel.Writer.Server
 
-        class SetbuffersizeCallContext(Protocol): ...
+        class SetbuffersizeCallContext(Protocol):
+            params: Channel.SetbuffersizeRequest
 
         class ReaderCallContext(Protocol):
+            params: Channel.ReaderRequest
             results: Channel.ReaderResult
 
         class WriterCallContext(Protocol):
+            params: Channel.WriterRequest
             results: Channel.WriterResult
 
         class EndpointsCallContext(Protocol):
+            params: Channel.EndpointsRequest
             results: Channel.EndpointsResult
 
-        class SetautoclosesemanticsCallContext(Protocol): ...
-        class CloseCallContext(Protocol): ...
+        class SetautoclosesemanticsCallContext(Protocol):
+            params: Channel.SetautoclosesemanticsRequest
+
+        class CloseCallContext(Protocol):
+            params: Channel.CloseRequest
 
         def setBufferSize(
             self,
@@ -669,24 +696,39 @@ class Channel:
             _context: Channel.Server.SetbuffersizeCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
+        def setBufferSize_context(
+            self, context: Channel.Server.SetbuffersizeCallContext
+        ) -> Awaitable[None]: ...
         def reader(
             self, _context: Channel.Server.ReaderCallContext, **kwargs: Any
         ) -> Awaitable[
             Channel.Reader.Server | Channel.Server.ReaderResultTuple | None
         ]: ...
+        def reader_context(
+            self, context: Channel.Server.ReaderCallContext
+        ) -> Awaitable[None]: ...
         def writer(
             self, _context: Channel.Server.WriterCallContext, **kwargs: Any
         ) -> Awaitable[
             Channel.Writer.Server | Channel.Server.WriterResultTuple | None
         ]: ...
+        def writer_context(
+            self, context: Channel.Server.WriterCallContext
+        ) -> Awaitable[None]: ...
         def endpoints(
             self, _context: Channel.Server.EndpointsCallContext, **kwargs: Any
         ) -> Awaitable[Channel.Server.EndpointsResultTuple | None]: ...
+        def endpoints_context(
+            self, context: Channel.Server.EndpointsCallContext
+        ) -> Awaitable[None]: ...
         def setAutoCloseSemantics(
             self,
             cs: Channel.CloseSemantics | Literal["fbp", "no"],
             _context: Channel.Server.SetautoclosesemanticsCallContext,
             **kwargs: Any,
+        ) -> Awaitable[None]: ...
+        def setAutoCloseSemantics_context(
+            self, context: Channel.Server.SetautoclosesemanticsCallContext
         ) -> Awaitable[None]: ...
         def close(
             self,
@@ -694,8 +736,9 @@ class Channel:
             _context: Channel.Server.CloseCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def close_context(
+            self, context: Channel.Server.CloseCallContext
+        ) -> Awaitable[None]: ...
 
 class ChannelClient(IdentifiableClient, PersistentClient):
     def setBufferSize(self, size: int | None = None) -> None: ...
@@ -858,12 +901,13 @@ class StartChannelsService:
     @classmethod
     def _new_client(
         cls, server: StartChannelsService.Server | Identifiable.Server
-    ) -> "StartChannelsServiceClient": ...
+    ) -> StartChannelsServiceClient: ...
     class Server(Identifiable.Server):
         class StartResultTuple(NamedTuple):
             startupInfos: Sequence[Channel.StartupInfo]
 
         class StartCallContext(Protocol):
+            params: StartChannelsService.StartRequest
             results: StartChannelsService.StartResult
 
         def start(
@@ -878,8 +922,9 @@ class StartChannelsService:
             _context: StartChannelsService.Server.StartCallContext,
             **kwargs: Any,
         ) -> Awaitable[StartChannelsService.Server.StartResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def start_context(
+            self, context: StartChannelsService.Server.StartCallContext
+        ) -> Awaitable[None]: ...
 
 class StartChannelsServiceClient(IdentifiableClient):
     def start(
@@ -1090,7 +1135,7 @@ class Component:
         @classmethod
         def _new_client(
             cls, server: Component.Runnable.Server | Identifiable.Server
-        ) -> "Component.RunnableClient": ...
+        ) -> Component.RunnableClient: ...
         class Server(Identifiable.Server):
             class StartResultTuple(NamedTuple):
                 success: bool
@@ -1099,9 +1144,11 @@ class Component:
                 success: bool
 
             class StartCallContext(Protocol):
+                params: Component.Runnable.StartRequest
                 results: Component.Runnable.StartResult
 
             class StopCallContext(Protocol):
+                params: Component.Runnable.StopRequest
                 results: Component.Runnable.StopResult
 
             def start(
@@ -1113,11 +1160,15 @@ class Component:
             ) -> Awaitable[
                 bool | Component.Runnable.Server.StartResultTuple | None
             ]: ...
+            def start_context(
+                self, context: Component.Runnable.Server.StartCallContext
+            ) -> Awaitable[None]: ...
             def stop(
                 self, _context: Component.Runnable.Server.StopCallContext, **kwargs: Any
             ) -> Awaitable[bool | Component.Runnable.Server.StopResultTuple | None]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def stop_context(
+                self, context: Component.Runnable.Server.StopCallContext
+            ) -> Awaitable[None]: ...
 
     class RunnableClient(IdentifiableClient):
         def start(

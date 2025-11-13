@@ -6,16 +6,7 @@ from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from enum import Enum
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from .common_capnp import Identifiable, IdentifiableClient
 from .persistence_capnp import Persistent, PersistentClient
@@ -518,7 +509,7 @@ class Profile:
     @classmethod
     def _new_client(
         cls, server: Profile.Server | Identifiable.Server | Persistent.Server
-    ) -> "ProfileClient": ...
+    ) -> ProfileClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class DataResultTuple(NamedTuple):
             layers: Sequence[Layer]
@@ -529,19 +520,25 @@ class Profile:
             lon: float
 
         class DataCallContext(Protocol):
+            params: Profile.DataRequest
             results: Profile.DataResult
 
         class GeolocationCallContext(Protocol):
+            params: Profile.GeolocationRequest
             results: Profile.GeolocationResult
 
         def data(
             self, _context: Profile.Server.DataCallContext, **kwargs: Any
         ) -> Awaitable[Profile.Server.DataResultTuple | None]: ...
+        def data_context(
+            self, context: Profile.Server.DataCallContext
+        ) -> Awaitable[None]: ...
         def geoLocation(
             self, _context: Profile.Server.GeolocationCallContext, **kwargs: Any
         ) -> Awaitable[Profile.Server.GeolocationResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def geoLocation_context(
+            self, context: Profile.Server.GeolocationCallContext
+        ) -> Awaitable[None]: ...
 
 class ProfileClient(IdentifiableClient, PersistentClient):
     def data(self) -> Profile.DataResult: ...
@@ -559,14 +556,13 @@ class Service:
             profiles: Sequence[Profile]
 
         @classmethod
-        def _new_client(
-            cls, server: Service.Stream.Server
-        ) -> "Service.StreamClient": ...
+        def _new_client(cls, server: Service.Stream.Server) -> Service.StreamClient: ...
         class Server(Protocol):
             class NextprofilesResultTuple(NamedTuple):
                 profiles: Sequence[Profile]
 
             class NextprofilesCallContext(Protocol):
+                params: Service.Stream.NextprofilesRequest
                 results: Service.Stream.NextprofilesResult
 
             def nextProfiles(
@@ -575,8 +571,9 @@ class Service:
                 _context: Service.Stream.Server.NextprofilesCallContext,
                 **kwargs: Any,
             ) -> Awaitable[Service.Stream.Server.NextprofilesResultTuple | None]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def nextProfiles_context(
+                self, context: Service.Stream.Server.NextprofilesCallContext
+            ) -> Awaitable[None]: ...
 
     class StreamClient(Protocol):
         def nextProfiles(
@@ -652,7 +649,7 @@ class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Persistent.Server
-    ) -> "ServiceClient": ...
+    ) -> ServiceClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class CheckavailableparametersResultTuple(NamedTuple):
             failed: bool
@@ -670,15 +667,19 @@ class Service:
             allProfiles: Service.Stream.Server
 
         class CheckavailableparametersCallContext(Protocol):
+            params: Service.CheckavailableparametersRequest
             results: Service.CheckavailableparametersResult
 
         class GetallavailableparametersCallContext(Protocol):
+            params: Service.GetallavailableparametersRequest
             results: Service.GetallavailableparametersResult
 
         class ClosestprofilesatCallContext(Protocol):
+            params: Service.ClosestprofilesatRequest
             results: Service.ClosestprofilesatResult
 
         class StreamallprofilesCallContext(Protocol):
+            params: Service.StreamallprofilesRequest
             results: Service.StreamallprofilesResult
 
         def checkAvailableParameters(
@@ -689,18 +690,27 @@ class Service:
             _context: Service.Server.CheckavailableparametersCallContext,
             **kwargs: Any,
         ) -> Awaitable[Service.Server.CheckavailableparametersResultTuple | None]: ...
+        def checkAvailableParameters_context(
+            self, context: Service.Server.CheckavailableparametersCallContext
+        ) -> Awaitable[None]: ...
         def getAllAvailableParameters(
             self,
             onlyRawData: bool,
             _context: Service.Server.GetallavailableparametersCallContext,
             **kwargs: Any,
         ) -> Awaitable[Service.Server.GetallavailableparametersResultTuple | None]: ...
+        def getAllAvailableParameters_context(
+            self, context: Service.Server.GetallavailableparametersCallContext
+        ) -> Awaitable[None]: ...
         def closestProfilesAt(
             self,
             query: Query.Reader,
             _context: Service.Server.ClosestprofilesatCallContext,
             **kwargs: Any,
         ) -> Awaitable[Service.Server.ClosestprofilesatResultTuple | None]: ...
+        def closestProfilesAt_context(
+            self, context: Service.Server.ClosestprofilesatCallContext
+        ) -> Awaitable[None]: ...
         def streamAllProfiles(
             self,
             mandatory: Sequence[PropertyName],
@@ -711,8 +721,9 @@ class Service:
         ) -> Awaitable[
             Service.Stream.Server | Service.Server.StreamallprofilesResultTuple | None
         ]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def streamAllProfiles_context(
+            self, context: Service.Server.StreamallprofilesCallContext
+        ) -> Awaitable[None]: ...
 
 class ServiceClient(IdentifiableClient, PersistentClient):
     def checkAvailableParameters(

@@ -5,16 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Generic,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    TypeVar,
-)
+from typing import Any, BinaryIO, Generic, NamedTuple, Protocol, TypeAlias, TypeVar
 
 from .common_capnp import Identifiable, IdentifiableClient
 from .persistence_capnp import Persistent, PersistentClient
@@ -97,19 +88,21 @@ class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Persistent.Server
-    ) -> "ServiceClient": ...
+    ) -> ServiceClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class NextjobResultTuple(NamedTuple):
             job: Job.Builder | Job.Reader
 
         class NextjobCallContext(Protocol):
+            params: Service.NextjobRequest
             results: Service.NextjobResult
 
         def nextJob(
             self, _context: Service.Server.NextjobCallContext, **kwargs: Any
         ) -> Awaitable[Service.Server.NextjobResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def nextJob_context(
+            self, context: Service.Server.NextjobCallContext
+        ) -> Awaitable[None]: ...
 
 class ServiceClient(IdentifiableClient, PersistentClient):
     def nextJob(self) -> Service.NextjobResult: ...

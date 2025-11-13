@@ -5,16 +5,7 @@ from __future__ import annotations
 from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import contextmanager
 from io import BufferedWriter
-from typing import (
-    Any,
-    BinaryIO,
-    Literal,
-    NamedTuple,
-    Protocol,
-    Self,
-    TypeAlias,
-    overload,
-)
+from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
 
 from .common_capnp import Identifiable, IdentifiableClient
 from .persistence_capnp import Restorer, RestorerClient, VatId
@@ -69,9 +60,7 @@ class Admin:
         registry: Any
 
     @classmethod
-    def _new_client(
-        cls, server: Admin.Server | Identifiable.Server
-    ) -> "AdminClient": ...
+    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> AdminClient: ...
     class Server(Identifiable.Server):
         class AddcategoryResultTuple(NamedTuple):
             success: bool
@@ -89,18 +78,23 @@ class Admin:
             pass
 
         class AddcategoryCallContext(Protocol):
+            params: Admin.AddcategoryRequest
             results: Admin.AddcategoryResult
 
         class RemovecategoryCallContext(Protocol):
+            params: Admin.RemovecategoryRequest
             results: Admin.RemovecategoryResult
 
         class MoveobjectsCallContext(Protocol):
+            params: Admin.MoveobjectsRequest
             results: Admin.MoveobjectsResult
 
         class RemoveobjectsCallContext(Protocol):
+            params: Admin.RemoveobjectsRequest
             results: Admin.RemoveobjectsResult
 
         class RegistryCallContext(Protocol):
+            params: Admin.RegistryRequest
             results: Admin.RegistryResult
 
         def addCategory(
@@ -109,6 +103,9 @@ class Admin:
             _context: Admin.Server.AddcategoryCallContext,
             **kwargs: Any,
         ) -> Awaitable[bool | Admin.Server.AddcategoryResultTuple | None]: ...
+        def addCategory_context(
+            self, context: Admin.Server.AddcategoryCallContext
+        ) -> Awaitable[None]: ...
         def removeCategory(
             self,
             categoryId: str,
@@ -116,6 +113,9 @@ class Admin:
             _context: Admin.Server.RemovecategoryCallContext,
             **kwargs: Any,
         ) -> Awaitable[Admin.Server.RemovecategoryResultTuple | None]: ...
+        def removeCategory_context(
+            self, context: Admin.Server.RemovecategoryCallContext
+        ) -> Awaitable[None]: ...
         def moveObjects(
             self,
             objectIds: Sequence[str],
@@ -123,17 +123,24 @@ class Admin:
             _context: Admin.Server.MoveobjectsCallContext,
             **kwargs: Any,
         ) -> Awaitable[Admin.Server.MoveobjectsResultTuple | None]: ...
+        def moveObjects_context(
+            self, context: Admin.Server.MoveobjectsCallContext
+        ) -> Awaitable[None]: ...
         def removeObjects(
             self,
             objectIds: Sequence[str],
             _context: Admin.Server.RemoveobjectsCallContext,
             **kwargs: Any,
         ) -> Awaitable[Admin.Server.RemoveobjectsResultTuple | None]: ...
+        def removeObjects_context(
+            self, context: Admin.Server.RemoveobjectsCallContext
+        ) -> Awaitable[None]: ...
         def registry(
             self, _context: Admin.Server.RegistryCallContext, **kwargs: Any
         ) -> Awaitable[Admin.Server.RegistryResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def registry_context(
+            self, context: Admin.Server.RegistryCallContext
+        ) -> Awaitable[None]: ...
 
 class AdminClient(IdentifiableClient):
     def addCategory(self, upsert: bool | None = None) -> Admin.AddcategoryResult: ...
@@ -266,7 +273,7 @@ class Registry:
     @classmethod
     def _new_client(
         cls, server: Registry.Server | Identifiable.Server
-    ) -> "RegistryClient": ...
+    ) -> RegistryClient: ...
     class Server(Identifiable.Server):
         class SupportedcategoriesResultTuple(NamedTuple):
             pass
@@ -280,12 +287,15 @@ class Registry:
             entries: Sequence[Registry.Entry]
 
         class SupportedcategoriesCallContext(Protocol):
+            params: Registry.SupportedcategoriesRequest
             results: Registry.SupportedcategoriesResult
 
         class CategoryinfoCallContext(Protocol):
+            params: Registry.CategoryinfoRequest
             results: Registry.CategoryinfoResult
 
         class EntriesCallContext(Protocol):
+            params: Registry.EntriesRequest
             results: Registry.EntriesResult
 
         def supportedCategories(
@@ -293,20 +303,27 @@ class Registry:
             _context: Registry.Server.SupportedcategoriesCallContext,
             **kwargs: Any,
         ) -> Awaitable[Registry.Server.SupportedcategoriesResultTuple | None]: ...
+        def supportedCategories_context(
+            self, context: Registry.Server.SupportedcategoriesCallContext
+        ) -> Awaitable[None]: ...
         def categoryInfo(
             self,
             categoryId: str,
             _context: Registry.Server.CategoryinfoCallContext,
             **kwargs: Any,
         ) -> Awaitable[Registry.Server.CategoryinfoResultTuple | None]: ...
+        def categoryInfo_context(
+            self, context: Registry.Server.CategoryinfoCallContext
+        ) -> Awaitable[None]: ...
         def entries(
             self,
             categoryId: str,
             _context: Registry.Server.EntriesCallContext,
             **kwargs: Any,
         ) -> Awaitable[Registry.Server.EntriesResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def entries_context(
+            self, context: Registry.Server.EntriesCallContext
+        ) -> Awaitable[None]: ...
 
 class RegistryClient(IdentifiableClient):
     def supportedCategories(self) -> Registry.SupportedcategoriesResult: ...
@@ -496,12 +513,13 @@ class Registrar:
         @classmethod
         def _new_client(
             cls, server: Registrar.Unregister.Server
-        ) -> "Registrar.UnregisterClient": ...
+        ) -> Registrar.UnregisterClient: ...
         class Server(Protocol):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
             class UnregisterCallContext(Protocol):
+                params: Registrar.Unregister.UnregisterRequest
                 results: Registrar.Unregister.UnregisterResult
 
             def unregister(
@@ -511,8 +529,9 @@ class Registrar:
             ) -> Awaitable[
                 bool | Registrar.Unregister.Server.UnregisterResultTuple | None
             ]: ...
-            def __enter__(self) -> Self: ...
-            def __exit__(self, *args: Any) -> None: ...
+            def unregister_context(
+                self, context: Registrar.Unregister.Server.UnregisterCallContext
+            ) -> Awaitable[None]: ...
 
     class UnregisterClient(Protocol):
         def unregister(self) -> Registrar.Unregister.UnregisterResult: ...
@@ -538,12 +557,13 @@ class Registrar:
     @classmethod
     def _new_client(
         cls, server: Registrar.Server | Identifiable.Server
-    ) -> "RegistrarClient": ...
+    ) -> RegistrarClient: ...
     class Server(Identifiable.Server):
         class RegisterResultTuple(NamedTuple):
             unreg: Registrar.Unregister.Server
 
         class RegisterCallContext(Protocol):
+            params: Registrar.RegisterRequest
             results: Registrar.RegisterResult
 
         def register(
@@ -555,8 +575,9 @@ class Registrar:
             _context: Registrar.Server.RegisterCallContext,
             **kwargs: Any,
         ) -> Awaitable[Registrar.Server.RegisterResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def register_context(
+            self, context: Registrar.Server.RegisterCallContext
+        ) -> Awaitable[None]: ...
 
 class RegistrarClient(IdentifiableClient):
     def register(

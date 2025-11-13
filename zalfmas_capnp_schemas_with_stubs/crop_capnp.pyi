@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable
-from typing import Any, NamedTuple, Protocol, Self
+from typing import Any, NamedTuple, Protocol
 
 from .common_capnp import Identifiable, IdentifiableClient
 from .persistence_capnp import Persistent, PersistentClient
@@ -31,7 +31,7 @@ class Crop:
     @classmethod
     def _new_client(
         cls, server: Crop.Server | Identifiable.Server | Persistent.Server
-    ) -> "CropClient": ...
+    ) -> CropClient: ...
     class Server(Identifiable.Server, Persistent.Server):
         class ParametersResultTuple(NamedTuple):
             params: Any
@@ -43,25 +43,35 @@ class Crop:
             pass
 
         class ParametersCallContext(Protocol):
+            params: Crop.ParametersRequest
             results: Crop.ParametersResult
 
         class CultivarCallContext(Protocol):
+            params: Crop.CultivarRequest
             results: Crop.CultivarResult
 
         class SpeciesCallContext(Protocol):
+            params: Crop.SpeciesRequest
             results: Crop.SpeciesResult
 
         def parameters(
             self, _context: Crop.Server.ParametersCallContext, **kwargs: Any
         ) -> Awaitable[Crop.Server.ParametersResultTuple | None]: ...
+        def parameters_context(
+            self, context: Crop.Server.ParametersCallContext
+        ) -> Awaitable[None]: ...
         def cultivar(
             self, _context: Crop.Server.CultivarCallContext, **kwargs: Any
         ) -> Awaitable[Crop.Server.CultivarResultTuple | None]: ...
+        def cultivar_context(
+            self, context: Crop.Server.CultivarCallContext
+        ) -> Awaitable[None]: ...
         def species(
             self, _context: Crop.Server.SpeciesCallContext, **kwargs: Any
         ) -> Awaitable[Crop.Server.SpeciesResultTuple | None]: ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+        def species_context(
+            self, context: Crop.Server.SpeciesCallContext
+        ) -> Awaitable[None]: ...
 
 class CropClient(IdentifiableClient, PersistentClient):
     def parameters(self) -> Crop.ParametersResult: ...
@@ -75,10 +85,7 @@ class Service:
     @classmethod
     def _new_client(
         cls, server: Service.Server | Identifiable.Server | Registry.Server
-    ) -> "ServiceClient": ...
-    class Server(Registry.Server):
-        ...
-        def __enter__(self) -> Self: ...
-        def __exit__(self, *args: Any) -> None: ...
+    ) -> ServiceClient: ...
+    class Server(Registry.Server): ...
 
 class ServiceClient(RegistryClient): ...
