@@ -2,21 +2,33 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
+from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
 
-from .common_capnp import Identifiable, IdentifiableClient, IdInformation, Pair
-from .persistence_capnp import Persistent, PersistentClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class Store:
-    class Container:
-        class Entry:
-            ValueBuilder: TypeAlias = Value.Builder
-            ValueReader: TypeAlias = Value.Reader
-            class Value:
-                class Reader:
+from .common_capnp import (
+    Identifiable,
+    IdentifiableClient,
+    _IdentifiableModule,
+    _IdInformationModule,
+    _PairModule,
+)
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
+
+class _StoreModule(_IdentifiableModule, _PersistentModule):
+    class _ContainerModule(_IdentifiableModule, _PersistentModule):
+        class _EntryModule(_InterfaceModule):
+            class _ValueModule(_StructModule):
+                class Reader(_DynamicStructReader):
                     @property
                     def boolValue(self) -> bool: ...
                     @property
@@ -71,6 +83,7 @@ class Store:
                     def dataListValue(self) -> Sequence[bytes]: ...
                     @property
                     def anyValue(self) -> Any: ...
+                    @override
                     def which(
                         self,
                     ) -> Literal[
@@ -102,15 +115,16 @@ class Store:
                         "dataListValue",
                         "anyValue",
                     ]: ...
-                    def as_builder(self) -> Store.Container.Entry.Value.Builder: ...
+                    @override
+                    def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
 
-                class Builder:
+                class Builder(_DynamicStructBuilder):
                     @property
                     def boolValue(self) -> bool: ...
                     @boolValue.setter
                     def boolValue(self, value: bool) -> None: ...
                     @property
-                    def boolListValue(self) -> Sequence[bool]: ...
+                    def boolListValue(self) -> MutableSequence[bool]: ...
                     @boolListValue.setter
                     def boolListValue(self, value: Sequence[bool]) -> None: ...
                     @property
@@ -118,7 +132,7 @@ class Store:
                     @int8Value.setter
                     def int8Value(self, value: int) -> None: ...
                     @property
-                    def int8ListValue(self) -> Sequence[int]: ...
+                    def int8ListValue(self) -> MutableSequence[int]: ...
                     @int8ListValue.setter
                     def int8ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -126,7 +140,7 @@ class Store:
                     @int16Value.setter
                     def int16Value(self, value: int) -> None: ...
                     @property
-                    def int16ListValue(self) -> Sequence[int]: ...
+                    def int16ListValue(self) -> MutableSequence[int]: ...
                     @int16ListValue.setter
                     def int16ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -134,7 +148,7 @@ class Store:
                     @int32Value.setter
                     def int32Value(self, value: int) -> None: ...
                     @property
-                    def int32ListValue(self) -> Sequence[int]: ...
+                    def int32ListValue(self) -> MutableSequence[int]: ...
                     @int32ListValue.setter
                     def int32ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -142,7 +156,7 @@ class Store:
                     @int64Value.setter
                     def int64Value(self, value: int) -> None: ...
                     @property
-                    def int64ListValue(self) -> Sequence[int]: ...
+                    def int64ListValue(self) -> MutableSequence[int]: ...
                     @int64ListValue.setter
                     def int64ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -150,7 +164,7 @@ class Store:
                     @uint8Value.setter
                     def uint8Value(self, value: int) -> None: ...
                     @property
-                    def uint8ListValue(self) -> Sequence[int]: ...
+                    def uint8ListValue(self) -> MutableSequence[int]: ...
                     @uint8ListValue.setter
                     def uint8ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -158,7 +172,7 @@ class Store:
                     @uint16Value.setter
                     def uint16Value(self, value: int) -> None: ...
                     @property
-                    def uint16ListValue(self) -> Sequence[int]: ...
+                    def uint16ListValue(self) -> MutableSequence[int]: ...
                     @uint16ListValue.setter
                     def uint16ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -166,7 +180,7 @@ class Store:
                     @uint32Value.setter
                     def uint32Value(self, value: int) -> None: ...
                     @property
-                    def uint32ListValue(self) -> Sequence[int]: ...
+                    def uint32ListValue(self) -> MutableSequence[int]: ...
                     @uint32ListValue.setter
                     def uint32ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -174,7 +188,7 @@ class Store:
                     @uint64Value.setter
                     def uint64Value(self, value: int) -> None: ...
                     @property
-                    def uint64ListValue(self) -> Sequence[int]: ...
+                    def uint64ListValue(self) -> MutableSequence[int]: ...
                     @uint64ListValue.setter
                     def uint64ListValue(self, value: Sequence[int]) -> None: ...
                     @property
@@ -182,7 +196,7 @@ class Store:
                     @float32Value.setter
                     def float32Value(self, value: float) -> None: ...
                     @property
-                    def float32ListValue(self) -> Sequence[float]: ...
+                    def float32ListValue(self) -> MutableSequence[float]: ...
                     @float32ListValue.setter
                     def float32ListValue(self, value: Sequence[float]) -> None: ...
                     @property
@@ -190,7 +204,7 @@ class Store:
                     @float64Value.setter
                     def float64Value(self, value: float) -> None: ...
                     @property
-                    def float64ListValue(self) -> Sequence[float]: ...
+                    def float64ListValue(self) -> MutableSequence[float]: ...
                     @float64ListValue.setter
                     def float64ListValue(self, value: Sequence[float]) -> None: ...
                     @property
@@ -198,7 +212,7 @@ class Store:
                     @textValue.setter
                     def textValue(self, value: str) -> None: ...
                     @property
-                    def textListValue(self) -> Sequence[str]: ...
+                    def textListValue(self) -> MutableSequence[str]: ...
                     @textListValue.setter
                     def textListValue(self, value: Sequence[str]) -> None: ...
                     @property
@@ -206,13 +220,14 @@ class Store:
                     @dataValue.setter
                     def dataValue(self, value: bytes) -> None: ...
                     @property
-                    def dataListValue(self) -> Sequence[bytes]: ...
+                    def dataListValue(self) -> MutableSequence[bytes]: ...
                     @dataListValue.setter
                     def dataListValue(self, value: Sequence[bytes]) -> None: ...
                     @property
                     def anyValue(self) -> Any: ...
                     @anyValue.setter
                     def anyValue(self, value: Any) -> None: ...
+                    @override
                     def which(
                         self,
                     ) -> Literal[
@@ -244,119 +259,40 @@ class Store:
                         "dataListValue",
                         "anyValue",
                     ]: ...
-                    @staticmethod
-                    def from_dict(
-                        dictionary: dict[str, Any],
-                    ) -> Store.Container.Entry.Value.Builder: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["boolListValue"], size: int = ...
-                    ) -> Sequence[bool]: ...
+                    def init(self, field: Literal["boolListValue"], size: int | None = None) -> MutableSequence[bool]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["int8ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["int8ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["int16ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["int16ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["int32ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["int32ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["int64ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["int64ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["uint8ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["uint8ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["uint16ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["uint16ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["uint32ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["uint32ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["uint64ListValue"], size: int = ...
-                    ) -> Sequence[int]: ...
+                    def init(self, field: Literal["uint64ListValue"], size: int | None = None) -> MutableSequence[int]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["float32ListValue"], size: int = ...
-                    ) -> Sequence[float]: ...
+                    def init(self, field: Literal["float32ListValue"], size: int | None = None) -> MutableSequence[float]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["float64ListValue"], size: int = ...
-                    ) -> Sequence[float]: ...
+                    def init(self, field: Literal["float64ListValue"], size: int | None = None) -> MutableSequence[float]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["textListValue"], size: int = ...
-                    ) -> Sequence[str]: ...
+                    def init(self, field: Literal["textListValue"], size: int | None = None) -> MutableSequence[str]: ...
                     @overload
-                    def init(
-                        self: Any, name: Literal["dataListValue"], size: int = ...
-                    ) -> Sequence[bytes]: ...
-                    def init(self: Any, name: str, size: int = ...) -> Any: ...
-                    def copy(self) -> Store.Container.Entry.Value.Builder: ...
-                    def to_bytes(self) -> bytes: ...
-                    def to_bytes_packed(self) -> bytes: ...
-                    def to_segments(self) -> list[bytes]: ...
-                    def as_reader(self) -> Store.Container.Entry.Value.Reader: ...
-                    @staticmethod
-                    def write(file: BufferedWriter) -> None: ...
-                    @staticmethod
-                    def write_packed(file: BufferedWriter) -> None: ...
+                    def init(self, field: Literal["dataListValue"], size: int | None = None) -> MutableSequence[bytes]: ...
+                    @overload
+                    def init(self, field: str, size: int | None = None) -> Any: ...
+                    @override
+                    def as_reader(self) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Reader: ...
 
-                def which(
-                    self,
-                ) -> Literal[
-                    "boolValue",
-                    "boolListValue",
-                    "int8Value",
-                    "int8ListValue",
-                    "int16Value",
-                    "int16ListValue",
-                    "int32Value",
-                    "int32ListValue",
-                    "int64Value",
-                    "int64ListValue",
-                    "uint8Value",
-                    "uint8ListValue",
-                    "uint16Value",
-                    "uint16ListValue",
-                    "uint32Value",
-                    "uint32ListValue",
-                    "uint64Value",
-                    "uint64ListValue",
-                    "float32Value",
-                    "float32ListValue",
-                    "float64Value",
-                    "float64ListValue",
-                    "textValue",
-                    "textListValue",
-                    "dataValue",
-                    "dataListValue",
-                    "anyValue",
-                ]: ...
-                @contextmanager
-                @staticmethod
-                def from_bytes(
-                    data: bytes,
-                    traversal_limit_in_words: int | None = ...,
-                    nesting_limit: int | None = ...,
-                ) -> Iterator[Store.Container.Entry.Value.Reader]: ...
-                @staticmethod
-                def from_bytes_packed(
-                    data: bytes,
-                    traversal_limit_in_words: int | None = ...,
-                    nesting_limit: int | None = ...,
-                ) -> Store.Container.Entry.Value.Reader: ...
-                @staticmethod
+                @override
                 def new_message(
+                    self,
                     num_first_segment_words: int | None = None,
                     allocate_seg_callable: Any = None,
                     boolValue: bool | None = None,
@@ -386,258 +322,171 @@ class Store:
                     dataValue: bytes | None = None,
                     dataListValue: Sequence[bytes] | None = None,
                     anyValue: Any | None = None,
-                ) -> Store.Container.Entry.Value.Builder: ...
-                @staticmethod
-                def read(
-                    file: BinaryIO,
-                    traversal_limit_in_words: int | None = ...,
-                    nesting_limit: int | None = ...,
-                ) -> Store.Container.Entry.Value.Reader: ...
-                @staticmethod
-                def read_packed(
-                    file: BinaryIO,
-                    traversal_limit_in_words: int | None = ...,
-                    nesting_limit: int | None = ...,
-                ) -> Store.Container.Entry.Value.Reader: ...
-                def to_dict(self) -> dict[str, Any]: ...
+                ) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
 
+            ValueReader: TypeAlias = _ValueModule.Reader
+            ValueBuilder: TypeAlias = _ValueModule.Builder
+            Value: _ValueModule
             class GetkeyRequest(Protocol):
-                def send(self) -> Store.Container.Entry.GetkeyResult: ...
-
-            class GetkeyResult(Awaitable[GetkeyResult], Protocol):
-                key: str
+                def send(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetkeyResult: ...
 
             class GetvalueRequest(Protocol):
-                def send(self) -> Store.Container.Entry.GetvalueResult: ...
-
-            class GetvalueResult(Awaitable[GetvalueResult], Protocol):
-                value: (
-                    Store.Container.Entry.Value.Builder
-                    | Store.Container.Entry.Value.Reader
-                )
-                isUnset: bool
+                def send(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetvalueResult: ...
 
             class SetvalueRequest(Protocol):
-                value: Store.Container.Entry.Value.Builder
+                value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
                 @overload
-                def init(
-                    self, name: Literal["value"]
-                ) -> Store.Container.Entry.Value.Builder: ...
+                def init(self, name: Literal["value"]) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
                 @overload
                 def init(self, name: str, size: int = ...) -> Any: ...
-                def send(self) -> Store.Container.Entry.SetvalueResult: ...
-
-            class SetvalueResult(Awaitable[SetvalueResult], Protocol):
-                success: bool
+                def send(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.SetvalueResult: ...
 
             @classmethod
-            def _new_client(
-                cls, server: Store.Container.Entry.Server
-            ) -> Store.Container.EntryClient: ...
-            class Server(Protocol):
+            def _new_client(cls, server: _StoreModule._ContainerModule._EntryModule.Server) -> _StoreModule._ContainerModule._EntryModule.EntryClient: ...
+            class Server(_DynamicCapabilityServer):
+                class GetkeyResult(Awaitable[GetkeyResult], Protocol):
+                    key: str
+
+                class GetvalueResult(Awaitable[GetvalueResult], Protocol):
+                    value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
+                    isUnset: bool
+
+                class SetvalueResult(Awaitable[SetvalueResult], Protocol):
+                    success: bool
+
                 class GetkeyResultTuple(NamedTuple):
                     key: str
 
                 class GetvalueResultTuple(NamedTuple):
-                    value: (
-                        Store.Container.Entry.Value.Builder
-                        | Store.Container.Entry.Value.Reader
-                    )
+                    value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
                     isUnset: bool
 
                 class SetvalueResultTuple(NamedTuple):
                     success: bool
 
                 class GetkeyCallContext(Protocol):
-                    params: Store.Container.Entry.GetkeyRequest
-                    results: Store.Container.Entry.GetkeyResult
+                    params: _StoreModule._ContainerModule._EntryModule.GetkeyRequest
+                    results: _StoreModule._ContainerModule._EntryModule.Server.GetkeyResult
 
                 class GetvalueCallContext(Protocol):
-                    params: Store.Container.Entry.GetvalueRequest
-                    results: Store.Container.Entry.GetvalueResult
+                    params: _StoreModule._ContainerModule._EntryModule.GetvalueRequest
+                    results: _StoreModule._ContainerModule._EntryModule.Server.GetvalueResult
 
                 class SetvalueCallContext(Protocol):
-                    params: Store.Container.Entry.SetvalueRequest
-                    results: Store.Container.Entry.SetvalueResult
+                    params: _StoreModule._ContainerModule._EntryModule.SetvalueRequest
+                    results: _StoreModule._ContainerModule._EntryModule.Server.SetvalueResult
 
-                def getKey(
-                    self,
-                    _context: Store.Container.Entry.Server.GetkeyCallContext,
-                    **kwargs: Any,
-                ) -> Awaitable[
-                    str | Store.Container.Entry.Server.GetkeyResultTuple | None
-                ]: ...
-                def getKey_context(
-                    self, context: Store.Container.Entry.Server.GetkeyCallContext
-                ) -> Awaitable[None]: ...
-                def getValue(
-                    self,
-                    _context: Store.Container.Entry.Server.GetvalueCallContext,
-                    **kwargs: Any,
-                ) -> Awaitable[
-                    Store.Container.Entry.Server.GetvalueResultTuple | None
-                ]: ...
-                def getValue_context(
-                    self, context: Store.Container.Entry.Server.GetvalueCallContext
-                ) -> Awaitable[None]: ...
-                def setValue(
-                    self,
-                    value: Store.Container.Entry.Value.Reader,
-                    _context: Store.Container.Entry.Server.SetvalueCallContext,
-                    **kwargs: Any,
-                ) -> Awaitable[
-                    bool | Store.Container.Entry.Server.SetvalueResultTuple | None
-                ]: ...
-                def setValue_context(
-                    self, context: Store.Container.Entry.Server.SetvalueCallContext
-                ) -> Awaitable[None]: ...
+                def getKey(self, _context: _StoreModule._ContainerModule._EntryModule.Server.GetkeyCallContext, **kwargs: Any) -> Awaitable[str | _StoreModule._ContainerModule._EntryModule.Server.GetkeyResultTuple | None]: ...
+                def getKey_context(self, context: _StoreModule._ContainerModule._EntryModule.Server.GetkeyCallContext) -> Awaitable[None]: ...
+                def getValue(self, _context: _StoreModule._ContainerModule._EntryModule.Server.GetvalueCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule._EntryModule.Server.GetvalueResultTuple | None]: ...
+                def getValue_context(self, context: _StoreModule._ContainerModule._EntryModule.Server.GetvalueCallContext) -> Awaitable[None]: ...
+                def setValue(self, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Reader, _context: _StoreModule._ContainerModule._EntryModule.Server.SetvalueCallContext, **kwargs: Any) -> Awaitable[bool | _StoreModule._ContainerModule._EntryModule.Server.SetvalueResultTuple | None]: ...
+                def setValue_context(self, context: _StoreModule._ContainerModule._EntryModule.Server.SetvalueCallContext) -> Awaitable[None]: ...
 
-        class EntryClient(Protocol):
-            def getKey(self) -> Store.Container.Entry.GetkeyResult: ...
-            def getValue(self) -> Store.Container.Entry.GetvalueResult: ...
-            def setValue(
-                self, value: Store.Container.Entry.Value | dict[str, Any] | None = None
-            ) -> Store.Container.Entry.SetvalueResult: ...
-            def getKey_request(self) -> Store.Container.Entry.GetkeyRequest: ...
-            def getValue_request(self) -> Store.Container.Entry.GetvalueRequest: ...
-            def setValue_request(
-                self, value: Store.Container.Entry.Value.Builder | None = None
-            ) -> Store.Container.Entry.SetvalueRequest: ...
+            class EntryClient(_DynamicCapabilityClient):
+                class GetkeyResult(Awaitable[GetkeyResult], Protocol):
+                    key: str
 
-        KeyAndEntryBuilder: TypeAlias = KeyAndEntry.Builder
-        KeyAndEntryReader: TypeAlias = KeyAndEntry.Reader
-        class KeyAndEntry:
-            class Reader:
+                class GetvalueResult(Awaitable[GetvalueResult], Protocol):
+                    value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
+                    isUnset: bool
+
+                class SetvalueResult(Awaitable[SetvalueResult], Protocol):
+                    success: bool
+
+                def getKey(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetkeyResult: ...
+                def getValue(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetvalueResult: ...
+                def setValue(self, value: ValueBuilder | ValueReader | dict[str, Any] | None = None) -> _StoreModule._ContainerModule._EntryModule.EntryClient.SetvalueResult: ...
+                def getKey_request(self) -> _StoreModule._ContainerModule._EntryModule.GetkeyRequest: ...
+                def getValue_request(self) -> _StoreModule._ContainerModule._EntryModule.GetvalueRequest: ...
+                def setValue_request(self, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | None = None) -> _StoreModule._ContainerModule._EntryModule.SetvalueRequest: ...
+
+        Entry: _EntryModule
+        EntryClient: TypeAlias = _StoreModule._ContainerModule._EntryModule.EntryClient
+        class _KeyAndEntryModule(_StructModule):
+            class Reader(_DynamicStructReader):
                 @property
                 def key(self) -> str: ...
                 @property
-                def entry(self) -> Store.Container.EntryClient: ...
-                def as_builder(self) -> Store.Container.KeyAndEntry.Builder: ...
+                def entry(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient: ...
+                @override
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ContainerModule._KeyAndEntryModule.Builder: ...
 
-            class Builder:
+            class Builder(_DynamicStructBuilder):
                 @property
                 def key(self) -> str: ...
                 @key.setter
                 def key(self, value: str) -> None: ...
                 @property
-                def entry(self) -> Store.Container.EntryClient: ...
+                def entry(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient: ...
                 @entry.setter
-                def entry(
-                    self,
-                    value: Store.Container.EntryClient | Store.Container.Entry.Server,
-                ) -> None: ...
-                @staticmethod
-                def from_dict(
-                    dictionary: dict[str, Any],
-                ) -> Store.Container.KeyAndEntry.Builder: ...
-                def copy(self) -> Store.Container.KeyAndEntry.Builder: ...
-                def to_bytes(self) -> bytes: ...
-                def to_bytes_packed(self) -> bytes: ...
-                def to_segments(self) -> list[bytes]: ...
-                def as_reader(self) -> Store.Container.KeyAndEntry.Reader: ...
-                @staticmethod
-                def write(file: BufferedWriter) -> None: ...
-                @staticmethod
-                def write_packed(file: BufferedWriter) -> None: ...
+                def entry(self, value: _StoreModule._ContainerModule._EntryModule.EntryClient | _StoreModule._ContainerModule._EntryModule.Server) -> None: ...
+                @override
+                def as_reader(self) -> _StoreModule._ContainerModule._KeyAndEntryModule.Reader: ...
 
-            @contextmanager
-            @staticmethod
-            def from_bytes(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Iterator[Store.Container.KeyAndEntry.Reader]: ...
-            @staticmethod
-            def from_bytes_packed(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Store.Container.KeyAndEntry.Reader: ...
-            @staticmethod
+            @override
             def new_message(
-                num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
-                key: str | None = None,
-                entry: Store.Container.EntryClient
-                | Store.Container.Entry.Server
-                | None = None,
-            ) -> Store.Container.KeyAndEntry.Builder: ...
-            @staticmethod
-            def read(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Store.Container.KeyAndEntry.Reader: ...
-            @staticmethod
-            def read_packed(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Store.Container.KeyAndEntry.Reader: ...
-            def to_dict(self) -> dict[str, Any]: ...
+                self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, entry: _StoreModule._ContainerModule._EntryModule.EntryClient | _StoreModule._ContainerModule._EntryModule.Server | None = None
+            ) -> _StoreModule._ContainerModule._KeyAndEntryModule.Builder: ...
 
+        KeyAndEntryReader: TypeAlias = _KeyAndEntryModule.Reader
+        KeyAndEntryBuilder: TypeAlias = _KeyAndEntryModule.Builder
+        KeyAndEntry: _KeyAndEntryModule
         class ExportRequest(Protocol):
-            def send(self) -> Store.Container.ExportResult: ...
-
-        class ExportResult(Awaitable[ExportResult], Protocol):
-            json: str
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.ExportResult: ...
 
         class DownloadentriesRequest(Protocol):
-            def send(self) -> Store.Container.DownloadentriesResult: ...
-
-        class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
-            entries: Any
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.DownloadentriesResult: ...
 
         class ListentriesRequest(Protocol):
-            def send(self) -> Store.Container.ListentriesResult: ...
-
-        class ListentriesResult(Awaitable[ListentriesResult], Protocol):
-            entries: Sequence[
-                Store.Container.KeyAndEntry.Builder | Store.Container.KeyAndEntry.Reader
-            ]
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.ListentriesResult: ...
 
         class GetentryRequest(Protocol):
             key: str
-            def send(self) -> Store.Container.GetentryResult: ...
-
-        class GetentryResult(Awaitable[GetentryResult], Protocol):
-            entry: Store.Container.EntryClient
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.GetentryResult: ...
 
         class RemoveentryRequest(Protocol):
             key: str
-            def send(self) -> Store.Container.RemoveentryResult: ...
-
-        class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
-            success: bool
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.RemoveentryResult: ...
 
         class ClearRequest(Protocol):
-            def send(self) -> Store.Container.ClearResult: ...
-
-        class ClearResult(Awaitable[ClearResult], Protocol):
-            success: bool
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.ClearResult: ...
 
         class AddentryRequest(Protocol):
             key: str
-            value: Store.Container.Entry.Value.Builder
+            value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
             replaceExisting: bool
             @overload
-            def init(
-                self, name: Literal["value"]
-            ) -> Store.Container.Entry.Value.Builder: ...
+            def init(self, name: Literal["value"]) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
             @overload
             def init(self, name: str, size: int = ...) -> Any: ...
-            def send(self) -> Store.Container.AddentryResult: ...
-
-        class AddentryResult(Awaitable[AddentryResult], Protocol):
-            entry: Store.Container.EntryClient
-            success: bool
+            def send(self) -> _StoreModule._ContainerModule.ContainerClient.AddentryResult: ...
 
         @classmethod
-        def _new_client(
-            cls,
-            server: Store.Container.Server | Identifiable.Server | Persistent.Server,
-        ) -> Store.ContainerClient: ...
-        class Server(Identifiable.Server, Persistent.Server):
+        def _new_client(cls, server: _StoreModule._ContainerModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _StoreModule._ContainerModule.ContainerClient: ...
+        class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+            class ExportResult(Awaitable[ExportResult], Protocol):
+                json: str
+
+            class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
+                entries: Any
+
+            class ListentriesResult(Awaitable[ListentriesResult], Protocol):
+                entries: Sequence[_StoreModule._ContainerModule._KeyAndEntryModule.Builder | _StoreModule._ContainerModule._KeyAndEntryModule.Reader]
+
+            class GetentryResult(Awaitable[GetentryResult], Protocol):
+                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+
+            class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
+                success: bool
+
+            class ClearResult(Awaitable[ClearResult], Protocol):
+                success: bool
+
+            class AddentryResult(Awaitable[AddentryResult], Protocol):
+                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+                success: bool
+
             class ExportResultTuple(NamedTuple):
                 json: str
 
@@ -645,10 +494,10 @@ class Store:
                 pass
 
             class ListentriesResultTuple(NamedTuple):
-                entries: Sequence[Store.Container.KeyAndEntry]
+                entries: Sequence[_StoreModule._ContainerModule._KeyAndEntryModule]
 
             class GetentryResultTuple(NamedTuple):
-                entry: Store.Container.Entry.Server
+                entry: _StoreModule._ContainerModule._EntryModule.Server
 
             class RemoveentryResultTuple(NamedTuple):
                 success: bool
@@ -657,452 +506,290 @@ class Store:
                 success: bool
 
             class AddentryResultTuple(NamedTuple):
-                entry: Store.Container.Entry.Server
+                entry: _StoreModule._ContainerModule._EntryModule.Server
                 success: bool
 
             class ExportCallContext(Protocol):
-                params: Store.Container.ExportRequest
-                results: Store.Container.ExportResult
+                params: _StoreModule._ContainerModule.ExportRequest
+                results: _StoreModule._ContainerModule.Server.ExportResult
 
             class DownloadentriesCallContext(Protocol):
-                params: Store.Container.DownloadentriesRequest
-                results: Store.Container.DownloadentriesResult
+                params: _StoreModule._ContainerModule.DownloadentriesRequest
+                results: _StoreModule._ContainerModule.Server.DownloadentriesResult
 
             class ListentriesCallContext(Protocol):
-                params: Store.Container.ListentriesRequest
-                results: Store.Container.ListentriesResult
+                params: _StoreModule._ContainerModule.ListentriesRequest
+                results: _StoreModule._ContainerModule.Server.ListentriesResult
 
             class GetentryCallContext(Protocol):
-                params: Store.Container.GetentryRequest
-                results: Store.Container.GetentryResult
+                params: _StoreModule._ContainerModule.GetentryRequest
+                results: _StoreModule._ContainerModule.Server.GetentryResult
 
             class RemoveentryCallContext(Protocol):
-                params: Store.Container.RemoveentryRequest
-                results: Store.Container.RemoveentryResult
+                params: _StoreModule._ContainerModule.RemoveentryRequest
+                results: _StoreModule._ContainerModule.Server.RemoveentryResult
 
             class ClearCallContext(Protocol):
-                params: Store.Container.ClearRequest
-                results: Store.Container.ClearResult
+                params: _StoreModule._ContainerModule.ClearRequest
+                results: _StoreModule._ContainerModule.Server.ClearResult
 
             class AddentryCallContext(Protocol):
-                params: Store.Container.AddentryRequest
-                results: Store.Container.AddentryResult
+                params: _StoreModule._ContainerModule.AddentryRequest
+                results: _StoreModule._ContainerModule.Server.AddentryResult
 
-            def export(
-                self, _context: Store.Container.Server.ExportCallContext, **kwargs: Any
-            ) -> Awaitable[str | Store.Container.Server.ExportResultTuple | None]: ...
-            def export_context(
-                self, context: Store.Container.Server.ExportCallContext
-            ) -> Awaitable[None]: ...
-            def downloadEntries(
-                self,
-                _context: Store.Container.Server.DownloadentriesCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[
-                Store.Container.Server.DownloadentriesResultTuple | None
-            ]: ...
-            def downloadEntries_context(
-                self, context: Store.Container.Server.DownloadentriesCallContext
-            ) -> Awaitable[None]: ...
-            def listEntries(
-                self,
-                _context: Store.Container.Server.ListentriesCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[Store.Container.Server.ListentriesResultTuple | None]: ...
-            def listEntries_context(
-                self, context: Store.Container.Server.ListentriesCallContext
-            ) -> Awaitable[None]: ...
-            def getEntry(
-                self,
-                key: str,
-                _context: Store.Container.Server.GetentryCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[
-                Store.Container.Entry.Server
-                | Store.Container.Server.GetentryResultTuple
-                | None
-            ]: ...
-            def getEntry_context(
-                self, context: Store.Container.Server.GetentryCallContext
-            ) -> Awaitable[None]: ...
-            def removeEntry(
-                self,
-                key: str,
-                _context: Store.Container.Server.RemoveentryCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[
-                bool | Store.Container.Server.RemoveentryResultTuple | None
-            ]: ...
-            def removeEntry_context(
-                self, context: Store.Container.Server.RemoveentryCallContext
-            ) -> Awaitable[None]: ...
-            def clear(
-                self, _context: Store.Container.Server.ClearCallContext, **kwargs: Any
-            ) -> Awaitable[bool | Store.Container.Server.ClearResultTuple | None]: ...
-            def clear_context(
-                self, context: Store.Container.Server.ClearCallContext
-            ) -> Awaitable[None]: ...
-            def addEntry(
-                self,
-                key: str,
-                value: Store.Container.Entry.Value.Reader,
-                replaceExisting: bool,
-                _context: Store.Container.Server.AddentryCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[Store.Container.Server.AddentryResultTuple | None]: ...
-            def addEntry_context(
-                self, context: Store.Container.Server.AddentryCallContext
-            ) -> Awaitable[None]: ...
+            def export(self, _context: _StoreModule._ContainerModule.Server.ExportCallContext, **kwargs: Any) -> Awaitable[str | _StoreModule._ContainerModule.Server.ExportResultTuple | None]: ...
+            def export_context(self, context: _StoreModule._ContainerModule.Server.ExportCallContext) -> Awaitable[None]: ...
+            def downloadEntries(self, _context: _StoreModule._ContainerModule.Server.DownloadentriesCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server.DownloadentriesResultTuple | None]: ...
+            def downloadEntries_context(self, context: _StoreModule._ContainerModule.Server.DownloadentriesCallContext) -> Awaitable[None]: ...
+            def listEntries(self, _context: _StoreModule._ContainerModule.Server.ListentriesCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server.ListentriesResultTuple | None]: ...
+            def listEntries_context(self, context: _StoreModule._ContainerModule.Server.ListentriesCallContext) -> Awaitable[None]: ...
+            def getEntry(self, key: str, _context: _StoreModule._ContainerModule.Server.GetentryCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule._EntryModule.Server | _StoreModule._ContainerModule.Server.GetentryResultTuple | None]: ...
+            def getEntry_context(self, context: _StoreModule._ContainerModule.Server.GetentryCallContext) -> Awaitable[None]: ...
+            def removeEntry(self, key: str, _context: _StoreModule._ContainerModule.Server.RemoveentryCallContext, **kwargs: Any) -> Awaitable[bool | _StoreModule._ContainerModule.Server.RemoveentryResultTuple | None]: ...
+            def removeEntry_context(self, context: _StoreModule._ContainerModule.Server.RemoveentryCallContext) -> Awaitable[None]: ...
+            def clear(self, _context: _StoreModule._ContainerModule.Server.ClearCallContext, **kwargs: Any) -> Awaitable[bool | _StoreModule._ContainerModule.Server.ClearResultTuple | None]: ...
+            def clear_context(self, context: _StoreModule._ContainerModule.Server.ClearCallContext) -> Awaitable[None]: ...
+            def addEntry(self, key: str, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Reader, replaceExisting: bool, _context: _StoreModule._ContainerModule.Server.AddentryCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server.AddentryResultTuple | None]: ...
+            def addEntry_context(self, context: _StoreModule._ContainerModule.Server.AddentryCallContext) -> Awaitable[None]: ...
 
-    class ContainerClient(IdentifiableClient, PersistentClient):
-        def export(self) -> Store.Container.ExportResult: ...
-        def downloadEntries(self) -> Store.Container.DownloadentriesResult: ...
-        def listEntries(self) -> Store.Container.ListentriesResult: ...
-        def getEntry(
-            self, key: str | None = None
-        ) -> Store.Container.GetentryResult: ...
-        def removeEntry(
-            self, key: str | None = None
-        ) -> Store.Container.RemoveentryResult: ...
-        def clear(self) -> Store.Container.ClearResult: ...
-        def addEntry(
-            self,
-            key: str | None = None,
-            value: Store.Container.Entry.Value | dict[str, Any] | None = None,
-            replaceExisting: bool | None = None,
-        ) -> Store.Container.AddentryResult: ...
-        def export_request(self) -> Store.Container.ExportRequest: ...
-        def downloadEntries_request(self) -> Store.Container.DownloadentriesRequest: ...
-        def listEntries_request(self) -> Store.Container.ListentriesRequest: ...
-        def getEntry_request(
-            self, key: str | None = None
-        ) -> Store.Container.GetentryRequest: ...
-        def removeEntry_request(
-            self, key: str | None = None
-        ) -> Store.Container.RemoveentryRequest: ...
-        def clear_request(self) -> Store.Container.ClearRequest: ...
-        def addEntry_request(
-            self,
-            key: str | None = None,
-            value: Store.Container.Entry.Value.Builder | None = None,
-            replaceExisting: bool | None = None,
-        ) -> Store.Container.AddentryRequest: ...
+        class ContainerClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+            class ExportResult(Awaitable[ExportResult], Protocol):
+                json: str
 
-    InfoAndContainerBuilder: TypeAlias = InfoAndContainer.Builder
-    InfoAndContainerReader: TypeAlias = InfoAndContainer.Reader
-    class InfoAndContainer:
-        class Reader:
+            class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
+                entries: Any
+
+            class ListentriesResult(Awaitable[ListentriesResult], Protocol):
+                entries: Sequence[_StoreModule._ContainerModule._KeyAndEntryModule.Builder | _StoreModule._ContainerModule._KeyAndEntryModule.Reader]
+
+            class GetentryResult(Awaitable[GetentryResult], Protocol):
+                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+
+            class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
+                success: bool
+
+            class ClearResult(Awaitable[ClearResult], Protocol):
+                success: bool
+
+            class AddentryResult(Awaitable[AddentryResult], Protocol):
+                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+                success: bool
+
+            def export(self) -> _StoreModule._ContainerModule.ContainerClient.ExportResult: ...
+            def downloadEntries(self) -> _StoreModule._ContainerModule.ContainerClient.DownloadentriesResult: ...
+            def listEntries(self) -> _StoreModule._ContainerModule.ContainerClient.ListentriesResult: ...
+            def getEntry(self, key: str | None = None) -> _StoreModule._ContainerModule.ContainerClient.GetentryResult: ...
+            def removeEntry(self, key: str | None = None) -> _StoreModule._ContainerModule.ContainerClient.RemoveentryResult: ...
+            def clear(self) -> _StoreModule._ContainerModule.ContainerClient.ClearResult: ...
+            def addEntry(self, key: str | None = None, value: ValueBuilder | ValueReader | dict[str, Any] | None = None, replaceExisting: bool | None = None) -> _StoreModule._ContainerModule.ContainerClient.AddentryResult: ...
+            def export_request(self) -> _StoreModule._ContainerModule.ExportRequest: ...
+            def downloadEntries_request(self) -> _StoreModule._ContainerModule.DownloadentriesRequest: ...
+            def listEntries_request(self) -> _StoreModule._ContainerModule.ListentriesRequest: ...
+            def getEntry_request(self, key: str | None = None) -> _StoreModule._ContainerModule.GetentryRequest: ...
+            def removeEntry_request(self, key: str | None = None) -> _StoreModule._ContainerModule.RemoveentryRequest: ...
+            def clear_request(self) -> _StoreModule._ContainerModule.ClearRequest: ...
+            def addEntry_request(self, key: str | None = None, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | None = None, replaceExisting: bool | None = None) -> _StoreModule._ContainerModule.AddentryRequest: ...
+
+    Container: _ContainerModule
+    ContainerClient: TypeAlias = _StoreModule._ContainerModule.ContainerClient
+    class _InfoAndContainerModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def id(self) -> str: ...
             @property
-            def name(self) -> str: ...
+            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
-            def container(self) -> Store.ContainerClient: ...
-            def as_builder(self) -> Store.InfoAndContainer.Builder: ...
+            def container(self) -> _StoreModule._ContainerModule.ContainerClient: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._InfoAndContainerModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def id(self) -> str: ...
             @id.setter
             def id(self, value: str) -> None: ...
             @property
-            def name(self) -> str: ...
+            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @name.setter
-            def name(self, value: str) -> None: ...
+            def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
-            def container(self) -> Store.ContainerClient: ...
+            def container(self) -> _StoreModule._ContainerModule.ContainerClient: ...
             @container.setter
-            def container(
-                self, value: Store.ContainerClient | Store.Container.Server
-            ) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Store.InfoAndContainer.Builder: ...
-            def copy(self) -> Store.InfoAndContainer.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Store.InfoAndContainer.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def container(self, value: _StoreModule._ContainerModule.ContainerClient | _StoreModule._ContainerModule.Server) -> None: ...
+            @override
+            def as_reader(self) -> _StoreModule._InfoAndContainerModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Store.InfoAndContainer.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.InfoAndContainer.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            id: str | None = None,
-            name: str | None = None,
-            container: Store.ContainerClient | Store.Container.Server | None = None,
-        ) -> Store.InfoAndContainer.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.InfoAndContainer.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.InfoAndContainer.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, container: _StoreModule._ContainerModule.ContainerClient | _StoreModule._ContainerModule.Server | None = None) -> _StoreModule._InfoAndContainerModule.Builder: ...
 
-    ImportExportDataBuilder: TypeAlias = ImportExportData.Builder
-    ImportExportDataReader: TypeAlias = ImportExportData.Reader
-    class ImportExportData:
-        class Reader:
+    InfoAndContainerReader: TypeAlias = _InfoAndContainerModule.Reader
+    InfoAndContainerBuilder: TypeAlias = _InfoAndContainerModule.Builder
+    InfoAndContainer: _InfoAndContainerModule
+    class _ImportExportDataModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def info(self) -> IdInformation.Reader: ...
+            def info(self) -> _IdInformationModule.Reader: ...
             @property
-            def entries(self) -> Sequence[Pair.Reader]: ...
+            def entries(self) -> Sequence[_PairModule.Reader]: ...
             @property
             def isAnyValue(self) -> Sequence[bool]: ...
-            def as_builder(self) -> Store.ImportExportData.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ImportExportDataModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def info(self) -> IdInformation.Builder: ...
+            def info(self) -> _IdInformationModule.Builder: ...
             @info.setter
-            def info(
-                self,
-                value: IdInformation.Builder | IdInformation.Reader | dict[str, Any],
-            ) -> None: ...
+            def info(self, value: _IdInformationModule.Builder | _IdInformationModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def entries(self) -> Sequence[Pair.Builder]: ...
+            def entries(self) -> MutableSequence[_PairModule.Builder]: ...
             @entries.setter
-            def entries(
-                self,
-                value: Sequence[Pair.Builder | Pair.Reader] | Sequence[dict[str, Any]],
-            ) -> None: ...
+            def entries(self, value: Sequence[_PairModule.Builder | _PairModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
             @property
-            def isAnyValue(self) -> Sequence[bool]: ...
+            def isAnyValue(self) -> MutableSequence[bool]: ...
             @isAnyValue.setter
             def isAnyValue(self, value: Sequence[bool]) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Store.ImportExportData.Builder: ...
             @overload
-            def init(self: Any, name: Literal["info"]) -> IdInformation.Builder: ...
+            def init(self, field: Literal["info"], size: int | None = None) -> _IdInformationModule.Builder: ...
             @overload
-            def init(
-                self: Any, name: Literal["entries"], size: int = ...
-            ) -> Sequence[Pair.Builder]: ...
+            def init(self, field: Literal["entries"], size: int | None = None) -> MutableSequence[_PairModule.Builder]: ...
             @overload
-            def init(
-                self: Any, name: Literal["isAnyValue"], size: int = ...
-            ) -> Sequence[bool]: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Store.ImportExportData.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Store.ImportExportData.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["isAnyValue"], size: int | None = None) -> MutableSequence[bool]: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _StoreModule._ImportExportDataModule.Reader: ...
 
-        def init(self, name: Literal["info"]) -> IdInformation: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Store.ImportExportData.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.ImportExportData.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            info: IdInformation.Builder | dict[str, Any] | None = None,
-            entries: Sequence[Pair.Builder] | Sequence[dict[str, Any]] | None = None,
-            isAnyValue: Sequence[bool] | None = None,
-        ) -> Store.ImportExportData.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.ImportExportData.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Store.ImportExportData.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, info: _IdInformationModule.Builder | dict[str, Any] | None = None, entries: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, isAnyValue: Sequence[bool] | None = None
+        ) -> _StoreModule._ImportExportDataModule.Builder: ...
 
+    ImportExportDataReader: TypeAlias = _ImportExportDataModule.Reader
+    ImportExportDataBuilder: TypeAlias = _ImportExportDataModule.Builder
+    ImportExportData: _ImportExportDataModule
     class NewcontainerRequest(Protocol):
         name: str
         description: str
-        def send(self) -> Store.NewcontainerResult: ...
-
-    class NewcontainerResult(Awaitable[NewcontainerResult], Protocol):
-        container: Store.ContainerClient
+        def send(self) -> _StoreModule.StoreClient.NewcontainerResult: ...
 
     class ContainerwithidRequest(Protocol):
         id: str
-        def send(self) -> Store.ContainerwithidResult: ...
-
-    class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
-        container: Store.ContainerClient
+        def send(self) -> _StoreModule.StoreClient.ContainerwithidResult: ...
 
     class ListcontainersRequest(Protocol):
-        def send(self) -> Store.ListcontainersResult: ...
-
-    class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
-        containers: Sequence[
-            Store.InfoAndContainer.Builder | Store.InfoAndContainer.Reader
-        ]
+        def send(self) -> _StoreModule.StoreClient.ListcontainersResult: ...
 
     class RemovecontainerRequest(Protocol):
         id: str
-        def send(self) -> Store.RemovecontainerResult: ...
-
-    class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
-        success: bool
+        def send(self) -> _StoreModule.StoreClient.RemovecontainerResult: ...
 
     class ImportcontainerRequest(Protocol):
         json: str
-        def send(self) -> Store.ImportcontainerResult: ...
-
-    class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
-        container: Store.ContainerClient
+        def send(self) -> _StoreModule.StoreClient.ImportcontainerResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Store.Server | Identifiable.Server | Persistent.Server
-    ) -> StoreClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _StoreModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _StoreModule.StoreClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class NewcontainerResult(Awaitable[NewcontainerResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
+        class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
+        class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
+            containers: Sequence[_StoreModule._InfoAndContainerModule.Builder | _StoreModule._InfoAndContainerModule.Reader]
+
+        class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
+            success: bool
+
+        class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
         class NewcontainerResultTuple(NamedTuple):
-            container: Store.Container.Server
+            container: _StoreModule._ContainerModule.Server
 
         class ContainerwithidResultTuple(NamedTuple):
-            container: Store.Container.Server
+            container: _StoreModule._ContainerModule.Server
 
         class ListcontainersResultTuple(NamedTuple):
-            containers: Sequence[Store.InfoAndContainer]
+            containers: Sequence[_StoreModule._InfoAndContainerModule]
 
         class RemovecontainerResultTuple(NamedTuple):
             success: bool
 
         class ImportcontainerResultTuple(NamedTuple):
-            container: Store.Container.Server
+            container: _StoreModule._ContainerModule.Server
 
         class NewcontainerCallContext(Protocol):
-            params: Store.NewcontainerRequest
-            results: Store.NewcontainerResult
+            params: _StoreModule.NewcontainerRequest
+            results: _StoreModule.Server.NewcontainerResult
 
         class ContainerwithidCallContext(Protocol):
-            params: Store.ContainerwithidRequest
-            results: Store.ContainerwithidResult
+            params: _StoreModule.ContainerwithidRequest
+            results: _StoreModule.Server.ContainerwithidResult
 
         class ListcontainersCallContext(Protocol):
-            params: Store.ListcontainersRequest
-            results: Store.ListcontainersResult
+            params: _StoreModule.ListcontainersRequest
+            results: _StoreModule.Server.ListcontainersResult
 
         class RemovecontainerCallContext(Protocol):
-            params: Store.RemovecontainerRequest
-            results: Store.RemovecontainerResult
+            params: _StoreModule.RemovecontainerRequest
+            results: _StoreModule.Server.RemovecontainerResult
 
         class ImportcontainerCallContext(Protocol):
-            params: Store.ImportcontainerRequest
-            results: Store.ImportcontainerResult
+            params: _StoreModule.ImportcontainerRequest
+            results: _StoreModule.Server.ImportcontainerResult
 
-        def newContainer(
-            self,
-            name: str,
-            description: str,
-            _context: Store.Server.NewcontainerCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            Store.Container.Server | Store.Server.NewcontainerResultTuple | None
-        ]: ...
-        def newContainer_context(
-            self, context: Store.Server.NewcontainerCallContext
-        ) -> Awaitable[None]: ...
-        def containerWithId(
-            self,
-            id: str,
-            _context: Store.Server.ContainerwithidCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            Store.Container.Server | Store.Server.ContainerwithidResultTuple | None
-        ]: ...
-        def containerWithId_context(
-            self, context: Store.Server.ContainerwithidCallContext
-        ) -> Awaitable[None]: ...
-        def listContainers(
-            self, _context: Store.Server.ListcontainersCallContext, **kwargs: Any
-        ) -> Awaitable[Store.Server.ListcontainersResultTuple | None]: ...
-        def listContainers_context(
-            self, context: Store.Server.ListcontainersCallContext
-        ) -> Awaitable[None]: ...
-        def removeContainer(
-            self,
-            id: str,
-            _context: Store.Server.RemovecontainerCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[bool | Store.Server.RemovecontainerResultTuple | None]: ...
-        def removeContainer_context(
-            self, context: Store.Server.RemovecontainerCallContext
-        ) -> Awaitable[None]: ...
-        def importContainer(
-            self,
-            json: str,
-            _context: Store.Server.ImportcontainerCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            Store.Container.Server | Store.Server.ImportcontainerResultTuple | None
-        ]: ...
-        def importContainer_context(
-            self, context: Store.Server.ImportcontainerCallContext
-        ) -> Awaitable[None]: ...
+        def newContainer(self, name: str, description: str, _context: _StoreModule.Server.NewcontainerCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server | _StoreModule.Server.NewcontainerResultTuple | None]: ...
+        def newContainer_context(self, context: _StoreModule.Server.NewcontainerCallContext) -> Awaitable[None]: ...
+        def containerWithId(self, id: str, _context: _StoreModule.Server.ContainerwithidCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server | _StoreModule.Server.ContainerwithidResultTuple | None]: ...
+        def containerWithId_context(self, context: _StoreModule.Server.ContainerwithidCallContext) -> Awaitable[None]: ...
+        def listContainers(self, _context: _StoreModule.Server.ListcontainersCallContext, **kwargs: Any) -> Awaitable[_StoreModule.Server.ListcontainersResultTuple | None]: ...
+        def listContainers_context(self, context: _StoreModule.Server.ListcontainersCallContext) -> Awaitable[None]: ...
+        def removeContainer(self, id: str, _context: _StoreModule.Server.RemovecontainerCallContext, **kwargs: Any) -> Awaitable[bool | _StoreModule.Server.RemovecontainerResultTuple | None]: ...
+        def removeContainer_context(self, context: _StoreModule.Server.RemovecontainerCallContext) -> Awaitable[None]: ...
+        def importContainer(self, json: str, _context: _StoreModule.Server.ImportcontainerCallContext, **kwargs: Any) -> Awaitable[_StoreModule._ContainerModule.Server | _StoreModule.Server.ImportcontainerResultTuple | None]: ...
+        def importContainer_context(self, context: _StoreModule.Server.ImportcontainerCallContext) -> Awaitable[None]: ...
 
-class StoreClient(IdentifiableClient, PersistentClient):
-    def newContainer(
-        self, name: str | None = None, description: str | None = None
-    ) -> Store.NewcontainerResult: ...
-    def containerWithId(self, id: str | None = None) -> Store.ContainerwithidResult: ...
-    def listContainers(self) -> Store.ListcontainersResult: ...
-    def removeContainer(self, id: str | None = None) -> Store.RemovecontainerResult: ...
-    def importContainer(
-        self, json: str | None = None
-    ) -> Store.ImportcontainerResult: ...
-    def newContainer_request(
-        self, name: str | None = None, description: str | None = None
-    ) -> Store.NewcontainerRequest: ...
-    def containerWithId_request(
-        self, id: str | None = None
-    ) -> Store.ContainerwithidRequest: ...
-    def listContainers_request(self) -> Store.ListcontainersRequest: ...
-    def removeContainer_request(
-        self, id: str | None = None
-    ) -> Store.RemovecontainerRequest: ...
-    def importContainer_request(
-        self, json: str | None = None
-    ) -> Store.ImportcontainerRequest: ...
+    class StoreClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class NewcontainerResult(Awaitable[NewcontainerResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
+        class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
+        class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
+            containers: Sequence[_StoreModule._InfoAndContainerModule.Builder | _StoreModule._InfoAndContainerModule.Reader]
+
+        class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
+            success: bool
+
+        class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
+            container: _StoreModule._ContainerModule.ContainerClient
+
+        def newContainer(self, name: str | None = None, description: str | None = None) -> _StoreModule.StoreClient.NewcontainerResult: ...
+        def containerWithId(self, id: str | None = None) -> _StoreModule.StoreClient.ContainerwithidResult: ...
+        def listContainers(self) -> _StoreModule.StoreClient.ListcontainersResult: ...
+        def removeContainer(self, id: str | None = None) -> _StoreModule.StoreClient.RemovecontainerResult: ...
+        def importContainer(self, json: str | None = None) -> _StoreModule.StoreClient.ImportcontainerResult: ...
+        def newContainer_request(self, name: str | None = None, description: str | None = None) -> _StoreModule.NewcontainerRequest: ...
+        def containerWithId_request(self, id: str | None = None) -> _StoreModule.ContainerwithidRequest: ...
+        def listContainers_request(self) -> _StoreModule.ListcontainersRequest: ...
+        def removeContainer_request(self, id: str | None = None) -> _StoreModule.RemovecontainerRequest: ...
+        def importContainer_request(self, json: str | None = None) -> _StoreModule.ImportcontainerRequest: ...
+
+Store: _StoreModule
+StoreClient: TypeAlias = _StoreModule.StoreClient
+
+# Top-level type aliases for use in type annotations
+ContainerClient: TypeAlias = _StoreModule._ContainerModule.ContainerClient
+EntryClient: TypeAlias = _StoreModule._ContainerModule._EntryModule.EntryClient
+ImportExportDataBuilder: TypeAlias = _StoreModule._ImportExportDataModule.Builder
+ImportExportDataReader: TypeAlias = _StoreModule._ImportExportDataModule.Reader
+InfoAndContainerBuilder: TypeAlias = _StoreModule._InfoAndContainerModule.Builder
+InfoAndContainerReader: TypeAlias = _StoreModule._InfoAndContainerModule.Reader
+KeyAndEntryBuilder: TypeAlias = _StoreModule._ContainerModule._KeyAndEntryModule.Builder
+KeyAndEntryReader: TypeAlias = _StoreModule._ContainerModule._KeyAndEntryModule.Reader
+ValueBuilder: TypeAlias = _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
+ValueReader: TypeAlias = _StoreModule._ContainerModule._EntryModule._ValueModule.Reader

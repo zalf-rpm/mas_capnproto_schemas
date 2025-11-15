@@ -2,51 +2,58 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
+from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
 
-from .common_capnp import Identifiable, IdentifiableClient
-from .persistence_capnp import Persistent, PersistentClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class SType(Enum):
-    unknown = "unknown"
-    ka5 = "ka5"
+from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
-class PropertyName(Enum):
-    soilType = "soilType"
-    sand = "sand"
-    clay = "clay"
-    silt = "silt"
-    pH = "pH"
-    sceleton = "sceleton"
-    organicCarbon = "organicCarbon"
-    organicMatter = "organicMatter"
-    bulkDensity = "bulkDensity"
-    rawDensity = "rawDensity"
-    fieldCapacity = "fieldCapacity"
-    permanentWiltingPoint = "permanentWiltingPoint"
-    saturation = "saturation"
-    soilMoisture = "soilMoisture"
-    soilWaterConductivityCoefficient = "soilWaterConductivityCoefficient"
-    ammonium = "ammonium"
-    nitrate = "nitrate"
-    cnRatio = "cnRatio"
-    inGroundwater = "inGroundwater"
-    impenetrable = "impenetrable"
+class _STypeModule(Enum):
+    unknown = 0
+    ka5 = 1
 
-LayerBuilder: TypeAlias = Layer.Builder
-LayerReader: TypeAlias = Layer.Reader
+SType: TypeAlias = _STypeModule
 
-class Layer:
-    PropertyBuilder: TypeAlias = Property.Builder
-    PropertyReader: TypeAlias = Property.Reader
-    class Property:
-        class Reader:
+class _PropertyNameModule(Enum):
+    soilType = 0
+    sand = 1
+    clay = 2
+    silt = 3
+    pH = 4
+    sceleton = 5
+    organicCarbon = 6
+    organicMatter = 7
+    bulkDensity = 8
+    rawDensity = 9
+    fieldCapacity = 10
+    permanentWiltingPoint = 11
+    saturation = 12
+    soilMoisture = 13
+    soilWaterConductivityCoefficient = 14
+    ammonium = 15
+    nitrate = 16
+    cnRatio = 17
+    inGroundwater = 18
+    impenetrable = 19
+
+PropertyName: TypeAlias = _PropertyNameModule
+
+class _LayerModule(_StructModule):
+    class _PropertyModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def name(self) -> PropertyName: ...
+            def name(self) -> _PropertyNameModule: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
             def f32Value(self) -> float: ...
             @property
@@ -55,39 +62,20 @@ class Layer:
             def type(self) -> str: ...
             @property
             def unset(self) -> None: ...
+            @override
             def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
-            def as_builder(self) -> Layer.Property.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LayerModule._PropertyModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def name(self) -> PropertyName: ...
+            def name(self) -> _PropertyNameModule: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @name.setter
             def name(
                 self,
-                value: PropertyName
-                | Literal[
-                    "soilType",
-                    "sand",
-                    "clay",
-                    "silt",
-                    "pH",
-                    "sceleton",
-                    "organicCarbon",
-                    "organicMatter",
-                    "bulkDensity",
-                    "rawDensity",
-                    "fieldCapacity",
-                    "permanentWiltingPoint",
-                    "saturation",
-                    "soilMoisture",
-                    "soilWaterConductivityCoefficient",
-                    "ammonium",
-                    "nitrate",
-                    "cnRatio",
-                    "inGroundwater",
-                    "impenetrable",
-                ],
-            ) -> None: ...
+                value: _PropertyNameModule
+                | Literal["soilType", "sand", "clay", "silt", "pH", "sceleton", "organicCarbon", "organicMatter", "bulkDensity", "rawDensity", "fieldCapacity", "permanentWiltingPoint", "saturation", "soilMoisture", "soilWaterConductivityCoefficient", "ammonium", "nitrate", "cnRatio", "inGroundwater", "impenetrable"],
+            ) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
             def f32Value(self) -> float: ...
             @f32Value.setter
@@ -104,98 +92,43 @@ class Layer:
             def unset(self) -> None: ...
             @unset.setter
             def unset(self, value: None) -> None: ...
+            @override
             def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Layer.Property.Builder: ...
-            def copy(self) -> Layer.Property.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Layer.Property.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _LayerModule._PropertyModule.Reader: ...
 
-        def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Layer.Property.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Layer.Property.Reader: ...
-        @staticmethod
+        @override
         def new_message(
+            self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            name: PropertyName
-            | Literal[
-                "soilType",
-                "sand",
-                "clay",
-                "silt",
-                "pH",
-                "sceleton",
-                "organicCarbon",
-                "organicMatter",
-                "bulkDensity",
-                "rawDensity",
-                "fieldCapacity",
-                "permanentWiltingPoint",
-                "saturation",
-                "soilMoisture",
-                "soilWaterConductivityCoefficient",
-                "ammonium",
-                "nitrate",
-                "cnRatio",
-                "inGroundwater",
-                "impenetrable",
-            ]
+            name: _PropertyNameModule
+            | Literal["soilType", "sand", "clay", "silt", "pH", "sceleton", "organicCarbon", "organicMatter", "bulkDensity", "rawDensity", "fieldCapacity", "permanentWiltingPoint", "saturation", "soilMoisture", "soilWaterConductivityCoefficient", "ammonium", "nitrate", "cnRatio", "inGroundwater", "impenetrable"]
             | None = None,
             f32Value: float | None = None,
             bValue: bool | None = None,
             type: str | None = None,
             unset: None | None = None,
-        ) -> Layer.Property.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Layer.Property.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Layer.Property.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        ) -> _LayerModule._PropertyModule.Builder: ...
 
-    class Reader:
+    PropertyReader: TypeAlias = _PropertyModule.Reader
+    PropertyBuilder: TypeAlias = _PropertyModule.Builder
+    Property: _PropertyModule
+    class Reader(_DynamicStructReader):
         @property
-        def properties(self) -> Sequence[Layer.Property.Reader]: ...
+        def properties(self) -> Sequence[_LayerModule._PropertyModule.Reader]: ...
         @property
         def size(self) -> float: ...
         @property
         def description(self) -> str: ...
-        def as_builder(self) -> Layer.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LayerModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def properties(self) -> Sequence[Layer.Property.Builder]: ...
+        def properties(self) -> MutableSequence[_LayerModule._PropertyModule.Builder]: ...
         @properties.setter
-        def properties(
-            self,
-            value: Sequence[Layer.Property.Builder | Layer.Property.Reader]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
+        def properties(self, value: Sequence[_LayerModule._PropertyModule.Builder | _LayerModule._PropertyModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
         @property
         def size(self) -> float: ...
         @size.setter
@@ -204,315 +137,145 @@ class Layer:
         def description(self) -> str: ...
         @description.setter
         def description(self, value: str) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Layer.Builder: ...
-        def init(
-            self, name: Literal["properties"], size: int = ...
-        ) -> Sequence[Layer.Property.Builder]: ...
-        def copy(self) -> Layer.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Layer.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["properties"], size: int | None = None) -> MutableSequence[_LayerModule._PropertyModule.Builder]: ...
+        @override
+        def as_reader(self) -> _LayerModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Layer.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Layer.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        properties: Sequence[Layer.Property.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        size: float | None = None,
-        description: str | None = None,
-    ) -> Layer.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Layer.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Layer.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, properties: Sequence[_LayerModule._PropertyModule.Builder] | Sequence[dict[str, Any]] | None = None, size: float | None = None, description: str | None = None) -> _LayerModule.Builder: ...
 
-QueryBuilder: TypeAlias = Query.Builder
-QueryReader: TypeAlias = Query.Reader
+LayerReader: TypeAlias = _LayerModule.Reader
+LayerBuilder: TypeAlias = _LayerModule.Builder
+Layer: _LayerModule
 
-class Query:
-    ResultBuilder: TypeAlias = Result.Builder
-    ResultReader: TypeAlias = Result.Reader
-    class Result:
-        class Reader:
+class _QueryModule(_StructModule):
+    class _ResultModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def failed(self) -> bool: ...
             @property
-            def mandatory(self) -> Sequence[PropertyName]: ...
+            def mandatory(self) -> Sequence[_PropertyNameModule]: ...
             @property
-            def optional(self) -> Sequence[PropertyName]: ...
-            def as_builder(self) -> Query.Result.Builder: ...
+            def optional(self) -> Sequence[_PropertyNameModule]: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _QueryModule._ResultModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def failed(self) -> bool: ...
             @failed.setter
             def failed(self, value: bool) -> None: ...
             @property
-            def mandatory(self) -> Sequence[PropertyName]: ...
+            def mandatory(self) -> MutableSequence[_PropertyNameModule]: ...
             @mandatory.setter
-            def mandatory(self, value: Sequence[PropertyName]) -> None: ...
+            def mandatory(self, value: Sequence[_PropertyNameModule]) -> None: ...
             @property
-            def optional(self) -> Sequence[PropertyName]: ...
+            def optional(self) -> MutableSequence[_PropertyNameModule]: ...
             @optional.setter
-            def optional(self, value: Sequence[PropertyName]) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Query.Result.Builder: ...
+            def optional(self, value: Sequence[_PropertyNameModule]) -> None: ...
             @overload
-            def init(
-                self: Any, name: Literal["mandatory"], size: int = ...
-            ) -> Sequence[PropertyName]: ...
+            def init(self, field: Literal["mandatory"], size: int | None = None) -> MutableSequence[_PropertyNameModule]: ...
             @overload
-            def init(
-                self: Any, name: Literal["optional"], size: int = ...
-            ) -> Sequence[PropertyName]: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Query.Result.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Query.Result.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["optional"], size: int | None = None) -> MutableSequence[_PropertyNameModule]: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _QueryModule._ResultModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Query.Result.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Query.Result.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            failed: bool | None = None,
-            mandatory: Sequence[PropertyName] | None = None,
-            optional: Sequence[PropertyName] | None = None,
-        ) -> Query.Result.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Query.Result.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Query.Result.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, failed: bool | None = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None) -> _QueryModule._ResultModule.Builder: ...
 
-    class Reader:
+    ResultReader: TypeAlias = _ResultModule.Reader
+    ResultBuilder: TypeAlias = _ResultModule.Builder
+    Result: _ResultModule
+    class Reader(_DynamicStructReader):
         @property
-        def mandatory(self) -> Sequence[PropertyName]: ...
+        def mandatory(self) -> Sequence[_PropertyNameModule]: ...
         @property
-        def optional(self) -> Sequence[PropertyName]: ...
+        def optional(self) -> Sequence[_PropertyNameModule]: ...
         @property
         def onlyRawData(self) -> bool: ...
-        def as_builder(self) -> Query.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _QueryModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def mandatory(self) -> Sequence[PropertyName]: ...
+        def mandatory(self) -> MutableSequence[_PropertyNameModule]: ...
         @mandatory.setter
-        def mandatory(self, value: Sequence[PropertyName]) -> None: ...
+        def mandatory(self, value: Sequence[_PropertyNameModule]) -> None: ...
         @property
-        def optional(self) -> Sequence[PropertyName]: ...
+        def optional(self) -> MutableSequence[_PropertyNameModule]: ...
         @optional.setter
-        def optional(self, value: Sequence[PropertyName]) -> None: ...
+        def optional(self, value: Sequence[_PropertyNameModule]) -> None: ...
         @property
         def onlyRawData(self) -> bool: ...
         @onlyRawData.setter
         def onlyRawData(self, value: bool) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Query.Builder: ...
         @overload
-        def init(
-            self: Any, name: Literal["mandatory"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
+        def init(self, field: Literal["mandatory"], size: int | None = None) -> MutableSequence[_PropertyNameModule]: ...
         @overload
-        def init(
-            self: Any, name: Literal["optional"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        def copy(self) -> Query.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Query.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["optional"], size: int | None = None) -> MutableSequence[_PropertyNameModule]: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> _QueryModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Query.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Query.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
-    ) -> Query.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Query.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Query.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _QueryModule.Builder: ...
 
-ProfileDataBuilder: TypeAlias = ProfileData.Builder
-ProfileDataReader: TypeAlias = ProfileData.Reader
+QueryReader: TypeAlias = _QueryModule.Reader
+QueryBuilder: TypeAlias = _QueryModule.Builder
+Query: _QueryModule
 
-class ProfileData:
-    class Reader:
+class _ProfileDataModule(_StructModule):
+    class Reader(_DynamicStructReader):
         @property
-        def layers(self) -> Sequence[Layer.Reader]: ...
+        def layers(self) -> Sequence[_LayerModule.Reader]: ...
         @property
         def percentageOfArea(self) -> float: ...
-        def as_builder(self) -> ProfileData.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ProfileDataModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def layers(self) -> Sequence[Layer.Builder]: ...
+        def layers(self) -> MutableSequence[_LayerModule.Builder]: ...
         @layers.setter
-        def layers(
-            self,
-            value: Sequence[Layer.Builder | Layer.Reader] | Sequence[dict[str, Any]],
-        ) -> None: ...
+        def layers(self, value: Sequence[_LayerModule.Builder | _LayerModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
         @property
         def percentageOfArea(self) -> float: ...
         @percentageOfArea.setter
         def percentageOfArea(self, value: float) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> ProfileData.Builder: ...
-        def init(
-            self, name: Literal["layers"], size: int = ...
-        ) -> Sequence[Layer.Builder]: ...
-        def copy(self) -> ProfileData.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> ProfileData.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["layers"], size: int | None = None) -> MutableSequence[_LayerModule.Builder]: ...
+        @override
+        def as_reader(self) -> _ProfileDataModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[ProfileData.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> ProfileData.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        layers: Sequence[Layer.Builder] | Sequence[dict[str, Any]] | None = None,
-        percentageOfArea: float | None = None,
-    ) -> ProfileData.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> ProfileData.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> ProfileData.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, layers: Sequence[_LayerModule.Builder] | Sequence[dict[str, Any]] | None = None, percentageOfArea: float | None = None) -> _ProfileDataModule.Builder: ...
 
-class Profile:
+ProfileDataReader: TypeAlias = _ProfileDataModule.Reader
+ProfileDataBuilder: TypeAlias = _ProfileDataModule.Builder
+ProfileData: _ProfileDataModule
+
+class _ProfileModule(_IdentifiableModule, _PersistentModule):
     class DataRequest(Protocol):
-        def send(self) -> Profile.DataResult: ...
-
-    class DataResult(Awaitable[DataResult], Protocol):
-        layers: Sequence[Layer.Builder | Layer.Reader]
-        percentageOfArea: float
+        def send(self) -> _ProfileModule.ProfileClient.DataResult: ...
 
     class GeolocationRequest(Protocol):
-        def send(self) -> Profile.GeolocationResult: ...
-
-    class GeolocationResult(Awaitable[GeolocationResult], Protocol):
-        lat: float
-        lon: float
+        def send(self) -> _ProfileModule.ProfileClient.GeolocationResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Profile.Server | Identifiable.Server | Persistent.Server
-    ) -> ProfileClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _ProfileModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ProfileModule.ProfileClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class DataResult(Awaitable[DataResult], Protocol):
+            layers: Sequence[_LayerModule.Builder | _LayerModule.Reader]
+            percentageOfArea: float
+
+        class GeolocationResult(Awaitable[GeolocationResult], Protocol):
+            lat: float
+            lon: float
+
         class DataResultTuple(NamedTuple):
-            layers: Sequence[Layer]
+            layers: Sequence[_LayerModule]
             percentageOfArea: float
 
         class GeolocationResultTuple(NamedTuple):
@@ -520,245 +283,193 @@ class Profile:
             lon: float
 
         class DataCallContext(Protocol):
-            params: Profile.DataRequest
-            results: Profile.DataResult
+            params: _ProfileModule.DataRequest
+            results: _ProfileModule.Server.DataResult
 
         class GeolocationCallContext(Protocol):
-            params: Profile.GeolocationRequest
-            results: Profile.GeolocationResult
+            params: _ProfileModule.GeolocationRequest
+            results: _ProfileModule.Server.GeolocationResult
 
-        def data(
-            self, _context: Profile.Server.DataCallContext, **kwargs: Any
-        ) -> Awaitable[Profile.Server.DataResultTuple | None]: ...
-        def data_context(
-            self, context: Profile.Server.DataCallContext
-        ) -> Awaitable[None]: ...
-        def geoLocation(
-            self, _context: Profile.Server.GeolocationCallContext, **kwargs: Any
-        ) -> Awaitable[Profile.Server.GeolocationResultTuple | None]: ...
-        def geoLocation_context(
-            self, context: Profile.Server.GeolocationCallContext
-        ) -> Awaitable[None]: ...
+        def data(self, _context: _ProfileModule.Server.DataCallContext, **kwargs: Any) -> Awaitable[_ProfileModule.Server.DataResultTuple | None]: ...
+        def data_context(self, context: _ProfileModule.Server.DataCallContext) -> Awaitable[None]: ...
+        def geoLocation(self, _context: _ProfileModule.Server.GeolocationCallContext, **kwargs: Any) -> Awaitable[_ProfileModule.Server.GeolocationResultTuple | None]: ...
+        def geoLocation_context(self, context: _ProfileModule.Server.GeolocationCallContext) -> Awaitable[None]: ...
 
-class ProfileClient(IdentifiableClient, PersistentClient):
-    def data(self) -> Profile.DataResult: ...
-    def geoLocation(self) -> Profile.GeolocationResult: ...
-    def data_request(self) -> Profile.DataRequest: ...
-    def geoLocation_request(self) -> Profile.GeolocationRequest: ...
+    class ProfileClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class DataResult(Awaitable[DataResult], Protocol):
+            layers: Sequence[_LayerModule.Builder | _LayerModule.Reader]
+            percentageOfArea: float
 
-class Service:
-    class Stream:
+        class GeolocationResult(Awaitable[GeolocationResult], Protocol):
+            lat: float
+            lon: float
+
+        def data(self) -> _ProfileModule.ProfileClient.DataResult: ...
+        def geoLocation(self) -> _ProfileModule.ProfileClient.GeolocationResult: ...
+        def data_request(self) -> _ProfileModule.DataRequest: ...
+        def geoLocation_request(self) -> _ProfileModule.GeolocationRequest: ...
+
+Profile: _ProfileModule
+ProfileClient: TypeAlias = _ProfileModule.ProfileClient
+
+class _ServiceModule(_IdentifiableModule, _PersistentModule):
+    class _StreamModule(_InterfaceModule):
         class NextprofilesRequest(Protocol):
             maxCount: int
-            def send(self) -> Service.Stream.NextprofilesResult: ...
-
-        class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
-            profiles: Sequence[Profile]
+            def send(self) -> _ServiceModule._StreamModule.StreamClient.NextprofilesResult: ...
 
         @classmethod
-        def _new_client(cls, server: Service.Stream.Server) -> Service.StreamClient: ...
-        class Server(Protocol):
+        def _new_client(cls, server: _ServiceModule._StreamModule.Server) -> _ServiceModule._StreamModule.StreamClient: ...
+        class Server(_DynamicCapabilityServer):
+            class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
+                profiles: Sequence[_ProfileModule]
+
             class NextprofilesResultTuple(NamedTuple):
-                profiles: Sequence[Profile]
+                profiles: Sequence[_ProfileModule]
 
             class NextprofilesCallContext(Protocol):
-                params: Service.Stream.NextprofilesRequest
-                results: Service.Stream.NextprofilesResult
+                params: _ServiceModule._StreamModule.NextprofilesRequest
+                results: _ServiceModule._StreamModule.Server.NextprofilesResult
 
-            def nextProfiles(
-                self,
-                maxCount: int,
-                _context: Service.Stream.Server.NextprofilesCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[Service.Stream.Server.NextprofilesResultTuple | None]: ...
-            def nextProfiles_context(
-                self, context: Service.Stream.Server.NextprofilesCallContext
-            ) -> Awaitable[None]: ...
+            def nextProfiles(self, maxCount: int, _context: _ServiceModule._StreamModule.Server.NextprofilesCallContext, **kwargs: Any) -> Awaitable[_ServiceModule._StreamModule.Server.NextprofilesResultTuple | None]: ...
+            def nextProfiles_context(self, context: _ServiceModule._StreamModule.Server.NextprofilesCallContext) -> Awaitable[None]: ...
 
-    class StreamClient(Protocol):
-        def nextProfiles(
-            self, maxCount: int | None = None
-        ) -> Service.Stream.NextprofilesResult: ...
-        def nextProfiles_request(
-            self, maxCount: int | None = None
-        ) -> Service.Stream.NextprofilesRequest: ...
+        class StreamClient(_DynamicCapabilityClient):
+            class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
+                profiles: Sequence[_ProfileModule]
 
+            def nextProfiles(self, maxCount: int | None = None) -> _ServiceModule._StreamModule.StreamClient.NextprofilesResult: ...
+            def nextProfiles_request(self, maxCount: int | None = None) -> _ServiceModule._StreamModule.NextprofilesRequest: ...
+
+    Stream: _StreamModule
+    StreamClient: TypeAlias = _ServiceModule._StreamModule.StreamClient
     class CheckavailableparametersRequest(Protocol):
-        mandatory: Sequence[PropertyName]
-        optional: Sequence[PropertyName]
+        mandatory: Sequence[_PropertyNameModule]
+        optional: Sequence[_PropertyNameModule]
         onlyRawData: bool
         @overload
-        def init(
-            self, name: Literal["mandatory"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
+        def init(self, name: Literal["mandatory"], size: int = ...) -> MutableSequence[_PropertyNameModule]: ...
         @overload
-        def init(
-            self, name: Literal["optional"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
+        def init(self, name: Literal["optional"], size: int = ...) -> MutableSequence[_PropertyNameModule]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Service.CheckavailableparametersResult: ...
-
-    class CheckavailableparametersResult(
-        Awaitable[CheckavailableparametersResult], Protocol
-    ):
-        failed: bool
-        mandatory: Sequence[PropertyName]
-        optional: Sequence[PropertyName]
+        def send(self) -> _ServiceModule.ServiceClient.CheckavailableparametersResult: ...
 
     class GetallavailableparametersRequest(Protocol):
         onlyRawData: bool
-        def send(self) -> Service.GetallavailableparametersResult: ...
-
-    class GetallavailableparametersResult(
-        Awaitable[GetallavailableparametersResult], Protocol
-    ):
-        mandatory: Sequence[PropertyName]
-        optional: Sequence[PropertyName]
+        def send(self) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
 
     class ClosestprofilesatRequest(Protocol):
-        query: Query.Builder
+        query: _QueryModule.Builder
         @overload
-        def init(self, name: Literal["query"]) -> Query.Builder: ...
+        def init(self, name: Literal["query"]) -> _QueryModule.Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Service.ClosestprofilesatResult: ...
-
-    class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
-        profiles: Sequence[Profile]
+        def send(self) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
 
     class StreamallprofilesRequest(Protocol):
-        mandatory: Sequence[PropertyName]
-        optional: Sequence[PropertyName]
+        mandatory: Sequence[_PropertyNameModule]
+        optional: Sequence[_PropertyNameModule]
         onlyRawData: bool
         @overload
-        def init(
-            self, name: Literal["mandatory"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
+        def init(self, name: Literal["mandatory"], size: int = ...) -> MutableSequence[_PropertyNameModule]: ...
         @overload
-        def init(
-            self, name: Literal["optional"], size: int = ...
-        ) -> Sequence[PropertyName]: ...
+        def init(self, name: Literal["optional"], size: int = ...) -> MutableSequence[_PropertyNameModule]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Service.StreamallprofilesResult: ...
-
-    class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
-        allProfiles: Service.StreamClient
+        def send(self) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Service.Server | Identifiable.Server | Persistent.Server
-    ) -> ServiceClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _ServiceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ServiceModule.ServiceClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class CheckavailableparametersResult(Awaitable[CheckavailableparametersResult], Protocol):
+            failed: bool
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
+
+        class GetallavailableparametersResult(Awaitable[GetallavailableparametersResult], Protocol):
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
+
+        class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
+            profiles: Sequence[_ProfileModule]
+
+        class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
+            allProfiles: _ServiceModule._StreamModule.StreamClient
+
         class CheckavailableparametersResultTuple(NamedTuple):
             failed: bool
-            mandatory: Sequence[PropertyName]
-            optional: Sequence[PropertyName]
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
 
         class GetallavailableparametersResultTuple(NamedTuple):
-            mandatory: Sequence[PropertyName]
-            optional: Sequence[PropertyName]
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
 
         class ClosestprofilesatResultTuple(NamedTuple):
-            profiles: Sequence[Profile]
+            profiles: Sequence[_ProfileModule]
 
         class StreamallprofilesResultTuple(NamedTuple):
-            allProfiles: Service.Stream.Server
+            allProfiles: _ServiceModule._StreamModule.Server
 
         class CheckavailableparametersCallContext(Protocol):
-            params: Service.CheckavailableparametersRequest
-            results: Service.CheckavailableparametersResult
+            params: _ServiceModule.CheckavailableparametersRequest
+            results: _ServiceModule.Server.CheckavailableparametersResult
 
         class GetallavailableparametersCallContext(Protocol):
-            params: Service.GetallavailableparametersRequest
-            results: Service.GetallavailableparametersResult
+            params: _ServiceModule.GetallavailableparametersRequest
+            results: _ServiceModule.Server.GetallavailableparametersResult
 
         class ClosestprofilesatCallContext(Protocol):
-            params: Service.ClosestprofilesatRequest
-            results: Service.ClosestprofilesatResult
+            params: _ServiceModule.ClosestprofilesatRequest
+            results: _ServiceModule.Server.ClosestprofilesatResult
 
         class StreamallprofilesCallContext(Protocol):
-            params: Service.StreamallprofilesRequest
-            results: Service.StreamallprofilesResult
+            params: _ServiceModule.StreamallprofilesRequest
+            results: _ServiceModule.Server.StreamallprofilesResult
 
-        def checkAvailableParameters(
-            self,
-            mandatory: Sequence[PropertyName],
-            optional: Sequence[PropertyName],
-            onlyRawData: bool,
-            _context: Service.Server.CheckavailableparametersCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Service.Server.CheckavailableparametersResultTuple | None]: ...
-        def checkAvailableParameters_context(
-            self, context: Service.Server.CheckavailableparametersCallContext
-        ) -> Awaitable[None]: ...
-        def getAllAvailableParameters(
-            self,
-            onlyRawData: bool,
-            _context: Service.Server.GetallavailableparametersCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Service.Server.GetallavailableparametersResultTuple | None]: ...
-        def getAllAvailableParameters_context(
-            self, context: Service.Server.GetallavailableparametersCallContext
-        ) -> Awaitable[None]: ...
-        def closestProfilesAt(
-            self,
-            query: Query.Reader,
-            _context: Service.Server.ClosestprofilesatCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Service.Server.ClosestprofilesatResultTuple | None]: ...
-        def closestProfilesAt_context(
-            self, context: Service.Server.ClosestprofilesatCallContext
-        ) -> Awaitable[None]: ...
+        def checkAvailableParameters(self, mandatory: Sequence[_PropertyNameModule], optional: Sequence[_PropertyNameModule], onlyRawData: bool, _context: _ServiceModule.Server.CheckavailableparametersCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.CheckavailableparametersResultTuple | None]: ...
+        def checkAvailableParameters_context(self, context: _ServiceModule.Server.CheckavailableparametersCallContext) -> Awaitable[None]: ...
+        def getAllAvailableParameters(self, onlyRawData: bool, _context: _ServiceModule.Server.GetallavailableparametersCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.GetallavailableparametersResultTuple | None]: ...
+        def getAllAvailableParameters_context(self, context: _ServiceModule.Server.GetallavailableparametersCallContext) -> Awaitable[None]: ...
+        def closestProfilesAt(self, query: _QueryModule.Reader, _context: _ServiceModule.Server.ClosestprofilesatCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.ClosestprofilesatResultTuple | None]: ...
+        def closestProfilesAt_context(self, context: _ServiceModule.Server.ClosestprofilesatCallContext) -> Awaitable[None]: ...
         def streamAllProfiles(
-            self,
-            mandatory: Sequence[PropertyName],
-            optional: Sequence[PropertyName],
-            onlyRawData: bool,
-            _context: Service.Server.StreamallprofilesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            Service.Stream.Server | Service.Server.StreamallprofilesResultTuple | None
-        ]: ...
-        def streamAllProfiles_context(
-            self, context: Service.Server.StreamallprofilesCallContext
-        ) -> Awaitable[None]: ...
+            self, mandatory: Sequence[_PropertyNameModule], optional: Sequence[_PropertyNameModule], onlyRawData: bool, _context: _ServiceModule.Server.StreamallprofilesCallContext, **kwargs: Any
+        ) -> Awaitable[_ServiceModule._StreamModule.Server | _ServiceModule.Server.StreamallprofilesResultTuple | None]: ...
+        def streamAllProfiles_context(self, context: _ServiceModule.Server.StreamallprofilesCallContext) -> Awaitable[None]: ...
 
-class ServiceClient(IdentifiableClient, PersistentClient):
-    def checkAvailableParameters(
-        self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
-    ) -> Service.CheckavailableparametersResult: ...
-    def getAllAvailableParameters(
-        self, onlyRawData: bool | None = None
-    ) -> Service.GetallavailableparametersResult: ...
-    def closestProfilesAt(
-        self, query: Query | dict[str, Any] | None = None
-    ) -> Service.ClosestprofilesatResult: ...
-    def streamAllProfiles(
-        self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
-    ) -> Service.StreamallprofilesResult: ...
-    def checkAvailableParameters_request(
-        self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
-    ) -> Service.CheckavailableparametersRequest: ...
-    def getAllAvailableParameters_request(
-        self, onlyRawData: bool | None = None
-    ) -> Service.GetallavailableparametersRequest: ...
-    def closestProfilesAt_request(
-        self, query: Query.Builder | None = None
-    ) -> Service.ClosestprofilesatRequest: ...
-    def streamAllProfiles_request(
-        self,
-        mandatory: Sequence[PropertyName] | None = None,
-        optional: Sequence[PropertyName] | None = None,
-        onlyRawData: bool | None = None,
-    ) -> Service.StreamallprofilesRequest: ...
+    class ServiceClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class CheckavailableparametersResult(Awaitable[CheckavailableparametersResult], Protocol):
+            failed: bool
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
+
+        class GetallavailableparametersResult(Awaitable[GetallavailableparametersResult], Protocol):
+            mandatory: Sequence[_PropertyNameModule]
+            optional: Sequence[_PropertyNameModule]
+
+        class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
+            profiles: Sequence[_ProfileModule]
+
+        class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
+            allProfiles: _ServiceModule._StreamModule.StreamClient
+
+        def checkAvailableParameters(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.CheckavailableparametersResult: ...
+        def getAllAvailableParameters(self, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
+        def closestProfilesAt(self, query: _QueryModule | dict[str, Any] | None = None) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
+        def streamAllProfiles(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
+        def checkAvailableParameters_request(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.CheckavailableparametersRequest: ...
+        def getAllAvailableParameters_request(self, onlyRawData: bool | None = None) -> _ServiceModule.GetallavailableparametersRequest: ...
+        def closestProfilesAt_request(self, query: _QueryModule.Builder | None = None) -> _ServiceModule.ClosestprofilesatRequest: ...
+        def streamAllProfiles_request(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.StreamallprofilesRequest: ...
+
+Service: _ServiceModule
+ServiceClient: TypeAlias = _ServiceModule.ServiceClient
+
+# Top-level type aliases for use in type annotations
+PropertyBuilder: TypeAlias = _LayerModule._PropertyModule.Builder
+PropertyReader: TypeAlias = _LayerModule._PropertyModule.Reader
+ResultBuilder: TypeAlias = _QueryModule._ResultModule.Builder
+ResultReader: TypeAlias = _QueryModule._ResultModule.Reader
+StreamClient: TypeAlias = _ServiceModule._StreamModule.StreamClient

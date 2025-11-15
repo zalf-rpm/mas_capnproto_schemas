@@ -2,25 +2,32 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator, Sequence
-from contextlib import contextmanager
+from collections.abc import MutableSequence, Sequence
 from enum import Enum
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, TypeAlias
+from typing import Any, Literal, TypeAlias, override
 
-class ResultId(Enum):
-    primaryYield = "primaryYield"
-    dryMatter = "dryMatter"
-    carbonInAboveGroundBiomass = "carbonInAboveGroundBiomass"
-    sumFertilizer = "sumFertilizer"
-    sumIrrigation = "sumIrrigation"
-    primaryYieldCU = "primaryYieldCU"
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-RestInputBuilder: TypeAlias = RestInput.Builder
-RestInputReader: TypeAlias = RestInput.Reader
+class _ResultIdModule(Enum):
+    primaryYield = 0
+    dryMatter = 1
+    carbonInAboveGroundBiomass = 2
+    sumFertilizer = 3
+    sumIrrigation = 4
+    primaryYieldCU = 5
 
-class RestInput:
-    class Reader:
+ResultId: TypeAlias = _ResultIdModule
+
+class _RestInputModule(_StructModule):
+    class Reader(_DynamicStructReader):
         @property
         def useDevTrend(self) -> bool: ...
         @property
@@ -47,9 +54,10 @@ class RestInput:
         def germanFederalStates(self) -> int: ...
         @property
         def getDryYearWaterNeed(self) -> bool: ...
-        def as_builder(self) -> RestInput.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RestInputModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def useDevTrend(self) -> bool: ...
         @useDevTrend.setter
@@ -102,33 +110,12 @@ class RestInput:
         def getDryYearWaterNeed(self) -> bool: ...
         @getDryYearWaterNeed.setter
         def getDryYearWaterNeed(self, value: bool) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> RestInput.Builder: ...
-        def copy(self) -> RestInput.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> RestInput.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        @override
+        def as_reader(self) -> _RestInputModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[RestInput.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> RestInput.Reader: ...
-    @staticmethod
+    @override
     def new_message(
+        self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         useDevTrend: bool | None = None,
@@ -144,122 +131,53 @@ class RestInput:
         stt: int | None = None,
         germanFederalStates: int | None = None,
         getDryYearWaterNeed: bool | None = None,
-    ) -> RestInput.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> RestInput.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> RestInput.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    ) -> _RestInputModule.Builder: ...
 
-ResultBuilder: TypeAlias = Result.Builder
-ResultReader: TypeAlias = Result.Reader
+RestInputReader: TypeAlias = _RestInputModule.Reader
+RestInputBuilder: TypeAlias = _RestInputModule.Builder
+RestInput: _RestInputModule
 
-class Result:
-    ResultToValueBuilder: TypeAlias = ResultToValue.Builder
-    ResultToValueReader: TypeAlias = ResultToValue.Reader
-    class ResultToValue:
-        class Reader:
+class _ResultModule(_StructModule):
+    class _ResultToValueModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def id(self) -> ResultId: ...
+            def id(self) -> _ResultIdModule: ...
             @property
             def value(self) -> float: ...
-            def as_builder(self) -> Result.ResultToValue.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ResultModule._ResultToValueModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def id(self) -> ResultId: ...
+            def id(self) -> _ResultIdModule: ...
             @id.setter
-            def id(
-                self,
-                value: ResultId
-                | Literal[
-                    "primaryYield",
-                    "dryMatter",
-                    "carbonInAboveGroundBiomass",
-                    "sumFertilizer",
-                    "sumIrrigation",
-                    "primaryYieldCU",
-                ],
-            ) -> None: ...
+            def id(self, value: _ResultIdModule | Literal["primaryYield", "dryMatter", "carbonInAboveGroundBiomass", "sumFertilizer", "sumIrrigation", "primaryYieldCU"]) -> None: ...
             @property
             def value(self) -> float: ...
             @value.setter
             def value(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Result.ResultToValue.Builder: ...
-            def copy(self) -> Result.ResultToValue.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Result.ResultToValue.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _ResultModule._ResultToValueModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Result.ResultToValue.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Result.ResultToValue.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            id: ResultId
-            | Literal[
-                "primaryYield",
-                "dryMatter",
-                "carbonInAboveGroundBiomass",
-                "sumFertilizer",
-                "sumIrrigation",
-                "primaryYieldCU",
-            ]
-            | None = None,
-            value: float | None = None,
-        ) -> Result.ResultToValue.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Result.ResultToValue.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Result.ResultToValue.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: _ResultIdModule | Literal["primaryYield", "dryMatter", "carbonInAboveGroundBiomass", "sumFertilizer", "sumIrrigation", "primaryYieldCU"] | None = None, value: float | None = None
+        ) -> _ResultModule._ResultToValueModule.Builder: ...
 
-    class Reader:
+    ResultToValueReader: TypeAlias = _ResultToValueModule.Reader
+    ResultToValueBuilder: TypeAlias = _ResultToValueModule.Builder
+    ResultToValue: _ResultToValueModule
+    class Reader(_DynamicStructReader):
         @property
         def cultivar(self) -> str: ...
         @property
         def isNoData(self) -> bool: ...
         @property
-        def values(self) -> Sequence[Result.ResultToValue.Reader]: ...
-        def as_builder(self) -> Result.Builder: ...
+        def values(self) -> Sequence[_ResultModule._ResultToValueModule.Reader]: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ResultModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def cultivar(self) -> str: ...
         @cultivar.setter
@@ -269,141 +187,50 @@ class Result:
         @isNoData.setter
         def isNoData(self, value: bool) -> None: ...
         @property
-        def values(self) -> Sequence[Result.ResultToValue.Builder]: ...
+        def values(self) -> MutableSequence[_ResultModule._ResultToValueModule.Builder]: ...
         @values.setter
-        def values(
-            self,
-            value: Sequence[Result.ResultToValue.Builder | Result.ResultToValue.Reader]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Result.Builder: ...
-        def init(
-            self, name: Literal["values"], size: int = ...
-        ) -> Sequence[Result.ResultToValue.Builder]: ...
-        def copy(self) -> Result.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Result.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def values(self, value: Sequence[_ResultModule._ResultToValueModule.Builder | _ResultModule._ResultToValueModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def init(self, field: Literal["values"], size: int | None = None) -> MutableSequence[_ResultModule._ResultToValueModule.Builder]: ...
+        @override
+        def as_reader(self) -> _ResultModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Result.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Result.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        cultivar: str | None = None,
-        isNoData: bool | None = None,
-        values: Sequence[Result.ResultToValue.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-    ) -> Result.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Result.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Result.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cultivar: str | None = None, isNoData: bool | None = None, values: Sequence[_ResultModule._ResultToValueModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _ResultModule.Builder: ...
 
-OutputBuilder: TypeAlias = Output.Builder
-OutputReader: TypeAlias = Output.Reader
+ResultReader: TypeAlias = _ResultModule.Reader
+ResultBuilder: TypeAlias = _ResultModule.Builder
+Result: _ResultModule
 
-class Output:
-    YearToResultBuilder: TypeAlias = YearToResult.Builder
-    YearToResultReader: TypeAlias = YearToResult.Reader
-    class YearToResult:
-        class Reader:
+class _OutputModule(_StructModule):
+    class _YearToResultModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def year(self) -> int: ...
             @property
-            def result(self) -> Result.Reader: ...
-            def as_builder(self) -> Output.YearToResult.Builder: ...
+            def result(self) -> _ResultModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _OutputModule._YearToResultModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def year(self) -> int: ...
             @year.setter
             def year(self, value: int) -> None: ...
             @property
-            def result(self) -> Result.Builder: ...
+            def result(self) -> _ResultModule.Builder: ...
             @result.setter
-            def result(
-                self, value: Result.Builder | Result.Reader | dict[str, Any]
-            ) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Output.YearToResult.Builder: ...
-            def init(self, name: Literal["result"]) -> Result.Builder: ...
-            def copy(self) -> Output.YearToResult.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Output.YearToResult.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def result(self, value: _ResultModule.Builder | _ResultModule.Reader | dict[str, Any]) -> None: ...
+            def init(self, field: Literal["result"], size: int | None = None) -> _ResultModule.Builder: ...
+            @override
+            def as_reader(self) -> _OutputModule._YearToResultModule.Reader: ...
 
-        def init(self, name: Literal["result"]) -> Result: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Output.YearToResult.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Output.YearToResult.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            year: int | None = None,
-            result: Result.Builder | dict[str, Any] | None = None,
-        ) -> Output.YearToResult.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Output.YearToResult.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Output.YearToResult.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, result: _ResultModule.Builder | dict[str, Any] | None = None) -> _OutputModule._YearToResultModule.Builder: ...
 
-    class Reader:
+    YearToResultReader: TypeAlias = _YearToResultModule.Reader
+    YearToResultBuilder: TypeAlias = _YearToResultModule.Builder
+    YearToResult: _YearToResultModule
+    class Reader(_DynamicStructReader):
         @property
         def id(self) -> str: ...
         @property
@@ -411,10 +238,11 @@ class Output:
         @property
         def reason(self) -> str: ...
         @property
-        def results(self) -> Sequence[Output.YearToResult.Reader]: ...
-        def as_builder(self) -> Output.Builder: ...
+        def results(self) -> Sequence[_OutputModule._YearToResultModule.Reader]: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _OutputModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def id(self) -> str: ...
         @id.setter
@@ -428,62 +256,22 @@ class Output:
         @reason.setter
         def reason(self, value: str) -> None: ...
         @property
-        def results(self) -> Sequence[Output.YearToResult.Builder]: ...
+        def results(self) -> MutableSequence[_OutputModule._YearToResultModule.Builder]: ...
         @results.setter
-        def results(
-            self,
-            value: Sequence[Output.YearToResult.Builder | Output.YearToResult.Reader]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Output.Builder: ...
-        def init(
-            self, name: Literal["results"], size: int = ...
-        ) -> Sequence[Output.YearToResult.Builder]: ...
-        def copy(self) -> Output.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Output.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def results(self, value: Sequence[_OutputModule._YearToResultModule.Builder | _OutputModule._YearToResultModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def init(self, field: Literal["results"], size: int | None = None) -> MutableSequence[_OutputModule._YearToResultModule.Builder]: ...
+        @override
+        def as_reader(self) -> _OutputModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Output.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Output.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        id: str | None = None,
-        runFailed: bool | None = None,
-        reason: str | None = None,
-        results: Sequence[Output.YearToResult.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-    ) -> Output.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Output.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Output.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, runFailed: bool | None = None, reason: str | None = None, results: Sequence[_OutputModule._YearToResultModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _OutputModule.Builder: ...
+
+OutputReader: TypeAlias = _OutputModule.Reader
+OutputBuilder: TypeAlias = _OutputModule.Builder
+Output: _OutputModule
+
+# Top-level type aliases for use in type annotations
+ResultToValueBuilder: TypeAlias = _ResultModule._ResultToValueModule.Builder
+ResultToValueReader: TypeAlias = _ResultModule._ResultToValueModule.Reader
+YearToResultBuilder: TypeAlias = _OutputModule._YearToResultModule.Builder
+YearToResultReader: TypeAlias = _OutputModule._YearToResultModule.Reader

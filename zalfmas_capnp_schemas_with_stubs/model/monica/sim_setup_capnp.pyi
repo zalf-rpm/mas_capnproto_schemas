@@ -2,16 +2,20 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, TypeAlias
+from typing import Any, TypeAlias, override
 
-SetupBuilder: TypeAlias = Setup.Builder
-SetupReader: TypeAlias = Setup.Reader
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class Setup:
-    class Reader:
+class _SetupModule(_StructModule):
+    class Reader(_DynamicStructReader):
         @property
         def runId(self) -> int: ...
         @property
@@ -68,9 +72,10 @@ class Setup:
         def useVernalisationFix(self) -> bool: ...
         @property
         def comment(self) -> str: ...
-        def as_builder(self) -> Setup.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SetupModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def runId(self) -> int: ...
         @runId.setter
@@ -183,33 +188,12 @@ class Setup:
         def comment(self) -> str: ...
         @comment.setter
         def comment(self, value: str) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Setup.Builder: ...
-        def copy(self) -> Setup.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Setup.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        @override
+        def as_reader(self) -> _SetupModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Setup.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Setup.Reader: ...
-    @staticmethod
+    @override
     def new_message(
+        self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         runId: int | None = None,
@@ -240,17 +224,8 @@ class Setup:
         stageTemperatureSum: str | None = None,
         useVernalisationFix: bool | None = None,
         comment: str | None = None,
-    ) -> Setup.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Setup.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Setup.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    ) -> _SetupModule.Builder: ...
+
+SetupReader: TypeAlias = _SetupModule.Reader
+SetupBuilder: TypeAlias = _SetupModule.Builder
+Setup: _SetupModule

@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from io import BufferedWriter
 from typing import (
     Any,
-    BinaryIO,
     Generic,
     Literal,
     NamedTuple,
@@ -16,594 +13,404 @@ from typing import (
     TypeAlias,
     TypeVar,
     overload,
+    override,
 )
 
-from .climate_capnp import TimeSeries, TimeSeriesClient
-from .common_capnp import Identifiable, IdentifiableClient
-from .management_capnp import Event
-from .persistence_capnp import Persistent, PersistentClient
-from .service_capnp import Stoppable, StoppableClient
-from .soil_capnp import Profile, ProfileClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
+
+from .climate_capnp import TimeSeries, TimeSeriesClient, _TimeSeriesModule
+from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+from .management_capnp import _EventModule
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
+from .service_capnp import Stoppable, StoppableClient, _StoppableModule
+from .soil_capnp import Profile, ProfileClient, _ProfileModule
 
 _RestInput = TypeVar("_RestInput")
 
-XYResultBuilder: TypeAlias = XYResult.Builder
-XYResultReader: TypeAlias = XYResult.Reader
-
-class XYResult:
-    class Reader:
+class _XYResultModule(_StructModule):
+    class Reader(_DynamicStructReader):
         @property
         def xs(self) -> Sequence[float]: ...
         @property
         def ys(self) -> Sequence[float]: ...
-        def as_builder(self) -> XYResult.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _XYResultModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def xs(self) -> Sequence[float]: ...
+        def xs(self) -> MutableSequence[float]: ...
         @xs.setter
         def xs(self, value: Sequence[float]) -> None: ...
         @property
-        def ys(self) -> Sequence[float]: ...
+        def ys(self) -> MutableSequence[float]: ...
         @ys.setter
         def ys(self, value: Sequence[float]) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> XYResult.Builder: ...
         @overload
-        def init(
-            self: Any, name: Literal["xs"], size: int = ...
-        ) -> Sequence[float]: ...
+        def init(self, field: Literal["xs"], size: int | None = None) -> MutableSequence[float]: ...
         @overload
-        def init(
-            self: Any, name: Literal["ys"], size: int = ...
-        ) -> Sequence[float]: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        def copy(self) -> XYResult.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> XYResult.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["ys"], size: int | None = None) -> MutableSequence[float]: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> _XYResultModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[XYResult.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYResult.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        xs: Sequence[float] | None = None,
-        ys: Sequence[float] | None = None,
-    ) -> XYResult.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYResult.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYResult.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, xs: Sequence[float] | None = None, ys: Sequence[float] | None = None) -> _XYResultModule.Builder: ...
 
-StatBuilder: TypeAlias = Stat.Builder
-StatReader: TypeAlias = Stat.Reader
+XYResultReader: TypeAlias = _XYResultModule.Reader
+XYResultBuilder: TypeAlias = _XYResultModule.Builder
+XYResult: _XYResultModule
 
-class Stat:
-    class Type(Enum):
-        min = "min"
-        max = "max"
-        sd = "sd"
-        avg = "avg"
-        median = "median"
+class _StatModule(_StructModule):
+    class _TypeModule(Enum):
+        min = 0
+        max = 1
+        sd = 2
+        avg = 3
+        median = 4
 
-    class Reader:
+    Type: TypeAlias = _TypeModule
+    class Reader(_DynamicStructReader):
         @property
-        def type(self) -> Stat.Type: ...
+        def type(self) -> _StatModule._TypeModule: ...
         @property
         def vs(self) -> Sequence[float]: ...
-        def as_builder(self) -> Stat.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StatModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def type(self) -> Stat.Type: ...
+        def type(self) -> _StatModule._TypeModule: ...
         @type.setter
-        def type(
-            self, value: Stat.Type | Literal["min", "max", "sd", "avg", "median"]
-        ) -> None: ...
+        def type(self, value: _StatModule._TypeModule | Literal["min", "max", "sd", "avg", "median"]) -> None: ...
         @property
-        def vs(self) -> Sequence[float]: ...
+        def vs(self) -> MutableSequence[float]: ...
         @vs.setter
         def vs(self, value: Sequence[float]) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Stat.Builder: ...
-        def init(self, name: Literal["vs"], size: int = ...) -> Sequence[float]: ...
-        def copy(self) -> Stat.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Stat.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["vs"], size: int | None = None) -> MutableSequence[float]: ...
+        @override
+        def as_reader(self) -> _StatModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Stat.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Stat.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        type: Stat.Type | Literal["min", "max", "sd", "avg", "median"] | None = None,
-        vs: Sequence[float] | None = None,
-    ) -> Stat.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Stat.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Stat.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, type: _StatModule._TypeModule | Literal["min", "max", "sd", "avg", "median"] | None = None, vs: Sequence[float] | None = None) -> _StatModule.Builder: ...
 
-XYPlusResultBuilder: TypeAlias = XYPlusResult.Builder
-XYPlusResultReader: TypeAlias = XYPlusResult.Reader
+StatReader: TypeAlias = _StatModule.Reader
+StatBuilder: TypeAlias = _StatModule.Builder
+Stat: _StatModule
 
-class XYPlusResult:
-    class Reader:
+class _XYPlusResultModule(_StructModule):
+    class Reader(_DynamicStructReader):
         @property
-        def xy(self) -> XYResult.Reader: ...
+        def xy(self) -> _XYResultModule.Reader: ...
         @property
-        def stats(self) -> Sequence[Stat.Reader]: ...
-        def as_builder(self) -> XYPlusResult.Builder: ...
+        def stats(self) -> Sequence[_StatModule.Reader]: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _XYPlusResultModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def xy(self) -> XYResult.Builder: ...
+        def xy(self) -> _XYResultModule.Builder: ...
         @xy.setter
-        def xy(
-            self, value: XYResult.Builder | XYResult.Reader | dict[str, Any]
-        ) -> None: ...
+        def xy(self, value: _XYResultModule.Builder | _XYResultModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def stats(self) -> Sequence[Stat.Builder]: ...
+        def stats(self) -> MutableSequence[_StatModule.Builder]: ...
         @stats.setter
-        def stats(
-            self, value: Sequence[Stat.Builder | Stat.Reader] | Sequence[dict[str, Any]]
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> XYPlusResult.Builder: ...
+        def stats(self, value: Sequence[_StatModule.Builder | _StatModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
         @overload
-        def init(self: Any, name: Literal["xy"]) -> XYResult.Builder: ...
+        def init(self, field: Literal["xy"], size: int | None = None) -> _XYResultModule.Builder: ...
         @overload
-        def init(
-            self: Any, name: Literal["stats"], size: int = ...
-        ) -> Sequence[Stat.Builder]: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        def copy(self) -> XYPlusResult.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> XYPlusResult.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["stats"], size: int | None = None) -> MutableSequence[_StatModule.Builder]: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> _XYPlusResultModule.Reader: ...
 
-    def init(self, name: Literal["xy"]) -> XYResult: ...
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[XYPlusResult.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYPlusResult.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        xy: XYResult.Builder | dict[str, Any] | None = None,
-        stats: Sequence[Stat.Builder] | Sequence[dict[str, Any]] | None = None,
-    ) -> XYPlusResult.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYPlusResult.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> XYPlusResult.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, xy: _XYResultModule.Builder | dict[str, Any] | None = None, stats: Sequence[_StatModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _XYPlusResultModule.Builder: ...
 
-class ClimateInstance:
+XYPlusResultReader: TypeAlias = _XYPlusResultModule.Reader
+XYPlusResultBuilder: TypeAlias = _XYPlusResultModule.Builder
+XYPlusResult: _XYPlusResultModule
+
+class _ClimateInstanceModule(_IdentifiableModule):
     class RunRequest(Protocol):
-        def send(self) -> ClimateInstance.RunResult: ...
-
-    class RunResult(Awaitable[RunResult], Protocol):
-        result: XYResult.Builder | XYResult.Reader
+        def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
 
     class RunsetRequest(Protocol):
-        def send(self) -> ClimateInstance.RunsetResult: ...
-
-    class RunsetResult(Awaitable[RunsetResult], Protocol):
-        result: XYPlusResult.Builder | XYPlusResult.Reader
+        def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: ClimateInstance.Server | Identifiable.Server
-    ) -> ClimateInstanceClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _ClimateInstanceModule.Server | _IdentifiableModule.Server) -> _ClimateInstanceModule.ClimateInstanceClient: ...
+    class Server(_IdentifiableModule.Server):
+        class RunResult(Awaitable[RunResult], Protocol):
+            result: _XYResultModule.Builder | _XYResultModule.Reader
+
+        class RunsetResult(Awaitable[RunsetResult], Protocol):
+            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
+
         class RunResultTuple(NamedTuple):
-            result: XYResult.Builder | XYResult.Reader
+            result: _XYResultModule.Builder | _XYResultModule.Reader
 
         class RunsetResultTuple(NamedTuple):
-            result: XYPlusResult.Builder | XYPlusResult.Reader
+            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
 
         class RunCallContext(Protocol):
-            params: ClimateInstance.RunRequest
-            results: ClimateInstance.RunResult
+            params: _ClimateInstanceModule.RunRequest
+            results: _ClimateInstanceModule.Server.RunResult
 
         class RunsetCallContext(Protocol):
-            params: ClimateInstance.RunsetRequest
-            results: ClimateInstance.RunsetResult
+            params: _ClimateInstanceModule.RunsetRequest
+            results: _ClimateInstanceModule.Server.RunsetResult
 
-        def run(
-            self, _context: ClimateInstance.Server.RunCallContext, **kwargs: Any
-        ) -> Awaitable[ClimateInstance.Server.RunResultTuple | None]: ...
-        def run_context(
-            self, context: ClimateInstance.Server.RunCallContext
-        ) -> Awaitable[None]: ...
-        def runSet(
-            self, _context: ClimateInstance.Server.RunsetCallContext, **kwargs: Any
-        ) -> Awaitable[ClimateInstance.Server.RunsetResultTuple | None]: ...
-        def runSet_context(
-            self, context: ClimateInstance.Server.RunsetCallContext
-        ) -> Awaitable[None]: ...
+        def run(self, _context: _ClimateInstanceModule.Server.RunCallContext, **kwargs: Any) -> Awaitable[_ClimateInstanceModule.Server.RunResultTuple | None]: ...
+        def run_context(self, context: _ClimateInstanceModule.Server.RunCallContext) -> Awaitable[None]: ...
+        def runSet(self, _context: _ClimateInstanceModule.Server.RunsetCallContext, **kwargs: Any) -> Awaitable[_ClimateInstanceModule.Server.RunsetResultTuple | None]: ...
+        def runSet_context(self, context: _ClimateInstanceModule.Server.RunsetCallContext) -> Awaitable[None]: ...
 
-class ClimateInstanceClient(IdentifiableClient):
-    def run(self) -> ClimateInstance.RunResult: ...
-    def runSet(self) -> ClimateInstance.RunsetResult: ...
-    def run_request(self) -> ClimateInstance.RunRequest: ...
-    def runSet_request(self) -> ClimateInstance.RunsetRequest: ...
+    class ClimateInstanceClient(_IdentifiableModule.IdentifiableClient):
+        class RunResult(Awaitable[RunResult], Protocol):
+            result: _XYResultModule.Builder | _XYResultModule.Reader
 
-EnvBuilder: TypeAlias = Env.Builder
-EnvReader: TypeAlias = Env.Reader
+        class RunsetResult(Awaitable[RunsetResult], Protocol):
+            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
 
-class Env(Generic[_RestInput]):
-    class Reader:
+        def run(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
+        def runSet(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
+        def run_request(self) -> _ClimateInstanceModule.RunRequest: ...
+        def runSet_request(self) -> _ClimateInstanceModule.RunsetRequest: ...
+
+ClimateInstance: _ClimateInstanceModule
+ClimateInstanceClient: TypeAlias = _ClimateInstanceModule.ClimateInstanceClient
+
+class _EnvModule(Generic[_RestInput], _StructModule):
+    class Reader(_DynamicStructReader):
         @property
         def rest(self) -> _RestInput: ...
         @property
-        def timeSeries(self) -> TimeSeriesClient: ...
+        def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @property
-        def soilProfile(self) -> ProfileClient: ...
+        def soilProfile(self) -> _ProfileModule.ProfileClient: ...
         @property
-        def mgmtEvents(self) -> Sequence[Event.Reader]: ...
-        def as_builder(self) -> Env.Builder: ...
+        def mgmtEvents(self) -> Sequence[_EventModule.Reader]: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EnvModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def rest(self) -> _RestInput: ...
         @rest.setter
         def rest(self, value: _RestInput) -> None: ...
         @property
-        def timeSeries(self) -> TimeSeriesClient: ...
+        def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @timeSeries.setter
-        def timeSeries(self, value: TimeSeriesClient | TimeSeries.Server) -> None: ...
+        def timeSeries(self, value: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server) -> None: ...
         @property
-        def soilProfile(self) -> ProfileClient: ...
+        def soilProfile(self) -> _ProfileModule.ProfileClient: ...
         @soilProfile.setter
-        def soilProfile(self, value: ProfileClient | Profile.Server) -> None: ...
+        def soilProfile(self, value: _ProfileModule.ProfileClient | _ProfileModule.Server) -> None: ...
         @property
-        def mgmtEvents(self) -> Sequence[Event.Builder]: ...
+        def mgmtEvents(self) -> MutableSequence[_EventModule.Builder]: ...
         @mgmtEvents.setter
-        def mgmtEvents(
-            self,
-            value: Sequence[Event.Builder | Event.Reader] | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Env.Builder: ...
-        def init(
-            self, name: Literal["mgmtEvents"], size: int = ...
-        ) -> Sequence[Event.Builder]: ...
-        def copy(self) -> Env.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Env.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def mgmtEvents(self, value: Sequence[_EventModule.Builder | _EventModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def init(self, field: Literal["mgmtEvents"], size: int | None = None) -> MutableSequence[_EventModule.Builder]: ...
+        @override
+        def as_reader(self) -> _EnvModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Env.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Env.Reader: ...
-    @staticmethod
+    @override
     def new_message(
+        self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         rest: _RestInput | None = None,
-        timeSeries: TimeSeriesClient | TimeSeries.Server | None = None,
-        soilProfile: ProfileClient | Profile.Server | None = None,
-        mgmtEvents: Sequence[Event.Builder] | Sequence[dict[str, Any]] | None = None,
-    ) -> Env.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Env.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Env.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+        timeSeries: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server | None = None,
+        soilProfile: _ProfileModule.ProfileClient | _ProfileModule.Server | None = None,
+        mgmtEvents: Sequence[_EventModule.Builder] | Sequence[dict[str, Any]] | None = None,
+    ) -> _EnvModule.Builder: ...
 
-class EnvInstance:
+EnvReader: TypeAlias = _EnvModule.Reader
+EnvBuilder: TypeAlias = _EnvModule.Builder
+Env: _EnvModule
+
+class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModule):
     class RunRequest(Protocol):
-        env: Env[Any].Builder
+        env: _EnvModule[_DynamicObjectReader].Builder
         @overload
-        def init(self, name: Literal["env"]) -> Env[Any].Builder: ...
+        def init(self, name: Literal["env"]) -> _EnvModule[_DynamicObjectReader].Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> EnvInstance.RunResult: ...
-
-    class RunResult(Awaitable[RunResult], Protocol):
-        result: Any
+        def send(self) -> _EnvInstanceModule.EnvInstanceClient.RunResult: ...
 
     @classmethod
-    def _new_client(
-        cls,
-        server: EnvInstance.Server
-        | Identifiable.Server
-        | Persistent.Server
-        | Stoppable.Server,
-    ) -> EnvInstanceClient: ...
-    class Server(Identifiable.Server, Persistent.Server, Stoppable.Server):
+    def _new_client(cls, server: _EnvInstanceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server | _StoppableModule.Server) -> _EnvInstanceModule.EnvInstanceClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server, _StoppableModule.Server):
+        class RunResult(Awaitable[RunResult], Protocol):
+            result: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+
         class RunResultTuple(NamedTuple):
-            result: Any
+            result: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
         class RunCallContext(Protocol):
-            params: EnvInstance.RunRequest
-            results: EnvInstance.RunResult
+            params: _EnvInstanceModule.RunRequest
+            results: _EnvInstanceModule.Server.RunResult
 
-        def run(
-            self,
-            env: Env[Any].Reader,
-            _context: EnvInstance.Server.RunCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[EnvInstance.Server.RunResultTuple | None]: ...
-        def run_context(
-            self, context: EnvInstance.Server.RunCallContext
-        ) -> Awaitable[None]: ...
+        def run(self, env: _EnvModule[_DynamicObjectReader].Reader, _context: _EnvInstanceModule.Server.RunCallContext, **kwargs: Any) -> Awaitable[_EnvInstanceModule.Server.RunResultTuple | None]: ...
+        def run_context(self, context: _EnvInstanceModule.Server.RunCallContext) -> Awaitable[None]: ...
 
-class EnvInstanceClient(IdentifiableClient, PersistentClient, StoppableClient):
-    def run(
-        self, env: Env[Any] | dict[str, Any] | None = None
-    ) -> EnvInstance.RunResult: ...
-    def run_request(
-        self, env: Env[Any].Builder | None = None
-    ) -> EnvInstance.RunRequest: ...
+    class EnvInstanceClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient, _StoppableModule.StoppableClient):
+        class RunResult(Awaitable[RunResult], Protocol):
+            result: _DynamicObjectReader
 
-class EnvInstanceProxy:
-    class Unregister:
+        def run(self, env: _EnvModule[_DynamicObjectReader] | dict[str, Any] | None = None) -> _EnvInstanceModule.EnvInstanceClient.RunResult: ...
+        def run_request(self, env: _EnvModule[_DynamicObjectReader].Builder | None = None) -> _EnvInstanceModule.RunRequest: ...
+
+EnvInstance: _EnvInstanceModule
+EnvInstanceClient: TypeAlias = _EnvInstanceModule.EnvInstanceClient
+
+class _EnvInstanceProxyModule(_EnvInstanceModule):
+    class _UnregisterModule(_InterfaceModule):
         class UnregisterRequest(Protocol):
-            def send(self) -> EnvInstanceProxy.Unregister.UnregisterResult: ...
-
-        class UnregisterResult(Awaitable[UnregisterResult], Protocol):
-            success: bool
+            def send(self) -> _EnvInstanceProxyModule._UnregisterModule.UnregisterClient.UnregisterResult: ...
 
         @classmethod
-        def _new_client(
-            cls, server: EnvInstanceProxy.Unregister.Server
-        ) -> EnvInstanceProxy.UnregisterClient: ...
-        class Server(Protocol):
+        def _new_client(cls, server: _EnvInstanceProxyModule._UnregisterModule.Server) -> _EnvInstanceProxyModule._UnregisterModule.UnregisterClient: ...
+        class Server(_DynamicCapabilityServer):
+            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
+                success: bool
+
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
             class UnregisterCallContext(Protocol):
-                params: EnvInstanceProxy.Unregister.UnregisterRequest
-                results: EnvInstanceProxy.Unregister.UnregisterResult
+                params: _EnvInstanceProxyModule._UnregisterModule.UnregisterRequest
+                results: _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterResult
 
-            def unregister(
-                self,
-                _context: EnvInstanceProxy.Unregister.Server.UnregisterCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[
-                bool | EnvInstanceProxy.Unregister.Server.UnregisterResultTuple | None
-            ]: ...
-            def unregister_context(
-                self, context: EnvInstanceProxy.Unregister.Server.UnregisterCallContext
-            ) -> Awaitable[None]: ...
+            def unregister(self, _context: _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterCallContext, **kwargs: Any) -> Awaitable[bool | _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterResultTuple | None]: ...
+            def unregister_context(self, context: _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterCallContext) -> Awaitable[None]: ...
 
-    class UnregisterClient(Protocol):
-        def unregister(self) -> EnvInstanceProxy.Unregister.UnregisterResult: ...
-        def unregister_request(
-            self,
-        ) -> EnvInstanceProxy.Unregister.UnregisterRequest: ...
+        class UnregisterClient(_DynamicCapabilityClient):
+            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
+                success: bool
 
+            def unregister(self) -> _EnvInstanceProxyModule._UnregisterModule.UnregisterClient.UnregisterResult: ...
+            def unregister_request(self) -> _EnvInstanceProxyModule._UnregisterModule.UnregisterRequest: ...
+
+    Unregister: _UnregisterModule
+    UnregisterClient: TypeAlias = _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
     class RegisterenvinstanceRequest(Protocol):
-        instance: EnvInstance | EnvInstance.Server
-        def send(self) -> EnvInstanceProxy.RegisterenvinstanceResult: ...
-
-    class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
-        unregister: EnvInstanceProxy.UnregisterClient
+        instance: EnvInstanceClient | _EnvInstanceModule.Server
+        def send(self) -> _EnvInstanceProxyModule.EnvInstanceProxyClient.RegisterenvinstanceResult: ...
 
     @classmethod
-    def _new_client(
-        cls,
-        server: EnvInstanceProxy.Server
-        | EnvInstance.Server
-        | Identifiable.Server
-        | Persistent.Server
-        | Stoppable.Server,
-    ) -> EnvInstanceProxyClient: ...
-    class Server(EnvInstance.Server):
+    def _new_client(cls, server: _EnvInstanceProxyModule.Server | _EnvInstanceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server | _StoppableModule.Server) -> _EnvInstanceProxyModule.EnvInstanceProxyClient: ...
+    class Server(_EnvInstanceModule.Server):
+        class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
+            unregister: _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
+
         class RegisterenvinstanceResultTuple(NamedTuple):
-            unregister: EnvInstanceProxy.Unregister.Server
+            unregister: _EnvInstanceProxyModule._UnregisterModule.Server
 
         class RegisterenvinstanceCallContext(Protocol):
-            params: EnvInstanceProxy.RegisterenvinstanceRequest
-            results: EnvInstanceProxy.RegisterenvinstanceResult
+            params: _EnvInstanceProxyModule.RegisterenvinstanceRequest
+            results: _EnvInstanceProxyModule.Server.RegisterenvinstanceResult
 
-        def registerEnvInstance(
-            self,
-            instance: EnvInstance,
-            _context: EnvInstanceProxy.Server.RegisterenvinstanceCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            EnvInstanceProxy.Unregister.Server
-            | EnvInstanceProxy.Server.RegisterenvinstanceResultTuple
-            | None
-        ]: ...
-        def registerEnvInstance_context(
-            self, context: EnvInstanceProxy.Server.RegisterenvinstanceCallContext
-        ) -> Awaitable[None]: ...
+        def registerEnvInstance(self, instance: EnvInstanceClient, _context: _EnvInstanceProxyModule.Server.RegisterenvinstanceCallContext, **kwargs: Any) -> Awaitable[_EnvInstanceProxyModule._UnregisterModule.Server | _EnvInstanceProxyModule.Server.RegisterenvinstanceResultTuple | None]: ...
+        def registerEnvInstance_context(self, context: _EnvInstanceProxyModule.Server.RegisterenvinstanceCallContext) -> Awaitable[None]: ...
 
-class EnvInstanceProxyClient(EnvInstanceClient):
-    def registerEnvInstance(
-        self, instance: EnvInstance | EnvInstance.Server | None = None
-    ) -> EnvInstanceProxy.RegisterenvinstanceResult: ...
-    def registerEnvInstance_request(
-        self, instance: EnvInstance | EnvInstance.Server | None = None
-    ) -> EnvInstanceProxy.RegisterenvinstanceRequest: ...
+    class EnvInstanceProxyClient(_EnvInstanceModule.EnvInstanceClient):
+        class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
+            unregister: _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
 
-class InstanceFactory:
+        def registerEnvInstance(self, instance: EnvInstanceClient | _EnvInstanceModule.Server | None = None) -> _EnvInstanceProxyModule.EnvInstanceProxyClient.RegisterenvinstanceResult: ...
+        def registerEnvInstance_request(self, instance: EnvInstanceClient | _EnvInstanceModule.Server | None = None) -> _EnvInstanceProxyModule.RegisterenvinstanceRequest: ...
+
+EnvInstanceProxy: _EnvInstanceProxyModule
+EnvInstanceProxyClient: TypeAlias = _EnvInstanceProxyModule.EnvInstanceProxyClient
+
+class _InstanceFactoryModule(_IdentifiableModule):
     class ModelinfoRequest(Protocol):
-        def send(self) -> InstanceFactory.ModelinfoResult: ...
-
-    class ModelinfoResult(Awaitable[ModelinfoResult], Protocol):
-        id: str
-        name: str
-        description: str
+        def send(self) -> _InstanceFactoryModule.InstanceFactoryClient.ModelinfoResult: ...
 
     class NewinstanceRequest(Protocol):
-        def send(self) -> InstanceFactory.NewinstanceResult: ...
-
-    class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
-        instance: IdentifiableClient
+        def send(self) -> _InstanceFactoryModule.InstanceFactoryClient.NewinstanceResult: ...
 
     class NewinstancesRequest(Protocol):
         numberOfInstances: int
-        def send(self) -> InstanceFactory.NewinstancesResult: ...
-
-    class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-        instances: Sequence[Identifiable]
+        def send(self) -> _InstanceFactoryModule.InstanceFactoryClient.NewinstancesResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: InstanceFactory.Server | Identifiable.Server
-    ) -> InstanceFactoryClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _InstanceFactoryModule.Server | _IdentifiableModule.Server) -> _InstanceFactoryModule.InstanceFactoryClient: ...
+    class Server(_IdentifiableModule.Server):
+        class ModelinfoResult(Awaitable[ModelinfoResult], Protocol):
+            id: str
+            name: str
+            description: str
+
+        class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
+            instance: _IdentifiableModule.IdentifiableClient
+
+        class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
+            instances: Sequence[_IdentifiableModule]
+
         class ModelinfoResultTuple(NamedTuple):
             id: str
             name: str
             description: str
 
         class NewinstanceResultTuple(NamedTuple):
-            instance: Identifiable.Server
+            instance: _IdentifiableModule.Server
 
         class NewinstancesResultTuple(NamedTuple):
-            instances: Sequence[Identifiable]
+            instances: Sequence[_IdentifiableModule]
 
         class ModelinfoCallContext(Protocol):
-            params: InstanceFactory.ModelinfoRequest
-            results: InstanceFactory.ModelinfoResult
+            params: _InstanceFactoryModule.ModelinfoRequest
+            results: _InstanceFactoryModule.Server.ModelinfoResult
 
         class NewinstanceCallContext(Protocol):
-            params: InstanceFactory.NewinstanceRequest
-            results: InstanceFactory.NewinstanceResult
+            params: _InstanceFactoryModule.NewinstanceRequest
+            results: _InstanceFactoryModule.Server.NewinstanceResult
 
         class NewinstancesCallContext(Protocol):
-            params: InstanceFactory.NewinstancesRequest
-            results: InstanceFactory.NewinstancesResult
+            params: _InstanceFactoryModule.NewinstancesRequest
+            results: _InstanceFactoryModule.Server.NewinstancesResult
 
-        def modelInfo(
-            self, _context: InstanceFactory.Server.ModelinfoCallContext, **kwargs: Any
-        ) -> Awaitable[InstanceFactory.Server.ModelinfoResultTuple | None]: ...
-        def modelInfo_context(
-            self, context: InstanceFactory.Server.ModelinfoCallContext
-        ) -> Awaitable[None]: ...
-        def newInstance(
-            self, _context: InstanceFactory.Server.NewinstanceCallContext, **kwargs: Any
-        ) -> Awaitable[
-            Identifiable.Server | InstanceFactory.Server.NewinstanceResultTuple | None
-        ]: ...
-        def newInstance_context(
-            self, context: InstanceFactory.Server.NewinstanceCallContext
-        ) -> Awaitable[None]: ...
-        def newInstances(
-            self,
-            numberOfInstances: int,
-            _context: InstanceFactory.Server.NewinstancesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[InstanceFactory.Server.NewinstancesResultTuple | None]: ...
-        def newInstances_context(
-            self, context: InstanceFactory.Server.NewinstancesCallContext
-        ) -> Awaitable[None]: ...
+        def modelInfo(self, _context: _InstanceFactoryModule.Server.ModelinfoCallContext, **kwargs: Any) -> Awaitable[_InstanceFactoryModule.Server.ModelinfoResultTuple | None]: ...
+        def modelInfo_context(self, context: _InstanceFactoryModule.Server.ModelinfoCallContext) -> Awaitable[None]: ...
+        def newInstance(self, _context: _InstanceFactoryModule.Server.NewinstanceCallContext, **kwargs: Any) -> Awaitable[_IdentifiableModule.Server | _InstanceFactoryModule.Server.NewinstanceResultTuple | None]: ...
+        def newInstance_context(self, context: _InstanceFactoryModule.Server.NewinstanceCallContext) -> Awaitable[None]: ...
+        def newInstances(self, numberOfInstances: int, _context: _InstanceFactoryModule.Server.NewinstancesCallContext, **kwargs: Any) -> Awaitable[_InstanceFactoryModule.Server.NewinstancesResultTuple | None]: ...
+        def newInstances_context(self, context: _InstanceFactoryModule.Server.NewinstancesCallContext) -> Awaitable[None]: ...
 
-class InstanceFactoryClient(IdentifiableClient):
-    def modelInfo(self) -> InstanceFactory.ModelinfoResult: ...
-    def newInstance(self) -> InstanceFactory.NewinstanceResult: ...
-    def newInstances(
-        self, numberOfInstances: int | None = None
-    ) -> InstanceFactory.NewinstancesResult: ...
-    def modelInfo_request(self) -> InstanceFactory.ModelinfoRequest: ...
-    def newInstance_request(self) -> InstanceFactory.NewinstanceRequest: ...
-    def newInstances_request(
-        self, numberOfInstances: int | None = None
-    ) -> InstanceFactory.NewinstancesRequest: ...
+    class InstanceFactoryClient(_IdentifiableModule.IdentifiableClient):
+        class ModelinfoResult(Awaitable[ModelinfoResult], Protocol):
+            id: str
+            name: str
+            description: str
+
+        class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
+            instance: _IdentifiableModule.IdentifiableClient
+
+        class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
+            instances: Sequence[_IdentifiableModule]
+
+        def modelInfo(self) -> _InstanceFactoryModule.InstanceFactoryClient.ModelinfoResult: ...
+        def newInstance(self) -> _InstanceFactoryModule.InstanceFactoryClient.NewinstanceResult: ...
+        def newInstances(self, numberOfInstances: int | None = None) -> _InstanceFactoryModule.InstanceFactoryClient.NewinstancesResult: ...
+        def modelInfo_request(self) -> _InstanceFactoryModule.ModelinfoRequest: ...
+        def newInstance_request(self) -> _InstanceFactoryModule.NewinstanceRequest: ...
+        def newInstances_request(self, numberOfInstances: int | None = None) -> _InstanceFactoryModule.NewinstancesRequest: ...
+
+InstanceFactory: _InstanceFactoryModule
+InstanceFactoryClient: TypeAlias = _InstanceFactoryModule.InstanceFactoryClient
+
+# Top-level type aliases for use in type annotations
+UnregisterClient: TypeAlias = _EnvInstanceProxyModule._UnregisterModule.UnregisterClient

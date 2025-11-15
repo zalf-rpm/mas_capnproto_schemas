@@ -3,27 +3,33 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, NamedTuple, Protocol, TypeAlias, TypeVar
+from typing import Any, Generic, NamedTuple, Protocol, TypeAlias, TypeVar, override
 
-from .common_capnp import Identifiable, IdentifiableClient
-from .persistence_capnp import Persistent, PersistentClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
+
+from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
 _Payload = TypeVar("_Payload")
 
-JobBuilder: TypeAlias = Job.Builder
-JobReader: TypeAlias = Job.Reader
-
-class Job(Generic[_Payload]):
-    class Reader:
+class _JobModule(Generic[_Payload], _StructModule):
+    class Reader(_DynamicStructReader):
         @property
         def data(self) -> _Payload: ...
         @property
         def noFurtherJobs(self) -> bool: ...
-        def as_builder(self) -> Job.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _JobModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
         def data(self) -> _Payload: ...
         @data.setter
@@ -32,78 +38,42 @@ class Job(Generic[_Payload]):
         def noFurtherJobs(self) -> bool: ...
         @noFurtherJobs.setter
         def noFurtherJobs(self, value: bool) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Job.Builder: ...
-        def copy(self) -> Job.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Job.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        @override
+        def as_reader(self) -> _JobModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Job.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Job.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        data: _Payload | None = None,
-        noFurtherJobs: bool | None = None,
-    ) -> Job.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Job.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Job.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, data: _Payload | None = None, noFurtherJobs: bool | None = None) -> _JobModule.Builder: ...
 
-class Service:
+JobReader: TypeAlias = _JobModule.Reader
+JobBuilder: TypeAlias = _JobModule.Builder
+Job: _JobModule
+
+class _ServiceModule(_IdentifiableModule, _PersistentModule):
     class NextjobRequest(Protocol):
-        def send(self) -> Service.NextjobResult: ...
-
-    class NextjobResult(Awaitable[NextjobResult], Protocol):
-        job: Job.Builder | Job.Reader
+        def send(self) -> _ServiceModule.ServiceClient.NextjobResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Service.Server | Identifiable.Server | Persistent.Server
-    ) -> ServiceClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _ServiceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ServiceModule.ServiceClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class NextjobResult(Awaitable[NextjobResult], Protocol):
+            job: _JobModule.Builder | _JobModule.Reader
+
         class NextjobResultTuple(NamedTuple):
-            job: Job.Builder | Job.Reader
+            job: _JobModule.Builder | _JobModule.Reader
 
         class NextjobCallContext(Protocol):
-            params: Service.NextjobRequest
-            results: Service.NextjobResult
+            params: _ServiceModule.NextjobRequest
+            results: _ServiceModule.Server.NextjobResult
 
-        def nextJob(
-            self, _context: Service.Server.NextjobCallContext, **kwargs: Any
-        ) -> Awaitable[Service.Server.NextjobResultTuple | None]: ...
-        def nextJob_context(
-            self, context: Service.Server.NextjobCallContext
-        ) -> Awaitable[None]: ...
+        def nextJob(self, _context: _ServiceModule.Server.NextjobCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.NextjobResultTuple | None]: ...
+        def nextJob_context(self, context: _ServiceModule.Server.NextjobCallContext) -> Awaitable[None]: ...
 
-class ServiceClient(IdentifiableClient, PersistentClient):
-    def nextJob(self) -> Service.NextjobResult: ...
-    def nextJob_request(self) -> Service.NextjobRequest: ...
+    class ServiceClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class NextjobResult(Awaitable[NextjobResult], Protocol):
+            job: _JobModule.Builder | _JobModule.Reader
+
+        def nextJob(self) -> _ServiceModule.ServiceClient.NextjobResult: ...
+        def nextJob_request(self) -> _ServiceModule.NextjobRequest: ...
+
+Service: _ServiceModule
+ServiceClient: TypeAlias = _ServiceModule.ServiceClient

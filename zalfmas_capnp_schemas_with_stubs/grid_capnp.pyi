@@ -3,38 +3,46 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
 from enum import Enum
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
+from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
 
-from .common_capnp import Identifiable, IdentifiableClient
-from .geo_capnp import LatLonCoord
-from .persistence_capnp import Persistent, PersistentClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class Aggregation(Enum):
-    none = "none"
-    wAvg = "wAvg"
-    wMedian = "wMedian"
-    min = "min"
-    max = "max"
-    sum = "sum"
-    iAvg = "iAvg"
-    iMedian = "iMedian"
-    avg = "avg"
-    median = "median"
-    wSum = "wSum"
-    iSum = "iSum"
-    wMin = "wMin"
-    iMin = "iMin"
-    wMax = "wMax"
-    iMax = "iMax"
+from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+from .geo_capnp import _LatLonCoordModule
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
-class Grid:
-    ValueBuilder: TypeAlias = Value.Builder
-    ValueReader: TypeAlias = Value.Reader
-    class Value:
-        class Reader:
+class _AggregationModule(Enum):
+    none = 0
+    wAvg = 2
+    wMedian = 5
+    min = 7
+    max = 10
+    sum = 13
+    iAvg = 3
+    iMedian = 6
+    avg = 1
+    median = 4
+    wSum = 14
+    iSum = 15
+    wMin = 8
+    iMin = 9
+    wMax = 11
+    iMax = 12
+
+Aggregation: TypeAlias = _AggregationModule
+
+class _GridModule(_IdentifiableModule, _PersistentModule):
+    class _ValueModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def f(self) -> float: ...
             @property
@@ -43,10 +51,12 @@ class Grid:
             def ui(self) -> int: ...
             @property
             def no(self) -> bool: ...
+            @override
             def which(self) -> Literal["f", "i", "ui", "no"]: ...
-            def as_builder(self) -> Grid.Value.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._ValueModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def f(self) -> float: ...
             @f.setter
@@ -63,68 +73,29 @@ class Grid:
             def no(self) -> bool: ...
             @no.setter
             def no(self, value: bool) -> None: ...
+            @override
             def which(self) -> Literal["f", "i", "ui", "no"]: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Grid.Value.Builder: ...
-            def copy(self) -> Grid.Value.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Grid.Value.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _GridModule._ValueModule.Reader: ...
 
-        def which(self) -> Literal["f", "i", "ui", "no"]: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Grid.Value.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Value.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            f: float | None = None,
-            i: int | None = None,
-            ui: int | None = None,
-            no: bool | None = None,
-        ) -> Grid.Value.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Value.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Value.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, f: float | None = None, i: int | None = None, ui: int | None = None, no: bool | None = None) -> _GridModule._ValueModule.Builder: ...
 
-    ResolutionBuilder: TypeAlias = Resolution.Builder
-    ResolutionReader: TypeAlias = Resolution.Reader
-    class Resolution:
-        class Reader:
+    ValueReader: TypeAlias = _ValueModule.Reader
+    ValueBuilder: TypeAlias = _ValueModule.Builder
+    Value: _ValueModule
+    class _ResolutionModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def meter(self) -> int: ...
             @property
             def degree(self) -> float: ...
+            @override
             def which(self) -> Literal["meter", "degree"]: ...
-            def as_builder(self) -> Grid.Resolution.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._ResolutionModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def meter(self) -> int: ...
             @meter.setter
@@ -133,65 +104,27 @@ class Grid:
             def degree(self) -> float: ...
             @degree.setter
             def degree(self, value: float) -> None: ...
+            @override
             def which(self) -> Literal["meter", "degree"]: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Grid.Resolution.Builder: ...
-            def copy(self) -> Grid.Resolution.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Grid.Resolution.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _GridModule._ResolutionModule.Reader: ...
 
-        def which(self) -> Literal["meter", "degree"]: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Grid.Resolution.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Resolution.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            meter: int | None = None,
-            degree: float | None = None,
-        ) -> Grid.Resolution.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Resolution.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Resolution.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meter: int | None = None, degree: float | None = None) -> _GridModule._ResolutionModule.Builder: ...
 
-    RowColBuilder: TypeAlias = RowCol.Builder
-    RowColReader: TypeAlias = RowCol.Reader
-    class RowCol:
-        class Reader:
+    ResolutionReader: TypeAlias = _ResolutionModule.Reader
+    ResolutionBuilder: TypeAlias = _ResolutionModule.Builder
+    Resolution: _ResolutionModule
+    class _RowColModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def row(self) -> int: ...
             @property
             def col(self) -> int: ...
-            def as_builder(self) -> Grid.RowCol.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._RowColModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def row(self) -> int: ...
             @row.setter
@@ -200,79 +133,37 @@ class Grid:
             def col(self) -> int: ...
             @col.setter
             def col(self, value: int) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Grid.RowCol.Builder: ...
-            def copy(self) -> Grid.RowCol.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Grid.RowCol.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _GridModule._RowColModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Grid.RowCol.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.RowCol.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            row: int | None = None,
-            col: int | None = None,
-        ) -> Grid.RowCol.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.RowCol.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.RowCol.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, row: int | None = None, col: int | None = None) -> _GridModule._RowColModule.Builder: ...
 
-    AggregationPartBuilder: TypeAlias = AggregationPart.Builder
-    AggregationPartReader: TypeAlias = AggregationPart.Reader
-    class AggregationPart:
-        class Reader:
+    RowColReader: TypeAlias = _RowColModule.Reader
+    RowColBuilder: TypeAlias = _RowColModule.Builder
+    RowCol: _RowColModule
+    class _AggregationPartModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def value(self) -> Grid.Value.Reader: ...
+            def value(self) -> _GridModule._ValueModule.Reader: ...
             @property
-            def rowCol(self) -> Grid.RowCol.Reader: ...
+            def rowCol(self) -> _GridModule._RowColModule.Reader: ...
             @property
             def areaFrac(self) -> float: ...
             @property
             def iValue(self) -> float: ...
-            def as_builder(self) -> Grid.AggregationPart.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._AggregationPartModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def value(self) -> Grid.Value.Builder: ...
+            def value(self) -> _GridModule._ValueModule.Builder: ...
             @value.setter
-            def value(
-                self, value: Grid.Value.Builder | Grid.Value.Reader | dict[str, Any]
-            ) -> None: ...
+            def value(self, value: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def rowCol(self) -> Grid.RowCol.Builder: ...
+            def rowCol(self) -> _GridModule._RowColModule.Builder: ...
             @rowCol.setter
-            def rowCol(
-                self, value: Grid.RowCol.Builder | Grid.RowCol.Reader | dict[str, Any]
-            ) -> None: ...
+            def rowCol(self, value: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader | dict[str, Any]) -> None: ...
             @property
             def areaFrac(self) -> float: ...
             @areaFrac.setter
@@ -281,632 +172,377 @@ class Grid:
             def iValue(self) -> float: ...
             @iValue.setter
             def iValue(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Grid.AggregationPart.Builder: ...
             @overload
-            def init(self: Any, name: Literal["value"]) -> Grid.Value.Builder: ...
+            def init(self, field: Literal["value"], size: int | None = None) -> _GridModule._ValueModule.Builder: ...
             @overload
-            def init(self: Any, name: Literal["rowCol"]) -> Grid.RowCol.Builder: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Grid.AggregationPart.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Grid.AggregationPart.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["rowCol"], size: int | None = None) -> _GridModule._RowColModule.Builder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _GridModule._AggregationPartModule.Reader: ...
 
-        @overload
-        def init(self, name: Literal["value"]) -> Grid.Value: ...
-        @overload
-        def init(self, name: Literal["rowCol"]) -> Grid.RowCol: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Grid.AggregationPart.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.AggregationPart.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            value: Grid.Value.Builder | dict[str, Any] | None = None,
-            rowCol: Grid.RowCol.Builder | dict[str, Any] | None = None,
-            areaFrac: float | None = None,
-            iValue: float | None = None,
-        ) -> Grid.AggregationPart.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.AggregationPart.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.AggregationPart.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, value: _GridModule._ValueModule.Builder | dict[str, Any] | None = None, rowCol: _GridModule._RowColModule.Builder | dict[str, Any] | None = None, areaFrac: float | None = None, iValue: float | None = None
+        ) -> _GridModule._AggregationPartModule.Builder: ...
 
-    LocationBuilder: TypeAlias = Location.Builder
-    LocationReader: TypeAlias = Location.Reader
-    class Location:
-        class Reader:
+    AggregationPartReader: TypeAlias = _AggregationPartModule.Reader
+    AggregationPartBuilder: TypeAlias = _AggregationPartModule.Builder
+    AggregationPart: _AggregationPartModule
+    class _LocationModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def latLonCoord(self) -> LatLonCoord.Reader: ...
+            def latLonCoord(self) -> _LatLonCoordModule.Reader: ...
             @property
-            def rowCol(self) -> Grid.RowCol.Reader: ...
+            def rowCol(self) -> _GridModule._RowColModule.Reader: ...
             @property
-            def value(self) -> Grid.Value.Reader: ...
-            def as_builder(self) -> Grid.Location.Builder: ...
+            def value(self) -> _GridModule._ValueModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._LocationModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def latLonCoord(self) -> LatLonCoord.Builder: ...
+            def latLonCoord(self) -> _LatLonCoordModule.Builder: ...
             @latLonCoord.setter
-            def latLonCoord(
-                self, value: LatLonCoord.Builder | LatLonCoord.Reader | dict[str, Any]
-            ) -> None: ...
+            def latLonCoord(self, value: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def rowCol(self) -> Grid.RowCol.Builder: ...
+            def rowCol(self) -> _GridModule._RowColModule.Builder: ...
             @rowCol.setter
-            def rowCol(
-                self, value: Grid.RowCol.Builder | Grid.RowCol.Reader | dict[str, Any]
-            ) -> None: ...
+            def rowCol(self, value: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def value(self) -> Grid.Value.Builder: ...
+            def value(self) -> _GridModule._ValueModule.Builder: ...
             @value.setter
-            def value(
-                self, value: Grid.Value.Builder | Grid.Value.Reader | dict[str, Any]
-            ) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Grid.Location.Builder: ...
+            def value(self, value: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader | dict[str, Any]) -> None: ...
             @overload
-            def init(
-                self: Any, name: Literal["latLonCoord"]
-            ) -> LatLonCoord.Builder: ...
+            def init(self, field: Literal["latLonCoord"], size: int | None = None) -> _LatLonCoordModule.Builder: ...
             @overload
-            def init(self: Any, name: Literal["rowCol"]) -> Grid.RowCol.Builder: ...
+            def init(self, field: Literal["rowCol"], size: int | None = None) -> _GridModule._RowColModule.Builder: ...
             @overload
-            def init(self: Any, name: Literal["value"]) -> Grid.Value.Builder: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Grid.Location.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Grid.Location.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["value"], size: int | None = None) -> _GridModule._ValueModule.Builder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _GridModule._LocationModule.Reader: ...
 
-        @overload
-        def init(self, name: Literal["latLonCoord"]) -> LatLonCoord: ...
-        @overload
-        def init(self, name: Literal["rowCol"]) -> Grid.RowCol: ...
-        @overload
-        def init(self, name: Literal["value"]) -> Grid.Value: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Grid.Location.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Location.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            latLonCoord: LatLonCoord.Builder | dict[str, Any] | None = None,
-            rowCol: Grid.RowCol.Builder | dict[str, Any] | None = None,
-            value: Grid.Value.Builder | dict[str, Any] | None = None,
-        ) -> Grid.Location.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Location.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Grid.Location.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, latLonCoord: _LatLonCoordModule.Builder | dict[str, Any] | None = None, rowCol: _GridModule._RowColModule.Builder | dict[str, Any] | None = None, value: _GridModule._ValueModule.Builder | dict[str, Any] | None = None
+        ) -> _GridModule._LocationModule.Builder: ...
 
-    class Callback:
+    LocationReader: TypeAlias = _LocationModule.Reader
+    LocationBuilder: TypeAlias = _LocationModule.Builder
+    Location: _LocationModule
+    class _CallbackModule(_InterfaceModule):
         class SendcellsRequest(Protocol):
             maxCount: int
-            def send(self) -> Grid.Callback.SendcellsResult: ...
-
-        class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-            locations: Sequence[Grid.Location.Builder | Grid.Location.Reader]
+            def send(self) -> _GridModule._CallbackModule.CallbackClient.SendcellsResult: ...
 
         @classmethod
-        def _new_client(cls, server: Grid.Callback.Server) -> Grid.CallbackClient: ...
-        class Server(Protocol):
+        def _new_client(cls, server: _GridModule._CallbackModule.Server) -> _GridModule._CallbackModule.CallbackClient: ...
+        class Server(_DynamicCapabilityServer):
+            class SendcellsResult(Awaitable[SendcellsResult], Protocol):
+                locations: Sequence[_GridModule._LocationModule.Builder | _GridModule._LocationModule.Reader]
+
             class SendcellsResultTuple(NamedTuple):
-                locations: Sequence[Grid.Location]
+                locations: Sequence[_GridModule._LocationModule]
 
             class SendcellsCallContext(Protocol):
-                params: Grid.Callback.SendcellsRequest
-                results: Grid.Callback.SendcellsResult
+                params: _GridModule._CallbackModule.SendcellsRequest
+                results: _GridModule._CallbackModule.Server.SendcellsResult
 
-            def sendCells(
-                self,
-                maxCount: int,
-                _context: Grid.Callback.Server.SendcellsCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[Grid.Callback.Server.SendcellsResultTuple | None]: ...
-            def sendCells_context(
-                self, context: Grid.Callback.Server.SendcellsCallContext
-            ) -> Awaitable[None]: ...
+            def sendCells(self, maxCount: int, _context: _GridModule._CallbackModule.Server.SendcellsCallContext, **kwargs: Any) -> Awaitable[_GridModule._CallbackModule.Server.SendcellsResultTuple | None]: ...
+            def sendCells_context(self, context: _GridModule._CallbackModule.Server.SendcellsCallContext) -> Awaitable[None]: ...
 
-    class CallbackClient(Protocol):
-        def sendCells(
-            self, maxCount: int | None = None
-        ) -> Grid.Callback.SendcellsResult: ...
-        def sendCells_request(
-            self, maxCount: int | None = None
-        ) -> Grid.Callback.SendcellsRequest: ...
+        class CallbackClient(_DynamicCapabilityClient):
+            class SendcellsResult(Awaitable[SendcellsResult], Protocol):
+                locations: Sequence[_GridModule._LocationModule.Builder | _GridModule._LocationModule.Reader]
 
+            def sendCells(self, maxCount: int | None = None) -> _GridModule._CallbackModule.CallbackClient.SendcellsResult: ...
+            def sendCells_request(self, maxCount: int | None = None) -> _GridModule._CallbackModule.SendcellsRequest: ...
+
+    Callback: _CallbackModule
+    CallbackClient: TypeAlias = _GridModule._CallbackModule.CallbackClient
     class ClosestvalueatRequest(Protocol):
-        latlonCoord: LatLonCoord.Builder
+        latlonCoord: _LatLonCoordModule.Builder
         ignoreNoData: bool
-        resolution: Grid.Resolution.Builder
-        agg: (
-            Aggregation
-            | Literal[
-                "none",
-                "wAvg",
-                "wMedian",
-                "min",
-                "max",
-                "sum",
-                "iAvg",
-                "iMedian",
-                "avg",
-                "median",
-                "wSum",
-                "iSum",
-                "wMin",
-                "iMin",
-                "wMax",
-                "iMax",
-            ]
-        )
+        resolution: _GridModule._ResolutionModule.Builder
+        agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"]
         returnRowCols: bool
         includeAggParts: bool
         @overload
-        def init(self, name: Literal["latlonCoord"]) -> LatLonCoord.Builder: ...
+        def init(self, name: Literal["latlonCoord"]) -> _LatLonCoordModule.Builder: ...
         @overload
-        def init(self, name: Literal["resolution"]) -> Grid.Resolution.Builder: ...
+        def init(self, name: Literal["resolution"]) -> _GridModule._ResolutionModule.Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Grid.ClosestvalueatResult: ...
-
-    class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
-        val: Grid.Value.Builder | Grid.Value.Reader
-        tl: Grid.RowCol.Builder | Grid.RowCol.Reader
-        br: Grid.RowCol.Builder | Grid.RowCol.Reader
-        aggParts: Sequence[Grid.AggregationPart.Builder | Grid.AggregationPart.Reader]
+        def send(self) -> _GridModule.GridClient.ClosestvalueatResult: ...
 
     class ResolutionRequest(Protocol):
-        def send(self) -> Grid.ResolutionResult: ...
-
-    class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-        res: Grid.Resolution.Builder | Grid.Resolution.Reader
+        def send(self) -> _GridModule.GridClient.ResolutionResult: ...
 
     class DimensionRequest(Protocol):
-        def send(self) -> Grid.DimensionResult: ...
-
-    class DimensionResult(Awaitable[DimensionResult], Protocol):
-        rows: int
-        cols: int
+        def send(self) -> _GridModule.GridClient.DimensionResult: ...
 
     class NodatavalueRequest(Protocol):
-        def send(self) -> Grid.NodatavalueResult: ...
-
-    class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
-        nodata: Grid.Value.Builder | Grid.Value.Reader
+        def send(self) -> _GridModule.GridClient.NodatavalueResult: ...
 
     class ValueatRequest(Protocol):
         row: int
         col: int
-        resolution: Grid.Resolution.Builder
-        agg: (
-            Aggregation
-            | Literal[
-                "none",
-                "wAvg",
-                "wMedian",
-                "min",
-                "max",
-                "sum",
-                "iAvg",
-                "iMedian",
-                "avg",
-                "median",
-                "wSum",
-                "iSum",
-                "wMin",
-                "iMin",
-                "wMax",
-                "iMax",
-            ]
-        )
+        resolution: _GridModule._ResolutionModule.Builder
+        agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"]
         includeAggParts: bool
         @overload
-        def init(self, name: Literal["resolution"]) -> Grid.Resolution.Builder: ...
+        def init(self, name: Literal["resolution"]) -> _GridModule._ResolutionModule.Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Grid.ValueatResult: ...
-
-    class ValueatResult(Awaitable[ValueatResult], Protocol):
-        val: Grid.Value.Builder | Grid.Value.Reader
-        aggParts: Sequence[Grid.AggregationPart.Builder | Grid.AggregationPart.Reader]
+        def send(self) -> _GridModule.GridClient.ValueatResult: ...
 
     class LatlonboundsRequest(Protocol):
         useCellCenter: bool
-        def send(self) -> Grid.LatlonboundsResult: ...
-
-    class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-        tl: LatLonCoord.Builder | LatLonCoord.Reader
-        tr: LatLonCoord.Builder | LatLonCoord.Reader
-        br: LatLonCoord.Builder | LatLonCoord.Reader
-        bl: LatLonCoord.Builder | LatLonCoord.Reader
+        def send(self) -> _GridModule.GridClient.LatlonboundsResult: ...
 
     class StreamcellsRequest(Protocol):
-        topLeft: Grid.RowCol.Builder
-        bottomRight: Grid.RowCol.Builder
+        topLeft: _GridModule._RowColModule.Builder
+        bottomRight: _GridModule._RowColModule.Builder
         @overload
-        def init(self, name: Literal["topLeft"]) -> Grid.RowCol.Builder: ...
+        def init(self, name: Literal["topLeft"]) -> _GridModule._RowColModule.Builder: ...
         @overload
-        def init(self, name: Literal["bottomRight"]) -> Grid.RowCol.Builder: ...
+        def init(self, name: Literal["bottomRight"]) -> _GridModule._RowColModule.Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Grid.StreamcellsResult: ...
-
-    class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
-        callback: Grid.CallbackClient
+        def send(self) -> _GridModule.GridClient.StreamcellsResult: ...
 
     class UnitRequest(Protocol):
-        def send(self) -> Grid.UnitResult: ...
-
-    class UnitResult(Awaitable[UnitResult], Protocol):
-        unit: str
+        def send(self) -> _GridModule.GridClient.UnitResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Grid.Server | Identifiable.Server | Persistent.Server
-    ) -> GridClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _GridModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _GridModule.GridClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule.Builder | _GridModule._AggregationPartModule.Reader]
+
+        class ResolutionResult(Awaitable[ResolutionResult], Protocol):
+            res: _GridModule._ResolutionModule.Builder | _GridModule._ResolutionModule.Reader
+
+        class DimensionResult(Awaitable[DimensionResult], Protocol):
+            rows: int
+            cols: int
+
+        class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
+            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+
+        class ValueatResult(Awaitable[ValueatResult], Protocol):
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule.Builder | _GridModule._AggregationPartModule.Reader]
+
+        class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
+            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+
+        class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
+            callback: _GridModule._CallbackModule.CallbackClient
+
+        class UnitResult(Awaitable[UnitResult], Protocol):
+            unit: str
+
         class ClosestvalueatResultTuple(NamedTuple):
-            val: Grid.Value.Builder | Grid.Value.Reader
-            tl: Grid.RowCol.Builder | Grid.RowCol.Reader
-            br: Grid.RowCol.Builder | Grid.RowCol.Reader
-            aggParts: Sequence[Grid.AggregationPart]
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule]
 
         class ResolutionResultTuple(NamedTuple):
-            res: Grid.Resolution.Builder | Grid.Resolution.Reader
+            res: _GridModule._ResolutionModule.Builder | _GridModule._ResolutionModule.Reader
 
         class DimensionResultTuple(NamedTuple):
             rows: int
             cols: int
 
         class NodatavalueResultTuple(NamedTuple):
-            nodata: Grid.Value.Builder | Grid.Value.Reader
+            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
 
         class ValueatResultTuple(NamedTuple):
-            val: Grid.Value.Builder | Grid.Value.Reader
-            aggParts: Sequence[Grid.AggregationPart]
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule]
 
         class LatlonboundsResultTuple(NamedTuple):
-            tl: LatLonCoord.Builder | LatLonCoord.Reader
-            tr: LatLonCoord.Builder | LatLonCoord.Reader
-            br: LatLonCoord.Builder | LatLonCoord.Reader
-            bl: LatLonCoord.Builder | LatLonCoord.Reader
+            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
 
         class StreamcellsResultTuple(NamedTuple):
-            callback: Grid.Callback.Server
+            callback: _GridModule._CallbackModule.Server
 
         class UnitResultTuple(NamedTuple):
             unit: str
 
         class ClosestvalueatCallContext(Protocol):
-            params: Grid.ClosestvalueatRequest
-            results: Grid.ClosestvalueatResult
+            params: _GridModule.ClosestvalueatRequest
+            results: _GridModule.Server.ClosestvalueatResult
 
         class ResolutionCallContext(Protocol):
-            params: Grid.ResolutionRequest
-            results: Grid.ResolutionResult
+            params: _GridModule.ResolutionRequest
+            results: _GridModule.Server.ResolutionResult
 
         class DimensionCallContext(Protocol):
-            params: Grid.DimensionRequest
-            results: Grid.DimensionResult
+            params: _GridModule.DimensionRequest
+            results: _GridModule.Server.DimensionResult
 
         class NodatavalueCallContext(Protocol):
-            params: Grid.NodatavalueRequest
-            results: Grid.NodatavalueResult
+            params: _GridModule.NodatavalueRequest
+            results: _GridModule.Server.NodatavalueResult
 
         class ValueatCallContext(Protocol):
-            params: Grid.ValueatRequest
-            results: Grid.ValueatResult
+            params: _GridModule.ValueatRequest
+            results: _GridModule.Server.ValueatResult
 
         class LatlonboundsCallContext(Protocol):
-            params: Grid.LatlonboundsRequest
-            results: Grid.LatlonboundsResult
+            params: _GridModule.LatlonboundsRequest
+            results: _GridModule.Server.LatlonboundsResult
 
         class StreamcellsCallContext(Protocol):
-            params: Grid.StreamcellsRequest
-            results: Grid.StreamcellsResult
+            params: _GridModule.StreamcellsRequest
+            results: _GridModule.Server.StreamcellsResult
 
         class UnitCallContext(Protocol):
-            params: Grid.UnitRequest
-            results: Grid.UnitResult
+            params: _GridModule.UnitRequest
+            results: _GridModule.Server.UnitResult
 
         def closestValueAt(
             self,
-            latlonCoord: LatLonCoord.Reader,
+            latlonCoord: _LatLonCoordModule.Reader,
             ignoreNoData: bool,
-            resolution: Grid.Resolution.Reader,
-            agg: Aggregation
-            | Literal[
-                "none",
-                "wAvg",
-                "wMedian",
-                "min",
-                "max",
-                "sum",
-                "iAvg",
-                "iMedian",
-                "avg",
-                "median",
-                "wSum",
-                "iSum",
-                "wMin",
-                "iMin",
-                "wMax",
-                "iMax",
-            ],
+            resolution: _GridModule._ResolutionModule.Reader,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"],
             returnRowCols: bool,
             includeAggParts: bool,
-            _context: Grid.Server.ClosestvalueatCallContext,
+            _context: _GridModule.Server.ClosestvalueatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Grid.Server.ClosestvalueatResultTuple | None]: ...
-        def closestValueAt_context(
-            self, context: Grid.Server.ClosestvalueatCallContext
-        ) -> Awaitable[None]: ...
-        def resolution(
-            self, _context: Grid.Server.ResolutionCallContext, **kwargs: Any
-        ) -> Awaitable[Grid.Server.ResolutionResultTuple | None]: ...
-        def resolution_context(
-            self, context: Grid.Server.ResolutionCallContext
-        ) -> Awaitable[None]: ...
-        def dimension(
-            self, _context: Grid.Server.DimensionCallContext, **kwargs: Any
-        ) -> Awaitable[Grid.Server.DimensionResultTuple | None]: ...
-        def dimension_context(
-            self, context: Grid.Server.DimensionCallContext
-        ) -> Awaitable[None]: ...
-        def noDataValue(
-            self, _context: Grid.Server.NodatavalueCallContext, **kwargs: Any
-        ) -> Awaitable[Grid.Server.NodatavalueResultTuple | None]: ...
-        def noDataValue_context(
-            self, context: Grid.Server.NodatavalueCallContext
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[_GridModule.Server.ClosestvalueatResultTuple | None]: ...
+        def closestValueAt_context(self, context: _GridModule.Server.ClosestvalueatCallContext) -> Awaitable[None]: ...
+        def resolution(self, _context: _GridModule.Server.ResolutionCallContext, **kwargs: Any) -> Awaitable[_GridModule.Server.ResolutionResultTuple | None]: ...
+        def resolution_context(self, context: _GridModule.Server.ResolutionCallContext) -> Awaitable[None]: ...
+        def dimension(self, _context: _GridModule.Server.DimensionCallContext, **kwargs: Any) -> Awaitable[_GridModule.Server.DimensionResultTuple | None]: ...
+        def dimension_context(self, context: _GridModule.Server.DimensionCallContext) -> Awaitable[None]: ...
+        def noDataValue(self, _context: _GridModule.Server.NodatavalueCallContext, **kwargs: Any) -> Awaitable[_GridModule.Server.NodatavalueResultTuple | None]: ...
+        def noDataValue_context(self, context: _GridModule.Server.NodatavalueCallContext) -> Awaitable[None]: ...
         def valueAt(
             self,
             row: int,
             col: int,
-            resolution: Grid.Resolution.Reader,
-            agg: Aggregation
-            | Literal[
-                "none",
-                "wAvg",
-                "wMedian",
-                "min",
-                "max",
-                "sum",
-                "iAvg",
-                "iMedian",
-                "avg",
-                "median",
-                "wSum",
-                "iSum",
-                "wMin",
-                "iMin",
-                "wMax",
-                "iMax",
-            ],
+            resolution: _GridModule._ResolutionModule.Reader,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"],
             includeAggParts: bool,
-            _context: Grid.Server.ValueatCallContext,
+            _context: _GridModule.Server.ValueatCallContext,
             **kwargs: Any,
-        ) -> Awaitable[Grid.Server.ValueatResultTuple | None]: ...
-        def valueAt_context(
-            self, context: Grid.Server.ValueatCallContext
-        ) -> Awaitable[None]: ...
-        def latLonBounds(
-            self,
-            useCellCenter: bool,
-            _context: Grid.Server.LatlonboundsCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Grid.Server.LatlonboundsResultTuple | None]: ...
-        def latLonBounds_context(
-            self, context: Grid.Server.LatlonboundsCallContext
-        ) -> Awaitable[None]: ...
-        def streamCells(
-            self,
-            topLeft: Grid.RowCol.Reader,
-            bottomRight: Grid.RowCol.Reader,
-            _context: Grid.Server.StreamcellsCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[
-            Grid.Callback.Server | Grid.Server.StreamcellsResultTuple | None
-        ]: ...
-        def streamCells_context(
-            self, context: Grid.Server.StreamcellsCallContext
-        ) -> Awaitable[None]: ...
-        def unit(
-            self, _context: Grid.Server.UnitCallContext, **kwargs: Any
-        ) -> Awaitable[str | Grid.Server.UnitResultTuple | None]: ...
-        def unit_context(
-            self, context: Grid.Server.UnitCallContext
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[_GridModule.Server.ValueatResultTuple | None]: ...
+        def valueAt_context(self, context: _GridModule.Server.ValueatCallContext) -> Awaitable[None]: ...
+        def latLonBounds(self, useCellCenter: bool, _context: _GridModule.Server.LatlonboundsCallContext, **kwargs: Any) -> Awaitable[_GridModule.Server.LatlonboundsResultTuple | None]: ...
+        def latLonBounds_context(self, context: _GridModule.Server.LatlonboundsCallContext) -> Awaitable[None]: ...
+        def streamCells(self, topLeft: _GridModule._RowColModule.Reader, bottomRight: _GridModule._RowColModule.Reader, _context: _GridModule.Server.StreamcellsCallContext, **kwargs: Any) -> Awaitable[_GridModule._CallbackModule.Server | _GridModule.Server.StreamcellsResultTuple | None]: ...
+        def streamCells_context(self, context: _GridModule.Server.StreamcellsCallContext) -> Awaitable[None]: ...
+        def unit(self, _context: _GridModule.Server.UnitCallContext, **kwargs: Any) -> Awaitable[str | _GridModule.Server.UnitResultTuple | None]: ...
+        def unit_context(self, context: _GridModule.Server.UnitCallContext) -> Awaitable[None]: ...
 
-class GridClient(IdentifiableClient, PersistentClient):
-    def closestValueAt(
-        self,
-        latlonCoord: LatLonCoord | dict[str, Any] | None = None,
-        ignoreNoData: bool | None = None,
-        resolution: Grid.Resolution | dict[str, Any] | None = None,
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ]
-        | None = None,
-        returnRowCols: bool | None = None,
-        includeAggParts: bool | None = None,
-    ) -> Grid.ClosestvalueatResult: ...
-    def resolution(self) -> Grid.ResolutionResult: ...
-    def dimension(self) -> Grid.DimensionResult: ...
-    def noDataValue(self) -> Grid.NodatavalueResult: ...
-    def valueAt(
-        self,
-        row: int | None = None,
-        col: int | None = None,
-        resolution: Grid.Resolution | dict[str, Any] | None = None,
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ]
-        | None = None,
-        includeAggParts: bool | None = None,
-    ) -> Grid.ValueatResult: ...
-    def latLonBounds(
-        self, useCellCenter: bool | None = None
-    ) -> Grid.LatlonboundsResult: ...
-    def streamCells(
-        self,
-        topLeft: Grid.RowCol | dict[str, Any] | None = None,
-        bottomRight: Grid.RowCol | dict[str, Any] | None = None,
-    ) -> Grid.StreamcellsResult: ...
-    def unit(self) -> Grid.UnitResult: ...
-    def closestValueAt_request(
-        self,
-        latlonCoord: LatLonCoord.Builder | None = None,
-        ignoreNoData: bool | None = None,
-        resolution: Grid.Resolution.Builder | None = None,
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ]
-        | None = None,
-        returnRowCols: bool | None = None,
-        includeAggParts: bool | None = None,
-    ) -> Grid.ClosestvalueatRequest: ...
-    def resolution_request(self) -> Grid.ResolutionRequest: ...
-    def dimension_request(self) -> Grid.DimensionRequest: ...
-    def noDataValue_request(self) -> Grid.NodatavalueRequest: ...
-    def valueAt_request(
-        self,
-        row: int | None = None,
-        col: int | None = None,
-        resolution: Grid.Resolution.Builder | None = None,
-        agg: Aggregation
-        | Literal[
-            "none",
-            "wAvg",
-            "wMedian",
-            "min",
-            "max",
-            "sum",
-            "iAvg",
-            "iMedian",
-            "avg",
-            "median",
-            "wSum",
-            "iSum",
-            "wMin",
-            "iMin",
-            "wMax",
-            "iMax",
-        ]
-        | None = None,
-        includeAggParts: bool | None = None,
-    ) -> Grid.ValueatRequest: ...
-    def latLonBounds_request(
-        self, useCellCenter: bool | None = None
-    ) -> Grid.LatlonboundsRequest: ...
-    def streamCells_request(
-        self,
-        topLeft: Grid.RowCol.Builder | None = None,
-        bottomRight: Grid.RowCol.Builder | None = None,
-    ) -> Grid.StreamcellsRequest: ...
-    def unit_request(self) -> Grid.UnitRequest: ...
+    class GridClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule.Builder | _GridModule._AggregationPartModule.Reader]
+
+        class ResolutionResult(Awaitable[ResolutionResult], Protocol):
+            res: _GridModule._ResolutionModule.Builder | _GridModule._ResolutionModule.Reader
+
+        class DimensionResult(Awaitable[DimensionResult], Protocol):
+            rows: int
+            cols: int
+
+        class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
+            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+
+        class ValueatResult(Awaitable[ValueatResult], Protocol):
+            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            aggParts: Sequence[_GridModule._AggregationPartModule.Builder | _GridModule._AggregationPartModule.Reader]
+
+        class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
+            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+
+        class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
+            callback: _GridModule._CallbackModule.CallbackClient
+
+        class UnitResult(Awaitable[UnitResult], Protocol):
+            unit: str
+
+        def closestValueAt(
+            self,
+            latlonCoord: _LatLonCoordModule | dict[str, Any] | None = None,
+            ignoreNoData: bool | None = None,
+            resolution: ResolutionBuilder | ResolutionReader | dict[str, Any] | None = None,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"] | None = None,
+            returnRowCols: bool | None = None,
+            includeAggParts: bool | None = None,
+        ) -> _GridModule.GridClient.ClosestvalueatResult: ...
+        def resolution(self) -> _GridModule.GridClient.ResolutionResult: ...
+        def dimension(self) -> _GridModule.GridClient.DimensionResult: ...
+        def noDataValue(self) -> _GridModule.GridClient.NodatavalueResult: ...
+        def valueAt(
+            self,
+            row: int | None = None,
+            col: int | None = None,
+            resolution: ResolutionBuilder | ResolutionReader | dict[str, Any] | None = None,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"] | None = None,
+            includeAggParts: bool | None = None,
+        ) -> _GridModule.GridClient.ValueatResult: ...
+        def latLonBounds(self, useCellCenter: bool | None = None) -> _GridModule.GridClient.LatlonboundsResult: ...
+        def streamCells(self, topLeft: RowColBuilder | RowColReader | dict[str, Any] | None = None, bottomRight: RowColBuilder | RowColReader | dict[str, Any] | None = None) -> _GridModule.GridClient.StreamcellsResult: ...
+        def unit(self) -> _GridModule.GridClient.UnitResult: ...
+        def closestValueAt_request(
+            self,
+            latlonCoord: _LatLonCoordModule.Builder | None = None,
+            ignoreNoData: bool | None = None,
+            resolution: _GridModule._ResolutionModule.Builder | None = None,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"] | None = None,
+            returnRowCols: bool | None = None,
+            includeAggParts: bool | None = None,
+        ) -> _GridModule.ClosestvalueatRequest: ...
+        def resolution_request(self) -> _GridModule.ResolutionRequest: ...
+        def dimension_request(self) -> _GridModule.DimensionRequest: ...
+        def noDataValue_request(self) -> _GridModule.NodatavalueRequest: ...
+        def valueAt_request(
+            self,
+            row: int | None = None,
+            col: int | None = None,
+            resolution: _GridModule._ResolutionModule.Builder | None = None,
+            agg: _AggregationModule | Literal["none", "wAvg", "wMedian", "min", "max", "sum", "iAvg", "iMedian", "avg", "median", "wSum", "iSum", "wMin", "iMin", "wMax", "iMax"] | None = None,
+            includeAggParts: bool | None = None,
+        ) -> _GridModule.ValueatRequest: ...
+        def latLonBounds_request(self, useCellCenter: bool | None = None) -> _GridModule.LatlonboundsRequest: ...
+        def streamCells_request(self, topLeft: _GridModule._RowColModule.Builder | None = None, bottomRight: _GridModule._RowColModule.Builder | None = None) -> _GridModule.StreamcellsRequest: ...
+        def unit_request(self) -> _GridModule.UnitRequest: ...
+
+Grid: _GridModule
+GridClient: TypeAlias = _GridModule.GridClient
+
+# Top-level type aliases for use in type annotations
+AggregationPartBuilder: TypeAlias = _GridModule._AggregationPartModule.Builder
+AggregationPartReader: TypeAlias = _GridModule._AggregationPartModule.Reader
+CallbackClient: TypeAlias = _GridModule._CallbackModule.CallbackClient
+LocationBuilder: TypeAlias = _GridModule._LocationModule.Builder
+LocationReader: TypeAlias = _GridModule._LocationModule.Reader
+ResolutionBuilder: TypeAlias = _GridModule._ResolutionModule.Builder
+ResolutionReader: TypeAlias = _GridModule._ResolutionModule.Reader
+RowColBuilder: TypeAlias = _GridModule._RowColModule.Builder
+RowColReader: TypeAlias = _GridModule._RowColModule.Reader
+ValueBuilder: TypeAlias = _GridModule._ValueModule.Builder
+ValueReader: TypeAlias = _GridModule._ValueModule.Reader

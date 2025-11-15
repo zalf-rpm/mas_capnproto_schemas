@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
-from io import BufferedWriter
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from typing import (
     Any,
-    BinaryIO,
     Generic,
     Literal,
     NamedTuple,
@@ -15,404 +12,308 @@ from typing import (
     TypeAlias,
     TypeVar,
     overload,
+    override,
 )
 
-from .common_capnp import Identifiable, IdentifiableClient, Pair
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-Factory_Payload = TypeVar("Factory_Payload")
+from .common_capnp import (
+    Identifiable,
+    IdentifiableClient,
+    _IdentifiableModule,
+    _PairModule,
+)
 
-class Admin:
+_FactoryModule_Payload = TypeVar("_FactoryModule_Payload")
+
+class _AdminModule(_IdentifiableModule):
     class HeartbeatRequest(Protocol):
-        def send(self) -> None: ...
+        def send(self) -> _AdminModule.AdminClient.HeartbeatResult: ...
 
     class SettimeoutRequest(Protocol):
         seconds: int
-        def send(self) -> None: ...
+        def send(self) -> _AdminModule.AdminClient.SettimeoutResult: ...
 
     class StopRequest(Protocol):
-        def send(self) -> None: ...
+        def send(self) -> _AdminModule.AdminClient.StopResult: ...
 
     class IdentitiesRequest(Protocol):
-        def send(self) -> Admin.IdentitiesResult: ...
-
-    class IdentitiesResult(Awaitable[IdentitiesResult], Protocol):
-        infos: Any
+        def send(self) -> _AdminModule.AdminClient.IdentitiesResult: ...
 
     class UpdateidentityRequest(Protocol):
         oldId: str
-        def send(self) -> None: ...
+        def send(self) -> _AdminModule.AdminClient.UpdateidentityResult: ...
 
     @classmethod
-    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> AdminClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _AdminModule.Server | _IdentifiableModule.Server) -> _AdminModule.AdminClient: ...
+    class Server(_IdentifiableModule.Server):
+        class HeartbeatResult(Awaitable[None], Protocol): ...
+        class SettimeoutResult(Awaitable[None], Protocol): ...
+        class StopResult(Awaitable[None], Protocol): ...
+
+        class IdentitiesResult(Awaitable[IdentitiesResult], Protocol):
+            infos: Any
+
+        class UpdateidentityResult(Awaitable[None], Protocol): ...
+
         class IdentitiesResultTuple(NamedTuple):
             pass
 
         class HeartbeatCallContext(Protocol):
-            params: Admin.HeartbeatRequest
+            params: _AdminModule.HeartbeatRequest
 
         class SettimeoutCallContext(Protocol):
-            params: Admin.SettimeoutRequest
+            params: _AdminModule.SettimeoutRequest
 
         class StopCallContext(Protocol):
-            params: Admin.StopRequest
+            params: _AdminModule.StopRequest
 
         class IdentitiesCallContext(Protocol):
-            params: Admin.IdentitiesRequest
-            results: Admin.IdentitiesResult
+            params: _AdminModule.IdentitiesRequest
+            results: _AdminModule.Server.IdentitiesResult
 
         class UpdateidentityCallContext(Protocol):
-            params: Admin.UpdateidentityRequest
+            params: _AdminModule.UpdateidentityRequest
 
-        def heartbeat(
-            self, _context: Admin.Server.HeartbeatCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
-        def heartbeat_context(
-            self, context: Admin.Server.HeartbeatCallContext
-        ) -> Awaitable[None]: ...
-        def setTimeout(
-            self,
-            seconds: int,
-            _context: Admin.Server.SettimeoutCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[None]: ...
-        def setTimeout_context(
-            self, context: Admin.Server.SettimeoutCallContext
-        ) -> Awaitable[None]: ...
-        def stop(
-            self, _context: Admin.Server.StopCallContext, **kwargs: Any
-        ) -> Awaitable[None]: ...
-        def stop_context(
-            self, context: Admin.Server.StopCallContext
-        ) -> Awaitable[None]: ...
-        def identities(
-            self, _context: Admin.Server.IdentitiesCallContext, **kwargs: Any
-        ) -> Awaitable[Admin.Server.IdentitiesResultTuple | None]: ...
-        def identities_context(
-            self, context: Admin.Server.IdentitiesCallContext
-        ) -> Awaitable[None]: ...
-        def updateIdentity(
-            self,
-            oldId: str,
-            _context: Admin.Server.UpdateidentityCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[None]: ...
-        def updateIdentity_context(
-            self, context: Admin.Server.UpdateidentityCallContext
-        ) -> Awaitable[None]: ...
+        def heartbeat(self, _context: _AdminModule.Server.HeartbeatCallContext, **kwargs: Any) -> Awaitable[None]: ...
+        def heartbeat_context(self, context: _AdminModule.Server.HeartbeatCallContext) -> Awaitable[None]: ...
+        def setTimeout(self, seconds: int, _context: _AdminModule.Server.SettimeoutCallContext, **kwargs: Any) -> Awaitable[None]: ...
+        def setTimeout_context(self, context: _AdminModule.Server.SettimeoutCallContext) -> Awaitable[None]: ...
+        def stop(self, _context: _AdminModule.Server.StopCallContext, **kwargs: Any) -> Awaitable[None]: ...
+        def stop_context(self, context: _AdminModule.Server.StopCallContext) -> Awaitable[None]: ...
+        def identities(self, _context: _AdminModule.Server.IdentitiesCallContext, **kwargs: Any) -> Awaitable[_AdminModule.Server.IdentitiesResultTuple | None]: ...
+        def identities_context(self, context: _AdminModule.Server.IdentitiesCallContext) -> Awaitable[None]: ...
+        def updateIdentity(self, oldId: str, _context: _AdminModule.Server.UpdateidentityCallContext, **kwargs: Any) -> Awaitable[None]: ...
+        def updateIdentity_context(self, context: _AdminModule.Server.UpdateidentityCallContext) -> Awaitable[None]: ...
 
-class AdminClient(IdentifiableClient):
-    def heartbeat(self) -> None: ...
-    def setTimeout(self, seconds: int | None = None) -> None: ...
-    def stop(self) -> None: ...
-    def identities(self) -> Admin.IdentitiesResult: ...
-    def updateIdentity(self, oldId: str | None = None) -> None: ...
-    def heartbeat_request(self) -> Admin.HeartbeatRequest: ...
-    def setTimeout_request(
-        self, seconds: int | None = None
-    ) -> Admin.SettimeoutRequest: ...
-    def stop_request(self) -> Admin.StopRequest: ...
-    def identities_request(self) -> Admin.IdentitiesRequest: ...
-    def updateIdentity_request(
-        self, oldId: str | None = None
-    ) -> Admin.UpdateidentityRequest: ...
+    class AdminClient(_IdentifiableModule.IdentifiableClient):
+        class HeartbeatResult(Awaitable[None], Protocol): ...
+        class SettimeoutResult(Awaitable[None], Protocol): ...
+        class StopResult(Awaitable[None], Protocol): ...
 
-class SimpleFactory:
+        class IdentitiesResult(Awaitable[IdentitiesResult], Protocol):
+            infos: Any
+
+        class UpdateidentityResult(Awaitable[None], Protocol): ...
+
+        def heartbeat(self) -> _AdminModule.AdminClient.HeartbeatResult: ...
+        def setTimeout(self, seconds: int | None = None) -> _AdminModule.AdminClient.SettimeoutResult: ...
+        def stop(self) -> _AdminModule.AdminClient.StopResult: ...
+        def identities(self) -> _AdminModule.AdminClient.IdentitiesResult: ...
+        def updateIdentity(self, oldId: str | None = None) -> _AdminModule.AdminClient.UpdateidentityResult: ...
+        def heartbeat_request(self) -> _AdminModule.HeartbeatRequest: ...
+        def setTimeout_request(self, seconds: int | None = None) -> _AdminModule.SettimeoutRequest: ...
+        def stop_request(self) -> _AdminModule.StopRequest: ...
+        def identities_request(self) -> _AdminModule.IdentitiesRequest: ...
+        def updateIdentity_request(self, oldId: str | None = None) -> _AdminModule.UpdateidentityRequest: ...
+
+Admin: _AdminModule
+AdminClient: TypeAlias = _AdminModule.AdminClient
+
+class _SimpleFactoryModule(_IdentifiableModule):
     class CreateRequest(Protocol):
-        def send(self) -> SimpleFactory.CreateResult: ...
-
-    class CreateResult(Awaitable[CreateResult], Protocol):
-        caps: Sequence[Identifiable]
+        def send(self) -> _SimpleFactoryModule.SimpleFactoryClient.CreateResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: SimpleFactory.Server | Identifiable.Server
-    ) -> SimpleFactoryClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _SimpleFactoryModule.Server | _IdentifiableModule.Server) -> _SimpleFactoryModule.SimpleFactoryClient: ...
+    class Server(_IdentifiableModule.Server):
+        class CreateResult(Awaitable[CreateResult], Protocol):
+            caps: Sequence[_IdentifiableModule]
+
         class CreateResultTuple(NamedTuple):
-            caps: Sequence[Identifiable]
+            caps: Sequence[_IdentifiableModule]
 
         class CreateCallContext(Protocol):
-            params: SimpleFactory.CreateRequest
-            results: SimpleFactory.CreateResult
+            params: _SimpleFactoryModule.CreateRequest
+            results: _SimpleFactoryModule.Server.CreateResult
 
-        def create(
-            self, _context: SimpleFactory.Server.CreateCallContext, **kwargs: Any
-        ) -> Awaitable[SimpleFactory.Server.CreateResultTuple | None]: ...
-        def create_context(
-            self, context: SimpleFactory.Server.CreateCallContext
-        ) -> Awaitable[None]: ...
+        def create(self, _context: _SimpleFactoryModule.Server.CreateCallContext, **kwargs: Any) -> Awaitable[_SimpleFactoryModule.Server.CreateResultTuple | None]: ...
+        def create_context(self, context: _SimpleFactoryModule.Server.CreateCallContext) -> Awaitable[None]: ...
 
-class SimpleFactoryClient(IdentifiableClient):
-    def create(self) -> SimpleFactory.CreateResult: ...
-    def create_request(self) -> SimpleFactory.CreateRequest: ...
+    class SimpleFactoryClient(_IdentifiableModule.IdentifiableClient):
+        class CreateResult(Awaitable[CreateResult], Protocol):
+            caps: Sequence[_IdentifiableModule]
 
-class Factory:
-    CreateParamsBuilder: TypeAlias = CreateParams.Builder
-    CreateParamsReader: TypeAlias = CreateParams.Reader
-    class CreateParams(Generic[Factory_Payload]):
-        class Reader:
+        def create(self) -> _SimpleFactoryModule.SimpleFactoryClient.CreateResult: ...
+        def create_request(self) -> _SimpleFactoryModule.CreateRequest: ...
+
+SimpleFactory: _SimpleFactoryModule
+SimpleFactoryClient: TypeAlias = _SimpleFactoryModule.SimpleFactoryClient
+
+class _FactoryModule(_IdentifiableModule):
+    class _CreateParamsModule(Generic[_FactoryModule_Payload], _StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def timeoutSeconds(self) -> int: ...
             @property
-            def interfaceNameToRegistrySR(self) -> Sequence[Pair.Reader]: ...
+            def interfaceNameToRegistrySR(self) -> Sequence[_PairModule.Reader]: ...
             @property
-            def msgPayload(self) -> Factory_Payload: ...
-            def as_builder(self) -> Factory.CreateParams.Builder: ...
+            def msgPayload(self) -> _FactoryModule_Payload: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _FactoryModule._CreateParamsModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def timeoutSeconds(self) -> int: ...
             @timeoutSeconds.setter
             def timeoutSeconds(self, value: int) -> None: ...
             @property
-            def interfaceNameToRegistrySR(self) -> Sequence[Pair.Builder]: ...
+            def interfaceNameToRegistrySR(self) -> MutableSequence[_PairModule.Builder]: ...
             @interfaceNameToRegistrySR.setter
-            def interfaceNameToRegistrySR(
-                self,
-                value: Sequence[Pair.Builder | Pair.Reader] | Sequence[dict[str, Any]],
-            ) -> None: ...
+            def interfaceNameToRegistrySR(self, value: Sequence[_PairModule.Builder | _PairModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
             @property
-            def msgPayload(self) -> Factory_Payload: ...
+            def msgPayload(self) -> _FactoryModule_Payload: ...
             @msgPayload.setter
-            def msgPayload(self, value: Factory_Payload) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Factory.CreateParams.Builder: ...
-            def init(
-                self, name: Literal["interfaceNameToRegistrySR"], size: int = ...
-            ) -> Sequence[Pair.Builder]: ...
-            def copy(self) -> Factory.CreateParams.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Factory.CreateParams.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def msgPayload(self, value: _FactoryModule_Payload) -> None: ...
+            def init(self, field: Literal["interfaceNameToRegistrySR"], size: int | None = None) -> MutableSequence[_PairModule.Builder]: ...
+            @override
+            def as_reader(self) -> _FactoryModule._CreateParamsModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Factory.CreateParams.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.CreateParams.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            timeoutSeconds: int | None = None,
-            interfaceNameToRegistrySR: Sequence[Pair.Builder]
-            | Sequence[dict[str, Any]]
-            | None = None,
-            msgPayload: Factory_Payload | None = None,
-        ) -> Factory.CreateParams.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.CreateParams.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.CreateParams.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, msgPayload: _FactoryModule_Payload | None = None
+        ) -> _FactoryModule._CreateParamsModule.Builder: ...
 
-    AccessInfoBuilder: TypeAlias = AccessInfo.Builder
-    AccessInfoReader: TypeAlias = AccessInfo.Reader
-    class AccessInfo:
-        class Reader:
+    CreateParamsReader: TypeAlias = _CreateParamsModule.Reader
+    CreateParamsBuilder: TypeAlias = _CreateParamsModule.Builder
+    CreateParams: _CreateParamsModule
+    class _AccessInfoModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def adminCap(self) -> Any: ...
             @property
-            def serviceCaps(self) -> Sequence[Identifiable]: ...
+            def serviceCaps(self) -> Sequence[_IdentifiableModule]: ...
             @property
             def error(self) -> str: ...
-            def as_builder(self) -> Factory.AccessInfo.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _FactoryModule._AccessInfoModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def adminCap(self) -> Any: ...
             @adminCap.setter
             def adminCap(self, value: Any) -> None: ...
             @property
-            def serviceCaps(self) -> Sequence[Identifiable]: ...
+            def serviceCaps(self) -> MutableSequence[_IdentifiableModule]: ...
             @serviceCaps.setter
-            def serviceCaps(self, value: Sequence[Identifiable]) -> None: ...
+            def serviceCaps(self, value: Sequence[_IdentifiableModule]) -> None: ...
             @property
             def error(self) -> str: ...
             @error.setter
             def error(self, value: str) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Factory.AccessInfo.Builder: ...
-            def init(
-                self, name: Literal["serviceCaps"], size: int = ...
-            ) -> Sequence[Identifiable]: ...
-            def copy(self) -> Factory.AccessInfo.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Factory.AccessInfo.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["serviceCaps"], size: int | None = None) -> MutableSequence[_IdentifiableModule]: ...
+            @override
+            def as_reader(self) -> _FactoryModule._AccessInfoModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Factory.AccessInfo.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.AccessInfo.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            adminCap: Any | None = None,
-            serviceCaps: Sequence[Identifiable] | None = None,
-            error: str | None = None,
-        ) -> Factory.AccessInfo.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.AccessInfo.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Factory.AccessInfo.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, adminCap: Any | None = None, serviceCaps: Sequence[_IdentifiableModule] | None = None, error: str | None = None) -> _FactoryModule._AccessInfoModule.Builder: ...
 
+    AccessInfoReader: TypeAlias = _AccessInfoModule.Reader
+    AccessInfoBuilder: TypeAlias = _AccessInfoModule.Builder
+    AccessInfo: _AccessInfoModule
     class CreateRequest(Protocol):
         timeoutSeconds: int
-        interfaceNameToRegistrySR: Sequence[Pair[str, str]] | Sequence[dict[str, Any]]
-        msgPayload: Any
+        interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]]
+        msgPayload: _DynamicObjectReader
         @overload
-        def init(
-            self, name: Literal["interfaceNameToRegistrySR"], size: int = ...
-        ) -> Sequence[Pair[str, str].Builder]: ...
+        def init(self, name: Literal["interfaceNameToRegistrySR"], size: int = ...) -> MutableSequence[_PairModule[str, str].Builder]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Factory.CreateResult: ...
-
-    class CreateResult(Awaitable[CreateResult], Protocol):
-        adminCap: Any
-        serviceCaps: Sequence[Identifiable]
-        error: str
+        def send(self) -> _FactoryModule.FactoryClient.CreateResult: ...
 
     class ServiceinterfacenamesRequest(Protocol):
-        def send(self) -> Factory.ServiceinterfacenamesResult: ...
-
-    class ServiceinterfacenamesResult(Awaitable[ServiceinterfacenamesResult], Protocol):
-        names: Sequence[str]
+        def send(self) -> _FactoryModule.FactoryClient.ServiceinterfacenamesResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Factory.Server | Identifiable.Server
-    ) -> FactoryClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _FactoryModule.Server | _IdentifiableModule.Server) -> _FactoryModule.FactoryClient: ...
+    class Server(_IdentifiableModule.Server):
+        class CreateResult(Awaitable[CreateResult], Protocol):
+            adminCap: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            serviceCaps: Sequence[_IdentifiableModule]
+            error: str
+
+        class ServiceinterfacenamesResult(Awaitable[ServiceinterfacenamesResult], Protocol):
+            names: Sequence[str]
+
         class CreateResultTuple(NamedTuple):
-            adminCap: Any
-            serviceCaps: Sequence[Identifiable]
+            adminCap: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            serviceCaps: Sequence[_IdentifiableModule]
             error: str
 
         class ServiceinterfacenamesResultTuple(NamedTuple):
             names: Sequence[str]
 
         class CreateCallContext(Protocol):
-            params: Factory.CreateRequest
-            results: Factory.CreateResult
+            params: _FactoryModule.CreateRequest
+            results: _FactoryModule.Server.CreateResult
 
         class ServiceinterfacenamesCallContext(Protocol):
-            params: Factory.ServiceinterfacenamesRequest
-            results: Factory.ServiceinterfacenamesResult
+            params: _FactoryModule.ServiceinterfacenamesRequest
+            results: _FactoryModule.Server.ServiceinterfacenamesResult
 
-        def create(
-            self,
-            timeoutSeconds: int,
-            interfaceNameToRegistrySR: Sequence[Pair[str, str].Reader],
-            msgPayload: Any,
-            _context: Factory.Server.CreateCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Factory.Server.CreateResultTuple | None]: ...
-        def create_context(
-            self, context: Factory.Server.CreateCallContext
-        ) -> Awaitable[None]: ...
-        def serviceInterfaceNames(
-            self,
-            _context: Factory.Server.ServiceinterfacenamesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Factory.Server.ServiceinterfacenamesResultTuple | None]: ...
-        def serviceInterfaceNames_context(
-            self, context: Factory.Server.ServiceinterfacenamesCallContext
-        ) -> Awaitable[None]: ...
+        def create(self, timeoutSeconds: int, interfaceNameToRegistrySR: Sequence[_PairModule[str, str].Reader], msgPayload: _DynamicObjectReader, _context: _FactoryModule.Server.CreateCallContext, **kwargs: Any) -> Awaitable[_FactoryModule.Server.CreateResultTuple | None]: ...
+        def create_context(self, context: _FactoryModule.Server.CreateCallContext) -> Awaitable[None]: ...
+        def serviceInterfaceNames(self, _context: _FactoryModule.Server.ServiceinterfacenamesCallContext, **kwargs: Any) -> Awaitable[_FactoryModule.Server.ServiceinterfacenamesResultTuple | None]: ...
+        def serviceInterfaceNames_context(self, context: _FactoryModule.Server.ServiceinterfacenamesCallContext) -> Awaitable[None]: ...
 
-class FactoryClient(IdentifiableClient):
-    def create(
-        self,
-        timeoutSeconds: int | None = None,
-        interfaceNameToRegistrySR: Sequence[Pair[str, str]]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        msgPayload: Any | None = None,
-    ) -> Factory.CreateResult: ...
-    def serviceInterfaceNames(self) -> Factory.ServiceinterfacenamesResult: ...
-    def create_request(
-        self,
-        timeoutSeconds: int | None = None,
-        interfaceNameToRegistrySR: Sequence[Pair[str, str]]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        msgPayload: Any | None = None,
-    ) -> Factory.CreateRequest: ...
-    def serviceInterfaceNames_request(self) -> Factory.ServiceinterfacenamesRequest: ...
+    class FactoryClient(_IdentifiableModule.IdentifiableClient):
+        class CreateResult(Awaitable[CreateResult], Protocol):
+            adminCap: _DynamicObjectReader
+            serviceCaps: Sequence[_IdentifiableModule]
+            error: str
 
-class Stoppable:
+        class ServiceinterfacenamesResult(Awaitable[ServiceinterfacenamesResult], Protocol):
+            names: Sequence[str]
+
+        def create(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]] | None = None, msgPayload: _DynamicObjectReader | None = None) -> _FactoryModule.FactoryClient.CreateResult: ...
+        def serviceInterfaceNames(self) -> _FactoryModule.FactoryClient.ServiceinterfacenamesResult: ...
+        def create_request(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]] | None = None, msgPayload: _DynamicObjectReader | None = None) -> _FactoryModule.CreateRequest: ...
+        def serviceInterfaceNames_request(self) -> _FactoryModule.ServiceinterfacenamesRequest: ...
+
+Factory: _FactoryModule
+FactoryClient: TypeAlias = _FactoryModule.FactoryClient
+
+class _StoppableModule(_InterfaceModule):
     class StopRequest(Protocol):
-        def send(self) -> Stoppable.StopResult: ...
-
-    class StopResult(Awaitable[StopResult], Protocol):
-        success: bool
+        def send(self) -> _StoppableModule.StoppableClient.StopResult: ...
 
     @classmethod
-    def _new_client(cls, server: Stoppable.Server) -> StoppableClient: ...
-    class Server(Protocol):
+    def _new_client(cls, server: _StoppableModule.Server) -> _StoppableModule.StoppableClient: ...
+    class Server(_DynamicCapabilityServer):
+        class StopResult(Awaitable[StopResult], Protocol):
+            success: bool
+
         class StopResultTuple(NamedTuple):
             success: bool
 
         class StopCallContext(Protocol):
-            params: Stoppable.StopRequest
-            results: Stoppable.StopResult
+            params: _StoppableModule.StopRequest
+            results: _StoppableModule.Server.StopResult
 
-        def stop(
-            self, _context: Stoppable.Server.StopCallContext, **kwargs: Any
-        ) -> Awaitable[bool | Stoppable.Server.StopResultTuple | None]: ...
-        def stop_context(
-            self, context: Stoppable.Server.StopCallContext
-        ) -> Awaitable[None]: ...
+        def stop(self, _context: _StoppableModule.Server.StopCallContext, **kwargs: Any) -> Awaitable[bool | _StoppableModule.Server.StopResultTuple | None]: ...
+        def stop_context(self, context: _StoppableModule.Server.StopCallContext) -> Awaitable[None]: ...
 
-class StoppableClient(Protocol):
-    def stop(self) -> Stoppable.StopResult: ...
-    def stop_request(self) -> Stoppable.StopRequest: ...
+    class StoppableClient(_DynamicCapabilityClient):
+        class StopResult(Awaitable[StopResult], Protocol):
+            success: bool
+
+        def stop(self) -> _StoppableModule.StoppableClient.StopResult: ...
+        def stop_request(self) -> _StoppableModule.StopRequest: ...
+
+Stoppable: _StoppableModule
+StoppableClient: TypeAlias = _StoppableModule.StoppableClient
+
+# Top-level type aliases for use in type annotations
+AccessInfoBuilder: TypeAlias = _FactoryModule._AccessInfoModule.Builder
+AccessInfoReader: TypeAlias = _FactoryModule._AccessInfoModule.Reader
+CreateParamsBuilder: TypeAlias = _FactoryModule._CreateParamsModule.Builder
+CreateParamsReader: TypeAlias = _FactoryModule._CreateParamsModule.Reader

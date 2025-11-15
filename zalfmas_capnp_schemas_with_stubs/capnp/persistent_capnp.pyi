@@ -3,161 +3,97 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, Generic, NamedTuple, Protocol, TypeAlias, TypeVar
+from typing import Any, Generic, NamedTuple, Protocol, TypeAlias, TypeVar, override
 
-Persistent_Owner = TypeVar("Persistent_Owner")
-Persistent_SturdyRef = TypeVar("Persistent_SturdyRef")
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class Persistent:
-    SaveParamsBuilder: TypeAlias = SaveParams.Builder
-    SaveParamsReader: TypeAlias = SaveParams.Reader
-    class SaveParams(Generic[Persistent_Owner]):
-        class Reader:
+_PersistentModule_Owner = TypeVar("_PersistentModule_Owner")
+_PersistentModule_SturdyRef = TypeVar("_PersistentModule_SturdyRef")
+
+class _PersistentModule(_InterfaceModule):
+    class _SaveParamsModule(Generic[_PersistentModule_Owner], _StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def sealFor(self) -> Any: ...
-            def as_builder(self) -> Persistent.SaveParams.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _PersistentModule._SaveParamsModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def sealFor(self) -> Any: ...
             @sealFor.setter
             def sealFor(self, value: Any) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Persistent.SaveParams.Builder: ...
-            def copy(self) -> Persistent.SaveParams.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Persistent.SaveParams.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _PersistentModule._SaveParamsModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Persistent.SaveParams.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveParams.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            sealFor: Any | None = None,
-        ) -> Persistent.SaveParams.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveParams.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveParams.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sealFor: Any | None = None) -> _PersistentModule._SaveParamsModule.Builder: ...
 
-    SaveResultsBuilder: TypeAlias = SaveResults.Builder
-    SaveResultsReader: TypeAlias = SaveResults.Reader
-    class SaveResults(Generic[Persistent_SturdyRef]):
-        class Reader:
+    SaveParamsReader: TypeAlias = _SaveParamsModule.Reader
+    SaveParamsBuilder: TypeAlias = _SaveParamsModule.Builder
+    SaveParams: _SaveParamsModule
+    class _SaveResultsModule(Generic[_PersistentModule_SturdyRef], _StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def sturdyRef(self) -> Persistent_SturdyRef: ...
-            def as_builder(self) -> Persistent.SaveResults.Builder: ...
+            def sturdyRef(self) -> _PersistentModule_SturdyRef: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _PersistentModule._SaveResultsModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def sturdyRef(self) -> Persistent_SturdyRef: ...
+            def sturdyRef(self) -> _PersistentModule_SturdyRef: ...
             @sturdyRef.setter
-            def sturdyRef(self, value: Persistent_SturdyRef) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Persistent.SaveResults.Builder: ...
-            def copy(self) -> Persistent.SaveResults.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Persistent.SaveResults.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def sturdyRef(self, value: _PersistentModule_SturdyRef) -> None: ...
+            @override
+            def as_reader(self) -> _PersistentModule._SaveResultsModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Persistent.SaveResults.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveResults.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            sturdyRef: Persistent_SturdyRef | None = None,
-        ) -> Persistent.SaveResults.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveResults.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Persistent.SaveResults.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sturdyRef: _PersistentModule_SturdyRef | None = None) -> _PersistentModule._SaveResultsModule.Builder: ...
 
+    SaveResultsReader: TypeAlias = _SaveResultsModule.Reader
+    SaveResultsBuilder: TypeAlias = _SaveResultsModule.Builder
+    SaveResults: _SaveResultsModule
     class SaveRequest(Protocol):
-        sealFor: Any
-        def send(self) -> Persistent.SaveResult: ...
-
-    class SaveResult(Awaitable[SaveResult], Protocol):
-        sturdyRef: Any
+        sealFor: _DynamicObjectReader
+        def send(self) -> _PersistentModule.PersistentClient.SaveResult: ...
 
     @classmethod
-    def _new_client(cls, server: Persistent.Server) -> PersistentClient: ...
-    class Server(Protocol):
+    def _new_client(cls, server: _PersistentModule.Server) -> _PersistentModule.PersistentClient: ...
+    class Server(_DynamicCapabilityServer):
+        class SaveResult(Awaitable[SaveResult], Protocol):
+            sturdyRef: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+
         class SaveResultTuple(NamedTuple):
-            sturdyRef: Any
+            sturdyRef: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
         class SaveCallContext(Protocol):
-            params: Persistent.SaveRequest
-            results: Persistent.SaveResult
+            params: _PersistentModule.SaveRequest
+            results: _PersistentModule.Server.SaveResult
 
-        def save(
-            self,
-            sealFor: Any,
-            _context: Persistent.Server.SaveCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Persistent.Server.SaveResultTuple | None]: ...
-        def save_context(
-            self, context: Persistent.Server.SaveCallContext
-        ) -> Awaitable[None]: ...
+        def save(self, sealFor: _DynamicObjectReader, _context: _PersistentModule.Server.SaveCallContext, **kwargs: Any) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
+        def save_context(self, context: _PersistentModule.Server.SaveCallContext) -> Awaitable[None]: ...
 
-class PersistentClient(Protocol):
-    def save(self, sealFor: Any | None = None) -> Persistent.SaveResult: ...
-    def save_request(self, sealFor: Any | None = None) -> Persistent.SaveRequest: ...
+    class PersistentClient(_DynamicCapabilityClient):
+        class SaveResult(Awaitable[SaveResult], Protocol):
+            sturdyRef: _DynamicObjectReader
+
+        def save(self, sealFor: _DynamicObjectReader | None = None) -> _PersistentModule.PersistentClient.SaveResult: ...
+        def save_request(self, sealFor: _DynamicObjectReader | None = None) -> _PersistentModule.SaveRequest: ...
+
+Persistent: _PersistentModule
+PersistentClient: TypeAlias = _PersistentModule.PersistentClient
+
+# Top-level type aliases for use in type annotations
+SaveParamsBuilder: TypeAlias = _PersistentModule._SaveParamsModule.Builder
+SaveParamsReader: TypeAlias = _PersistentModule._SaveParamsModule.Reader
+SaveResultsBuilder: TypeAlias = _PersistentModule._SaveResultsModule.Builder
+SaveResultsReader: TypeAlias = _PersistentModule._SaveResultsModule.Reader

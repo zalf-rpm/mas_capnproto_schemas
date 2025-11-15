@@ -2,436 +2,240 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
+from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
 
-from .common_capnp import Identifiable, IdentifiableClient, IdInformation
-from .crop_capnp import Crop, CropClient
-from .date_capnp import Date
-from .persistence_capnp import Persistent, PersistentClient
-from .registry_capnp import Registry, RegistryClient
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class EventType(Enum):
-    sowing = "sowing"
-    automaticSowing = "automaticSowing"
-    harvest = "harvest"
-    automaticHarvest = "automaticHarvest"
-    irrigation = "irrigation"
-    tillage = "tillage"
-    organicFertilization = "organicFertilization"
-    mineralFertilization = "mineralFertilization"
-    nDemandFertilization = "nDemandFertilization"
-    cutting = "cutting"
-    setValue = "setValue"
-    saveState = "saveState"
+from .common_capnp import (
+    Identifiable,
+    IdentifiableClient,
+    _IdentifiableModule,
+    _IdInformationModule,
+)
+from .crop_capnp import Crop, CropClient, _CropModule
+from .date_capnp import _DateModule
+from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
+from .registry_capnp import Registry, RegistryClient, _RegistryModule
 
-class PlantOrgan(Enum):
-    root = "root"
-    leaf = "leaf"
-    shoot = "shoot"
-    fruit = "fruit"
-    strukt = "strukt"
-    sugar = "sugar"
+class _EventTypeModule(Enum):
+    sowing = 0
+    automaticSowing = 1
+    harvest = 2
+    automaticHarvest = 3
+    irrigation = 4
+    tillage = 5
+    organicFertilization = 6
+    mineralFertilization = 7
+    nDemandFertilization = 8
+    cutting = 9
+    setValue = 10
+    saveState = 11
 
-EventBuilder: TypeAlias = Event.Builder
-EventReader: TypeAlias = Event.Reader
+EventType: TypeAlias = _EventTypeModule
 
-class Event:
-    class ExternalType(Enum):
-        sowing = "sowing"
-        automaticSowing = "automaticSowing"
-        harvest = "harvest"
-        automaticHarvest = "automaticHarvest"
-        irrigation = "irrigation"
-        tillage = "tillage"
-        organicFertilization = "organicFertilization"
-        mineralFertilization = "mineralFertilization"
-        nDemandFertilization = "nDemandFertilization"
-        cutting = "cutting"
+class _PlantOrganModule(Enum):
+    root = 0
+    leaf = 1
+    shoot = 2
+    fruit = 3
+    strukt = 4
+    sugar = 5
 
-    class PhenoStage(Enum):
-        emergence = "emergence"
-        flowering = "flowering"
-        anthesis = "anthesis"
-        maturity = "maturity"
+PlantOrgan: TypeAlias = _PlantOrganModule
 
-    TypeBuilder: TypeAlias = Type.Builder
-    TypeReader: TypeAlias = Type.Reader
-    class Type:
-        class Reader:
+class _EventModule(_StructModule):
+    class _ExternalTypeModule(Enum):
+        sowing = 0
+        automaticSowing = 1
+        harvest = 2
+        automaticHarvest = 3
+        irrigation = 4
+        tillage = 5
+        organicFertilization = 6
+        mineralFertilization = 7
+        nDemandFertilization = 8
+        cutting = 9
+
+    ExternalType: TypeAlias = _ExternalTypeModule
+    class _PhenoStageModule(Enum):
+        emergence = 0
+        flowering = 1
+        anthesis = 2
+        maturity = 3
+
+    PhenoStage: TypeAlias = _PhenoStageModule
+    class _TypeModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def external(self) -> Event.ExternalType: ...
+            def external(self) -> _EventModule._ExternalTypeModule: ...
             @property
-            def internal(self) -> Event.PhenoStage: ...
+            def internal(self) -> _EventModule._PhenoStageModule: ...
+            @override
             def which(self) -> Literal["external", "internal"]: ...
-            def as_builder(self) -> Event.Type.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._TypeModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def external(self) -> Event.ExternalType: ...
+            def external(self) -> _EventModule._ExternalTypeModule: ...
             @external.setter
-            def external(
-                self,
-                value: Event.ExternalType
-                | Literal[
-                    "sowing",
-                    "automaticSowing",
-                    "harvest",
-                    "automaticHarvest",
-                    "irrigation",
-                    "tillage",
-                    "organicFertilization",
-                    "mineralFertilization",
-                    "nDemandFertilization",
-                    "cutting",
-                ],
-            ) -> None: ...
+            def external(self, value: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting"]) -> None: ...
             @property
-            def internal(self) -> Event.PhenoStage: ...
+            def internal(self) -> _EventModule._PhenoStageModule: ...
             @internal.setter
-            def internal(
-                self,
-                value: Event.PhenoStage
-                | Literal["emergence", "flowering", "anthesis", "maturity"],
-            ) -> None: ...
+            def internal(self, value: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"]) -> None: ...
+            @override
             def which(self) -> Literal["external", "internal"]: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Event.Type.Builder: ...
-            def copy(self) -> Event.Type.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Event.Type.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _EventModule._TypeModule.Reader: ...
 
-        def which(self) -> Literal["external", "internal"]: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Event.Type.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Type.Reader: ...
-        @staticmethod
+        @override
         def new_message(
+            self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            external: Event.ExternalType
-            | Literal[
-                "sowing",
-                "automaticSowing",
-                "harvest",
-                "automaticHarvest",
-                "irrigation",
-                "tillage",
-                "organicFertilization",
-                "mineralFertilization",
-                "nDemandFertilization",
-                "cutting",
-            ]
-            | None = None,
-            internal: Event.PhenoStage
-            | Literal["emergence", "flowering", "anthesis", "maturity"]
-            | None = None,
-        ) -> Event.Type.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Type.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Type.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            external: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting"] | None = None,
+            internal: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"] | None = None,
+        ) -> _EventModule._TypeModule.Builder: ...
 
-    AtBuilder: TypeAlias = At.Builder
-    AtReader: TypeAlias = At.Reader
-    class At:
-        class Reader:
+    TypeReader: TypeAlias = _TypeModule.Reader
+    TypeBuilder: TypeAlias = _TypeModule.Builder
+    Type: _TypeModule
+    class _AtModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def date(self) -> Date.Reader: ...
-            def as_builder(self) -> Event.At.Builder: ...
+            def date(self) -> _DateModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._AtModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def date(self) -> Date.Builder: ...
+            def date(self) -> _DateModule.Builder: ...
             @date.setter
-            def date(
-                self, value: Date.Builder | Date.Reader | dict[str, Any]
-            ) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Event.At.Builder: ...
-            def init(self, name: Literal["date"]) -> Date.Builder: ...
-            def copy(self) -> Event.At.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Event.At.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+            def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+            @override
+            def as_reader(self) -> _EventModule._AtModule.Reader: ...
 
-        def init(self, name: Literal["date"]) -> Date: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Event.At.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.At.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            date: Date.Builder | dict[str, Any] | None = None,
-        ) -> Event.At.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.At.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.At.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> _EventModule._AtModule.Builder: ...
 
-    BetweenBuilder: TypeAlias = Between.Builder
-    BetweenReader: TypeAlias = Between.Reader
-    class Between:
-        class Reader:
+    AtReader: TypeAlias = _AtModule.Reader
+    AtBuilder: TypeAlias = _AtModule.Builder
+    At: _AtModule
+    class _BetweenModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def earliest(self) -> Date.Reader: ...
+            def earliest(self) -> _DateModule.Reader: ...
             @property
-            def latest(self) -> Date.Reader: ...
-            def as_builder(self) -> Event.Between.Builder: ...
+            def latest(self) -> _DateModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._BetweenModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def earliest(self) -> Date.Builder: ...
+            def earliest(self) -> _DateModule.Builder: ...
             @earliest.setter
-            def earliest(
-                self, value: Date.Builder | Date.Reader | dict[str, Any]
-            ) -> None: ...
+            def earliest(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def latest(self) -> Date.Builder: ...
+            def latest(self) -> _DateModule.Builder: ...
             @latest.setter
-            def latest(
-                self, value: Date.Builder | Date.Reader | dict[str, Any]
-            ) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Event.Between.Builder: ...
+            def latest(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
             @overload
-            def init(self: Any, name: Literal["earliest"]) -> Date.Builder: ...
+            def init(self, field: Literal["earliest"], size: int | None = None) -> _DateModule.Builder: ...
             @overload
-            def init(self: Any, name: Literal["latest"]) -> Date.Builder: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Event.Between.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Event.Between.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["latest"], size: int | None = None) -> _DateModule.Builder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _EventModule._BetweenModule.Reader: ...
 
-        @overload
-        def init(self, name: Literal["earliest"]) -> Date: ...
-        @overload
-        def init(self, name: Literal["latest"]) -> Date: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Event.Between.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Between.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            earliest: Date.Builder | dict[str, Any] | None = None,
-            latest: Date.Builder | dict[str, Any] | None = None,
-        ) -> Event.Between.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Between.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.Between.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, earliest: _DateModule.Builder | dict[str, Any] | None = None, latest: _DateModule.Builder | dict[str, Any] | None = None) -> _EventModule._BetweenModule.Builder: ...
 
-    AfterBuilder: TypeAlias = After.Builder
-    AfterReader: TypeAlias = After.Reader
-    class After:
-        class Reader:
+    BetweenReader: TypeAlias = _BetweenModule.Reader
+    BetweenBuilder: TypeAlias = _BetweenModule.Builder
+    Between: _BetweenModule
+    class _AfterModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def event(self) -> Event.Type.Reader: ...
+            def event(self) -> _EventModule._TypeModule.Reader: ...
             @property
             def days(self) -> int: ...
-            def as_builder(self) -> Event.After.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._AfterModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def event(self) -> Event.Type.Builder: ...
+            def event(self) -> _EventModule._TypeModule.Builder: ...
             @event.setter
-            def event(
-                self, value: Event.Type.Builder | Event.Type.Reader | dict[str, Any]
-            ) -> None: ...
+            def event(self, value: _EventModule._TypeModule.Builder | _EventModule._TypeModule.Reader | dict[str, Any]) -> None: ...
             @property
             def days(self) -> int: ...
             @days.setter
             def days(self, value: int) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Event.After.Builder: ...
-            def init(self, name: Literal["event"]) -> Event.Type.Builder: ...
-            def copy(self) -> Event.After.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Event.After.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["event"], size: int | None = None) -> _EventModule._TypeModule.Builder: ...
+            @override
+            def as_reader(self) -> _EventModule._AfterModule.Reader: ...
 
-        def init(self, name: Literal["event"]) -> Event.Type: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Event.After.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.After.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            event: Event.Type.Builder | dict[str, Any] | None = None,
-            days: int | None = None,
-        ) -> Event.After.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.After.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Event.After.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, event: _EventModule._TypeModule.Builder | dict[str, Any] | None = None, days: int | None = None) -> _EventModule._AfterModule.Builder: ...
 
-    class Reader:
+    AfterReader: TypeAlias = _AfterModule.Reader
+    AfterBuilder: TypeAlias = _AfterModule.Builder
+    After: _AfterModule
+    class Reader(_DynamicStructReader):
         @property
-        def type(self) -> Event.ExternalType: ...
+        def type(self) -> _EventModule._ExternalTypeModule: ...
         @property
-        def info(self) -> IdInformation.Reader: ...
+        def info(self) -> _IdInformationModule.Reader: ...
         @property
-        def at(self) -> Event.At.Reader: ...
+        def at(self) -> _EventModule._AtModule.Reader: ...
         @property
-        def between(self) -> Event.Between.Reader: ...
+        def between(self) -> _EventModule._BetweenModule.Reader: ...
         @property
-        def after(self) -> Event.After.Reader: ...
+        def after(self) -> _EventModule._AfterModule.Reader: ...
         @property
         def params(self) -> Any: ...
         @property
         def runAtStartOfDay(self) -> bool: ...
+        @override
         def which(self) -> Literal["at", "between", "after"]: ...
-        def as_builder(self) -> Event.Builder: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def type(self) -> Event.ExternalType: ...
+        def type(self) -> _EventModule._ExternalTypeModule: ...
         @type.setter
-        def type(
-            self,
-            value: Event.ExternalType
-            | Literal[
-                "sowing",
-                "automaticSowing",
-                "harvest",
-                "automaticHarvest",
-                "irrigation",
-                "tillage",
-                "organicFertilization",
-                "mineralFertilization",
-                "nDemandFertilization",
-                "cutting",
-            ],
-        ) -> None: ...
+        def type(self, value: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting"]) -> None: ...
         @property
-        def info(self) -> IdInformation.Builder: ...
+        def info(self) -> _IdInformationModule.Builder: ...
         @info.setter
-        def info(
-            self, value: IdInformation.Builder | IdInformation.Reader | dict[str, Any]
-        ) -> None: ...
+        def info(self, value: _IdInformationModule.Builder | _IdInformationModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def at(self) -> Event.At.Builder: ...
+        def at(self) -> _EventModule._AtModule.Builder: ...
         @at.setter
-        def at(
-            self, value: Event.At.Builder | Event.At.Reader | dict[str, Any]
-        ) -> None: ...
+        def at(self, value: _EventModule._AtModule.Builder | _EventModule._AtModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def between(self) -> Event.Between.Builder: ...
+        def between(self) -> _EventModule._BetweenModule.Builder: ...
         @between.setter
-        def between(
-            self, value: Event.Between.Builder | Event.Between.Reader | dict[str, Any]
-        ) -> None: ...
+        def between(self, value: _EventModule._BetweenModule.Builder | _EventModule._BetweenModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def after(self) -> Event.After.Builder: ...
+        def after(self) -> _EventModule._AfterModule.Builder: ...
         @after.setter
-        def after(
-            self, value: Event.After.Builder | Event.After.Reader | dict[str, Any]
-        ) -> None: ...
+        def after(self, value: _EventModule._AfterModule.Builder | _EventModule._AfterModule.Reader | dict[str, Any]) -> None: ...
         @property
         def params(self) -> Any: ...
         @params.setter
@@ -440,281 +244,162 @@ class Event:
         def runAtStartOfDay(self) -> bool: ...
         @runAtStartOfDay.setter
         def runAtStartOfDay(self, value: bool) -> None: ...
+        @override
         def which(self) -> Literal["at", "between", "after"]: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Event.Builder: ...
         @overload
-        def init(self: Any, name: Literal["info"]) -> IdInformation.Builder: ...
+        def init(self, field: Literal["info"], size: int | None = None) -> _IdInformationModule.Builder: ...
         @overload
-        def init(self: Any, name: Literal["at"]) -> Event.At.Builder: ...
+        def init(self, field: Literal["at"], size: int | None = None) -> _EventModule._AtModule.Builder: ...
         @overload
-        def init(self: Any, name: Literal["between"]) -> Event.Between.Builder: ...
+        def init(self, field: Literal["between"], size: int | None = None) -> _EventModule._BetweenModule.Builder: ...
         @overload
-        def init(self: Any, name: Literal["after"]) -> Event.After.Builder: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        def copy(self) -> Event.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Event.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def init(self, field: Literal["after"], size: int | None = None) -> _EventModule._AfterModule.Builder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> _EventModule.Reader: ...
 
-    def which(self) -> Literal["at", "between", "after"]: ...
-    @overload
-    def init(self, name: Literal["info"]) -> IdInformation: ...
-    @overload
-    def init(self, name: Literal["at"]) -> Event.At: ...
-    @overload
-    def init(self, name: Literal["between"]) -> Event.Between: ...
-    @overload
-    def init(self, name: Literal["after"]) -> Event.After: ...
-    def init(self: Any, name: str, size: int = ...) -> Any: ...
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Event.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Event.Reader: ...
-    @staticmethod
+    @override
     def new_message(
+        self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        type: Event.ExternalType
-        | Literal[
-            "sowing",
-            "automaticSowing",
-            "harvest",
-            "automaticHarvest",
-            "irrigation",
-            "tillage",
-            "organicFertilization",
-            "mineralFertilization",
-            "nDemandFertilization",
-            "cutting",
-        ]
-        | None = None,
-        info: IdInformation.Builder | dict[str, Any] | None = None,
-        at: Event.At.Builder | dict[str, Any] | None = None,
-        between: Event.Between.Builder | dict[str, Any] | None = None,
-        after: Event.After.Builder | dict[str, Any] | None = None,
+        type: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting"] | None = None,
+        info: _IdInformationModule.Builder | dict[str, Any] | None = None,
+        at: _EventModule._AtModule.Builder | dict[str, Any] | None = None,
+        between: _EventModule._BetweenModule.Builder | dict[str, Any] | None = None,
+        after: _EventModule._AfterModule.Builder | dict[str, Any] | None = None,
         params: Any | None = None,
         runAtStartOfDay: bool | None = None,
-    ) -> Event.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Event.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Event.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    ) -> _EventModule.Builder: ...
 
-class Fertilizer:
+EventReader: TypeAlias = _EventModule.Reader
+EventBuilder: TypeAlias = _EventModule.Builder
+Event: _EventModule
+
+class _FertilizerModule(_IdentifiableModule, _PersistentModule):
+    NutrientReader: TypeAlias = _NutrientModule.Reader
+    NutrientBuilder: TypeAlias = _NutrientModule.Builder
+    Nutrient: _NutrientModule
     class NutrientsRequest(Protocol):
-        def send(self) -> Fertilizer.NutrientsResult: ...
-
-    class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-        nutrients: Sequence[Nutrient.Builder | Nutrient.Reader]
+        def send(self) -> _FertilizerModule.FertilizerClient.NutrientsResult: ...
 
     class ParametersRequest(Protocol):
-        def send(self) -> Fertilizer.ParametersResult: ...
-
-    class ParametersResult(Awaitable[ParametersResult], Protocol):
-        params: Any
+        def send(self) -> _FertilizerModule.FertilizerClient.ParametersResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Fertilizer.Server | Identifiable.Server | Persistent.Server
-    ) -> FertilizerClient: ...
-    class Server(Identifiable.Server, Persistent.Server):
+    def _new_client(cls, server: _FertilizerModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _FertilizerModule.FertilizerClient: ...
+    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        class NutrientsResult(Awaitable[NutrientsResult], Protocol):
+            nutrients: Sequence[_NutrientModule.Builder | _NutrientModule.Reader]
+
+        class ParametersResult(Awaitable[ParametersResult], Protocol):
+            params: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+
         class NutrientsResultTuple(NamedTuple):
-            nutrients: Sequence[Nutrient]
+            nutrients: Sequence[_NutrientModule]
 
         class ParametersResultTuple(NamedTuple):
-            params: Any
+            params: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
         class NutrientsCallContext(Protocol):
-            params: Fertilizer.NutrientsRequest
-            results: Fertilizer.NutrientsResult
+            params: _FertilizerModule.NutrientsRequest
+            results: _FertilizerModule.Server.NutrientsResult
 
         class ParametersCallContext(Protocol):
-            params: Fertilizer.ParametersRequest
-            results: Fertilizer.ParametersResult
+            params: _FertilizerModule.ParametersRequest
+            results: _FertilizerModule.Server.ParametersResult
 
-        def nutrients(
-            self, _context: Fertilizer.Server.NutrientsCallContext, **kwargs: Any
-        ) -> Awaitable[Fertilizer.Server.NutrientsResultTuple | None]: ...
-        def nutrients_context(
-            self, context: Fertilizer.Server.NutrientsCallContext
-        ) -> Awaitable[None]: ...
-        def parameters(
-            self, _context: Fertilizer.Server.ParametersCallContext, **kwargs: Any
-        ) -> Awaitable[Fertilizer.Server.ParametersResultTuple | None]: ...
-        def parameters_context(
-            self, context: Fertilizer.Server.ParametersCallContext
-        ) -> Awaitable[None]: ...
+        def nutrients(self, _context: _FertilizerModule.Server.NutrientsCallContext, **kwargs: Any) -> Awaitable[_FertilizerModule.Server.NutrientsResultTuple | None]: ...
+        def nutrients_context(self, context: _FertilizerModule.Server.NutrientsCallContext) -> Awaitable[None]: ...
+        def parameters(self, _context: _FertilizerModule.Server.ParametersCallContext, **kwargs: Any) -> Awaitable[_FertilizerModule.Server.ParametersResultTuple | None]: ...
+        def parameters_context(self, context: _FertilizerModule.Server.ParametersCallContext) -> Awaitable[None]: ...
 
-NutrientBuilder: TypeAlias = Nutrient.Builder
-NutrientReader: TypeAlias = Nutrient.Reader
+    class FertilizerClient(_IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient):
+        class NutrientsResult(Awaitable[NutrientsResult], Protocol):
+            nutrients: Sequence[_NutrientModule.Builder | _NutrientModule.Reader]
 
-class Nutrient:
-    class Name(Enum):
-        urea = "urea"
-        ammonia = "ammonia"
-        nitrate = "nitrate"
-        phosphorus = "phosphorus"
-        potassium = "potassium"
-        sulfate = "sulfate"
-        organicC = "organicC"
-        organicN = "organicN"
-        organicP = "organicP"
-        organicNFast = "organicNFast"
-        organicNSlow = "organicNSlow"
+        class ParametersResult(Awaitable[ParametersResult], Protocol):
+            params: _DynamicObjectReader
 
-    class Unit(Enum):
-        none = "none"
-        fraction = "fraction"
-        percent = "percent"
+        def nutrients(self) -> _FertilizerModule.FertilizerClient.NutrientsResult: ...
+        def parameters(self) -> _FertilizerModule.FertilizerClient.ParametersResult: ...
+        def nutrients_request(self) -> _FertilizerModule.NutrientsRequest: ...
+        def parameters_request(self) -> _FertilizerModule.ParametersRequest: ...
 
-    class Reader:
+class _NutrientModule(_StructModule):
+    class _NameModule(Enum):
+        urea = 0
+        ammonia = 1
+        nitrate = 2
+        phosphorus = 3
+        potassium = 4
+        sulfate = 5
+        organicC = 6
+        organicN = 7
+        organicP = 8
+        organicNFast = 9
+        organicNSlow = 10
+
+    Name: TypeAlias = _NameModule
+    class _UnitModule(Enum):
+        none = 0
+        fraction = 1
+        percent = 2
+
+    Unit: TypeAlias = _UnitModule
+    class Reader(_DynamicStructReader):
         @property
-        def nutrient(self) -> Nutrient.Name: ...
+        def nutrient(self) -> _NutrientModule._NameModule: ...
         @property
         def value(self) -> float: ...
         @property
-        def unit(self) -> Nutrient.Unit: ...
-        def as_builder(self) -> Nutrient.Builder: ...
+        def unit(self) -> _NutrientModule._UnitModule: ...
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _NutrientModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def nutrient(self) -> Nutrient.Name: ...
+        def nutrient(self) -> _NutrientModule._NameModule: ...
         @nutrient.setter
-        def nutrient(
-            self,
-            value: Nutrient.Name
-            | Literal[
-                "urea",
-                "ammonia",
-                "nitrate",
-                "phosphorus",
-                "potassium",
-                "sulfate",
-                "organicC",
-                "organicN",
-                "organicP",
-                "organicNFast",
-                "organicNSlow",
-            ],
-        ) -> None: ...
+        def nutrient(self, value: _NutrientModule._NameModule | Literal["urea", "ammonia", "nitrate", "phosphorus", "potassium", "sulfate", "organicC", "organicN", "organicP", "organicNFast", "organicNSlow"]) -> None: ...
         @property
         def value(self) -> float: ...
         @value.setter
         def value(self, value: float) -> None: ...
         @property
-        def unit(self) -> Nutrient.Unit: ...
+        def unit(self) -> _NutrientModule._UnitModule: ...
         @unit.setter
-        def unit(
-            self, value: Nutrient.Unit | Literal["none", "fraction", "percent"]
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Nutrient.Builder: ...
-        def copy(self) -> Nutrient.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Nutrient.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def unit(self, value: _NutrientModule._UnitModule | Literal["none", "fraction", "percent"]) -> None: ...
+        @override
+        def as_reader(self) -> _NutrientModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Nutrient.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Nutrient.Reader: ...
-    @staticmethod
+    @override
     def new_message(
+        self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        nutrient: Nutrient.Name
-        | Literal[
-            "urea",
-            "ammonia",
-            "nitrate",
-            "phosphorus",
-            "potassium",
-            "sulfate",
-            "organicC",
-            "organicN",
-            "organicP",
-            "organicNFast",
-            "organicNSlow",
-        ]
-        | None = None,
+        nutrient: _NutrientModule._NameModule | Literal["urea", "ammonia", "nitrate", "phosphorus", "potassium", "sulfate", "organicC", "organicN", "organicP", "organicNFast", "organicNSlow"] | None = None,
         value: float | None = None,
-        unit: Nutrient.Unit | Literal["none", "fraction", "percent"] | None = None,
-    ) -> Nutrient.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Nutrient.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Nutrient.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+        unit: _NutrientModule._UnitModule | Literal["none", "fraction", "percent"] | None = None,
+    ) -> _NutrientModule.Builder: ...
 
-class FertilizerClient(IdentifiableClient, PersistentClient):
-    def nutrients(self) -> Fertilizer.NutrientsResult: ...
-    def parameters(self) -> Fertilizer.ParametersResult: ...
-    def nutrients_request(self) -> Fertilizer.NutrientsRequest: ...
-    def parameters_request(self) -> Fertilizer.ParametersRequest: ...
+Fertilizer: _FertilizerModule
+FertilizerClient: TypeAlias = _FertilizerModule.FertilizerClient
 
-ParamsBuilder: TypeAlias = Params.Builder
-ParamsReader: TypeAlias = Params.Reader
-
-class Params:
-    SowingBuilder: TypeAlias = Sowing.Builder
-    SowingReader: TypeAlias = Sowing.Reader
-    class Sowing:
-        class Reader:
+class _ParamsModule(_StructModule):
+    class _SowingModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def cultivar(self) -> str: ...
             @property
             def plantDensity(self) -> int: ...
             @property
-            def crop(self) -> CropClient: ...
-            def as_builder(self) -> Params.Sowing.Builder: ...
+            def crop(self) -> _CropModule.CropClient: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._SowingModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def cultivar(self) -> str: ...
             @cultivar.setter
@@ -724,72 +409,31 @@ class Params:
             @plantDensity.setter
             def plantDensity(self, value: int) -> None: ...
             @property
-            def crop(self) -> CropClient: ...
+            def crop(self) -> _CropModule.CropClient: ...
             @crop.setter
-            def crop(self, value: CropClient | Crop.Server) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Params.Sowing.Builder: ...
-            def copy(self) -> Params.Sowing.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.Sowing.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def crop(self, value: _CropModule.CropClient | _CropModule.Server) -> None: ...
+            @override
+            def as_reader(self) -> _ParamsModule._SowingModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.Sowing.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Sowing.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            cultivar: str | None = None,
-            plantDensity: int | None = None,
-            crop: CropClient | Crop.Server | None = None,
-        ) -> Params.Sowing.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Sowing.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Sowing.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cultivar: str | None = None, plantDensity: int | None = None, crop: _CropModule.CropClient | _CropModule.Server | None = None) -> _ParamsModule._SowingModule.Builder: ...
 
-    AutomaticSowingBuilder: TypeAlias = AutomaticSowing.Builder
-    AutomaticSowingReader: TypeAlias = AutomaticSowing.Reader
-    class AutomaticSowing:
-        AvgSoilTempBuilder: TypeAlias = AvgSoilTemp.Builder
-        AvgSoilTempReader: TypeAlias = AvgSoilTemp.Reader
-        class AvgSoilTemp:
-            class Reader:
+    SowingReader: TypeAlias = _SowingModule.Reader
+    SowingBuilder: TypeAlias = _SowingModule.Builder
+    Sowing: _SowingModule
+    class _AutomaticSowingModule(_StructModule):
+        class _AvgSoilTempModule(_StructModule):
+            class Reader(_DynamicStructReader):
                 @property
                 def soilDepthForAveraging(self) -> float: ...
                 @property
                 def daysInSoilTempWindow(self) -> int: ...
                 @property
                 def sowingIfAboveAvgSoilTemp(self) -> float: ...
-                def as_builder(self) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
+                @override
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
 
-            class Builder:
+            class Builder(_DynamicStructBuilder):
                 @property
                 def soilDepthForAveraging(self) -> float: ...
                 @soilDepthForAveraging.setter
@@ -802,56 +446,16 @@ class Params:
                 def sowingIfAboveAvgSoilTemp(self) -> float: ...
                 @sowingIfAboveAvgSoilTemp.setter
                 def sowingIfAboveAvgSoilTemp(self, value: float) -> None: ...
-                @staticmethod
-                def from_dict(
-                    dictionary: dict[str, Any],
-                ) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
-                def copy(self) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
-                def to_bytes(self) -> bytes: ...
-                def to_bytes_packed(self) -> bytes: ...
-                def to_segments(self) -> list[bytes]: ...
-                def as_reader(self) -> Params.AutomaticSowing.AvgSoilTemp.Reader: ...
-                @staticmethod
-                def write(file: BufferedWriter) -> None: ...
-                @staticmethod
-                def write_packed(file: BufferedWriter) -> None: ...
+                @override
+                def as_reader(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader: ...
 
-            @contextmanager
-            @staticmethod
-            def from_bytes(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Iterator[Params.AutomaticSowing.AvgSoilTemp.Reader]: ...
-            @staticmethod
-            def from_bytes_packed(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.AutomaticSowing.AvgSoilTemp.Reader: ...
-            @staticmethod
-            def new_message(
-                num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
-                soilDepthForAveraging: float | None = None,
-                daysInSoilTempWindow: int | None = None,
-                sowingIfAboveAvgSoilTemp: float | None = None,
-            ) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
-            @staticmethod
-            def read(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.AutomaticSowing.AvgSoilTemp.Reader: ...
-            @staticmethod
-            def read_packed(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.AutomaticSowing.AvgSoilTemp.Reader: ...
-            def to_dict(self) -> dict[str, Any]: ...
+            @override
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilDepthForAveraging: float | None = None, daysInSoilTempWindow: int | None = None, sowingIfAboveAvgSoilTemp: float | None = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
 
-        class Reader:
+        AvgSoilTempReader: TypeAlias = _AvgSoilTempModule.Reader
+        AvgSoilTempBuilder: TypeAlias = _AvgSoilTempModule.Builder
+        AvgSoilTemp: _AvgSoilTempModule
+        class Reader(_DynamicStructReader):
             @property
             def minTempThreshold(self) -> float: ...
             @property
@@ -869,12 +473,13 @@ class Params:
             @property
             def baseTemp(self) -> float: ...
             @property
-            def avgSoilTemp(self) -> Params.AutomaticSowing.AvgSoilTemp.Reader: ...
+            def avgSoilTemp(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader: ...
             @property
-            def sowing(self) -> Params.Sowing.Reader: ...
-            def as_builder(self) -> Params.AutomaticSowing.Builder: ...
+            def sowing(self) -> _ParamsModule._SowingModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticSowingModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def minTempThreshold(self) -> float: ...
             @minTempThreshold.setter
@@ -908,64 +513,25 @@ class Params:
             @baseTemp.setter
             def baseTemp(self, value: float) -> None: ...
             @property
-            def avgSoilTemp(self) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
+            def avgSoilTemp(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
             @avgSoilTemp.setter
-            def avgSoilTemp(
-                self,
-                value: Params.AutomaticSowing.AvgSoilTemp.Builder
-                | Params.AutomaticSowing.AvgSoilTemp.Reader
-                | dict[str, Any],
-            ) -> None: ...
+            def avgSoilTemp(self, value: _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder | _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def sowing(self) -> Params.Sowing.Builder: ...
+            def sowing(self) -> _ParamsModule._SowingModule.Builder: ...
             @sowing.setter
-            def sowing(
-                self,
-                value: Params.Sowing.Builder | Params.Sowing.Reader | dict[str, Any],
-            ) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Params.AutomaticSowing.Builder: ...
+            def sowing(self, value: _ParamsModule._SowingModule.Builder | _ParamsModule._SowingModule.Reader | dict[str, Any]) -> None: ...
             @overload
-            def init(
-                self: Any, name: Literal["avgSoilTemp"]
-            ) -> Params.AutomaticSowing.AvgSoilTemp.Builder: ...
+            def init(self, field: Literal["avgSoilTemp"], size: int | None = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
             @overload
-            def init(self: Any, name: Literal["sowing"]) -> Params.Sowing.Builder: ...
-            def init(self: Any, name: str, size: int = ...) -> Any: ...
-            def copy(self) -> Params.AutomaticSowing.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.AutomaticSowing.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["sowing"], size: int | None = None) -> _ParamsModule._SowingModule.Builder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
+            @override
+            def as_reader(self) -> _ParamsModule._AutomaticSowingModule.Reader: ...
 
-        @overload
-        def init(
-            self, name: Literal["avgSoilTemp"]
-        ) -> Params.AutomaticSowing.AvgSoilTemp: ...
-        @overload
-        def init(self, name: Literal["sowing"]) -> Params.Sowing: ...
-        def init(self: Any, name: str, size: int = ...) -> Any: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.AutomaticSowing.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticSowing.Reader: ...
-        @staticmethod
+        @override
         def new_message(
+            self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             minTempThreshold: float | None = None,
@@ -976,51 +542,37 @@ class Params:
             maxCurrentDayPrecipSum: float | None = None,
             tempSumAboveBaseTemp: float | None = None,
             baseTemp: float | None = None,
-            avgSoilTemp: Params.AutomaticSowing.AvgSoilTemp.Builder
-            | dict[str, Any]
-            | None = None,
-            sowing: Params.Sowing.Builder | dict[str, Any] | None = None,
-        ) -> Params.AutomaticSowing.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticSowing.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticSowing.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            avgSoilTemp: _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder | dict[str, Any] | None = None,
+            sowing: _ParamsModule._SowingModule.Builder | dict[str, Any] | None = None,
+        ) -> _ParamsModule._AutomaticSowingModule.Builder: ...
 
-    HarvestBuilder: TypeAlias = Harvest.Builder
-    HarvestReader: TypeAlias = Harvest.Reader
-    class Harvest:
-        class CropUsage(Enum):
-            greenManure = "greenManure"
-            biomassProduction = "biomassProduction"
+    AutomaticSowingReader: TypeAlias = _AutomaticSowingModule.Reader
+    AutomaticSowingBuilder: TypeAlias = _AutomaticSowingModule.Builder
+    AutomaticSowing: _AutomaticSowingModule
+    class _HarvestModule(_StructModule):
+        class _CropUsageModule(Enum):
+            greenManure = 0
+            biomassProduction = 1
 
-        OptCarbonMgmtDataBuilder: TypeAlias = OptCarbonMgmtData.Builder
-        OptCarbonMgmtDataReader: TypeAlias = OptCarbonMgmtData.Reader
-        class OptCarbonMgmtData:
-            class Reader:
+        CropUsage: TypeAlias = _CropUsageModule
+        class _OptCarbonMgmtDataModule(_StructModule):
+            class Reader(_DynamicStructReader):
                 @property
                 def optCarbonConservation(self) -> bool: ...
                 @property
                 def cropImpactOnHumusBalance(self) -> float: ...
                 @property
-                def cropUsage(self) -> Params.Harvest.CropUsage: ...
+                def cropUsage(self) -> _ParamsModule._HarvestModule._CropUsageModule: ...
                 @property
                 def residueHeq(self) -> float: ...
                 @property
                 def organicFertilizerHeq(self) -> float: ...
                 @property
                 def maxResidueRecoverFraction(self) -> float: ...
-                def as_builder(self) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
+                @override
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
 
-            class Builder:
+            class Builder(_DynamicStructBuilder):
                 @property
                 def optCarbonConservation(self) -> bool: ...
                 @optCarbonConservation.setter
@@ -1030,13 +582,9 @@ class Params:
                 @cropImpactOnHumusBalance.setter
                 def cropImpactOnHumusBalance(self, value: float) -> None: ...
                 @property
-                def cropUsage(self) -> Params.Harvest.CropUsage: ...
+                def cropUsage(self) -> _ParamsModule._HarvestModule._CropUsageModule: ...
                 @cropUsage.setter
-                def cropUsage(
-                    self,
-                    value: Params.Harvest.CropUsage
-                    | Literal["greenManure", "biomassProduction"],
-                ) -> None: ...
+                def cropUsage(self, value: _ParamsModule._HarvestModule._CropUsageModule | Literal["greenManure", "biomassProduction"]) -> None: ...
                 @property
                 def residueHeq(self) -> float: ...
                 @residueHeq.setter
@@ -1049,139 +597,54 @@ class Params:
                 def maxResidueRecoverFraction(self) -> float: ...
                 @maxResidueRecoverFraction.setter
                 def maxResidueRecoverFraction(self, value: float) -> None: ...
-                @staticmethod
-                def from_dict(
-                    dictionary: dict[str, Any],
-                ) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
-                def copy(self) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
-                def to_bytes(self) -> bytes: ...
-                def to_bytes_packed(self) -> bytes: ...
-                def to_segments(self) -> list[bytes]: ...
-                def as_reader(self) -> Params.Harvest.OptCarbonMgmtData.Reader: ...
-                @staticmethod
-                def write(file: BufferedWriter) -> None: ...
-                @staticmethod
-                def write_packed(file: BufferedWriter) -> None: ...
+                @override
+                def as_reader(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader: ...
 
-            @contextmanager
-            @staticmethod
-            def from_bytes(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Iterator[Params.Harvest.OptCarbonMgmtData.Reader]: ...
-            @staticmethod
-            def from_bytes_packed(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Harvest.OptCarbonMgmtData.Reader: ...
-            @staticmethod
+            @override
             def new_message(
+                self,
                 num_first_segment_words: int | None = None,
                 allocate_seg_callable: Any = None,
                 optCarbonConservation: bool | None = None,
                 cropImpactOnHumusBalance: float | None = None,
-                cropUsage: Params.Harvest.CropUsage
-                | Literal["greenManure", "biomassProduction"]
-                | None = None,
+                cropUsage: _ParamsModule._HarvestModule._CropUsageModule | Literal["greenManure", "biomassProduction"] | None = None,
                 residueHeq: float | None = None,
                 organicFertilizerHeq: float | None = None,
                 maxResidueRecoverFraction: float | None = None,
-            ) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
-            @staticmethod
-            def read(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Harvest.OptCarbonMgmtData.Reader: ...
-            @staticmethod
-            def read_packed(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Harvest.OptCarbonMgmtData.Reader: ...
-            def to_dict(self) -> dict[str, Any]: ...
+            ) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
 
-        class Reader:
+        OptCarbonMgmtDataReader: TypeAlias = _OptCarbonMgmtDataModule.Reader
+        OptCarbonMgmtDataBuilder: TypeAlias = _OptCarbonMgmtDataModule.Builder
+        OptCarbonMgmtData: _OptCarbonMgmtDataModule
+        class Reader(_DynamicStructReader):
             @property
             def exported(self) -> bool: ...
             @property
-            def optCarbMgmtData(self) -> Params.Harvest.OptCarbonMgmtData.Reader: ...
-            def as_builder(self) -> Params.Harvest.Builder: ...
+            def optCarbMgmtData(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._HarvestModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def exported(self) -> bool: ...
             @exported.setter
             def exported(self, value: bool) -> None: ...
             @property
-            def optCarbMgmtData(self) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
+            def optCarbMgmtData(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
             @optCarbMgmtData.setter
-            def optCarbMgmtData(
-                self,
-                value: Params.Harvest.OptCarbonMgmtData.Builder
-                | Params.Harvest.OptCarbonMgmtData.Reader
-                | dict[str, Any],
-            ) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Params.Harvest.Builder: ...
-            def init(
-                self, name: Literal["optCarbMgmtData"]
-            ) -> Params.Harvest.OptCarbonMgmtData.Builder: ...
-            def copy(self) -> Params.Harvest.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.Harvest.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def optCarbMgmtData(self, value: _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder | _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader | dict[str, Any]) -> None: ...
+            def init(self, field: Literal["optCarbMgmtData"], size: int | None = None) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
+            @override
+            def as_reader(self) -> _ParamsModule._HarvestModule.Reader: ...
 
-        def init(
-            self, name: Literal["optCarbMgmtData"]
-        ) -> Params.Harvest.OptCarbonMgmtData: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.Harvest.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Harvest.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            exported: bool | None = None,
-            optCarbMgmtData: Params.Harvest.OptCarbonMgmtData.Builder
-            | dict[str, Any]
-            | None = None,
-        ) -> Params.Harvest.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Harvest.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Harvest.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, exported: bool | None = None, optCarbMgmtData: _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder | dict[str, Any] | None = None) -> _ParamsModule._HarvestModule.Builder: ...
 
-    AutomaticHarvestBuilder: TypeAlias = AutomaticHarvest.Builder
-    AutomaticHarvestReader: TypeAlias = AutomaticHarvest.Reader
-    class AutomaticHarvest:
-        class Reader:
+    HarvestReader: TypeAlias = _HarvestModule.Reader
+    HarvestBuilder: TypeAlias = _HarvestModule.Builder
+    Harvest: _HarvestModule
+    class _AutomaticHarvestModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def minPercentASW(self) -> float: ...
             @property
@@ -1191,12 +654,13 @@ class Params:
             @property
             def maxCurrentDayPrecipSum(self) -> float: ...
             @property
-            def harvestTime(self) -> Event.PhenoStage: ...
+            def harvestTime(self) -> _EventModule._PhenoStageModule: ...
             @property
-            def harvest(self) -> Params.Harvest.Reader: ...
-            def as_builder(self) -> Params.AutomaticHarvest.Builder: ...
+            def harvest(self) -> _ParamsModule._HarvestModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticHarvestModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def minPercentASW(self) -> float: ...
             @minPercentASW.setter
@@ -1214,357 +678,177 @@ class Params:
             @maxCurrentDayPrecipSum.setter
             def maxCurrentDayPrecipSum(self, value: float) -> None: ...
             @property
-            def harvestTime(self) -> Event.PhenoStage: ...
+            def harvestTime(self) -> _EventModule._PhenoStageModule: ...
             @harvestTime.setter
-            def harvestTime(
-                self,
-                value: Event.PhenoStage
-                | Literal["emergence", "flowering", "anthesis", "maturity"],
-            ) -> None: ...
+            def harvestTime(self, value: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"]) -> None: ...
             @property
-            def harvest(self) -> Params.Harvest.Builder: ...
+            def harvest(self) -> _ParamsModule._HarvestModule.Builder: ...
             @harvest.setter
-            def harvest(
-                self,
-                value: Params.Harvest.Builder | Params.Harvest.Reader | dict[str, Any],
-            ) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Params.AutomaticHarvest.Builder: ...
-            def init(self, name: Literal["harvest"]) -> Params.Harvest.Builder: ...
-            def copy(self) -> Params.AutomaticHarvest.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.AutomaticHarvest.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def harvest(self, value: _ParamsModule._HarvestModule.Builder | _ParamsModule._HarvestModule.Reader | dict[str, Any]) -> None: ...
+            def init(self, field: Literal["harvest"], size: int | None = None) -> _ParamsModule._HarvestModule.Builder: ...
+            @override
+            def as_reader(self) -> _ParamsModule._AutomaticHarvestModule.Reader: ...
 
-        def init(self, name: Literal["harvest"]) -> Params.Harvest: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.AutomaticHarvest.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticHarvest.Reader: ...
-        @staticmethod
+        @override
         def new_message(
+            self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             minPercentASW: float | None = None,
             maxPercentASW: float | None = None,
             max3dayPrecipSum: float | None = None,
             maxCurrentDayPrecipSum: float | None = None,
-            harvestTime: Event.PhenoStage
-            | Literal["emergence", "flowering", "anthesis", "maturity"]
-            | None = None,
-            harvest: Params.Harvest.Builder | dict[str, Any] | None = None,
-        ) -> Params.AutomaticHarvest.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticHarvest.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.AutomaticHarvest.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            harvestTime: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"] | None = None,
+            harvest: _ParamsModule._HarvestModule.Builder | dict[str, Any] | None = None,
+        ) -> _ParamsModule._AutomaticHarvestModule.Builder: ...
 
-    CuttingBuilder: TypeAlias = Cutting.Builder
-    CuttingReader: TypeAlias = Cutting.Reader
-    class Cutting:
-        class CL(Enum):
-            cut = "cut"
-            left = "left"
+    AutomaticHarvestReader: TypeAlias = _AutomaticHarvestModule.Reader
+    AutomaticHarvestBuilder: TypeAlias = _AutomaticHarvestModule.Builder
+    AutomaticHarvest: _AutomaticHarvestModule
+    class _CuttingModule(_StructModule):
+        class _CLModule(Enum):
+            cut = 0
+            left = 1
 
-        class Unit(Enum):
-            percentage = "percentage"
-            biomass = "biomass"
-            lai = "lai"
+        CL: TypeAlias = _CLModule
+        class _UnitModule(Enum):
+            percentage = 0
+            biomass = 1
+            lai = 2
 
-        SpecBuilder: TypeAlias = Spec.Builder
-        SpecReader: TypeAlias = Spec.Reader
-        class Spec:
-            class Reader:
+        Unit: TypeAlias = _UnitModule
+        class _SpecModule(_StructModule):
+            class Reader(_DynamicStructReader):
                 @property
-                def organ(self) -> PlantOrgan: ...
+                def organ(self) -> _PlantOrganModule: ...
                 @property
                 def value(self) -> float: ...
                 @property
-                def unit(self) -> Params.Cutting.Unit: ...
+                def unit(self) -> _ParamsModule._CuttingModule._UnitModule: ...
                 @property
-                def cutOrLeft(self) -> Params.Cutting.CL: ...
+                def cutOrLeft(self) -> _ParamsModule._CuttingModule._CLModule: ...
                 @property
                 def exportPercentage(self) -> float: ...
-                def as_builder(self) -> Params.Cutting.Spec.Builder: ...
+                @override
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._CuttingModule._SpecModule.Builder: ...
 
-            class Builder:
+            class Builder(_DynamicStructBuilder):
                 @property
-                def organ(self) -> PlantOrgan: ...
+                def organ(self) -> _PlantOrganModule: ...
                 @organ.setter
-                def organ(
-                    self,
-                    value: PlantOrgan
-                    | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"],
-                ) -> None: ...
+                def organ(self, value: _PlantOrganModule | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]) -> None: ...
                 @property
                 def value(self) -> float: ...
                 @value.setter
                 def value(self, value: float) -> None: ...
                 @property
-                def unit(self) -> Params.Cutting.Unit: ...
+                def unit(self) -> _ParamsModule._CuttingModule._UnitModule: ...
                 @unit.setter
-                def unit(
-                    self,
-                    value: Params.Cutting.Unit
-                    | Literal["percentage", "biomass", "lai"],
-                ) -> None: ...
+                def unit(self, value: _ParamsModule._CuttingModule._UnitModule | Literal["percentage", "biomass", "lai"]) -> None: ...
                 @property
-                def cutOrLeft(self) -> Params.Cutting.CL: ...
+                def cutOrLeft(self) -> _ParamsModule._CuttingModule._CLModule: ...
                 @cutOrLeft.setter
-                def cutOrLeft(
-                    self, value: Params.Cutting.CL | Literal["cut", "left"]
-                ) -> None: ...
+                def cutOrLeft(self, value: _ParamsModule._CuttingModule._CLModule | Literal["cut", "left"]) -> None: ...
                 @property
                 def exportPercentage(self) -> float: ...
                 @exportPercentage.setter
                 def exportPercentage(self, value: float) -> None: ...
-                @staticmethod
-                def from_dict(
-                    dictionary: dict[str, Any],
-                ) -> Params.Cutting.Spec.Builder: ...
-                def copy(self) -> Params.Cutting.Spec.Builder: ...
-                def to_bytes(self) -> bytes: ...
-                def to_bytes_packed(self) -> bytes: ...
-                def to_segments(self) -> list[bytes]: ...
-                def as_reader(self) -> Params.Cutting.Spec.Reader: ...
-                @staticmethod
-                def write(file: BufferedWriter) -> None: ...
-                @staticmethod
-                def write_packed(file: BufferedWriter) -> None: ...
+                @override
+                def as_reader(self) -> _ParamsModule._CuttingModule._SpecModule.Reader: ...
 
-            @contextmanager
-            @staticmethod
-            def from_bytes(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Iterator[Params.Cutting.Spec.Reader]: ...
-            @staticmethod
-            def from_bytes_packed(
-                data: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Cutting.Spec.Reader: ...
-            @staticmethod
+            @override
             def new_message(
+                self,
                 num_first_segment_words: int | None = None,
                 allocate_seg_callable: Any = None,
-                organ: PlantOrgan
-                | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]
-                | None = None,
+                organ: _PlantOrganModule | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"] | None = None,
                 value: float | None = None,
-                unit: Params.Cutting.Unit
-                | Literal["percentage", "biomass", "lai"]
-                | None = None,
-                cutOrLeft: Params.Cutting.CL | Literal["cut", "left"] | None = None,
+                unit: _ParamsModule._CuttingModule._UnitModule | Literal["percentage", "biomass", "lai"] | None = None,
+                cutOrLeft: _ParamsModule._CuttingModule._CLModule | Literal["cut", "left"] | None = None,
                 exportPercentage: float | None = None,
-            ) -> Params.Cutting.Spec.Builder: ...
-            @staticmethod
-            def read(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Cutting.Spec.Reader: ...
-            @staticmethod
-            def read_packed(
-                file: BinaryIO,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
-            ) -> Params.Cutting.Spec.Reader: ...
-            def to_dict(self) -> dict[str, Any]: ...
+            ) -> _ParamsModule._CuttingModule._SpecModule.Builder: ...
 
-        class Reader:
+        SpecReader: TypeAlias = _SpecModule.Reader
+        SpecBuilder: TypeAlias = _SpecModule.Builder
+        Spec: _SpecModule
+        class Reader(_DynamicStructReader):
             @property
-            def cuttingSpec(self) -> Sequence[Params.Cutting.Spec.Reader]: ...
+            def cuttingSpec(self) -> Sequence[_ParamsModule._CuttingModule._SpecModule.Reader]: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
-            def as_builder(self) -> Params.Cutting.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._CuttingModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def cuttingSpec(self) -> Sequence[Params.Cutting.Spec.Builder]: ...
+            def cuttingSpec(self) -> MutableSequence[_ParamsModule._CuttingModule._SpecModule.Builder]: ...
             @cuttingSpec.setter
-            def cuttingSpec(
-                self,
-                value: Sequence[
-                    Params.Cutting.Spec.Builder | Params.Cutting.Spec.Reader
-                ]
-                | Sequence[dict[str, Any]],
-            ) -> None: ...
+            def cuttingSpec(self, value: Sequence[_ParamsModule._CuttingModule._SpecModule.Builder | _ParamsModule._CuttingModule._SpecModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
             @cutMaxAssimilationRatePercentage.setter
             def cutMaxAssimilationRatePercentage(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Params.Cutting.Builder: ...
-            def init(
-                self, name: Literal["cuttingSpec"], size: int = ...
-            ) -> Sequence[Params.Cutting.Spec.Builder]: ...
-            def copy(self) -> Params.Cutting.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.Cutting.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def init(self, field: Literal["cuttingSpec"], size: int | None = None) -> MutableSequence[_ParamsModule._CuttingModule._SpecModule.Builder]: ...
+            @override
+            def as_reader(self) -> _ParamsModule._CuttingModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.Cutting.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Cutting.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            cuttingSpec: Sequence[Params.Cutting.Spec.Builder]
-            | Sequence[dict[str, Any]]
-            | None = None,
-            cutMaxAssimilationRatePercentage: float | None = None,
-        ) -> Params.Cutting.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Cutting.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Cutting.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cuttingSpec: Sequence[_ParamsModule._CuttingModule._SpecModule.Builder] | Sequence[dict[str, Any]] | None = None, cutMaxAssimilationRatePercentage: float | None = None
+        ) -> _ParamsModule._CuttingModule.Builder: ...
 
-    MineralFertilizationBuilder: TypeAlias = MineralFertilization.Builder
-    MineralFertilizationReader: TypeAlias = MineralFertilization.Reader
-    class MineralFertilization:
-        class Reader:
+    CuttingReader: TypeAlias = _CuttingModule.Reader
+    CuttingBuilder: TypeAlias = _CuttingModule.Builder
+    Cutting: _CuttingModule
+    class _MineralFertilizationModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @property
             def amount(self) -> float: ...
-            def as_builder(self) -> Params.MineralFertilization.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._MineralFertilizationModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @fertilizer.setter
-            def fertilizer(
-                self, value: FertilizerClient | Fertilizer.Server
-            ) -> None: ...
+            def fertilizer(self, value: _FertilizerModule.FertilizerClient | _FertilizerModule.Server) -> None: ...
             @property
             def amount(self) -> float: ...
             @amount.setter
             def amount(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Params.MineralFertilization.Builder: ...
-            def copy(self) -> Params.MineralFertilization.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.MineralFertilization.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _ParamsModule._MineralFertilizationModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.MineralFertilization.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.MineralFertilization.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            fertilizer: FertilizerClient | Fertilizer.Server | None = None,
-            amount: float | None = None,
-        ) -> Params.MineralFertilization.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.MineralFertilization.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.MineralFertilization.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, fertilizer: _FertilizerModule.FertilizerClient | _FertilizerModule.Server | None = None, amount: float | None = None) -> _ParamsModule._MineralFertilizationModule.Builder: ...
 
-    NDemandFertilizationBuilder: TypeAlias = NDemandFertilization.Builder
-    NDemandFertilizationReader: TypeAlias = NDemandFertilization.Reader
-    class NDemandFertilization:
-        class Reader:
+    MineralFertilizationReader: TypeAlias = _MineralFertilizationModule.Reader
+    MineralFertilizationBuilder: TypeAlias = _MineralFertilizationModule.Builder
+    MineralFertilization: _MineralFertilizationModule
+    class _NDemandFertilizationModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def nDemand(self) -> float: ...
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @property
             def depth(self) -> float: ...
             @property
             def stage(self) -> int: ...
-            def as_builder(self) -> Params.NDemandFertilization.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._NDemandFertilizationModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def nDemand(self) -> float: ...
             @nDemand.setter
             def nDemand(self, value: float) -> None: ...
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @fertilizer.setter
-            def fertilizer(
-                self, value: FertilizerClient | Fertilizer.Server
-            ) -> None: ...
+            def fertilizer(self, value: _FertilizerModule.FertilizerClient | _FertilizerModule.Server) -> None: ...
             @property
             def depth(self) -> float: ...
             @depth.setter
@@ -1573,75 +857,33 @@ class Params:
             def stage(self) -> int: ...
             @stage.setter
             def stage(self, value: int) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Params.NDemandFertilization.Builder: ...
-            def copy(self) -> Params.NDemandFertilization.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.NDemandFertilization.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _ParamsModule._NDemandFertilizationModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.NDemandFertilization.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.NDemandFertilization.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            nDemand: float | None = None,
-            fertilizer: FertilizerClient | Fertilizer.Server | None = None,
-            depth: float | None = None,
-            stage: int | None = None,
-        ) -> Params.NDemandFertilization.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.NDemandFertilization.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.NDemandFertilization.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, nDemand: float | None = None, fertilizer: _FertilizerModule.FertilizerClient | _FertilizerModule.Server | None = None, depth: float | None = None, stage: int | None = None
+        ) -> _ParamsModule._NDemandFertilizationModule.Builder: ...
 
-    OrganicFertilizationBuilder: TypeAlias = OrganicFertilization.Builder
-    OrganicFertilizationReader: TypeAlias = OrganicFertilization.Reader
-    class OrganicFertilization:
-        class Reader:
+    NDemandFertilizationReader: TypeAlias = _NDemandFertilizationModule.Reader
+    NDemandFertilizationBuilder: TypeAlias = _NDemandFertilizationModule.Builder
+    NDemandFertilization: _NDemandFertilizationModule
+    class _OrganicFertilizationModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @property
             def amount(self) -> float: ...
             @property
             def incorporation(self) -> bool: ...
-            def as_builder(self) -> Params.OrganicFertilization.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._OrganicFertilizationModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def fertilizer(self) -> FertilizerClient: ...
+            def fertilizer(self) -> _FertilizerModule.FertilizerClient: ...
             @fertilizer.setter
-            def fertilizer(
-                self, value: FertilizerClient | Fertilizer.Server
-            ) -> None: ...
+            def fertilizer(self, value: _FertilizerModule.FertilizerClient | _FertilizerModule.Server) -> None: ...
             @property
             def amount(self) -> float: ...
             @amount.setter
@@ -1650,279 +892,152 @@ class Params:
             def incorporation(self) -> bool: ...
             @incorporation.setter
             def incorporation(self, value: bool) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Params.OrganicFertilization.Builder: ...
-            def copy(self) -> Params.OrganicFertilization.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.OrganicFertilization.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _ParamsModule._OrganicFertilizationModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.OrganicFertilization.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.OrganicFertilization.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            fertilizer: FertilizerClient | Fertilizer.Server | None = None,
-            amount: float | None = None,
-            incorporation: bool | None = None,
-        ) -> Params.OrganicFertilization.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.OrganicFertilization.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.OrganicFertilization.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, fertilizer: _FertilizerModule.FertilizerClient | _FertilizerModule.Server | None = None, amount: float | None = None, incorporation: bool | None = None) -> _ParamsModule._OrganicFertilizationModule.Builder: ...
 
-    TillageBuilder: TypeAlias = Tillage.Builder
-    TillageReader: TypeAlias = Tillage.Reader
-    class Tillage:
-        class Reader:
+    OrganicFertilizationReader: TypeAlias = _OrganicFertilizationModule.Reader
+    OrganicFertilizationBuilder: TypeAlias = _OrganicFertilizationModule.Builder
+    OrganicFertilization: _OrganicFertilizationModule
+    class _TillageModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def depth(self) -> float: ...
-            def as_builder(self) -> Params.Tillage.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._TillageModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def depth(self) -> float: ...
             @depth.setter
             def depth(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Params.Tillage.Builder: ...
-            def copy(self) -> Params.Tillage.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.Tillage.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _ParamsModule._TillageModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.Tillage.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Tillage.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            depth: float | None = None,
-        ) -> Params.Tillage.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Tillage.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Tillage.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, depth: float | None = None) -> _ParamsModule._TillageModule.Builder: ...
 
-    IrrigationBuilder: TypeAlias = Irrigation.Builder
-    IrrigationReader: TypeAlias = Irrigation.Reader
-    class Irrigation:
-        class Reader:
+    TillageReader: TypeAlias = _TillageModule.Reader
+    TillageBuilder: TypeAlias = _TillageModule.Builder
+    Tillage: _TillageModule
+    class _IrrigationModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def amount(self) -> float: ...
             @property
-            def nutrientConcentrations(self) -> Sequence[Nutrient.Reader]: ...
-            def as_builder(self) -> Params.Irrigation.Builder: ...
+            def nutrientConcentrations(self) -> Sequence[_NutrientModule.Reader]: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._IrrigationModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def amount(self) -> float: ...
             @amount.setter
             def amount(self, value: float) -> None: ...
             @property
-            def nutrientConcentrations(self) -> Sequence[Nutrient.Builder]: ...
+            def nutrientConcentrations(self) -> MutableSequence[_NutrientModule.Builder]: ...
             @nutrientConcentrations.setter
-            def nutrientConcentrations(
-                self,
-                value: Sequence[Nutrient.Builder | Nutrient.Reader]
-                | Sequence[dict[str, Any]],
-            ) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Params.Irrigation.Builder: ...
-            def init(
-                self, name: Literal["nutrientConcentrations"], size: int = ...
-            ) -> Sequence[Nutrient.Builder]: ...
-            def copy(self) -> Params.Irrigation.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Params.Irrigation.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def nutrientConcentrations(self, value: Sequence[_NutrientModule.Builder | _NutrientModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+            def init(self, field: Literal["nutrientConcentrations"], size: int | None = None) -> MutableSequence[_NutrientModule.Builder]: ...
+            @override
+            def as_reader(self) -> _ParamsModule._IrrigationModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Params.Irrigation.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Irrigation.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            amount: float | None = None,
-            nutrientConcentrations: Sequence[Nutrient.Builder]
-            | Sequence[dict[str, Any]]
-            | None = None,
-        ) -> Params.Irrigation.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Irrigation.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Params.Irrigation.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, amount: float | None = None, nutrientConcentrations: Sequence[_NutrientModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _ParamsModule._IrrigationModule.Builder: ...
 
-    class Reader:
-        def as_builder(self) -> Params.Builder: ...
+    IrrigationReader: TypeAlias = _IrrigationModule.Reader
+    IrrigationBuilder: TypeAlias = _IrrigationModule.Builder
+    Irrigation: _IrrigationModule
+    class Reader(_DynamicStructReader):
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule.Builder: ...
 
-    class Builder:
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> Params.Builder: ...
-        def copy(self) -> Params.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> Params.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+    class Builder(_DynamicStructBuilder):
+        @override
+        def as_reader(self) -> _ParamsModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[Params.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Params.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None, allocate_seg_callable: Any = None
-    ) -> Params.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Params.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Params.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule.Builder: ...
 
-class FertilizerService:
+ParamsReader: TypeAlias = _ParamsModule.Reader
+ParamsBuilder: TypeAlias = _ParamsModule.Builder
+Params: _ParamsModule
+
+class _FertilizerServiceModule(_RegistryModule):
     @classmethod
-    def _new_client(
-        cls, server: FertilizerService.Server | Identifiable.Server | Registry.Server
-    ) -> FertilizerServiceClient: ...
-    class Server(Registry.Server): ...
+    def _new_client(cls, server: _FertilizerServiceModule.Server | _IdentifiableModule.Server | _RegistryModule.Server) -> _FertilizerServiceModule.FertilizerServiceClient: ...
+    class Server(_RegistryModule.Server): ...
+    class FertilizerServiceClient(_RegistryModule.RegistryClient): ...
 
-class FertilizerServiceClient(RegistryClient): ...
+FertilizerService: _FertilizerServiceModule
+FertilizerServiceClient: TypeAlias = _FertilizerServiceModule.FertilizerServiceClient
 
-class Service:
+class _ServiceModule(_IdentifiableModule):
     class ManagementatRequest(Protocol):
         lat: float
         lon: float
-        def send(self) -> Service.ManagementatResult: ...
-
-    class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-        mgmt: Sequence[Event.Builder | Event.Reader]
+        def send(self) -> _ServiceModule.ServiceClient.ManagementatResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Service.Server | Identifiable.Server
-    ) -> ServiceClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _ServiceModule.Server | _IdentifiableModule.Server) -> _ServiceModule.ServiceClient: ...
+    class Server(_IdentifiableModule.Server):
+        class ManagementatResult(Awaitable[ManagementatResult], Protocol):
+            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+
         class ManagementatResultTuple(NamedTuple):
-            mgmt: Sequence[Event]
+            mgmt: Sequence[_EventModule]
 
         class ManagementatCallContext(Protocol):
-            params: Service.ManagementatRequest
-            results: Service.ManagementatResult
+            params: _ServiceModule.ManagementatRequest
+            results: _ServiceModule.Server.ManagementatResult
 
-        def managementAt(
-            self,
-            lat: float,
-            lon: float,
-            _context: Service.Server.ManagementatCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Service.Server.ManagementatResultTuple | None]: ...
-        def managementAt_context(
-            self, context: Service.Server.ManagementatCallContext
-        ) -> Awaitable[None]: ...
+        def managementAt(self, lat: float, lon: float, _context: _ServiceModule.Server.ManagementatCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.ManagementatResultTuple | None]: ...
+        def managementAt_context(self, context: _ServiceModule.Server.ManagementatCallContext) -> Awaitable[None]: ...
 
-class ServiceClient(IdentifiableClient):
-    def managementAt(
-        self, lat: float | None = None, lon: float | None = None
-    ) -> Service.ManagementatResult: ...
-    def managementAt_request(
-        self, lat: float | None = None, lon: float | None = None
-    ) -> Service.ManagementatRequest: ...
+    class ServiceClient(_IdentifiableModule.IdentifiableClient):
+        class ManagementatResult(Awaitable[ManagementatResult], Protocol):
+            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+
+        def managementAt(self, lat: float | None = None, lon: float | None = None) -> _ServiceModule.ServiceClient.ManagementatResult: ...
+        def managementAt_request(self, lat: float | None = None, lon: float | None = None) -> _ServiceModule.ManagementatRequest: ...
+
+Service: _ServiceModule
+ServiceClient: TypeAlias = _ServiceModule.ServiceClient
+
+# Top-level type aliases for use in type annotations
+AfterBuilder: TypeAlias = _EventModule._AfterModule.Builder
+AfterReader: TypeAlias = _EventModule._AfterModule.Reader
+AtBuilder: TypeAlias = _EventModule._AtModule.Builder
+AtReader: TypeAlias = _EventModule._AtModule.Reader
+AutomaticHarvestBuilder: TypeAlias = _ParamsModule._AutomaticHarvestModule.Builder
+AutomaticHarvestReader: TypeAlias = _ParamsModule._AutomaticHarvestModule.Reader
+AutomaticSowingBuilder: TypeAlias = _ParamsModule._AutomaticSowingModule.Builder
+AutomaticSowingReader: TypeAlias = _ParamsModule._AutomaticSowingModule.Reader
+AvgSoilTempBuilder: TypeAlias = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder
+AvgSoilTempReader: TypeAlias = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader
+BetweenBuilder: TypeAlias = _EventModule._BetweenModule.Builder
+BetweenReader: TypeAlias = _EventModule._BetweenModule.Reader
+CuttingBuilder: TypeAlias = _ParamsModule._CuttingModule.Builder
+CuttingReader: TypeAlias = _ParamsModule._CuttingModule.Reader
+HarvestBuilder: TypeAlias = _ParamsModule._HarvestModule.Builder
+HarvestReader: TypeAlias = _ParamsModule._HarvestModule.Reader
+IrrigationBuilder: TypeAlias = _ParamsModule._IrrigationModule.Builder
+IrrigationReader: TypeAlias = _ParamsModule._IrrigationModule.Reader
+MineralFertilizationBuilder: TypeAlias = _ParamsModule._MineralFertilizationModule.Builder
+MineralFertilizationReader: TypeAlias = _ParamsModule._MineralFertilizationModule.Reader
+NDemandFertilizationBuilder: TypeAlias = _ParamsModule._NDemandFertilizationModule.Builder
+NDemandFertilizationReader: TypeAlias = _ParamsModule._NDemandFertilizationModule.Reader
+OptCarbonMgmtDataBuilder: TypeAlias = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder
+OptCarbonMgmtDataReader: TypeAlias = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader
+OrganicFertilizationBuilder: TypeAlias = _ParamsModule._OrganicFertilizationModule.Builder
+OrganicFertilizationReader: TypeAlias = _ParamsModule._OrganicFertilizationModule.Reader
+SowingBuilder: TypeAlias = _ParamsModule._SowingModule.Builder
+SowingReader: TypeAlias = _ParamsModule._SowingModule.Reader
+SpecBuilder: TypeAlias = _ParamsModule._CuttingModule._SpecModule.Builder
+SpecReader: TypeAlias = _ParamsModule._CuttingModule._SpecModule.Reader
+TillageBuilder: TypeAlias = _ParamsModule._TillageModule.Builder
+TillageReader: TypeAlias = _ParamsModule._TillageModule.Reader
+TypeBuilder: TypeAlias = _EventModule._TypeModule.Builder
+TypeReader: TypeAlias = _EventModule._TypeModule.Reader

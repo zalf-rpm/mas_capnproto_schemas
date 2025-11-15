@@ -2,279 +2,211 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, NamedTuple, Protocol, TypeAlias, overload
+from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
+from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
 
-from .common_capnp import Identifiable, IdentifiableClient
-from .persistence_capnp import Restorer, RestorerClient, VatId
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class Admin:
+from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+from .persistence_capnp import Restorer, RestorerClient, _RestorerModule, _VatIdModule
+
+class _AdminModule(_IdentifiableModule):
     class AddcategoryRequest(Protocol):
         upsert: bool
-        def send(self) -> Admin.AddcategoryResult: ...
-
-    class AddcategoryResult(Awaitable[AddcategoryResult], Protocol):
-        success: bool
+        def send(self) -> _AdminModule.AdminClient.AddcategoryResult: ...
 
     class RemovecategoryRequest(Protocol):
         categoryId: str
         moveObjectsToCategoryId: str
-        def send(self) -> Admin.RemovecategoryResult: ...
-
-    class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
-        removedObjects: Sequence[Identifiable]
+        def send(self) -> _AdminModule.AdminClient.RemovecategoryResult: ...
 
     class MoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         toCatId: str
         @overload
-        def init(
-            self, name: Literal["objectIds"], size: int = ...
-        ) -> Sequence[str]: ...
+        def init(self, name: Literal["objectIds"], size: int = ...) -> MutableSequence[str]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Admin.MoveobjectsResult: ...
-
-    class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
-        movedObjectIds: Sequence[str]
+        def send(self) -> _AdminModule.AdminClient.MoveobjectsResult: ...
 
     class RemoveobjectsRequest(Protocol):
         objectIds: Sequence[str]
         @overload
-        def init(
-            self, name: Literal["objectIds"], size: int = ...
-        ) -> Sequence[str]: ...
+        def init(self, name: Literal["objectIds"], size: int = ...) -> MutableSequence[str]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Admin.RemoveobjectsResult: ...
-
-    class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
-        removedObjects: Sequence[Identifiable]
+        def send(self) -> _AdminModule.AdminClient.RemoveobjectsResult: ...
 
     class RegistryRequest(Protocol):
-        def send(self) -> Admin.RegistryResult: ...
-
-    class RegistryResult(Awaitable[RegistryResult], Protocol):
-        registry: Any
+        def send(self) -> _AdminModule.AdminClient.RegistryResult: ...
 
     @classmethod
-    def _new_client(cls, server: Admin.Server | Identifiable.Server) -> AdminClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _AdminModule.Server | _IdentifiableModule.Server) -> _AdminModule.AdminClient: ...
+    class Server(_IdentifiableModule.Server):
+        class AddcategoryResult(Awaitable[AddcategoryResult], Protocol):
+            success: bool
+
+        class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
+            removedObjects: Sequence[_IdentifiableModule]
+
+        class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
+            movedObjectIds: Sequence[str]
+
+        class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
+            removedObjects: Sequence[_IdentifiableModule]
+
+        class RegistryResult(Awaitable[RegistryResult], Protocol):
+            registry: Any
+
         class AddcategoryResultTuple(NamedTuple):
             success: bool
 
         class RemovecategoryResultTuple(NamedTuple):
-            removedObjects: Sequence[Identifiable]
+            removedObjects: Sequence[_IdentifiableModule]
 
         class MoveobjectsResultTuple(NamedTuple):
             movedObjectIds: Sequence[str]
 
         class RemoveobjectsResultTuple(NamedTuple):
-            removedObjects: Sequence[Identifiable]
+            removedObjects: Sequence[_IdentifiableModule]
 
         class RegistryResultTuple(NamedTuple):
             pass
 
         class AddcategoryCallContext(Protocol):
-            params: Admin.AddcategoryRequest
-            results: Admin.AddcategoryResult
+            params: _AdminModule.AddcategoryRequest
+            results: _AdminModule.Server.AddcategoryResult
 
         class RemovecategoryCallContext(Protocol):
-            params: Admin.RemovecategoryRequest
-            results: Admin.RemovecategoryResult
+            params: _AdminModule.RemovecategoryRequest
+            results: _AdminModule.Server.RemovecategoryResult
 
         class MoveobjectsCallContext(Protocol):
-            params: Admin.MoveobjectsRequest
-            results: Admin.MoveobjectsResult
+            params: _AdminModule.MoveobjectsRequest
+            results: _AdminModule.Server.MoveobjectsResult
 
         class RemoveobjectsCallContext(Protocol):
-            params: Admin.RemoveobjectsRequest
-            results: Admin.RemoveobjectsResult
+            params: _AdminModule.RemoveobjectsRequest
+            results: _AdminModule.Server.RemoveobjectsResult
 
         class RegistryCallContext(Protocol):
-            params: Admin.RegistryRequest
-            results: Admin.RegistryResult
+            params: _AdminModule.RegistryRequest
+            results: _AdminModule.Server.RegistryResult
 
-        def addCategory(
-            self,
-            upsert: bool,
-            _context: Admin.Server.AddcategoryCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[bool | Admin.Server.AddcategoryResultTuple | None]: ...
-        def addCategory_context(
-            self, context: Admin.Server.AddcategoryCallContext
-        ) -> Awaitable[None]: ...
-        def removeCategory(
-            self,
-            categoryId: str,
-            moveObjectsToCategoryId: str,
-            _context: Admin.Server.RemovecategoryCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Admin.Server.RemovecategoryResultTuple | None]: ...
-        def removeCategory_context(
-            self, context: Admin.Server.RemovecategoryCallContext
-        ) -> Awaitable[None]: ...
-        def moveObjects(
-            self,
-            objectIds: Sequence[str],
-            toCatId: str,
-            _context: Admin.Server.MoveobjectsCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Admin.Server.MoveobjectsResultTuple | None]: ...
-        def moveObjects_context(
-            self, context: Admin.Server.MoveobjectsCallContext
-        ) -> Awaitable[None]: ...
-        def removeObjects(
-            self,
-            objectIds: Sequence[str],
-            _context: Admin.Server.RemoveobjectsCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Admin.Server.RemoveobjectsResultTuple | None]: ...
-        def removeObjects_context(
-            self, context: Admin.Server.RemoveobjectsCallContext
-        ) -> Awaitable[None]: ...
-        def registry(
-            self, _context: Admin.Server.RegistryCallContext, **kwargs: Any
-        ) -> Awaitable[Admin.Server.RegistryResultTuple | None]: ...
-        def registry_context(
-            self, context: Admin.Server.RegistryCallContext
-        ) -> Awaitable[None]: ...
+        def addCategory(self, upsert: bool, _context: _AdminModule.Server.AddcategoryCallContext, **kwargs: Any) -> Awaitable[bool | _AdminModule.Server.AddcategoryResultTuple | None]: ...
+        def addCategory_context(self, context: _AdminModule.Server.AddcategoryCallContext) -> Awaitable[None]: ...
+        def removeCategory(self, categoryId: str, moveObjectsToCategoryId: str, _context: _AdminModule.Server.RemovecategoryCallContext, **kwargs: Any) -> Awaitable[_AdminModule.Server.RemovecategoryResultTuple | None]: ...
+        def removeCategory_context(self, context: _AdminModule.Server.RemovecategoryCallContext) -> Awaitable[None]: ...
+        def moveObjects(self, objectIds: Sequence[str], toCatId: str, _context: _AdminModule.Server.MoveobjectsCallContext, **kwargs: Any) -> Awaitable[_AdminModule.Server.MoveobjectsResultTuple | None]: ...
+        def moveObjects_context(self, context: _AdminModule.Server.MoveobjectsCallContext) -> Awaitable[None]: ...
+        def removeObjects(self, objectIds: Sequence[str], _context: _AdminModule.Server.RemoveobjectsCallContext, **kwargs: Any) -> Awaitable[_AdminModule.Server.RemoveobjectsResultTuple | None]: ...
+        def removeObjects_context(self, context: _AdminModule.Server.RemoveobjectsCallContext) -> Awaitable[None]: ...
+        def registry(self, _context: _AdminModule.Server.RegistryCallContext, **kwargs: Any) -> Awaitable[_AdminModule.Server.RegistryResultTuple | None]: ...
+        def registry_context(self, context: _AdminModule.Server.RegistryCallContext) -> Awaitable[None]: ...
 
-class AdminClient(IdentifiableClient):
-    def addCategory(self, upsert: bool | None = None) -> Admin.AddcategoryResult: ...
-    def removeCategory(
-        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
-    ) -> Admin.RemovecategoryResult: ...
-    def moveObjects(
-        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
-    ) -> Admin.MoveobjectsResult: ...
-    def removeObjects(
-        self, objectIds: Sequence[str] | None = None
-    ) -> Admin.RemoveobjectsResult: ...
-    def registry(self) -> Admin.RegistryResult: ...
-    def addCategory_request(
-        self, upsert: bool | None = None
-    ) -> Admin.AddcategoryRequest: ...
-    def removeCategory_request(
-        self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None
-    ) -> Admin.RemovecategoryRequest: ...
-    def moveObjects_request(
-        self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
-    ) -> Admin.MoveobjectsRequest: ...
-    def removeObjects_request(
-        self, objectIds: Sequence[str] | None = None
-    ) -> Admin.RemoveobjectsRequest: ...
-    def registry_request(self) -> Admin.RegistryRequest: ...
+    class AdminClient(_IdentifiableModule.IdentifiableClient):
+        class AddcategoryResult(Awaitable[AddcategoryResult], Protocol):
+            success: bool
 
-class Registry:
-    EntryBuilder: TypeAlias = Entry.Builder
-    EntryReader: TypeAlias = Entry.Reader
-    class Entry:
-        class Reader:
+        class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
+            removedObjects: Sequence[_IdentifiableModule]
+
+        class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
+            movedObjectIds: Sequence[str]
+
+        class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
+            removedObjects: Sequence[_IdentifiableModule]
+
+        class RegistryResult(Awaitable[RegistryResult], Protocol):
+            registry: Any
+
+        def addCategory(self, upsert: bool | None = None) -> _AdminModule.AdminClient.AddcategoryResult: ...
+        def removeCategory(self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None) -> _AdminModule.AdminClient.RemovecategoryResult: ...
+        def moveObjects(self, objectIds: Sequence[str] | None = None, toCatId: str | None = None) -> _AdminModule.AdminClient.MoveobjectsResult: ...
+        def removeObjects(self, objectIds: Sequence[str] | None = None) -> _AdminModule.AdminClient.RemoveobjectsResult: ...
+        def registry(self) -> _AdminModule.AdminClient.RegistryResult: ...
+        def addCategory_request(self, upsert: bool | None = None) -> _AdminModule.AddcategoryRequest: ...
+        def removeCategory_request(self, categoryId: str | None = None, moveObjectsToCategoryId: str | None = None) -> _AdminModule.RemovecategoryRequest: ...
+        def moveObjects_request(self, objectIds: Sequence[str] | None = None, toCatId: str | None = None) -> _AdminModule.MoveobjectsRequest: ...
+        def removeObjects_request(self, objectIds: Sequence[str] | None = None) -> _AdminModule.RemoveobjectsRequest: ...
+        def registry_request(self) -> _AdminModule.RegistryRequest: ...
+
+Admin: _AdminModule
+AdminClient: TypeAlias = _AdminModule.AdminClient
+
+class _RegistryModule(_IdentifiableModule):
+    class _EntryModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def categoryId(self) -> str: ...
             @property
-            def ref(self) -> IdentifiableClient: ...
+            def ref(self) -> _IdentifiableModule.IdentifiableClient: ...
             @property
-            def name(self) -> str: ...
+            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
             def id(self) -> str: ...
-            def as_builder(self) -> Registry.Entry.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistryModule._EntryModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def categoryId(self) -> str: ...
             @categoryId.setter
             def categoryId(self, value: str) -> None: ...
             @property
-            def ref(self) -> IdentifiableClient: ...
+            def ref(self) -> _IdentifiableModule.IdentifiableClient: ...
             @ref.setter
-            def ref(self, value: IdentifiableClient | Identifiable.Server) -> None: ...
+            def ref(self, value: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server) -> None: ...
             @property
-            def name(self) -> str: ...
+            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @name.setter
-            def name(self, value: str) -> None: ...
+            def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
             def id(self) -> str: ...
             @id.setter
             def id(self, value: str) -> None: ...
-            @staticmethod
-            def from_dict(dictionary: dict[str, Any]) -> Registry.Entry.Builder: ...
-            def copy(self) -> Registry.Entry.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Registry.Entry.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _RegistryModule._EntryModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Registry.Entry.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registry.Entry.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            categoryId: str | None = None,
-            ref: IdentifiableClient | Identifiable.Server | None = None,
-            name: str | None = None,
-            id: str | None = None,
-        ) -> Registry.Entry.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registry.Entry.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registry.Entry.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, categoryId: str | None = None, ref: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None, name: str | None = None, id: str | None = None) -> _RegistryModule._EntryModule.Builder: ...
 
+    EntryReader: TypeAlias = _EntryModule.Reader
+    EntryBuilder: TypeAlias = _EntryModule.Builder
+    Entry: _EntryModule
     class SupportedcategoriesRequest(Protocol):
-        def send(self) -> Registry.SupportedcategoriesResult: ...
-
-    class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
-        cats: Any
+        def send(self) -> _RegistryModule.RegistryClient.SupportedcategoriesResult: ...
 
     class CategoryinfoRequest(Protocol):
         categoryId: str
-        def send(self) -> Registry.CategoryinfoResult: ...
-
-    class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
-        id: str
-        name: str
-        description: str
+        def send(self) -> _RegistryModule.RegistryClient.CategoryinfoResult: ...
 
     class EntriesRequest(Protocol):
         categoryId: str
-        def send(self) -> Registry.EntriesResult: ...
-
-    class EntriesResult(Awaitable[EntriesResult], Protocol):
-        entries: Sequence[Registry.Entry.Builder | Registry.Entry.Reader]
+        def send(self) -> _RegistryModule.RegistryClient.EntriesResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Registry.Server | Identifiable.Server
-    ) -> RegistryClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _RegistryModule.Server | _IdentifiableModule.Server) -> _RegistryModule.RegistryClient: ...
+    class Server(_IdentifiableModule.Server):
+        class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
+            cats: Any
+
+        class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
+            id: str
+            name: str
+            description: str
+
+        class EntriesResult(Awaitable[EntriesResult], Protocol):
+            entries: Sequence[_RegistryModule._EntryModule.Builder | _RegistryModule._EntryModule.Reader]
+
         class SupportedcategoriesResultTuple(NamedTuple):
             pass
 
@@ -284,152 +216,96 @@ class Registry:
             description: str
 
         class EntriesResultTuple(NamedTuple):
-            entries: Sequence[Registry.Entry]
+            entries: Sequence[_RegistryModule._EntryModule]
 
         class SupportedcategoriesCallContext(Protocol):
-            params: Registry.SupportedcategoriesRequest
-            results: Registry.SupportedcategoriesResult
+            params: _RegistryModule.SupportedcategoriesRequest
+            results: _RegistryModule.Server.SupportedcategoriesResult
 
         class CategoryinfoCallContext(Protocol):
-            params: Registry.CategoryinfoRequest
-            results: Registry.CategoryinfoResult
+            params: _RegistryModule.CategoryinfoRequest
+            results: _RegistryModule.Server.CategoryinfoResult
 
         class EntriesCallContext(Protocol):
-            params: Registry.EntriesRequest
-            results: Registry.EntriesResult
+            params: _RegistryModule.EntriesRequest
+            results: _RegistryModule.Server.EntriesResult
 
-        def supportedCategories(
-            self,
-            _context: Registry.Server.SupportedcategoriesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Registry.Server.SupportedcategoriesResultTuple | None]: ...
-        def supportedCategories_context(
-            self, context: Registry.Server.SupportedcategoriesCallContext
-        ) -> Awaitable[None]: ...
-        def categoryInfo(
-            self,
-            categoryId: str,
-            _context: Registry.Server.CategoryinfoCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Registry.Server.CategoryinfoResultTuple | None]: ...
-        def categoryInfo_context(
-            self, context: Registry.Server.CategoryinfoCallContext
-        ) -> Awaitable[None]: ...
-        def entries(
-            self,
-            categoryId: str,
-            _context: Registry.Server.EntriesCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Registry.Server.EntriesResultTuple | None]: ...
-        def entries_context(
-            self, context: Registry.Server.EntriesCallContext
-        ) -> Awaitable[None]: ...
+        def supportedCategories(self, _context: _RegistryModule.Server.SupportedcategoriesCallContext, **kwargs: Any) -> Awaitable[_RegistryModule.Server.SupportedcategoriesResultTuple | None]: ...
+        def supportedCategories_context(self, context: _RegistryModule.Server.SupportedcategoriesCallContext) -> Awaitable[None]: ...
+        def categoryInfo(self, categoryId: str, _context: _RegistryModule.Server.CategoryinfoCallContext, **kwargs: Any) -> Awaitable[_RegistryModule.Server.CategoryinfoResultTuple | None]: ...
+        def categoryInfo_context(self, context: _RegistryModule.Server.CategoryinfoCallContext) -> Awaitable[None]: ...
+        def entries(self, categoryId: str, _context: _RegistryModule.Server.EntriesCallContext, **kwargs: Any) -> Awaitable[_RegistryModule.Server.EntriesResultTuple | None]: ...
+        def entries_context(self, context: _RegistryModule.Server.EntriesCallContext) -> Awaitable[None]: ...
 
-class RegistryClient(IdentifiableClient):
-    def supportedCategories(self) -> Registry.SupportedcategoriesResult: ...
-    def categoryInfo(
-        self, categoryId: str | None = None
-    ) -> Registry.CategoryinfoResult: ...
-    def entries(self, categoryId: str | None = None) -> Registry.EntriesResult: ...
-    def supportedCategories_request(self) -> Registry.SupportedcategoriesRequest: ...
-    def categoryInfo_request(
-        self, categoryId: str | None = None
-    ) -> Registry.CategoryinfoRequest: ...
-    def entries_request(
-        self, categoryId: str | None = None
-    ) -> Registry.EntriesRequest: ...
+    class RegistryClient(_IdentifiableModule.IdentifiableClient):
+        class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
+            cats: Any
 
-class Registrar:
-    CrossDomainRestoreBuilder: TypeAlias = CrossDomainRestore.Builder
-    CrossDomainRestoreReader: TypeAlias = CrossDomainRestore.Reader
-    class CrossDomainRestore:
-        class Reader:
+        class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
+            id: str
+            name: str
+            description: str
+
+        class EntriesResult(Awaitable[EntriesResult], Protocol):
+            entries: Sequence[_RegistryModule._EntryModule.Builder | _RegistryModule._EntryModule.Reader]
+
+        def supportedCategories(self) -> _RegistryModule.RegistryClient.SupportedcategoriesResult: ...
+        def categoryInfo(self, categoryId: str | None = None) -> _RegistryModule.RegistryClient.CategoryinfoResult: ...
+        def entries(self, categoryId: str | None = None) -> _RegistryModule.RegistryClient.EntriesResult: ...
+        def supportedCategories_request(self) -> _RegistryModule.SupportedcategoriesRequest: ...
+        def categoryInfo_request(self, categoryId: str | None = None) -> _RegistryModule.CategoryinfoRequest: ...
+        def entries_request(self, categoryId: str | None = None) -> _RegistryModule.EntriesRequest: ...
+
+Registry: _RegistryModule
+RegistryClient: TypeAlias = _RegistryModule.RegistryClient
+
+class _RegistrarModule(_IdentifiableModule):
+    class _CrossDomainRestoreModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def vatId(self) -> VatId.Reader: ...
+            def vatId(self) -> _VatIdModule.Reader: ...
             @property
-            def restorer(self) -> RestorerClient: ...
-            def as_builder(self) -> Registrar.CrossDomainRestore.Builder: ...
+            def restorer(self) -> _RestorerModule.RestorerClient: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def vatId(self) -> VatId.Builder: ...
+            def vatId(self) -> _VatIdModule.Builder: ...
             @vatId.setter
-            def vatId(
-                self, value: VatId.Builder | VatId.Reader | dict[str, Any]
-            ) -> None: ...
+            def vatId(self, value: _VatIdModule.Builder | _VatIdModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def restorer(self) -> RestorerClient: ...
+            def restorer(self) -> _RestorerModule.RestorerClient: ...
             @restorer.setter
-            def restorer(self, value: RestorerClient | Restorer.Server) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Registrar.CrossDomainRestore.Builder: ...
-            def init(self, name: Literal["vatId"]) -> VatId.Builder: ...
-            def copy(self) -> Registrar.CrossDomainRestore.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Registrar.CrossDomainRestore.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def restorer(self, value: _RestorerModule.RestorerClient | _RestorerModule.Server) -> None: ...
+            def init(self, field: Literal["vatId"], size: int | None = None) -> _VatIdModule.Builder: ...
+            @override
+            def as_reader(self) -> _RegistrarModule._CrossDomainRestoreModule.Reader: ...
 
-        def init(self, name: Literal["vatId"]) -> VatId: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Registrar.CrossDomainRestore.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.CrossDomainRestore.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            vatId: VatId.Builder | dict[str, Any] | None = None,
-            restorer: RestorerClient | Restorer.Server | None = None,
-        ) -> Registrar.CrossDomainRestore.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.CrossDomainRestore.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.CrossDomainRestore.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, vatId: _VatIdModule.Builder | dict[str, Any] | None = None, restorer: _RestorerModule.RestorerClient | _RestorerModule.Server | None = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
 
-    RegParamsBuilder: TypeAlias = RegParams.Builder
-    RegParamsReader: TypeAlias = RegParams.Reader
-    class RegParams:
-        class Reader:
+    CrossDomainRestoreReader: TypeAlias = _CrossDomainRestoreModule.Reader
+    CrossDomainRestoreBuilder: TypeAlias = _CrossDomainRestoreModule.Builder
+    CrossDomainRestore: _CrossDomainRestoreModule
+    class _RegParamsModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
-            def cap(self) -> IdentifiableClient: ...
+            def cap(self) -> _IdentifiableModule.IdentifiableClient: ...
             @property
             def regName(self) -> str: ...
             @property
             def categoryId(self) -> str: ...
             @property
-            def xDomain(self) -> Registrar.CrossDomainRestore.Reader: ...
-            def as_builder(self) -> Registrar.RegParams.Builder: ...
+            def xDomain(self) -> _RegistrarModule._CrossDomainRestoreModule.Reader: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistrarModule._RegParamsModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
-            def cap(self) -> IdentifiableClient: ...
+            def cap(self) -> _IdentifiableModule.IdentifiableClient: ...
             @cap.setter
-            def cap(self, value: IdentifiableClient | Identifiable.Server) -> None: ...
+            def cap(self, value: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server) -> None: ...
             @property
             def regName(self) -> str: ...
             @regName.setter
@@ -439,158 +315,100 @@ class Registrar:
             @categoryId.setter
             def categoryId(self, value: str) -> None: ...
             @property
-            def xDomain(self) -> Registrar.CrossDomainRestore.Builder: ...
+            def xDomain(self) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
             @xDomain.setter
-            def xDomain(
-                self,
-                value: Registrar.CrossDomainRestore.Builder
-                | Registrar.CrossDomainRestore.Reader
-                | dict[str, Any],
-            ) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> Registrar.RegParams.Builder: ...
-            def init(
-                self, name: Literal["xDomain"]
-            ) -> Registrar.CrossDomainRestore.Builder: ...
-            def copy(self) -> Registrar.RegParams.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> Registrar.RegParams.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            def xDomain(self, value: _RegistrarModule._CrossDomainRestoreModule.Builder | _RegistrarModule._CrossDomainRestoreModule.Reader | dict[str, Any]) -> None: ...
+            def init(self, field: Literal["xDomain"], size: int | None = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
+            @override
+            def as_reader(self) -> _RegistrarModule._RegParamsModule.Reader: ...
 
-        def init(self, name: Literal["xDomain"]) -> Registrar.CrossDomainRestore: ...
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[Registrar.RegParams.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.RegParams.Reader: ...
-        @staticmethod
+        @override
         def new_message(
+            self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            cap: IdentifiableClient | Identifiable.Server | None = None,
+            cap: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
-            xDomain: Registrar.CrossDomainRestore.Builder
-            | dict[str, Any]
-            | None = None,
-        ) -> Registrar.RegParams.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.RegParams.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Registrar.RegParams.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder | dict[str, Any] | None = None,
+        ) -> _RegistrarModule._RegParamsModule.Builder: ...
 
-    class Unregister:
+    RegParamsReader: TypeAlias = _RegParamsModule.Reader
+    RegParamsBuilder: TypeAlias = _RegParamsModule.Builder
+    RegParams: _RegParamsModule
+    class _UnregisterModule(_InterfaceModule):
         class UnregisterRequest(Protocol):
-            def send(self) -> Registrar.Unregister.UnregisterResult: ...
-
-        class UnregisterResult(Awaitable[UnregisterResult], Protocol):
-            success: bool
+            def send(self) -> _RegistrarModule._UnregisterModule.UnregisterClient.UnregisterResult: ...
 
         @classmethod
-        def _new_client(
-            cls, server: Registrar.Unregister.Server
-        ) -> Registrar.UnregisterClient: ...
-        class Server(Protocol):
+        def _new_client(cls, server: _RegistrarModule._UnregisterModule.Server) -> _RegistrarModule._UnregisterModule.UnregisterClient: ...
+        class Server(_DynamicCapabilityServer):
+            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
+                success: bool
+
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
             class UnregisterCallContext(Protocol):
-                params: Registrar.Unregister.UnregisterRequest
-                results: Registrar.Unregister.UnregisterResult
+                params: _RegistrarModule._UnregisterModule.UnregisterRequest
+                results: _RegistrarModule._UnregisterModule.Server.UnregisterResult
 
-            def unregister(
-                self,
-                _context: Registrar.Unregister.Server.UnregisterCallContext,
-                **kwargs: Any,
-            ) -> Awaitable[
-                bool | Registrar.Unregister.Server.UnregisterResultTuple | None
-            ]: ...
-            def unregister_context(
-                self, context: Registrar.Unregister.Server.UnregisterCallContext
-            ) -> Awaitable[None]: ...
+            def unregister(self, _context: _RegistrarModule._UnregisterModule.Server.UnregisterCallContext, **kwargs: Any) -> Awaitable[bool | _RegistrarModule._UnregisterModule.Server.UnregisterResultTuple | None]: ...
+            def unregister_context(self, context: _RegistrarModule._UnregisterModule.Server.UnregisterCallContext) -> Awaitable[None]: ...
 
-    class UnregisterClient(Protocol):
-        def unregister(self) -> Registrar.Unregister.UnregisterResult: ...
-        def unregister_request(self) -> Registrar.Unregister.UnregisterRequest: ...
+        class UnregisterClient(_DynamicCapabilityClient):
+            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
+                success: bool
 
+            def unregister(self) -> _RegistrarModule._UnregisterModule.UnregisterClient.UnregisterResult: ...
+            def unregister_request(self) -> _RegistrarModule._UnregisterModule.UnregisterRequest: ...
+
+    Unregister: _UnregisterModule
+    UnregisterClient: TypeAlias = _RegistrarModule._UnregisterModule.UnregisterClient
     class RegisterRequest(Protocol):
-        cap: Identifiable | Identifiable.Server
+        cap: IdentifiableClient | _IdentifiableModule.Server
         regName: str
         categoryId: str
-        xDomain: Registrar.CrossDomainRestore.Builder
+        xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder
         @overload
-        def init(
-            self, name: Literal["xDomain"]
-        ) -> Registrar.CrossDomainRestore.Builder: ...
+        def init(self, name: Literal["xDomain"]) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> Registrar.RegisterResult: ...
-
-    class RegisterResult(Awaitable[RegisterResult], Protocol):
-        unreg: Registrar.UnregisterClient
-        reregSR: Any
+        def send(self) -> _RegistrarModule.RegistrarClient.RegisterResult: ...
 
     @classmethod
-    def _new_client(
-        cls, server: Registrar.Server | Identifiable.Server
-    ) -> RegistrarClient: ...
-    class Server(Identifiable.Server):
+    def _new_client(cls, server: _RegistrarModule.Server | _IdentifiableModule.Server) -> _RegistrarModule.RegistrarClient: ...
+    class Server(_IdentifiableModule.Server):
+        class RegisterResult(Awaitable[RegisterResult], Protocol):
+            unreg: _RegistrarModule._UnregisterModule.UnregisterClient
+            reregSR: Any
+
         class RegisterResultTuple(NamedTuple):
-            unreg: Registrar.Unregister.Server
+            unreg: _RegistrarModule._UnregisterModule.Server
 
         class RegisterCallContext(Protocol):
-            params: Registrar.RegisterRequest
-            results: Registrar.RegisterResult
+            params: _RegistrarModule.RegisterRequest
+            results: _RegistrarModule.Server.RegisterResult
 
-        def register(
-            self,
-            cap: Identifiable,
-            regName: str,
-            categoryId: str,
-            xDomain: Registrar.CrossDomainRestore.Reader,
-            _context: Registrar.Server.RegisterCallContext,
-            **kwargs: Any,
-        ) -> Awaitable[Registrar.Server.RegisterResultTuple | None]: ...
-        def register_context(
-            self, context: Registrar.Server.RegisterCallContext
-        ) -> Awaitable[None]: ...
+        def register(self, cap: IdentifiableClient, regName: str, categoryId: str, xDomain: _RegistrarModule._CrossDomainRestoreModule.Reader, _context: _RegistrarModule.Server.RegisterCallContext, **kwargs: Any) -> Awaitable[_RegistrarModule.Server.RegisterResultTuple | None]: ...
+        def register_context(self, context: _RegistrarModule.Server.RegisterCallContext) -> Awaitable[None]: ...
 
-class RegistrarClient(IdentifiableClient):
-    def register(
-        self,
-        cap: Identifiable | Identifiable.Server | None = None,
-        regName: str | None = None,
-        categoryId: str | None = None,
-        xDomain: Registrar.CrossDomainRestore | dict[str, Any] | None = None,
-    ) -> Registrar.RegisterResult: ...
-    def register_request(
-        self,
-        cap: Identifiable | Identifiable.Server | None = None,
-        regName: str | None = None,
-        categoryId: str | None = None,
-        xDomain: Registrar.CrossDomainRestore.Builder | None = None,
-    ) -> Registrar.RegisterRequest: ...
+    class RegistrarClient(_IdentifiableModule.IdentifiableClient):
+        class RegisterResult(Awaitable[RegisterResult], Protocol):
+            unreg: _RegistrarModule._UnregisterModule.UnregisterClient
+            reregSR: Any
+
+        def register(self, cap: IdentifiableClient | _IdentifiableModule.Server | None = None, regName: str | None = None, categoryId: str | None = None, xDomain: CrossDomainRestoreBuilder | CrossDomainRestoreReader | dict[str, Any] | None = None) -> _RegistrarModule.RegistrarClient.RegisterResult: ...
+        def register_request(self, cap: IdentifiableClient | _IdentifiableModule.Server | None = None, regName: str | None = None, categoryId: str | None = None, xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder | None = None) -> _RegistrarModule.RegisterRequest: ...
+
+Registrar: _RegistrarModule
+RegistrarClient: TypeAlias = _RegistrarModule.RegistrarClient
+
+# Top-level type aliases for use in type annotations
+CrossDomainRestoreBuilder: TypeAlias = _RegistrarModule._CrossDomainRestoreModule.Builder
+CrossDomainRestoreReader: TypeAlias = _RegistrarModule._CrossDomainRestoreModule.Reader
+EntryBuilder: TypeAlias = _RegistryModule._EntryModule.Builder
+EntryReader: TypeAlias = _RegistryModule._EntryModule.Reader
+RegParamsBuilder: TypeAlias = _RegistrarModule._RegParamsModule.Builder
+RegParamsReader: TypeAlias = _RegistrarModule._RegParamsModule.Reader
+UnregisterClient: TypeAlias = _RegistrarModule._UnregisterModule.UnregisterClient

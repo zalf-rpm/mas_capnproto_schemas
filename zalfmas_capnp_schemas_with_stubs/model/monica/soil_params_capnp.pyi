@@ -2,19 +2,22 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator, Sequence
-from contextlib import contextmanager
-from io import BufferedWriter
-from typing import Any, BinaryIO, Literal, TypeAlias
+from collections.abc import MutableSequence, Sequence
+from typing import Any, Literal, TypeAlias, override
 
-SoilCharacteristicDataBuilder: TypeAlias = SoilCharacteristicData.Builder
-SoilCharacteristicDataReader: TypeAlias = SoilCharacteristicData.Reader
+from capnp.lib.capnp import (
+    _DynamicCapabilityClient,
+    _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _InterfaceModule,
+    _Request,
+    _StructModule,
+)
 
-class SoilCharacteristicData:
-    DataBuilder: TypeAlias = Data.Builder
-    DataReader: TypeAlias = Data.Reader
-    class Data:
-        class Reader:
+class _SoilCharacteristicDataModule(_StructModule):
+    class _DataModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def soilType(self) -> str: ...
             @property
@@ -25,9 +28,10 @@ class SoilCharacteristicData:
             def fieldCapacity(self) -> int: ...
             @property
             def nFieldCapacity(self) -> int: ...
-            def as_builder(self) -> SoilCharacteristicData.Data.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SoilCharacteristicDataModule._DataModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def soilType(self) -> str: ...
             @soilType.setter
@@ -48,131 +52,42 @@ class SoilCharacteristicData:
             def nFieldCapacity(self) -> int: ...
             @nFieldCapacity.setter
             def nFieldCapacity(self, value: int) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> SoilCharacteristicData.Data.Builder: ...
-            def copy(self) -> SoilCharacteristicData.Data.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> SoilCharacteristicData.Data.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _SoilCharacteristicDataModule._DataModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[SoilCharacteristicData.Data.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicData.Data.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            soilType: str | None = None,
-            soilRawDensity: int | None = None,
-            airCapacity: int | None = None,
-            fieldCapacity: int | None = None,
-            nFieldCapacity: int | None = None,
-        ) -> SoilCharacteristicData.Data.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicData.Data.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicData.Data.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilType: str | None = None, soilRawDensity: int | None = None, airCapacity: int | None = None, fieldCapacity: int | None = None, nFieldCapacity: int | None = None
+        ) -> _SoilCharacteristicDataModule._DataModule.Builder: ...
 
-    class Reader:
+    DataReader: TypeAlias = _DataModule.Reader
+    DataBuilder: TypeAlias = _DataModule.Builder
+    Data: _DataModule
+    class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[SoilCharacteristicData.Data.Reader]: ...
-        def as_builder(self) -> SoilCharacteristicData.Builder: ...
+        def list(self) -> Sequence[_SoilCharacteristicDataModule._DataModule.Reader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SoilCharacteristicDataModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> Sequence[SoilCharacteristicData.Data.Builder]: ...
+        def list(self) -> MutableSequence[_SoilCharacteristicDataModule._DataModule.Builder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
-        def list(
-            self,
-            value: Sequence[
-                SoilCharacteristicData.Data.Builder | SoilCharacteristicData.Data.Reader
-            ]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> SoilCharacteristicData.Builder: ...
-        def init(
-            self, name: Literal["list"], size: int = ...
-        ) -> Sequence[SoilCharacteristicData.Data.Builder]: ...
-        def copy(self) -> SoilCharacteristicData.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> SoilCharacteristicData.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def list(self, value: Sequence[_SoilCharacteristicDataModule._DataModule.Builder | _SoilCharacteristicDataModule._DataModule.Reader] | Sequence[dict[str, Any]]) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def init(self, field: Literal["list"], size: int | None = None) -> MutableSequence[_SoilCharacteristicDataModule._DataModule.Builder]: ...
+        @override
+        def as_reader(self) -> _SoilCharacteristicDataModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[SoilCharacteristicData.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicData.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        list: Sequence[SoilCharacteristicData.Data.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-    ) -> SoilCharacteristicData.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicData.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicData.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, list: Sequence[_SoilCharacteristicDataModule._DataModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _SoilCharacteristicDataModule.Builder: ...
 
-SoilCharacteristicModifierBuilder: TypeAlias = SoilCharacteristicModifier.Builder
-SoilCharacteristicModifierReader: TypeAlias = SoilCharacteristicModifier.Reader
+SoilCharacteristicDataReader: TypeAlias = _SoilCharacteristicDataModule.Reader
+SoilCharacteristicDataBuilder: TypeAlias = _SoilCharacteristicDataModule.Builder
+SoilCharacteristicData: _SoilCharacteristicDataModule
 
-class SoilCharacteristicModifier:
-    DataBuilder: TypeAlias = Data.Builder
-    DataReader: TypeAlias = Data.Reader
-    class Data:
-        class Reader:
+class _SoilCharacteristicModifierModule(_StructModule):
+    class _DataModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def soilType(self) -> str: ...
             @property
@@ -183,9 +98,10 @@ class SoilCharacteristicModifier:
             def fieldCapacity(self) -> int: ...
             @property
             def nFieldCapacity(self) -> int: ...
-            def as_builder(self) -> SoilCharacteristicModifier.Data.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SoilCharacteristicModifierModule._DataModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def soilType(self) -> str: ...
             @soilType.setter
@@ -206,143 +122,52 @@ class SoilCharacteristicModifier:
             def nFieldCapacity(self) -> int: ...
             @nFieldCapacity.setter
             def nFieldCapacity(self, value: int) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> SoilCharacteristicModifier.Data.Builder: ...
-            def copy(self) -> SoilCharacteristicModifier.Data.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> SoilCharacteristicModifier.Data.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _SoilCharacteristicModifierModule._DataModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[SoilCharacteristicModifier.Data.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicModifier.Data.Reader: ...
-        @staticmethod
+        @override
         def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            soilType: str | None = None,
-            organicMatter: float | None = None,
-            airCapacity: int | None = None,
-            fieldCapacity: int | None = None,
-            nFieldCapacity: int | None = None,
-        ) -> SoilCharacteristicModifier.Data.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicModifier.Data.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> SoilCharacteristicModifier.Data.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilType: str | None = None, organicMatter: float | None = None, airCapacity: int | None = None, fieldCapacity: int | None = None, nFieldCapacity: int | None = None
+        ) -> _SoilCharacteristicModifierModule._DataModule.Builder: ...
 
-    class Reader:
+    DataReader: TypeAlias = _DataModule.Reader
+    DataBuilder: TypeAlias = _DataModule.Builder
+    Data: _DataModule
+    class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[SoilCharacteristicModifier.Data.Reader]: ...
-        def as_builder(self) -> SoilCharacteristicModifier.Builder: ...
+        def list(self) -> Sequence[_SoilCharacteristicModifierModule._DataModule.Reader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SoilCharacteristicModifierModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> Sequence[SoilCharacteristicModifier.Data.Builder]: ...
+        def list(self) -> MutableSequence[_SoilCharacteristicModifierModule._DataModule.Builder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
-        def list(
-            self,
-            value: Sequence[
-                SoilCharacteristicModifier.Data.Builder
-                | SoilCharacteristicModifier.Data.Reader
-            ]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(
-            dictionary: dict[str, Any],
-        ) -> SoilCharacteristicModifier.Builder: ...
-        def init(
-            self, name: Literal["list"], size: int = ...
-        ) -> Sequence[SoilCharacteristicModifier.Data.Builder]: ...
-        def copy(self) -> SoilCharacteristicModifier.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> SoilCharacteristicModifier.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def list(self, value: Sequence[_SoilCharacteristicModifierModule._DataModule.Builder | _SoilCharacteristicModifierModule._DataModule.Reader] | Sequence[dict[str, Any]]) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def init(self, field: Literal["list"], size: int | None = None) -> MutableSequence[_SoilCharacteristicModifierModule._DataModule.Builder]: ...
+        @override
+        def as_reader(self) -> _SoilCharacteristicModifierModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[SoilCharacteristicModifier.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicModifier.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        list: Sequence[SoilCharacteristicModifier.Data.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-    ) -> SoilCharacteristicModifier.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicModifier.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> SoilCharacteristicModifier.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, list: Sequence[_SoilCharacteristicModifierModule._DataModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _SoilCharacteristicModifierModule.Builder: ...
 
-CapillaryRiseRateBuilder: TypeAlias = CapillaryRiseRate.Builder
-CapillaryRiseRateReader: TypeAlias = CapillaryRiseRate.Reader
+SoilCharacteristicModifierReader: TypeAlias = _SoilCharacteristicModifierModule.Reader
+SoilCharacteristicModifierBuilder: TypeAlias = _SoilCharacteristicModifierModule.Builder
+SoilCharacteristicModifier: _SoilCharacteristicModifierModule
 
-class CapillaryRiseRate:
-    DataBuilder: TypeAlias = Data.Builder
-    DataReader: TypeAlias = Data.Reader
-    class Data:
-        class Reader:
+class _CapillaryRiseRateModule(_StructModule):
+    class _DataModule(_StructModule):
+        class Reader(_DynamicStructReader):
             @property
             def soilType(self) -> str: ...
             @property
             def distance(self) -> int: ...
             @property
             def rate(self) -> float: ...
-            def as_builder(self) -> CapillaryRiseRate.Data.Builder: ...
+            @override
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _CapillaryRiseRateModule._DataModule.Builder: ...
 
-        class Builder:
+        class Builder(_DynamicStructBuilder):
             @property
             def soilType(self) -> str: ...
             @soilType.setter
@@ -355,117 +180,37 @@ class CapillaryRiseRate:
             def rate(self) -> float: ...
             @rate.setter
             def rate(self, value: float) -> None: ...
-            @staticmethod
-            def from_dict(
-                dictionary: dict[str, Any],
-            ) -> CapillaryRiseRate.Data.Builder: ...
-            def copy(self) -> CapillaryRiseRate.Data.Builder: ...
-            def to_bytes(self) -> bytes: ...
-            def to_bytes_packed(self) -> bytes: ...
-            def to_segments(self) -> list[bytes]: ...
-            def as_reader(self) -> CapillaryRiseRate.Data.Reader: ...
-            @staticmethod
-            def write(file: BufferedWriter) -> None: ...
-            @staticmethod
-            def write_packed(file: BufferedWriter) -> None: ...
+            @override
+            def as_reader(self) -> _CapillaryRiseRateModule._DataModule.Reader: ...
 
-        @contextmanager
-        @staticmethod
-        def from_bytes(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Iterator[CapillaryRiseRate.Data.Reader]: ...
-        @staticmethod
-        def from_bytes_packed(
-            data: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> CapillaryRiseRate.Data.Reader: ...
-        @staticmethod
-        def new_message(
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            soilType: str | None = None,
-            distance: int | None = None,
-            rate: float | None = None,
-        ) -> CapillaryRiseRate.Data.Builder: ...
-        @staticmethod
-        def read(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> CapillaryRiseRate.Data.Reader: ...
-        @staticmethod
-        def read_packed(
-            file: BinaryIO,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> CapillaryRiseRate.Data.Reader: ...
-        def to_dict(self) -> dict[str, Any]: ...
+        @override
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilType: str | None = None, distance: int | None = None, rate: float | None = None) -> _CapillaryRiseRateModule._DataModule.Builder: ...
 
-    class Reader:
+    DataReader: TypeAlias = _DataModule.Reader
+    DataBuilder: TypeAlias = _DataModule.Builder
+    Data: _DataModule
+    class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[CapillaryRiseRate.Data.Reader]: ...
-        def as_builder(self) -> CapillaryRiseRate.Builder: ...
+        def list(self) -> Sequence[_CapillaryRiseRateModule._DataModule.Reader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        @override
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _CapillaryRiseRateModule.Builder: ...
 
-    class Builder:
+    class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> Sequence[CapillaryRiseRate.Data.Builder]: ...
+        def list(self) -> MutableSequence[_CapillaryRiseRateModule._DataModule.Builder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
-        def list(
-            self,
-            value: Sequence[
-                CapillaryRiseRate.Data.Builder | CapillaryRiseRate.Data.Reader
-            ]
-            | Sequence[dict[str, Any]],
-        ) -> None: ...
-        @staticmethod
-        def from_dict(dictionary: dict[str, Any]) -> CapillaryRiseRate.Builder: ...
-        def init(
-            self, name: Literal["list"], size: int = ...
-        ) -> Sequence[CapillaryRiseRate.Data.Builder]: ...
-        def copy(self) -> CapillaryRiseRate.Builder: ...
-        def to_bytes(self) -> bytes: ...
-        def to_bytes_packed(self) -> bytes: ...
-        def to_segments(self) -> list[bytes]: ...
-        def as_reader(self) -> CapillaryRiseRate.Reader: ...
-        @staticmethod
-        def write(file: BufferedWriter) -> None: ...
-        @staticmethod
-        def write_packed(file: BufferedWriter) -> None: ...
+        def list(self, value: Sequence[_CapillaryRiseRateModule._DataModule.Builder | _CapillaryRiseRateModule._DataModule.Reader] | Sequence[dict[str, Any]]) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def init(self, field: Literal["list"], size: int | None = None) -> MutableSequence[_CapillaryRiseRateModule._DataModule.Builder]: ...
+        @override
+        def as_reader(self) -> _CapillaryRiseRateModule.Reader: ...
 
-    @contextmanager
-    @staticmethod
-    def from_bytes(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> Iterator[CapillaryRiseRate.Reader]: ...
-    @staticmethod
-    def from_bytes_packed(
-        data: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> CapillaryRiseRate.Reader: ...
-    @staticmethod
-    def new_message(
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        list: Sequence[CapillaryRiseRate.Data.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-    ) -> CapillaryRiseRate.Builder: ...
-    @staticmethod
-    def read(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> CapillaryRiseRate.Reader: ...
-    @staticmethod
-    def read_packed(
-        file: BinaryIO,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
-    ) -> CapillaryRiseRate.Reader: ...
-    def to_dict(self) -> dict[str, Any]: ...
+    @override
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, list: Sequence[_CapillaryRiseRateModule._DataModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _CapillaryRiseRateModule.Builder: ...
+
+CapillaryRiseRateReader: TypeAlias = _CapillaryRiseRateModule.Reader
+CapillaryRiseRateBuilder: TypeAlias = _CapillaryRiseRateModule.Builder
+CapillaryRiseRate: _CapillaryRiseRateModule
+
+# Top-level type aliases for use in type annotations
+DataBuilder: TypeAlias = _CapillaryRiseRateModule._DataModule.Builder
+DataReader: TypeAlias = _CapillaryRiseRateModule._DataModule.Reader
