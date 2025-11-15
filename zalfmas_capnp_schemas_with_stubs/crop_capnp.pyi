@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from typing import Any, NamedTuple, Protocol, TypeAlias
+from typing import Any, NamedTuple, Protocol
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -20,6 +20,9 @@ from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
 from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 from .registry_capnp import Registry, RegistryClient, _RegistryModule
 
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+
 class _CropModule(_IdentifiableModule, _PersistentModule):
     class ParametersRequest(Protocol):
         def send(self) -> _CropModule.CropClient.ParametersResult: ...
@@ -34,7 +37,7 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
     def _new_client(cls, server: _CropModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _CropModule.CropClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class ParametersResult(Awaitable[ParametersResult], Protocol):
-            params: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            params: AnyPointer
 
         class CultivarResult(Awaitable[CultivarResult], Protocol):
             info: Any
@@ -43,7 +46,7 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             info: Any
 
         class ParametersResultTuple(NamedTuple):
-            params: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            params: AnyPointer
 
         class CultivarResultTuple(NamedTuple):
             pass
@@ -88,7 +91,6 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
         def species_request(self) -> _CropModule.SpeciesRequest: ...
 
 Crop: _CropModule
-CropClient: TypeAlias = _CropModule.CropClient
 
 class _ServiceModule(_RegistryModule):
     @classmethod
@@ -97,4 +99,7 @@ class _ServiceModule(_RegistryModule):
     class ServiceClient(_RegistryModule.RegistryClient): ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
+
+# Top-level type aliases for use in type annotations
+type CropClient = _CropModule.CropClient
+type ServiceClient = _ServiceModule.ServiceClient

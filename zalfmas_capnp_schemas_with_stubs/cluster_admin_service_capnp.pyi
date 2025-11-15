@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from typing import Any, NamedTuple, Protocol, TypeAlias, override
+from typing import Any, NamedTuple, Protocol, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -17,6 +17,9 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
+
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _ClusterModule(_StructModule):
     class _UnregisterModule(_InterfaceModule):
@@ -47,7 +50,7 @@ class _ClusterModule(_StructModule):
             def unregister_request(self) -> _ClusterModule._UnregisterModule.UnregisterRequest: ...
 
     Unregister: _UnregisterModule
-    UnregisterClient: TypeAlias = _ClusterModule._UnregisterModule.UnregisterClient
+    type UnregisterClient = _ClusterModule._UnregisterModule.UnregisterClient
     class _AdminMasterModule(_IdentifiableModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
@@ -99,7 +102,7 @@ class _ClusterModule(_StructModule):
             def availableModels_request(self) -> _ClusterModule._AdminMasterModule.AvailablemodelsRequest: ...
 
     AdminMaster: _AdminMasterModule
-    AdminMasterClient: TypeAlias = _ClusterModule._AdminMasterModule.AdminMasterClient
+    type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
     class _UserMasterModule(_IdentifiableModule):
         class AvailablemodelsRequest(Protocol):
             def send(self) -> _ClusterModule._UserMasterModule.UserMasterClient.AvailablemodelsResult: ...
@@ -128,7 +131,7 @@ class _ClusterModule(_StructModule):
             def availableModels_request(self) -> _ClusterModule._UserMasterModule.AvailablemodelsRequest: ...
 
     UserMaster: _UserMasterModule
-    UserMasterClient: TypeAlias = _ClusterModule._UserMasterModule.UserMasterClient
+    type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
     class _RuntimeModule(_IdentifiableModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
@@ -240,7 +243,7 @@ class _ClusterModule(_StructModule):
             def reserveNumberOfCores_request(self, reserveCores: int | None = None, aModelId: str | None = None) -> _ClusterModule._RuntimeModule.ReservenumberofcoresRequest: ...
 
     Runtime: _RuntimeModule
-    RuntimeClient: TypeAlias = _ClusterModule._RuntimeModule.RuntimeClient
+    type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
     class _ZmqPipelineAddressesModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -248,7 +251,7 @@ class _ClusterModule(_StructModule):
             @property
             def output(self) -> str: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ClusterModule._ZmqPipelineAddressesModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ZmqPipelineAddressesBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -260,13 +263,13 @@ class _ClusterModule(_StructModule):
             @output.setter
             def output(self, value: str) -> None: ...
             @override
-            def as_reader(self) -> _ClusterModule._ZmqPipelineAddressesModule.Reader: ...
+            def as_reader(self) -> ZmqPipelineAddressesReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, input: str | None = None, output: str | None = None) -> _ClusterModule._ZmqPipelineAddressesModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, input: str | None = None, output: str | None = None) -> ZmqPipelineAddressesBuilder: ...
 
-    ZmqPipelineAddressesReader: TypeAlias = _ZmqPipelineAddressesModule.Reader
-    ZmqPipelineAddressesBuilder: TypeAlias = _ZmqPipelineAddressesModule.Builder
+    type ZmqPipelineAddressesReader = _ZmqPipelineAddressesModule.Reader
+    type ZmqPipelineAddressesBuilder = _ZmqPipelineAddressesModule.Builder
     ZmqPipelineAddresses: _ZmqPipelineAddressesModule
     class _ValueHolderModule(_InterfaceModule):
         class ValueRequest(Protocol):
@@ -279,12 +282,12 @@ class _ClusterModule(_StructModule):
         def _new_client(cls, server: _ClusterModule._ValueHolderModule.Server) -> _ClusterModule._ValueHolderModule.ValueHolderClient: ...
         class Server(_DynamicCapabilityServer):
             class ValueResult(Awaitable[ValueResult], Protocol):
-                val: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+                val: AnyPointer
 
             class ReleaseResult(Awaitable[None], Protocol): ...
 
             class ValueResultTuple(NamedTuple):
-                val: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+                val: AnyPointer
 
             class ValueCallContext(Protocol):
                 params: _ClusterModule._ValueHolderModule.ValueRequest
@@ -310,7 +313,7 @@ class _ClusterModule(_StructModule):
             def release_request(self) -> _ClusterModule._ValueHolderModule.ReleaseRequest: ...
 
     ValueHolder: _ValueHolderModule
-    ValueHolderClient: TypeAlias = _ClusterModule._ValueHolderModule.ValueHolderClient
+    type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
     class _ModelInstanceFactoryModule(_IdentifiableModule):
         class NewinstanceRequest(Protocol):
             def send(self) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.NewinstanceResult: ...
@@ -331,7 +334,7 @@ class _ClusterModule(_StructModule):
             def send(self) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.ModelidResult: ...
 
         class RegistermodelinstanceRequest(Protocol):
-            instance: _DynamicObjectReader
+            instance: AnyPointer
             registrationToken: str
             def send(self) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.RegistermodelinstanceResult: ...
 
@@ -425,7 +428,7 @@ class _ClusterModule(_StructModule):
             def modelId(self, _context: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidCallContext, **kwargs: Any) -> Awaitable[str | _ClusterModule._ModelInstanceFactoryModule.Server.ModelidResultTuple | None]: ...
             def modelId_context(self, context: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidCallContext) -> Awaitable[None]: ...
             def registerModelInstance(
-                self, instance: _DynamicObjectReader, registrationToken: str, _context: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceCallContext, **kwargs: Any
+                self, instance: AnyPointer, registrationToken: str, _context: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceCallContext, **kwargs: Any
             ) -> Awaitable[_ClusterModule._UnregisterModule.Server | _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceResultTuple | None]: ...
             def registerModelInstance_context(self, context: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceCallContext) -> Awaitable[None]: ...
             def restoreSturdyRef(self, sturdyRef: str, _context: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefCallContext, **kwargs: Any) -> Awaitable[_ClusterModule._ValueHolderModule.Server | _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefResultTuple | None]: ...
@@ -465,32 +468,32 @@ class _ClusterModule(_StructModule):
             def newCloudViaZmqPipelineProxies_request(self, numberOfInstances: int | None = None) -> _ClusterModule._ModelInstanceFactoryModule.NewcloudviazmqpipelineproxiesRequest: ...
             def newCloudViaProxy_request(self, numberOfInstances: int | None = None) -> _ClusterModule._ModelInstanceFactoryModule.NewcloudviaproxyRequest: ...
             def modelId_request(self) -> _ClusterModule._ModelInstanceFactoryModule.ModelidRequest: ...
-            def registerModelInstance_request(self, instance: _DynamicObjectReader | None = None, registrationToken: str | None = None) -> _ClusterModule._ModelInstanceFactoryModule.RegistermodelinstanceRequest: ...
+            def registerModelInstance_request(self, instance: AnyPointer | None = None, registrationToken: str | None = None) -> _ClusterModule._ModelInstanceFactoryModule.RegistermodelinstanceRequest: ...
             def restoreSturdyRef_request(self, sturdyRef: str | None = None) -> _ClusterModule._ModelInstanceFactoryModule.RestoresturdyrefRequest: ...
 
     ModelInstanceFactory: _ModelInstanceFactoryModule
-    ModelInstanceFactoryClient: TypeAlias = _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+    type ModelInstanceFactoryClient = _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
     class Reader(_DynamicStructReader):
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ClusterModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ClusterBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @override
-        def as_reader(self) -> _ClusterModule.Reader: ...
+        def as_reader(self) -> ClusterReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ClusterModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ClusterBuilder: ...
 
-ClusterReader: TypeAlias = _ClusterModule.Reader
-ClusterBuilder: TypeAlias = _ClusterModule.Builder
 Cluster: _ClusterModule
 
 # Top-level type aliases for use in type annotations
-AdminMasterClient: TypeAlias = _ClusterModule._AdminMasterModule.AdminMasterClient
-ModelInstanceFactoryClient: TypeAlias = _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-RuntimeClient: TypeAlias = _ClusterModule._RuntimeModule.RuntimeClient
-UnregisterClient: TypeAlias = _ClusterModule._UnregisterModule.UnregisterClient
-UserMasterClient: TypeAlias = _ClusterModule._UserMasterModule.UserMasterClient
-ValueHolderClient: TypeAlias = _ClusterModule._ValueHolderModule.ValueHolderClient
-ZmqPipelineAddressesBuilder: TypeAlias = _ClusterModule._ZmqPipelineAddressesModule.Builder
-ZmqPipelineAddressesReader: TypeAlias = _ClusterModule._ZmqPipelineAddressesModule.Reader
+type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
+type ClusterBuilder = _ClusterModule.Builder
+type ClusterReader = _ClusterModule.Reader
+type ModelInstanceFactoryClient = _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
+type UnregisterClient = _ClusterModule._UnregisterModule.UnregisterClient
+type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
+type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
+type ZmqPipelineAddressesBuilder = _ClusterModule._ZmqPipelineAddressesModule.Builder
+type ZmqPipelineAddressesReader = _ClusterModule._ZmqPipelineAddressesModule.Reader

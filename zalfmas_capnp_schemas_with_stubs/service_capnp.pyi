@@ -3,17 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
-from typing import (
-    Any,
-    Generic,
-    Literal,
-    NamedTuple,
-    Protocol,
-    TypeAlias,
-    TypeVar,
-    overload,
-    override,
-)
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -33,7 +23,8 @@ from .common_capnp import (
     _PairModule,
 )
 
-_FactoryModule_Payload = TypeVar("_FactoryModule_Payload")
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _AdminModule(_IdentifiableModule):
     class HeartbeatRequest(Protocol):
@@ -117,7 +108,6 @@ class _AdminModule(_IdentifiableModule):
         def updateIdentity_request(self, oldId: str | None = None) -> _AdminModule.UpdateidentityRequest: ...
 
 Admin: _AdminModule
-AdminClient: TypeAlias = _AdminModule.AdminClient
 
 class _SimpleFactoryModule(_IdentifiableModule):
     class CreateRequest(Protocol):
@@ -147,19 +137,18 @@ class _SimpleFactoryModule(_IdentifiableModule):
         def create_request(self) -> _SimpleFactoryModule.CreateRequest: ...
 
 SimpleFactory: _SimpleFactoryModule
-SimpleFactoryClient: TypeAlias = _SimpleFactoryModule.SimpleFactoryClient
 
 class _FactoryModule(_IdentifiableModule):
-    class _CreateParamsModule(Generic[_FactoryModule_Payload], _StructModule):
+    class _CreateParamsModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def timeoutSeconds(self) -> int: ...
             @property
             def interfaceNameToRegistrySR(self) -> Sequence[_PairModule.Reader]: ...
             @property
-            def msgPayload(self) -> _FactoryModule_Payload: ...
+            def msgPayload(self) -> _DynamicObjectReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _FactoryModule._CreateParamsModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CreateParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -171,20 +160,18 @@ class _FactoryModule(_IdentifiableModule):
             @interfaceNameToRegistrySR.setter
             def interfaceNameToRegistrySR(self, value: Sequence[_PairModule.Builder | _PairModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
             @property
-            def msgPayload(self) -> _FactoryModule_Payload: ...
+            def msgPayload(self) -> _DynamicObjectReader: ...
             @msgPayload.setter
-            def msgPayload(self, value: _FactoryModule_Payload) -> None: ...
+            def msgPayload(self, value: AnyPointer) -> None: ...
             def init(self, field: Literal["interfaceNameToRegistrySR"], size: int | None = None) -> MutableSequence[_PairModule.Builder]: ...
             @override
-            def as_reader(self) -> _FactoryModule._CreateParamsModule.Reader: ...
+            def as_reader(self) -> CreateParamsReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, msgPayload: _FactoryModule_Payload | None = None
-        ) -> _FactoryModule._CreateParamsModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, msgPayload: AnyPointer | None = None) -> CreateParamsBuilder: ...
 
-    CreateParamsReader: TypeAlias = _CreateParamsModule.Reader
-    CreateParamsBuilder: TypeAlias = _CreateParamsModule.Builder
+    type CreateParamsReader = _CreateParamsModule.Reader
+    type CreateParamsBuilder = _CreateParamsModule.Builder
     CreateParams: _CreateParamsModule
     class _AccessInfoModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -195,7 +182,7 @@ class _FactoryModule(_IdentifiableModule):
             @property
             def error(self) -> str: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _FactoryModule._AccessInfoModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AccessInfoBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -212,20 +199,20 @@ class _FactoryModule(_IdentifiableModule):
             def error(self, value: str) -> None: ...
             def init(self, field: Literal["serviceCaps"], size: int | None = None) -> MutableSequence[_IdentifiableModule]: ...
             @override
-            def as_reader(self) -> _FactoryModule._AccessInfoModule.Reader: ...
+            def as_reader(self) -> AccessInfoReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, adminCap: Any | None = None, serviceCaps: Sequence[_IdentifiableModule] | None = None, error: str | None = None) -> _FactoryModule._AccessInfoModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, adminCap: Any | None = None, serviceCaps: Sequence[_IdentifiableModule] | None = None, error: str | None = None) -> AccessInfoBuilder: ...
 
-    AccessInfoReader: TypeAlias = _AccessInfoModule.Reader
-    AccessInfoBuilder: TypeAlias = _AccessInfoModule.Builder
+    type AccessInfoReader = _AccessInfoModule.Reader
+    type AccessInfoBuilder = _AccessInfoModule.Builder
     AccessInfo: _AccessInfoModule
     class CreateRequest(Protocol):
         timeoutSeconds: int
-        interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]]
-        msgPayload: _DynamicObjectReader
+        interfaceNameToRegistrySR: Sequence[_PairModule] | Sequence[dict[str, Any]]
+        msgPayload: AnyPointer
         @overload
-        def init(self, name: Literal["interfaceNameToRegistrySR"], size: int = ...) -> MutableSequence[_PairModule[str, str].Builder]: ...
+        def init(self, name: Literal["interfaceNameToRegistrySR"], size: int = ...) -> MutableSequence[_PairModule.Builder]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _FactoryModule.FactoryClient.CreateResult: ...
@@ -237,7 +224,7 @@ class _FactoryModule(_IdentifiableModule):
     def _new_client(cls, server: _FactoryModule.Server | _IdentifiableModule.Server) -> _FactoryModule.FactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            adminCap: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            adminCap: AnyPointer
             serviceCaps: Sequence[_IdentifiableModule]
             error: str
 
@@ -245,7 +232,7 @@ class _FactoryModule(_IdentifiableModule):
             names: Sequence[str]
 
         class CreateResultTuple(NamedTuple):
-            adminCap: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            adminCap: AnyPointer
             serviceCaps: Sequence[_IdentifiableModule]
             error: str
 
@@ -260,7 +247,7 @@ class _FactoryModule(_IdentifiableModule):
             params: _FactoryModule.ServiceinterfacenamesRequest
             results: _FactoryModule.Server.ServiceinterfacenamesResult
 
-        def create(self, timeoutSeconds: int, interfaceNameToRegistrySR: Sequence[_PairModule[str, str].Reader], msgPayload: _DynamicObjectReader, _context: _FactoryModule.Server.CreateCallContext, **kwargs: Any) -> Awaitable[_FactoryModule.Server.CreateResultTuple | None]: ...
+        def create(self, timeoutSeconds: int, interfaceNameToRegistrySR: Sequence[_PairModule.Reader], msgPayload: AnyPointer, _context: _FactoryModule.Server.CreateCallContext, **kwargs: Any) -> Awaitable[_FactoryModule.Server.CreateResultTuple | None]: ...
         def create_context(self, context: _FactoryModule.Server.CreateCallContext) -> Awaitable[None]: ...
         def serviceInterfaceNames(self, _context: _FactoryModule.Server.ServiceinterfacenamesCallContext, **kwargs: Any) -> Awaitable[_FactoryModule.Server.ServiceinterfacenamesResultTuple | None]: ...
         def serviceInterfaceNames_context(self, context: _FactoryModule.Server.ServiceinterfacenamesCallContext) -> Awaitable[None]: ...
@@ -274,13 +261,12 @@ class _FactoryModule(_IdentifiableModule):
         class ServiceinterfacenamesResult(Awaitable[ServiceinterfacenamesResult], Protocol):
             names: Sequence[str]
 
-        def create(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]] | None = None, msgPayload: _DynamicObjectReader | None = None) -> _FactoryModule.FactoryClient.CreateResult: ...
+        def create(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule] | Sequence[dict[str, Any]] | None = None, msgPayload: _DynamicObjectReader | None = None) -> _FactoryModule.FactoryClient.CreateResult: ...
         def serviceInterfaceNames(self) -> _FactoryModule.FactoryClient.ServiceinterfacenamesResult: ...
-        def create_request(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule[str, str]] | Sequence[dict[str, Any]] | None = None, msgPayload: _DynamicObjectReader | None = None) -> _FactoryModule.CreateRequest: ...
+        def create_request(self, timeoutSeconds: int | None = None, interfaceNameToRegistrySR: Sequence[_PairModule] | Sequence[dict[str, Any]] | None = None, msgPayload: AnyPointer | None = None) -> _FactoryModule.CreateRequest: ...
         def serviceInterfaceNames_request(self) -> _FactoryModule.ServiceinterfacenamesRequest: ...
 
 Factory: _FactoryModule
-FactoryClient: TypeAlias = _FactoryModule.FactoryClient
 
 class _StoppableModule(_InterfaceModule):
     class StopRequest(Protocol):
@@ -310,10 +296,13 @@ class _StoppableModule(_InterfaceModule):
         def stop_request(self) -> _StoppableModule.StopRequest: ...
 
 Stoppable: _StoppableModule
-StoppableClient: TypeAlias = _StoppableModule.StoppableClient
 
 # Top-level type aliases for use in type annotations
-AccessInfoBuilder: TypeAlias = _FactoryModule._AccessInfoModule.Builder
-AccessInfoReader: TypeAlias = _FactoryModule._AccessInfoModule.Reader
-CreateParamsBuilder: TypeAlias = _FactoryModule._CreateParamsModule.Builder
-CreateParamsReader: TypeAlias = _FactoryModule._CreateParamsModule.Reader
+type AccessInfoBuilder = _FactoryModule._AccessInfoModule.Builder
+type AccessInfoReader = _FactoryModule._AccessInfoModule.Reader
+type AdminClient = _AdminModule.AdminClient
+type CreateParamsBuilder = _FactoryModule._CreateParamsModule.Builder
+type CreateParamsReader = _FactoryModule._CreateParamsModule.Reader
+type FactoryClient = _FactoryModule.FactoryClient
+type SimpleFactoryClient = _SimpleFactoryModule.SimpleFactoryClient
+type StoppableClient = _StoppableModule.StoppableClient

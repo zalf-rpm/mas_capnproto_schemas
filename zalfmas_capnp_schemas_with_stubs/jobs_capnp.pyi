@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from typing import Any, Generic, NamedTuple, Protocol, TypeAlias, TypeVar, override
+from typing import Any, NamedTuple, Protocol, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -18,34 +19,33 @@ from capnp.lib.capnp import (
 from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
 from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
-_Payload = TypeVar("_Payload")
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
-class _JobModule(Generic[_Payload], _StructModule):
+class _JobModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def data(self) -> _Payload: ...
+        def data(self) -> _DynamicObjectReader: ...
         @property
         def noFurtherJobs(self) -> bool: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _JobModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> JobBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def data(self) -> _Payload: ...
+        def data(self) -> _DynamicObjectReader: ...
         @data.setter
-        def data(self, value: _Payload) -> None: ...
+        def data(self, value: AnyPointer) -> None: ...
         @property
         def noFurtherJobs(self) -> bool: ...
         @noFurtherJobs.setter
         def noFurtherJobs(self, value: bool) -> None: ...
         @override
-        def as_reader(self) -> _JobModule.Reader: ...
+        def as_reader(self) -> JobReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, data: _Payload | None = None, noFurtherJobs: bool | None = None) -> _JobModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, data: AnyPointer | None = None, noFurtherJobs: bool | None = None) -> JobBuilder: ...
 
-JobReader: TypeAlias = _JobModule.Reader
-JobBuilder: TypeAlias = _JobModule.Builder
 Job: _JobModule
 
 class _ServiceModule(_IdentifiableModule, _PersistentModule):
@@ -76,4 +76,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         def nextJob_request(self) -> _ServiceModule.NextjobRequest: ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
+
+# Top-level type aliases for use in type annotations
+type JobBuilder = _JobModule.Builder
+type JobReader = _JobModule.Reader
+type ServiceClient = _ServiceModule.ServiceClient

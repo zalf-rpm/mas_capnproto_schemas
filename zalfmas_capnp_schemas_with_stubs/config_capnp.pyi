@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from typing import Any, NamedTuple, Protocol, TypeAlias
+from typing import Any, NamedTuple, Protocol
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -16,6 +16,9 @@ from capnp.lib.capnp import (
     _StructModule,
 )
 
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+
 class _ServiceModule(_InterfaceModule):
     class NextconfigRequest(Protocol):
         def send(self) -> _ServiceModule.ServiceClient.NextconfigResult: ...
@@ -24,11 +27,11 @@ class _ServiceModule(_InterfaceModule):
     def _new_client(cls, server: _ServiceModule.Server) -> _ServiceModule.ServiceClient: ...
     class Server(_DynamicCapabilityServer):
         class NextconfigResult(Awaitable[NextconfigResult], Protocol):
-            config: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            config: AnyPointer
             noFurtherConfigs: bool
 
         class NextconfigResultTuple(NamedTuple):
-            config: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            config: AnyPointer
             noFurtherConfigs: bool
 
         class NextconfigCallContext(Protocol):
@@ -47,4 +50,6 @@ class _ServiceModule(_InterfaceModule):
         def nextConfig_request(self) -> _ServiceModule.NextconfigRequest: ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
+
+# Top-level type aliases for use in type annotations
+type ServiceClient = _ServiceModule.ServiceClient

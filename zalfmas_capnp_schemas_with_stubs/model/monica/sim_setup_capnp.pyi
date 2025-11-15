@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, TypeAlias, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -73,7 +73,7 @@ class _SetupModule(_StructModule):
         @property
         def comment(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _SetupModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SetupBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -189,7 +189,7 @@ class _SetupModule(_StructModule):
         @comment.setter
         def comment(self, value: str) -> None: ...
         @override
-        def as_reader(self) -> _SetupModule.Reader: ...
+        def as_reader(self) -> SetupReader: ...
 
     @override
     def new_message(
@@ -224,8 +224,10 @@ class _SetupModule(_StructModule):
         stageTemperatureSum: str | None = None,
         useVernalisationFix: bool | None = None,
         comment: str | None = None,
-    ) -> _SetupModule.Builder: ...
+    ) -> SetupBuilder: ...
 
-SetupReader: TypeAlias = _SetupModule.Reader
-SetupBuilder: TypeAlias = _SetupModule.Builder
 Setup: _SetupModule
+
+# Top-level type aliases for use in type annotations
+type SetupBuilder = _SetupModule.Builder
+type SetupReader = _SetupModule.Reader

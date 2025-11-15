@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -140,7 +140,6 @@ class _AdminModule(_IdentifiableModule):
         def registry_request(self) -> _AdminModule.RegistryRequest: ...
 
 Admin: _AdminModule
-AdminClient: TypeAlias = _AdminModule.AdminClient
 
 class _RegistryModule(_IdentifiableModule):
     class _EntryModule(_StructModule):
@@ -154,7 +153,7 @@ class _RegistryModule(_IdentifiableModule):
             @property
             def id(self) -> str: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistryModule._EntryModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EntryBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -174,13 +173,13 @@ class _RegistryModule(_IdentifiableModule):
             @id.setter
             def id(self, value: str) -> None: ...
             @override
-            def as_reader(self) -> _RegistryModule._EntryModule.Reader: ...
+            def as_reader(self) -> EntryReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, categoryId: str | None = None, ref: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None, name: str | None = None, id: str | None = None) -> _RegistryModule._EntryModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, categoryId: str | None = None, ref: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None, name: str | None = None, id: str | None = None) -> EntryBuilder: ...
 
-    EntryReader: TypeAlias = _EntryModule.Reader
-    EntryBuilder: TypeAlias = _EntryModule.Builder
+    type EntryReader = _EntryModule.Reader
+    type EntryBuilder = _EntryModule.Builder
     Entry: _EntryModule
     class SupportedcategoriesRequest(Protocol):
         def send(self) -> _RegistryModule.RegistryClient.SupportedcategoriesResult: ...
@@ -257,7 +256,6 @@ class _RegistryModule(_IdentifiableModule):
         def entries_request(self, categoryId: str | None = None) -> _RegistryModule.EntriesRequest: ...
 
 Registry: _RegistryModule
-RegistryClient: TypeAlias = _RegistryModule.RegistryClient
 
 class _RegistrarModule(_IdentifiableModule):
     class _CrossDomainRestoreModule(_StructModule):
@@ -267,7 +265,7 @@ class _RegistrarModule(_IdentifiableModule):
             @property
             def restorer(self) -> _RestorerModule.RestorerClient: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CrossDomainRestoreBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -280,13 +278,13 @@ class _RegistrarModule(_IdentifiableModule):
             def restorer(self, value: _RestorerModule.RestorerClient | _RestorerModule.Server) -> None: ...
             def init(self, field: Literal["vatId"], size: int | None = None) -> _VatIdModule.Builder: ...
             @override
-            def as_reader(self) -> _RegistrarModule._CrossDomainRestoreModule.Reader: ...
+            def as_reader(self) -> CrossDomainRestoreReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, vatId: _VatIdModule.Builder | dict[str, Any] | None = None, restorer: _RestorerModule.RestorerClient | _RestorerModule.Server | None = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, vatId: _VatIdModule.Builder | dict[str, Any] | None = None, restorer: _RestorerModule.RestorerClient | _RestorerModule.Server | None = None) -> CrossDomainRestoreBuilder: ...
 
-    CrossDomainRestoreReader: TypeAlias = _CrossDomainRestoreModule.Reader
-    CrossDomainRestoreBuilder: TypeAlias = _CrossDomainRestoreModule.Builder
+    type CrossDomainRestoreReader = _CrossDomainRestoreModule.Reader
+    type CrossDomainRestoreBuilder = _CrossDomainRestoreModule.Builder
     CrossDomainRestore: _CrossDomainRestoreModule
     class _RegParamsModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -297,9 +295,9 @@ class _RegistrarModule(_IdentifiableModule):
             @property
             def categoryId(self) -> str: ...
             @property
-            def xDomain(self) -> _RegistrarModule._CrossDomainRestoreModule.Reader: ...
+            def xDomain(self) -> CrossDomainRestoreReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _RegistrarModule._RegParamsModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> RegParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -315,26 +313,20 @@ class _RegistrarModule(_IdentifiableModule):
             @categoryId.setter
             def categoryId(self, value: str) -> None: ...
             @property
-            def xDomain(self) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
+            def xDomain(self) -> CrossDomainRestoreBuilder: ...
             @xDomain.setter
-            def xDomain(self, value: _RegistrarModule._CrossDomainRestoreModule.Builder | _RegistrarModule._CrossDomainRestoreModule.Reader | dict[str, Any]) -> None: ...
+            def xDomain(self, value: CrossDomainRestoreBuilder | CrossDomainRestoreReader | dict[str, Any]) -> None: ...
             def init(self, field: Literal["xDomain"], size: int | None = None) -> _RegistrarModule._CrossDomainRestoreModule.Builder: ...
             @override
-            def as_reader(self) -> _RegistrarModule._RegParamsModule.Reader: ...
+            def as_reader(self) -> RegParamsReader: ...
 
         @override
         def new_message(
-            self,
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            cap: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None,
-            regName: str | None = None,
-            categoryId: str | None = None,
-            xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder | dict[str, Any] | None = None,
-        ) -> _RegistrarModule._RegParamsModule.Builder: ...
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cap: _IdentifiableModule.IdentifiableClient | _IdentifiableModule.Server | None = None, regName: str | None = None, categoryId: str | None = None, xDomain: CrossDomainRestoreBuilder | dict[str, Any] | None = None
+        ) -> RegParamsBuilder: ...
 
-    RegParamsReader: TypeAlias = _RegParamsModule.Reader
-    RegParamsBuilder: TypeAlias = _RegParamsModule.Builder
+    type RegParamsReader = _RegParamsModule.Reader
+    type RegParamsBuilder = _RegParamsModule.Builder
     RegParams: _RegParamsModule
     class _UnregisterModule(_InterfaceModule):
         class UnregisterRequest(Protocol):
@@ -364,7 +356,7 @@ class _RegistrarModule(_IdentifiableModule):
             def unregister_request(self) -> _RegistrarModule._UnregisterModule.UnregisterRequest: ...
 
     Unregister: _UnregisterModule
-    UnregisterClient: TypeAlias = _RegistrarModule._UnregisterModule.UnregisterClient
+    type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient
     class RegisterRequest(Protocol):
         cap: IdentifiableClient | _IdentifiableModule.Server
         regName: str
@@ -402,13 +394,15 @@ class _RegistrarModule(_IdentifiableModule):
         def register_request(self, cap: IdentifiableClient | _IdentifiableModule.Server | None = None, regName: str | None = None, categoryId: str | None = None, xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder | None = None) -> _RegistrarModule.RegisterRequest: ...
 
 Registrar: _RegistrarModule
-RegistrarClient: TypeAlias = _RegistrarModule.RegistrarClient
 
 # Top-level type aliases for use in type annotations
-CrossDomainRestoreBuilder: TypeAlias = _RegistrarModule._CrossDomainRestoreModule.Builder
-CrossDomainRestoreReader: TypeAlias = _RegistrarModule._CrossDomainRestoreModule.Reader
-EntryBuilder: TypeAlias = _RegistryModule._EntryModule.Builder
-EntryReader: TypeAlias = _RegistryModule._EntryModule.Reader
-RegParamsBuilder: TypeAlias = _RegistrarModule._RegParamsModule.Builder
-RegParamsReader: TypeAlias = _RegistrarModule._RegParamsModule.Reader
-UnregisterClient: TypeAlias = _RegistrarModule._UnregisterModule.UnregisterClient
+type AdminClient = _AdminModule.AdminClient
+type CrossDomainRestoreBuilder = _RegistrarModule._CrossDomainRestoreModule.Builder
+type CrossDomainRestoreReader = _RegistrarModule._CrossDomainRestoreModule.Reader
+type EntryBuilder = _RegistryModule._EntryModule.Builder
+type EntryReader = _RegistryModule._EntryModule.Reader
+type RegParamsBuilder = _RegistrarModule._RegParamsModule.Builder
+type RegParamsReader = _RegistrarModule._RegParamsModule.Reader
+type RegistrarClient = _RegistrarModule.RegistrarClient
+type RegistryClient = _RegistryModule.RegistryClient
+type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient

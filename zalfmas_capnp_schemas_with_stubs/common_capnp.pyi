@@ -4,17 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from typing import (
-    Any,
-    Generic,
-    Literal,
-    NamedTuple,
-    Protocol,
-    TypeAlias,
-    TypeVar,
-    overload,
-    override,
-)
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -27,8 +17,8 @@ from capnp.lib.capnp import (
     _StructModule,
 )
 
-_ValueModule_F = TypeVar("_ValueModule_F")
-_ValueModule_S = TypeVar("_ValueModule_S")
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _IdInformationModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -39,7 +29,7 @@ class _IdInformationModule(_StructModule):
         @property
         def description(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _IdInformationModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> IdInformationBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -55,13 +45,11 @@ class _IdInformationModule(_StructModule):
         @description.setter
         def description(self, value: str) -> None: ...
         @override
-        def as_reader(self) -> _IdInformationModule.Reader: ...
+        def as_reader(self) -> IdInformationReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, description: str | None = None) -> _IdInformationModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, description: str | None = None) -> IdInformationBuilder: ...
 
-IdInformationReader: TypeAlias = _IdInformationModule.Reader
-IdInformationBuilder: TypeAlias = _IdInformationModule.Builder
 IdInformation: _IdInformationModule
 
 class _IdentifiableModule(_InterfaceModule):
@@ -98,7 +86,6 @@ class _IdentifiableModule(_InterfaceModule):
         def info_request(self) -> _IdentifiableModule.InfoRequest: ...
 
 Identifiable: _IdentifiableModule
-IdentifiableClient: TypeAlias = _IdentifiableModule.IdentifiableClient
 
 class _StructuredTextModule(_StructModule):
     class _TypeModule(Enum):
@@ -108,7 +95,7 @@ class _StructuredTextModule(_StructModule):
         toml = 3
         sturdyRef = 4
 
-    Type: TypeAlias = _TypeModule
+    type Type = _TypeModule
     class _StructureModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -122,7 +109,7 @@ class _StructuredTextModule(_StructModule):
             @override
             def which(self) -> Literal["none", "json", "xml", "toml"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StructuredTextModule._StructureModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> StructureBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -144,23 +131,23 @@ class _StructuredTextModule(_StructModule):
             @override
             def which(self) -> Literal["none", "json", "xml", "toml"]: ...
             @override
-            def as_reader(self) -> _StructuredTextModule._StructureModule.Reader: ...
+            def as_reader(self) -> StructureReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, none: None | None = None, json: None | None = None, xml: None | None = None, toml: None | None = None) -> _StructuredTextModule._StructureModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, none: None | None = None, json: None | None = None, xml: None | None = None, toml: None | None = None) -> StructureBuilder: ...
 
-    StructureReader: TypeAlias = _StructureModule.Reader
-    StructureBuilder: TypeAlias = _StructureModule.Builder
+    type StructureReader = _StructureModule.Reader
+    type StructureBuilder = _StructureModule.Builder
     Structure: _StructureModule
     class Reader(_DynamicStructReader):
         @property
         def value(self) -> str: ...
         @property
-        def structure(self) -> _StructuredTextModule._StructureModule.Reader: ...
+        def structure(self) -> StructureReader: ...
         @property
         def type(self) -> _StructuredTextModule._TypeModule: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StructuredTextModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> StructuredTextBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -168,59 +155,51 @@ class _StructuredTextModule(_StructModule):
         @value.setter
         def value(self, value: str) -> None: ...
         @property
-        def structure(self) -> _StructuredTextModule._StructureModule.Builder: ...
+        def structure(self) -> StructureBuilder: ...
         @structure.setter
-        def structure(self, value: _StructuredTextModule._StructureModule.Builder | _StructuredTextModule._StructureModule.Reader | dict[str, Any]) -> None: ...
+        def structure(self, value: StructureBuilder | StructureReader | dict[str, Any]) -> None: ...
         @property
         def type(self) -> _StructuredTextModule._TypeModule: ...
         @type.setter
         def type(self, value: _StructuredTextModule._TypeModule | Literal["unstructured", "json", "xml", "toml", "sturdyRef"]) -> None: ...
         def init(self, field: Literal["structure"], size: int | None = None) -> _StructuredTextModule._StructureModule.Builder: ...
         @override
-        def as_reader(self) -> _StructuredTextModule.Reader: ...
+        def as_reader(self) -> StructuredTextReader: ...
 
     @override
     def new_message(
-        self,
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        value: str | None = None,
-        structure: _StructuredTextModule._StructureModule.Builder | dict[str, Any] | None = None,
-        type: _StructuredTextModule._TypeModule | Literal["unstructured", "json", "xml", "toml", "sturdyRef"] | None = None,
-    ) -> _StructuredTextModule.Builder: ...
+        self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, value: str | None = None, structure: StructureBuilder | dict[str, Any] | None = None, type: _StructuredTextModule._TypeModule | Literal["unstructured", "json", "xml", "toml", "sturdyRef"] | None = None
+    ) -> StructuredTextBuilder: ...
 
-StructuredTextReader: TypeAlias = _StructuredTextModule.Reader
-StructuredTextBuilder: TypeAlias = _StructuredTextModule.Builder
 StructuredText: _StructuredTextModule
 
-class _PairModule(Generic[_ValueModule_F, _ValueModule_S], _StructModule):
+class _PairModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def fst(self) -> _ValueModule_F: ...
+        def fst(self) -> _DynamicObjectReader: ...
         @property
-        def snd(self) -> _ValueModule_S: ...
+        def snd(self) -> _DynamicObjectReader: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _PairModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> PairBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def fst(self) -> _ValueModule_F: ...
+        def fst(self) -> _DynamicObjectReader: ...
         @fst.setter
-        def fst(self, value: _ValueModule_F) -> None: ...
+        def fst(self, value: AnyPointer) -> None: ...
         @property
-        def snd(self) -> _ValueModule_S: ...
+        def snd(self) -> _DynamicObjectReader: ...
         @snd.setter
-        def snd(self, value: _ValueModule_S) -> None: ...
+        def snd(self, value: AnyPointer) -> None: ...
         @override
-        def as_reader(self) -> _PairModule.Reader: ...
+        def as_reader(self) -> PairReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, fst: _ValueModule_F | None = None, snd: _ValueModule_S | None = None) -> _PairModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, fst: AnyPointer | None = None, snd: AnyPointer | None = None) -> PairBuilder: ...
+
+Pair: _PairModule
 
 class _ValueModule(_StructModule):
-    PairReader: TypeAlias = _PairModule.Reader
-    PairBuilder: TypeAlias = _PairModule.Builder
-    Pair: _PairModule
     class Reader(_DynamicStructReader):
         @property
         def f64(self) -> float: ...
@@ -281,11 +260,11 @@ class _ValueModule(_StructModule):
         @property
         def lcap(self) -> Sequence[_DynamicObjectReader]: ...
         @property
-        def lpair(self) -> Sequence[_PairModule.Reader]: ...
+        def lpair(self) -> Sequence[PairReader]: ...
         @override
         def which(self) -> Literal["f64", "f32", "i64", "i32", "i16", "i8", "ui64", "ui32", "ui16", "ui8", "b", "t", "d", "p", "cap", "lf64", "lf32", "li64", "li32", "li16", "li8", "lui64", "lui32", "lui16", "lui8", "lb", "lt", "ld", "lcap", "lpair"]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ValueModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ValueBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -405,9 +384,9 @@ class _ValueModule(_StructModule):
         @lcap.setter
         def lcap(self, value: Sequence[_DynamicObjectReader]) -> None: ...
         @property
-        def lpair(self) -> MutableSequence[_PairModule.Builder]: ...
+        def lpair(self) -> MutableSequence[PairBuilder]: ...
         @lpair.setter
-        def lpair(self, value: Sequence[_PairModule.Builder | _PairModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def lpair(self, value: Sequence[PairBuilder | PairReader] | Sequence[dict[str, Any]]) -> None: ...
         @override
         def which(self) -> Literal["f64", "f32", "i64", "i32", "i16", "i8", "ui64", "ui32", "ui16", "ui8", "b", "t", "d", "p", "cap", "lf64", "lf32", "li64", "li32", "li16", "li8", "lui64", "lui32", "lui16", "lui8", "lb", "lt", "ld", "lcap", "lpair"]: ...
         @overload
@@ -443,7 +422,7 @@ class _ValueModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _ValueModule.Reader: ...
+        def as_reader(self) -> ValueReader: ...
 
     @override
     def new_message(
@@ -479,11 +458,9 @@ class _ValueModule(_StructModule):
         lt: Sequence[str] | None = None,
         ld: Sequence[bytes] | None = None,
         lcap: Sequence[_DynamicObjectReader] | None = None,
-        lpair: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None,
-    ) -> _ValueModule.Builder: ...
+        lpair: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
+    ) -> ValueBuilder: ...
 
-ValueReader: TypeAlias = _ValueModule.Reader
-ValueBuilder: TypeAlias = _ValueModule.Builder
 Value: _ValueModule
 
 class _HolderModule(_InterfaceModule):
@@ -494,10 +471,10 @@ class _HolderModule(_InterfaceModule):
     def _new_client(cls, server: _HolderModule.Server) -> _HolderModule.HolderClient: ...
     class Server(_DynamicCapabilityServer):
         class ValueResult(Awaitable[ValueResult], Protocol):
-            value: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            value: AnyPointer
 
         class ValueResultTuple(NamedTuple):
-            value: str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+            value: AnyPointer
 
         class ValueCallContext(Protocol):
             params: _HolderModule.ValueRequest
@@ -514,7 +491,6 @@ class _HolderModule(_InterfaceModule):
         def value_request(self) -> _HolderModule.ValueRequest: ...
 
 Holder: _HolderModule
-HolderClient: TypeAlias = _HolderModule.HolderClient
 
 class _IdentifiableHolderModule(_IdentifiableModule, _HolderModule):
     @classmethod
@@ -523,8 +499,19 @@ class _IdentifiableHolderModule(_IdentifiableModule, _HolderModule):
     class IdentifiableHolderClient(_IdentifiableModule.IdentifiableClient, _HolderModule.HolderClient): ...
 
 IdentifiableHolder: _IdentifiableHolderModule
-IdentifiableHolderClient: TypeAlias = _IdentifiableHolderModule.IdentifiableHolderClient
 
 # Top-level type aliases for use in type annotations
-StructureBuilder: TypeAlias = _StructuredTextModule._StructureModule.Builder
-StructureReader: TypeAlias = _StructuredTextModule._StructureModule.Reader
+type HolderClient = _HolderModule.HolderClient
+type IdInformationBuilder = _IdInformationModule.Builder
+type IdInformationReader = _IdInformationModule.Reader
+type IdentifiableClient = _IdentifiableModule.IdentifiableClient
+type IdentifiableHolderClient = _IdentifiableHolderModule.IdentifiableHolderClient
+type PairBuilder = _PairModule.Builder
+type PairReader = _PairModule.Reader
+type StructureBuilder = _StructuredTextModule._StructureModule.Builder
+type StructureReader = _StructuredTextModule._StructureModule.Reader
+type StructuredTextBuilder = _StructuredTextModule.Builder
+type StructuredTextReader = _StructuredTextModule.Reader
+type Type = _StructuredTextModule._TypeModule
+type ValueBuilder = _ValueModule.Builder
+type ValueReader = _ValueModule.Reader

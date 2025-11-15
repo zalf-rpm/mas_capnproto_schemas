@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator
-from typing import Any, NamedTuple, Protocol, TypeAlias
+from typing import Any, NamedTuple, Protocol
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -52,4 +52,6 @@ class _DWLABImportModule(_InterfaceModule):
         def importData_request(self, id: str | None = None, dwla: bytes | None = None, dwlb: bytes | None = None) -> _DWLABImportModule.ImportdataRequest: ...
 
 DWLABImport: _DWLABImportModule
-DWLABImportClient: TypeAlias = _DWLABImportModule.DWLABImportClient
+
+# Top-level type aliases for use in type annotations
+type DWLABImportClient = _DWLABImportModule.DWLABImportClient

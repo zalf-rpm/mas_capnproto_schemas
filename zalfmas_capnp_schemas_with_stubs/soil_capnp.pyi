@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -22,8 +22,6 @@ from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 class _STypeModule(Enum):
     unknown = 0
     ka5 = 1
-
-SType: TypeAlias = _STypeModule
 
 class _PropertyNameModule(Enum):
     soilType = 0
@@ -47,8 +45,6 @@ class _PropertyNameModule(Enum):
     inGroundwater = 18
     impenetrable = 19
 
-PropertyName: TypeAlias = _PropertyNameModule
-
 class _LayerModule(_StructModule):
     class _PropertyModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -65,7 +61,7 @@ class _LayerModule(_StructModule):
             @override
             def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LayerModule._PropertyModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> PropertyBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -95,7 +91,7 @@ class _LayerModule(_StructModule):
             @override
             def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
             @override
-            def as_reader(self) -> _LayerModule._PropertyModule.Reader: ...
+            def as_reader(self) -> PropertyReader: ...
 
         @override
         def new_message(
@@ -109,26 +105,26 @@ class _LayerModule(_StructModule):
             bValue: bool | None = None,
             type: str | None = None,
             unset: None | None = None,
-        ) -> _LayerModule._PropertyModule.Builder: ...
+        ) -> PropertyBuilder: ...
 
-    PropertyReader: TypeAlias = _PropertyModule.Reader
-    PropertyBuilder: TypeAlias = _PropertyModule.Builder
+    type PropertyReader = _PropertyModule.Reader
+    type PropertyBuilder = _PropertyModule.Builder
     Property: _PropertyModule
     class Reader(_DynamicStructReader):
         @property
-        def properties(self) -> Sequence[_LayerModule._PropertyModule.Reader]: ...
+        def properties(self) -> Sequence[PropertyReader]: ...
         @property
         def size(self) -> float: ...
         @property
         def description(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LayerModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> LayerBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def properties(self) -> MutableSequence[_LayerModule._PropertyModule.Builder]: ...
+        def properties(self) -> MutableSequence[PropertyBuilder]: ...
         @properties.setter
-        def properties(self, value: Sequence[_LayerModule._PropertyModule.Builder | _LayerModule._PropertyModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def properties(self, value: Sequence[PropertyBuilder | PropertyReader] | Sequence[dict[str, Any]]) -> None: ...
         @property
         def size(self) -> float: ...
         @size.setter
@@ -139,13 +135,11 @@ class _LayerModule(_StructModule):
         def description(self, value: str) -> None: ...
         def init(self, field: Literal["properties"], size: int | None = None) -> MutableSequence[_LayerModule._PropertyModule.Builder]: ...
         @override
-        def as_reader(self) -> _LayerModule.Reader: ...
+        def as_reader(self) -> LayerReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, properties: Sequence[_LayerModule._PropertyModule.Builder] | Sequence[dict[str, Any]] | None = None, size: float | None = None, description: str | None = None) -> _LayerModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, properties: Sequence[PropertyBuilder] | Sequence[dict[str, Any]] | None = None, size: float | None = None, description: str | None = None) -> LayerBuilder: ...
 
-LayerReader: TypeAlias = _LayerModule.Reader
-LayerBuilder: TypeAlias = _LayerModule.Builder
 Layer: _LayerModule
 
 class _QueryModule(_StructModule):
@@ -158,7 +152,7 @@ class _QueryModule(_StructModule):
             @property
             def optional(self) -> Sequence[_PropertyNameModule]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _QueryModule._ResultModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ResultBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -180,13 +174,13 @@ class _QueryModule(_StructModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _QueryModule._ResultModule.Reader: ...
+            def as_reader(self) -> ResultReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, failed: bool | None = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None) -> _QueryModule._ResultModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, failed: bool | None = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None) -> ResultBuilder: ...
 
-    ResultReader: TypeAlias = _ResultModule.Reader
-    ResultBuilder: TypeAlias = _ResultModule.Builder
+    type ResultReader = _ResultModule.Reader
+    type ResultBuilder = _ResultModule.Builder
     Result: _ResultModule
     class Reader(_DynamicStructReader):
         @property
@@ -196,7 +190,7 @@ class _QueryModule(_StructModule):
         @property
         def onlyRawData(self) -> bool: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _QueryModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> QueryBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -218,42 +212,38 @@ class _QueryModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _QueryModule.Reader: ...
+        def as_reader(self) -> QueryReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _QueryModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> QueryBuilder: ...
 
-QueryReader: TypeAlias = _QueryModule.Reader
-QueryBuilder: TypeAlias = _QueryModule.Builder
 Query: _QueryModule
 
 class _ProfileDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def layers(self) -> Sequence[_LayerModule.Reader]: ...
+        def layers(self) -> Sequence[LayerReader]: ...
         @property
         def percentageOfArea(self) -> float: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ProfileDataModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ProfileDataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def layers(self) -> MutableSequence[_LayerModule.Builder]: ...
+        def layers(self) -> MutableSequence[LayerBuilder]: ...
         @layers.setter
-        def layers(self, value: Sequence[_LayerModule.Builder | _LayerModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def layers(self, value: Sequence[LayerBuilder | LayerReader] | Sequence[dict[str, Any]]) -> None: ...
         @property
         def percentageOfArea(self) -> float: ...
         @percentageOfArea.setter
         def percentageOfArea(self, value: float) -> None: ...
         def init(self, field: Literal["layers"], size: int | None = None) -> MutableSequence[_LayerModule.Builder]: ...
         @override
-        def as_reader(self) -> _ProfileDataModule.Reader: ...
+        def as_reader(self) -> ProfileDataReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, layers: Sequence[_LayerModule.Builder] | Sequence[dict[str, Any]] | None = None, percentageOfArea: float | None = None) -> _ProfileDataModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None, percentageOfArea: float | None = None) -> ProfileDataBuilder: ...
 
-ProfileDataReader: TypeAlias = _ProfileDataModule.Reader
-ProfileDataBuilder: TypeAlias = _ProfileDataModule.Builder
 ProfileData: _ProfileDataModule
 
 class _ProfileModule(_IdentifiableModule, _PersistentModule):
@@ -310,7 +300,6 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
         def geoLocation_request(self) -> _ProfileModule.GeolocationRequest: ...
 
 Profile: _ProfileModule
-ProfileClient: TypeAlias = _ProfileModule.ProfileClient
 
 class _ServiceModule(_IdentifiableModule, _PersistentModule):
     class _StreamModule(_InterfaceModule):
@@ -342,7 +331,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             def nextProfiles_request(self, maxCount: int | None = None) -> _ServiceModule._StreamModule.NextprofilesRequest: ...
 
     Stream: _StreamModule
-    StreamClient: TypeAlias = _ServiceModule._StreamModule.StreamClient
+    type StreamClient = _ServiceModule._StreamModule.StreamClient
     class CheckavailableparametersRequest(Protocol):
         mandatory: Sequence[_PropertyNameModule]
         optional: Sequence[_PropertyNameModule]
@@ -457,7 +446,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         def checkAvailableParameters(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.CheckavailableparametersResult: ...
         def getAllAvailableParameters(self, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
-        def closestProfilesAt(self, query: _QueryModule | dict[str, Any] | None = None) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
+        def closestProfilesAt(self, query: QueryBuilder | QueryReader | dict[str, Any] | None = None) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
         def streamAllProfiles(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
         def checkAvailableParameters_request(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.CheckavailableparametersRequest: ...
         def getAllAvailableParameters_request(self, onlyRawData: bool | None = None) -> _ServiceModule.GetallavailableparametersRequest: ...
@@ -465,11 +454,20 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         def streamAllProfiles_request(self, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> _ServiceModule.StreamallprofilesRequest: ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
 
 # Top-level type aliases for use in type annotations
-PropertyBuilder: TypeAlias = _LayerModule._PropertyModule.Builder
-PropertyReader: TypeAlias = _LayerModule._PropertyModule.Reader
-ResultBuilder: TypeAlias = _QueryModule._ResultModule.Builder
-ResultReader: TypeAlias = _QueryModule._ResultModule.Reader
-StreamClient: TypeAlias = _ServiceModule._StreamModule.StreamClient
+type LayerBuilder = _LayerModule.Builder
+type LayerReader = _LayerModule.Reader
+type ProfileClient = _ProfileModule.ProfileClient
+type ProfileDataBuilder = _ProfileDataModule.Builder
+type ProfileDataReader = _ProfileDataModule.Reader
+type PropertyBuilder = _LayerModule._PropertyModule.Builder
+type PropertyName = _PropertyNameModule
+type PropertyReader = _LayerModule._PropertyModule.Reader
+type QueryBuilder = _QueryModule.Builder
+type QueryReader = _QueryModule.Reader
+type ResultBuilder = _QueryModule._ResultModule.Builder
+type ResultReader = _QueryModule._ResultModule.Reader
+type SType = _STypeModule
+type ServiceClient = _ServiceModule.ServiceClient
+type StreamClient = _ServiceModule._StreamModule.StreamClient

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -116,7 +116,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                         "anyValue",
                     ]: ...
                     @override
-                    def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
+                    def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ValueBuilder: ...
 
                 class Builder(_DynamicStructBuilder):
                     @property
@@ -288,7 +288,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     @overload
                     def init(self, field: str, size: int | None = None) -> Any: ...
                     @override
-                    def as_reader(self) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Reader: ...
+                    def as_reader(self) -> ValueReader: ...
 
                 @override
                 def new_message(
@@ -322,10 +322,10 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     dataValue: bytes | None = None,
                     dataListValue: Sequence[bytes] | None = None,
                     anyValue: Any | None = None,
-                ) -> _StoreModule._ContainerModule._EntryModule._ValueModule.Builder: ...
+                ) -> ValueBuilder: ...
 
-            ValueReader: TypeAlias = _ValueModule.Reader
-            ValueBuilder: TypeAlias = _ValueModule.Builder
+            type ValueReader = _ValueModule.Reader
+            type ValueBuilder = _ValueModule.Builder
             Value: _ValueModule
             class GetkeyRequest(Protocol):
                 def send(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetkeyResult: ...
@@ -402,7 +402,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 def setValue_request(self, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | None = None) -> _StoreModule._ContainerModule._EntryModule.SetvalueRequest: ...
 
         Entry: _EntryModule
-        EntryClient: TypeAlias = _StoreModule._ContainerModule._EntryModule.EntryClient
+        type EntryClient = _StoreModule._ContainerModule._EntryModule.EntryClient
         class _KeyAndEntryModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
@@ -410,7 +410,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 @property
                 def entry(self) -> _StoreModule._ContainerModule._EntryModule.EntryClient: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ContainerModule._KeyAndEntryModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> KeyAndEntryBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -422,15 +422,13 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 @entry.setter
                 def entry(self, value: _StoreModule._ContainerModule._EntryModule.EntryClient | _StoreModule._ContainerModule._EntryModule.Server) -> None: ...
                 @override
-                def as_reader(self) -> _StoreModule._ContainerModule._KeyAndEntryModule.Reader: ...
+                def as_reader(self) -> KeyAndEntryReader: ...
 
             @override
-            def new_message(
-                self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, entry: _StoreModule._ContainerModule._EntryModule.EntryClient | _StoreModule._ContainerModule._EntryModule.Server | None = None
-            ) -> _StoreModule._ContainerModule._KeyAndEntryModule.Builder: ...
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, entry: _StoreModule._ContainerModule._EntryModule.EntryClient | _StoreModule._ContainerModule._EntryModule.Server | None = None) -> KeyAndEntryBuilder: ...
 
-        KeyAndEntryReader: TypeAlias = _KeyAndEntryModule.Reader
-        KeyAndEntryBuilder: TypeAlias = _KeyAndEntryModule.Builder
+        type KeyAndEntryReader = _KeyAndEntryModule.Reader
+        type KeyAndEntryBuilder = _KeyAndEntryModule.Builder
         KeyAndEntry: _KeyAndEntryModule
         class ExportRequest(Protocol):
             def send(self) -> _StoreModule._ContainerModule.ContainerClient.ExportResult: ...
@@ -591,7 +589,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def addEntry_request(self, key: str | None = None, value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder | None = None, replaceExisting: bool | None = None) -> _StoreModule._ContainerModule.AddentryRequest: ...
 
     Container: _ContainerModule
-    ContainerClient: TypeAlias = _StoreModule._ContainerModule.ContainerClient
+    type ContainerClient = _StoreModule._ContainerModule.ContainerClient
     class _InfoAndContainerModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -601,7 +599,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             @property
             def container(self) -> _StoreModule._ContainerModule.ContainerClient: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._InfoAndContainerModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> InfoAndContainerBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -617,13 +615,13 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             @container.setter
             def container(self, value: _StoreModule._ContainerModule.ContainerClient | _StoreModule._ContainerModule.Server) -> None: ...
             @override
-            def as_reader(self) -> _StoreModule._InfoAndContainerModule.Reader: ...
+            def as_reader(self) -> InfoAndContainerReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, container: _StoreModule._ContainerModule.ContainerClient | _StoreModule._ContainerModule.Server | None = None) -> _StoreModule._InfoAndContainerModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, container: _StoreModule._ContainerModule.ContainerClient | _StoreModule._ContainerModule.Server | None = None) -> InfoAndContainerBuilder: ...
 
-    InfoAndContainerReader: TypeAlias = _InfoAndContainerModule.Reader
-    InfoAndContainerBuilder: TypeAlias = _InfoAndContainerModule.Builder
+    type InfoAndContainerReader = _InfoAndContainerModule.Reader
+    type InfoAndContainerBuilder = _InfoAndContainerModule.Builder
     InfoAndContainer: _InfoAndContainerModule
     class _ImportExportDataModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -634,7 +632,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             @property
             def isAnyValue(self) -> Sequence[bool]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _StoreModule._ImportExportDataModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ImportExportDataBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -658,15 +656,15 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _StoreModule._ImportExportDataModule.Reader: ...
+            def as_reader(self) -> ImportExportDataReader: ...
 
         @override
         def new_message(
             self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, info: _IdInformationModule.Builder | dict[str, Any] | None = None, entries: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, isAnyValue: Sequence[bool] | None = None
-        ) -> _StoreModule._ImportExportDataModule.Builder: ...
+        ) -> ImportExportDataBuilder: ...
 
-    ImportExportDataReader: TypeAlias = _ImportExportDataModule.Reader
-    ImportExportDataBuilder: TypeAlias = _ImportExportDataModule.Builder
+    type ImportExportDataReader = _ImportExportDataModule.Reader
+    type ImportExportDataBuilder = _ImportExportDataModule.Builder
     ImportExportData: _ImportExportDataModule
     class NewcontainerRequest(Protocol):
         name: str
@@ -780,16 +778,16 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
         def importContainer_request(self, json: str | None = None) -> _StoreModule.ImportcontainerRequest: ...
 
 Store: _StoreModule
-StoreClient: TypeAlias = _StoreModule.StoreClient
 
 # Top-level type aliases for use in type annotations
-ContainerClient: TypeAlias = _StoreModule._ContainerModule.ContainerClient
-EntryClient: TypeAlias = _StoreModule._ContainerModule._EntryModule.EntryClient
-ImportExportDataBuilder: TypeAlias = _StoreModule._ImportExportDataModule.Builder
-ImportExportDataReader: TypeAlias = _StoreModule._ImportExportDataModule.Reader
-InfoAndContainerBuilder: TypeAlias = _StoreModule._InfoAndContainerModule.Builder
-InfoAndContainerReader: TypeAlias = _StoreModule._InfoAndContainerModule.Reader
-KeyAndEntryBuilder: TypeAlias = _StoreModule._ContainerModule._KeyAndEntryModule.Builder
-KeyAndEntryReader: TypeAlias = _StoreModule._ContainerModule._KeyAndEntryModule.Reader
-ValueBuilder: TypeAlias = _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-ValueReader: TypeAlias = _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
+type ContainerClient = _StoreModule._ContainerModule.ContainerClient
+type EntryClient = _StoreModule._ContainerModule._EntryModule.EntryClient
+type ImportExportDataBuilder = _StoreModule._ImportExportDataModule.Builder
+type ImportExportDataReader = _StoreModule._ImportExportDataModule.Reader
+type InfoAndContainerBuilder = _StoreModule._InfoAndContainerModule.Builder
+type InfoAndContainerReader = _StoreModule._InfoAndContainerModule.Reader
+type KeyAndEntryBuilder = _StoreModule._ContainerModule._KeyAndEntryModule.Builder
+type KeyAndEntryReader = _StoreModule._ContainerModule._KeyAndEntryModule.Reader
+type StoreClient = _StoreModule.StoreClient
+type ValueBuilder = _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
+type ValueReader = _StoreModule._ContainerModule._EntryModule._ValueModule.Reader

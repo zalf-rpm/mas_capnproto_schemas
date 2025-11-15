@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, TypeAlias, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -23,7 +23,7 @@ class _DateModule(_StructModule):
         @property
         def day(self) -> int: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _DateModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> DateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -39,11 +39,13 @@ class _DateModule(_StructModule):
         @day.setter
         def day(self, value: int) -> None: ...
         @override
-        def as_reader(self) -> _DateModule.Reader: ...
+        def as_reader(self) -> DateReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, month: int | None = None, day: int | None = None) -> _DateModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, month: int | None = None, day: int | None = None) -> DateBuilder: ...
 
-DateReader: TypeAlias = _DateModule.Reader
-DateBuilder: TypeAlias = _DateModule.Builder
 Date: _DateModule
+
+# Top-level type aliases for use in type annotations
+type DateBuilder = _DateModule.Builder
+type DateReader = _DateModule.Reader

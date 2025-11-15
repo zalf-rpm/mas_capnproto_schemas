@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -39,7 +39,7 @@ class _ILRDatesModule(_StructModule):
         @property
         def latestHarvest(self) -> _DateModule.Reader: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ILRDatesModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ILRDatesBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -75,7 +75,7 @@ class _ILRDatesModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _ILRDatesModule.Reader: ...
+        def as_reader(self) -> ILRDatesReader: ...
 
     @override
     def new_message(
@@ -87,10 +87,8 @@ class _ILRDatesModule(_StructModule):
         latestSowing: _DateModule.Builder | dict[str, Any] | None = None,
         harvest: _DateModule.Builder | dict[str, Any] | None = None,
         latestHarvest: _DateModule.Builder | dict[str, Any] | None = None,
-    ) -> _ILRDatesModule.Builder: ...
+    ) -> ILRDatesBuilder: ...
 
-ILRDatesReader: TypeAlias = _ILRDatesModule.Reader
-ILRDatesBuilder: TypeAlias = _ILRDatesModule.Builder
 ILRDates: _ILRDatesModule
 
 class _EventTypeModule(Enum):
@@ -107,8 +105,6 @@ class _EventTypeModule(Enum):
     setValue = 10
     saveState = 11
 
-EventType: TypeAlias = _EventTypeModule
-
 class _PlantOrganModule(Enum):
     root = 0
     leaf = 1
@@ -116,8 +112,6 @@ class _PlantOrganModule(Enum):
     fruit = 3
     strukt = 4
     sugar = 5
-
-PlantOrgan: TypeAlias = _PlantOrganModule
 
 class _EventModule(_StructModule):
     class _ExternalTypeModule(Enum):
@@ -135,14 +129,14 @@ class _EventModule(_StructModule):
         saveState = 11
         weather = 12
 
-    ExternalType: TypeAlias = _ExternalTypeModule
+    type ExternalType = _ExternalTypeModule
     class _PhenoStageModule(Enum):
         emergence = 0
         flowering = 1
         anthesis = 2
         maturity = 3
 
-    PhenoStage: TypeAlias = _PhenoStageModule
+    type PhenoStage = _PhenoStageModule
     class _TypeModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -152,7 +146,7 @@ class _EventModule(_StructModule):
             @override
             def which(self) -> Literal["external", "internal"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._TypeModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> TypeBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -166,7 +160,7 @@ class _EventModule(_StructModule):
             @override
             def which(self) -> Literal["external", "internal"]: ...
             @override
-            def as_reader(self) -> _EventModule._TypeModule.Reader: ...
+            def as_reader(self) -> TypeReader: ...
 
         @override
         def new_message(
@@ -175,17 +169,17 @@ class _EventModule(_StructModule):
             allocate_seg_callable: Any = None,
             external: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting", "setValue", "saveState", "weather"] | None = None,
             internal: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"] | None = None,
-        ) -> _EventModule._TypeModule.Builder: ...
+        ) -> TypeBuilder: ...
 
-    TypeReader: TypeAlias = _TypeModule.Reader
-    TypeBuilder: TypeAlias = _TypeModule.Builder
+    type TypeReader = _TypeModule.Reader
+    type TypeBuilder = _TypeModule.Builder
     Type: _TypeModule
     class _AtModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def date(self) -> _DateModule.Reader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._AtModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AtBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -194,13 +188,13 @@ class _EventModule(_StructModule):
             def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
             def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
             @override
-            def as_reader(self) -> _EventModule._AtModule.Reader: ...
+            def as_reader(self) -> AtReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> _EventModule._AtModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> AtBuilder: ...
 
-    AtReader: TypeAlias = _AtModule.Reader
-    AtBuilder: TypeAlias = _AtModule.Builder
+    type AtReader = _AtModule.Reader
+    type AtBuilder = _AtModule.Builder
     At: _AtModule
     class _BetweenModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -209,7 +203,7 @@ class _EventModule(_StructModule):
             @property
             def latest(self) -> _DateModule.Reader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._BetweenModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> BetweenBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -227,41 +221,41 @@ class _EventModule(_StructModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _EventModule._BetweenModule.Reader: ...
+            def as_reader(self) -> BetweenReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, earliest: _DateModule.Builder | dict[str, Any] | None = None, latest: _DateModule.Builder | dict[str, Any] | None = None) -> _EventModule._BetweenModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, earliest: _DateModule.Builder | dict[str, Any] | None = None, latest: _DateModule.Builder | dict[str, Any] | None = None) -> BetweenBuilder: ...
 
-    BetweenReader: TypeAlias = _BetweenModule.Reader
-    BetweenBuilder: TypeAlias = _BetweenModule.Builder
+    type BetweenReader = _BetweenModule.Reader
+    type BetweenBuilder = _BetweenModule.Builder
     Between: _BetweenModule
     class _AfterModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def event(self) -> _EventModule._TypeModule.Reader: ...
+            def event(self) -> TypeReader: ...
             @property
             def days(self) -> int: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule._AfterModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AfterBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def event(self) -> _EventModule._TypeModule.Builder: ...
+            def event(self) -> TypeBuilder: ...
             @event.setter
-            def event(self, value: _EventModule._TypeModule.Builder | _EventModule._TypeModule.Reader | dict[str, Any]) -> None: ...
+            def event(self, value: TypeBuilder | TypeReader | dict[str, Any]) -> None: ...
             @property
             def days(self) -> int: ...
             @days.setter
             def days(self, value: int) -> None: ...
             def init(self, field: Literal["event"], size: int | None = None) -> _EventModule._TypeModule.Builder: ...
             @override
-            def as_reader(self) -> _EventModule._AfterModule.Reader: ...
+            def as_reader(self) -> AfterReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, event: _EventModule._TypeModule.Builder | dict[str, Any] | None = None, days: int | None = None) -> _EventModule._AfterModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, event: TypeBuilder | dict[str, Any] | None = None, days: int | None = None) -> AfterBuilder: ...
 
-    AfterReader: TypeAlias = _AfterModule.Reader
-    AfterBuilder: TypeAlias = _AfterModule.Builder
+    type AfterReader = _AfterModule.Reader
+    type AfterBuilder = _AfterModule.Builder
     After: _AfterModule
     class Reader(_DynamicStructReader):
         @property
@@ -269,11 +263,11 @@ class _EventModule(_StructModule):
         @property
         def info(self) -> _IdInformationModule.Reader: ...
         @property
-        def at(self) -> _EventModule._AtModule.Reader: ...
+        def at(self) -> AtReader: ...
         @property
-        def between(self) -> _EventModule._BetweenModule.Reader: ...
+        def between(self) -> BetweenReader: ...
         @property
-        def after(self) -> _EventModule._AfterModule.Reader: ...
+        def after(self) -> AfterReader: ...
         @property
         def params(self) -> Any: ...
         @property
@@ -281,7 +275,7 @@ class _EventModule(_StructModule):
         @override
         def which(self) -> Literal["at", "between", "after"]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EventModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EventBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -293,17 +287,17 @@ class _EventModule(_StructModule):
         @info.setter
         def info(self, value: _IdInformationModule.Builder | _IdInformationModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def at(self) -> _EventModule._AtModule.Builder: ...
+        def at(self) -> AtBuilder: ...
         @at.setter
-        def at(self, value: _EventModule._AtModule.Builder | _EventModule._AtModule.Reader | dict[str, Any]) -> None: ...
+        def at(self, value: AtBuilder | AtReader | dict[str, Any]) -> None: ...
         @property
-        def between(self) -> _EventModule._BetweenModule.Builder: ...
+        def between(self) -> BetweenBuilder: ...
         @between.setter
-        def between(self, value: _EventModule._BetweenModule.Builder | _EventModule._BetweenModule.Reader | dict[str, Any]) -> None: ...
+        def between(self, value: BetweenBuilder | BetweenReader | dict[str, Any]) -> None: ...
         @property
-        def after(self) -> _EventModule._AfterModule.Builder: ...
+        def after(self) -> AfterBuilder: ...
         @after.setter
-        def after(self, value: _EventModule._AfterModule.Builder | _EventModule._AfterModule.Reader | dict[str, Any]) -> None: ...
+        def after(self, value: AfterBuilder | AfterReader | dict[str, Any]) -> None: ...
         @property
         def params(self) -> Any: ...
         @params.setter
@@ -325,7 +319,7 @@ class _EventModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _EventModule.Reader: ...
+        def as_reader(self) -> EventReader: ...
 
     @override
     def new_message(
@@ -334,15 +328,13 @@ class _EventModule(_StructModule):
         allocate_seg_callable: Any = None,
         type: _EventModule._ExternalTypeModule | Literal["sowing", "automaticSowing", "harvest", "automaticHarvest", "irrigation", "tillage", "organicFertilization", "mineralFertilization", "nDemandFertilization", "cutting", "setValue", "saveState", "weather"] | None = None,
         info: _IdInformationModule.Builder | dict[str, Any] | None = None,
-        at: _EventModule._AtModule.Builder | dict[str, Any] | None = None,
-        between: _EventModule._BetweenModule.Builder | dict[str, Any] | None = None,
-        after: _EventModule._AfterModule.Builder | dict[str, Any] | None = None,
+        at: AtBuilder | dict[str, Any] | None = None,
+        between: BetweenBuilder | dict[str, Any] | None = None,
+        after: AfterBuilder | dict[str, Any] | None = None,
         params: Any | None = None,
         runAtStartOfDay: bool | None = None,
-    ) -> _EventModule.Builder: ...
+    ) -> EventBuilder: ...
 
-EventReader: TypeAlias = _EventModule.Reader
-EventBuilder: TypeAlias = _EventModule.Builder
 Event: _EventModule
 
 class _ParamsModule(_StructModule):
@@ -354,7 +346,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def value(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._DailyWeatherModule._KVModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> KVBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -366,7 +358,7 @@ class _ParamsModule(_StructModule):
                 @value.setter
                 def value(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._DailyWeatherModule._KVModule.Reader: ...
+                def as_reader(self) -> KVReader: ...
 
             @override
             def new_message(
@@ -375,31 +367,31 @@ class _ParamsModule(_StructModule):
                 allocate_seg_callable: Any = None,
                 key: Element | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None,
                 value: float | None = None,
-            ) -> _ParamsModule._DailyWeatherModule._KVModule.Builder: ...
+            ) -> KVBuilder: ...
 
-        KVReader: TypeAlias = _KVModule.Reader
-        KVBuilder: TypeAlias = _KVModule.Builder
+        type KVReader = _KVModule.Reader
+        type KVBuilder = _KVModule.Builder
         KV: _KVModule
         class Reader(_DynamicStructReader):
             @property
-            def data(self) -> Sequence[_ParamsModule._DailyWeatherModule._KVModule.Reader]: ...
+            def data(self) -> Sequence[KVReader]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._DailyWeatherModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> DailyWeatherBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def data(self) -> MutableSequence[_ParamsModule._DailyWeatherModule._KVModule.Builder]: ...
+            def data(self) -> MutableSequence[KVBuilder]: ...
             @data.setter
-            def data(self, value: Sequence[_ParamsModule._DailyWeatherModule._KVModule.Builder | _ParamsModule._DailyWeatherModule._KVModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+            def data(self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]) -> None: ...
             def init(self, field: Literal["data"], size: int | None = None) -> MutableSequence[_ParamsModule._DailyWeatherModule._KVModule.Builder]: ...
             @override
-            def as_reader(self) -> _ParamsModule._DailyWeatherModule.Reader: ...
+            def as_reader(self) -> DailyWeatherReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, data: Sequence[_ParamsModule._DailyWeatherModule._KVModule.Builder] | Sequence[dict[str, Any]] | None = None) -> _ParamsModule._DailyWeatherModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, data: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None) -> DailyWeatherBuilder: ...
 
-    DailyWeatherReader: TypeAlias = _DailyWeatherModule.Reader
-    DailyWeatherBuilder: TypeAlias = _DailyWeatherModule.Builder
+    type DailyWeatherReader = _DailyWeatherModule.Reader
+    type DailyWeatherBuilder = _DailyWeatherModule.Builder
     DailyWeather: _DailyWeatherModule
     class _SowingModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -410,7 +402,7 @@ class _ParamsModule(_StructModule):
             @property
             def crop(self) -> _CropModule.CropClient: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._SowingModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SowingBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -426,13 +418,13 @@ class _ParamsModule(_StructModule):
             @crop.setter
             def crop(self, value: _CropModule.CropClient | _CropModule.Server) -> None: ...
             @override
-            def as_reader(self) -> _ParamsModule._SowingModule.Reader: ...
+            def as_reader(self) -> SowingReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cultivar: str | None = None, plantDensity: int | None = None, crop: _CropModule.CropClient | _CropModule.Server | None = None) -> _ParamsModule._SowingModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cultivar: str | None = None, plantDensity: int | None = None, crop: _CropModule.CropClient | _CropModule.Server | None = None) -> SowingBuilder: ...
 
-    SowingReader: TypeAlias = _SowingModule.Reader
-    SowingBuilder: TypeAlias = _SowingModule.Builder
+    type SowingReader = _SowingModule.Reader
+    type SowingBuilder = _SowingModule.Builder
     Sowing: _SowingModule
     class _AutomaticSowingModule(_StructModule):
         class _AvgSoilTempModule(_StructModule):
@@ -444,7 +436,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def sowingIfAboveAvgSoilTemp(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AvgSoilTempBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -460,13 +452,13 @@ class _ParamsModule(_StructModule):
                 @sowingIfAboveAvgSoilTemp.setter
                 def sowingIfAboveAvgSoilTemp(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader: ...
+                def as_reader(self) -> AvgSoilTempReader: ...
 
             @override
-            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilDepthForAveraging: float | None = None, daysInSoilTempWindow: int | None = None, sowingIfAboveAvgSoilTemp: float | None = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, soilDepthForAveraging: float | None = None, daysInSoilTempWindow: int | None = None, sowingIfAboveAvgSoilTemp: float | None = None) -> AvgSoilTempBuilder: ...
 
-        AvgSoilTempReader: TypeAlias = _AvgSoilTempModule.Reader
-        AvgSoilTempBuilder: TypeAlias = _AvgSoilTempModule.Builder
+        type AvgSoilTempReader = _AvgSoilTempModule.Reader
+        type AvgSoilTempBuilder = _AvgSoilTempModule.Builder
         AvgSoilTemp: _AvgSoilTempModule
         class Reader(_DynamicStructReader):
             @property
@@ -486,11 +478,11 @@ class _ParamsModule(_StructModule):
             @property
             def baseTemp(self) -> float: ...
             @property
-            def avgSoilTemp(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader: ...
+            def avgSoilTemp(self) -> AvgSoilTempReader: ...
             @property
-            def sowing(self) -> _ParamsModule._SowingModule.Reader: ...
+            def sowing(self) -> SowingReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticSowingModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AutomaticSowingBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -526,13 +518,13 @@ class _ParamsModule(_StructModule):
             @baseTemp.setter
             def baseTemp(self, value: float) -> None: ...
             @property
-            def avgSoilTemp(self) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
+            def avgSoilTemp(self) -> AvgSoilTempBuilder: ...
             @avgSoilTemp.setter
-            def avgSoilTemp(self, value: _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder | _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader | dict[str, Any]) -> None: ...
+            def avgSoilTemp(self, value: AvgSoilTempBuilder | AvgSoilTempReader | dict[str, Any]) -> None: ...
             @property
-            def sowing(self) -> _ParamsModule._SowingModule.Builder: ...
+            def sowing(self) -> SowingBuilder: ...
             @sowing.setter
-            def sowing(self, value: _ParamsModule._SowingModule.Builder | _ParamsModule._SowingModule.Reader | dict[str, Any]) -> None: ...
+            def sowing(self, value: SowingBuilder | SowingReader | dict[str, Any]) -> None: ...
             @overload
             def init(self, field: Literal["avgSoilTemp"], size: int | None = None) -> _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder: ...
             @overload
@@ -540,7 +532,7 @@ class _ParamsModule(_StructModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _ParamsModule._AutomaticSowingModule.Reader: ...
+            def as_reader(self) -> AutomaticSowingReader: ...
 
         @override
         def new_message(
@@ -555,19 +547,19 @@ class _ParamsModule(_StructModule):
             maxCurrentDayPrecipSum: float | None = None,
             tempSumAboveBaseTemp: float | None = None,
             baseTemp: float | None = None,
-            avgSoilTemp: _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder | dict[str, Any] | None = None,
-            sowing: _ParamsModule._SowingModule.Builder | dict[str, Any] | None = None,
-        ) -> _ParamsModule._AutomaticSowingModule.Builder: ...
+            avgSoilTemp: AvgSoilTempBuilder | dict[str, Any] | None = None,
+            sowing: SowingBuilder | dict[str, Any] | None = None,
+        ) -> AutomaticSowingBuilder: ...
 
-    AutomaticSowingReader: TypeAlias = _AutomaticSowingModule.Reader
-    AutomaticSowingBuilder: TypeAlias = _AutomaticSowingModule.Builder
+    type AutomaticSowingReader = _AutomaticSowingModule.Reader
+    type AutomaticSowingBuilder = _AutomaticSowingModule.Builder
     AutomaticSowing: _AutomaticSowingModule
     class _HarvestModule(_StructModule):
         class _CropUsageModule(Enum):
             greenManure = 0
             biomassProduction = 1
 
-        CropUsage: TypeAlias = _CropUsageModule
+        type CropUsage = _CropUsageModule
         class _OptCarbonMgmtDataModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
@@ -583,7 +575,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def maxResidueRecoverFraction(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> OptCarbonMgmtDataBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -611,7 +603,7 @@ class _ParamsModule(_StructModule):
                 @maxResidueRecoverFraction.setter
                 def maxResidueRecoverFraction(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader: ...
+                def as_reader(self) -> OptCarbonMgmtDataReader: ...
 
             @override
             def new_message(
@@ -624,18 +616,18 @@ class _ParamsModule(_StructModule):
                 residueHeq: float | None = None,
                 organicFertilizerHeq: float | None = None,
                 maxResidueRecoverFraction: float | None = None,
-            ) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
+            ) -> OptCarbonMgmtDataBuilder: ...
 
-        OptCarbonMgmtDataReader: TypeAlias = _OptCarbonMgmtDataModule.Reader
-        OptCarbonMgmtDataBuilder: TypeAlias = _OptCarbonMgmtDataModule.Builder
+        type OptCarbonMgmtDataReader = _OptCarbonMgmtDataModule.Reader
+        type OptCarbonMgmtDataBuilder = _OptCarbonMgmtDataModule.Builder
         OptCarbonMgmtData: _OptCarbonMgmtDataModule
         class Reader(_DynamicStructReader):
             @property
             def exported(self) -> bool: ...
             @property
-            def optCarbMgmtData(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader: ...
+            def optCarbMgmtData(self) -> OptCarbonMgmtDataReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._HarvestModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> HarvestBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -643,18 +635,18 @@ class _ParamsModule(_StructModule):
             @exported.setter
             def exported(self, value: bool) -> None: ...
             @property
-            def optCarbMgmtData(self) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
+            def optCarbMgmtData(self) -> OptCarbonMgmtDataBuilder: ...
             @optCarbMgmtData.setter
-            def optCarbMgmtData(self, value: _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder | _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader | dict[str, Any]) -> None: ...
+            def optCarbMgmtData(self, value: OptCarbonMgmtDataBuilder | OptCarbonMgmtDataReader | dict[str, Any]) -> None: ...
             def init(self, field: Literal["optCarbMgmtData"], size: int | None = None) -> _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._HarvestModule.Reader: ...
+            def as_reader(self) -> HarvestReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, exported: bool | None = None, optCarbMgmtData: _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder | dict[str, Any] | None = None) -> _ParamsModule._HarvestModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, exported: bool | None = None, optCarbMgmtData: OptCarbonMgmtDataBuilder | dict[str, Any] | None = None) -> HarvestBuilder: ...
 
-    HarvestReader: TypeAlias = _HarvestModule.Reader
-    HarvestBuilder: TypeAlias = _HarvestModule.Builder
+    type HarvestReader = _HarvestModule.Reader
+    type HarvestBuilder = _HarvestModule.Builder
     Harvest: _HarvestModule
     class _AutomaticHarvestModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -669,9 +661,9 @@ class _ParamsModule(_StructModule):
             @property
             def harvestTime(self) -> _EventModule._PhenoStageModule: ...
             @property
-            def harvest(self) -> _ParamsModule._HarvestModule.Reader: ...
+            def harvest(self) -> HarvestReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._AutomaticHarvestModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AutomaticHarvestBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -695,12 +687,12 @@ class _ParamsModule(_StructModule):
             @harvestTime.setter
             def harvestTime(self, value: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"]) -> None: ...
             @property
-            def harvest(self) -> _ParamsModule._HarvestModule.Builder: ...
+            def harvest(self) -> HarvestBuilder: ...
             @harvest.setter
-            def harvest(self, value: _ParamsModule._HarvestModule.Builder | _ParamsModule._HarvestModule.Reader | dict[str, Any]) -> None: ...
+            def harvest(self, value: HarvestBuilder | HarvestReader | dict[str, Any]) -> None: ...
             def init(self, field: Literal["harvest"], size: int | None = None) -> _ParamsModule._HarvestModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._AutomaticHarvestModule.Reader: ...
+            def as_reader(self) -> AutomaticHarvestReader: ...
 
         @override
         def new_message(
@@ -712,24 +704,24 @@ class _ParamsModule(_StructModule):
             max3dayPrecipSum: float | None = None,
             maxCurrentDayPrecipSum: float | None = None,
             harvestTime: _EventModule._PhenoStageModule | Literal["emergence", "flowering", "anthesis", "maturity"] | None = None,
-            harvest: _ParamsModule._HarvestModule.Builder | dict[str, Any] | None = None,
-        ) -> _ParamsModule._AutomaticHarvestModule.Builder: ...
+            harvest: HarvestBuilder | dict[str, Any] | None = None,
+        ) -> AutomaticHarvestBuilder: ...
 
-    AutomaticHarvestReader: TypeAlias = _AutomaticHarvestModule.Reader
-    AutomaticHarvestBuilder: TypeAlias = _AutomaticHarvestModule.Builder
+    type AutomaticHarvestReader = _AutomaticHarvestModule.Reader
+    type AutomaticHarvestBuilder = _AutomaticHarvestModule.Builder
     AutomaticHarvest: _AutomaticHarvestModule
     class _CuttingModule(_StructModule):
         class _CLModule(Enum):
             cut = 0
             left = 1
 
-        CL: TypeAlias = _CLModule
+        type CL = _CLModule
         class _UnitModule(Enum):
             percentage = 0
             biomass = 1
             lai = 2
 
-        Unit: TypeAlias = _UnitModule
+        type Unit = _UnitModule
         class _SpecModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
@@ -743,7 +735,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def exportPercentage(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._CuttingModule._SpecModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SpecBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -767,7 +759,7 @@ class _ParamsModule(_StructModule):
                 @exportPercentage.setter
                 def exportPercentage(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._CuttingModule._SpecModule.Reader: ...
+                def as_reader(self) -> SpecReader: ...
 
             @override
             def new_message(
@@ -779,39 +771,37 @@ class _ParamsModule(_StructModule):
                 unit: _ParamsModule._CuttingModule._UnitModule | Literal["percentage", "biomass", "lai"] | None = None,
                 cutOrLeft: _ParamsModule._CuttingModule._CLModule | Literal["cut", "left"] | None = None,
                 exportPercentage: float | None = None,
-            ) -> _ParamsModule._CuttingModule._SpecModule.Builder: ...
+            ) -> SpecBuilder: ...
 
-        SpecReader: TypeAlias = _SpecModule.Reader
-        SpecBuilder: TypeAlias = _SpecModule.Builder
+        type SpecReader = _SpecModule.Reader
+        type SpecBuilder = _SpecModule.Builder
         Spec: _SpecModule
         class Reader(_DynamicStructReader):
             @property
-            def cuttingSpec(self) -> Sequence[_ParamsModule._CuttingModule._SpecModule.Reader]: ...
+            def cuttingSpec(self) -> Sequence[SpecReader]: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._CuttingModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CuttingBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def cuttingSpec(self) -> MutableSequence[_ParamsModule._CuttingModule._SpecModule.Builder]: ...
+            def cuttingSpec(self) -> MutableSequence[SpecBuilder]: ...
             @cuttingSpec.setter
-            def cuttingSpec(self, value: Sequence[_ParamsModule._CuttingModule._SpecModule.Builder | _ParamsModule._CuttingModule._SpecModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+            def cuttingSpec(self, value: Sequence[SpecBuilder | SpecReader] | Sequence[dict[str, Any]]) -> None: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
             @cutMaxAssimilationRatePercentage.setter
             def cutMaxAssimilationRatePercentage(self, value: float) -> None: ...
             def init(self, field: Literal["cuttingSpec"], size: int | None = None) -> MutableSequence[_ParamsModule._CuttingModule._SpecModule.Builder]: ...
             @override
-            def as_reader(self) -> _ParamsModule._CuttingModule.Reader: ...
+            def as_reader(self) -> CuttingReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cuttingSpec: Sequence[_ParamsModule._CuttingModule._SpecModule.Builder] | Sequence[dict[str, Any]] | None = None, cutMaxAssimilationRatePercentage: float | None = None
-        ) -> _ParamsModule._CuttingModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cuttingSpec: Sequence[SpecBuilder] | Sequence[dict[str, Any]] | None = None, cutMaxAssimilationRatePercentage: float | None = None) -> CuttingBuilder: ...
 
-    CuttingReader: TypeAlias = _CuttingModule.Reader
-    CuttingBuilder: TypeAlias = _CuttingModule.Builder
+    type CuttingReader = _CuttingModule.Reader
+    type CuttingBuilder = _CuttingModule.Builder
     Cutting: _CuttingModule
     class _MineralFertilizationModule(_StructModule):
         class _ParametersModule(_StructModule):
@@ -827,7 +817,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def no3(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ParametersBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -851,53 +841,53 @@ class _ParamsModule(_StructModule):
                 @no3.setter
                 def no3(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Reader: ...
+                def as_reader(self) -> ParametersReader: ...
 
             @override
-            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, carbamid: float | None = None, nh4: float | None = None, no3: float | None = None) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, name: str | None = None, carbamid: float | None = None, nh4: float | None = None, no3: float | None = None) -> ParametersBuilder: ...
 
-        ParametersReader: TypeAlias = _ParametersModule.Reader
-        ParametersBuilder: TypeAlias = _ParametersModule.Builder
+        type ParametersReader = _ParametersModule.Reader
+        type ParametersBuilder = _ParametersModule.Builder
         Parameters: _ParametersModule
         class Reader(_DynamicStructReader):
             @property
-            def partition(self) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Reader: ...
+            def partition(self) -> ParametersReader: ...
             @property
             def amount(self) -> float: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._MineralFertilizationModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> MineralFertilizationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def partition(self) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+            def partition(self) -> ParametersBuilder: ...
             @partition.setter
-            def partition(self, value: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder | _ParamsModule._MineralFertilizationModule._ParametersModule.Reader | dict[str, Any]) -> None: ...
+            def partition(self, value: ParametersBuilder | ParametersReader | dict[str, Any]) -> None: ...
             @property
             def amount(self) -> float: ...
             @amount.setter
             def amount(self, value: float) -> None: ...
             def init(self, field: Literal["partition"], size: int | None = None) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._MineralFertilizationModule.Reader: ...
+            def as_reader(self) -> MineralFertilizationReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, partition: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder | dict[str, Any] | None = None, amount: float | None = None) -> _ParamsModule._MineralFertilizationModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, partition: ParametersBuilder | dict[str, Any] | None = None, amount: float | None = None) -> MineralFertilizationBuilder: ...
 
-    MineralFertilizationReader: TypeAlias = _MineralFertilizationModule.Reader
-    MineralFertilizationBuilder: TypeAlias = _MineralFertilizationModule.Builder
+    type MineralFertilizationReader = _MineralFertilizationModule.Reader
+    type MineralFertilizationBuilder = _MineralFertilizationModule.Builder
     MineralFertilization: _MineralFertilizationModule
     class _NDemandFertilizationModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def nDemand(self) -> float: ...
             @property
-            def partition(self) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Reader: ...
+            def partition(self) -> ParametersReader: ...
             @property
             def depth(self) -> float: ...
             @property
             def stage(self) -> int: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._NDemandFertilizationModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> NDemandFertilizationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -905,9 +895,9 @@ class _ParamsModule(_StructModule):
             @nDemand.setter
             def nDemand(self, value: float) -> None: ...
             @property
-            def partition(self) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+            def partition(self) -> ParametersBuilder: ...
             @partition.setter
-            def partition(self, value: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder | _ParamsModule._MineralFertilizationModule._ParametersModule.Reader | dict[str, Any]) -> None: ...
+            def partition(self, value: ParametersBuilder | ParametersReader | dict[str, Any]) -> None: ...
             @property
             def depth(self) -> float: ...
             @depth.setter
@@ -918,15 +908,13 @@ class _ParamsModule(_StructModule):
             def stage(self, value: int) -> None: ...
             def init(self, field: Literal["partition"], size: int | None = None) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._NDemandFertilizationModule.Reader: ...
+            def as_reader(self) -> NDemandFertilizationReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, nDemand: float | None = None, partition: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder | dict[str, Any] | None = None, depth: float | None = None, stage: int | None = None
-        ) -> _ParamsModule._NDemandFertilizationModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, nDemand: float | None = None, partition: ParametersBuilder | dict[str, Any] | None = None, depth: float | None = None, stage: int | None = None) -> NDemandFertilizationBuilder: ...
 
-    NDemandFertilizationReader: TypeAlias = _NDemandFertilizationModule.Reader
-    NDemandFertilizationBuilder: TypeAlias = _NDemandFertilizationModule.Builder
+    type NDemandFertilizationReader = _NDemandFertilizationModule.Reader
+    type NDemandFertilizationBuilder = _NDemandFertilizationModule.Builder
     NDemandFertilization: _NDemandFertilizationModule
     class _OrganicFertilizationModule(_StructModule):
         class _OrganicMatterParametersModule(_StructModule):
@@ -958,7 +946,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def nConcentration(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> OrganicMatterParametersBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -1014,7 +1002,7 @@ class _ParamsModule(_StructModule):
                 @nConcentration.setter
                 def nConcentration(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Reader: ...
+                def as_reader(self) -> OrganicMatterParametersReader: ...
 
             @override
             def new_message(
@@ -1034,27 +1022,27 @@ class _ParamsModule(_StructModule):
                 partAOMSlowToSMBSlow: float | None = None,
                 partAOMSlowToSMBFast: float | None = None,
                 nConcentration: float | None = None,
-            ) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder: ...
+            ) -> OrganicMatterParametersBuilder: ...
 
-        OrganicMatterParametersReader: TypeAlias = _OrganicMatterParametersModule.Reader
-        OrganicMatterParametersBuilder: TypeAlias = _OrganicMatterParametersModule.Builder
+        type OrganicMatterParametersReader = _OrganicMatterParametersModule.Reader
+        type OrganicMatterParametersBuilder = _OrganicMatterParametersModule.Builder
         OrganicMatterParameters: _OrganicMatterParametersModule
         class _ParametersModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
-                def params(self) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Reader: ...
+                def params(self) -> OrganicMatterParametersReader: ...
                 @property
                 def id(self) -> str: ...
                 @property
                 def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ParametersBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
-                def params(self) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder: ...
+                def params(self) -> OrganicMatterParametersBuilder: ...
                 @params.setter
-                def params(self, value: _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder | _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Reader | dict[str, Any]) -> None: ...
+                def params(self, value: OrganicMatterParametersBuilder | OrganicMatterParametersReader | dict[str, Any]) -> None: ...
                 @property
                 def id(self) -> str: ...
                 @id.setter
@@ -1065,31 +1053,29 @@ class _ParamsModule(_StructModule):
                 def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
                 def init(self, field: Literal["params"], size: int | None = None) -> _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder: ...
                 @override
-                def as_reader(self) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Reader: ...
+                def as_reader(self) -> ParametersReader: ...
 
             @override
-            def new_message(
-                self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, params: _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder | dict[str, Any] | None = None, id: str | None = None, name: str | None = None
-            ) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder: ...
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, params: OrganicMatterParametersBuilder | dict[str, Any] | None = None, id: str | None = None, name: str | None = None) -> ParametersBuilder: ...
 
-        ParametersReader: TypeAlias = _ParametersModule.Reader
-        ParametersBuilder: TypeAlias = _ParametersModule.Builder
+        type ParametersReader = _ParametersModule.Reader
+        type ParametersBuilder = _ParametersModule.Builder
         Parameters: _ParametersModule
         class Reader(_DynamicStructReader):
             @property
-            def params(self) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Reader: ...
+            def params(self) -> ParametersReader: ...
             @property
             def amount(self) -> float: ...
             @property
             def incorporation(self) -> bool: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._OrganicFertilizationModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> OrganicFertilizationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def params(self) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder: ...
+            def params(self) -> ParametersBuilder: ...
             @params.setter
-            def params(self, value: _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder | _ParamsModule._OrganicFertilizationModule._ParametersModule.Reader | dict[str, Any]) -> None: ...
+            def params(self, value: ParametersBuilder | ParametersReader | dict[str, Any]) -> None: ...
             @property
             def amount(self) -> float: ...
             @amount.setter
@@ -1100,22 +1086,20 @@ class _ParamsModule(_StructModule):
             def incorporation(self, value: bool) -> None: ...
             def init(self, field: Literal["params"], size: int | None = None) -> _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._OrganicFertilizationModule.Reader: ...
+            def as_reader(self) -> OrganicFertilizationReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, params: _ParamsModule._OrganicFertilizationModule._ParametersModule.Builder | dict[str, Any] | None = None, amount: float | None = None, incorporation: bool | None = None
-        ) -> _ParamsModule._OrganicFertilizationModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, params: ParametersBuilder | dict[str, Any] | None = None, amount: float | None = None, incorporation: bool | None = None) -> OrganicFertilizationBuilder: ...
 
-    OrganicFertilizationReader: TypeAlias = _OrganicFertilizationModule.Reader
-    OrganicFertilizationBuilder: TypeAlias = _OrganicFertilizationModule.Builder
+    type OrganicFertilizationReader = _OrganicFertilizationModule.Reader
+    type OrganicFertilizationBuilder = _OrganicFertilizationModule.Builder
     OrganicFertilization: _OrganicFertilizationModule
     class _TillageModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def depth(self) -> float: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._TillageModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> TillageBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -1123,13 +1107,13 @@ class _ParamsModule(_StructModule):
             @depth.setter
             def depth(self, value: float) -> None: ...
             @override
-            def as_reader(self) -> _ParamsModule._TillageModule.Reader: ...
+            def as_reader(self) -> TillageReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, depth: float | None = None) -> _ParamsModule._TillageModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, depth: float | None = None) -> TillageBuilder: ...
 
-    TillageReader: TypeAlias = _TillageModule.Reader
-    TillageBuilder: TypeAlias = _TillageModule.Builder
+    type TillageReader = _TillageModule.Reader
+    type TillageBuilder = _TillageModule.Builder
     Tillage: _TillageModule
     class _IrrigationModule(_StructModule):
         class _ParametersModule(_StructModule):
@@ -1139,7 +1123,7 @@ class _ParamsModule(_StructModule):
                 @property
                 def sulfateConcentration(self) -> float: ...
                 @override
-                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._IrrigationModule._ParametersModule.Builder: ...
+                def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ParametersBuilder: ...
 
             class Builder(_DynamicStructBuilder):
                 @property
@@ -1151,21 +1135,21 @@ class _ParamsModule(_StructModule):
                 @sulfateConcentration.setter
                 def sulfateConcentration(self, value: float) -> None: ...
                 @override
-                def as_reader(self) -> _ParamsModule._IrrigationModule._ParametersModule.Reader: ...
+                def as_reader(self) -> ParametersReader: ...
 
             @override
-            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, nitrateConcentration: float | None = None, sulfateConcentration: float | None = None) -> _ParamsModule._IrrigationModule._ParametersModule.Builder: ...
+            def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, nitrateConcentration: float | None = None, sulfateConcentration: float | None = None) -> ParametersBuilder: ...
 
-        ParametersReader: TypeAlias = _ParametersModule.Reader
-        ParametersBuilder: TypeAlias = _ParametersModule.Builder
+        type ParametersReader = _ParametersModule.Reader
+        type ParametersBuilder = _ParametersModule.Builder
         Parameters: _ParametersModule
         class Reader(_DynamicStructReader):
             @property
             def amount(self) -> float: ...
             @property
-            def params(self) -> _ParamsModule._IrrigationModule._ParametersModule.Reader: ...
+            def params(self) -> ParametersReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._IrrigationModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> IrrigationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -1173,18 +1157,18 @@ class _ParamsModule(_StructModule):
             @amount.setter
             def amount(self, value: float) -> None: ...
             @property
-            def params(self) -> _ParamsModule._IrrigationModule._ParametersModule.Builder: ...
+            def params(self) -> ParametersBuilder: ...
             @params.setter
-            def params(self, value: _ParamsModule._IrrigationModule._ParametersModule.Builder | _ParamsModule._IrrigationModule._ParametersModule.Reader | dict[str, Any]) -> None: ...
+            def params(self, value: ParametersBuilder | ParametersReader | dict[str, Any]) -> None: ...
             def init(self, field: Literal["params"], size: int | None = None) -> _ParamsModule._IrrigationModule._ParametersModule.Builder: ...
             @override
-            def as_reader(self) -> _ParamsModule._IrrigationModule.Reader: ...
+            def as_reader(self) -> IrrigationReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, amount: float | None = None, params: _ParamsModule._IrrigationModule._ParametersModule.Builder | dict[str, Any] | None = None) -> _ParamsModule._IrrigationModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, amount: float | None = None, params: ParametersBuilder | dict[str, Any] | None = None) -> IrrigationBuilder: ...
 
-    IrrigationReader: TypeAlias = _IrrigationModule.Reader
-    IrrigationBuilder: TypeAlias = _IrrigationModule.Builder
+    type IrrigationReader = _IrrigationModule.Reader
+    type IrrigationBuilder = _IrrigationModule.Builder
     Irrigation: _IrrigationModule
     class _SaveStateModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -1193,7 +1177,7 @@ class _ParamsModule(_StructModule):
             @property
             def asJson(self) -> bool: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule._SaveStateModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SaveStateBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -1205,27 +1189,25 @@ class _ParamsModule(_StructModule):
             @asJson.setter
             def asJson(self, value: bool) -> None: ...
             @override
-            def as_reader(self) -> _ParamsModule._SaveStateModule.Reader: ...
+            def as_reader(self) -> SaveStateReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, noOfPreviousDaysSerializedClimateData: int | None = None, asJson: bool | None = None) -> _ParamsModule._SaveStateModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, noOfPreviousDaysSerializedClimateData: int | None = None, asJson: bool | None = None) -> SaveStateBuilder: ...
 
-    SaveStateReader: TypeAlias = _SaveStateModule.Reader
-    SaveStateBuilder: TypeAlias = _SaveStateModule.Builder
+    type SaveStateReader = _SaveStateModule.Reader
+    type SaveStateBuilder = _SaveStateModule.Builder
     SaveState: _SaveStateModule
     class Reader(_DynamicStructReader):
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ParamsBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @override
-        def as_reader(self) -> _ParamsModule.Reader: ...
+        def as_reader(self) -> ParamsReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _ParamsModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ParamsBuilder: ...
 
-ParamsReader: TypeAlias = _ParamsModule.Reader
-ParamsBuilder: TypeAlias = _ParamsModule.Builder
 Params: _ParamsModule
 
 class _ServiceModule(_IdentifiableModule):
@@ -1258,50 +1240,63 @@ class _ServiceModule(_IdentifiableModule):
         def managementAt_request(self, lat: float | None = None, lon: float | None = None) -> _ServiceModule.ManagementatRequest: ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
 
 # Top-level type aliases for use in type annotations
-AfterBuilder: TypeAlias = _EventModule._AfterModule.Builder
-AfterReader: TypeAlias = _EventModule._AfterModule.Reader
-AtBuilder: TypeAlias = _EventModule._AtModule.Builder
-AtReader: TypeAlias = _EventModule._AtModule.Reader
-AutomaticHarvestBuilder: TypeAlias = _ParamsModule._AutomaticHarvestModule.Builder
-AutomaticHarvestReader: TypeAlias = _ParamsModule._AutomaticHarvestModule.Reader
-AutomaticSowingBuilder: TypeAlias = _ParamsModule._AutomaticSowingModule.Builder
-AutomaticSowingReader: TypeAlias = _ParamsModule._AutomaticSowingModule.Reader
-AvgSoilTempBuilder: TypeAlias = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder
-AvgSoilTempReader: TypeAlias = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader
-BetweenBuilder: TypeAlias = _EventModule._BetweenModule.Builder
-BetweenReader: TypeAlias = _EventModule._BetweenModule.Reader
-CuttingBuilder: TypeAlias = _ParamsModule._CuttingModule.Builder
-CuttingReader: TypeAlias = _ParamsModule._CuttingModule.Reader
-DailyWeatherBuilder: TypeAlias = _ParamsModule._DailyWeatherModule.Builder
-DailyWeatherReader: TypeAlias = _ParamsModule._DailyWeatherModule.Reader
-HarvestBuilder: TypeAlias = _ParamsModule._HarvestModule.Builder
-HarvestReader: TypeAlias = _ParamsModule._HarvestModule.Reader
-IrrigationBuilder: TypeAlias = _ParamsModule._IrrigationModule.Builder
-IrrigationReader: TypeAlias = _ParamsModule._IrrigationModule.Reader
-KVBuilder: TypeAlias = _ParamsModule._DailyWeatherModule._KVModule.Builder
-KVReader: TypeAlias = _ParamsModule._DailyWeatherModule._KVModule.Reader
-MineralFertilizationBuilder: TypeAlias = _ParamsModule._MineralFertilizationModule.Builder
-MineralFertilizationReader: TypeAlias = _ParamsModule._MineralFertilizationModule.Reader
-NDemandFertilizationBuilder: TypeAlias = _ParamsModule._NDemandFertilizationModule.Builder
-NDemandFertilizationReader: TypeAlias = _ParamsModule._NDemandFertilizationModule.Reader
-OptCarbonMgmtDataBuilder: TypeAlias = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder
-OptCarbonMgmtDataReader: TypeAlias = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader
-OrganicFertilizationBuilder: TypeAlias = _ParamsModule._OrganicFertilizationModule.Builder
-OrganicFertilizationReader: TypeAlias = _ParamsModule._OrganicFertilizationModule.Reader
-OrganicMatterParametersBuilder: TypeAlias = _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder
-OrganicMatterParametersReader: TypeAlias = _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Reader
-ParametersBuilder: TypeAlias = _ParamsModule._IrrigationModule._ParametersModule.Builder
-ParametersReader: TypeAlias = _ParamsModule._IrrigationModule._ParametersModule.Reader
-SaveStateBuilder: TypeAlias = _ParamsModule._SaveStateModule.Builder
-SaveStateReader: TypeAlias = _ParamsModule._SaveStateModule.Reader
-SowingBuilder: TypeAlias = _ParamsModule._SowingModule.Builder
-SowingReader: TypeAlias = _ParamsModule._SowingModule.Reader
-SpecBuilder: TypeAlias = _ParamsModule._CuttingModule._SpecModule.Builder
-SpecReader: TypeAlias = _ParamsModule._CuttingModule._SpecModule.Reader
-TillageBuilder: TypeAlias = _ParamsModule._TillageModule.Builder
-TillageReader: TypeAlias = _ParamsModule._TillageModule.Reader
-TypeBuilder: TypeAlias = _EventModule._TypeModule.Builder
-TypeReader: TypeAlias = _EventModule._TypeModule.Reader
+type AfterBuilder = _EventModule._AfterModule.Builder
+type AfterReader = _EventModule._AfterModule.Reader
+type AtBuilder = _EventModule._AtModule.Builder
+type AtReader = _EventModule._AtModule.Reader
+type AutomaticHarvestBuilder = _ParamsModule._AutomaticHarvestModule.Builder
+type AutomaticHarvestReader = _ParamsModule._AutomaticHarvestModule.Reader
+type AutomaticSowingBuilder = _ParamsModule._AutomaticSowingModule.Builder
+type AutomaticSowingReader = _ParamsModule._AutomaticSowingModule.Reader
+type AvgSoilTempBuilder = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Builder
+type AvgSoilTempReader = _ParamsModule._AutomaticSowingModule._AvgSoilTempModule.Reader
+type BetweenBuilder = _EventModule._BetweenModule.Builder
+type BetweenReader = _EventModule._BetweenModule.Reader
+type CL = _ParamsModule._CuttingModule._CLModule
+type CropUsage = _ParamsModule._HarvestModule._CropUsageModule
+type CuttingBuilder = _ParamsModule._CuttingModule.Builder
+type CuttingReader = _ParamsModule._CuttingModule.Reader
+type DailyWeatherBuilder = _ParamsModule._DailyWeatherModule.Builder
+type DailyWeatherReader = _ParamsModule._DailyWeatherModule.Reader
+type EventBuilder = _EventModule.Builder
+type EventReader = _EventModule.Reader
+type EventType = _EventTypeModule
+type ExternalType = _EventModule._ExternalTypeModule
+type HarvestBuilder = _ParamsModule._HarvestModule.Builder
+type HarvestReader = _ParamsModule._HarvestModule.Reader
+type ILRDatesBuilder = _ILRDatesModule.Builder
+type ILRDatesReader = _ILRDatesModule.Reader
+type IrrigationBuilder = _ParamsModule._IrrigationModule.Builder
+type IrrigationReader = _ParamsModule._IrrigationModule.Reader
+type KVBuilder = _ParamsModule._DailyWeatherModule._KVModule.Builder
+type KVReader = _ParamsModule._DailyWeatherModule._KVModule.Reader
+type MineralFertilizationBuilder = _ParamsModule._MineralFertilizationModule.Builder
+type MineralFertilizationReader = _ParamsModule._MineralFertilizationModule.Reader
+type NDemandFertilizationBuilder = _ParamsModule._NDemandFertilizationModule.Builder
+type NDemandFertilizationReader = _ParamsModule._NDemandFertilizationModule.Reader
+type OptCarbonMgmtDataBuilder = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Builder
+type OptCarbonMgmtDataReader = _ParamsModule._HarvestModule._OptCarbonMgmtDataModule.Reader
+type OrganicFertilizationBuilder = _ParamsModule._OrganicFertilizationModule.Builder
+type OrganicFertilizationReader = _ParamsModule._OrganicFertilizationModule.Reader
+type OrganicMatterParametersBuilder = _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Builder
+type OrganicMatterParametersReader = _ParamsModule._OrganicFertilizationModule._OrganicMatterParametersModule.Reader
+type ParametersBuilder = _ParamsModule._IrrigationModule._ParametersModule.Builder
+type ParametersReader = _ParamsModule._IrrigationModule._ParametersModule.Reader
+type ParamsBuilder = _ParamsModule.Builder
+type ParamsReader = _ParamsModule.Reader
+type PhenoStage = _EventModule._PhenoStageModule
+type PlantOrgan = _PlantOrganModule
+type SaveStateBuilder = _ParamsModule._SaveStateModule.Builder
+type SaveStateReader = _ParamsModule._SaveStateModule.Reader
+type ServiceClient = _ServiceModule.ServiceClient
+type SowingBuilder = _ParamsModule._SowingModule.Builder
+type SowingReader = _ParamsModule._SowingModule.Reader
+type SpecBuilder = _ParamsModule._CuttingModule._SpecModule.Builder
+type SpecReader = _ParamsModule._CuttingModule._SpecModule.Reader
+type TillageBuilder = _ParamsModule._TillageModule.Builder
+type TillageReader = _ParamsModule._TillageModule.Reader
+type TypeBuilder = _EventModule._TypeModule.Builder
+type TypeReader = _EventModule._TypeModule.Reader
+type Unit = _ParamsModule._CuttingModule._UnitModule

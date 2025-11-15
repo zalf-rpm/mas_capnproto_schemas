@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, Sequence
 from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -38,8 +38,6 @@ class _AggregationModule(Enum):
     wMax = 11
     iMax = 12
 
-Aggregation: TypeAlias = _AggregationModule
-
 class _GridModule(_IdentifiableModule, _PersistentModule):
     class _ValueModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -54,7 +52,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @override
             def which(self) -> Literal["f", "i", "ui", "no"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._ValueModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ValueBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -76,13 +74,13 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @override
             def which(self) -> Literal["f", "i", "ui", "no"]: ...
             @override
-            def as_reader(self) -> _GridModule._ValueModule.Reader: ...
+            def as_reader(self) -> ValueReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, f: float | None = None, i: int | None = None, ui: int | None = None, no: bool | None = None) -> _GridModule._ValueModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, f: float | None = None, i: int | None = None, ui: int | None = None, no: bool | None = None) -> ValueBuilder: ...
 
-    ValueReader: TypeAlias = _ValueModule.Reader
-    ValueBuilder: TypeAlias = _ValueModule.Builder
+    type ValueReader = _ValueModule.Reader
+    type ValueBuilder = _ValueModule.Builder
     Value: _ValueModule
     class _ResolutionModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -93,7 +91,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @override
             def which(self) -> Literal["meter", "degree"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._ResolutionModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ResolutionBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -107,13 +105,13 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @override
             def which(self) -> Literal["meter", "degree"]: ...
             @override
-            def as_reader(self) -> _GridModule._ResolutionModule.Reader: ...
+            def as_reader(self) -> ResolutionReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meter: int | None = None, degree: float | None = None) -> _GridModule._ResolutionModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meter: int | None = None, degree: float | None = None) -> ResolutionBuilder: ...
 
-    ResolutionReader: TypeAlias = _ResolutionModule.Reader
-    ResolutionBuilder: TypeAlias = _ResolutionModule.Builder
+    type ResolutionReader = _ResolutionModule.Reader
+    type ResolutionBuilder = _ResolutionModule.Builder
     Resolution: _ResolutionModule
     class _RowColModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -122,7 +120,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @property
             def col(self) -> int: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._RowColModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> RowColBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -134,36 +132,36 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @col.setter
             def col(self, value: int) -> None: ...
             @override
-            def as_reader(self) -> _GridModule._RowColModule.Reader: ...
+            def as_reader(self) -> RowColReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, row: int | None = None, col: int | None = None) -> _GridModule._RowColModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, row: int | None = None, col: int | None = None) -> RowColBuilder: ...
 
-    RowColReader: TypeAlias = _RowColModule.Reader
-    RowColBuilder: TypeAlias = _RowColModule.Builder
+    type RowColReader = _RowColModule.Reader
+    type RowColBuilder = _RowColModule.Builder
     RowCol: _RowColModule
     class _AggregationPartModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def value(self) -> _GridModule._ValueModule.Reader: ...
+            def value(self) -> ValueReader: ...
             @property
-            def rowCol(self) -> _GridModule._RowColModule.Reader: ...
+            def rowCol(self) -> RowColReader: ...
             @property
             def areaFrac(self) -> float: ...
             @property
             def iValue(self) -> float: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._AggregationPartModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AggregationPartBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def value(self) -> _GridModule._ValueModule.Builder: ...
+            def value(self) -> ValueBuilder: ...
             @value.setter
-            def value(self, value: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader | dict[str, Any]) -> None: ...
+            def value(self, value: ValueBuilder | ValueReader | dict[str, Any]) -> None: ...
             @property
-            def rowCol(self) -> _GridModule._RowColModule.Builder: ...
+            def rowCol(self) -> RowColBuilder: ...
             @rowCol.setter
-            def rowCol(self, value: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader | dict[str, Any]) -> None: ...
+            def rowCol(self, value: RowColBuilder | RowColReader | dict[str, Any]) -> None: ...
             @property
             def areaFrac(self) -> float: ...
             @areaFrac.setter
@@ -179,26 +177,24 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _GridModule._AggregationPartModule.Reader: ...
+            def as_reader(self) -> AggregationPartReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, value: _GridModule._ValueModule.Builder | dict[str, Any] | None = None, rowCol: _GridModule._RowColModule.Builder | dict[str, Any] | None = None, areaFrac: float | None = None, iValue: float | None = None
-        ) -> _GridModule._AggregationPartModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, value: ValueBuilder | dict[str, Any] | None = None, rowCol: RowColBuilder | dict[str, Any] | None = None, areaFrac: float | None = None, iValue: float | None = None) -> AggregationPartBuilder: ...
 
-    AggregationPartReader: TypeAlias = _AggregationPartModule.Reader
-    AggregationPartBuilder: TypeAlias = _AggregationPartModule.Builder
+    type AggregationPartReader = _AggregationPartModule.Reader
+    type AggregationPartBuilder = _AggregationPartModule.Builder
     AggregationPart: _AggregationPartModule
     class _LocationModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def latLonCoord(self) -> _LatLonCoordModule.Reader: ...
             @property
-            def rowCol(self) -> _GridModule._RowColModule.Reader: ...
+            def rowCol(self) -> RowColReader: ...
             @property
-            def value(self) -> _GridModule._ValueModule.Reader: ...
+            def value(self) -> ValueReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _GridModule._LocationModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> LocationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -206,13 +202,13 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @latLonCoord.setter
             def latLonCoord(self, value: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader | dict[str, Any]) -> None: ...
             @property
-            def rowCol(self) -> _GridModule._RowColModule.Builder: ...
+            def rowCol(self) -> RowColBuilder: ...
             @rowCol.setter
-            def rowCol(self, value: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader | dict[str, Any]) -> None: ...
+            def rowCol(self, value: RowColBuilder | RowColReader | dict[str, Any]) -> None: ...
             @property
-            def value(self) -> _GridModule._ValueModule.Builder: ...
+            def value(self) -> ValueBuilder: ...
             @value.setter
-            def value(self, value: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader | dict[str, Any]) -> None: ...
+            def value(self, value: ValueBuilder | ValueReader | dict[str, Any]) -> None: ...
             @overload
             def init(self, field: Literal["latLonCoord"], size: int | None = None) -> _LatLonCoordModule.Builder: ...
             @overload
@@ -222,15 +218,13 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _GridModule._LocationModule.Reader: ...
+            def as_reader(self) -> LocationReader: ...
 
         @override
-        def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, latLonCoord: _LatLonCoordModule.Builder | dict[str, Any] | None = None, rowCol: _GridModule._RowColModule.Builder | dict[str, Any] | None = None, value: _GridModule._ValueModule.Builder | dict[str, Any] | None = None
-        ) -> _GridModule._LocationModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, latLonCoord: _LatLonCoordModule.Builder | dict[str, Any] | None = None, rowCol: RowColBuilder | dict[str, Any] | None = None, value: ValueBuilder | dict[str, Any] | None = None) -> LocationBuilder: ...
 
-    LocationReader: TypeAlias = _LocationModule.Reader
-    LocationBuilder: TypeAlias = _LocationModule.Builder
+    type LocationReader = _LocationModule.Reader
+    type LocationBuilder = _LocationModule.Builder
     Location: _LocationModule
     class _CallbackModule(_InterfaceModule):
         class SendcellsRequest(Protocol):
@@ -261,7 +255,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def sendCells_request(self, maxCount: int | None = None) -> _GridModule._CallbackModule.SendcellsRequest: ...
 
     Callback: _CallbackModule
-    CallbackClient: TypeAlias = _GridModule._CallbackModule.CallbackClient
+    type CallbackClient = _GridModule._CallbackModule.CallbackClient
     class ClosestvalueatRequest(Protocol):
         latlonCoord: _LatLonCoordModule.Builder
         ignoreNoData: bool
@@ -532,17 +526,18 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def unit_request(self) -> _GridModule.UnitRequest: ...
 
 Grid: _GridModule
-GridClient: TypeAlias = _GridModule.GridClient
 
 # Top-level type aliases for use in type annotations
-AggregationPartBuilder: TypeAlias = _GridModule._AggregationPartModule.Builder
-AggregationPartReader: TypeAlias = _GridModule._AggregationPartModule.Reader
-CallbackClient: TypeAlias = _GridModule._CallbackModule.CallbackClient
-LocationBuilder: TypeAlias = _GridModule._LocationModule.Builder
-LocationReader: TypeAlias = _GridModule._LocationModule.Reader
-ResolutionBuilder: TypeAlias = _GridModule._ResolutionModule.Builder
-ResolutionReader: TypeAlias = _GridModule._ResolutionModule.Reader
-RowColBuilder: TypeAlias = _GridModule._RowColModule.Builder
-RowColReader: TypeAlias = _GridModule._RowColModule.Reader
-ValueBuilder: TypeAlias = _GridModule._ValueModule.Builder
-ValueReader: TypeAlias = _GridModule._ValueModule.Reader
+type Aggregation = _AggregationModule
+type AggregationPartBuilder = _GridModule._AggregationPartModule.Builder
+type AggregationPartReader = _GridModule._AggregationPartModule.Reader
+type CallbackClient = _GridModule._CallbackModule.CallbackClient
+type GridClient = _GridModule.GridClient
+type LocationBuilder = _GridModule._LocationModule.Builder
+type LocationReader = _GridModule._LocationModule.Reader
+type ResolutionBuilder = _GridModule._ResolutionModule.Builder
+type ResolutionReader = _GridModule._ResolutionModule.Reader
+type RowColBuilder = _GridModule._RowColModule.Builder
+type RowColReader = _GridModule._RowColModule.Reader
+type ValueBuilder = _GridModule._ValueModule.Builder
+type ValueReader = _GridModule._ValueModule.Reader

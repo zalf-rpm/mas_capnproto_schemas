@@ -34,6 +34,8 @@ from capnp._internal import (
     TReader,
 )
 
+# Type alias for anypointer to reflect what is really allowed for anypointer inputs
+
 # Generated imports for project-specific types
 from zalfmas_capnp_schemas_with_stubs import climate_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import cluster_admin_service_capnp  # type: ignore[import-not-found]
@@ -41,6 +43,7 @@ from zalfmas_capnp_schemas_with_stubs import common_capnp  # type: ignore[import
 from zalfmas_capnp_schemas_with_stubs import config_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import crop_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import fbp_capnp  # type: ignore[import-not-found]
+from zalfmas_capnp_schemas_with_stubs import geo_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import grid_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import jobs_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import management_capnp  # type: ignore[import-not-found]
@@ -53,6 +56,15 @@ from zalfmas_capnp_schemas_with_stubs import service_capnp  # type: ignore[impor
 from zalfmas_capnp_schemas_with_stubs import soil_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs import storage_capnp  # type: ignore[import-not-found]
 from zalfmas_capnp_schemas_with_stubs.model.weberest import web_berest_data_import_capnp  # type: ignore[import-not-found]
+
+type AnyPointer = (
+    str
+    | bytes
+    | _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+)
 
 class KjException(Exception):
     """Exception raised by Cap'n Proto operations.
@@ -215,6 +227,10 @@ class _DynamicObjectReader:
     def as_interface(
         self, type: fbp_capnp._ChannelModule._WriterModule
     ) -> fbp_capnp.WriterClient: ...
+    @overload
+    def as_interface(
+        self, type: jobs_capnp._ServiceModule
+    ) -> jobs_capnp.ServiceClient: ...
     @overload
     def as_interface(
         self, type: management_capnp._FertilizerModule
@@ -524,6 +540,30 @@ class _DynamicObjectReader:
     def as_struct(
         self, type: fbp_capnp._PortInfosModule
     ) -> fbp_capnp.PortInfosReader: ...
+    @overload
+    def as_struct(self, type: geo_capnp._CoordModule) -> geo_capnp.CoordReader: ...
+    @overload
+    def as_struct(self, type: geo_capnp._EPSGModule) -> geo_capnp.EPSGReader: ...
+    @overload
+    def as_struct(self, type: geo_capnp._GKCoordModule) -> geo_capnp.GKCoordReader: ...
+    @overload
+    def as_struct(
+        self, type: geo_capnp._LatLonCoordModule
+    ) -> geo_capnp.LatLonCoordReader: ...
+    @overload
+    def as_struct(self, type: geo_capnp._Point2DModule) -> geo_capnp.Point2DReader: ...
+    @overload
+    def as_struct(
+        self, type: geo_capnp._RectBoundsModule
+    ) -> geo_capnp.RectBoundsReader: ...
+    @overload
+    def as_struct(self, type: geo_capnp._RowColModule) -> geo_capnp.RowColReader: ...
+    @overload
+    def as_struct(
+        self, type: geo_capnp._UTMCoordModule
+    ) -> geo_capnp.UTMCoordReader: ...
+    @overload
+    def as_struct(self, type: jobs_capnp._JobModule) -> jobs_capnp.JobReader: ...
     @overload
     def as_struct(
         self, type: management_capnp._EventModule

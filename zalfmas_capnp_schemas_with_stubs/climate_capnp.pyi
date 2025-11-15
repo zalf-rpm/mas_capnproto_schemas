@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
 from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, TypeAlias, overload, override
+from typing import Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -41,8 +41,6 @@ class _GCMModule(Enum):
     gswp3W5E5 = 10
     mohcHadGem2Es = 11
 
-GCM: TypeAlias = _GCMModule
-
 class _RCMModule(Enum):
     clmcomCclm4817 = 0
     gericsRemo2015 = 1
@@ -52,16 +50,12 @@ class _RCMModule(Enum):
     mpiCscRemo2009 = 5
     uhohWrf361H = 6
 
-RCM: TypeAlias = _RCMModule
-
 class _SSPModule(Enum):
     ssp1 = 0
     ssp2 = 1
     ssp3 = 2
     ssp4 = 3
     ssp5 = 4
-
-SSP: TypeAlias = _SSPModule
 
 class _RCPModule(Enum):
     rcp19 = 0
@@ -71,8 +65,6 @@ class _RCPModule(Enum):
     rcp60 = 4
     rcp70 = 5
     rcp85 = 6
-
-RCP: TypeAlias = _RCPModule
 
 class _EnsembleMemberModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -85,7 +77,7 @@ class _EnsembleMemberModule(_StructModule):
         @property
         def f(self) -> int: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _EnsembleMemberModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EnsembleMemberBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -105,13 +97,11 @@ class _EnsembleMemberModule(_StructModule):
         @f.setter
         def f(self, value: int) -> None: ...
         @override
-        def as_reader(self) -> _EnsembleMemberModule.Reader: ...
+        def as_reader(self) -> EnsembleMemberReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, r: int | None = None, i: int | None = None, p: int | None = None, f: int | None = None) -> _EnsembleMemberModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, r: int | None = None, i: int | None = None, p: int | None = None, f: int | None = None) -> EnsembleMemberBuilder: ...
 
-EnsembleMemberReader: TypeAlias = _EnsembleMemberModule.Reader
-EnsembleMemberBuilder: TypeAlias = _EnsembleMemberModule.Builder
 EnsembleMember: _EnsembleMemberModule
 
 class _MetadataModule(_StructModule):
@@ -164,7 +154,7 @@ class _MetadataModule(_StructModule):
             def supportedValues_request(self, typeId: str | None = None) -> _MetadataModule._SupportedModule.SupportedvaluesRequest: ...
 
     Supported: _SupportedModule
-    SupportedClient: TypeAlias = _MetadataModule._SupportedModule.SupportedClient
+    type SupportedClient = _MetadataModule._SupportedModule.SupportedClient
     class _ValueModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -180,7 +170,7 @@ class _MetadataModule(_StructModule):
             @override
             def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _MetadataModule._ValueModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ValueBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -207,13 +197,13 @@ class _MetadataModule(_StructModule):
             def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
             def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
             @override
-            def as_reader(self) -> _MetadataModule._ValueModule.Reader: ...
+            def as_reader(self) -> ValueReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, text: str | None = None, float: float | None = None, int: int | None = None, bool: bool | None = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> _MetadataModule._ValueModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, text: str | None = None, float: float | None = None, int: int | None = None, bool: bool | None = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> ValueBuilder: ...
 
-    ValueReader: TypeAlias = _ValueModule.Reader
-    ValueBuilder: TypeAlias = _ValueModule.Builder
+    type ValueReader = _ValueModule.Reader
+    type ValueBuilder = _ValueModule.Builder
     Value: _ValueModule
     class _EntryModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -228,7 +218,7 @@ class _MetadataModule(_StructModule):
             @property
             def ssp(self) -> _SSPModule: ...
             @property
-            def ensMem(self) -> _EnsembleMemberModule.Reader: ...
+            def ensMem(self) -> EnsembleMemberReader: ...
             @property
             def version(self) -> str: ...
             @property
@@ -244,7 +234,7 @@ class _MetadataModule(_StructModule):
             @override
             def which(self) -> Literal["gcm", "rcm", "historical", "rcp", "ssp", "ensMem", "version", "start", "end", "co2", "picontrol", "description"]: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _MetadataModule._EntryModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EntryBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -268,9 +258,9 @@ class _MetadataModule(_StructModule):
             @ssp.setter
             def ssp(self, value: _SSPModule | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]) -> None: ...
             @property
-            def ensMem(self) -> _EnsembleMemberModule.Builder: ...
+            def ensMem(self) -> EnsembleMemberBuilder: ...
             @ensMem.setter
-            def ensMem(self, value: _EnsembleMemberModule.Builder | _EnsembleMemberModule.Reader | dict[str, Any]) -> None: ...
+            def ensMem(self, value: EnsembleMemberBuilder | EnsembleMemberReader | dict[str, Any]) -> None: ...
             @property
             def version(self) -> str: ...
             @version.setter
@@ -306,7 +296,7 @@ class _MetadataModule(_StructModule):
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
-            def as_reader(self) -> _MetadataModule._EntryModule.Reader: ...
+            def as_reader(self) -> EntryReader: ...
 
         @override
         def new_message(
@@ -318,17 +308,17 @@ class _MetadataModule(_StructModule):
             historical: None | None = None,
             rcp: _RCPModule | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"] | None = None,
             ssp: _SSPModule | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"] | None = None,
-            ensMem: _EnsembleMemberModule.Builder | dict[str, Any] | None = None,
+            ensMem: EnsembleMemberBuilder | dict[str, Any] | None = None,
             version: str | None = None,
             start: _DateModule.Builder | dict[str, Any] | None = None,
             end: _DateModule.Builder | dict[str, Any] | None = None,
             co2: float | None = None,
             picontrol: None | None = None,
             description: str | None = None,
-        ) -> _MetadataModule._EntryModule.Builder: ...
+        ) -> EntryBuilder: ...
 
-    EntryReader: TypeAlias = _EntryModule.Reader
-    EntryBuilder: TypeAlias = _EntryModule.Builder
+    type EntryReader = _EntryModule.Reader
+    type EntryBuilder = _EntryModule.Builder
     Entry: _EntryModule
     class _InformationModule(_InterfaceModule):
         class ForoneRequest(Protocol):
@@ -389,42 +379,35 @@ class _MetadataModule(_StructModule):
             def forAll_request(self) -> _MetadataModule._InformationModule.ForallRequest: ...
 
     Information: _InformationModule
-    InformationClient: TypeAlias = _MetadataModule._InformationModule.InformationClient
+    type InformationClient = _MetadataModule._InformationModule.InformationClient
     class Reader(_DynamicStructReader):
         @property
-        def entries(self) -> Sequence[_MetadataModule._EntryModule.Reader]: ...
+        def entries(self) -> Sequence[EntryReader]: ...
         @property
         def info(self) -> _MetadataModule._InformationModule.InformationClient: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _MetadataModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> MetadataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def entries(self) -> MutableSequence[_MetadataModule._EntryModule.Builder]: ...
+        def entries(self) -> MutableSequence[EntryBuilder]: ...
         @entries.setter
-        def entries(self, value: Sequence[_MetadataModule._EntryModule.Builder | _MetadataModule._EntryModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def entries(self, value: Sequence[EntryBuilder | EntryReader] | Sequence[dict[str, Any]]) -> None: ...
         @property
         def info(self) -> _MetadataModule._InformationModule.InformationClient: ...
         @info.setter
         def info(self, value: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server) -> None: ...
         def init(self, field: Literal["entries"], size: int | None = None) -> MutableSequence[_MetadataModule._EntryModule.Builder]: ...
         @override
-        def as_reader(self) -> _MetadataModule.Reader: ...
+        def as_reader(self) -> MetadataReader: ...
 
     @override
-    def new_message(
-        self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, entries: Sequence[_MetadataModule._EntryModule.Builder] | Sequence[dict[str, Any]] | None = None, info: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server | None = None
-    ) -> _MetadataModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, entries: Sequence[EntryBuilder] | Sequence[dict[str, Any]] | None = None, info: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server | None = None) -> MetadataBuilder: ...
 
-MetadataReader: TypeAlias = _MetadataModule.Reader
-MetadataBuilder: TypeAlias = _MetadataModule.Builder
 Metadata: _MetadataModule
 
 class _DatasetModule(_IdentifiableModule, _PersistentModule):
     class _GetLocationsCallbackModule(_InterfaceModule):
-        LocationReader: TypeAlias = _LocationModule.Reader
-        LocationBuilder: TypeAlias = _LocationModule.Builder
-        Location: _LocationModule
         class NextlocationsRequest(Protocol):
             maxCount: int
             def send(self) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient.NextlocationsResult: ...
@@ -453,7 +436,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             def nextLocations_request(self, maxCount: int | None = None) -> _DatasetModule._GetLocationsCallbackModule.NextlocationsRequest: ...
 
     GetLocationsCallback: _GetLocationsCallbackModule
-    GetLocationsCallbackClient: TypeAlias = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
+    type GetLocationsCallbackClient = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
     class MetadataRequest(Protocol):
         def send(self) -> _DatasetModule.DatasetClient.MetadataResult: ...
 
@@ -575,7 +558,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         daily = 0
         hourly = 1
 
-    Resolution: TypeAlias = _ResolutionModule
+    type Resolution = _ResolutionModule
     class ResolutionRequest(Protocol):
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.ResolutionResult: ...
 
@@ -789,7 +772,6 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def location_request(self) -> _TimeSeriesModule.LocationRequest: ...
 
 TimeSeries: _TimeSeriesModule
-TimeSeriesClient: TypeAlias = _TimeSeriesModule.TimeSeriesClient
 
 class _LocationModule(_StructModule):
     class _KVModule(_StructModule):
@@ -799,7 +781,7 @@ class _LocationModule(_StructModule):
             @property
             def value(self) -> Any: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LocationModule._KVModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> KVBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -811,13 +793,13 @@ class _LocationModule(_StructModule):
             @value.setter
             def value(self, value: Any) -> None: ...
             @override
-            def as_reader(self) -> _LocationModule._KVModule.Reader: ...
+            def as_reader(self) -> KVReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, value: Any | None = None) -> _LocationModule._KVModule.Builder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, value: Any | None = None) -> KVBuilder: ...
 
-    KVReader: TypeAlias = _KVModule.Reader
-    KVBuilder: TypeAlias = _KVModule.Builder
+    type KVReader = _KVModule.Reader
+    type KVBuilder = _KVModule.Builder
     KV: _KVModule
     class Reader(_DynamicStructReader):
         @property
@@ -829,9 +811,9 @@ class _LocationModule(_StructModule):
         @property
         def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @property
-        def customData(self) -> Sequence[_LocationModule._KVModule.Reader]: ...
+        def customData(self) -> Sequence[KVReader]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _LocationModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> LocationBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -851,9 +833,9 @@ class _LocationModule(_StructModule):
         @timeSeries.setter
         def timeSeries(self, value: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server) -> None: ...
         @property
-        def customData(self) -> MutableSequence[_LocationModule._KVModule.Builder]: ...
+        def customData(self) -> MutableSequence[KVBuilder]: ...
         @customData.setter
-        def customData(self, value: Sequence[_LocationModule._KVModule.Builder | _LocationModule._KVModule.Reader] | Sequence[dict[str, Any]]) -> None: ...
+        def customData(self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]) -> None: ...
         @overload
         def init(self, field: Literal["id"], size: int | None = None) -> _IdInformationModule.Builder: ...
         @overload
@@ -863,7 +845,7 @@ class _LocationModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _LocationModule.Reader: ...
+        def as_reader(self) -> LocationReader: ...
 
     @override
     def new_message(
@@ -874,39 +856,37 @@ class _LocationModule(_StructModule):
         heightNN: float | None = None,
         latlon: _LatLonCoordModule.Builder | dict[str, Any] | None = None,
         timeSeries: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server | None = None,
-        customData: Sequence[_LocationModule._KVModule.Builder] | Sequence[dict[str, Any]] | None = None,
-    ) -> _LocationModule.Builder: ...
+        customData: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+    ) -> LocationBuilder: ...
 
+Location: _LocationModule
 Dataset: _DatasetModule
-DatasetClient: TypeAlias = _DatasetModule.DatasetClient
 
 class _MetaPlusDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def meta(self) -> _MetadataModule.Reader: ...
+        def meta(self) -> MetadataReader: ...
         @property
         def data(self) -> _DatasetModule.DatasetClient: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _MetaPlusDataModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> MetaPlusDataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def meta(self) -> _MetadataModule.Builder: ...
+        def meta(self) -> MetadataBuilder: ...
         @meta.setter
-        def meta(self, value: _MetadataModule.Builder | _MetadataModule.Reader | dict[str, Any]) -> None: ...
+        def meta(self, value: MetadataBuilder | MetadataReader | dict[str, Any]) -> None: ...
         @property
         def data(self) -> _DatasetModule.DatasetClient: ...
         @data.setter
         def data(self, value: _DatasetModule.DatasetClient | _DatasetModule.Server) -> None: ...
         def init(self, field: Literal["meta"], size: int | None = None) -> _MetadataModule.Builder: ...
         @override
-        def as_reader(self) -> _MetaPlusDataModule.Reader: ...
+        def as_reader(self) -> MetaPlusDataReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meta: _MetadataModule.Builder | dict[str, Any] | None = None, data: _DatasetModule.DatasetClient | _DatasetModule.Server | None = None) -> _MetaPlusDataModule.Builder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meta: MetadataBuilder | dict[str, Any] | None = None, data: _DatasetModule.DatasetClient | _DatasetModule.Server | None = None) -> MetaPlusDataBuilder: ...
 
-MetaPlusDataReader: TypeAlias = _MetaPlusDataModule.Reader
-MetaPlusDataBuilder: TypeAlias = _MetaPlusDataModule.Builder
 MetaPlusData: _MetaPlusDataModule
 
 class _ElementModule(Enum):
@@ -930,8 +910,6 @@ class _ElementModule(Enum):
     surfaceDownwellingLongwaveRadiation = 17
     potET = 18
 
-Element: TypeAlias = _ElementModule
-
 class _TimeSeriesDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -947,7 +925,7 @@ class _TimeSeriesDataModule(_StructModule):
         @property
         def resolution(self) -> _TimeSeriesModule._ResolutionModule: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _TimeSeriesDataModule.Builder: ...
+        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> TimeSeriesDataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -985,7 +963,7 @@ class _TimeSeriesDataModule(_StructModule):
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
-        def as_reader(self) -> _TimeSeriesDataModule.Reader: ...
+        def as_reader(self) -> TimeSeriesDataReader: ...
 
     @override
     def new_message(
@@ -998,10 +976,8 @@ class _TimeSeriesDataModule(_StructModule):
         startDate: _DateModule.Builder | dict[str, Any] | None = None,
         endDate: _DateModule.Builder | dict[str, Any] | None = None,
         resolution: _TimeSeriesModule._ResolutionModule | Literal["daily", "hourly"] | None = None,
-    ) -> _TimeSeriesDataModule.Builder: ...
+    ) -> TimeSeriesDataBuilder: ...
 
-TimeSeriesDataReader: TypeAlias = _TimeSeriesDataModule.Reader
-TimeSeriesDataBuilder: TypeAlias = _TimeSeriesDataModule.Builder
 TimeSeriesData: _TimeSeriesDataModule
 
 class _ServiceModule(_IdentifiableModule, _PersistentModule):
@@ -1052,12 +1028,11 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             datasets: Sequence[_DatasetModule]
 
         def getAvailableDatasets(self) -> _ServiceModule.ServiceClient.GetavailabledatasetsResult: ...
-        def getDatasetsFor(self, template: _MetadataModule | dict[str, Any] | None = None) -> _ServiceModule.ServiceClient.GetdatasetsforResult: ...
+        def getDatasetsFor(self, template: MetadataBuilder | MetadataReader | dict[str, Any] | None = None) -> _ServiceModule.ServiceClient.GetdatasetsforResult: ...
         def getAvailableDatasets_request(self) -> _ServiceModule.GetavailabledatasetsRequest: ...
         def getDatasetsFor_request(self, template: _MetadataModule.Builder | None = None) -> _ServiceModule.GetdatasetsforRequest: ...
 
 Service: _ServiceModule
-ServiceClient: TypeAlias = _ServiceModule.ServiceClient
 
 class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
     class _CSVConfigModule(_StructModule):
@@ -1071,7 +1046,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             @property
             def skipLinesFromHeaderToData(self) -> int: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CSVConfigBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -1092,15 +1067,15 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             def skipLinesFromHeaderToData(self, value: int) -> None: ...
             def init(self, field: Literal["headerMap"], size: int | None = None) -> MutableSequence[_PairModule.Builder]: ...
             @override
-            def as_reader(self) -> _CSVTimeSeriesFactoryModule._CSVConfigModule.Reader: ...
+            def as_reader(self) -> CSVConfigReader: ...
 
         @override
         def new_message(
             self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sep: str | None = None, headerMap: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, skipLinesToHeader: int | None = None, skipLinesFromHeaderToData: int | None = None
-        ) -> _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder: ...
+        ) -> CSVConfigBuilder: ...
 
-    CSVConfigReader: TypeAlias = _CSVConfigModule.Reader
-    CSVConfigBuilder: TypeAlias = _CSVConfigModule.Builder
+    type CSVConfigReader = _CSVConfigModule.Reader
+    type CSVConfigBuilder = _CSVConfigModule.Builder
     CSVConfig: _CSVConfigModule
     class CreateRequest(Protocol):
         csvData: str
@@ -1138,14 +1113,13 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
         def create_request(self, csvData: str | None = None, config: _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder | None = None) -> _CSVTimeSeriesFactoryModule.CreateRequest: ...
 
 CSVTimeSeriesFactory: _CSVTimeSeriesFactoryModule
-CSVTimeSeriesFactoryClient: TypeAlias = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient
 
 class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
     class _AlterTypeModule(Enum):
         add = 0
         mul = 1
 
-    AlterType: TypeAlias = _AlterTypeModule
+    type AlterType = _AlterTypeModule
     class _AlteredModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -1155,7 +1129,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             @property
             def type(self) -> _AlterTimeSeriesWrapperModule._AlterTypeModule: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> _AlterTimeSeriesWrapperModule._AlteredModule.Builder: ...
+            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AlteredBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -1171,7 +1145,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             @type.setter
             def type(self, value: _AlterTimeSeriesWrapperModule._AlterTypeModule | Literal["add", "mul"]) -> None: ...
             @override
-            def as_reader(self) -> _AlterTimeSeriesWrapperModule._AlteredModule.Reader: ...
+            def as_reader(self) -> AlteredReader: ...
 
         @override
         def new_message(
@@ -1181,10 +1155,10 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             element: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None,
             value: float | None = None,
             type: _AlterTimeSeriesWrapperModule._AlterTypeModule | Literal["add", "mul"] | None = None,
-        ) -> _AlterTimeSeriesWrapperModule._AlteredModule.Builder: ...
+        ) -> AlteredBuilder: ...
 
-    AlteredReader: TypeAlias = _AlteredModule.Reader
-    AlteredBuilder: TypeAlias = _AlteredModule.Builder
+    type AlteredReader = _AlteredModule.Reader
+    type AlteredBuilder = _AlteredModule.Builder
     Altered: _AlteredModule
     class WrappedtimeseriesRequest(Protocol):
         def send(self) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.WrappedtimeseriesResult: ...
@@ -1296,7 +1270,6 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         def replaceWrappedTimeSeries_request(self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None) -> _AlterTimeSeriesWrapperModule.ReplacewrappedtimeseriesRequest: ...
 
 AlterTimeSeriesWrapper: _AlterTimeSeriesWrapperModule
-AlterTimeSeriesWrapperClient: TypeAlias = _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
 
 class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
     class WrapRequest(Protocol):
@@ -1327,19 +1300,41 @@ class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
         def wrap_request(self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None) -> _AlterTimeSeriesWrapperFactoryModule.WrapRequest: ...
 
 AlterTimeSeriesWrapperFactory: _AlterTimeSeriesWrapperFactoryModule
-AlterTimeSeriesWrapperFactoryClient: TypeAlias = _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient
 
 # Top-level type aliases for use in type annotations
-AlteredBuilder: TypeAlias = _AlterTimeSeriesWrapperModule._AlteredModule.Builder
-AlteredReader: TypeAlias = _AlterTimeSeriesWrapperModule._AlteredModule.Reader
-CSVConfigBuilder: TypeAlias = _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder
-CSVConfigReader: TypeAlias = _CSVTimeSeriesFactoryModule._CSVConfigModule.Reader
-EntryBuilder: TypeAlias = _MetadataModule._EntryModule.Builder
-EntryReader: TypeAlias = _MetadataModule._EntryModule.Reader
-GetLocationsCallbackClient: TypeAlias = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
-InformationClient: TypeAlias = _MetadataModule._InformationModule.InformationClient
-KVBuilder: TypeAlias = _LocationModule._KVModule.Builder
-KVReader: TypeAlias = _LocationModule._KVModule.Reader
-SupportedClient: TypeAlias = _MetadataModule._SupportedModule.SupportedClient
-ValueBuilder: TypeAlias = _MetadataModule._ValueModule.Builder
-ValueReader: TypeAlias = _MetadataModule._ValueModule.Reader
+type AlterTimeSeriesWrapperClient = _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
+type AlterTimeSeriesWrapperFactoryClient = _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient
+type AlterType = _AlterTimeSeriesWrapperModule._AlterTypeModule
+type AlteredBuilder = _AlterTimeSeriesWrapperModule._AlteredModule.Builder
+type AlteredReader = _AlterTimeSeriesWrapperModule._AlteredModule.Reader
+type CSVConfigBuilder = _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder
+type CSVConfigReader = _CSVTimeSeriesFactoryModule._CSVConfigModule.Reader
+type CSVTimeSeriesFactoryClient = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient
+type DatasetClient = _DatasetModule.DatasetClient
+type Element = _ElementModule
+type EnsembleMemberBuilder = _EnsembleMemberModule.Builder
+type EnsembleMemberReader = _EnsembleMemberModule.Reader
+type EntryBuilder = _MetadataModule._EntryModule.Builder
+type EntryReader = _MetadataModule._EntryModule.Reader
+type GCM = _GCMModule
+type GetLocationsCallbackClient = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
+type InformationClient = _MetadataModule._InformationModule.InformationClient
+type KVBuilder = _LocationModule._KVModule.Builder
+type KVReader = _LocationModule._KVModule.Reader
+type LocationBuilder = _LocationModule.Builder
+type LocationReader = _LocationModule.Reader
+type MetaPlusDataBuilder = _MetaPlusDataModule.Builder
+type MetaPlusDataReader = _MetaPlusDataModule.Reader
+type MetadataBuilder = _MetadataModule.Builder
+type MetadataReader = _MetadataModule.Reader
+type RCM = _RCMModule
+type RCP = _RCPModule
+type Resolution = _TimeSeriesModule._ResolutionModule
+type SSP = _SSPModule
+type ServiceClient = _ServiceModule.ServiceClient
+type SupportedClient = _MetadataModule._SupportedModule.SupportedClient
+type TimeSeriesClient = _TimeSeriesModule.TimeSeriesClient
+type TimeSeriesDataBuilder = _TimeSeriesDataModule.Builder
+type TimeSeriesDataReader = _TimeSeriesDataModule.Reader
+type ValueBuilder = _MetadataModule._ValueModule.Builder
+type ValueReader = _MetadataModule._ValueModule.Reader
