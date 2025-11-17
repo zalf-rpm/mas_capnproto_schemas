@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, override
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -224,7 +225,19 @@ class _SetupModule(_StructModule):
         stageTemperatureSum: str | None = None,
         useVernalisationFix: bool | None = None,
         comment: str | None = None,
+        **kwargs: Any,
     ) -> SetupBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[SetupReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[SetupReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[SetupBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SetupReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SetupReader: ...
 
 Setup: _SetupModule
 

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, override
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -42,7 +43,18 @@ class _DateModule(_StructModule):
         def as_reader(self) -> DateReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, month: int | None = None, day: int | None = None) -> DateBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, month: int | None = None, day: int | None = None, **kwargs: Any) -> DateBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[DateReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[DateReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[DateBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> DateReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> DateReader: ...
 
 Date: _DateModule
 

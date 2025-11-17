@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
-from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, overload, override
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -27,44 +27,44 @@ from .date_capnp import _DateModule
 from .geo_capnp import _LatLonCoordModule
 from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
-class _GCMModule(Enum):
-    cccmaCanEsm2 = 0
-    ichecEcEarth = 1
-    ipslIpslCm5AMr = 2
-    mirocMiroc5 = 3
-    mpiMMpiEsmLr = 4
-    gfdlEsm4 = 5
-    ipslCm6aLr = 6
-    mpiEsm12Hr = 7
-    mriEsm20 = 8
-    ukesm10Ll = 9
-    gswp3W5E5 = 10
-    mohcHadGem2Es = 11
+class _GCMModule:
+    cccmaCanEsm2: int
+    ichecEcEarth: int
+    ipslIpslCm5AMr: int
+    mirocMiroc5: int
+    mpiMMpiEsmLr: int
+    gfdlEsm4: int
+    ipslCm6aLr: int
+    mpiEsm12Hr: int
+    mriEsm20: int
+    ukesm10Ll: int
+    gswp3W5E5: int
+    mohcHadGem2Es: int
 
-class _RCMModule(Enum):
-    clmcomCclm4817 = 0
-    gericsRemo2015 = 1
-    knmiRacmo22E = 2
-    smhiRca4 = 3
-    clmcomBtuCclm4817 = 4
-    mpiCscRemo2009 = 5
-    uhohWrf361H = 6
+class _RCMModule:
+    clmcomCclm4817: int
+    gericsRemo2015: int
+    knmiRacmo22E: int
+    smhiRca4: int
+    clmcomBtuCclm4817: int
+    mpiCscRemo2009: int
+    uhohWrf361H: int
 
-class _SSPModule(Enum):
-    ssp1 = 0
-    ssp2 = 1
-    ssp3 = 2
-    ssp4 = 3
-    ssp5 = 4
+class _SSPModule:
+    ssp1: int
+    ssp2: int
+    ssp3: int
+    ssp4: int
+    ssp5: int
 
-class _RCPModule(Enum):
-    rcp19 = 0
-    rcp26 = 1
-    rcp34 = 2
-    rcp45 = 3
-    rcp60 = 4
-    rcp70 = 5
-    rcp85 = 6
+class _RCPModule:
+    rcp19: int
+    rcp26: int
+    rcp34: int
+    rcp45: int
+    rcp60: int
+    rcp70: int
+    rcp85: int
 
 class _EnsembleMemberModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -100,7 +100,18 @@ class _EnsembleMemberModule(_StructModule):
         def as_reader(self) -> EnsembleMemberReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, r: int | None = None, i: int | None = None, p: int | None = None, f: int | None = None) -> EnsembleMemberBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, r: int | None = None, i: int | None = None, p: int | None = None, f: int | None = None, **kwargs: Any) -> EnsembleMemberBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[EnsembleMemberReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[EnsembleMemberReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[EnsembleMemberBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EnsembleMemberReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EnsembleMemberReader: ...
 
 EnsembleMember: _EnsembleMemberModule
 
@@ -114,7 +125,7 @@ class _MetadataModule(_StructModule):
             def send(self) -> _MetadataModule._SupportedModule.SupportedClient.SupportedvaluesResult: ...
 
         @classmethod
-        def _new_client(cls, server: _MetadataModule._SupportedModule.Server) -> _MetadataModule._SupportedModule.SupportedClient: ...
+        def _new_client(cls, server: _DynamicCapabilityServer) -> _MetadataModule._SupportedModule.SupportedClient: ...
         class Server(_DynamicCapabilityServer):
             class CategoriesResult(Awaitable[CategoriesResult], Protocol):
                 types: Any
@@ -200,7 +211,18 @@ class _MetadataModule(_StructModule):
             def as_reader(self) -> ValueReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, text: str | None = None, float: float | None = None, int: int | None = None, bool: bool | None = None, date: _DateModule.Builder | dict[str, Any] | None = None) -> ValueBuilder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, text: str | None = None, float: float | None = None, int: int | None = None, bool: bool | None = None, date: _DateModule.Builder | dict[str, Any] | None = None, **kwargs: Any) -> ValueBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ValueReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ValueReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ValueBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ValueReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ValueReader: ...
 
     type ValueReader = _ValueModule.Reader
     type ValueBuilder = _ValueModule.Builder
@@ -208,15 +230,15 @@ class _MetadataModule(_StructModule):
     class _EntryModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def gcm(self) -> _GCMModule: ...
+            def gcm(self) -> int: ...
             @property
-            def rcm(self) -> _RCMModule: ...
+            def rcm(self) -> int: ...
             @property
             def historical(self) -> None: ...
             @property
-            def rcp(self) -> _RCPModule: ...
+            def rcp(self) -> int: ...
             @property
-            def ssp(self) -> _SSPModule: ...
+            def ssp(self) -> int: ...
             @property
             def ensMem(self) -> EnsembleMemberReader: ...
             @property
@@ -238,25 +260,25 @@ class _MetadataModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def gcm(self) -> _GCMModule: ...
+            def gcm(self) -> int: ...
             @gcm.setter
-            def gcm(self, value: _GCMModule | Literal["cccmaCanEsm2", "ichecEcEarth", "ipslIpslCm5AMr", "mirocMiroc5", "mpiMMpiEsmLr", "gfdlEsm4", "ipslCm6aLr", "mpiEsm12Hr", "mriEsm20", "ukesm10Ll", "gswp3W5E5", "mohcHadGem2Es"]) -> None: ...
+            def gcm(self, value: int | Literal["cccmaCanEsm2", "ichecEcEarth", "ipslIpslCm5AMr", "mirocMiroc5", "mpiMMpiEsmLr", "gfdlEsm4", "ipslCm6aLr", "mpiEsm12Hr", "mriEsm20", "ukesm10Ll", "gswp3W5E5", "mohcHadGem2Es"]) -> None: ...
             @property
-            def rcm(self) -> _RCMModule: ...
+            def rcm(self) -> int: ...
             @rcm.setter
-            def rcm(self, value: _RCMModule | Literal["clmcomCclm4817", "gericsRemo2015", "knmiRacmo22E", "smhiRca4", "clmcomBtuCclm4817", "mpiCscRemo2009", "uhohWrf361H"]) -> None: ...
+            def rcm(self, value: int | Literal["clmcomCclm4817", "gericsRemo2015", "knmiRacmo22E", "smhiRca4", "clmcomBtuCclm4817", "mpiCscRemo2009", "uhohWrf361H"]) -> None: ...
             @property
             def historical(self) -> None: ...
             @historical.setter
             def historical(self, value: None) -> None: ...
             @property
-            def rcp(self) -> _RCPModule: ...
+            def rcp(self) -> int: ...
             @rcp.setter
-            def rcp(self, value: _RCPModule | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"]) -> None: ...
+            def rcp(self, value: int | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"]) -> None: ...
             @property
-            def ssp(self) -> _SSPModule: ...
+            def ssp(self) -> int: ...
             @ssp.setter
-            def ssp(self, value: _SSPModule | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]) -> None: ...
+            def ssp(self, value: int | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]) -> None: ...
             @property
             def ensMem(self) -> EnsembleMemberBuilder: ...
             @ensMem.setter
@@ -288,7 +310,7 @@ class _MetadataModule(_StructModule):
             @override
             def which(self) -> Literal["gcm", "rcm", "historical", "rcp", "ssp", "ensMem", "version", "start", "end", "co2", "picontrol", "description"]: ...
             @overload
-            def init(self, field: Literal["ensMem"], size: int | None = None) -> _EnsembleMemberModule.Builder: ...
+            def init(self, field: Literal["ensMem"], size: int | None = None) -> EnsembleMemberBuilder: ...
             @overload
             def init(self, field: Literal["start"], size: int | None = None) -> _DateModule.Builder: ...
             @overload
@@ -303,11 +325,11 @@ class _MetadataModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            gcm: _GCMModule | Literal["cccmaCanEsm2", "ichecEcEarth", "ipslIpslCm5AMr", "mirocMiroc5", "mpiMMpiEsmLr", "gfdlEsm4", "ipslCm6aLr", "mpiEsm12Hr", "mriEsm20", "ukesm10Ll", "gswp3W5E5", "mohcHadGem2Es"] | None = None,
-            rcm: _RCMModule | Literal["clmcomCclm4817", "gericsRemo2015", "knmiRacmo22E", "smhiRca4", "clmcomBtuCclm4817", "mpiCscRemo2009", "uhohWrf361H"] | None = None,
+            gcm: int | Literal["cccmaCanEsm2", "ichecEcEarth", "ipslIpslCm5AMr", "mirocMiroc5", "mpiMMpiEsmLr", "gfdlEsm4", "ipslCm6aLr", "mpiEsm12Hr", "mriEsm20", "ukesm10Ll", "gswp3W5E5", "mohcHadGem2Es"] | None = None,
+            rcm: int | Literal["clmcomCclm4817", "gericsRemo2015", "knmiRacmo22E", "smhiRca4", "clmcomBtuCclm4817", "mpiCscRemo2009", "uhohWrf361H"] | None = None,
             historical: None | None = None,
-            rcp: _RCPModule | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"] | None = None,
-            ssp: _SSPModule | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"] | None = None,
+            rcp: int | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"] | None = None,
+            ssp: int | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"] | None = None,
             ensMem: EnsembleMemberBuilder | dict[str, Any] | None = None,
             version: str | None = None,
             start: _DateModule.Builder | dict[str, Any] | None = None,
@@ -315,7 +337,19 @@ class _MetadataModule(_StructModule):
             co2: float | None = None,
             picontrol: None | None = None,
             description: str | None = None,
+            **kwargs: Any,
         ) -> EntryBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[EntryReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[EntryReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[EntryBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EntryReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EntryReader: ...
 
     type EntryReader = _EntryModule.Reader
     type EntryBuilder = _EntryModule.Builder
@@ -324,7 +358,7 @@ class _MetadataModule(_StructModule):
         class ForoneRequest(Protocol):
             entry: _MetadataModule._EntryModule.Builder
             @overload
-            def init(self, name: Literal["entry"]) -> _MetadataModule._EntryModule.Builder: ...
+            def init(self, name: Literal["entry"]) -> EntryBuilder: ...
             @overload
             def init(self, name: str, size: int = ...) -> Any: ...
             def send(self) -> _MetadataModule._InformationModule.InformationClient.ForoneResult: ...
@@ -333,7 +367,7 @@ class _MetadataModule(_StructModule):
             def send(self) -> _MetadataModule._InformationModule.InformationClient.ForallResult: ...
 
         @classmethod
-        def _new_client(cls, server: _MetadataModule._InformationModule.Server) -> _MetadataModule._InformationModule.InformationClient: ...
+        def _new_client(cls, server: _DynamicCapabilityServer) -> _MetadataModule._InformationModule.InformationClient: ...
         class Server(_DynamicCapabilityServer):
             class ForoneResult(Awaitable[ForoneResult], Protocol):
                 id: str
@@ -397,12 +431,25 @@ class _MetadataModule(_StructModule):
         def info(self) -> _MetadataModule._InformationModule.InformationClient: ...
         @info.setter
         def info(self, value: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server) -> None: ...
-        def init(self, field: Literal["entries"], size: int | None = None) -> MutableSequence[_MetadataModule._EntryModule.Builder]: ...
+        def init(self, field: Literal["entries"], size: int | None = None) -> MutableSequence[EntryBuilder]: ...
         @override
         def as_reader(self) -> MetadataReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, entries: Sequence[EntryBuilder] | Sequence[dict[str, Any]] | None = None, info: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server | None = None) -> MetadataBuilder: ...
+    def new_message(
+        self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, entries: Sequence[EntryBuilder] | Sequence[dict[str, Any]] | None = None, info: _MetadataModule._InformationModule.InformationClient | _MetadataModule._InformationModule.Server | None = None, **kwargs: Any
+    ) -> MetadataBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[MetadataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[MetadataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[MetadataBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> MetadataReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> MetadataReader: ...
 
 Metadata: _MetadataModule
 
@@ -413,7 +460,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             def send(self) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient.NextlocationsResult: ...
 
         @classmethod
-        def _new_client(cls, server: _DatasetModule._GetLocationsCallbackModule.Server) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient: ...
+        def _new_client(cls, server: _DynamicCapabilityServer) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient: ...
         class Server(_DynamicCapabilityServer):
             class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
                 locations: Sequence[_LocationModule.Builder | _LocationModule.Reader]
@@ -460,7 +507,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _DatasetModule.DatasetClient.StreamlocationsResult: ...
 
     @classmethod
-    def _new_client(cls, server: _DatasetModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _DatasetModule.DatasetClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _DatasetModule.DatasetClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
             entries: Sequence[_MetadataModule._EntryModule.Builder | _MetadataModule._EntryModule.Reader]
@@ -554,11 +601,11 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         def streamLocations_request(self, startAfterLocationId: str | None = None) -> _DatasetModule.StreamlocationsRequest: ...
 
 class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
-    class _ResolutionModule(Enum):
-        daily = 0
-        hourly = 1
+    class _ResolutionModule:
+        daily: int
+        hourly: int
 
-    type Resolution = _ResolutionModule
+    Resolution: _ResolutionModule
     class ResolutionRequest(Protocol):
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.ResolutionResult: ...
 
@@ -595,7 +642,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.LocationResult: ...
 
     @classmethod
-    def _new_client(cls, server: _TimeSeriesModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _TimeSeriesModule.TimeSeriesClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _TimeSeriesModule.TimeSeriesClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
             resolution: _TimeSeriesModule._ResolutionModule
@@ -796,7 +843,18 @@ class _LocationModule(_StructModule):
             def as_reader(self) -> KVReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, value: Any | None = None) -> KVBuilder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, key: str | None = None, value: Any | None = None, **kwargs: Any) -> KVBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[KVReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[KVReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[KVBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> KVReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> KVReader: ...
 
     type KVReader = _KVModule.Reader
     type KVBuilder = _KVModule.Builder
@@ -841,7 +899,7 @@ class _LocationModule(_StructModule):
         @overload
         def init(self, field: Literal["latlon"], size: int | None = None) -> _LatLonCoordModule.Builder: ...
         @overload
-        def init(self, field: Literal["customData"], size: int | None = None) -> MutableSequence[_LocationModule._KVModule.Builder]: ...
+        def init(self, field: Literal["customData"], size: int | None = None) -> MutableSequence[KVBuilder]: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -857,7 +915,19 @@ class _LocationModule(_StructModule):
         latlon: _LatLonCoordModule.Builder | dict[str, Any] | None = None,
         timeSeries: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server | None = None,
         customData: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+        **kwargs: Any,
     ) -> LocationBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[LocationReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[LocationReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[LocationBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LocationReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LocationReader: ...
 
 Location: _LocationModule
 Dataset: _DatasetModule
@@ -880,35 +950,46 @@ class _MetaPlusDataModule(_StructModule):
         def data(self) -> _DatasetModule.DatasetClient: ...
         @data.setter
         def data(self, value: _DatasetModule.DatasetClient | _DatasetModule.Server) -> None: ...
-        def init(self, field: Literal["meta"], size: int | None = None) -> _MetadataModule.Builder: ...
+        def init(self, field: Literal["meta"], size: int | None = None) -> MetadataBuilder: ...
         @override
         def as_reader(self) -> MetaPlusDataReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meta: MetadataBuilder | dict[str, Any] | None = None, data: _DatasetModule.DatasetClient | _DatasetModule.Server | None = None) -> MetaPlusDataBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meta: MetadataBuilder | dict[str, Any] | None = None, data: _DatasetModule.DatasetClient | _DatasetModule.Server | None = None, **kwargs: Any) -> MetaPlusDataBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[MetaPlusDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[MetaPlusDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[MetaPlusDataBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> MetaPlusDataReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> MetaPlusDataReader: ...
 
 MetaPlusData: _MetaPlusDataModule
 
-class _ElementModule(Enum):
-    tmin = 0
-    tavg = 1
-    tmax = 2
-    precip = 3
-    globrad = 4
-    wind = 5
-    sunhours = 6
-    cloudamount = 7
-    relhumid = 8
-    airpress = 9
-    vaporpress = 10
-    co2 = 11
-    o3 = 12
-    et0 = 13
-    dewpointTemp = 14
-    specificHumidity = 15
-    snowfallFlux = 16
-    surfaceDownwellingLongwaveRadiation = 17
-    potET = 18
+class _ElementModule:
+    tmin: int
+    tavg: int
+    tmax: int
+    precip: int
+    globrad: int
+    wind: int
+    sunhours: int
+    cloudamount: int
+    relhumid: int
+    airpress: int
+    vaporpress: int
+    co2: int
+    o3: int
+    et0: int
+    dewpointTemp: int
+    specificHumidity: int
+    snowfallFlux: int
+    surfaceDownwellingLongwaveRadiation: int
+    potET: int
 
 class _TimeSeriesDataModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -923,7 +1004,7 @@ class _TimeSeriesDataModule(_StructModule):
         @property
         def endDate(self) -> _DateModule.Reader: ...
         @property
-        def resolution(self) -> _TimeSeriesModule._ResolutionModule: ...
+        def resolution(self) -> int: ...
         @override
         def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> TimeSeriesDataBuilder: ...
 
@@ -949,9 +1030,9 @@ class _TimeSeriesDataModule(_StructModule):
         @endDate.setter
         def endDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
         @property
-        def resolution(self) -> _TimeSeriesModule._ResolutionModule: ...
+        def resolution(self) -> int: ...
         @resolution.setter
-        def resolution(self, value: _TimeSeriesModule._ResolutionModule | Literal["daily", "hourly"]) -> None: ...
+        def resolution(self, value: int | Literal["daily", "hourly"]) -> None: ...
         @overload
         def init(self, field: Literal["startDate"], size: int | None = None) -> _DateModule.Builder: ...
         @overload
@@ -975,8 +1056,20 @@ class _TimeSeriesDataModule(_StructModule):
         header: Sequence[_ElementModule] | None = None,
         startDate: _DateModule.Builder | dict[str, Any] | None = None,
         endDate: _DateModule.Builder | dict[str, Any] | None = None,
-        resolution: _TimeSeriesModule._ResolutionModule | Literal["daily", "hourly"] | None = None,
+        resolution: int | Literal["daily", "hourly"] | None = None,
+        **kwargs: Any,
     ) -> TimeSeriesDataBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[TimeSeriesDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[TimeSeriesDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[TimeSeriesDataBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> TimeSeriesDataReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> TimeSeriesDataReader: ...
 
 TimeSeriesData: _TimeSeriesDataModule
 
@@ -987,13 +1080,13 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
     class GetdatasetsforRequest(Protocol):
         template: _MetadataModule.Builder
         @overload
-        def init(self, name: Literal["template"]) -> _MetadataModule.Builder: ...
+        def init(self, name: Literal["template"]) -> MetadataBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _ServiceModule.ServiceClient.GetdatasetsforResult: ...
 
     @classmethod
-    def _new_client(cls, server: _ServiceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ServiceModule.ServiceClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class GetavailabledatasetsResult(Awaitable[GetavailabledatasetsResult], Protocol):
             datasets: Sequence[_MetaPlusDataModule.Builder | _MetaPlusDataModule.Reader]
@@ -1071,8 +1164,19 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
 
         @override
         def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sep: str | None = None, headerMap: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, skipLinesToHeader: int | None = None, skipLinesFromHeaderToData: int | None = None
+            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sep: str | None = None, headerMap: Sequence[_PairModule.Builder] | Sequence[dict[str, Any]] | None = None, skipLinesToHeader: int | None = None, skipLinesFromHeaderToData: int | None = None, **kwargs: Any
         ) -> CSVConfigBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[CSVConfigReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[CSVConfigReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[CSVConfigBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CSVConfigReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CSVConfigReader: ...
 
     type CSVConfigReader = _CSVConfigModule.Reader
     type CSVConfigBuilder = _CSVConfigModule.Builder
@@ -1081,13 +1185,13 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
         csvData: str
         config: _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder
         @overload
-        def init(self, name: Literal["config"]) -> _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder: ...
+        def init(self, name: Literal["config"]) -> CSVConfigBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient.CreateResult: ...
 
     @classmethod
-    def _new_client(cls, server: _CSVTimeSeriesFactoryModule.Server | _IdentifiableModule.Server) -> _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class CreateResult(Awaitable[CreateResult], Protocol):
             timeseries: _TimeSeriesModule.TimeSeriesClient
@@ -1115,35 +1219,35 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
 CSVTimeSeriesFactory: _CSVTimeSeriesFactoryModule
 
 class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
-    class _AlterTypeModule(Enum):
-        add = 0
-        mul = 1
+    class _AlterTypeModule:
+        add: int
+        mul: int
 
-    type AlterType = _AlterTypeModule
+    AlterType: _AlterTypeModule
     class _AlteredModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def element(self) -> _ElementModule: ...
+            def element(self) -> int: ...
             @property
             def value(self) -> float: ...
             @property
-            def type(self) -> _AlterTimeSeriesWrapperModule._AlterTypeModule: ...
+            def type(self) -> int: ...
             @override
             def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> AlteredBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def element(self) -> _ElementModule: ...
+            def element(self) -> int: ...
             @element.setter
-            def element(self, value: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"]) -> None: ...
+            def element(self, value: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"]) -> None: ...
             @property
             def value(self) -> float: ...
             @value.setter
             def value(self, value: float) -> None: ...
             @property
-            def type(self) -> _AlterTimeSeriesWrapperModule._AlterTypeModule: ...
+            def type(self) -> int: ...
             @type.setter
-            def type(self, value: _AlterTimeSeriesWrapperModule._AlterTypeModule | Literal["add", "mul"]) -> None: ...
+            def type(self, value: int | Literal["add", "mul"]) -> None: ...
             @override
             def as_reader(self) -> AlteredReader: ...
 
@@ -1152,10 +1256,22 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            element: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None,
+            element: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None,
             value: float | None = None,
-            type: _AlterTimeSeriesWrapperModule._AlterTypeModule | Literal["add", "mul"] | None = None,
+            type: int | Literal["add", "mul"] | None = None,
+            **kwargs: Any,
         ) -> AlteredBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[AlteredReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[AlteredReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[AlteredBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AlteredReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AlteredReader: ...
 
     type AlteredReader = _AlteredModule.Reader
     type AlteredBuilder = _AlteredModule.Builder
@@ -1170,13 +1286,13 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         desc: _AlterTimeSeriesWrapperModule._AlteredModule.Builder
         asNewTimeSeries: bool
         @overload
-        def init(self, name: Literal["desc"]) -> _AlterTimeSeriesWrapperModule._AlteredModule.Builder: ...
+        def init(self, name: Literal["desc"]) -> AlteredBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.AlterResult: ...
 
     class RemoveRequest(Protocol):
-        alteredElement: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"]
+        alteredElement: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"]
         def send(self) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.RemoveResult: ...
 
     class ReplacewrappedtimeseriesRequest(Protocol):
@@ -1184,7 +1300,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         def send(self) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.ReplacewrappedtimeseriesResult: ...
 
     @classmethod
-    def _new_client(cls, server: _AlterTimeSeriesWrapperModule.Server | _IdentifiableModule.Server | _PersistentModule.Server | _TimeSeriesModule.Server) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient: ...
     class Server(_TimeSeriesModule.Server):
         class WrappedtimeseriesResult(Awaitable[WrappedtimeseriesResult], Protocol):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
@@ -1233,7 +1349,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         def alter_context(self, context: _AlterTimeSeriesWrapperModule.Server.AlterCallContext) -> Awaitable[None]: ...
         def remove(
             self,
-            alteredElement: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"],
+            alteredElement: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"],
             _context: _AlterTimeSeriesWrapperModule.Server.RemoveCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
@@ -1258,14 +1374,14 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         def alteredElements(self) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.AlteredelementsResult: ...
         def alter(self, desc: AlteredBuilder | AlteredReader | dict[str, Any] | None = None, asNewTimeSeries: bool | None = None) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.AlterResult: ...
         def remove(
-            self, alteredElement: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None
+            self, alteredElement: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None
         ) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.RemoveResult: ...
         def replaceWrappedTimeSeries(self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.ReplacewrappedtimeseriesResult: ...
         def wrappedTimeSeries_request(self) -> _AlterTimeSeriesWrapperModule.WrappedtimeseriesRequest: ...
         def alteredElements_request(self) -> _AlterTimeSeriesWrapperModule.AlteredelementsRequest: ...
         def alter_request(self, desc: _AlterTimeSeriesWrapperModule._AlteredModule.Builder | None = None, asNewTimeSeries: bool | None = None) -> _AlterTimeSeriesWrapperModule.AlterRequest: ...
         def remove_request(
-            self, alteredElement: _ElementModule | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None
+            self, alteredElement: int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"] | None = None
         ) -> _AlterTimeSeriesWrapperModule.RemoveRequest: ...
         def replaceWrappedTimeSeries_request(self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None) -> _AlterTimeSeriesWrapperModule.ReplacewrappedtimeseriesRequest: ...
 
@@ -1277,7 +1393,7 @@ class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
         def send(self) -> _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient.WrapResult: ...
 
     @classmethod
-    def _new_client(cls, server: _AlterTimeSeriesWrapperFactoryModule.Server | _IdentifiableModule.Server) -> _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class WrapResult(Awaitable[WrapResult], Protocol):
             wrapper: _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
@@ -1304,19 +1420,19 @@ AlterTimeSeriesWrapperFactory: _AlterTimeSeriesWrapperFactoryModule
 # Top-level type aliases for use in type annotations
 type AlterTimeSeriesWrapperClient = _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
 type AlterTimeSeriesWrapperFactoryClient = _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient
-type AlterType = _AlterTimeSeriesWrapperModule._AlterTypeModule
+type AlterType = int | Literal["add", "mul"]
 type AlteredBuilder = _AlterTimeSeriesWrapperModule._AlteredModule.Builder
 type AlteredReader = _AlterTimeSeriesWrapperModule._AlteredModule.Reader
 type CSVConfigBuilder = _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder
 type CSVConfigReader = _CSVTimeSeriesFactoryModule._CSVConfigModule.Reader
 type CSVTimeSeriesFactoryClient = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient
 type DatasetClient = _DatasetModule.DatasetClient
-type Element = _ElementModule
+type Element = int | Literal["tmin", "tavg", "tmax", "precip", "globrad", "wind", "sunhours", "cloudamount", "relhumid", "airpress", "vaporpress", "co2", "o3", "et0", "dewpointTemp", "specificHumidity", "snowfallFlux", "surfaceDownwellingLongwaveRadiation", "potET"]
 type EnsembleMemberBuilder = _EnsembleMemberModule.Builder
 type EnsembleMemberReader = _EnsembleMemberModule.Reader
 type EntryBuilder = _MetadataModule._EntryModule.Builder
 type EntryReader = _MetadataModule._EntryModule.Reader
-type GCM = _GCMModule
+type GCM = int | Literal["cccmaCanEsm2", "ichecEcEarth", "ipslIpslCm5AMr", "mirocMiroc5", "mpiMMpiEsmLr", "gfdlEsm4", "ipslCm6aLr", "mpiEsm12Hr", "mriEsm20", "ukesm10Ll", "gswp3W5E5", "mohcHadGem2Es"]
 type GetLocationsCallbackClient = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
 type InformationClient = _MetadataModule._InformationModule.InformationClient
 type KVBuilder = _LocationModule._KVModule.Builder
@@ -1327,10 +1443,10 @@ type MetaPlusDataBuilder = _MetaPlusDataModule.Builder
 type MetaPlusDataReader = _MetaPlusDataModule.Reader
 type MetadataBuilder = _MetadataModule.Builder
 type MetadataReader = _MetadataModule.Reader
-type RCM = _RCMModule
-type RCP = _RCPModule
-type Resolution = _TimeSeriesModule._ResolutionModule
-type SSP = _SSPModule
+type RCM = int | Literal["clmcomCclm4817", "gericsRemo2015", "knmiRacmo22E", "smhiRca4", "clmcomBtuCclm4817", "mpiCscRemo2009", "uhohWrf361H"]
+type RCP = int | Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"]
+type Resolution = int | Literal["daily", "hourly"]
+type SSP = int | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]
 type ServiceClient = _ServiceModule.ServiceClient
 type SupportedClient = _MetadataModule._SupportedModule.SupportedClient
 type TimeSeriesClient = _TimeSeriesModule.TimeSeriesClient

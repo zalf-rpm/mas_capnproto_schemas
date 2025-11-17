@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Iterator, MutableSequence, Sequence
-from enum import Enum
-from typing import Any, Literal, NamedTuple, Protocol, overload, override
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -19,37 +19,37 @@ from capnp.lib.capnp import (
 from .common_capnp import Identifiable, IdentifiableClient, _IdentifiableModule
 from .persistence_capnp import Persistent, PersistentClient, _PersistentModule
 
-class _STypeModule(Enum):
-    unknown = 0
-    ka5 = 1
+class _STypeModule:
+    unknown: int
+    ka5: int
 
-class _PropertyNameModule(Enum):
-    soilType = 0
-    sand = 1
-    clay = 2
-    silt = 3
-    pH = 4
-    sceleton = 5
-    organicCarbon = 6
-    organicMatter = 7
-    bulkDensity = 8
-    rawDensity = 9
-    fieldCapacity = 10
-    permanentWiltingPoint = 11
-    saturation = 12
-    soilMoisture = 13
-    soilWaterConductivityCoefficient = 14
-    ammonium = 15
-    nitrate = 16
-    cnRatio = 17
-    inGroundwater = 18
-    impenetrable = 19
+class _PropertyNameModule:
+    soilType: int
+    sand: int
+    clay: int
+    silt: int
+    pH: int
+    sceleton: int
+    organicCarbon: int
+    organicMatter: int
+    bulkDensity: int
+    rawDensity: int
+    fieldCapacity: int
+    permanentWiltingPoint: int
+    saturation: int
+    soilMoisture: int
+    soilWaterConductivityCoefficient: int
+    ammonium: int
+    nitrate: int
+    cnRatio: int
+    inGroundwater: int
+    impenetrable: int
 
 class _LayerModule(_StructModule):
     class _PropertyModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def name(self) -> _PropertyNameModule: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> int: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
             def f32Value(self) -> float: ...
             @property
@@ -65,11 +65,11 @@ class _LayerModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def name(self) -> _PropertyNameModule: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> int: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @name.setter
             def name(
                 self,
-                value: _PropertyNameModule
+                value: int
                 | Literal["soilType", "sand", "clay", "silt", "pH", "sceleton", "organicCarbon", "organicMatter", "bulkDensity", "rawDensity", "fieldCapacity", "permanentWiltingPoint", "saturation", "soilMoisture", "soilWaterConductivityCoefficient", "ammonium", "nitrate", "cnRatio", "inGroundwater", "impenetrable"],
             ) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
             @property
@@ -98,14 +98,26 @@ class _LayerModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            name: _PropertyNameModule
+            name: int
             | Literal["soilType", "sand", "clay", "silt", "pH", "sceleton", "organicCarbon", "organicMatter", "bulkDensity", "rawDensity", "fieldCapacity", "permanentWiltingPoint", "saturation", "soilMoisture", "soilWaterConductivityCoefficient", "ammonium", "nitrate", "cnRatio", "inGroundwater", "impenetrable"]
             | None = None,
             f32Value: float | None = None,
             bValue: bool | None = None,
             type: str | None = None,
             unset: None | None = None,
+            **kwargs: Any,
         ) -> PropertyBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[PropertyReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[PropertyReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[PropertyBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PropertyReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PropertyReader: ...
 
     type PropertyReader = _PropertyModule.Reader
     type PropertyBuilder = _PropertyModule.Builder
@@ -133,12 +145,23 @@ class _LayerModule(_StructModule):
         def description(self) -> str: ...
         @description.setter
         def description(self, value: str) -> None: ...
-        def init(self, field: Literal["properties"], size: int | None = None) -> MutableSequence[_LayerModule._PropertyModule.Builder]: ...
+        def init(self, field: Literal["properties"], size: int | None = None) -> MutableSequence[PropertyBuilder]: ...
         @override
         def as_reader(self) -> LayerReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, properties: Sequence[PropertyBuilder] | Sequence[dict[str, Any]] | None = None, size: float | None = None, description: str | None = None) -> LayerBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, properties: Sequence[PropertyBuilder] | Sequence[dict[str, Any]] | None = None, size: float | None = None, description: str | None = None, **kwargs: Any) -> LayerBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[LayerReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[LayerReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[LayerBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LayerReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LayerReader: ...
 
 Layer: _LayerModule
 
@@ -177,7 +200,18 @@ class _QueryModule(_StructModule):
             def as_reader(self) -> ResultReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, failed: bool | None = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None) -> ResultBuilder: ...
+        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, failed: bool | None = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, **kwargs: Any) -> ResultBuilder: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ResultReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ResultReader]: ...
+        @overload
+        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ResultBuilder]: ...
+        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        @override
+        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultReader: ...
+        @override
+        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultReader: ...
 
     type ResultReader = _ResultModule.Reader
     type ResultBuilder = _ResultModule.Builder
@@ -215,7 +249,18 @@ class _QueryModule(_StructModule):
         def as_reader(self) -> QueryReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None) -> QueryBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, mandatory: Sequence[_PropertyNameModule] | None = None, optional: Sequence[_PropertyNameModule] | None = None, onlyRawData: bool | None = None, **kwargs: Any) -> QueryBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[QueryReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[QueryReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[QueryBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> QueryReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> QueryReader: ...
 
 Query: _QueryModule
 
@@ -237,12 +282,23 @@ class _ProfileDataModule(_StructModule):
         def percentageOfArea(self) -> float: ...
         @percentageOfArea.setter
         def percentageOfArea(self, value: float) -> None: ...
-        def init(self, field: Literal["layers"], size: int | None = None) -> MutableSequence[_LayerModule.Builder]: ...
+        def init(self, field: Literal["layers"], size: int | None = None) -> MutableSequence[LayerBuilder]: ...
         @override
         def as_reader(self) -> ProfileDataReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None, percentageOfArea: float | None = None) -> ProfileDataBuilder: ...
+    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None, percentageOfArea: float | None = None, **kwargs: Any) -> ProfileDataBuilder: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ProfileDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ProfileDataReader]: ...
+    @overload
+    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ProfileDataBuilder]: ...
+    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    @override
+    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ProfileDataReader: ...
+    @override
+    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ProfileDataReader: ...
 
 ProfileData: _ProfileDataModule
 
@@ -254,7 +310,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _ProfileModule.ProfileClient.GeolocationResult: ...
 
     @classmethod
-    def _new_client(cls, server: _ProfileModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ProfileModule.ProfileClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _ProfileModule.ProfileClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class DataResult(Awaitable[DataResult], Protocol):
             layers: Sequence[_LayerModule.Builder | _LayerModule.Reader]
@@ -308,7 +364,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             def send(self) -> _ServiceModule._StreamModule.StreamClient.NextprofilesResult: ...
 
         @classmethod
-        def _new_client(cls, server: _ServiceModule._StreamModule.Server) -> _ServiceModule._StreamModule.StreamClient: ...
+        def _new_client(cls, server: _DynamicCapabilityServer) -> _ServiceModule._StreamModule.StreamClient: ...
         class Server(_DynamicCapabilityServer):
             class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
                 profiles: Sequence[_ProfileModule]
@@ -351,7 +407,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
     class ClosestprofilesatRequest(Protocol):
         query: _QueryModule.Builder
         @overload
-        def init(self, name: Literal["query"]) -> _QueryModule.Builder: ...
+        def init(self, name: Literal["query"]) -> QueryBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
@@ -369,7 +425,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
 
     @classmethod
-    def _new_client(cls, server: _ServiceModule.Server | _IdentifiableModule.Server | _PersistentModule.Server) -> _ServiceModule.ServiceClient: ...
+    def _new_client(cls, server: _DynamicCapabilityServer) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class CheckavailableparametersResult(Awaitable[CheckavailableparametersResult], Protocol):
             failed: bool
@@ -462,12 +518,14 @@ type ProfileClient = _ProfileModule.ProfileClient
 type ProfileDataBuilder = _ProfileDataModule.Builder
 type ProfileDataReader = _ProfileDataModule.Reader
 type PropertyBuilder = _LayerModule._PropertyModule.Builder
-type PropertyName = _PropertyNameModule
+type PropertyName = (
+    int | Literal["soilType", "sand", "clay", "silt", "pH", "sceleton", "organicCarbon", "organicMatter", "bulkDensity", "rawDensity", "fieldCapacity", "permanentWiltingPoint", "saturation", "soilMoisture", "soilWaterConductivityCoefficient", "ammonium", "nitrate", "cnRatio", "inGroundwater", "impenetrable"]
+)
 type PropertyReader = _LayerModule._PropertyModule.Reader
 type QueryBuilder = _QueryModule.Builder
 type QueryReader = _QueryModule.Reader
 type ResultBuilder = _QueryModule._ResultModule.Builder
 type ResultReader = _QueryModule._ResultModule.Reader
-type SType = _STypeModule
+type SType = int | Literal["unknown", "ka5"]
 type ServiceClient = _ServiceModule.ServiceClient
 type StreamClient = _ServiceModule._StreamModule.StreamClient
