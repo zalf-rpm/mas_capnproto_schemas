@@ -437,13 +437,23 @@ class _RegistrarModule(_IdentifiableModule):
 Registrar: _RegistrarModule
 
 # Top-level type aliases for use in type annotations
+type AddcategoryResult = _AdminModule.AdminClient.AddcategoryResult
 type AdminClient = _AdminModule.AdminClient
+type CategoryinfoResult = _RegistryModule.RegistryClient.CategoryinfoResult
 type CrossDomainRestoreBuilder = _RegistrarModule._CrossDomainRestoreModule.Builder
 type CrossDomainRestoreReader = _RegistrarModule._CrossDomainRestoreModule.Reader
+type EntriesResult = _RegistryModule.RegistryClient.EntriesResult
 type EntryBuilder = _RegistryModule._EntryModule.Builder
 type EntryReader = _RegistryModule._EntryModule.Reader
+type MoveobjectsResult = _AdminModule.AdminClient.MoveobjectsResult
 type RegParamsBuilder = _RegistrarModule._RegParamsModule.Builder
 type RegParamsReader = _RegistrarModule._RegParamsModule.Reader
+type RegisterResult = _RegistrarModule.RegistrarClient.RegisterResult
 type RegistrarClient = _RegistrarModule.RegistrarClient
 type RegistryClient = _RegistryModule.RegistryClient
+type RegistryResult = _AdminModule.AdminClient.RegistryResult
+type RemovecategoryResult = _AdminModule.AdminClient.RemovecategoryResult
+type RemoveobjectsResult = _AdminModule.AdminClient.RemoveobjectsResult
+type SupportedcategoriesResult = _RegistryModule.RegistryClient.SupportedcategoriesResult
 type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient
+type UnregisterResult = _RegistrarModule._UnregisterModule.UnregisterClient.UnregisterResult

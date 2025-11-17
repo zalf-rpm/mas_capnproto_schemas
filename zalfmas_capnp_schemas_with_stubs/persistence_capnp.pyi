@@ -776,6 +776,7 @@ Gateway: _GatewayModule
 # Top-level type aliases for use in type annotations
 type AddressBuilder = _AddressModule.Builder
 type AddressReader = _AddressModule.Reader
+type BeatResult = _HeartbeatModule.HeartbeatClient.BeatResult
 type GatewayClient = _GatewayModule.GatewayClient
 type HeartbeatClient = _HeartbeatModule.HeartbeatClient
 type HostPortResolverClient = _HostPortResolverModule.HostPortResolverClient
@@ -788,13 +789,18 @@ type RegResultsBuilder = _GatewayModule._RegResultsModule.Builder
 type RegResultsReader = _GatewayModule._RegResultsModule.Reader
 type RegisterParamsBuilder = _HostPortResolverModule._RegistrarModule._RegisterParamsModule.Builder
 type RegisterParamsReader = _HostPortResolverModule._RegistrarModule._RegisterParamsModule.Reader
+type RegisterResult = _GatewayModule.GatewayClient.RegisterResult
 type RegistrarClient = _HostPortResolverModule._RegistrarModule.RegistrarClient
+type ReleaseResult = _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient.ReleaseResult
 type ReleaseSturdyRefClient = _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
+type ResolveResult = _HostPortResolverModule.HostPortResolverClient.ResolveResult
 type RestoreParamsBuilder = _RestorerModule._RestoreParamsModule.Builder
 type RestoreParamsReader = _RestorerModule._RestoreParamsModule.Reader
+type RestoreResult = _RestorerModule.RestorerClient.RestoreResult
 type RestorerClient = _RestorerModule.RestorerClient
 type SaveParamsBuilder = _PersistentModule._SaveParamsModule.Builder
 type SaveParamsReader = _PersistentModule._SaveParamsModule.Reader
+type SaveResult = _PersistentModule.PersistentClient.SaveResult
 type SaveResultsBuilder = _PersistentModule._SaveResultsModule.Builder
 type SaveResultsReader = _PersistentModule._SaveResultsModule.Reader
 type SturdyRefBuilder = _SturdyRefModule.Builder

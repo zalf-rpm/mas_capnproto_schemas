@@ -102,4 +102,7 @@ Service: _ServiceModule
 
 # Top-level type aliases for use in type annotations
 type CropClient = _CropModule.CropClient
+type CultivarResult = _CropModule.CropClient.CultivarResult
+type ParametersResult = _CropModule.CropClient.ParametersResult
 type ServiceClient = _ServiceModule.ServiceClient
+type SpeciesResult = _CropModule.CropClient.SpeciesResult

@@ -92,4 +92,5 @@ Service: _ServiceModule
 # Top-level type aliases for use in type annotations
 type JobBuilder = _JobModule.Builder
 type JobReader = _JobModule.Reader
+type NextjobResult = _ServiceModule.ServiceClient.NextjobResult
 type ServiceClient = _ServiceModule.ServiceClient

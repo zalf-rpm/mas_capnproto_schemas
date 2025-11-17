@@ -512,8 +512,14 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 Service: _ServiceModule
 
 # Top-level type aliases for use in type annotations
+type CheckavailableparametersResult = _ServiceModule.ServiceClient.CheckavailableparametersResult
+type ClosestprofilesatResult = _ServiceModule.ServiceClient.ClosestprofilesatResult
+type DataResult = _ProfileModule.ProfileClient.DataResult
+type GeolocationResult = _ProfileModule.ProfileClient.GeolocationResult
+type GetallavailableparametersResult = _ServiceModule.ServiceClient.GetallavailableparametersResult
 type LayerBuilder = _LayerModule.Builder
 type LayerReader = _LayerModule.Reader
+type NextprofilesResult = _ServiceModule._StreamModule.StreamClient.NextprofilesResult
 type ProfileClient = _ProfileModule.ProfileClient
 type ProfileDataBuilder = _ProfileDataModule.Builder
 type ProfileDataReader = _ProfileDataModule.Reader
@@ -529,3 +535,4 @@ type ResultReader = _QueryModule._ResultModule.Reader
 type SType = int | Literal["unknown", "ka5"]
 type ServiceClient = _ServiceModule.ServiceClient
 type StreamClient = _ServiceModule._StreamModule.StreamClient
+type StreamallprofilesResult = _ServiceModule.ServiceClient.StreamallprofilesResult

@@ -826,14 +826,29 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 Store: _StoreModule
 
 # Top-level type aliases for use in type annotations
+type AddentryResult = _StoreModule._ContainerModule.ContainerClient.AddentryResult
+type ClearResult = _StoreModule._ContainerModule.ContainerClient.ClearResult
 type ContainerClient = _StoreModule._ContainerModule.ContainerClient
+type ContainerwithidResult = _StoreModule.StoreClient.ContainerwithidResult
+type DownloadentriesResult = _StoreModule._ContainerModule.ContainerClient.DownloadentriesResult
 type EntryClient = _StoreModule._ContainerModule._EntryModule.EntryClient
+type ExportResult = _StoreModule._ContainerModule.ContainerClient.ExportResult
+type GetentryResult = _StoreModule._ContainerModule.ContainerClient.GetentryResult
+type GetkeyResult = _StoreModule._ContainerModule._EntryModule.EntryClient.GetkeyResult
+type GetvalueResult = _StoreModule._ContainerModule._EntryModule.EntryClient.GetvalueResult
 type ImportExportDataBuilder = _StoreModule._ImportExportDataModule.Builder
 type ImportExportDataReader = _StoreModule._ImportExportDataModule.Reader
+type ImportcontainerResult = _StoreModule.StoreClient.ImportcontainerResult
 type InfoAndContainerBuilder = _StoreModule._InfoAndContainerModule.Builder
 type InfoAndContainerReader = _StoreModule._InfoAndContainerModule.Reader
 type KeyAndEntryBuilder = _StoreModule._ContainerModule._KeyAndEntryModule.Builder
 type KeyAndEntryReader = _StoreModule._ContainerModule._KeyAndEntryModule.Reader
+type ListcontainersResult = _StoreModule.StoreClient.ListcontainersResult
+type ListentriesResult = _StoreModule._ContainerModule.ContainerClient.ListentriesResult
+type NewcontainerResult = _StoreModule.StoreClient.NewcontainerResult
+type RemovecontainerResult = _StoreModule.StoreClient.RemovecontainerResult
+type RemoveentryResult = _StoreModule._ContainerModule.ContainerClient.RemoveentryResult
+type SetvalueResult = _StoreModule._ContainerModule._EntryModule.EntryClient.SetvalueResult
 type StoreClient = _StoreModule.StoreClient
 type ValueBuilder = _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
 type ValueReader = _StoreModule._ContainerModule._EntryModule._ValueModule.Reader

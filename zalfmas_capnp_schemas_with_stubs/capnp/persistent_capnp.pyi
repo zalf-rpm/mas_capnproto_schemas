@@ -118,5 +118,6 @@ Persistent: _PersistentModule
 type PersistentClient = _PersistentModule.PersistentClient
 type SaveParamsBuilder = _PersistentModule._SaveParamsModule.Builder
 type SaveParamsReader = _PersistentModule._SaveParamsModule.Reader
+type SaveResult = _PersistentModule.PersistentClient.SaveResult
 type SaveResultsBuilder = _PersistentModule._SaveResultsModule.Builder
 type SaveResultsReader = _PersistentModule._SaveResultsModule.Reader

@@ -974,11 +974,13 @@ Component: _ComponentModule
 
 # Top-level type aliases for use in type annotations
 type ChannelClient = _ChannelModule.ChannelClient
+type CloseResult = _ChannelModule.ChannelClient.CloseResult
 type CloseSemantics = int | Literal["fbp", "no"]
 type ComponentBuilder = _ComponentModule.Builder
 type ComponentReader = _ComponentModule.Reader
 type ComponentType = int | Literal["standard", "iip", "subflow", "view"]
 type ContentType = int | Literal["structuredText"]
+type EndpointsResult = _ChannelModule.ChannelClient.EndpointsResult
 type IIPBuilder = _IIPModule.Builder
 type IIPReader = _IIPModule.Reader
 type IPBuilder = _IPModule.Builder
@@ -996,10 +998,20 @@ type PortInfosBuilder = _PortInfosModule.Builder
 type PortInfosReader = _PortInfosModule.Reader
 type PortReader = _ComponentModule._PortModule.Reader
 type PortType = int | Literal["standard"]
+type ReadResult = _ChannelModule._ReaderModule.ReaderClient.ReadResult
 type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
+type ReaderResult = _ChannelModule.ChannelClient.ReaderResult
+type ReadifmsgResult = _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult
 type RunnableClient = _ComponentModule._RunnableModule.RunnableClient
+type SetautoclosesemanticsResult = _ChannelModule.ChannelClient.SetautoclosesemanticsResult
+type SetbuffersizeResult = _ChannelModule.ChannelClient.SetbuffersizeResult
 type StartChannelsServiceClient = _StartChannelsServiceModule.StartChannelsServiceClient
+type StartResult = _ComponentModule._RunnableModule.RunnableClient.StartResult
 type StartupInfoBuilder = _ChannelModule._StartupInfoModule.Builder
 type StartupInfoReader = _ChannelModule._StartupInfoModule.Reader
+type StopResult = _ComponentModule._RunnableModule.RunnableClient.StopResult
 type Type = int | Literal["standard", "openBracket", "closeBracket"]
+type WriteResult = _ChannelModule._WriterModule.WriterClient.WriteResult
+type WriteifspaceResult = _ChannelModule._WriterModule.WriterClient.WriteifspaceResult
 type WriterClient = _ChannelModule._WriterModule.WriterClient
+type WriterResult = _ChannelModule.ChannelClient.WriterResult

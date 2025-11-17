@@ -55,3 +55,4 @@ DWLABImport: _DWLABImportModule
 
 # Top-level type aliases for use in type annotations
 type DWLABImportClient = _DWLABImportModule.DWLABImportClient
+type ImportdataResult = _DWLABImportModule.DWLABImportClient.ImportdataResult

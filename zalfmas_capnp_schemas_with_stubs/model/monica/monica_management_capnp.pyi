@@ -1578,6 +1578,7 @@ type IrrigationBuilder = _ParamsModule._IrrigationModule.Builder
 type IrrigationReader = _ParamsModule._IrrigationModule.Reader
 type KVBuilder = _ParamsModule._DailyWeatherModule._KVModule.Builder
 type KVReader = _ParamsModule._DailyWeatherModule._KVModule.Reader
+type ManagementatResult = _ServiceModule.ServiceClient.ManagementatResult
 type MineralFertilizationBuilder = _ParamsModule._MineralFertilizationModule.Builder
 type MineralFertilizationReader = _ParamsModule._MineralFertilizationModule.Reader
 type NDemandFertilizationBuilder = _ParamsModule._NDemandFertilizationModule.Builder
