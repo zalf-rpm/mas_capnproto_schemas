@@ -7,7 +7,9 @@ import capnp
 
 capnp.remove_import_hook()
 here = os.path.dirname(os.path.abspath(__file__))
-module_file = os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas/common.capnp"))
+module_file = os.path.abspath(
+    os.path.join(here, "../zalfmas_capnp_schemas/common.capnp")
+)
 import_path = [here, os.path.join(here, "../zalfmas_capnp_schemas")]
 IdInformation = capnp.load(module_file, imports=import_path).IdInformation
 Identifiable = capnp.load(module_file, imports=import_path).Identifiable
@@ -18,4 +20,6 @@ Holder = capnp.load(module_file, imports=import_path).Holder
 IdentifiableHolder = capnp.load(module_file, imports=import_path).IdentifiableHolder
 
 Holder.Server.ValueResultTuple = NamedTuple("ValueResultTuple", [("value", object)])
-Identifiable.Server.InfoResultTuple = NamedTuple("InfoResultTuple", [("id", object), ("name", object), ("description", object)])
+Identifiable.Server.InfoResultTuple = NamedTuple(
+    "InfoResultTuple", [("id", object), ("name", object), ("description", object)]
+)

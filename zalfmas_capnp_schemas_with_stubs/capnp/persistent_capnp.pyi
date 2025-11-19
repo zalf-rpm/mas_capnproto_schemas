@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator
+from collections.abc import Awaitable
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -13,12 +13,18 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
-    _Request,
     _StructModule,
 )
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
-type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+type AnyPointer = (
+    str
+    | bytes
+    | _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+)
 
 class _PersistentModule(_InterfaceModule):
     class _SaveParamsModule(_StructModule):
@@ -26,7 +32,11 @@ class _PersistentModule(_InterfaceModule):
             @property
             def sealFor(self) -> _DynamicObjectReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SaveParamsBuilder: ...
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
+            ) -> SaveParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -37,18 +47,58 @@ class _PersistentModule(_InterfaceModule):
             def as_reader(self) -> SaveParamsReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sealFor: AnyPointer | None = None, **kwargs: Any) -> SaveParamsBuilder: ...
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            sealFor: AnyPointer | None = None,
+            **kwargs: Any,
+        ) -> SaveParamsBuilder: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[SaveParamsReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> AbstractContextManager[SaveParamsReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[SaveParamsReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[SaveParamsReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[SaveParamsBuilder]: ...
-        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[SaveParamsBuilder]: ...
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> _DynamicStructReader: ...
         @override
-        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SaveParamsReader: ...
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> SaveParamsReader: ...
         @override
-        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SaveParamsReader: ...
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> SaveParamsReader: ...
 
     type SaveParamsReader = _SaveParamsModule.Reader
     type SaveParamsBuilder = _SaveParamsModule.Builder
@@ -58,7 +108,11 @@ class _PersistentModule(_InterfaceModule):
             @property
             def sturdyRef(self) -> _DynamicObjectReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SaveResultsBuilder: ...
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
+            ) -> SaveResultsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -69,18 +123,58 @@ class _PersistentModule(_InterfaceModule):
             def as_reader(self) -> SaveResultsReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, sturdyRef: AnyPointer | None = None, **kwargs: Any) -> SaveResultsBuilder: ...
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            sturdyRef: AnyPointer | None = None,
+            **kwargs: Any,
+        ) -> SaveResultsBuilder: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[SaveResultsReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> AbstractContextManager[SaveResultsReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[SaveResultsReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[SaveResultsReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[SaveResultsBuilder]: ...
-        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[SaveResultsBuilder]: ...
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> _DynamicStructReader: ...
         @override
-        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SaveResultsReader: ...
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> SaveResultsReader: ...
         @override
-        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SaveResultsReader: ...
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> SaveResultsReader: ...
 
     type SaveResultsReader = _SaveResultsModule.Reader
     type SaveResultsBuilder = _SaveResultsModule.Builder
@@ -89,8 +183,9 @@ class _PersistentModule(_InterfaceModule):
         sealFor: AnyPointer
         def send(self) -> _PersistentModule.PersistentClient.SaveResult: ...
 
-    @classmethod
-    def _new_client(cls, server: _DynamicCapabilityServer) -> _PersistentModule.PersistentClient: ...
+    def _new_client(
+        self, server: _DynamicCapabilityServer
+    ) -> _PersistentModule.PersistentClient: ...
     class Server(_DynamicCapabilityServer):
         class SaveResult(Awaitable[SaveResult], Protocol):
             sturdyRef: AnyPointer
@@ -102,15 +197,26 @@ class _PersistentModule(_InterfaceModule):
             params: _PersistentModule.SaveRequest
             results: _PersistentModule.Server.SaveResult
 
-        def save(self, sealFor: AnyPointer, _context: _PersistentModule.Server.SaveCallContext, **kwargs: Any) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
-        def save_context(self, context: _PersistentModule.Server.SaveCallContext) -> Awaitable[None]: ...
+        def save(
+            self,
+            sealFor: AnyPointer,
+            _context: _PersistentModule.Server.SaveCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
+        def save_context(
+            self, context: _PersistentModule.Server.SaveCallContext
+        ) -> Awaitable[None]: ...
 
     class PersistentClient(_DynamicCapabilityClient):
         class SaveResult(Awaitable[SaveResult], Protocol):
             sturdyRef: _DynamicObjectReader
 
-        def save(self, sealFor: _DynamicObjectReader | None = None) -> _PersistentModule.PersistentClient.SaveResult: ...
-        def save_request(self, sealFor: AnyPointer | None = None) -> _PersistentModule.SaveRequest: ...
+        def save(
+            self, sealFor: _DynamicObjectReader | None = None
+        ) -> _PersistentModule.PersistentClient.SaveResult: ...
+        def save_request(
+            self, sealFor: AnyPointer | None = None
+        ) -> _PersistentModule.SaveRequest: ...
 
 Persistent: _PersistentModule
 

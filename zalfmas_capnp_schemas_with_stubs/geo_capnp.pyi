@@ -11,13 +11,18 @@ from capnp.lib.capnp import (
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
-    _InterfaceModule,
-    _Request,
     _StructModule,
 )
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
-type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+type AnyPointer = (
+    str
+    | bytes
+    | _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+)
 
 class _CoordTypeModule:
     gk: int
@@ -33,25 +38,68 @@ class _EPSGModule(_StructModule):
     gk3: int
     class Reader(_DynamicStructReader):
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EPSGBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> EPSGBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @override
         def as_reader(self) -> EPSGReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, **kwargs: Any) -> EPSGBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        **kwargs: Any,
+    ) -> EPSGBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[EPSGReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[EPSGReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[EPSGReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[EPSGReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[EPSGBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[EPSGBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EPSGReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> EPSGReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EPSGReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> EPSGReader: ...
 
 EPSG: _EPSGModule
 
@@ -66,7 +114,11 @@ class _UTMCoordModule(_StructModule):
         @property
         def h(self) -> float: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> UTMCoordBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> UTMCoordBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -89,18 +141,61 @@ class _UTMCoordModule(_StructModule):
         def as_reader(self) -> UTMCoordReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, zone: int | None = None, latitudeBand: str | None = None, r: float | None = None, h: float | None = None, **kwargs: Any) -> UTMCoordBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        zone: int | None = None,
+        latitudeBand: str | None = None,
+        r: float | None = None,
+        h: float | None = None,
+        **kwargs: Any,
+    ) -> UTMCoordBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[UTMCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[UTMCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[UTMCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[UTMCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[UTMCoordBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[UTMCoordBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> UTMCoordReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> UTMCoordReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> UTMCoordReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> UTMCoordReader: ...
 
 UTMCoord: _UTMCoordModule
 
@@ -111,7 +206,11 @@ class _LatLonCoordModule(_StructModule):
         @property
         def lon(self) -> float: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> LatLonCoordBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> LatLonCoordBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -126,18 +225,59 @@ class _LatLonCoordModule(_StructModule):
         def as_reader(self) -> LatLonCoordReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, lat: float | None = None, lon: float | None = None, **kwargs: Any) -> LatLonCoordBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        **kwargs: Any,
+    ) -> LatLonCoordBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[LatLonCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[LatLonCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[LatLonCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[LatLonCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[LatLonCoordBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[LatLonCoordBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LatLonCoordReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> LatLonCoordReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> LatLonCoordReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> LatLonCoordReader: ...
 
 LatLonCoord: _LatLonCoordModule
 
@@ -150,7 +290,11 @@ class _GKCoordModule(_StructModule):
         @property
         def h(self) -> float: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> GKCoordBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> GKCoordBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -169,18 +313,60 @@ class _GKCoordModule(_StructModule):
         def as_reader(self) -> GKCoordReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, meridianNo: int | None = None, r: float | None = None, h: float | None = None, **kwargs: Any) -> GKCoordBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        meridianNo: int | None = None,
+        r: float | None = None,
+        h: float | None = None,
+        **kwargs: Any,
+    ) -> GKCoordBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[GKCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[GKCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[GKCoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[GKCoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[GKCoordBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[GKCoordBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> GKCoordReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> GKCoordReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> GKCoordReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> GKCoordReader: ...
 
 GKCoord: _GKCoordModule
 
@@ -191,7 +377,11 @@ class _Point2DModule(_StructModule):
         @property
         def y(self) -> float: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> Point2DBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> Point2DBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -206,18 +396,59 @@ class _Point2DModule(_StructModule):
         def as_reader(self) -> Point2DReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, x: float | None = None, y: float | None = None, **kwargs: Any) -> Point2DBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        x: float | None = None,
+        y: float | None = None,
+        **kwargs: Any,
+    ) -> Point2DBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[Point2DReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[Point2DReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[Point2DReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[Point2DReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[Point2DBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[Point2DBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> Point2DReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> Point2DReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> Point2DReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> Point2DReader: ...
 
 Point2D: _Point2DModule
 
@@ -228,7 +459,11 @@ class _RowColModule(_StructModule):
         @property
         def col(self) -> int: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> RowColBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> RowColBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -243,18 +478,59 @@ class _RowColModule(_StructModule):
         def as_reader(self) -> RowColReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, row: int | None = None, col: int | None = None, **kwargs: Any) -> RowColBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        row: int | None = None,
+        col: int | None = None,
+        **kwargs: Any,
+    ) -> RowColBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[RowColReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[RowColReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[RowColReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[RowColReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[RowColBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[RowColBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RowColReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RowColReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RowColReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RowColReader: ...
 
 RowCol: _RowColModule
 
@@ -273,41 +549,65 @@ class _CoordModule(_StructModule):
         @override
         def which(self) -> Literal["gk", "latlon", "utm", "p2D", "rowcol"]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CoordBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> CoordBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def gk(self) -> GKCoordBuilder: ...
         @gk.setter
-        def gk(self, value: GKCoordBuilder | GKCoordReader | dict[str, Any]) -> None: ...
+        def gk(
+            self, value: GKCoordBuilder | GKCoordReader | dict[str, Any]
+        ) -> None: ...
         @property
         def latlon(self) -> LatLonCoordBuilder: ...
         @latlon.setter
-        def latlon(self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]) -> None: ...
+        def latlon(
+            self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
+        ) -> None: ...
         @property
         def utm(self) -> UTMCoordBuilder: ...
         @utm.setter
-        def utm(self, value: UTMCoordBuilder | UTMCoordReader | dict[str, Any]) -> None: ...
+        def utm(
+            self, value: UTMCoordBuilder | UTMCoordReader | dict[str, Any]
+        ) -> None: ...
         @property
         def p2D(self) -> Point2DBuilder: ...
         @p2D.setter
-        def p2D(self, value: Point2DBuilder | Point2DReader | dict[str, Any]) -> None: ...
+        def p2D(
+            self, value: Point2DBuilder | Point2DReader | dict[str, Any]
+        ) -> None: ...
         @property
         def rowcol(self) -> RowColBuilder: ...
         @rowcol.setter
-        def rowcol(self, value: RowColBuilder | RowColReader | dict[str, Any]) -> None: ...
+        def rowcol(
+            self, value: RowColBuilder | RowColReader | dict[str, Any]
+        ) -> None: ...
         @override
         def which(self) -> Literal["gk", "latlon", "utm", "p2D", "rowcol"]: ...
         @overload
-        def init(self, field: Literal["gk"], size: int | None = None) -> GKCoordBuilder: ...
+        def init(
+            self, field: Literal["gk"], size: int | None = None
+        ) -> GKCoordBuilder: ...
         @overload
-        def init(self, field: Literal["latlon"], size: int | None = None) -> LatLonCoordBuilder: ...
+        def init(
+            self, field: Literal["latlon"], size: int | None = None
+        ) -> LatLonCoordBuilder: ...
         @overload
-        def init(self, field: Literal["utm"], size: int | None = None) -> UTMCoordBuilder: ...
+        def init(
+            self, field: Literal["utm"], size: int | None = None
+        ) -> UTMCoordBuilder: ...
         @overload
-        def init(self, field: Literal["p2D"], size: int | None = None) -> Point2DBuilder: ...
+        def init(
+            self, field: Literal["p2D"], size: int | None = None
+        ) -> Point2DBuilder: ...
         @overload
-        def init(self, field: Literal["rowcol"], size: int | None = None) -> RowColBuilder: ...
+        def init(
+            self, field: Literal["rowcol"], size: int | None = None
+        ) -> RowColBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -326,16 +626,50 @@ class _CoordModule(_StructModule):
         **kwargs: Any,
     ) -> CoordBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[CoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[CoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[CoordReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[CoordReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[CoordBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[CoordBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CoordReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> CoordReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CoordReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> CoordReader: ...
 
 Coord: _CoordModule
 
@@ -346,7 +680,11 @@ class _RectBoundsModule(_StructModule):
         @property
         def br(self) -> _DynamicObjectReader: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> RectBoundsBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> RectBoundsBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -361,25 +699,66 @@ class _RectBoundsModule(_StructModule):
         def as_reader(self) -> RectBoundsReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, tl: AnyPointer | None = None, br: AnyPointer | None = None, **kwargs: Any) -> RectBoundsBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        tl: AnyPointer | None = None,
+        br: AnyPointer | None = None,
+        **kwargs: Any,
+    ) -> RectBoundsBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[RectBoundsReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[RectBoundsReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[RectBoundsReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[RectBoundsReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[RectBoundsBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[RectBoundsBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RectBoundsReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RectBoundsReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RectBoundsReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RectBoundsReader: ...
 
 RectBounds: _RectBoundsModule
 
 # Top-level type aliases for use in type annotations
 type CoordBuilder = _CoordModule.Builder
 type CoordReader = _CoordModule.Reader
-type CoordType = int | Literal["gk", "utm", "latlon"]
+type CoordTypeEnum = int | Literal["gk", "utm", "latlon"]
 type EPSGBuilder = _EPSGModule.Builder
 type EPSGReader = _EPSGModule.Reader
 type GKCoordBuilder = _GKCoordModule.Builder

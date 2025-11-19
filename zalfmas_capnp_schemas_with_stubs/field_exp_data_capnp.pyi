@@ -7,18 +7,14 @@ from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
-    _DynamicCapabilityClient,
-    _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
-    _InterfaceModule,
-    _Request,
     _StructModule,
 )
 
-from .climate_capnp import TimeSeries, TimeSeriesClient, _TimeSeriesModule
+from .climate_capnp import _TimeSeriesModule
 from .date_capnp import _DateModule
-from .soil_capnp import Profile, ProfileClient, _ProfileModule
+from .soil_capnp import _ProfileModule
 
 class _WeatherStationModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -57,7 +53,11 @@ class _WeatherStationModule(_StructModule):
         @property
         def notes(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> WeatherStationBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> WeatherStationBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -156,16 +156,50 @@ class _WeatherStationModule(_StructModule):
         **kwargs: Any,
     ) -> WeatherStationBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[WeatherStationReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[WeatherStationReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[WeatherStationReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[WeatherStationReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[WeatherStationBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[WeatherStationBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> WeatherStationReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> WeatherStationReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> WeatherStationReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> WeatherStationReader: ...
 
 WeatherStation: _WeatherStationModule
 
@@ -210,7 +244,11 @@ class _SoilMetadataModule(_StructModule):
         @property
         def profile(self) -> _ProfileModule.ProfileClient: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> SoilMetadataBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> SoilMetadataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -288,7 +326,9 @@ class _SoilMetadataModule(_StructModule):
         @property
         def profile(self) -> _ProfileModule.ProfileClient: ...
         @profile.setter
-        def profile(self, value: _ProfileModule.ProfileClient | _ProfileModule.Server) -> None: ...
+        def profile(
+            self, value: _ProfileModule.ProfileClient | _ProfileModule.Server
+        ) -> None: ...
         @override
         def as_reader(self) -> SoilMetadataReader: ...
 
@@ -319,16 +359,50 @@ class _SoilMetadataModule(_StructModule):
         **kwargs: Any,
     ) -> SoilMetadataBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[SoilMetadataReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[SoilMetadataReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[SoilMetadataReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilMetadataReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[SoilMetadataBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilMetadataBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SoilMetadataReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> SoilMetadataReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> SoilMetadataReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> SoilMetadataReader: ...
 
 SoilMetadata: _SoilMetadataModule
 
@@ -359,7 +433,11 @@ class _FieldModule(_StructModule):
         @property
         def notes(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> FieldBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> FieldBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -433,16 +511,50 @@ class _FieldModule(_StructModule):
         **kwargs: Any,
     ) -> FieldBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[FieldReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[FieldReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[FieldReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[FieldReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[FieldBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[FieldBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> FieldReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> FieldReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> FieldReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> FieldReader: ...
 
 Field: _FieldModule
 
@@ -471,7 +583,11 @@ class _CultivarModule(_StructModule):
         @property
         def notes(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> CultivarBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> CultivarBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -540,16 +656,50 @@ class _CultivarModule(_StructModule):
         **kwargs: Any,
     ) -> CultivarBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[CultivarReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[CultivarReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[CultivarReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[CultivarReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[CultivarBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[CultivarBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CultivarReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> CultivarReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> CultivarReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> CultivarReader: ...
 
 Cultivar: _CultivarModule
 
@@ -584,7 +734,11 @@ class _PlotModule(_StructModule):
         @property
         def soilId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> PlotBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> PlotBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -594,11 +748,15 @@ class _PlotModule(_StructModule):
         @property
         def cultivar(self) -> CultivarBuilder: ...
         @cultivar.setter
-        def cultivar(self, value: CultivarBuilder | CultivarReader | dict[str, Any]) -> None: ...
+        def cultivar(
+            self, value: CultivarBuilder | CultivarReader | dict[str, Any]
+        ) -> None: ...
         @property
         def soil(self) -> SoilMetadataBuilder: ...
         @soil.setter
-        def soil(self, value: SoilMetadataBuilder | SoilMetadataReader | dict[str, Any]) -> None: ...
+        def soil(
+            self, value: SoilMetadataBuilder | SoilMetadataReader | dict[str, Any]
+        ) -> None: ...
         @property
         def blockNumber(self) -> int: ...
         @blockNumber.setter
@@ -644,9 +802,13 @@ class _PlotModule(_StructModule):
         @soilId.setter
         def soilId(self, value: str) -> None: ...
         @overload
-        def init(self, field: Literal["cultivar"], size: int | None = None) -> CultivarBuilder: ...
+        def init(
+            self, field: Literal["cultivar"], size: int | None = None
+        ) -> CultivarBuilder: ...
         @overload
-        def init(self, field: Literal["soil"], size: int | None = None) -> SoilMetadataBuilder: ...
+        def init(
+            self, field: Literal["soil"], size: int | None = None
+        ) -> SoilMetadataBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -674,16 +836,50 @@ class _PlotModule(_StructModule):
         **kwargs: Any,
     ) -> PlotBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[PlotReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[PlotReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[PlotReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[PlotReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[PlotBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[PlotBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PlotReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> PlotReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PlotReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> PlotReader: ...
 
 Plot: _PlotModule
 
@@ -708,13 +904,19 @@ class _ResidueModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ResidueBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> ResidueBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def initialMeasureDate(self) -> _DateModule.Builder: ...
         @initialMeasureDate.setter
-        def initialMeasureDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def initialMeasureDate(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def incorporationDepth(self) -> int: ...
         @incorporationDepth.setter
@@ -747,7 +949,9 @@ class _ResidueModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["initialMeasureDate"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["initialMeasureDate"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> ResidueReader: ...
 
@@ -768,16 +972,50 @@ class _ResidueModule(_StructModule):
         **kwargs: Any,
     ) -> ResidueBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ResidueReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[ResidueReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ResidueReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[ResidueReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ResidueBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[ResidueBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResidueReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ResidueReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResidueReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ResidueReader: ...
 
 Residue: _ResidueModule
 
@@ -806,13 +1044,19 @@ class _InitialConditionsLayerModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> InitialConditionsLayerBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> InitialConditionsLayerBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def date(self) -> _DateModule.Builder: ...
         @date.setter
-        def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def date(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def soilLayerTopDepthInCM(self) -> int: ...
         @soilLayerTopDepthInCM.setter
@@ -853,7 +1097,9 @@ class _InitialConditionsLayerModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["date"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> InitialConditionsLayerReader: ...
 
@@ -876,16 +1122,50 @@ class _InitialConditionsLayerModule(_StructModule):
         **kwargs: Any,
     ) -> InitialConditionsLayerBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[InitialConditionsLayerReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[InitialConditionsLayerReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[InitialConditionsLayerReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[InitialConditionsLayerReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[InitialConditionsLayerBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[InitialConditionsLayerBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> InitialConditionsLayerReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> InitialConditionsLayerReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> InitialConditionsLayerReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> InitialConditionsLayerReader: ...
 
 InitialConditionsLayer: _InitialConditionsLayerModule
 
@@ -916,7 +1196,11 @@ class _PlantingEventModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> PlantingEventBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> PlantingEventBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -942,7 +1226,9 @@ class _PlantingEventModule(_StructModule):
         @property
         def plantingDate(self) -> _DateModule.Builder: ...
         @plantingDate.setter
-        def plantingDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def plantingDate(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def plantPopulationAtPlantingInNoPerM2(self) -> int: ...
         @plantPopulationAtPlantingInNoPerM2.setter
@@ -950,7 +1236,9 @@ class _PlantingEventModule(_StructModule):
         @property
         def averageEmergenceDate(self) -> _DateModule.Builder: ...
         @averageEmergenceDate.setter
-        def averageEmergenceDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def averageEmergenceDate(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def averagePlantPopulationAtEmergenceInNoPerM2(self) -> int: ...
         @averagePlantPopulationAtEmergenceInNoPerM2.setter
@@ -968,9 +1256,13 @@ class _PlantingEventModule(_StructModule):
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
         @overload
-        def init(self, field: Literal["plantingDate"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["plantingDate"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @overload
-        def init(self, field: Literal["averageEmergenceDate"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["averageEmergenceDate"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -996,16 +1288,50 @@ class _PlantingEventModule(_StructModule):
         **kwargs: Any,
     ) -> PlantingEventBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[PlantingEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[PlantingEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[PlantingEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[PlantingEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[PlantingEventBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[PlantingEventBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PlantingEventReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> PlantingEventReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> PlantingEventReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> PlantingEventReader: ...
 
 PlantingEvent: _PlantingEventModule
 
@@ -1026,13 +1352,19 @@ class _HarvestEventModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> HarvestEventBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> HarvestEventBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def date(self) -> _DateModule.Builder: ...
         @date.setter
-        def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def date(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def harvestMethod(self) -> str: ...
         @harvestMethod.setter
@@ -1057,7 +1389,9 @@ class _HarvestEventModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["date"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> HarvestEventReader: ...
 
@@ -1076,16 +1410,50 @@ class _HarvestEventModule(_StructModule):
         **kwargs: Any,
     ) -> HarvestEventBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[HarvestEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[HarvestEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[HarvestEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[HarvestEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[HarvestEventBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[HarvestEventBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> HarvestEventReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> HarvestEventReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> HarvestEventReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> HarvestEventReader: ...
 
 HarvestEvent: _HarvestEventModule
 
@@ -1108,13 +1476,19 @@ class _IrrigationEventModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> IrrigationEventBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> IrrigationEventBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def date(self) -> _DateModule.Builder: ...
         @date.setter
-        def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def date(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def operation(self) -> str: ...
         @operation.setter
@@ -1143,7 +1517,9 @@ class _IrrigationEventModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["date"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> IrrigationEventReader: ...
 
@@ -1163,16 +1539,50 @@ class _IrrigationEventModule(_StructModule):
         **kwargs: Any,
     ) -> IrrigationEventBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[IrrigationEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[IrrigationEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[IrrigationEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[IrrigationEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[IrrigationEventBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[IrrigationEventBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> IrrigationEventReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> IrrigationEventReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> IrrigationEventReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> IrrigationEventReader: ...
 
 IrrigationEvent: _IrrigationEventModule
 
@@ -1199,13 +1609,19 @@ class _FertilizerEventModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> FertilizerEventBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> FertilizerEventBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def date(self) -> _DateModule.Builder: ...
         @date.setter
-        def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def date(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def applicationMethod(self) -> str: ...
         @applicationMethod.setter
@@ -1242,7 +1658,9 @@ class _FertilizerEventModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["date"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> FertilizerEventReader: ...
 
@@ -1264,16 +1682,50 @@ class _FertilizerEventModule(_StructModule):
         **kwargs: Any,
     ) -> FertilizerEventBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[FertilizerEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[FertilizerEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[FertilizerEventReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[FertilizerEventReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[FertilizerEventBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[FertilizerEventBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> FertilizerEventReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> FertilizerEventReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> FertilizerEventReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> FertilizerEventReader: ...
 
 FertilizerEvent: _FertilizerEventModule
 
@@ -1292,13 +1744,19 @@ class _EnvironmentModificationModule(_StructModule):
         @property
         def treatmentId(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> EnvironmentModificationBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> EnvironmentModificationBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
         def date(self) -> _DateModule.Builder: ...
         @date.setter
-        def date(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def date(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def codeCO2(self) -> str: ...
         @codeCO2.setter
@@ -1319,25 +1777,70 @@ class _EnvironmentModificationModule(_StructModule):
         def treatmentId(self) -> str: ...
         @treatmentId.setter
         def treatmentId(self, value: str) -> None: ...
-        def init(self, field: Literal["date"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["date"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @override
         def as_reader(self) -> EnvironmentModificationReader: ...
 
     @override
     def new_message(
-        self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, date: _DateModule.Builder | dict[str, Any] | None = None, codeCO2: str | None = None, valueCO2: int | None = None, notes: str | None = None, experimentId: str | None = None, treatmentId: str | None = None, **kwargs: Any
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        date: _DateModule.Builder | dict[str, Any] | None = None,
+        codeCO2: str | None = None,
+        valueCO2: int | None = None,
+        notes: str | None = None,
+        experimentId: str | None = None,
+        treatmentId: str | None = None,
+        **kwargs: Any,
     ) -> EnvironmentModificationBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[EnvironmentModificationReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[EnvironmentModificationReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[EnvironmentModificationReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[EnvironmentModificationReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[EnvironmentModificationBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[EnvironmentModificationBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EnvironmentModificationReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> EnvironmentModificationReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> EnvironmentModificationReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> EnvironmentModificationReader: ...
 
 EnvironmentModification: _EnvironmentModificationModule
 
@@ -1392,7 +1895,9 @@ class _TreatmentModule(_StructModule):
         @property
         def fertilizerEvents(self) -> Sequence[FertilizerEventReader]: ...
         @property
-        def environmentModifications(self) -> Sequence[EnvironmentModificationReader]: ...
+        def environmentModifications(
+            self,
+        ) -> Sequence[EnvironmentModificationReader]: ...
         @property
         def experimentId(self) -> str: ...
         @property
@@ -1402,7 +1907,11 @@ class _TreatmentModule(_StructModule):
         @property
         def weatherStationDataset(self) -> str: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> TreatmentBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> TreatmentBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -1416,11 +1925,15 @@ class _TreatmentModule(_StructModule):
         @property
         def weatherStation(self) -> WeatherStationBuilder: ...
         @weatherStation.setter
-        def weatherStation(self, value: WeatherStationBuilder | WeatherStationReader | dict[str, Any]) -> None: ...
+        def weatherStation(
+            self, value: WeatherStationBuilder | WeatherStationReader | dict[str, Any]
+        ) -> None: ...
         @property
         def weatherStationTimeseries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @weatherStationTimeseries.setter
-        def weatherStationTimeseries(self, value: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server) -> None: ...
+        def weatherStationTimeseries(
+            self, value: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server
+        ) -> None: ...
         @property
         def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @name.setter
@@ -1428,11 +1941,15 @@ class _TreatmentModule(_StructModule):
         @property
         def simulationStartDate(self) -> _DateModule.Builder: ...
         @simulationStartDate.setter
-        def simulationStartDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def simulationStartDate(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def simulationEndDate(self) -> _DateModule.Builder: ...
         @simulationEndDate.setter
-        def simulationEndDate(self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]) -> None: ...
+        def simulationEndDate(
+            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def irrigationApplied(self) -> bool: ...
         @irrigationApplied.setter
@@ -1476,35 +1993,71 @@ class _TreatmentModule(_StructModule):
         @property
         def plots(self) -> MutableSequence[PlotBuilder]: ...
         @plots.setter
-        def plots(self, value: Sequence[PlotBuilder | PlotReader] | Sequence[dict[str, Any]]) -> None: ...
+        def plots(
+            self, value: Sequence[PlotBuilder | PlotReader] | Sequence[dict[str, Any]]
+        ) -> None: ...
         @property
         def residue(self) -> ResidueBuilder: ...
         @residue.setter
-        def residue(self, value: ResidueBuilder | ResidueReader | dict[str, Any]) -> None: ...
+        def residue(
+            self, value: ResidueBuilder | ResidueReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def initialConditionsLayers(self) -> MutableSequence[InitialConditionsLayerBuilder]: ...
+        def initialConditionsLayers(
+            self,
+        ) -> MutableSequence[InitialConditionsLayerBuilder]: ...
         @initialConditionsLayers.setter
-        def initialConditionsLayers(self, value: Sequence[InitialConditionsLayerBuilder | InitialConditionsLayerReader] | Sequence[dict[str, Any]]) -> None: ...
+        def initialConditionsLayers(
+            self,
+            value: Sequence[
+                InitialConditionsLayerBuilder | InitialConditionsLayerReader
+            ]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
         def plantingEvents(self) -> MutableSequence[PlantingEventBuilder]: ...
         @plantingEvents.setter
-        def plantingEvents(self, value: Sequence[PlantingEventBuilder | PlantingEventReader] | Sequence[dict[str, Any]]) -> None: ...
+        def plantingEvents(
+            self,
+            value: Sequence[PlantingEventBuilder | PlantingEventReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
         def harvestEvents(self) -> MutableSequence[HarvestEventBuilder]: ...
         @harvestEvents.setter
-        def harvestEvents(self, value: Sequence[HarvestEventBuilder | HarvestEventReader] | Sequence[dict[str, Any]]) -> None: ...
+        def harvestEvents(
+            self,
+            value: Sequence[HarvestEventBuilder | HarvestEventReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
         def irrigationEvents(self) -> MutableSequence[IrrigationEventBuilder]: ...
         @irrigationEvents.setter
-        def irrigationEvents(self, value: Sequence[IrrigationEventBuilder | IrrigationEventReader] | Sequence[dict[str, Any]]) -> None: ...
+        def irrigationEvents(
+            self,
+            value: Sequence[IrrigationEventBuilder | IrrigationEventReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
         def fertilizerEvents(self) -> MutableSequence[FertilizerEventBuilder]: ...
         @fertilizerEvents.setter
-        def fertilizerEvents(self, value: Sequence[FertilizerEventBuilder | FertilizerEventReader] | Sequence[dict[str, Any]]) -> None: ...
+        def fertilizerEvents(
+            self,
+            value: Sequence[FertilizerEventBuilder | FertilizerEventReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
-        def environmentModifications(self) -> MutableSequence[EnvironmentModificationBuilder]: ...
+        def environmentModifications(
+            self,
+        ) -> MutableSequence[EnvironmentModificationBuilder]: ...
         @environmentModifications.setter
-        def environmentModifications(self, value: Sequence[EnvironmentModificationBuilder | EnvironmentModificationReader] | Sequence[dict[str, Any]]) -> None: ...
+        def environmentModifications(
+            self,
+            value: Sequence[
+                EnvironmentModificationBuilder | EnvironmentModificationReader
+            ]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
         @property
         def experimentId(self) -> str: ...
         @experimentId.setter
@@ -1522,29 +2075,53 @@ class _TreatmentModule(_StructModule):
         @weatherStationDataset.setter
         def weatherStationDataset(self, value: str) -> None: ...
         @overload
-        def init(self, field: Literal["field"], size: int | None = None) -> FieldBuilder: ...
+        def init(
+            self, field: Literal["field"], size: int | None = None
+        ) -> FieldBuilder: ...
         @overload
-        def init(self, field: Literal["weatherStation"], size: int | None = None) -> WeatherStationBuilder: ...
+        def init(
+            self, field: Literal["weatherStation"], size: int | None = None
+        ) -> WeatherStationBuilder: ...
         @overload
-        def init(self, field: Literal["simulationStartDate"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["simulationStartDate"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @overload
-        def init(self, field: Literal["simulationEndDate"], size: int | None = None) -> _DateModule.Builder: ...
+        def init(
+            self, field: Literal["simulationEndDate"], size: int | None = None
+        ) -> _DateModule.Builder: ...
         @overload
-        def init(self, field: Literal["residue"], size: int | None = None) -> ResidueBuilder: ...
+        def init(
+            self, field: Literal["residue"], size: int | None = None
+        ) -> ResidueBuilder: ...
         @overload
-        def init(self, field: Literal["plots"], size: int | None = None) -> MutableSequence[PlotBuilder]: ...
+        def init(
+            self, field: Literal["plots"], size: int | None = None
+        ) -> MutableSequence[PlotBuilder]: ...
         @overload
-        def init(self, field: Literal["initialConditionsLayers"], size: int | None = None) -> MutableSequence[InitialConditionsLayerBuilder]: ...
+        def init(
+            self, field: Literal["initialConditionsLayers"], size: int | None = None
+        ) -> MutableSequence[InitialConditionsLayerBuilder]: ...
         @overload
-        def init(self, field: Literal["plantingEvents"], size: int | None = None) -> MutableSequence[PlantingEventBuilder]: ...
+        def init(
+            self, field: Literal["plantingEvents"], size: int | None = None
+        ) -> MutableSequence[PlantingEventBuilder]: ...
         @overload
-        def init(self, field: Literal["harvestEvents"], size: int | None = None) -> MutableSequence[HarvestEventBuilder]: ...
+        def init(
+            self, field: Literal["harvestEvents"], size: int | None = None
+        ) -> MutableSequence[HarvestEventBuilder]: ...
         @overload
-        def init(self, field: Literal["irrigationEvents"], size: int | None = None) -> MutableSequence[IrrigationEventBuilder]: ...
+        def init(
+            self, field: Literal["irrigationEvents"], size: int | None = None
+        ) -> MutableSequence[IrrigationEventBuilder]: ...
         @overload
-        def init(self, field: Literal["fertilizerEvents"], size: int | None = None) -> MutableSequence[FertilizerEventBuilder]: ...
+        def init(
+            self, field: Literal["fertilizerEvents"], size: int | None = None
+        ) -> MutableSequence[FertilizerEventBuilder]: ...
         @overload
-        def init(self, field: Literal["environmentModifications"], size: int | None = None) -> MutableSequence[EnvironmentModificationBuilder]: ...
+        def init(
+            self, field: Literal["environmentModifications"], size: int | None = None
+        ) -> MutableSequence[EnvironmentModificationBuilder]: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1558,7 +2135,9 @@ class _TreatmentModule(_StructModule):
         id: str | None = None,
         field: FieldBuilder | dict[str, Any] | None = None,
         weatherStation: WeatherStationBuilder | dict[str, Any] | None = None,
-        weatherStationTimeseries: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server | None = None,
+        weatherStationTimeseries: _TimeSeriesModule.TimeSeriesClient
+        | _TimeSeriesModule.Server
+        | None = None,
         name: str | None = None,
         simulationStartDate: _DateModule.Builder | dict[str, Any] | None = None,
         simulationEndDate: _DateModule.Builder | dict[str, Any] | None = None,
@@ -1574,12 +2153,24 @@ class _TreatmentModule(_StructModule):
         notes: str | None = None,
         plots: Sequence[PlotBuilder] | Sequence[dict[str, Any]] | None = None,
         residue: ResidueBuilder | dict[str, Any] | None = None,
-        initialConditionsLayers: Sequence[InitialConditionsLayerBuilder] | Sequence[dict[str, Any]] | None = None,
-        plantingEvents: Sequence[PlantingEventBuilder] | Sequence[dict[str, Any]] | None = None,
-        harvestEvents: Sequence[HarvestEventBuilder] | Sequence[dict[str, Any]] | None = None,
-        irrigationEvents: Sequence[IrrigationEventBuilder] | Sequence[dict[str, Any]] | None = None,
-        fertilizerEvents: Sequence[FertilizerEventBuilder] | Sequence[dict[str, Any]] | None = None,
-        environmentModifications: Sequence[EnvironmentModificationBuilder] | Sequence[dict[str, Any]] | None = None,
+        initialConditionsLayers: Sequence[InitialConditionsLayerBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
+        plantingEvents: Sequence[PlantingEventBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
+        harvestEvents: Sequence[HarvestEventBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
+        irrigationEvents: Sequence[IrrigationEventBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
+        fertilizerEvents: Sequence[FertilizerEventBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
+        environmentModifications: Sequence[EnvironmentModificationBuilder]
+        | Sequence[dict[str, Any]]
+        | None = None,
         experimentId: str | None = None,
         fieldId: str | None = None,
         weatherStationId: str | None = None,
@@ -1587,16 +2178,50 @@ class _TreatmentModule(_StructModule):
         **kwargs: Any,
     ) -> TreatmentBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[TreatmentReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[TreatmentReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[TreatmentReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[TreatmentReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[TreatmentBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[TreatmentBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> TreatmentReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> TreatmentReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> TreatmentReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> TreatmentReader: ...
 
 Treatment: _TreatmentModule
 
@@ -1639,7 +2264,11 @@ class _ExperimentDescriptionModule(_StructModule):
         @property
         def treatments(self) -> Sequence[TreatmentReader]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ExperimentDescriptionBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> ExperimentDescriptionBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -1713,8 +2342,14 @@ class _ExperimentDescriptionModule(_StructModule):
         @property
         def treatments(self) -> MutableSequence[TreatmentBuilder]: ...
         @treatments.setter
-        def treatments(self, value: Sequence[TreatmentBuilder | TreatmentReader] | Sequence[dict[str, Any]]) -> None: ...
-        def init(self, field: Literal["treatments"], size: int | None = None) -> MutableSequence[TreatmentBuilder]: ...
+        def treatments(
+            self,
+            value: Sequence[TreatmentBuilder | TreatmentReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
+        def init(
+            self, field: Literal["treatments"], size: int | None = None
+        ) -> MutableSequence[TreatmentBuilder]: ...
         @override
         def as_reader(self) -> ExperimentDescriptionReader: ...
 
@@ -1744,16 +2379,50 @@ class _ExperimentDescriptionModule(_StructModule):
         **kwargs: Any,
     ) -> ExperimentDescriptionBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ExperimentDescriptionReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[ExperimentDescriptionReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ExperimentDescriptionReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[ExperimentDescriptionReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ExperimentDescriptionBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[ExperimentDescriptionBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ExperimentDescriptionReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ExperimentDescriptionReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ExperimentDescriptionReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ExperimentDescriptionReader: ...
 
 ExperimentDescription: _ExperimentDescriptionModule
 

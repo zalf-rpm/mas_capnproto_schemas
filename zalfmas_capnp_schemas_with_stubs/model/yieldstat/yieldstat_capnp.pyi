@@ -7,12 +7,8 @@ from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
-    _DynamicCapabilityClient,
-    _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
-    _InterfaceModule,
-    _Request,
     _StructModule,
 )
 
@@ -53,7 +49,11 @@ class _RestInputModule(_StructModule):
         @property
         def getDryYearWaterNeed(self) -> bool: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> RestInputBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> RestInputBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -132,16 +132,50 @@ class _RestInputModule(_StructModule):
         **kwargs: Any,
     ) -> RestInputBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[RestInputReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[RestInputReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[RestInputReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[RestInputReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[RestInputBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[RestInputBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RestInputReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RestInputReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> RestInputReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> RestInputReader: ...
 
 RestInput: _RestInputModule
 
@@ -149,17 +183,21 @@ class _ResultModule(_StructModule):
     class _ResultToValueModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def id(self) -> int: ...
+            def id(self) -> ResultIdEnum: ...
             @property
             def value(self) -> float: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ResultToValueBuilder: ...
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
+            ) -> ResultToValueBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def id(self) -> int: ...
+            def id(self) -> ResultIdEnum: ...
             @id.setter
-            def id(self, value: int | Literal["primaryYield", "dryMatter", "carbonInAboveGroundBiomass", "sumFertilizer", "sumIrrigation", "primaryYieldCU"]) -> None: ...
+            def id(self, value: ResultIdEnum) -> None: ...
             @property
             def value(self) -> float: ...
             @value.setter
@@ -169,19 +207,58 @@ class _ResultModule(_StructModule):
 
         @override
         def new_message(
-            self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: int | Literal["primaryYield", "dryMatter", "carbonInAboveGroundBiomass", "sumFertilizer", "sumIrrigation", "primaryYieldCU"] | None = None, value: float | None = None, **kwargs: Any
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            id: ResultIdEnum | None = None,
+            value: float | None = None,
+            **kwargs: Any,
         ) -> ResultToValueBuilder: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ResultToValueReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> AbstractContextManager[ResultToValueReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ResultToValueReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[ResultToValueReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ResultToValueBuilder]: ...
-        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[ResultToValueBuilder]: ...
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> _DynamicStructReader: ...
         @override
-        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultToValueReader: ...
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> ResultToValueReader: ...
         @override
-        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultToValueReader: ...
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> ResultToValueReader: ...
 
     type ResultToValueReader = _ResultToValueModule.Reader
     type ResultToValueBuilder = _ResultToValueModule.Builder
@@ -194,7 +271,11 @@ class _ResultModule(_StructModule):
         @property
         def values(self) -> Sequence[ResultToValueReader]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> ResultBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> ResultBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -208,24 +289,72 @@ class _ResultModule(_StructModule):
         @property
         def values(self) -> MutableSequence[ResultToValueBuilder]: ...
         @values.setter
-        def values(self, value: Sequence[ResultToValueBuilder | ResultToValueReader] | Sequence[dict[str, Any]]) -> None: ...
-        def init(self, field: Literal["values"], size: int | None = None) -> MutableSequence[ResultToValueBuilder]: ...
+        def values(
+            self,
+            value: Sequence[ResultToValueBuilder | ResultToValueReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
+        def init(
+            self, field: Literal["values"], size: int | None = None
+        ) -> MutableSequence[ResultToValueBuilder]: ...
         @override
         def as_reader(self) -> ResultReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, cultivar: str | None = None, isNoData: bool | None = None, values: Sequence[ResultToValueBuilder] | Sequence[dict[str, Any]] | None = None, **kwargs: Any) -> ResultBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        cultivar: str | None = None,
+        isNoData: bool | None = None,
+        values: Sequence[ResultToValueBuilder] | Sequence[dict[str, Any]] | None = None,
+        **kwargs: Any,
+    ) -> ResultBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[ResultReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[ResultReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[ResultReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[ResultReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[ResultBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[ResultBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ResultReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> ResultReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> ResultReader: ...
 
 Result: _ResultModule
 
@@ -237,7 +366,11 @@ class _OutputModule(_StructModule):
             @property
             def result(self) -> ResultReader: ...
             @override
-            def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> YearToResultBuilder: ...
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
+            ) -> YearToResultBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -247,24 +380,69 @@ class _OutputModule(_StructModule):
             @property
             def result(self) -> ResultBuilder: ...
             @result.setter
-            def result(self, value: ResultBuilder | ResultReader | dict[str, Any]) -> None: ...
-            def init(self, field: Literal["result"], size: int | None = None) -> ResultBuilder: ...
+            def result(
+                self, value: ResultBuilder | ResultReader | dict[str, Any]
+            ) -> None: ...
+            def init(
+                self, field: Literal["result"], size: int | None = None
+            ) -> ResultBuilder: ...
             @override
             def as_reader(self) -> YearToResultReader: ...
 
         @override
-        def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, year: int | None = None, result: ResultBuilder | dict[str, Any] | None = None, **kwargs: Any) -> YearToResultBuilder: ...
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            year: int | None = None,
+            result: ResultBuilder | dict[str, Any] | None = None,
+            **kwargs: Any,
+        ) -> YearToResultBuilder: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[YearToResultReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> AbstractContextManager[YearToResultReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[YearToResultReader]: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[YearToResultReader]: ...
         @overload
-        def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[YearToResultBuilder]: ...
-        def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[YearToResultBuilder]: ...
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> _DynamicStructReader: ...
         @override
-        def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> YearToResultReader: ...
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> YearToResultReader: ...
         @override
-        def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> YearToResultReader: ...
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> YearToResultReader: ...
 
     type YearToResultReader = _YearToResultModule.Reader
     type YearToResultBuilder = _YearToResultModule.Builder
@@ -279,7 +457,11 @@ class _OutputModule(_StructModule):
         @property
         def results(self) -> Sequence[YearToResultReader]: ...
         @override
-        def as_builder(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None) -> OutputBuilder: ...
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+        ) -> OutputBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
@@ -297,24 +479,73 @@ class _OutputModule(_StructModule):
         @property
         def results(self) -> MutableSequence[YearToResultBuilder]: ...
         @results.setter
-        def results(self, value: Sequence[YearToResultBuilder | YearToResultReader] | Sequence[dict[str, Any]]) -> None: ...
-        def init(self, field: Literal["results"], size: int | None = None) -> MutableSequence[YearToResultBuilder]: ...
+        def results(
+            self,
+            value: Sequence[YearToResultBuilder | YearToResultReader]
+            | Sequence[dict[str, Any]],
+        ) -> None: ...
+        def init(
+            self, field: Literal["results"], size: int | None = None
+        ) -> MutableSequence[YearToResultBuilder]: ...
         @override
         def as_reader(self) -> OutputReader: ...
 
     @override
-    def new_message(self, num_first_segment_words: int | None = None, allocate_seg_callable: Any = None, id: str | None = None, runFailed: bool | None = None, reason: str | None = None, results: Sequence[YearToResultBuilder] | Sequence[dict[str, Any]] | None = None, **kwargs: Any) -> OutputBuilder: ...
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Any = None,
+        id: str | None = None,
+        runFailed: bool | None = None,
+        reason: str | None = None,
+        results: Sequence[YearToResultBuilder] | Sequence[dict[str, Any]] | None = None,
+        **kwargs: Any,
+    ) -> OutputBuilder: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> AbstractContextManager[OutputReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> AbstractContextManager[OutputReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[False]) -> AbstractContextManager[OutputReader]: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[OutputReader]: ...
     @overload
-    def from_bytes(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ..., *, builder: Literal[True]) -> AbstractContextManager[OutputBuilder]: ...
-    def from_bytes_packed(self, buf: bytes, traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> _DynamicStructReader: ...
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[OutputBuilder]: ...
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> _DynamicStructReader: ...
     @override
-    def read(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> OutputReader: ...
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> OutputReader: ...
     @override
-    def read_packed(self, file: IO[str] | IO[bytes], traversal_limit_in_words: int | None = ..., nesting_limit: int | None = ...) -> OutputReader: ...
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = ...,
+        nesting_limit: int | None = ...,
+    ) -> OutputReader: ...
 
 Output: _OutputModule
 
@@ -324,7 +555,17 @@ type OutputReader = _OutputModule.Reader
 type RestInputBuilder = _RestInputModule.Builder
 type RestInputReader = _RestInputModule.Reader
 type ResultBuilder = _ResultModule.Builder
-type ResultId = int | Literal["primaryYield", "dryMatter", "carbonInAboveGroundBiomass", "sumFertilizer", "sumIrrigation", "primaryYieldCU"]
+type ResultIdEnum = (
+    int
+    | Literal[
+        "primaryYield",
+        "dryMatter",
+        "carbonInAboveGroundBiomass",
+        "sumFertilizer",
+        "sumIrrigation",
+        "primaryYieldCU",
+    ]
+)
 type ResultReader = _ResultModule.Reader
 type ResultToValueBuilder = _ResultModule._ResultToValueModule.Builder
 type ResultToValueReader = _ResultModule._ResultToValueModule.Reader

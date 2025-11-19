@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Iterator
+from collections.abc import Awaitable
 from typing import Any, NamedTuple, Protocol
 
 from capnp.lib.capnp import (
@@ -12,19 +12,25 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
-    _Request,
-    _StructModule,
 )
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
-type AnyPointer = str | bytes | _DynamicStructBuilder | _DynamicStructReader | _DynamicCapabilityClient | _DynamicCapabilityServer
+type AnyPointer = (
+    str
+    | bytes
+    | _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+)
 
 class _ServiceModule(_InterfaceModule):
     class NextconfigRequest(Protocol):
         def send(self) -> _ServiceModule.ServiceClient.NextconfigResult: ...
 
-    @classmethod
-    def _new_client(cls, server: _DynamicCapabilityServer) -> _ServiceModule.ServiceClient: ...
+    def _new_client(
+        self, server: _DynamicCapabilityServer
+    ) -> _ServiceModule.ServiceClient: ...
     class Server(_DynamicCapabilityServer):
         class NextconfigResult(Awaitable[NextconfigResult], Protocol):
             config: AnyPointer
@@ -38,8 +44,12 @@ class _ServiceModule(_InterfaceModule):
             params: _ServiceModule.NextconfigRequest
             results: _ServiceModule.Server.NextconfigResult
 
-        def nextConfig(self, _context: _ServiceModule.Server.NextconfigCallContext, **kwargs: Any) -> Awaitable[_ServiceModule.Server.NextconfigResultTuple | None]: ...
-        def nextConfig_context(self, context: _ServiceModule.Server.NextconfigCallContext) -> Awaitable[None]: ...
+        def nextConfig(
+            self, _context: _ServiceModule.Server.NextconfigCallContext, **kwargs: Any
+        ) -> Awaitable[_ServiceModule.Server.NextconfigResultTuple | None]: ...
+        def nextConfig_context(
+            self, context: _ServiceModule.Server.NextconfigCallContext
+        ) -> Awaitable[None]: ...
 
     class ServiceClient(_DynamicCapabilityClient):
         class NextconfigResult(Awaitable[NextconfigResult], Protocol):
