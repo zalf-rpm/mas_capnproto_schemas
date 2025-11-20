@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.42](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.41...v0.1.42) (2025-11-20)
+
+
+### Bug Fixes
+
+* regenerate python stubs with correct import paths ([5ad4dca](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/5ad4dca094f55ea718bc46ea29d2f2b9568001fa))
+
 ## [0.1.41](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.40...v0.1.41) (2025-11-19)
 
 
