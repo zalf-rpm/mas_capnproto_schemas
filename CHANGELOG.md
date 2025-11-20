@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.43](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.42...v0.1.43) (2025-11-20)
+
+
+### Bug Fixes
+
+* regenerate with including parent dir in input path to resolve imports without id issues ([4dc18b5](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/4dc18b5349b625680682eddb21b065e9c7b3cf90))
+
 ## [0.1.42](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.41...v0.1.42) (2025-11-20)
 
 
