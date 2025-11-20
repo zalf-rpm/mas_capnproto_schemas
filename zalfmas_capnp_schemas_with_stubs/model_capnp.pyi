@@ -16,9 +16,9 @@ from capnp.lib.capnp import (
     _StructModule,
 )
 
-from .climate_capnp import _TimeSeriesModule
+from .climate_capnp import TimeSeriesClient, _TimeSeriesModule
 from .common_capnp import _IdentifiableModule
-from .management_capnp import _EventModule
+from .management_capnp import EventBuilder, EventReader
 from .persistence_capnp import _PersistentModule
 from .service_capnp import _StoppableModule
 from .soil_capnp import _ProfileModule
@@ -316,9 +316,17 @@ XYPlusResult: _XYPlusResultModule
 
 class _ClimateInstanceModule(_IdentifiableModule):
     class RunRequest(Protocol):
+        timeSeries: TimeSeriesClient | _TimeSeriesModule.Server
         def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
 
     class RunsetRequest(Protocol):
+        dataset: Sequence[_TimeSeriesModule]
+        @overload
+        def init(
+            self, name: Literal["dataset"], size: int = ...
+        ) -> MutableSequence[_TimeSeriesModule]: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
 
     def _new_client(
@@ -337,13 +345,15 @@ class _ClimateInstanceModule(_IdentifiableModule):
         class RunsetResultTuple(NamedTuple):
             result: XYPlusResultBuilder | XYPlusResultReader
 
-        class RunParams(Protocol): ...
+        class RunParams(Protocol):
+            timeSeries: TimeSeriesClient
 
         class RunCallContext(Protocol):
             params: _ClimateInstanceModule.Server.RunParams
             results: _ClimateInstanceModule.Server.RunResult
 
-        class RunsetParams(Protocol): ...
+        class RunsetParams(Protocol):
+            dataset: Sequence[_TimeSeriesModule]
 
         class RunsetCallContext(Protocol):
             params: _ClimateInstanceModule.Server.RunsetParams
@@ -351,6 +361,7 @@ class _ClimateInstanceModule(_IdentifiableModule):
 
         def run(
             self,
+            timeSeries: TimeSeriesClient,
             _context: _ClimateInstanceModule.Server.RunCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[_ClimateInstanceModule.Server.RunResultTuple | None]: ...
@@ -359,6 +370,7 @@ class _ClimateInstanceModule(_IdentifiableModule):
         ) -> Awaitable[None]: ...
         def runSet(
             self,
+            dataset: Sequence[_TimeSeriesModule],
             _context: _ClimateInstanceModule.Server.RunsetCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[_ClimateInstanceModule.Server.RunsetResultTuple | None]: ...
@@ -373,12 +385,18 @@ class _ClimateInstanceModule(_IdentifiableModule):
         class RunsetResult(Awaitable[RunsetResult], Protocol):
             result: XYPlusResultReader
 
-        def run(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
+        def run(
+            self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None
+        ) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
         def runSet(
-            self,
+            self, dataset: Sequence[_TimeSeriesModule] | None = None
         ) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
-        def run_request(self) -> _ClimateInstanceModule.RunRequest: ...
-        def runSet_request(self) -> _ClimateInstanceModule.RunsetRequest: ...
+        def run_request(
+            self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None
+        ) -> _ClimateInstanceModule.RunRequest: ...
+        def runSet_request(
+            self, dataset: Sequence[_TimeSeriesModule] | None = None
+        ) -> _ClimateInstanceModule.RunsetRequest: ...
 
 ClimateInstance: _ClimateInstanceModule
 
@@ -391,7 +409,7 @@ class _EnvModule(_StructModule):
         @property
         def soilProfile(self) -> _ProfileModule.ProfileClient: ...
         @property
-        def mgmtEvents(self) -> Sequence[_EventModule.Reader]: ...
+        def mgmtEvents(self) -> Sequence[EventReader]: ...
         @override
         def as_builder(
             self,
@@ -417,16 +435,14 @@ class _EnvModule(_StructModule):
             self, value: _ProfileModule.ProfileClient | _ProfileModule.Server
         ) -> None: ...
         @property
-        def mgmtEvents(self) -> MutableSequence[_EventModule.Builder]: ...
+        def mgmtEvents(self) -> MutableSequence[EventBuilder]: ...
         @mgmtEvents.setter
         def mgmtEvents(
-            self,
-            value: Sequence[_EventModule.Builder | _EventModule.Reader]
-            | Sequence[dict[str, Any]],
+            self, value: Sequence[EventBuilder | EventReader] | Sequence[dict[str, Any]]
         ) -> None: ...
         def init(
             self, field: Literal["mgmtEvents"], size: int | None = None
-        ) -> MutableSequence[_EventModule.Builder]: ...
+        ) -> MutableSequence[EventBuilder]: ...
         @override
         def as_reader(self) -> EnvReader: ...
 
@@ -440,9 +456,7 @@ class _EnvModule(_StructModule):
         | _TimeSeriesModule.Server
         | None = None,
         soilProfile: _ProfileModule.ProfileClient | _ProfileModule.Server | None = None,
-        mgmtEvents: Sequence[_EventModule.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
+        mgmtEvents: Sequence[EventBuilder] | Sequence[dict[str, Any]] | None = None,
         **kwargs: Any,
     ) -> EnvBuilder: ...
     @overload
@@ -615,10 +629,16 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
     ) -> _EnvInstanceProxyModule.EnvInstanceProxyClient: ...
     class Server(_EnvInstanceModule.Server):
         class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
-            unregister: _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
+            unregister: (
+                _EnvInstanceProxyModule._UnregisterModule.Server
+                | _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
+            )
 
         class RegisterenvinstanceResultTuple(NamedTuple):
-            unregister: _EnvInstanceProxyModule._UnregisterModule.Server
+            unregister: (
+                _EnvInstanceProxyModule._UnregisterModule.Server
+                | _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
+            )
 
         class RegisterenvinstanceParams(Protocol):
             instance: EnvInstanceClient
@@ -683,10 +703,14 @@ class _InstanceFactoryModule(_IdentifiableModule):
             description: str
 
         class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
-            instance: _IdentifiableModule.IdentifiableClient
+            instance: (
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            )
 
         class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-            instances: Sequence[_IdentifiableModule]
+            instances: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class ModelinfoResultTuple(NamedTuple):
             id: str
@@ -694,10 +718,14 @@ class _InstanceFactoryModule(_IdentifiableModule):
             description: str
 
         class NewinstanceResultTuple(NamedTuple):
-            instance: _IdentifiableModule.Server
+            instance: (
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            )
 
         class NewinstancesResultTuple(NamedTuple):
-            instances: Sequence[_IdentifiableModule]
+            instances: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class ModelinfoParams(Protocol): ...
 
@@ -760,7 +788,7 @@ class _InstanceFactoryModule(_IdentifiableModule):
             instance: _IdentifiableModule.IdentifiableClient
 
         class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-            instances: Sequence[_IdentifiableModule]
+            instances: Sequence[_IdentifiableModule.IdentifiableClient]
 
         def modelInfo(
             self,

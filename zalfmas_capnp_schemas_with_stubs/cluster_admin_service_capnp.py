@@ -14,7 +14,7 @@ import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schema
 Cluster = capnp.load(module_file, imports=import_path).Cluster
 
 Cluster.AdminMaster.Server.AvailablemodelsResultTuple = NamedTuple(
-    "AvailablemodelsResultTuple", []
+    "AvailablemodelsResultTuple", [("factories", object)]
 )
 Cluster.AdminMaster.Server.RegistermodelinstancefactoryResultTuple = NamedTuple(
     "RegistermodelinstancefactoryResultTuple", [("unregister", object)]
@@ -41,7 +41,7 @@ Cluster.ModelInstanceFactory.Server.RestoresturdyrefResultTuple = NamedTuple(
     "RestoresturdyrefResultTuple", [("cap", object)]
 )
 Cluster.Runtime.Server.AvailablemodelsResultTuple = NamedTuple(
-    "AvailablemodelsResultTuple", []
+    "AvailablemodelsResultTuple", [("factories", object)]
 )
 Cluster.Runtime.Server.FreenumberofcoresResultTuple = NamedTuple(
     "FreenumberofcoresResultTuple", [("cores", object)]
@@ -59,7 +59,7 @@ Cluster.Unregister.Server.UnregisterResultTuple = NamedTuple(
     "UnregisterResultTuple", [("success", object)]
 )
 Cluster.UserMaster.Server.AvailablemodelsResultTuple = NamedTuple(
-    "AvailablemodelsResultTuple", []
+    "AvailablemodelsResultTuple", [("factories", object)]
 )
 Cluster.ValueHolder.Server.ValueResultTuple = NamedTuple(
     "ValueResultTuple", [("val", object)]

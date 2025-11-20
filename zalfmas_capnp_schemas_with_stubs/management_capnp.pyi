@@ -16,11 +16,12 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
     _IdentifiableModule,
-    _IdInformationModule,
 )
 from .crop_capnp import _CropModule
-from .date_capnp import _DateModule
+from .date_capnp import DateBuilder, DateReader
 from .persistence_capnp import _PersistentModule
 from .registry_capnp import _RegistryModule
 
@@ -167,7 +168,7 @@ class _EventModule(_StructModule):
     class _AtModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def date(self) -> _DateModule.Reader: ...
+            def date(self) -> DateReader: ...
             @override
             def as_builder(
                 self,
@@ -177,14 +178,14 @@ class _EventModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def date(self) -> _DateModule.Builder: ...
+            def date(self) -> DateBuilder: ...
             @date.setter
             def date(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             def init(
                 self, field: Literal["date"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @override
             def as_reader(self) -> AtReader: ...
 
@@ -193,7 +194,7 @@ class _EventModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            date: _DateModule.Builder | dict[str, Any] | None = None,
+            date: DateBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> AtBuilder: ...
         @overload
@@ -248,9 +249,9 @@ class _EventModule(_StructModule):
     class _BetweenModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def earliest(self) -> _DateModule.Reader: ...
+            def earliest(self) -> DateReader: ...
             @property
-            def latest(self) -> _DateModule.Reader: ...
+            def latest(self) -> DateReader: ...
             @override
             def as_builder(
                 self,
@@ -260,25 +261,25 @@ class _EventModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def earliest(self) -> _DateModule.Builder: ...
+            def earliest(self) -> DateBuilder: ...
             @earliest.setter
             def earliest(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             @property
-            def latest(self) -> _DateModule.Builder: ...
+            def latest(self) -> DateBuilder: ...
             @latest.setter
             def latest(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             @overload
             def init(
                 self, field: Literal["earliest"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @overload
             def init(
                 self, field: Literal["latest"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -289,8 +290,8 @@ class _EventModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            earliest: _DateModule.Builder | dict[str, Any] | None = None,
-            latest: _DateModule.Builder | dict[str, Any] | None = None,
+            earliest: DateBuilder | dict[str, Any] | None = None,
+            latest: DateBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> BetweenBuilder: ...
         @overload
@@ -434,7 +435,7 @@ class _EventModule(_StructModule):
         @property
         def type(self) -> EventExternalTypeEnum: ...
         @property
-        def info(self) -> _IdInformationModule.Reader: ...
+        def info(self) -> IdInformationReader: ...
         @property
         def at(self) -> AtReader: ...
         @property
@@ -460,13 +461,10 @@ class _EventModule(_StructModule):
         @type.setter
         def type(self, value: EventExternalTypeEnum) -> None: ...
         @property
-        def info(self) -> _IdInformationModule.Builder: ...
+        def info(self) -> IdInformationBuilder: ...
         @info.setter
         def info(
-            self,
-            value: _IdInformationModule.Builder
-            | _IdInformationModule.Reader
-            | dict[str, Any],
+            self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
         ) -> None: ...
         @property
         def at(self) -> AtBuilder: ...
@@ -495,7 +493,7 @@ class _EventModule(_StructModule):
         @overload
         def init(
             self, field: Literal["info"], size: int | None = None
-        ) -> _IdInformationModule.Builder: ...
+        ) -> IdInformationBuilder: ...
         @overload
         def init(self, field: Literal["at"], size: int | None = None) -> AtBuilder: ...
         @overload
@@ -517,7 +515,7 @@ class _EventModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         type: EventExternalTypeEnum | None = None,
-        info: _IdInformationModule.Builder | dict[str, Any] | None = None,
+        info: IdInformationBuilder | dict[str, Any] | None = None,
         at: AtBuilder | dict[str, Any] | None = None,
         between: BetweenBuilder | dict[str, Any] | None = None,
         after: AfterBuilder | dict[str, Any] | None = None,

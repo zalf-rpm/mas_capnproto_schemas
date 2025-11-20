@@ -1246,11 +1246,11 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
         ) -> _HostPortResolverModule._RegistrarModule.RegistrarClient: ...
         class Server(_DynamicCapabilityServer):
             class RegisterResult(Awaitable[RegisterResult], Protocol):
-                heartbeat: _HeartbeatModule.HeartbeatClient
+                heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
                 secsHeartbeatInterval: int
 
             class RegisterResultTuple(NamedTuple):
-                heartbeat: _HeartbeatModule.Server
+                heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
                 secsHeartbeatInterval: int
 
             class RegisterParams(Protocol):
@@ -1469,12 +1469,12 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
     class Server(_IdentifiableModule.Server, _RestorerModule.Server):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
             sturdyRef: SturdyRefBuilder | SturdyRefReader
-            heartbeat: _HeartbeatModule.HeartbeatClient
+            heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
             secsHeartbeatInterval: int
 
         class RegisterResultTuple(NamedTuple):
             sturdyRef: SturdyRefBuilder | SturdyRefReader
-            heartbeat: _HeartbeatModule.Server
+            heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
             secsHeartbeatInterval: int
 
         class RegisterParams(Protocol):

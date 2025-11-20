@@ -13,7 +13,7 @@ from capnp.lib.capnp import (
 )
 
 from ...climate_capnp import RCPEnum
-from ...date_capnp import _DateModule
+from ...date_capnp import DateBuilder, DateReader
 from .monica_management_capnp import _ParamsModule
 
 class _SpeciesParametersModule(_StructModule):
@@ -2289,7 +2289,7 @@ class _MeasuredGroundwaterTableInformationModule(_StructModule):
     class _DateToValueModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def date(self) -> _DateModule.Reader: ...
+            def date(self) -> DateReader: ...
             @property
             def value(self) -> float: ...
             @override
@@ -2301,10 +2301,10 @@ class _MeasuredGroundwaterTableInformationModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def date(self) -> _DateModule.Builder: ...
+            def date(self) -> DateBuilder: ...
             @date.setter
             def date(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             @property
             def value(self) -> float: ...
@@ -2312,7 +2312,7 @@ class _MeasuredGroundwaterTableInformationModule(_StructModule):
             def value(self, value: float) -> None: ...
             def init(
                 self, field: Literal["date"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @override
             def as_reader(self) -> DateToValueReader: ...
 
@@ -2321,7 +2321,7 @@ class _MeasuredGroundwaterTableInformationModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            date: _DateModule.Builder | dict[str, Any] | None = None,
+            date: DateBuilder | dict[str, Any] | None = None,
             value: float | None = None,
             **kwargs: Any,
         ) -> DateToValueBuilder: ...
@@ -2467,9 +2467,9 @@ MeasuredGroundwaterTableInformation: _MeasuredGroundwaterTableInformationModule
 class _SimulationParametersModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def startDate(self) -> _DateModule.Reader: ...
+        def startDate(self) -> DateReader: ...
         @property
-        def endDate(self) -> _DateModule.Reader: ...
+        def endDate(self) -> DateReader: ...
         @property
         def nitrogenResponseOn(self) -> bool: ...
         @property
@@ -2513,17 +2513,15 @@ class _SimulationParametersModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def startDate(self) -> _DateModule.Builder: ...
+        def startDate(self) -> DateBuilder: ...
         @startDate.setter
         def startDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
-        def endDate(self) -> _DateModule.Builder: ...
+        def endDate(self) -> DateBuilder: ...
         @endDate.setter
-        def endDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def endDate(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def nitrogenResponseOn(self) -> bool: ...
         @nitrogenResponseOn.setter
@@ -2608,11 +2606,11 @@ class _SimulationParametersModule(_StructModule):
         @overload
         def init(
             self, field: Literal["startDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["endDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["autoIrrigationParams"], size: int | None = None
@@ -2635,8 +2633,8 @@ class _SimulationParametersModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        startDate: _DateModule.Builder | dict[str, Any] | None = None,
-        endDate: _DateModule.Builder | dict[str, Any] | None = None,
+        startDate: DateBuilder | dict[str, Any] | None = None,
+        endDate: DateBuilder | dict[str, Any] | None = None,
         nitrogenResponseOn: bool | None = None,
         waterDeficitResponseOn: bool | None = None,
         emergenceFloodingControlOn: bool | None = None,

@@ -16,12 +16,14 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
+    PairBuilder,
+    PairReader,
     _IdentifiableModule,
-    _IdInformationModule,
-    _PairModule,
 )
-from .date_capnp import _DateModule
-from .geo_capnp import _LatLonCoordModule
+from .date_capnp import DateBuilder, DateReader
+from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import _PersistentModule
 
 class _GCMModule:
@@ -179,16 +181,16 @@ class _MetadataModule(_StructModule):
         ) -> _MetadataModule._SupportedModule.SupportedClient: ...
         class Server(_DynamicCapabilityServer):
             class CategoriesResult(Awaitable[CategoriesResult], Protocol):
-                types: Any
+                types: Sequence[IdInformationBuilder | IdInformationReader]
 
             class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
-                values: Any
+                values: Sequence[IdInformationBuilder | IdInformationReader]
 
             class CategoriesResultTuple(NamedTuple):
-                pass
+                types: Sequence[IdInformationBuilder | IdInformationReader]
 
             class SupportedvaluesResultTuple(NamedTuple):
-                pass
+                values: Sequence[IdInformationBuilder | IdInformationReader]
 
             class CategoriesParams(Protocol): ...
 
@@ -230,10 +232,10 @@ class _MetadataModule(_StructModule):
 
         class SupportedClient(_DynamicCapabilityClient):
             class CategoriesResult(Awaitable[CategoriesResult], Protocol):
-                types: Any
+                types: Sequence[IdInformationReader]
 
             class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
-                values: Any
+                values: Sequence[IdInformationReader]
 
             def categories(
                 self,
@@ -263,7 +265,7 @@ class _MetadataModule(_StructModule):
             @property
             def bool(self) -> bool: ...
             @property
-            def date(self) -> _DateModule.Reader: ...
+            def date(self) -> DateReader: ...
             @override
             def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
             @override
@@ -291,16 +293,16 @@ class _MetadataModule(_StructModule):
             @bool.setter
             def bool(self, value: bool) -> None: ...
             @property
-            def date(self) -> _DateModule.Builder: ...
+            def date(self) -> DateBuilder: ...
             @date.setter
             def date(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             @override
             def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
             def init(
                 self, field: Literal["date"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @override
             def as_reader(self) -> ValueReader: ...
 
@@ -313,7 +315,7 @@ class _MetadataModule(_StructModule):
             float: float | None = None,
             int: int | None = None,
             bool: bool | None = None,
-            date: _DateModule.Builder | dict[str, Any] | None = None,
+            date: DateBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> ValueBuilder: ...
         @overload
@@ -382,9 +384,9 @@ class _MetadataModule(_StructModule):
             @property
             def version(self) -> str: ...
             @property
-            def start(self) -> _DateModule.Reader: ...
+            def start(self) -> DateReader: ...
             @property
-            def end(self) -> _DateModule.Reader: ...
+            def end(self) -> DateReader: ...
             @property
             def co2(self) -> float: ...
             @property
@@ -448,17 +450,15 @@ class _MetadataModule(_StructModule):
             @version.setter
             def version(self, value: str) -> None: ...
             @property
-            def start(self) -> _DateModule.Builder: ...
+            def start(self) -> DateBuilder: ...
             @start.setter
             def start(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+                self, value: DateBuilder | DateReader | dict[str, Any]
             ) -> None: ...
             @property
-            def end(self) -> _DateModule.Builder: ...
+            def end(self) -> DateBuilder: ...
             @end.setter
-            def end(
-                self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-            ) -> None: ...
+            def end(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
             @property
             def co2(self) -> float: ...
             @co2.setter
@@ -495,11 +495,11 @@ class _MetadataModule(_StructModule):
             @overload
             def init(
                 self, field: Literal["start"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @overload
             def init(
                 self, field: Literal["end"], size: int | None = None
-            ) -> _DateModule.Builder: ...
+            ) -> DateBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -517,8 +517,8 @@ class _MetadataModule(_StructModule):
             ssp: SSPEnum | None = None,
             ensMem: EnsembleMemberBuilder | dict[str, Any] | None = None,
             version: str | None = None,
-            start: _DateModule.Builder | dict[str, Any] | None = None,
-            end: _DateModule.Builder | dict[str, Any] | None = None,
+            start: DateBuilder | dict[str, Any] | None = None,
+            end: DateBuilder | dict[str, Any] | None = None,
             co2: float | None = None,
             picontrol: None | None = None,
             description: str | None = None,
@@ -599,7 +599,7 @@ class _MetadataModule(_StructModule):
                 description: str
 
             class ForallResult(Awaitable[ForallResult], Protocol):
-                all: Any
+                all: Sequence[PairBuilder | PairReader]
 
             class ForoneResultTuple(NamedTuple):
                 id: str
@@ -607,7 +607,7 @@ class _MetadataModule(_StructModule):
                 description: str
 
             class ForallResultTuple(NamedTuple):
-                pass
+                all: Sequence[PairBuilder | PairReader]
 
             class ForoneParams(Protocol):
                 entry: EntryReader
@@ -653,7 +653,7 @@ class _MetadataModule(_StructModule):
                 description: str
 
             class ForallResult(Awaitable[ForallResult], Protocol):
-                all: Any
+                all: Sequence[PairReader]
 
             def forOne(
                 self, entry: EntryBuilder | EntryReader | dict[str, Any] | None = None
@@ -820,9 +820,9 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _DatasetModule.DatasetClient.MetadataResult: ...
 
     class ClosesttimeseriesatRequest(Protocol):
-        latlon: _LatLonCoordModule.Builder
+        latlon: LatLonCoordBuilder
         @overload
-        def init(self, name: Literal["latlon"]) -> _LatLonCoordModule.Builder: ...
+        def init(self, name: Literal["latlon"]) -> LatLonCoordBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _DatasetModule.DatasetClient.ClosesttimeseriesatResult: ...
@@ -844,37 +844,47 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
             entries: Sequence[EntryBuilder | EntryReader]
-            info: _MetadataModule._InformationModule.InformationClient
+            info: (
+                _MetadataModule._InformationModule.Server
+                | _MetadataModule._InformationModule.InformationClient
+            )
 
         class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class TimeseriesatResult(Awaitable[TimeseriesatResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResult(Awaitable[LocationsResult], Protocol):
             locations: Sequence[LocationBuilder | LocationReader]
 
         class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
             locationsCallback: (
-                _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
+                _DatasetModule._GetLocationsCallbackModule.Server
+                | _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
             )
 
         class MetadataResultTuple(NamedTuple):
             entries: Sequence[EntryBuilder | EntryReader]
-            info: _MetadataModule._InformationModule.Server
+            info: (
+                _MetadataModule._InformationModule.Server
+                | _MetadataModule._InformationModule.InformationClient
+            )
 
         class ClosesttimeseriesatResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class TimeseriesatResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResultTuple(NamedTuple):
             locations: Sequence[LocationBuilder | LocationReader]
 
         class StreamlocationsResultTuple(NamedTuple):
-            locationsCallback: _DatasetModule._GetLocationsCallbackModule.Server
+            locationsCallback: (
+                _DatasetModule._GetLocationsCallbackModule.Server
+                | _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
+            )
 
         class MetadataParams(Protocol): ...
 
@@ -883,7 +893,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             results: _DatasetModule.Server.MetadataResult
 
         class ClosesttimeseriesatParams(Protocol):
-            latlon: _LatLonCoordModule.Reader
+            latlon: LatLonCoordReader
 
         class ClosesttimeseriesatCallContext(Protocol):
             params: _DatasetModule.Server.ClosesttimeseriesatParams
@@ -919,7 +929,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def closestTimeSeriesAt(
             self,
-            latlon: _LatLonCoordModule.Reader,
+            latlon: LatLonCoordReader,
             _context: _DatasetModule.Server.ClosesttimeseriesatCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -988,7 +998,11 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
 
         def metadata(self) -> _DatasetModule.DatasetClient.MetadataResult: ...
         def closestTimeSeriesAt(
-            self, latlon: _LatLonCoordModule | dict[str, Any] | None = None
+            self,
+            latlon: LatLonCoordBuilder
+            | LatLonCoordReader
+            | dict[str, Any]
+            | None = None,
         ) -> _DatasetModule.DatasetClient.ClosesttimeseriesatResult: ...
         def timeSeriesAt(
             self, locationId: str | None = None
@@ -999,7 +1013,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         ) -> _DatasetModule.DatasetClient.StreamlocationsResult: ...
         def metadata_request(self) -> _DatasetModule.MetadataRequest: ...
         def closestTimeSeriesAt_request(
-            self, latlon: _LatLonCoordModule.Builder | None = None
+            self, latlon: LatLonCoordBuilder | None = None
         ) -> _DatasetModule.ClosesttimeseriesatRequest: ...
         def timeSeriesAt_request(
             self, locationId: str | None = None
@@ -1031,17 +1045,24 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.DatatResult: ...
 
     class SubrangeRequest(Protocol):
-        start: _DateModule.Builder
-        end: _DateModule.Builder
+        start: DateBuilder
+        end: DateBuilder
         @overload
-        def init(self, name: Literal["start"]) -> _DateModule.Builder: ...
+        def init(self, name: Literal["start"]) -> DateBuilder: ...
         @overload
-        def init(self, name: Literal["end"]) -> _DateModule.Builder: ...
+        def init(self, name: Literal["end"]) -> DateBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.SubrangeResult: ...
 
     class SubheaderRequest(Protocol):
+        elements: Sequence[ElementEnum]
+        @overload
+        def init(
+            self, name: Literal["elements"], size: int = ...
+        ) -> MutableSequence[ElementEnum]: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.SubheaderResult: ...
 
     class MetadataRequest(Protocol):
@@ -1058,11 +1079,11 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             resolution: TimeSeriesResolutionEnum
 
         class RangeResult(Awaitable[RangeResult], Protocol):
-            startDate: _DateModule.Builder | _DateModule.Reader
-            endDate: _DateModule.Builder | _DateModule.Reader
+            startDate: DateBuilder | DateReader
+            endDate: DateBuilder | DateReader
 
         class HeaderResult(Awaitable[HeaderResult], Protocol):
-            header: Any
+            header: Sequence[ElementEnum]
 
         class DataResult(Awaitable[DataResult], Protocol):
             data: Sequence[Sequence[float]]
@@ -1071,31 +1092,34 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             data: Sequence[Sequence[float]]
 
         class SubrangeResult(Awaitable[SubrangeResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class SubheaderResult(Awaitable[SubheaderResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResult(Awaitable[MetadataResult], Protocol):
             entries: Sequence[EntryBuilder | EntryReader]
-            info: _MetadataModule._InformationModule.InformationClient
+            info: (
+                _MetadataModule._InformationModule.Server
+                | _MetadataModule._InformationModule.InformationClient
+            )
 
         class LocationResult(Awaitable[LocationResult], Protocol):
-            id: _IdInformationModule.Builder | _IdInformationModule.Reader
+            id: IdInformationBuilder | IdInformationReader
             heightNN: float
-            latlon: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            latlon: LatLonCoordBuilder | LatLonCoordReader
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
             customData: Sequence[KVBuilder | KVReader]
 
         class ResolutionResultTuple(NamedTuple):
             resolution: TimeSeriesResolutionEnum
 
         class RangeResultTuple(NamedTuple):
-            startDate: _DateModule.Builder | _DateModule.Reader
-            endDate: _DateModule.Builder | _DateModule.Reader
+            startDate: DateBuilder | DateReader
+            endDate: DateBuilder | DateReader
 
         class HeaderResultTuple(NamedTuple):
-            pass
+            header: Sequence[ElementEnum]
 
         class DataResultTuple(NamedTuple):
             data: Sequence[Sequence[float]]
@@ -1104,20 +1128,23 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             data: Sequence[Sequence[float]]
 
         class SubrangeResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class SubheaderResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResultTuple(NamedTuple):
             entries: Sequence[EntryBuilder | EntryReader]
-            info: _MetadataModule._InformationModule.Server
+            info: (
+                _MetadataModule._InformationModule.Server
+                | _MetadataModule._InformationModule.InformationClient
+            )
 
         class LocationResultTuple(NamedTuple):
-            id: _IdInformationModule.Builder | _IdInformationModule.Reader
+            id: IdInformationBuilder | IdInformationReader
             heightNN: float
-            latlon: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            timeSeries: _TimeSeriesModule.Server
+            latlon: LatLonCoordBuilder | LatLonCoordReader
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
             customData: Sequence[KVBuilder | KVReader]
 
         class ResolutionParams(Protocol): ...
@@ -1151,14 +1178,15 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             results: _TimeSeriesModule.Server.DatatResult
 
         class SubrangeParams(Protocol):
-            start: _DateModule.Reader
-            end: _DateModule.Reader
+            start: DateReader
+            end: DateReader
 
         class SubrangeCallContext(Protocol):
             params: _TimeSeriesModule.Server.SubrangeParams
             results: _TimeSeriesModule.Server.SubrangeResult
 
-        class SubheaderParams(Protocol): ...
+        class SubheaderParams(Protocol):
+            elements: Sequence[ElementEnum]
 
         class SubheaderCallContext(Protocol):
             params: _TimeSeriesModule.Server.SubheaderParams
@@ -1222,8 +1250,8 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def subrange(
             self,
-            start: _DateModule.Reader,
-            end: _DateModule.Reader,
+            start: DateReader,
+            end: DateReader,
             _context: _TimeSeriesModule.Server.SubrangeCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -1236,6 +1264,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def subheader(
             self,
+            elements: Sequence[ElementEnum],
             _context: _TimeSeriesModule.Server.SubheaderCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -1270,11 +1299,11 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             resolution: TimeSeriesResolutionEnum
 
         class RangeResult(Awaitable[RangeResult], Protocol):
-            startDate: _DateModule.Reader
-            endDate: _DateModule.Reader
+            startDate: DateReader
+            endDate: DateReader
 
         class HeaderResult(Awaitable[HeaderResult], Protocol):
-            header: Any
+            header: Sequence[ElementEnum]
 
         class DataResult(Awaitable[DataResult], Protocol):
             data: Sequence[Sequence[float]]
@@ -1293,9 +1322,9 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             info: _MetadataModule._InformationModule.InformationClient
 
         class LocationResult(Awaitable[LocationResult], Protocol):
-            id: _IdInformationModule.Reader
+            id: IdInformationReader
             heightNN: float
-            latlon: _LatLonCoordModule.Reader
+            latlon: LatLonCoordReader
             timeSeries: _TimeSeriesModule.TimeSeriesClient
             customData: Sequence[KVReader]
 
@@ -1306,10 +1335,12 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def dataT(self) -> _TimeSeriesModule.TimeSeriesClient.DatatResult: ...
         def subrange(
             self,
-            start: _DateModule | dict[str, Any] | None = None,
-            end: _DateModule | dict[str, Any] | None = None,
+            start: DateBuilder | DateReader | dict[str, Any] | None = None,
+            end: DateBuilder | DateReader | dict[str, Any] | None = None,
         ) -> _TimeSeriesModule.TimeSeriesClient.SubrangeResult: ...
-        def subheader(self) -> _TimeSeriesModule.TimeSeriesClient.SubheaderResult: ...
+        def subheader(
+            self, elements: Sequence[ElementEnum] | None = None
+        ) -> _TimeSeriesModule.TimeSeriesClient.SubheaderResult: ...
         def metadata(self) -> _TimeSeriesModule.TimeSeriesClient.MetadataResult: ...
         def location(self) -> _TimeSeriesModule.TimeSeriesClient.LocationResult: ...
         def resolution_request(self) -> _TimeSeriesModule.ResolutionRequest: ...
@@ -1318,13 +1349,34 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def data_request(self) -> _TimeSeriesModule.DataRequest: ...
         def dataT_request(self) -> _TimeSeriesModule.DatatRequest: ...
         def subrange_request(
-            self,
-            start: _DateModule.Builder | None = None,
-            end: _DateModule.Builder | None = None,
+            self, start: DateBuilder | None = None, end: DateBuilder | None = None
         ) -> _TimeSeriesModule.SubrangeRequest: ...
-        def subheader_request(self) -> _TimeSeriesModule.SubheaderRequest: ...
+        def subheader_request(
+            self, elements: Sequence[ElementEnum] | None = None
+        ) -> _TimeSeriesModule.SubheaderRequest: ...
         def metadata_request(self) -> _TimeSeriesModule.MetadataRequest: ...
         def location_request(self) -> _TimeSeriesModule.LocationRequest: ...
+
+class _ElementModule:
+    tmin: int
+    tavg: int
+    tmax: int
+    precip: int
+    globrad: int
+    wind: int
+    sunhours: int
+    cloudamount: int
+    relhumid: int
+    airpress: int
+    vaporpress: int
+    co2: int
+    o3: int
+    et0: int
+    dewpointTemp: int
+    specificHumidity: int
+    snowfallFlux: int
+    surfaceDownwellingLongwaveRadiation: int
+    potET: int
 
 TimeSeries: _TimeSeriesModule
 
@@ -1414,11 +1466,11 @@ class _LocationModule(_StructModule):
     KV: _KVModule
     class Reader(_DynamicStructReader):
         @property
-        def id(self) -> _IdInformationModule.Reader: ...
+        def id(self) -> IdInformationReader: ...
         @property
         def heightNN(self) -> float: ...
         @property
-        def latlon(self) -> _LatLonCoordModule.Reader: ...
+        def latlon(self) -> LatLonCoordReader: ...
         @property
         def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @property
@@ -1432,26 +1484,20 @@ class _LocationModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def id(self) -> _IdInformationModule.Builder: ...
+        def id(self) -> IdInformationBuilder: ...
         @id.setter
         def id(
-            self,
-            value: _IdInformationModule.Builder
-            | _IdInformationModule.Reader
-            | dict[str, Any],
+            self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
         ) -> None: ...
         @property
         def heightNN(self) -> float: ...
         @heightNN.setter
         def heightNN(self, value: float) -> None: ...
         @property
-        def latlon(self) -> _LatLonCoordModule.Builder: ...
+        def latlon(self) -> LatLonCoordBuilder: ...
         @latlon.setter
         def latlon(
-            self,
-            value: _LatLonCoordModule.Builder
-            | _LatLonCoordModule.Reader
-            | dict[str, Any],
+            self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
         ) -> None: ...
         @property
         def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
@@ -1468,11 +1514,11 @@ class _LocationModule(_StructModule):
         @overload
         def init(
             self, field: Literal["id"], size: int | None = None
-        ) -> _IdInformationModule.Builder: ...
+        ) -> IdInformationBuilder: ...
         @overload
         def init(
             self, field: Literal["latlon"], size: int | None = None
-        ) -> _LatLonCoordModule.Builder: ...
+        ) -> LatLonCoordBuilder: ...
         @overload
         def init(
             self, field: Literal["customData"], size: int | None = None
@@ -1487,9 +1533,9 @@ class _LocationModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        id: _IdInformationModule.Builder | dict[str, Any] | None = None,
+        id: IdInformationBuilder | dict[str, Any] | None = None,
         heightNN: float | None = None,
-        latlon: _LatLonCoordModule.Builder | dict[str, Any] | None = None,
+        latlon: LatLonCoordBuilder | dict[str, Any] | None = None,
         timeSeries: _TimeSeriesModule.TimeSeriesClient
         | _TimeSeriesModule.Server
         | None = None,
@@ -1634,27 +1680,6 @@ class _MetaPlusDataModule(_StructModule):
 
 MetaPlusData: _MetaPlusDataModule
 
-class _ElementModule:
-    tmin: int
-    tavg: int
-    tmax: int
-    precip: int
-    globrad: int
-    wind: int
-    sunhours: int
-    cloudamount: int
-    relhumid: int
-    airpress: int
-    vaporpress: int
-    co2: int
-    o3: int
-    et0: int
-    dewpointTemp: int
-    specificHumidity: int
-    snowfallFlux: int
-    surfaceDownwellingLongwaveRadiation: int
-    potET: int
-
 class _TimeSeriesDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1664,9 +1689,9 @@ class _TimeSeriesDataModule(_StructModule):
         @property
         def header(self) -> Sequence[ElementEnum]: ...
         @property
-        def startDate(self) -> _DateModule.Reader: ...
+        def startDate(self) -> DateReader: ...
         @property
-        def endDate(self) -> _DateModule.Reader: ...
+        def endDate(self) -> DateReader: ...
         @property
         def resolution(self) -> TimeSeriesResolutionEnum: ...
         @override
@@ -1690,17 +1715,15 @@ class _TimeSeriesDataModule(_StructModule):
         @header.setter
         def header(self, value: Sequence[ElementEnum]) -> None: ...
         @property
-        def startDate(self) -> _DateModule.Builder: ...
+        def startDate(self) -> DateBuilder: ...
         @startDate.setter
         def startDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
-        def endDate(self) -> _DateModule.Builder: ...
+        def endDate(self) -> DateBuilder: ...
         @endDate.setter
-        def endDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def endDate(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def resolution(self) -> TimeSeriesResolutionEnum: ...
         @resolution.setter
@@ -1708,11 +1731,11 @@ class _TimeSeriesDataModule(_StructModule):
         @overload
         def init(
             self, field: Literal["startDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["endDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["data"], size: int | None = None
@@ -1734,8 +1757,8 @@ class _TimeSeriesDataModule(_StructModule):
         data: Sequence[Sequence[float]] | None = None,
         isTransposed: bool | None = None,
         header: Sequence[ElementEnum] | None = None,
-        startDate: _DateModule.Builder | dict[str, Any] | None = None,
-        endDate: _DateModule.Builder | dict[str, Any] | None = None,
+        startDate: DateBuilder | dict[str, Any] | None = None,
+        endDate: DateBuilder | dict[str, Any] | None = None,
         resolution: TimeSeriesResolutionEnum | None = None,
         **kwargs: Any,
     ) -> TimeSeriesDataBuilder: ...
@@ -1809,13 +1832,13 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
 
         class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
-            datasets: Sequence[_DatasetModule]
+            datasets: Sequence[_DatasetModule.Server | _DatasetModule.DatasetClient]
 
         class GetavailabledatasetsResultTuple(NamedTuple):
             datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
 
         class GetdatasetsforResultTuple(NamedTuple):
-            datasets: Sequence[_DatasetModule]
+            datasets: Sequence[_DatasetModule.Server | _DatasetModule.DatasetClient]
 
         class GetavailabledatasetsParams(Protocol): ...
 
@@ -1859,7 +1882,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             datasets: Sequence[MetaPlusDataReader]
 
         class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
-            datasets: Sequence[_DatasetModule]
+            datasets: Sequence[_DatasetModule.DatasetClient]
 
         def getAvailableDatasets(
             self,
@@ -1883,7 +1906,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             @property
             def sep(self) -> str: ...
             @property
-            def headerMap(self) -> Sequence[_PairModule.Reader]: ...
+            def headerMap(self) -> Sequence[PairReader]: ...
             @property
             def skipLinesToHeader(self) -> int: ...
             @property
@@ -1901,12 +1924,11 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             @sep.setter
             def sep(self, value: str) -> None: ...
             @property
-            def headerMap(self) -> MutableSequence[_PairModule.Builder]: ...
+            def headerMap(self) -> MutableSequence[PairBuilder]: ...
             @headerMap.setter
             def headerMap(
                 self,
-                value: Sequence[_PairModule.Builder | _PairModule.Reader]
-                | Sequence[dict[str, Any]],
+                value: Sequence[PairBuilder | PairReader] | Sequence[dict[str, Any]],
             ) -> None: ...
             @property
             def skipLinesToHeader(self) -> int: ...
@@ -1918,7 +1940,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             def skipLinesFromHeaderToData(self, value: int) -> None: ...
             def init(
                 self, field: Literal["headerMap"], size: int | None = None
-            ) -> MutableSequence[_PairModule.Builder]: ...
+            ) -> MutableSequence[PairBuilder]: ...
             @override
             def as_reader(self) -> CSVConfigReader: ...
 
@@ -1928,9 +1950,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             sep: str | None = None,
-            headerMap: Sequence[_PairModule.Builder]
-            | Sequence[dict[str, Any]]
-            | None = None,
+            headerMap: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
             skipLinesToHeader: int | None = None,
             skipLinesFromHeaderToData: int | None = None,
             **kwargs: Any,
@@ -2000,11 +2020,11 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
     ) -> _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            timeseries: _TimeSeriesModule.TimeSeriesClient
+            timeseries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
             error: str
 
         class CreateResultTuple(NamedTuple):
-            timeseries: _TimeSeriesModule.Server
+            timeseries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
             error: str
 
         class CreateParams(Protocol):
@@ -2178,25 +2198,25 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
     ) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient: ...
     class Server(_TimeSeriesModule.Server):
         class WrappedtimeseriesResult(Awaitable[WrappedtimeseriesResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
             list: Sequence[AlteredBuilder | AlteredReader]
 
         class AlterResult(Awaitable[AlterResult], Protocol):
-            timeSeries: _TimeSeriesModule.TimeSeriesClient
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class RemoveResult(Awaitable[None], Protocol): ...
         class ReplacewrappedtimeseriesResult(Awaitable[None], Protocol): ...
 
         class WrappedtimeseriesResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResultTuple(NamedTuple):
             list: Sequence[AlteredBuilder | AlteredReader]
 
         class AlterResultTuple(NamedTuple):
-            timeSeries: _TimeSeriesModule.Server
+            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class WrappedtimeseriesParams(Protocol): ...
 
@@ -2352,10 +2372,16 @@ class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
     ) -> _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class WrapResult(Awaitable[WrapResult], Protocol):
-            wrapper: _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
+            wrapper: (
+                _AlterTimeSeriesWrapperModule.Server
+                | _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
+            )
 
         class WrapResultTuple(NamedTuple):
-            wrapper: _AlterTimeSeriesWrapperModule.Server
+            wrapper: (
+                _AlterTimeSeriesWrapperModule.Server
+                | _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
+            )
 
         class WrapParams(Protocol):
             timeSeries: TimeSeriesClient

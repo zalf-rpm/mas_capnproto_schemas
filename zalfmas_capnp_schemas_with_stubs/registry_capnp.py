@@ -21,7 +21,9 @@ Admin.Server.AddcategoryResultTuple = NamedTuple(
 Admin.Server.MoveobjectsResultTuple = NamedTuple(
     "MoveobjectsResultTuple", [("movedObjectIds", object)]
 )
-Admin.Server.RegistryResultTuple = NamedTuple("RegistryResultTuple", [])
+Admin.Server.RegistryResultTuple = NamedTuple(
+    "RegistryResultTuple", [("registry", object)]
+)
 Admin.Server.RemovecategoryResultTuple = NamedTuple(
     "RemovecategoryResultTuple", [("removedObjects", object)]
 )
@@ -29,7 +31,7 @@ Admin.Server.RemoveobjectsResultTuple = NamedTuple(
     "RemoveobjectsResultTuple", [("removedObjects", object)]
 )
 Registrar.Server.RegisterResultTuple = NamedTuple(
-    "RegisterResultTuple", [("unreg", object)]
+    "RegisterResultTuple", [("unreg", object), ("reregSR", object)]
 )
 Registrar.Unregister.Server.UnregisterResultTuple = NamedTuple(
     "UnregisterResultTuple", [("success", object)]
@@ -42,5 +44,5 @@ Registry.Server.EntriesResultTuple = NamedTuple(
     "EntriesResultTuple", [("entries", object)]
 )
 Registry.Server.SupportedcategoriesResultTuple = NamedTuple(
-    "SupportedcategoriesResultTuple", []
+    "SupportedcategoriesResultTuple", [("cats", object)]
 )

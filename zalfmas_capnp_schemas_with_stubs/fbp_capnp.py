@@ -37,5 +37,5 @@ Component.Runnable.Server.StopResultTuple = NamedTuple(
     "StopResultTuple", [("success", object)]
 )
 StartChannelsService.Server.StartResultTuple = NamedTuple(
-    "StartResultTuple", [("startupInfos", object)]
+    "StartResultTuple", [("startupInfos", object), ("stop", object)]
 )

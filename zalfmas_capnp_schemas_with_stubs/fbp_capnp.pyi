@@ -16,10 +16,12 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
     _IdentifiableModule,
-    _IdInformationModule,
 )
 from .persistence_capnp import _PersistentModule
+from .service_capnp import _StoppableModule
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (
@@ -820,27 +822,51 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
         class SetbuffersizeResult(Awaitable[None], Protocol): ...
 
         class ReaderResult(Awaitable[ReaderResult], Protocol):
-            r: _ChannelModule._ReaderModule.ReaderClient
+            r: (
+                _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient
+            )
 
         class WriterResult(Awaitable[WriterResult], Protocol):
-            w: _ChannelModule._WriterModule.WriterClient
+            w: (
+                _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient
+            )
 
         class EndpointsResult(Awaitable[EndpointsResult], Protocol):
-            r: _ChannelModule._ReaderModule.ReaderClient
-            w: _ChannelModule._WriterModule.WriterClient
+            r: (
+                _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient
+            )
+            w: (
+                _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient
+            )
 
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
 
         class ReaderResultTuple(NamedTuple):
-            r: _ChannelModule._ReaderModule.Server
+            r: (
+                _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient
+            )
 
         class WriterResultTuple(NamedTuple):
-            w: _ChannelModule._WriterModule.Server
+            w: (
+                _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient
+            )
 
         class EndpointsResultTuple(NamedTuple):
-            r: _ChannelModule._ReaderModule.Server
-            w: _ChannelModule._WriterModule.Server
+            r: (
+                _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient
+            )
+            w: (
+                _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient
+            )
 
         class SetbuffersizeParams(Protocol):
             size: int
@@ -1140,10 +1166,11 @@ class _StartChannelsServiceModule(_IdentifiableModule):
     class Server(_IdentifiableModule.Server):
         class StartResult(Awaitable[StartResult], Protocol):
             startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
-            stop: Any
+            stop: _StoppableModule.Server | _StoppableModule.StoppableClient
 
         class StartResultTuple(NamedTuple):
             startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
+            stop: _StoppableModule.Server | _StoppableModule.StoppableClient
 
         class StartParams(Protocol):
             name: str
@@ -1177,7 +1204,7 @@ class _StartChannelsServiceModule(_IdentifiableModule):
     class StartChannelsServiceClient(_IdentifiableModule.IdentifiableClient):
         class StartResult(Awaitable[StartResult], Protocol):
             startupInfos: Sequence[StartupInfoReader]
-            stop: Any
+            stop: _StoppableModule.StoppableClient
 
         def start(
             self,
@@ -1593,7 +1620,7 @@ class _ComponentModule(_StructModule):
     Port: _PortModule
     class Reader(_DynamicStructReader):
         @property
-        def info(self) -> _IdInformationModule.Reader: ...
+        def info(self) -> IdInformationReader: ...
         @property
         def type(self) -> ComponentComponentTypeEnum: ...
         @property
@@ -1613,13 +1640,10 @@ class _ComponentModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def info(self) -> _IdInformationModule.Builder: ...
+        def info(self) -> IdInformationBuilder: ...
         @info.setter
         def info(
-            self,
-            value: _IdInformationModule.Builder
-            | _IdInformationModule.Reader
-            | dict[str, Any],
+            self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
         ) -> None: ...
         @property
         def type(self) -> ComponentComponentTypeEnum: ...
@@ -1652,7 +1676,7 @@ class _ComponentModule(_StructModule):
         @overload
         def init(
             self, field: Literal["info"], size: int | None = None
-        ) -> _IdInformationModule.Builder: ...
+        ) -> IdInformationBuilder: ...
         @overload
         def init(
             self, field: Literal["inPorts"], size: int | None = None
@@ -1671,7 +1695,7 @@ class _ComponentModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        info: _IdInformationModule.Builder | dict[str, Any] | None = None,
+        info: IdInformationBuilder | dict[str, Any] | None = None,
         type: ComponentComponentTypeEnum | None = None,
         inPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,
         outPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,

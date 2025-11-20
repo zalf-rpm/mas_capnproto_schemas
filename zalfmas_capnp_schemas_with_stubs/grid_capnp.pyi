@@ -16,7 +16,7 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import _IdentifiableModule
-from .geo_capnp import _LatLonCoordModule
+from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import _PersistentModule
 
 class _AggregationModule:
@@ -423,7 +423,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
     class _LocationModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def latLonCoord(self) -> _LatLonCoordModule.Reader: ...
+            def latLonCoord(self) -> LatLonCoordReader: ...
             @property
             def rowCol(self) -> RowColReader: ...
             @property
@@ -437,13 +437,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def latLonCoord(self) -> _LatLonCoordModule.Builder: ...
+            def latLonCoord(self) -> LatLonCoordBuilder: ...
             @latLonCoord.setter
             def latLonCoord(
-                self,
-                value: _LatLonCoordModule.Builder
-                | _LatLonCoordModule.Reader
-                | dict[str, Any],
+                self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
             ) -> None: ...
             @property
             def rowCol(self) -> RowColBuilder: ...
@@ -460,7 +457,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             @overload
             def init(
                 self, field: Literal["latLonCoord"], size: int | None = None
-            ) -> _LatLonCoordModule.Builder: ...
+            ) -> LatLonCoordBuilder: ...
             @overload
             def init(
                 self, field: Literal["rowCol"], size: int | None = None
@@ -479,7 +476,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            latLonCoord: _LatLonCoordModule.Builder | dict[str, Any] | None = None,
+            latLonCoord: LatLonCoordBuilder | dict[str, Any] | None = None,
             rowCol: RowColBuilder | dict[str, Any] | None = None,
             value: ValueBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
@@ -583,14 +580,14 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
     Callback: _CallbackModule
     type CallbackClient = _GridModule._CallbackModule.CallbackClient
     class ClosestvalueatRequest(Protocol):
-        latlonCoord: _LatLonCoordModule.Builder
+        latlonCoord: LatLonCoordBuilder
         ignoreNoData: bool
         resolution: ResolutionBuilder
         agg: AggregationEnum
         returnRowCols: bool
         includeAggParts: bool
         @overload
-        def init(self, name: Literal["latlonCoord"]) -> _LatLonCoordModule.Builder: ...
+        def init(self, name: Literal["latlonCoord"]) -> LatLonCoordBuilder: ...
         @overload
         def init(self, name: Literal["resolution"]) -> ResolutionBuilder: ...
         @overload
@@ -661,13 +658,16 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tl: LatLonCoordBuilder | LatLonCoordReader
+            tr: LatLonCoordBuilder | LatLonCoordReader
+            br: LatLonCoordBuilder | LatLonCoordReader
+            bl: LatLonCoordBuilder | LatLonCoordReader
 
         class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
-            callback: _GridModule._CallbackModule.CallbackClient
+            callback: (
+                _GridModule._CallbackModule.Server
+                | _GridModule._CallbackModule.CallbackClient
+            )
 
         class UnitResult(Awaitable[UnitResult], Protocol):
             unit: str
@@ -693,19 +693,22 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class LatlonboundsResultTuple(NamedTuple):
-            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tl: LatLonCoordBuilder | LatLonCoordReader
+            tr: LatLonCoordBuilder | LatLonCoordReader
+            br: LatLonCoordBuilder | LatLonCoordReader
+            bl: LatLonCoordBuilder | LatLonCoordReader
 
         class StreamcellsResultTuple(NamedTuple):
-            callback: _GridModule._CallbackModule.Server
+            callback: (
+                _GridModule._CallbackModule.Server
+                | _GridModule._CallbackModule.CallbackClient
+            )
 
         class UnitResultTuple(NamedTuple):
             unit: str
 
         class ClosestvalueatParams(Protocol):
-            latlonCoord: _LatLonCoordModule.Reader
+            latlonCoord: LatLonCoordReader
             ignoreNoData: bool
             resolution: ResolutionReader
             agg: AggregationEnum
@@ -768,7 +771,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         def closestValueAt(
             self,
-            latlonCoord: _LatLonCoordModule.Reader,
+            latlonCoord: LatLonCoordReader,
             ignoreNoData: bool,
             resolution: ResolutionReader,
             agg: AggregationEnum,
@@ -871,10 +874,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             aggParts: Sequence[AggregationPartReader]
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-            tl: _LatLonCoordModule.Reader
-            tr: _LatLonCoordModule.Reader
-            br: _LatLonCoordModule.Reader
-            bl: _LatLonCoordModule.Reader
+            tl: LatLonCoordReader
+            tr: LatLonCoordReader
+            br: LatLonCoordReader
+            bl: LatLonCoordReader
 
         class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
             callback: _GridModule._CallbackModule.CallbackClient
@@ -884,7 +887,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         def closestValueAt(
             self,
-            latlonCoord: _LatLonCoordModule | dict[str, Any] | None = None,
+            latlonCoord: LatLonCoordBuilder
+            | LatLonCoordReader
+            | dict[str, Any]
+            | None = None,
             ignoreNoData: bool | None = None,
             resolution: ResolutionBuilder
             | ResolutionReader
@@ -919,7 +925,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def unit(self) -> _GridModule.GridClient.UnitResult: ...
         def closestValueAt_request(
             self,
-            latlonCoord: _LatLonCoordModule.Builder | None = None,
+            latlonCoord: LatLonCoordBuilder | None = None,
             ignoreNoData: bool | None = None,
             resolution: ResolutionBuilder | None = None,
             agg: AggregationEnum | None = None,

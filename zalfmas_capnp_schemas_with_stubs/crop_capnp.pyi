@@ -13,7 +13,11 @@ from capnp.lib.capnp import (
     _DynamicStructReader,
 )
 
-from .common_capnp import _IdentifiableModule
+from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
+    _IdentifiableModule,
+)
 from .persistence_capnp import _PersistentModule
 from .registry_capnp import _RegistryModule
 
@@ -45,19 +49,19 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             params: AnyPointer
 
         class CultivarResult(Awaitable[CultivarResult], Protocol):
-            info: Any
+            info: IdInformationBuilder | IdInformationReader
 
         class SpeciesResult(Awaitable[SpeciesResult], Protocol):
-            info: Any
+            info: IdInformationBuilder | IdInformationReader
 
         class ParametersResultTuple(NamedTuple):
             params: AnyPointer
 
         class CultivarResultTuple(NamedTuple):
-            pass
+            info: IdInformationBuilder | IdInformationReader
 
         class SpeciesResultTuple(NamedTuple):
-            pass
+            info: IdInformationBuilder | IdInformationReader
 
         class ParametersParams(Protocol): ...
 
@@ -109,10 +113,10 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             params: _DynamicObjectReader
 
         class CultivarResult(Awaitable[CultivarResult], Protocol):
-            info: Any
+            info: IdInformationReader
 
         class SpeciesResult(Awaitable[SpeciesResult], Protocol):
-            info: Any
+            info: IdInformationReader
 
         def parameters(self) -> _CropModule.CropClient.ParametersResult: ...
         def cultivar(self) -> _CropModule.CropClient.CultivarResult: ...

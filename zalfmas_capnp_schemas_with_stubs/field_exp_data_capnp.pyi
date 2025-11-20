@@ -13,7 +13,7 @@ from capnp.lib.capnp import (
 )
 
 from .climate_capnp import _TimeSeriesModule
-from .date_capnp import _DateModule
+from .date_capnp import DateBuilder, DateReader
 from .soil_capnp import _ProfileModule
 
 class _WeatherStationModule(_StructModule):
@@ -886,7 +886,7 @@ Plot: _PlotModule
 class _ResidueModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def initialMeasureDate(self) -> _DateModule.Reader: ...
+        def initialMeasureDate(self) -> DateReader: ...
         @property
         def incorporationDepth(self) -> int: ...
         @property
@@ -912,10 +912,10 @@ class _ResidueModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def initialMeasureDate(self) -> _DateModule.Builder: ...
+        def initialMeasureDate(self) -> DateBuilder: ...
         @initialMeasureDate.setter
         def initialMeasureDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def incorporationDepth(self) -> int: ...
@@ -951,7 +951,7 @@ class _ResidueModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["initialMeasureDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> ResidueReader: ...
 
@@ -960,7 +960,7 @@ class _ResidueModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        initialMeasureDate: _DateModule.Builder | dict[str, Any] | None = None,
+        initialMeasureDate: DateBuilder | dict[str, Any] | None = None,
         incorporationDepth: int | None = None,
         percentIncorporated: float | None = None,
         prevCropCode: str | None = None,
@@ -1022,7 +1022,7 @@ Residue: _ResidueModule
 class _InitialConditionsLayerModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def date(self) -> _DateModule.Reader: ...
+        def date(self) -> DateReader: ...
         @property
         def soilLayerTopDepthInCM(self) -> int: ...
         @property
@@ -1052,11 +1052,9 @@ class _InitialConditionsLayerModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def date(self) -> _DateModule.Builder: ...
+        def date(self) -> DateBuilder: ...
         @date.setter
-        def date(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def date(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def soilLayerTopDepthInCM(self) -> int: ...
         @soilLayerTopDepthInCM.setter
@@ -1099,7 +1097,7 @@ class _InitialConditionsLayerModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["date"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> InitialConditionsLayerReader: ...
 
@@ -1108,7 +1106,7 @@ class _InitialConditionsLayerModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        date: _DateModule.Builder | dict[str, Any] | None = None,
+        date: DateBuilder | dict[str, Any] | None = None,
         soilLayerTopDepthInCM: int | None = None,
         soilLayerBaseDepthInCM: int | None = None,
         waterConcentration: float | None = None,
@@ -1182,11 +1180,11 @@ class _PlantingEventModule(_StructModule):
         @property
         def plotLayout(self) -> str: ...
         @property
-        def plantingDate(self) -> _DateModule.Reader: ...
+        def plantingDate(self) -> DateReader: ...
         @property
         def plantPopulationAtPlantingInNoPerM2(self) -> int: ...
         @property
-        def averageEmergenceDate(self) -> _DateModule.Reader: ...
+        def averageEmergenceDate(self) -> DateReader: ...
         @property
         def averagePlantPopulationAtEmergenceInNoPerM2(self) -> int: ...
         @property
@@ -1224,20 +1222,20 @@ class _PlantingEventModule(_StructModule):
         @plotLayout.setter
         def plotLayout(self, value: str) -> None: ...
         @property
-        def plantingDate(self) -> _DateModule.Builder: ...
+        def plantingDate(self) -> DateBuilder: ...
         @plantingDate.setter
         def plantingDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def plantPopulationAtPlantingInNoPerM2(self) -> int: ...
         @plantPopulationAtPlantingInNoPerM2.setter
         def plantPopulationAtPlantingInNoPerM2(self, value: int) -> None: ...
         @property
-        def averageEmergenceDate(self) -> _DateModule.Builder: ...
+        def averageEmergenceDate(self) -> DateBuilder: ...
         @averageEmergenceDate.setter
         def averageEmergenceDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def averagePlantPopulationAtEmergenceInNoPerM2(self) -> int: ...
@@ -1258,11 +1256,11 @@ class _PlantingEventModule(_StructModule):
         @overload
         def init(
             self, field: Literal["plantingDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["averageEmergenceDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1278,9 +1276,9 @@ class _PlantingEventModule(_StructModule):
         rowDirectionInArcDeg: float | None = None,
         plantingDepthInMM: int | None = None,
         plotLayout: str | None = None,
-        plantingDate: _DateModule.Builder | dict[str, Any] | None = None,
+        plantingDate: DateBuilder | dict[str, Any] | None = None,
         plantPopulationAtPlantingInNoPerM2: int | None = None,
-        averageEmergenceDate: _DateModule.Builder | dict[str, Any] | None = None,
+        averageEmergenceDate: DateBuilder | dict[str, Any] | None = None,
         averagePlantPopulationAtEmergenceInNoPerM2: int | None = None,
         notes: str | None = None,
         experimentId: str | None = None,
@@ -1338,7 +1336,7 @@ PlantingEvent: _PlantingEventModule
 class _HarvestEventModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def date(self) -> _DateModule.Reader: ...
+        def date(self) -> DateReader: ...
         @property
         def harvestMethod(self) -> str: ...
         @property
@@ -1360,11 +1358,9 @@ class _HarvestEventModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def date(self) -> _DateModule.Builder: ...
+        def date(self) -> DateBuilder: ...
         @date.setter
-        def date(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def date(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def harvestMethod(self) -> str: ...
         @harvestMethod.setter
@@ -1391,7 +1387,7 @@ class _HarvestEventModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["date"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> HarvestEventReader: ...
 
@@ -1400,7 +1396,7 @@ class _HarvestEventModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        date: _DateModule.Builder | dict[str, Any] | None = None,
+        date: DateBuilder | dict[str, Any] | None = None,
         harvestMethod: str | None = None,
         harvestArea: float | None = None,
         notes: str | None = None,
@@ -1460,7 +1456,7 @@ HarvestEvent: _HarvestEventModule
 class _IrrigationEventModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def date(self) -> _DateModule.Reader: ...
+        def date(self) -> DateReader: ...
         @property
         def operation(self) -> str: ...
         @property
@@ -1484,11 +1480,9 @@ class _IrrigationEventModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def date(self) -> _DateModule.Builder: ...
+        def date(self) -> DateBuilder: ...
         @date.setter
-        def date(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def date(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def operation(self) -> str: ...
         @operation.setter
@@ -1519,7 +1513,7 @@ class _IrrigationEventModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["date"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> IrrigationEventReader: ...
 
@@ -1528,7 +1522,7 @@ class _IrrigationEventModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        date: _DateModule.Builder | dict[str, Any] | None = None,
+        date: DateBuilder | dict[str, Any] | None = None,
         operation: str | None = None,
         applicationDepth: int | None = None,
         amount: int | None = None,
@@ -1589,7 +1583,7 @@ IrrigationEvent: _IrrigationEventModule
 class _FertilizerEventModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def date(self) -> _DateModule.Reader: ...
+        def date(self) -> DateReader: ...
         @property
         def applicationMethod(self) -> str: ...
         @property
@@ -1617,11 +1611,9 @@ class _FertilizerEventModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def date(self) -> _DateModule.Builder: ...
+        def date(self) -> DateBuilder: ...
         @date.setter
-        def date(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def date(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def applicationMethod(self) -> str: ...
         @applicationMethod.setter
@@ -1660,7 +1652,7 @@ class _FertilizerEventModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["date"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> FertilizerEventReader: ...
 
@@ -1669,7 +1661,7 @@ class _FertilizerEventModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        date: _DateModule.Builder | dict[str, Any] | None = None,
+        date: DateBuilder | dict[str, Any] | None = None,
         applicationMethod: str | None = None,
         applicationDepthInCM: int | None = None,
         material: str | None = None,
@@ -1732,7 +1724,7 @@ FertilizerEvent: _FertilizerEventModule
 class _EnvironmentModificationModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def date(self) -> _DateModule.Reader: ...
+        def date(self) -> DateReader: ...
         @property
         def codeCO2(self) -> str: ...
         @property
@@ -1752,11 +1744,9 @@ class _EnvironmentModificationModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def date(self) -> _DateModule.Builder: ...
+        def date(self) -> DateBuilder: ...
         @date.setter
-        def date(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
-        ) -> None: ...
+        def date(self, value: DateBuilder | DateReader | dict[str, Any]) -> None: ...
         @property
         def codeCO2(self) -> str: ...
         @codeCO2.setter
@@ -1779,7 +1769,7 @@ class _EnvironmentModificationModule(_StructModule):
         def treatmentId(self, value: str) -> None: ...
         def init(
             self, field: Literal["date"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @override
         def as_reader(self) -> EnvironmentModificationReader: ...
 
@@ -1788,7 +1778,7 @@ class _EnvironmentModificationModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        date: _DateModule.Builder | dict[str, Any] | None = None,
+        date: DateBuilder | dict[str, Any] | None = None,
         codeCO2: str | None = None,
         valueCO2: int | None = None,
         notes: str | None = None,
@@ -1857,9 +1847,9 @@ class _TreatmentModule(_StructModule):
         @property
         def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @property
-        def simulationStartDate(self) -> _DateModule.Reader: ...
+        def simulationStartDate(self) -> DateReader: ...
         @property
-        def simulationEndDate(self) -> _DateModule.Reader: ...
+        def simulationEndDate(self) -> DateReader: ...
         @property
         def irrigationApplied(self) -> bool: ...
         @property
@@ -1939,16 +1929,16 @@ class _TreatmentModule(_StructModule):
         @name.setter
         def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @property
-        def simulationStartDate(self) -> _DateModule.Builder: ...
+        def simulationStartDate(self) -> DateBuilder: ...
         @simulationStartDate.setter
         def simulationStartDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
-        def simulationEndDate(self) -> _DateModule.Builder: ...
+        def simulationEndDate(self) -> DateBuilder: ...
         @simulationEndDate.setter
         def simulationEndDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def irrigationApplied(self) -> bool: ...
@@ -2085,11 +2075,11 @@ class _TreatmentModule(_StructModule):
         @overload
         def init(
             self, field: Literal["simulationStartDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["simulationEndDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["residue"], size: int | None = None
@@ -2139,8 +2129,8 @@ class _TreatmentModule(_StructModule):
         | _TimeSeriesModule.Server
         | None = None,
         name: str | None = None,
-        simulationStartDate: _DateModule.Builder | dict[str, Any] | None = None,
-        simulationEndDate: _DateModule.Builder | dict[str, Any] | None = None,
+        simulationStartDate: DateBuilder | dict[str, Any] | None = None,
+        simulationEndDate: DateBuilder | dict[str, Any] | None = None,
         irrigationApplied: bool | None = None,
         fertilizerApplied: bool | None = None,
         irrigationLevel: int | None = None,

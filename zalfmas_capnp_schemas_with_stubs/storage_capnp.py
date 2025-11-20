@@ -35,7 +35,7 @@ Store.Container.Server.ClearResultTuple = NamedTuple(
     "ClearResultTuple", [("success", object)]
 )
 Store.Container.Server.DownloadentriesResultTuple = NamedTuple(
-    "DownloadentriesResultTuple", []
+    "DownloadentriesResultTuple", [("entries", object)]
 )
 Store.Container.Server.ExportResultTuple = NamedTuple(
     "ExportResultTuple", [("json", object)]

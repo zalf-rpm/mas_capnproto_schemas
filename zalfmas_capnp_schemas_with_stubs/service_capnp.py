@@ -16,7 +16,9 @@ SimpleFactory = capnp.load(module_file, imports=import_path).SimpleFactory
 Factory = capnp.load(module_file, imports=import_path).Factory
 Stoppable = capnp.load(module_file, imports=import_path).Stoppable
 
-Admin.Server.IdentitiesResultTuple = NamedTuple("IdentitiesResultTuple", [])
+Admin.Server.IdentitiesResultTuple = NamedTuple(
+    "IdentitiesResultTuple", [("infos", object)]
+)
 Factory.Server.CreateResultTuple = NamedTuple(
     "CreateResultTuple",
     [("adminCap", object), ("serviceCaps", object), ("error", object)],

@@ -16,9 +16,11 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
+    PairBuilder,
+    PairReader,
     _IdentifiableModule,
-    _IdInformationModule,
-    _PairModule,
 )
 from .persistence_capnp import _PersistentModule
 
@@ -704,13 +706,16 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 json: str
 
             class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
-                entries: Any
+                entries: Sequence[PairBuilder | PairReader]
 
             class ListentriesResult(Awaitable[ListentriesResult], Protocol):
                 entries: Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
 
             class GetentryResult(Awaitable[GetentryResult], Protocol):
-                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+                entry: (
+                    _StoreModule._ContainerModule._EntryModule.Server
+                    | _StoreModule._ContainerModule._EntryModule.EntryClient
+                )
 
             class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
                 success: bool
@@ -719,20 +724,26 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 success: bool
 
             class AddentryResult(Awaitable[AddentryResult], Protocol):
-                entry: _StoreModule._ContainerModule._EntryModule.EntryClient
+                entry: (
+                    _StoreModule._ContainerModule._EntryModule.Server
+                    | _StoreModule._ContainerModule._EntryModule.EntryClient
+                )
                 success: bool
 
             class ExportResultTuple(NamedTuple):
                 json: str
 
             class DownloadentriesResultTuple(NamedTuple):
-                pass
+                entries: Sequence[PairBuilder | PairReader]
 
             class ListentriesResultTuple(NamedTuple):
                 entries: Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
 
             class GetentryResultTuple(NamedTuple):
-                entry: _StoreModule._ContainerModule._EntryModule.Server
+                entry: (
+                    _StoreModule._ContainerModule._EntryModule.Server
+                    | _StoreModule._ContainerModule._EntryModule.EntryClient
+                )
 
             class RemoveentryResultTuple(NamedTuple):
                 success: bool
@@ -741,7 +752,10 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 success: bool
 
             class AddentryResultTuple(NamedTuple):
-                entry: _StoreModule._ContainerModule._EntryModule.Server
+                entry: (
+                    _StoreModule._ContainerModule._EntryModule.Server
+                    | _StoreModule._ContainerModule._EntryModule.EntryClient
+                )
                 success: bool
 
             class ExportParams(Protocol): ...
@@ -881,7 +895,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 json: str
 
             class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
-                entries: Any
+                entries: Sequence[PairReader]
 
             class ListentriesResult(Awaitable[ListentriesResult], Protocol):
                 entries: Sequence[KeyAndEntryReader]
@@ -1047,9 +1061,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
     class _ImportExportDataModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def info(self) -> _IdInformationModule.Reader: ...
+            def info(self) -> IdInformationReader: ...
             @property
-            def entries(self) -> Sequence[_PairModule.Reader]: ...
+            def entries(self) -> Sequence[PairReader]: ...
             @property
             def isAnyValue(self) -> Sequence[bool]: ...
             @override
@@ -1061,21 +1075,17 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def info(self) -> _IdInformationModule.Builder: ...
+            def info(self) -> IdInformationBuilder: ...
             @info.setter
             def info(
-                self,
-                value: _IdInformationModule.Builder
-                | _IdInformationModule.Reader
-                | dict[str, Any],
+                self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
             ) -> None: ...
             @property
-            def entries(self) -> MutableSequence[_PairModule.Builder]: ...
+            def entries(self) -> MutableSequence[PairBuilder]: ...
             @entries.setter
             def entries(
                 self,
-                value: Sequence[_PairModule.Builder | _PairModule.Reader]
-                | Sequence[dict[str, Any]],
+                value: Sequence[PairBuilder | PairReader] | Sequence[dict[str, Any]],
             ) -> None: ...
             @property
             def isAnyValue(self) -> MutableSequence[bool]: ...
@@ -1084,11 +1094,11 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             @overload
             def init(
                 self, field: Literal["info"], size: int | None = None
-            ) -> _IdInformationModule.Builder: ...
+            ) -> IdInformationBuilder: ...
             @overload
             def init(
                 self, field: Literal["entries"], size: int | None = None
-            ) -> MutableSequence[_PairModule.Builder]: ...
+            ) -> MutableSequence[PairBuilder]: ...
             @overload
             def init(
                 self, field: Literal["isAnyValue"], size: int | None = None
@@ -1103,10 +1113,8 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            info: _IdInformationModule.Builder | dict[str, Any] | None = None,
-            entries: Sequence[_PairModule.Builder]
-            | Sequence[dict[str, Any]]
-            | None = None,
+            info: IdInformationBuilder | dict[str, Any] | None = None,
+            entries: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
             isAnyValue: Sequence[bool] | None = None,
             **kwargs: Any,
         ) -> ImportExportDataBuilder: ...
@@ -1184,10 +1192,16 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
     ) -> _StoreModule.StoreClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class NewcontainerResult(Awaitable[NewcontainerResult], Protocol):
-            container: _StoreModule._ContainerModule.ContainerClient
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
-            container: _StoreModule._ContainerModule.ContainerClient
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
             containers: Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
@@ -1196,13 +1210,22 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             success: bool
 
         class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
-            container: _StoreModule._ContainerModule.ContainerClient
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class NewcontainerResultTuple(NamedTuple):
-            container: _StoreModule._ContainerModule.Server
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class ContainerwithidResultTuple(NamedTuple):
-            container: _StoreModule._ContainerModule.Server
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class ListcontainersResultTuple(NamedTuple):
             containers: Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
@@ -1211,7 +1234,10 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             success: bool
 
         class ImportcontainerResultTuple(NamedTuple):
-            container: _StoreModule._ContainerModule.Server
+            container: (
+                _StoreModule._ContainerModule.Server
+                | _StoreModule._ContainerModule.ContainerClient
+            )
 
         class NewcontainerParams(Protocol):
             name: str

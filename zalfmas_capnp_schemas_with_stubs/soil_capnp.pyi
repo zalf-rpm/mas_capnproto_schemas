@@ -16,6 +16,7 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import _IdentifiableModule
+from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import _PersistentModule
 
 class _STypeModule:
@@ -621,10 +622,10 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> _ServiceModule._StreamModule.StreamClient: ...
         class Server(_DynamicCapabilityServer):
             class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
-                profiles: Sequence[_ProfileModule]
+                profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
 
             class NextprofilesResultTuple(NamedTuple):
-                profiles: Sequence[_ProfileModule]
+                profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
 
             class NextprofilesParams(Protocol):
                 maxCount: int
@@ -648,7 +649,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class StreamClient(_DynamicCapabilityClient):
             class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
-                profiles: Sequence[_ProfileModule]
+                profiles: Sequence[_ProfileModule.ProfileClient]
 
             def nextProfiles(
                 self, maxCount: int | None = None
@@ -684,7 +685,10 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
 
     class ClosestprofilesatRequest(Protocol):
+        coord: LatLonCoordBuilder
         query: QueryBuilder
+        @overload
+        def init(self, name: Literal["coord"]) -> LatLonCoordBuilder: ...
         @overload
         def init(self, name: Literal["query"]) -> QueryBuilder: ...
         @overload
@@ -725,10 +729,13 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             optional: Sequence[PropertyNameEnum]
 
         class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
-            profiles: Sequence[_ProfileModule]
+            profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
 
         class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
-            allProfiles: _ServiceModule._StreamModule.StreamClient
+            allProfiles: (
+                _ServiceModule._StreamModule.Server
+                | _ServiceModule._StreamModule.StreamClient
+            )
 
         class CheckavailableparametersResultTuple(NamedTuple):
             failed: bool
@@ -740,10 +747,13 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             optional: Sequence[PropertyNameEnum]
 
         class ClosestprofilesatResultTuple(NamedTuple):
-            profiles: Sequence[_ProfileModule]
+            profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
 
         class StreamallprofilesResultTuple(NamedTuple):
-            allProfiles: _ServiceModule._StreamModule.Server
+            allProfiles: (
+                _ServiceModule._StreamModule.Server
+                | _ServiceModule._StreamModule.StreamClient
+            )
 
         class CheckavailableparametersParams(Protocol):
             mandatory: Sequence[PropertyNameEnum]
@@ -762,6 +772,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             results: _ServiceModule.Server.GetallavailableparametersResult
 
         class ClosestprofilesatParams(Protocol):
+            coord: LatLonCoordReader
             query: QueryReader
 
         class ClosestprofilesatCallContext(Protocol):
@@ -803,6 +814,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def closestProfilesAt(
             self,
+            coord: LatLonCoordReader,
             query: QueryReader,
             _context: _ServiceModule.Server.ClosestprofilesatCallContext,
             **kwargs: dict[str, Any],
@@ -843,7 +855,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             optional: Sequence[PropertyNameEnum]
 
         class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
-            profiles: Sequence[_ProfileModule]
+            profiles: Sequence[_ProfileModule.ProfileClient]
 
         class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
             allProfiles: _ServiceModule._StreamModule.StreamClient
@@ -858,7 +870,12 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self, onlyRawData: bool | None = None
         ) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
         def closestProfilesAt(
-            self, query: QueryBuilder | QueryReader | dict[str, Any] | None = None
+            self,
+            coord: LatLonCoordBuilder
+            | LatLonCoordReader
+            | dict[str, Any]
+            | None = None,
+            query: QueryBuilder | QueryReader | dict[str, Any] | None = None,
         ) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
         def streamAllProfiles(
             self,
@@ -876,7 +893,9 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self, onlyRawData: bool | None = None
         ) -> _ServiceModule.GetallavailableparametersRequest: ...
         def closestProfilesAt_request(
-            self, query: QueryBuilder | None = None
+            self,
+            coord: LatLonCoordBuilder | None = None,
+            query: QueryBuilder | None = None,
         ) -> _ServiceModule.ClosestprofilesatRequest: ...
         def streamAllProfiles_request(
             self,

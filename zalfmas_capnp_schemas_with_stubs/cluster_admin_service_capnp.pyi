@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -81,6 +81,10 @@ class _ClusterModule(_StructModule):
     class _AdminMasterModule(_IdentifiableModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
+            aFactory: (
+                ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+            )
             def send(
                 self,
             ) -> _ClusterModule._AdminMasterModule.AdminMasterClient.RegistermodelinstancefactoryResult: ...
@@ -97,19 +101,32 @@ class _ClusterModule(_StructModule):
             class RegistermodelinstancefactoryResult(
                 Awaitable[RegistermodelinstancefactoryResult], Protocol
             ):
-                unregister: _ClusterModule._UnregisterModule.UnregisterClient
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
 
             class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
 
             class RegistermodelinstancefactoryResultTuple(NamedTuple):
-                unregister: _ClusterModule._UnregisterModule.Server
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
 
             class AvailablemodelsResultTuple(NamedTuple):
-                pass
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
 
             class RegistermodelinstancefactoryParams(Protocol):
                 aModelId: str
+                aFactory: ModelInstanceFactoryClient
 
             class RegistermodelinstancefactoryCallContext(Protocol):
                 params: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryParams
@@ -124,6 +141,7 @@ class _ClusterModule(_StructModule):
             def registerModelInstanceFactory(
                 self,
                 aModelId: str,
+                aFactory: ModelInstanceFactoryClient,
                 _context: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
@@ -155,16 +173,26 @@ class _ClusterModule(_StructModule):
                 unregister: _ClusterModule._UnregisterModule.UnregisterClient
 
             class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
 
             def registerModelInstanceFactory(
-                self, aModelId: str | None = None
+                self,
+                aModelId: str | None = None,
+                aFactory: ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+                | None = None,
             ) -> _ClusterModule._AdminMasterModule.AdminMasterClient.RegistermodelinstancefactoryResult: ...
             def availableModels(
                 self,
             ) -> _ClusterModule._AdminMasterModule.AdminMasterClient.AvailablemodelsResult: ...
             def registerModelInstanceFactory_request(
-                self, aModelId: str | None = None
+                self,
+                aModelId: str | None = None,
+                aFactory: ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+                | None = None,
             ) -> (
                 _ClusterModule._AdminMasterModule.RegistermodelinstancefactoryRequest
             ): ...
@@ -172,446 +200,6 @@ class _ClusterModule(_StructModule):
                 self,
             ) -> _ClusterModule._AdminMasterModule.AvailablemodelsRequest: ...
 
-    AdminMaster: _AdminMasterModule
-    type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
-    class _UserMasterModule(_IdentifiableModule):
-        class AvailablemodelsRequest(Protocol):
-            def send(
-                self,
-            ) -> (
-                _ClusterModule._UserMasterModule.UserMasterClient.AvailablemodelsResult
-            ): ...
-
-        def _new_client(
-            self, server: _DynamicCapabilityServer
-        ) -> _ClusterModule._UserMasterModule.UserMasterClient: ...
-        class Server(_IdentifiableModule.Server):
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
-
-            class AvailablemodelsResultTuple(NamedTuple):
-                pass
-
-            class AvailablemodelsParams(Protocol): ...
-
-            class AvailablemodelsCallContext(Protocol):
-                params: _ClusterModule._UserMasterModule.Server.AvailablemodelsParams
-                results: _ClusterModule._UserMasterModule.Server.AvailablemodelsResult
-
-            def availableModels(
-                self,
-                _context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                _ClusterModule._UserMasterModule.Server.AvailablemodelsResultTuple
-                | None
-            ]: ...
-            def availableModels_context(
-                self,
-                context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
-            ) -> Awaitable[None]: ...
-
-        class UserMasterClient(_IdentifiableModule.IdentifiableClient):
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
-
-            def availableModels(
-                self,
-            ) -> (
-                _ClusterModule._UserMasterModule.UserMasterClient.AvailablemodelsResult
-            ): ...
-            def availableModels_request(
-                self,
-            ) -> _ClusterModule._UserMasterModule.AvailablemodelsRequest: ...
-
-    UserMaster: _UserMasterModule
-    type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
-    class _RuntimeModule(_IdentifiableModule):
-        class RegistermodelinstancefactoryRequest(Protocol):
-            aModelId: str
-            def send(
-                self,
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.RegistermodelinstancefactoryResult: ...
-
-        class AvailablemodelsRequest(Protocol):
-            def send(
-                self,
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.AvailablemodelsResult: ...
-
-        class NumberofcoresRequest(Protocol):
-            def send(
-                self,
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.NumberofcoresResult: ...
-
-        class FreenumberofcoresRequest(Protocol):
-            def send(
-                self,
-            ) -> (
-                _ClusterModule._RuntimeModule.RuntimeClient.FreenumberofcoresResult
-            ): ...
-
-        class ReservenumberofcoresRequest(Protocol):
-            reserveCores: int
-            aModelId: str
-            def send(
-                self,
-            ) -> (
-                _ClusterModule._RuntimeModule.RuntimeClient.ReservenumberofcoresResult
-            ): ...
-
-        def _new_client(
-            self, server: _DynamicCapabilityServer
-        ) -> _ClusterModule._RuntimeModule.RuntimeClient: ...
-        class Server(_IdentifiableModule.Server):
-            class RegistermodelinstancefactoryResult(
-                Awaitable[RegistermodelinstancefactoryResult], Protocol
-            ):
-                unregister: _ClusterModule._UnregisterModule.UnregisterClient
-
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
-
-            class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
-                cores: int
-
-            class FreenumberofcoresResult(Awaitable[FreenumberofcoresResult], Protocol):
-                cores: int
-
-            class ReservenumberofcoresResult(
-                Awaitable[ReservenumberofcoresResult], Protocol
-            ):
-                reservedCores: int
-
-            class RegistermodelinstancefactoryResultTuple(NamedTuple):
-                unregister: _ClusterModule._UnregisterModule.Server
-
-            class AvailablemodelsResultTuple(NamedTuple):
-                pass
-
-            class NumberofcoresResultTuple(NamedTuple):
-                cores: int
-
-            class FreenumberofcoresResultTuple(NamedTuple):
-                cores: int
-
-            class ReservenumberofcoresResultTuple(NamedTuple):
-                reservedCores: int
-
-            class RegistermodelinstancefactoryParams(Protocol):
-                aModelId: str
-
-            class RegistermodelinstancefactoryCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryParams
-                results: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResult
-
-            class AvailablemodelsParams(Protocol): ...
-
-            class AvailablemodelsCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.Server.AvailablemodelsParams
-                results: _ClusterModule._RuntimeModule.Server.AvailablemodelsResult
-
-            class NumberofcoresParams(Protocol): ...
-
-            class NumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.Server.NumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.NumberofcoresResult
-
-            class FreenumberofcoresParams(Protocol): ...
-
-            class FreenumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.Server.FreenumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.FreenumberofcoresResult
-
-            class ReservenumberofcoresParams(Protocol):
-                reserveCores: int
-                aModelId: str
-
-            class ReservenumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResult
-
-            def registerModelInstanceFactory(
-                self,
-                aModelId: str,
-                _context: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                _ClusterModule._UnregisterModule.Server
-                | _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResultTuple
-                | None
-            ]: ...
-            def registerModelInstanceFactory_context(
-                self,
-                context: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryCallContext,
-            ) -> Awaitable[None]: ...
-            def availableModels(
-                self,
-                _context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                _ClusterModule._RuntimeModule.Server.AvailablemodelsResultTuple | None
-            ]: ...
-            def availableModels_context(
-                self,
-                context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
-            ) -> Awaitable[None]: ...
-            def numberOfCores(
-                self,
-                _context: _ClusterModule._RuntimeModule.Server.NumberofcoresCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                int
-                | _ClusterModule._RuntimeModule.Server.NumberofcoresResultTuple
-                | None
-            ]: ...
-            def numberOfCores_context(
-                self,
-                context: _ClusterModule._RuntimeModule.Server.NumberofcoresCallContext,
-            ) -> Awaitable[None]: ...
-            def freeNumberOfCores(
-                self,
-                _context: _ClusterModule._RuntimeModule.Server.FreenumberofcoresCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                int
-                | _ClusterModule._RuntimeModule.Server.FreenumberofcoresResultTuple
-                | None
-            ]: ...
-            def freeNumberOfCores_context(
-                self,
-                context: _ClusterModule._RuntimeModule.Server.FreenumberofcoresCallContext,
-            ) -> Awaitable[None]: ...
-            def reserveNumberOfCores(
-                self,
-                reserveCores: int,
-                aModelId: str,
-                _context: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                int
-                | _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResultTuple
-                | None
-            ]: ...
-            def reserveNumberOfCores_context(
-                self,
-                context: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresCallContext,
-            ) -> Awaitable[None]: ...
-
-        class RuntimeClient(_IdentifiableModule.IdentifiableClient):
-            class RegistermodelinstancefactoryResult(
-                Awaitable[RegistermodelinstancefactoryResult], Protocol
-            ):
-                unregister: _ClusterModule._UnregisterModule.UnregisterClient
-
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Any
-
-            class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
-                cores: int
-
-            class FreenumberofcoresResult(Awaitable[FreenumberofcoresResult], Protocol):
-                cores: int
-
-            class ReservenumberofcoresResult(
-                Awaitable[ReservenumberofcoresResult], Protocol
-            ):
-                reservedCores: int
-
-            def registerModelInstanceFactory(
-                self, aModelId: str | None = None
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.RegistermodelinstancefactoryResult: ...
-            def availableModels(
-                self,
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.AvailablemodelsResult: ...
-            def numberOfCores(
-                self,
-            ) -> _ClusterModule._RuntimeModule.RuntimeClient.NumberofcoresResult: ...
-            def freeNumberOfCores(
-                self,
-            ) -> (
-                _ClusterModule._RuntimeModule.RuntimeClient.FreenumberofcoresResult
-            ): ...
-            def reserveNumberOfCores(
-                self, reserveCores: int | None = None, aModelId: str | None = None
-            ) -> (
-                _ClusterModule._RuntimeModule.RuntimeClient.ReservenumberofcoresResult
-            ): ...
-            def registerModelInstanceFactory_request(
-                self, aModelId: str | None = None
-            ) -> _ClusterModule._RuntimeModule.RegistermodelinstancefactoryRequest: ...
-            def availableModels_request(
-                self,
-            ) -> _ClusterModule._RuntimeModule.AvailablemodelsRequest: ...
-            def numberOfCores_request(
-                self,
-            ) -> _ClusterModule._RuntimeModule.NumberofcoresRequest: ...
-            def freeNumberOfCores_request(
-                self,
-            ) -> _ClusterModule._RuntimeModule.FreenumberofcoresRequest: ...
-            def reserveNumberOfCores_request(
-                self, reserveCores: int | None = None, aModelId: str | None = None
-            ) -> _ClusterModule._RuntimeModule.ReservenumberofcoresRequest: ...
-
-    Runtime: _RuntimeModule
-    type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
-    class _ZmqPipelineAddressesModule(_StructModule):
-        class Reader(_DynamicStructReader):
-            @property
-            def input(self) -> str: ...
-            @property
-            def output(self) -> str: ...
-            @override
-            def as_builder(
-                self,
-                num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
-            ) -> ZmqPipelineAddressesBuilder: ...
-
-        class Builder(_DynamicStructBuilder):
-            @property
-            def input(self) -> str: ...
-            @input.setter
-            def input(self, value: str) -> None: ...
-            @property
-            def output(self) -> str: ...
-            @output.setter
-            def output(self, value: str) -> None: ...
-            @override
-            def as_reader(self) -> ZmqPipelineAddressesReader: ...
-
-        @override
-        def new_message(
-            self,
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            input: str | None = None,
-            output: str | None = None,
-            **kwargs: Any,
-        ) -> ZmqPipelineAddressesBuilder: ...
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> AbstractContextManager[ZmqPipelineAddressesReader]: ...
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-            *,
-            builder: Literal[False],
-        ) -> AbstractContextManager[ZmqPipelineAddressesReader]: ...
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-            *,
-            builder: Literal[True],
-        ) -> AbstractContextManager[ZmqPipelineAddressesBuilder]: ...
-        def from_bytes_packed(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> _DynamicStructReader: ...
-        @override
-        def read(
-            self,
-            file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> ZmqPipelineAddressesReader: ...
-        @override
-        def read_packed(
-            self,
-            file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> ZmqPipelineAddressesReader: ...
-
-    type ZmqPipelineAddressesReader = _ZmqPipelineAddressesModule.Reader
-    type ZmqPipelineAddressesBuilder = _ZmqPipelineAddressesModule.Builder
-    ZmqPipelineAddresses: _ZmqPipelineAddressesModule
-    class _ValueHolderModule(_InterfaceModule):
-        class ValueRequest(Protocol):
-            def send(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ValueResult: ...
-
-        class ReleaseRequest(Protocol):
-            def send(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ReleaseResult: ...
-
-        def _new_client(
-            self, server: _DynamicCapabilityServer
-        ) -> _ClusterModule._ValueHolderModule.ValueHolderClient: ...
-        class Server(_DynamicCapabilityServer):
-            class ValueResult(Awaitable[ValueResult], Protocol):
-                val: AnyPointer
-
-            class ReleaseResult(Awaitable[None], Protocol): ...
-
-            class ValueResultTuple(NamedTuple):
-                val: AnyPointer
-
-            class ValueParams(Protocol): ...
-
-            class ValueCallContext(Protocol):
-                params: _ClusterModule._ValueHolderModule.Server.ValueParams
-                results: _ClusterModule._ValueHolderModule.Server.ValueResult
-
-            class ReleaseParams(Protocol): ...
-
-            class ReleaseCallContext(Protocol):
-                params: _ClusterModule._ValueHolderModule.Server.ReleaseParams
-
-            def value(
-                self,
-                _context: _ClusterModule._ValueHolderModule.Server.ValueCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[
-                _ClusterModule._ValueHolderModule.Server.ValueResultTuple | None
-            ]: ...
-            def value_context(
-                self, context: _ClusterModule._ValueHolderModule.Server.ValueCallContext
-            ) -> Awaitable[None]: ...
-            def release(
-                self,
-                _context: _ClusterModule._ValueHolderModule.Server.ReleaseCallContext,
-                **kwargs: dict[str, Any],
-            ) -> Awaitable[None]: ...
-            def release_context(
-                self,
-                context: _ClusterModule._ValueHolderModule.Server.ReleaseCallContext,
-            ) -> Awaitable[None]: ...
-
-        class ValueHolderClient(_DynamicCapabilityClient):
-            class ValueResult(Awaitable[ValueResult], Protocol):
-                val: _DynamicObjectReader
-
-            class ReleaseResult(Awaitable[None], Protocol): ...
-
-            def value(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ValueResult: ...
-            def release(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ReleaseResult: ...
-            def value_request(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ValueRequest: ...
-            def release_request(
-                self,
-            ) -> _ClusterModule._ValueHolderModule.ReleaseRequest: ...
-
-    ValueHolder: _ValueHolderModule
-    type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
     class _ModelInstanceFactoryModule(_IdentifiableModule):
         class NewinstanceRequest(Protocol):
             def send(
@@ -659,18 +247,30 @@ class _ClusterModule(_StructModule):
         ) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient: ...
         class Server(_IdentifiableModule.Server):
             class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
-                instance: _ClusterModule._ValueHolderModule.ValueHolderClient
+                instance: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-                instances: _ClusterModule._ValueHolderModule.ValueHolderClient
+                instances: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewcloudviazmqpipelineproxiesResult(
                 Awaitable[NewcloudviazmqpipelineproxiesResult], Protocol
             ):
-                proxyAddresses: _ClusterModule._ValueHolderModule.ValueHolderClient
+                proxyAddresses: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewcloudviaproxyResult(Awaitable[NewcloudviaproxyResult], Protocol):
-                proxy: _ClusterModule._ValueHolderModule.ValueHolderClient
+                proxy: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class ModelidResult(Awaitable[ModelidResult], Protocol):
                 id: str
@@ -678,31 +278,55 @@ class _ClusterModule(_StructModule):
             class RegistermodelinstanceResult(
                 Awaitable[RegistermodelinstanceResult], Protocol
             ):
-                unregister: _ClusterModule._UnregisterModule.UnregisterClient
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
 
             class RestoresturdyrefResult(Awaitable[RestoresturdyrefResult], Protocol):
-                cap: _ClusterModule._ValueHolderModule.ValueHolderClient
+                cap: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewinstanceResultTuple(NamedTuple):
-                instance: _ClusterModule._ValueHolderModule.Server
+                instance: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewinstancesResultTuple(NamedTuple):
-                instances: _ClusterModule._ValueHolderModule.Server
+                instances: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewcloudviazmqpipelineproxiesResultTuple(NamedTuple):
-                proxyAddresses: _ClusterModule._ValueHolderModule.Server
+                proxyAddresses: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewcloudviaproxyResultTuple(NamedTuple):
-                proxy: _ClusterModule._ValueHolderModule.Server
+                proxy: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class ModelidResultTuple(NamedTuple):
                 id: str
 
             class RegistermodelinstanceResultTuple(NamedTuple):
-                unregister: _ClusterModule._UnregisterModule.Server
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
 
             class RestoresturdyrefResultTuple(NamedTuple):
-                cap: _ClusterModule._ValueHolderModule.Server
+                cap: (
+                    _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient
+                )
 
             class NewinstanceParams(Protocol): ...
 
@@ -933,10 +557,486 @@ class _ClusterModule(_StructModule):
                 self, sturdyRef: str | None = None
             ) -> _ClusterModule._ModelInstanceFactoryModule.RestoresturdyrefRequest: ...
 
+    class _ValueHolderModule(_InterfaceModule):
+        class ValueRequest(Protocol):
+            def send(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ValueResult: ...
+
+        class ReleaseRequest(Protocol):
+            def send(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ReleaseResult: ...
+
+        def _new_client(
+            self, server: _DynamicCapabilityServer
+        ) -> _ClusterModule._ValueHolderModule.ValueHolderClient: ...
+        class Server(_DynamicCapabilityServer):
+            class ValueResult(Awaitable[ValueResult], Protocol):
+                val: AnyPointer
+
+            class ReleaseResult(Awaitable[None], Protocol): ...
+
+            class ValueResultTuple(NamedTuple):
+                val: AnyPointer
+
+            class ValueParams(Protocol): ...
+
+            class ValueCallContext(Protocol):
+                params: _ClusterModule._ValueHolderModule.Server.ValueParams
+                results: _ClusterModule._ValueHolderModule.Server.ValueResult
+
+            class ReleaseParams(Protocol): ...
+
+            class ReleaseCallContext(Protocol):
+                params: _ClusterModule._ValueHolderModule.Server.ReleaseParams
+
+            def value(
+                self,
+                _context: _ClusterModule._ValueHolderModule.Server.ValueCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                _ClusterModule._ValueHolderModule.Server.ValueResultTuple | None
+            ]: ...
+            def value_context(
+                self, context: _ClusterModule._ValueHolderModule.Server.ValueCallContext
+            ) -> Awaitable[None]: ...
+            def release(
+                self,
+                _context: _ClusterModule._ValueHolderModule.Server.ReleaseCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[None]: ...
+            def release_context(
+                self,
+                context: _ClusterModule._ValueHolderModule.Server.ReleaseCallContext,
+            ) -> Awaitable[None]: ...
+
+        class ValueHolderClient(_DynamicCapabilityClient):
+            class ValueResult(Awaitable[ValueResult], Protocol):
+                val: _DynamicObjectReader
+
+            class ReleaseResult(Awaitable[None], Protocol): ...
+
+            def value(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ValueResult: ...
+            def release(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ValueHolderClient.ReleaseResult: ...
+            def value_request(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ValueRequest: ...
+            def release_request(
+                self,
+            ) -> _ClusterModule._ValueHolderModule.ReleaseRequest: ...
+
+    ValueHolder: _ValueHolderModule
+    type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
     ModelInstanceFactory: _ModelInstanceFactoryModule
     type ModelInstanceFactoryClient = (
         _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
     )
+    AdminMaster: _AdminMasterModule
+    type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
+    class _UserMasterModule(_IdentifiableModule):
+        class AvailablemodelsRequest(Protocol):
+            def send(
+                self,
+            ) -> (
+                _ClusterModule._UserMasterModule.UserMasterClient.AvailablemodelsResult
+            ): ...
+
+        def _new_client(
+            self, server: _DynamicCapabilityServer
+        ) -> _ClusterModule._UserMasterModule.UserMasterClient: ...
+        class Server(_IdentifiableModule.Server):
+            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            class AvailablemodelsResultTuple(NamedTuple):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            class AvailablemodelsParams(Protocol): ...
+
+            class AvailablemodelsCallContext(Protocol):
+                params: _ClusterModule._UserMasterModule.Server.AvailablemodelsParams
+                results: _ClusterModule._UserMasterModule.Server.AvailablemodelsResult
+
+            def availableModels(
+                self,
+                _context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                _ClusterModule._UserMasterModule.Server.AvailablemodelsResultTuple
+                | None
+            ]: ...
+            def availableModels_context(
+                self,
+                context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
+            ) -> Awaitable[None]: ...
+
+        class UserMasterClient(_IdentifiableModule.IdentifiableClient):
+            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            def availableModels(
+                self,
+            ) -> (
+                _ClusterModule._UserMasterModule.UserMasterClient.AvailablemodelsResult
+            ): ...
+            def availableModels_request(
+                self,
+            ) -> _ClusterModule._UserMasterModule.AvailablemodelsRequest: ...
+
+    UserMaster: _UserMasterModule
+    type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
+    class _RuntimeModule(_IdentifiableModule):
+        class RegistermodelinstancefactoryRequest(Protocol):
+            aModelId: str
+            aFactory: (
+                ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+            )
+            def send(
+                self,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.RegistermodelinstancefactoryResult: ...
+
+        class AvailablemodelsRequest(Protocol):
+            def send(
+                self,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.AvailablemodelsResult: ...
+
+        class NumberofcoresRequest(Protocol):
+            def send(
+                self,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.NumberofcoresResult: ...
+
+        class FreenumberofcoresRequest(Protocol):
+            def send(
+                self,
+            ) -> (
+                _ClusterModule._RuntimeModule.RuntimeClient.FreenumberofcoresResult
+            ): ...
+
+        class ReservenumberofcoresRequest(Protocol):
+            reserveCores: int
+            aModelId: str
+            def send(
+                self,
+            ) -> (
+                _ClusterModule._RuntimeModule.RuntimeClient.ReservenumberofcoresResult
+            ): ...
+
+        def _new_client(
+            self, server: _DynamicCapabilityServer
+        ) -> _ClusterModule._RuntimeModule.RuntimeClient: ...
+        class Server(_IdentifiableModule.Server):
+            class RegistermodelinstancefactoryResult(
+                Awaitable[RegistermodelinstancefactoryResult], Protocol
+            ):
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
+
+            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
+                cores: int
+
+            class FreenumberofcoresResult(Awaitable[FreenumberofcoresResult], Protocol):
+                cores: int
+
+            class ReservenumberofcoresResult(
+                Awaitable[ReservenumberofcoresResult], Protocol
+            ):
+                reservedCores: int
+
+            class RegistermodelinstancefactoryResultTuple(NamedTuple):
+                unregister: (
+                    _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient
+                )
+
+            class AvailablemodelsResultTuple(NamedTuple):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.Server
+                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            class NumberofcoresResultTuple(NamedTuple):
+                cores: int
+
+            class FreenumberofcoresResultTuple(NamedTuple):
+                cores: int
+
+            class ReservenumberofcoresResultTuple(NamedTuple):
+                reservedCores: int
+
+            class RegistermodelinstancefactoryParams(Protocol):
+                aModelId: str
+                aFactory: ModelInstanceFactoryClient
+
+            class RegistermodelinstancefactoryCallContext(Protocol):
+                params: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryParams
+                results: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResult
+
+            class AvailablemodelsParams(Protocol): ...
+
+            class AvailablemodelsCallContext(Protocol):
+                params: _ClusterModule._RuntimeModule.Server.AvailablemodelsParams
+                results: _ClusterModule._RuntimeModule.Server.AvailablemodelsResult
+
+            class NumberofcoresParams(Protocol): ...
+
+            class NumberofcoresCallContext(Protocol):
+                params: _ClusterModule._RuntimeModule.Server.NumberofcoresParams
+                results: _ClusterModule._RuntimeModule.Server.NumberofcoresResult
+
+            class FreenumberofcoresParams(Protocol): ...
+
+            class FreenumberofcoresCallContext(Protocol):
+                params: _ClusterModule._RuntimeModule.Server.FreenumberofcoresParams
+                results: _ClusterModule._RuntimeModule.Server.FreenumberofcoresResult
+
+            class ReservenumberofcoresParams(Protocol):
+                reserveCores: int
+                aModelId: str
+
+            class ReservenumberofcoresCallContext(Protocol):
+                params: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresParams
+                results: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResult
+
+            def registerModelInstanceFactory(
+                self,
+                aModelId: str,
+                aFactory: ModelInstanceFactoryClient,
+                _context: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                _ClusterModule._UnregisterModule.Server
+                | _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResultTuple
+                | None
+            ]: ...
+            def registerModelInstanceFactory_context(
+                self,
+                context: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryCallContext,
+            ) -> Awaitable[None]: ...
+            def availableModels(
+                self,
+                _context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                _ClusterModule._RuntimeModule.Server.AvailablemodelsResultTuple | None
+            ]: ...
+            def availableModels_context(
+                self,
+                context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
+            ) -> Awaitable[None]: ...
+            def numberOfCores(
+                self,
+                _context: _ClusterModule._RuntimeModule.Server.NumberofcoresCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                int
+                | _ClusterModule._RuntimeModule.Server.NumberofcoresResultTuple
+                | None
+            ]: ...
+            def numberOfCores_context(
+                self,
+                context: _ClusterModule._RuntimeModule.Server.NumberofcoresCallContext,
+            ) -> Awaitable[None]: ...
+            def freeNumberOfCores(
+                self,
+                _context: _ClusterModule._RuntimeModule.Server.FreenumberofcoresCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                int
+                | _ClusterModule._RuntimeModule.Server.FreenumberofcoresResultTuple
+                | None
+            ]: ...
+            def freeNumberOfCores_context(
+                self,
+                context: _ClusterModule._RuntimeModule.Server.FreenumberofcoresCallContext,
+            ) -> Awaitable[None]: ...
+            def reserveNumberOfCores(
+                self,
+                reserveCores: int,
+                aModelId: str,
+                _context: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresCallContext,
+                **kwargs: dict[str, Any],
+            ) -> Awaitable[
+                int
+                | _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResultTuple
+                | None
+            ]: ...
+            def reserveNumberOfCores_context(
+                self,
+                context: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresCallContext,
+            ) -> Awaitable[None]: ...
+
+        class RuntimeClient(_IdentifiableModule.IdentifiableClient):
+            class RegistermodelinstancefactoryResult(
+                Awaitable[RegistermodelinstancefactoryResult], Protocol
+            ):
+                unregister: _ClusterModule._UnregisterModule.UnregisterClient
+
+            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
+                factories: Sequence[
+                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
+                ]
+
+            class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
+                cores: int
+
+            class FreenumberofcoresResult(Awaitable[FreenumberofcoresResult], Protocol):
+                cores: int
+
+            class ReservenumberofcoresResult(
+                Awaitable[ReservenumberofcoresResult], Protocol
+            ):
+                reservedCores: int
+
+            def registerModelInstanceFactory(
+                self,
+                aModelId: str | None = None,
+                aFactory: ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+                | None = None,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.RegistermodelinstancefactoryResult: ...
+            def availableModels(
+                self,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.AvailablemodelsResult: ...
+            def numberOfCores(
+                self,
+            ) -> _ClusterModule._RuntimeModule.RuntimeClient.NumberofcoresResult: ...
+            def freeNumberOfCores(
+                self,
+            ) -> (
+                _ClusterModule._RuntimeModule.RuntimeClient.FreenumberofcoresResult
+            ): ...
+            def reserveNumberOfCores(
+                self, reserveCores: int | None = None, aModelId: str | None = None
+            ) -> (
+                _ClusterModule._RuntimeModule.RuntimeClient.ReservenumberofcoresResult
+            ): ...
+            def registerModelInstanceFactory_request(
+                self,
+                aModelId: str | None = None,
+                aFactory: ModelInstanceFactoryClient
+                | _ClusterModule._ModelInstanceFactoryModule.Server
+                | None = None,
+            ) -> _ClusterModule._RuntimeModule.RegistermodelinstancefactoryRequest: ...
+            def availableModels_request(
+                self,
+            ) -> _ClusterModule._RuntimeModule.AvailablemodelsRequest: ...
+            def numberOfCores_request(
+                self,
+            ) -> _ClusterModule._RuntimeModule.NumberofcoresRequest: ...
+            def freeNumberOfCores_request(
+                self,
+            ) -> _ClusterModule._RuntimeModule.FreenumberofcoresRequest: ...
+            def reserveNumberOfCores_request(
+                self, reserveCores: int | None = None, aModelId: str | None = None
+            ) -> _ClusterModule._RuntimeModule.ReservenumberofcoresRequest: ...
+
+    Runtime: _RuntimeModule
+    type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
+    class _ZmqPipelineAddressesModule(_StructModule):
+        class Reader(_DynamicStructReader):
+            @property
+            def input(self) -> str: ...
+            @property
+            def output(self) -> str: ...
+            @override
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Any = None,
+            ) -> ZmqPipelineAddressesBuilder: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            def input(self) -> str: ...
+            @input.setter
+            def input(self, value: str) -> None: ...
+            @property
+            def output(self) -> str: ...
+            @output.setter
+            def output(self, value: str) -> None: ...
+            @override
+            def as_reader(self) -> ZmqPipelineAddressesReader: ...
+
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Any = None,
+            input: str | None = None,
+            output: str | None = None,
+            **kwargs: Any,
+        ) -> ZmqPipelineAddressesBuilder: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> AbstractContextManager[ZmqPipelineAddressesReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[ZmqPipelineAddressesReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[ZmqPipelineAddressesBuilder]: ...
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> ZmqPipelineAddressesReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = ...,
+            nesting_limit: int | None = ...,
+        ) -> ZmqPipelineAddressesReader: ...
+
+    type ZmqPipelineAddressesReader = _ZmqPipelineAddressesModule.Reader
+    type ZmqPipelineAddressesBuilder = _ZmqPipelineAddressesModule.Builder
+    ZmqPipelineAddresses: _ZmqPipelineAddressesModule
     class Reader(_DynamicStructReader):
         @override
         def as_builder(

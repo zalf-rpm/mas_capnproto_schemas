@@ -20,8 +20,8 @@ Metadata = capnp.load(module_file, imports=import_path).Metadata
 Dataset = capnp.load(module_file, imports=import_path).Dataset
 Location = capnp.load(module_file, imports=import_path).Location
 TimeSeries = capnp.load(module_file, imports=import_path).TimeSeries
-MetaPlusData = capnp.load(module_file, imports=import_path).MetaPlusData
 Element = capnp.load(module_file, imports=import_path).Element
+MetaPlusData = capnp.load(module_file, imports=import_path).MetaPlusData
 TimeSeriesData = capnp.load(module_file, imports=import_path).TimeSeriesData
 Service = capnp.load(module_file, imports=import_path).Service
 CSVTimeSeriesFactory = capnp.load(module_file, imports=import_path).CSVTimeSeriesFactory
@@ -65,15 +65,17 @@ Dataset.Server.TimeseriesatResultTuple = NamedTuple(
 Dataset.GetLocationsCallback.Server.NextlocationsResultTuple = NamedTuple(
     "NextlocationsResultTuple", [("locations", object)]
 )
-Metadata.Information.Server.ForallResultTuple = NamedTuple("ForallResultTuple", [])
+Metadata.Information.Server.ForallResultTuple = NamedTuple(
+    "ForallResultTuple", [("all", object)]
+)
 Metadata.Information.Server.ForoneResultTuple = NamedTuple(
     "ForoneResultTuple", [("id", object), ("name", object), ("description", object)]
 )
 Metadata.Supported.Server.CategoriesResultTuple = NamedTuple(
-    "CategoriesResultTuple", []
+    "CategoriesResultTuple", [("types", object)]
 )
 Metadata.Supported.Server.SupportedvaluesResultTuple = NamedTuple(
-    "SupportedvaluesResultTuple", []
+    "SupportedvaluesResultTuple", [("values", object)]
 )
 Service.Server.GetavailabledatasetsResultTuple = NamedTuple(
     "GetavailabledatasetsResultTuple", [("datasets", object)]
@@ -83,7 +85,9 @@ Service.Server.GetdatasetsforResultTuple = NamedTuple(
 )
 TimeSeries.Server.DataResultTuple = NamedTuple("DataResultTuple", [("data", object)])
 TimeSeries.Server.DatatResultTuple = NamedTuple("DatatResultTuple", [("data", object)])
-TimeSeries.Server.HeaderResultTuple = NamedTuple("HeaderResultTuple", [])
+TimeSeries.Server.HeaderResultTuple = NamedTuple(
+    "HeaderResultTuple", [("header", object)]
+)
 TimeSeries.Server.LocationResultTuple = NamedTuple(
     "LocationResultTuple",
     [

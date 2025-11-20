@@ -17,6 +17,10 @@ from capnp.lib.capnp import (
 )
 
 from .common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
+    PairBuilder,
+    PairReader,
     _IdentifiableModule,
     _PairModule,
 )
@@ -47,6 +51,11 @@ class _AdminModule(_IdentifiableModule):
 
     class UpdateidentityRequest(Protocol):
         oldId: str
+        newInfo: IdInformationBuilder
+        @overload
+        def init(self, name: Literal["newInfo"]) -> IdInformationBuilder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _AdminModule.AdminClient.UpdateidentityResult: ...
 
     def _new_client(
@@ -58,12 +67,12 @@ class _AdminModule(_IdentifiableModule):
         class StopResult(Awaitable[None], Protocol): ...
 
         class IdentitiesResult(Awaitable[IdentitiesResult], Protocol):
-            infos: Any
+            infos: Sequence[IdInformationBuilder | IdInformationReader]
 
         class UpdateidentityResult(Awaitable[None], Protocol): ...
 
         class IdentitiesResultTuple(NamedTuple):
-            pass
+            infos: Sequence[IdInformationBuilder | IdInformationReader]
 
         class HeartbeatParams(Protocol): ...
 
@@ -89,6 +98,7 @@ class _AdminModule(_IdentifiableModule):
 
         class UpdateidentityParams(Protocol):
             oldId: str
+            newInfo: IdInformationReader
 
         class UpdateidentityCallContext(Protocol):
             params: _AdminModule.Server.UpdateidentityParams
@@ -129,6 +139,7 @@ class _AdminModule(_IdentifiableModule):
         def updateIdentity(
             self,
             oldId: str,
+            newInfo: IdInformationReader,
             _context: _AdminModule.Server.UpdateidentityCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
@@ -142,7 +153,7 @@ class _AdminModule(_IdentifiableModule):
         class StopResult(Awaitable[None], Protocol): ...
 
         class IdentitiesResult(Awaitable[IdentitiesResult], Protocol):
-            infos: Any
+            infos: Sequence[IdInformationReader]
 
         class UpdateidentityResult(Awaitable[None], Protocol): ...
 
@@ -153,7 +164,12 @@ class _AdminModule(_IdentifiableModule):
         def stop(self) -> _AdminModule.AdminClient.StopResult: ...
         def identities(self) -> _AdminModule.AdminClient.IdentitiesResult: ...
         def updateIdentity(
-            self, oldId: str | None = None
+            self,
+            oldId: str | None = None,
+            newInfo: IdInformationBuilder
+            | IdInformationReader
+            | dict[str, Any]
+            | None = None,
         ) -> _AdminModule.AdminClient.UpdateidentityResult: ...
         def heartbeat_request(self) -> _AdminModule.HeartbeatRequest: ...
         def setTimeout_request(
@@ -162,7 +178,7 @@ class _AdminModule(_IdentifiableModule):
         def stop_request(self) -> _AdminModule.StopRequest: ...
         def identities_request(self) -> _AdminModule.IdentitiesRequest: ...
         def updateIdentity_request(
-            self, oldId: str | None = None
+            self, oldId: str | None = None, newInfo: IdInformationBuilder | None = None
         ) -> _AdminModule.UpdateidentityRequest: ...
 
 Admin: _AdminModule
@@ -176,10 +192,14 @@ class _SimpleFactoryModule(_IdentifiableModule):
     ) -> _SimpleFactoryModule.SimpleFactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            caps: Sequence[_IdentifiableModule]
+            caps: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class CreateResultTuple(NamedTuple):
-            caps: Sequence[_IdentifiableModule]
+            caps: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class CreateParams(Protocol): ...
 
@@ -198,7 +218,7 @@ class _SimpleFactoryModule(_IdentifiableModule):
 
     class SimpleFactoryClient(_IdentifiableModule.IdentifiableClient):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            caps: Sequence[_IdentifiableModule]
+            caps: Sequence[_IdentifiableModule.IdentifiableClient]
 
         def create(self) -> _SimpleFactoryModule.SimpleFactoryClient.CreateResult: ...
         def create_request(self) -> _SimpleFactoryModule.CreateRequest: ...
@@ -211,7 +231,7 @@ class _FactoryModule(_IdentifiableModule):
             @property
             def timeoutSeconds(self) -> int: ...
             @property
-            def interfaceNameToRegistrySR(self) -> Sequence[_PairModule.Reader]: ...
+            def interfaceNameToRegistrySR(self) -> Sequence[PairReader]: ...
             @property
             def msgPayload(self) -> _DynamicObjectReader: ...
             @override
@@ -227,14 +247,11 @@ class _FactoryModule(_IdentifiableModule):
             @timeoutSeconds.setter
             def timeoutSeconds(self, value: int) -> None: ...
             @property
-            def interfaceNameToRegistrySR(
-                self,
-            ) -> MutableSequence[_PairModule.Builder]: ...
+            def interfaceNameToRegistrySR(self) -> MutableSequence[PairBuilder]: ...
             @interfaceNameToRegistrySR.setter
             def interfaceNameToRegistrySR(
                 self,
-                value: Sequence[_PairModule.Builder | _PairModule.Reader]
-                | Sequence[dict[str, Any]],
+                value: Sequence[PairBuilder | PairReader] | Sequence[dict[str, Any]],
             ) -> None: ...
             @property
             def msgPayload(self) -> _DynamicObjectReader: ...
@@ -244,7 +261,7 @@ class _FactoryModule(_IdentifiableModule):
                 self,
                 field: Literal["interfaceNameToRegistrySR"],
                 size: int | None = None,
-            ) -> MutableSequence[_PairModule.Builder]: ...
+            ) -> MutableSequence[PairBuilder]: ...
             @override
             def as_reader(self) -> CreateParamsReader: ...
 
@@ -254,7 +271,7 @@ class _FactoryModule(_IdentifiableModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             timeoutSeconds: int | None = None,
-            interfaceNameToRegistrySR: Sequence[_PairModule.Builder]
+            interfaceNameToRegistrySR: Sequence[PairBuilder]
             | Sequence[dict[str, Any]]
             | None = None,
             msgPayload: AnyPointer | None = None,
@@ -409,7 +426,7 @@ class _FactoryModule(_IdentifiableModule):
         @overload
         def init(
             self, name: Literal["interfaceNameToRegistrySR"], size: int = ...
-        ) -> MutableSequence[_PairModule.Builder]: ...
+        ) -> MutableSequence[PairBuilder]: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _FactoryModule.FactoryClient.CreateResult: ...
@@ -433,7 +450,9 @@ class _FactoryModule(_IdentifiableModule):
 
         class CreateResultTuple(NamedTuple):
             adminCap: AnyPointer
-            serviceCaps: Sequence[_IdentifiableModule]
+            serviceCaps: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
             error: str
 
         class ServiceinterfacenamesResultTuple(NamedTuple):

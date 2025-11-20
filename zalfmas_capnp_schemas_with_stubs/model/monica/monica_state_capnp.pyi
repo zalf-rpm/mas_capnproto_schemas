@@ -12,26 +12,42 @@ from capnp.lib.capnp import (
     _StructModule,
 )
 
-from ...date_capnp import _DateModule
+from ...date_capnp import DateBuilder, DateReader
 from .monica_management_capnp import _ParamsModule
 from .monica_params_capnp import (
-    _AutomaticHarvestParametersModule,
-    _CropModuleParametersModule,
-    _CropParametersModule,
-    _CropResidueParametersModule,
-    _CultivarParametersModule,
-    _EnvironmentParametersModule,
-    _MeasuredGroundwaterTableInformationModule,
-    _SimulationParametersModule,
-    _SiteParametersModule,
-    _SoilMoistureModuleParametersModule,
-    _SoilOrganicModuleParametersModule,
-    _SoilParametersModule,
-    _SoilTemperatureModuleParametersModule,
-    _SoilTransportModuleParametersModule,
-    _SpeciesParametersModule,
+    AutomaticHarvestParametersBuilder,
+    AutomaticHarvestParametersReader,
+    CropModuleParametersBuilder,
+    CropModuleParametersReader,
+    CropParametersBuilder,
+    CropParametersReader,
+    CropResidueParametersBuilder,
+    CropResidueParametersReader,
+    CultivarParametersBuilder,
+    CultivarParametersReader,
+    EnvironmentParametersBuilder,
+    EnvironmentParametersReader,
+    MeasuredGroundwaterTableInformationBuilder,
+    MeasuredGroundwaterTableInformationReader,
+    SimulationParametersBuilder,
+    SimulationParametersReader,
+    SiteParametersBuilder,
+    SiteParametersReader,
+    SoilMoistureModuleParametersBuilder,
+    SoilMoistureModuleParametersReader,
+    SoilOrganicModuleParametersBuilder,
+    SoilOrganicModuleParametersReader,
+    SoilParametersBuilder,
+    SoilParametersReader,
+    SoilTemperatureModuleParametersBuilder,
+    SoilTemperatureModuleParametersReader,
+    SoilTransportModuleParametersBuilder,
+    SoilTransportModuleParametersReader,
+    SpeciesParametersBuilder,
+    SpeciesParametersReader,
+    YieldComponentBuilder,
+    YieldComponentReader,
     _VocModule,
-    _YieldComponentModule,
 )
 
 class _MaybeBoolModule(_StructModule):
@@ -366,15 +382,11 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcOrganGrowthRespiration(self) -> Sequence[float]: ...
         @property
-        def pcOrganIdsForPrimaryYield(
-            self,
-        ) -> Sequence[_YieldComponentModule.Reader]: ...
+        def pcOrganIdsForPrimaryYield(self) -> Sequence[YieldComponentReader]: ...
         @property
-        def pcOrganIdsForSecondaryYield(
-            self,
-        ) -> Sequence[_YieldComponentModule.Reader]: ...
+        def pcOrganIdsForSecondaryYield(self) -> Sequence[YieldComponentReader]: ...
         @property
-        def pcOrganIdsForCutting(self) -> Sequence[_YieldComponentModule.Reader]: ...
+        def pcOrganIdsForCutting(self) -> Sequence[YieldComponentReader]: ...
         @property
         def pcOrganMaintenanceRespiration(self) -> Sequence[float]: ...
         @property
@@ -572,11 +584,11 @@ class _CropModuleStateModule(_StructModule):
         @property
         def cropPhotosynthesisResults(self) -> _VocModule._CPDataModule.Reader: ...
         @property
-        def speciesParams(self) -> _SpeciesParametersModule.Reader: ...
+        def speciesParams(self) -> SpeciesParametersReader: ...
         @property
-        def cultivarParams(self) -> _CultivarParametersModule.Reader: ...
+        def cultivarParams(self) -> CultivarParametersReader: ...
         @property
-        def residueParams(self) -> _CropResidueParametersModule.Reader: ...
+        def residueParams(self) -> CropResidueParametersReader: ...
         @property
         def isWinterCrop(self) -> bool: ...
         @property
@@ -1106,37 +1118,29 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcOrganIdsForPrimaryYield(
             self,
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        ) -> MutableSequence[YieldComponentBuilder]: ...
         @pcOrganIdsForPrimaryYield.setter
         def pcOrganIdsForPrimaryYield(
             self,
-            value: Sequence[
-                _YieldComponentModule.Builder | _YieldComponentModule.Reader
-            ]
+            value: Sequence[YieldComponentBuilder | YieldComponentReader]
             | Sequence[dict[str, Any]],
         ) -> None: ...
         @property
         def pcOrganIdsForSecondaryYield(
             self,
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        ) -> MutableSequence[YieldComponentBuilder]: ...
         @pcOrganIdsForSecondaryYield.setter
         def pcOrganIdsForSecondaryYield(
             self,
-            value: Sequence[
-                _YieldComponentModule.Builder | _YieldComponentModule.Reader
-            ]
+            value: Sequence[YieldComponentBuilder | YieldComponentReader]
             | Sequence[dict[str, Any]],
         ) -> None: ...
         @property
-        def pcOrganIdsForCutting(
-            self,
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        def pcOrganIdsForCutting(self) -> MutableSequence[YieldComponentBuilder]: ...
         @pcOrganIdsForCutting.setter
         def pcOrganIdsForCutting(
             self,
-            value: Sequence[
-                _YieldComponentModule.Builder | _YieldComponentModule.Reader
-            ]
+            value: Sequence[YieldComponentBuilder | YieldComponentReader]
             | Sequence[dict[str, Any]],
         ) -> None: ...
         @property
@@ -1552,30 +1556,28 @@ class _CropModuleStateModule(_StructModule):
             | dict[str, Any],
         ) -> None: ...
         @property
-        def speciesParams(self) -> _SpeciesParametersModule.Builder: ...
+        def speciesParams(self) -> SpeciesParametersBuilder: ...
         @speciesParams.setter
         def speciesParams(
             self,
-            value: _SpeciesParametersModule.Builder
-            | _SpeciesParametersModule.Reader
-            | dict[str, Any],
+            value: SpeciesParametersBuilder | SpeciesParametersReader | dict[str, Any],
         ) -> None: ...
         @property
-        def cultivarParams(self) -> _CultivarParametersModule.Builder: ...
+        def cultivarParams(self) -> CultivarParametersBuilder: ...
         @cultivarParams.setter
         def cultivarParams(
             self,
-            value: _CultivarParametersModule.Builder
-            | _CultivarParametersModule.Reader
+            value: CultivarParametersBuilder
+            | CultivarParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def residueParams(self) -> _CropResidueParametersModule.Builder: ...
+        def residueParams(self) -> CropResidueParametersBuilder: ...
         @residueParams.setter
         def residueParams(
             self,
-            value: _CropResidueParametersModule.Builder
-            | _CropResidueParametersModule.Reader
+            value: CropResidueParametersBuilder
+            | CropResidueParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -1609,15 +1611,15 @@ class _CropModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["speciesParams"], size: int | None = None
-        ) -> _SpeciesParametersModule.Builder: ...
+        ) -> SpeciesParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["cultivarParams"], size: int | None = None
-        ) -> _CultivarParametersModule.Builder: ...
+        ) -> CultivarParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["residueParams"], size: int | None = None
-        ) -> _CropResidueParametersModule.Builder: ...
+        ) -> CropResidueParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["pcAbovegroundOrgan"], size: int | None = None
@@ -1699,15 +1701,15 @@ class _CropModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["pcOrganIdsForPrimaryYield"], size: int | None = None
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        ) -> MutableSequence[YieldComponentBuilder]: ...
         @overload
         def init(
             self, field: Literal["pcOrganIdsForSecondaryYield"], size: int | None = None
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        ) -> MutableSequence[YieldComponentBuilder]: ...
         @overload
         def init(
             self, field: Literal["pcOrganIdsForCutting"], size: int | None = None
-        ) -> MutableSequence[_YieldComponentModule.Builder]: ...
+        ) -> MutableSequence[YieldComponentBuilder]: ...
         @overload
         def init(
             self,
@@ -1925,13 +1927,13 @@ class _CropModuleStateModule(_StructModule):
         organGreenBiomass: Sequence[float] | None = None,
         organGrowthIncrement: Sequence[float] | None = None,
         pcOrganGrowthRespiration: Sequence[float] | None = None,
-        pcOrganIdsForPrimaryYield: Sequence[_YieldComponentModule.Builder]
+        pcOrganIdsForPrimaryYield: Sequence[YieldComponentBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
-        pcOrganIdsForSecondaryYield: Sequence[_YieldComponentModule.Builder]
+        pcOrganIdsForSecondaryYield: Sequence[YieldComponentBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
-        pcOrganIdsForCutting: Sequence[_YieldComponentModule.Builder]
+        pcOrganIdsForCutting: Sequence[YieldComponentBuilder]
         | Sequence[dict[str, Any]]
         | None = None,
         pcOrganMaintenanceRespiration: Sequence[float] | None = None,
@@ -2040,13 +2042,9 @@ class _CropModuleStateModule(_StructModule):
         cropPhotosynthesisResults: _VocModule._CPDataModule.Builder
         | dict[str, Any]
         | None = None,
-        speciesParams: _SpeciesParametersModule.Builder | dict[str, Any] | None = None,
-        cultivarParams: _CultivarParametersModule.Builder
-        | dict[str, Any]
-        | None = None,
-        residueParams: _CropResidueParametersModule.Builder
-        | dict[str, Any]
-        | None = None,
+        speciesParams: SpeciesParametersBuilder | dict[str, Any] | None = None,
+        cultivarParams: CultivarParametersBuilder | dict[str, Any] | None = None,
+        residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
         isWinterCrop: bool | None = None,
         stemElongationEventFired: bool | None = None,
         lt50m: float | None = None,
@@ -2342,7 +2340,7 @@ class _SoilLayerStateModule(_StructModule):
         @property
         def soilFrozen(self) -> bool: ...
         @property
-        def sps(self) -> _SoilParametersModule.Reader: ...
+        def sps(self) -> SoilParametersReader: ...
         @property
         def soilMoistureM3(self) -> float: ...
         @property
@@ -2408,13 +2406,10 @@ class _SoilLayerStateModule(_StructModule):
         @soilFrozen.setter
         def soilFrozen(self, value: bool) -> None: ...
         @property
-        def sps(self) -> _SoilParametersModule.Builder: ...
+        def sps(self) -> SoilParametersBuilder: ...
         @sps.setter
         def sps(
-            self,
-            value: _SoilParametersModule.Builder
-            | _SoilParametersModule.Reader
-            | dict[str, Any],
+            self, value: SoilParametersBuilder | SoilParametersReader | dict[str, Any]
         ) -> None: ...
         @property
         def soilMoistureM3(self) -> float: ...
@@ -2427,7 +2422,7 @@ class _SoilLayerStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["sps"], size: int | None = None
-        ) -> _SoilParametersModule.Builder: ...
+        ) -> SoilParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["voAOMPool"], size: int | None = None
@@ -2456,7 +2451,7 @@ class _SoilLayerStateModule(_StructModule):
         soilNO2: float | None = None,
         soilNO3: float | None = None,
         soilFrozen: bool | None = None,
-        sps: _SoilParametersModule.Builder | dict[str, Any] | None = None,
+        sps: SoilParametersBuilder | dict[str, Any] | None = None,
         soilMoistureM3: float | None = None,
         soilTemperature: float | None = None,
         **kwargs: Any,
@@ -2881,7 +2876,7 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @property
         def soilSurfaceTemperature(self) -> float: ...
         @property
-        def moduleParams(self) -> _SoilTemperatureModuleParametersModule.Reader: ...
+        def moduleParams(self) -> SoilTemperatureModuleParametersReader: ...
         @property
         def dampingFactor(self) -> float: ...
         @property
@@ -2929,12 +2924,12 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @soilSurfaceTemperature.setter
         def soilSurfaceTemperature(self, value: float) -> None: ...
         @property
-        def moduleParams(self) -> _SoilTemperatureModuleParametersModule.Builder: ...
+        def moduleParams(self) -> SoilTemperatureModuleParametersBuilder: ...
         @moduleParams.setter
         def moduleParams(
             self,
-            value: _SoilTemperatureModuleParametersModule.Builder
-            | _SoilTemperatureModuleParametersModule.Reader
+            value: SoilTemperatureModuleParametersBuilder
+            | SoilTemperatureModuleParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -3012,7 +3007,7 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
-        ) -> _SoilTemperatureModuleParametersModule.Builder: ...
+        ) -> SoilTemperatureModuleParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["soilColumnVtGroundLayer"], size: int | None = None
@@ -3076,7 +3071,7 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         soilSurfaceTemperature: float | None = None,
-        moduleParams: _SoilTemperatureModuleParametersModule.Builder
+        moduleParams: SoilTemperatureModuleParametersBuilder
         | dict[str, Any]
         | None = None,
         dampingFactor: float | None = None,
@@ -3504,7 +3499,7 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def xSACriticalSoilMoisture(self) -> float: ...
         @property
-        def moduleParams(self) -> _SoilMoistureModuleParametersModule.Reader: ...
+        def moduleParams(self) -> SoilMoistureModuleParametersReader: ...
         @property
         def vwWindSpeedHeight(self) -> float: ...
         @property
@@ -3653,12 +3648,12 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @xSACriticalSoilMoisture.setter
         def xSACriticalSoilMoisture(self, value: float) -> None: ...
         @property
-        def moduleParams(self) -> _SoilMoistureModuleParametersModule.Builder: ...
+        def moduleParams(self) -> SoilMoistureModuleParametersBuilder: ...
         @moduleParams.setter
         def moduleParams(
             self,
-            value: _SoilMoistureModuleParametersModule.Builder
-            | _SoilMoistureModuleParametersModule.Reader
+            value: SoilMoistureModuleParametersBuilder
+            | SoilMoistureModuleParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -3916,7 +3911,7 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
-        ) -> _SoilMoistureModuleParametersModule.Builder: ...
+        ) -> SoilMoistureModuleParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["availableWater"], size: int | None = None
@@ -4008,7 +4003,7 @@ class _SoilMoistureModuleStateModule(_StructModule):
         frostComponent: FrostModuleStateBuilder | dict[str, Any] | None = None,
         snowComponent: SnowModuleStateBuilder | dict[str, Any] | None = None,
         xSACriticalSoilMoisture: float | None = None,
-        moduleParams: _SoilMoistureModuleParametersModule.Builder
+        moduleParams: SoilMoistureModuleParametersBuilder
         | dict[str, Any]
         | None = None,
         vwWindSpeedHeight: float | None = None,
@@ -4129,7 +4124,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @property
         def totalDenitrification(self) -> float: ...
         @property
-        def moduleParams(self) -> _SoilOrganicModuleParametersModule.Reader: ...
+        def moduleParams(self) -> SoilOrganicModuleParametersReader: ...
         @property
         def vsNumberOfLayers(self) -> int: ...
         @property
@@ -4223,12 +4218,12 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @totalDenitrification.setter
         def totalDenitrification(self, value: float) -> None: ...
         @property
-        def moduleParams(self) -> _SoilOrganicModuleParametersModule.Builder: ...
+        def moduleParams(self) -> SoilOrganicModuleParametersBuilder: ...
         @moduleParams.setter
         def moduleParams(
             self,
-            value: _SoilOrganicModuleParametersModule.Builder
-            | _SoilOrganicModuleParametersModule.Reader
+            value: SoilOrganicModuleParametersBuilder
+            | SoilOrganicModuleParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -4386,7 +4381,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
-        ) -> _SoilOrganicModuleParametersModule.Builder: ...
+        ) -> SoilOrganicModuleParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["actAmmoniaOxidationRate"], size: int | None = None
@@ -4479,9 +4474,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
         allocate_seg_callable: Any = None,
         incorporation: bool | None = None,
         totalDenitrification: float | None = None,
-        moduleParams: _SoilOrganicModuleParametersModule.Builder
-        | dict[str, Any]
-        | None = None,
+        moduleParams: SoilOrganicModuleParametersBuilder | dict[str, Any] | None = None,
         vsNumberOfLayers: int | None = None,
         vsNumberOfOrganicLayers: int | None = None,
         addedOrganicMatter: bool | None = None,
@@ -4575,7 +4568,7 @@ class _SoilTransportModuleStateModule(_StructModule):
         @property
         def pcMinimumAvailableN(self) -> float: ...
         @property
-        def moduleParams(self) -> _SoilTransportModuleParametersModule.Reader: ...
+        def moduleParams(self) -> SoilTransportModuleParametersReader: ...
         @property
         def convection(self) -> Sequence[float]: ...
         @property
@@ -4621,12 +4614,12 @@ class _SoilTransportModuleStateModule(_StructModule):
         @pcMinimumAvailableN.setter
         def pcMinimumAvailableN(self, value: float) -> None: ...
         @property
-        def moduleParams(self) -> _SoilTransportModuleParametersModule.Builder: ...
+        def moduleParams(self) -> SoilTransportModuleParametersBuilder: ...
         @moduleParams.setter
         def moduleParams(
             self,
-            value: _SoilTransportModuleParametersModule.Builder
-            | _SoilTransportModuleParametersModule.Reader
+            value: SoilTransportModuleParametersBuilder
+            | SoilTransportModuleParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -4696,7 +4689,7 @@ class _SoilTransportModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
-        ) -> _SoilTransportModuleParametersModule.Builder: ...
+        ) -> SoilTransportModuleParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["convection"], size: int | None = None
@@ -4752,7 +4745,7 @@ class _SoilTransportModuleStateModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         pcMinimumAvailableN: float | None = None,
-        moduleParams: _SoilTransportModuleParametersModule.Builder
+        moduleParams: SoilTransportModuleParametersBuilder
         | dict[str, Any]
         | None = None,
         convection: Sequence[float] | None = None,
@@ -4907,13 +4900,13 @@ class _MonicaModelStateModule(_StructModule):
     ACDToValue: _ACDToValueModule
     class Reader(_DynamicStructReader):
         @property
-        def sitePs(self) -> _SiteParametersModule.Reader: ...
+        def sitePs(self) -> SiteParametersReader: ...
         @property
         def cultivationMethodCount(self) -> int: ...
         @property
-        def envPs(self) -> _EnvironmentParametersModule.Reader: ...
+        def envPs(self) -> EnvironmentParametersReader: ...
         @property
-        def cropPs(self) -> _CropModuleParametersModule.Reader: ...
+        def cropPs(self) -> CropModuleParametersReader: ...
         @property
         def vsGroundwaterDepth(self) -> float: ...
         @property
@@ -4921,11 +4914,11 @@ class _MonicaModelStateModule(_StructModule):
         @property
         def vwAtmosphericCO2Concentration(self) -> float: ...
         @property
-        def simPs(self) -> _SimulationParametersModule.Reader: ...
+        def simPs(self) -> SimulationParametersReader: ...
         @property
         def groundwaterInformation(
             self,
-        ) -> _MeasuredGroundwaterTableInformationModule.Reader: ...
+        ) -> MeasuredGroundwaterTableInformationReader: ...
         @property
         def soilColumn(self) -> SoilColumnStateReader: ...
         @property
@@ -4961,7 +4954,7 @@ class _MonicaModelStateModule(_StructModule):
         @property
         def optCarbonReturnedResidues(self) -> float: ...
         @property
-        def currentStepDate(self) -> _DateModule.Reader: ...
+        def currentStepDate(self) -> DateReader: ...
         @property
         def climateData(self) -> Sequence[Sequence[ACDToValueReader]]: ...
         @property
@@ -4987,34 +4980,31 @@ class _MonicaModelStateModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def sitePs(self) -> _SiteParametersModule.Builder: ...
+        def sitePs(self) -> SiteParametersBuilder: ...
         @sitePs.setter
         def sitePs(
-            self,
-            value: _SiteParametersModule.Builder
-            | _SiteParametersModule.Reader
-            | dict[str, Any],
+            self, value: SiteParametersBuilder | SiteParametersReader | dict[str, Any]
         ) -> None: ...
         @property
         def cultivationMethodCount(self) -> int: ...
         @cultivationMethodCount.setter
         def cultivationMethodCount(self, value: int) -> None: ...
         @property
-        def envPs(self) -> _EnvironmentParametersModule.Builder: ...
+        def envPs(self) -> EnvironmentParametersBuilder: ...
         @envPs.setter
         def envPs(
             self,
-            value: _EnvironmentParametersModule.Builder
-            | _EnvironmentParametersModule.Reader
+            value: EnvironmentParametersBuilder
+            | EnvironmentParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def cropPs(self) -> _CropModuleParametersModule.Builder: ...
+        def cropPs(self) -> CropModuleParametersBuilder: ...
         @cropPs.setter
         def cropPs(
             self,
-            value: _CropModuleParametersModule.Builder
-            | _CropModuleParametersModule.Reader
+            value: CropModuleParametersBuilder
+            | CropModuleParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -5030,23 +5020,23 @@ class _MonicaModelStateModule(_StructModule):
         @vwAtmosphericCO2Concentration.setter
         def vwAtmosphericCO2Concentration(self, value: float) -> None: ...
         @property
-        def simPs(self) -> _SimulationParametersModule.Builder: ...
+        def simPs(self) -> SimulationParametersBuilder: ...
         @simPs.setter
         def simPs(
             self,
-            value: _SimulationParametersModule.Builder
-            | _SimulationParametersModule.Reader
+            value: SimulationParametersBuilder
+            | SimulationParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
         def groundwaterInformation(
             self,
-        ) -> _MeasuredGroundwaterTableInformationModule.Builder: ...
+        ) -> MeasuredGroundwaterTableInformationBuilder: ...
         @groundwaterInformation.setter
         def groundwaterInformation(
             self,
-            value: _MeasuredGroundwaterTableInformationModule.Builder
-            | _MeasuredGroundwaterTableInformationModule.Reader
+            value: MeasuredGroundwaterTableInformationBuilder
+            | MeasuredGroundwaterTableInformationReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -5142,10 +5132,10 @@ class _MonicaModelStateModule(_StructModule):
         @optCarbonReturnedResidues.setter
         def optCarbonReturnedResidues(self, value: float) -> None: ...
         @property
-        def currentStepDate(self) -> _DateModule.Builder: ...
+        def currentStepDate(self) -> DateBuilder: ...
         @currentStepDate.setter
         def currentStepDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def climateData(self) -> Sequence[Sequence[ACDToValueBuilder]]: ...
@@ -5186,23 +5176,23 @@ class _MonicaModelStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["sitePs"], size: int | None = None
-        ) -> _SiteParametersModule.Builder: ...
+        ) -> SiteParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["envPs"], size: int | None = None
-        ) -> _EnvironmentParametersModule.Builder: ...
+        ) -> EnvironmentParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["cropPs"], size: int | None = None
-        ) -> _CropModuleParametersModule.Builder: ...
+        ) -> CropModuleParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["simPs"], size: int | None = None
-        ) -> _SimulationParametersModule.Builder: ...
+        ) -> SimulationParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["groundwaterInformation"], size: int | None = None
-        ) -> _MeasuredGroundwaterTableInformationModule.Builder: ...
+        ) -> MeasuredGroundwaterTableInformationBuilder: ...
         @overload
         def init(
             self, field: Literal["soilColumn"], size: int | None = None
@@ -5230,7 +5220,7 @@ class _MonicaModelStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["currentStepDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["climateData"], size: int | None = None
@@ -5253,15 +5243,15 @@ class _MonicaModelStateModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        sitePs: _SiteParametersModule.Builder | dict[str, Any] | None = None,
+        sitePs: SiteParametersBuilder | dict[str, Any] | None = None,
         cultivationMethodCount: int | None = None,
-        envPs: _EnvironmentParametersModule.Builder | dict[str, Any] | None = None,
-        cropPs: _CropModuleParametersModule.Builder | dict[str, Any] | None = None,
+        envPs: EnvironmentParametersBuilder | dict[str, Any] | None = None,
+        cropPs: CropModuleParametersBuilder | dict[str, Any] | None = None,
         vsGroundwaterDepth: float | None = None,
         vwAtmosphericO3Concentration: float | None = None,
         vwAtmosphericCO2Concentration: float | None = None,
-        simPs: _SimulationParametersModule.Builder | dict[str, Any] | None = None,
-        groundwaterInformation: _MeasuredGroundwaterTableInformationModule.Builder
+        simPs: SimulationParametersBuilder | dict[str, Any] | None = None,
+        groundwaterInformation: MeasuredGroundwaterTableInformationBuilder
         | dict[str, Any]
         | None = None,
         soilColumn: SoilColumnStateBuilder | dict[str, Any] | None = None,
@@ -5283,7 +5273,7 @@ class _MonicaModelStateModule(_StructModule):
         dailySumIrrigationWater: float | None = None,
         optCarbonExportedResidues: float | None = None,
         optCarbonReturnedResidues: float | None = None,
-        currentStepDate: _DateModule.Builder | dict[str, Any] | None = None,
+        currentStepDate: DateBuilder | dict[str, Any] | None = None,
         climateData: Sequence[Sequence[ACDToValueBuilder]] | None = None,
         currentEvents: Sequence[str] | None = None,
         previousDaysEvents: Sequence[str] | None = None,
@@ -5426,29 +5416,27 @@ RuntimeState: _RuntimeStateModule
 class _CropStateModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def automaticHarvestParams(
-            self,
-        ) -> _AutomaticHarvestParametersModule.Reader: ...
+        def automaticHarvestParams(self) -> AutomaticHarvestParametersReader: ...
         @property
         def speciesName(self) -> str: ...
         @property
         def cultivarName(self) -> str: ...
         @property
-        def seedDate(self) -> _DateModule.Reader: ...
+        def seedDate(self) -> DateReader: ...
         @property
-        def harvestDate(self) -> _DateModule.Reader: ...
+        def harvestDate(self) -> DateReader: ...
         @property
         def isWinterCrop(self) -> MaybeBoolReader: ...
         @property
         def isPerennialCrop(self) -> MaybeBoolReader: ...
         @property
-        def cuttingDates(self) -> Sequence[_DateModule.Reader]: ...
+        def cuttingDates(self) -> Sequence[DateReader]: ...
         @property
-        def cropParams(self) -> _CropParametersModule.Reader: ...
+        def cropParams(self) -> CropParametersReader: ...
         @property
-        def perennialCropParams(self) -> _CropParametersModule.Reader: ...
+        def perennialCropParams(self) -> CropParametersReader: ...
         @property
-        def residueParams(self) -> _CropResidueParametersModule.Reader: ...
+        def residueParams(self) -> CropResidueParametersReader: ...
         @property
         def crossCropAdaptionFactor(self) -> float: ...
         @property
@@ -5462,14 +5450,12 @@ class _CropStateModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def automaticHarvestParams(
-            self,
-        ) -> _AutomaticHarvestParametersModule.Builder: ...
+        def automaticHarvestParams(self) -> AutomaticHarvestParametersBuilder: ...
         @automaticHarvestParams.setter
         def automaticHarvestParams(
             self,
-            value: _AutomaticHarvestParametersModule.Builder
-            | _AutomaticHarvestParametersModule.Reader
+            value: AutomaticHarvestParametersBuilder
+            | AutomaticHarvestParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -5481,16 +5467,16 @@ class _CropStateModule(_StructModule):
         @cultivarName.setter
         def cultivarName(self, value: str) -> None: ...
         @property
-        def seedDate(self) -> _DateModule.Builder: ...
+        def seedDate(self) -> DateBuilder: ...
         @seedDate.setter
         def seedDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
-        def harvestDate(self) -> _DateModule.Builder: ...
+        def harvestDate(self) -> DateBuilder: ...
         @harvestDate.setter
         def harvestDate(
-            self, value: _DateModule.Builder | _DateModule.Reader | dict[str, Any]
+            self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
         def isWinterCrop(self) -> MaybeBoolBuilder: ...
@@ -5505,38 +5491,30 @@ class _CropStateModule(_StructModule):
             self, value: MaybeBoolBuilder | MaybeBoolReader | dict[str, Any]
         ) -> None: ...
         @property
-        def cuttingDates(self) -> MutableSequence[_DateModule.Builder]: ...
+        def cuttingDates(self) -> MutableSequence[DateBuilder]: ...
         @cuttingDates.setter
         def cuttingDates(
-            self,
-            value: Sequence[_DateModule.Builder | _DateModule.Reader]
-            | Sequence[dict[str, Any]],
+            self, value: Sequence[DateBuilder | DateReader] | Sequence[dict[str, Any]]
         ) -> None: ...
         @property
-        def cropParams(self) -> _CropParametersModule.Builder: ...
+        def cropParams(self) -> CropParametersBuilder: ...
         @cropParams.setter
         def cropParams(
-            self,
-            value: _CropParametersModule.Builder
-            | _CropParametersModule.Reader
-            | dict[str, Any],
+            self, value: CropParametersBuilder | CropParametersReader | dict[str, Any]
         ) -> None: ...
         @property
-        def perennialCropParams(self) -> _CropParametersModule.Builder: ...
+        def perennialCropParams(self) -> CropParametersBuilder: ...
         @perennialCropParams.setter
         def perennialCropParams(
-            self,
-            value: _CropParametersModule.Builder
-            | _CropParametersModule.Reader
-            | dict[str, Any],
+            self, value: CropParametersBuilder | CropParametersReader | dict[str, Any]
         ) -> None: ...
         @property
-        def residueParams(self) -> _CropResidueParametersModule.Builder: ...
+        def residueParams(self) -> CropResidueParametersBuilder: ...
         @residueParams.setter
         def residueParams(
             self,
-            value: _CropResidueParametersModule.Builder
-            | _CropResidueParametersModule.Reader
+            value: CropResidueParametersBuilder
+            | CropResidueParametersReader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -5550,15 +5528,15 @@ class _CropStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["automaticHarvestParams"], size: int | None = None
-        ) -> _AutomaticHarvestParametersModule.Builder: ...
+        ) -> AutomaticHarvestParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["seedDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["harvestDate"], size: int | None = None
-        ) -> _DateModule.Builder: ...
+        ) -> DateBuilder: ...
         @overload
         def init(
             self, field: Literal["isWinterCrop"], size: int | None = None
@@ -5570,19 +5548,19 @@ class _CropStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["cropParams"], size: int | None = None
-        ) -> _CropParametersModule.Builder: ...
+        ) -> CropParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["perennialCropParams"], size: int | None = None
-        ) -> _CropParametersModule.Builder: ...
+        ) -> CropParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["residueParams"], size: int | None = None
-        ) -> _CropResidueParametersModule.Builder: ...
+        ) -> CropResidueParametersBuilder: ...
         @overload
         def init(
             self, field: Literal["cuttingDates"], size: int | None = None
-        ) -> MutableSequence[_DateModule.Builder]: ...
+        ) -> MutableSequence[DateBuilder]: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -5593,25 +5571,19 @@ class _CropStateModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        automaticHarvestParams: _AutomaticHarvestParametersModule.Builder
+        automaticHarvestParams: AutomaticHarvestParametersBuilder
         | dict[str, Any]
         | None = None,
         speciesName: str | None = None,
         cultivarName: str | None = None,
-        seedDate: _DateModule.Builder | dict[str, Any] | None = None,
-        harvestDate: _DateModule.Builder | dict[str, Any] | None = None,
+        seedDate: DateBuilder | dict[str, Any] | None = None,
+        harvestDate: DateBuilder | dict[str, Any] | None = None,
         isWinterCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
         isPerennialCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
-        cuttingDates: Sequence[_DateModule.Builder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        cropParams: _CropParametersModule.Builder | dict[str, Any] | None = None,
-        perennialCropParams: _CropParametersModule.Builder
-        | dict[str, Any]
-        | None = None,
-        residueParams: _CropResidueParametersModule.Builder
-        | dict[str, Any]
-        | None = None,
+        cuttingDates: Sequence[DateBuilder] | Sequence[dict[str, Any]] | None = None,
+        cropParams: CropParametersBuilder | dict[str, Any] | None = None,
+        perennialCropParams: CropParametersBuilder | dict[str, Any] | None = None,
+        residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
         crossCropAdaptionFactor: float | None = None,
         automaticHarvest: bool | None = None,
         **kwargs: Any,

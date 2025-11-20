@@ -15,12 +15,28 @@ from capnp.lib.capnp import (
     _StructModule,
 )
 
-from .common_capnp import IdentifiableClient, _IdentifiableModule
-from .persistence_capnp import _RestorerModule, _VatIdModule
+from .common_capnp import (
+    IdentifiableClient,
+    IdInformationBuilder,
+    IdInformationReader,
+    _IdentifiableModule,
+)
+from .persistence_capnp import (
+    SturdyRefBuilder,
+    SturdyRefReader,
+    VatIdBuilder,
+    VatIdReader,
+    _RestorerModule,
+)
 
 class _AdminModule(_IdentifiableModule):
     class AddcategoryRequest(Protocol):
+        category: IdInformationBuilder
         upsert: bool
+        @overload
+        def init(self, name: Literal["category"]) -> IdInformationBuilder: ...
+        @overload
+        def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _AdminModule.AdminClient.AddcategoryResult: ...
 
     class RemovecategoryRequest(Protocol):
@@ -60,33 +76,42 @@ class _AdminModule(_IdentifiableModule):
             success: bool
 
         class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
             movedObjectIds: Sequence[str]
 
         class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class RegistryResult(Awaitable[RegistryResult], Protocol):
-            registry: Any
+            registry: _RegistryModule.Server | _RegistryModule.RegistryClient
 
         class AddcategoryResultTuple(NamedTuple):
             success: bool
 
         class RemovecategoryResultTuple(NamedTuple):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class MoveobjectsResultTuple(NamedTuple):
             movedObjectIds: Sequence[str]
 
         class RemoveobjectsResultTuple(NamedTuple):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[
+                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
+            ]
 
         class RegistryResultTuple(NamedTuple):
-            pass
+            registry: _RegistryModule.Server | _RegistryModule.RegistryClient
 
         class AddcategoryParams(Protocol):
+            category: IdInformationReader
             upsert: bool
 
         class AddcategoryCallContext(Protocol):
@@ -124,6 +149,7 @@ class _AdminModule(_IdentifiableModule):
 
         def addCategory(
             self,
+            category: IdInformationReader,
             upsert: bool,
             _context: _AdminModule.Server.AddcategoryCallContext,
             **kwargs: dict[str, Any],
@@ -164,7 +190,9 @@ class _AdminModule(_IdentifiableModule):
             self,
             _context: _AdminModule.Server.RegistryCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_AdminModule.Server.RegistryResultTuple | None]: ...
+        ) -> Awaitable[
+            _RegistryModule.Server | _AdminModule.Server.RegistryResultTuple | None
+        ]: ...
         def registry_context(
             self, context: _AdminModule.Server.RegistryCallContext
         ) -> Awaitable[None]: ...
@@ -174,19 +202,24 @@ class _AdminModule(_IdentifiableModule):
             success: bool
 
         class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[_IdentifiableModule.IdentifiableClient]
 
         class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
             movedObjectIds: Sequence[str]
 
         class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule]
+            removedObjects: Sequence[_IdentifiableModule.IdentifiableClient]
 
         class RegistryResult(Awaitable[RegistryResult], Protocol):
-            registry: Any
+            registry: _RegistryModule.RegistryClient
 
         def addCategory(
-            self, upsert: bool | None = None
+            self,
+            category: IdInformationBuilder
+            | IdInformationReader
+            | dict[str, Any]
+            | None = None,
+            upsert: bool | None = None,
         ) -> _AdminModule.AdminClient.AddcategoryResult: ...
         def removeCategory(
             self,
@@ -201,7 +234,9 @@ class _AdminModule(_IdentifiableModule):
         ) -> _AdminModule.AdminClient.RemoveobjectsResult: ...
         def registry(self) -> _AdminModule.AdminClient.RegistryResult: ...
         def addCategory_request(
-            self, upsert: bool | None = None
+            self,
+            category: IdInformationBuilder | None = None,
+            upsert: bool | None = None,
         ) -> _AdminModule.AddcategoryRequest: ...
         def removeCategory_request(
             self,
@@ -215,8 +250,6 @@ class _AdminModule(_IdentifiableModule):
             self, objectIds: Sequence[str] | None = None
         ) -> _AdminModule.RemoveobjectsRequest: ...
         def registry_request(self) -> _AdminModule.RegistryRequest: ...
-
-Admin: _AdminModule
 
 class _RegistryModule(_IdentifiableModule):
     class _EntryModule(_StructModule):
@@ -338,7 +371,7 @@ class _RegistryModule(_IdentifiableModule):
     ) -> _RegistryModule.RegistryClient: ...
     class Server(_IdentifiableModule.Server):
         class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
-            cats: Any
+            cats: Sequence[IdInformationBuilder | IdInformationReader]
 
         class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
             id: str
@@ -349,7 +382,7 @@ class _RegistryModule(_IdentifiableModule):
             entries: Sequence[EntryBuilder | EntryReader]
 
         class SupportedcategoriesResultTuple(NamedTuple):
-            pass
+            cats: Sequence[IdInformationBuilder | IdInformationReader]
 
         class CategoryinfoResultTuple(NamedTuple):
             id: str
@@ -410,7 +443,7 @@ class _RegistryModule(_IdentifiableModule):
 
     class RegistryClient(_IdentifiableModule.IdentifiableClient):
         class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
-            cats: Any
+            cats: Sequence[IdInformationReader]
 
         class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
             id: str
@@ -440,12 +473,13 @@ class _RegistryModule(_IdentifiableModule):
         ) -> _RegistryModule.EntriesRequest: ...
 
 Registry: _RegistryModule
+Admin: _AdminModule
 
 class _RegistrarModule(_IdentifiableModule):
     class _CrossDomainRestoreModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def vatId(self) -> _VatIdModule.Reader: ...
+            def vatId(self) -> VatIdReader: ...
             @property
             def restorer(self) -> _RestorerModule.RestorerClient: ...
             @override
@@ -457,10 +491,10 @@ class _RegistrarModule(_IdentifiableModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def vatId(self) -> _VatIdModule.Builder: ...
+            def vatId(self) -> VatIdBuilder: ...
             @vatId.setter
             def vatId(
-                self, value: _VatIdModule.Builder | _VatIdModule.Reader | dict[str, Any]
+                self, value: VatIdBuilder | VatIdReader | dict[str, Any]
             ) -> None: ...
             @property
             def restorer(self) -> _RestorerModule.RestorerClient: ...
@@ -470,7 +504,7 @@ class _RegistrarModule(_IdentifiableModule):
             ) -> None: ...
             def init(
                 self, field: Literal["vatId"], size: int | None = None
-            ) -> _VatIdModule.Builder: ...
+            ) -> VatIdBuilder: ...
             @override
             def as_reader(self) -> CrossDomainRestoreReader: ...
 
@@ -479,7 +513,7 @@ class _RegistrarModule(_IdentifiableModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            vatId: _VatIdModule.Builder | dict[str, Any] | None = None,
+            vatId: VatIdBuilder | dict[str, Any] | None = None,
             restorer: _RestorerModule.RestorerClient
             | _RestorerModule.Server
             | None = None,
@@ -714,11 +748,18 @@ class _RegistrarModule(_IdentifiableModule):
     ) -> _RegistrarModule.RegistrarClient: ...
     class Server(_IdentifiableModule.Server):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
-            unreg: _RegistrarModule._UnregisterModule.UnregisterClient
-            reregSR: Any
+            unreg: (
+                _RegistrarModule._UnregisterModule.Server
+                | _RegistrarModule._UnregisterModule.UnregisterClient
+            )
+            reregSR: SturdyRefBuilder | SturdyRefReader
 
         class RegisterResultTuple(NamedTuple):
-            unreg: _RegistrarModule._UnregisterModule.Server
+            unreg: (
+                _RegistrarModule._UnregisterModule.Server
+                | _RegistrarModule._UnregisterModule.UnregisterClient
+            )
+            reregSR: SturdyRefBuilder | SturdyRefReader
 
         class RegisterParams(Protocol):
             cap: IdentifiableClient
@@ -746,7 +787,7 @@ class _RegistrarModule(_IdentifiableModule):
     class RegistrarClient(_IdentifiableModule.IdentifiableClient):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
             unreg: _RegistrarModule._UnregisterModule.UnregisterClient
-            reregSR: Any
+            reregSR: SturdyRefReader
 
         def register(
             self,
