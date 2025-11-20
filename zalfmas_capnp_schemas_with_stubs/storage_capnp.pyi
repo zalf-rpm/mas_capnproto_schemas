@@ -445,10 +445,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     key: str
 
                 class GetvalueResultTuple(NamedTuple):
-                    value: (
-                        _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-                        | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
-                    )
+                    value: ValueBuilder | ValueReader
                     isUnset: bool
 
                 class SetvalueResultTuple(NamedTuple):
@@ -710,10 +707,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 entries: Any
 
             class ListentriesResult(Awaitable[ListentriesResult], Protocol):
-                entries: Sequence[
-                    _StoreModule._ContainerModule._KeyAndEntryModule.Builder
-                    | _StoreModule._ContainerModule._KeyAndEntryModule.Reader
-                ]
+                entries: Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
 
             class GetentryResult(Awaitable[GetentryResult], Protocol):
                 entry: _StoreModule._ContainerModule._EntryModule.EntryClient
@@ -735,7 +729,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 pass
 
             class ListentriesResultTuple(NamedTuple):
-                entries: Sequence[_StoreModule._ContainerModule._KeyAndEntryModule]
+                entries: Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
 
             class GetentryResultTuple(NamedTuple):
                 entry: _StoreModule._ContainerModule._EntryModule.Server
@@ -890,10 +884,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 entries: Any
 
             class ListentriesResult(Awaitable[ListentriesResult], Protocol):
-                entries: Sequence[
-                    _StoreModule._ContainerModule._KeyAndEntryModule.Builder
-                    | _StoreModule._ContainerModule._KeyAndEntryModule.Reader
-                ]
+                entries: Sequence[KeyAndEntryReader]
 
             class GetentryResult(Awaitable[GetentryResult], Protocol):
                 entry: _StoreModule._ContainerModule._EntryModule.EntryClient
@@ -1199,10 +1190,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             container: _StoreModule._ContainerModule.ContainerClient
 
         class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
-            containers: Sequence[
-                _StoreModule._InfoAndContainerModule.Builder
-                | _StoreModule._InfoAndContainerModule.Reader
-            ]
+            containers: Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
 
         class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
             success: bool
@@ -1217,7 +1205,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             container: _StoreModule._ContainerModule.Server
 
         class ListcontainersResultTuple(NamedTuple):
-            containers: Sequence[_StoreModule._InfoAndContainerModule]
+            containers: Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
 
         class RemovecontainerResultTuple(NamedTuple):
             success: bool
@@ -1330,10 +1318,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             container: _StoreModule._ContainerModule.ContainerClient
 
         class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
-            containers: Sequence[
-                _StoreModule._InfoAndContainerModule.Builder
-                | _StoreModule._InfoAndContainerModule.Reader
-            ]
+            containers: Sequence[InfoAndContainerReader]
 
         class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
             success: bool

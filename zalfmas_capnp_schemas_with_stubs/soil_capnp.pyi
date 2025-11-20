@@ -546,7 +546,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
     ) -> _ProfileModule.ProfileClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class DataResult(Awaitable[DataResult], Protocol):
-            layers: Sequence[_LayerModule.Builder | _LayerModule.Reader]
+            layers: Sequence[LayerBuilder | LayerReader]
             percentageOfArea: float
 
         class GeolocationResult(Awaitable[GeolocationResult], Protocol):
@@ -554,7 +554,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
             lon: float
 
         class DataResultTuple(NamedTuple):
-            layers: Sequence[_LayerModule]
+            layers: Sequence[LayerBuilder | LayerReader]
             percentageOfArea: float
 
         class GeolocationResultTuple(NamedTuple):
@@ -594,7 +594,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class DataResult(Awaitable[DataResult], Protocol):
-            layers: Sequence[_LayerModule.Builder | _LayerModule.Reader]
+            layers: Sequence[LayerReader]
             percentageOfArea: float
 
         class GeolocationResult(Awaitable[GeolocationResult], Protocol):

@@ -775,10 +775,10 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         ) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient: ...
         class Server(_DynamicCapabilityServer):
             class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
-                locations: Sequence[_LocationModule.Builder | _LocationModule.Reader]
+                locations: Sequence[LocationBuilder | LocationReader]
 
             class NextlocationsResultTuple(NamedTuple):
-                locations: Sequence[_LocationModule]
+                locations: Sequence[LocationBuilder | LocationReader]
 
             class NextlocationsParams(Protocol):
                 maxCount: int
@@ -803,7 +803,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
 
         class GetLocationsCallbackClient(_DynamicCapabilityClient):
             class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
-                locations: Sequence[_LocationModule.Builder | _LocationModule.Reader]
+                locations: Sequence[LocationReader]
 
             def nextLocations(
                 self, maxCount: int | None = None
@@ -843,10 +843,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
     ) -> _DatasetModule.DatasetClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[
-                _MetadataModule._EntryModule.Builder
-                | _MetadataModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryBuilder | EntryReader]
             info: _MetadataModule._InformationModule.InformationClient
 
         class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
@@ -856,7 +853,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResult(Awaitable[LocationsResult], Protocol):
-            locations: Sequence[_LocationModule.Builder | _LocationModule.Reader]
+            locations: Sequence[LocationBuilder | LocationReader]
 
         class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
             locationsCallback: (
@@ -864,7 +861,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             )
 
         class MetadataResultTuple(NamedTuple):
-            entries: Sequence[_MetadataModule._EntryModule]
+            entries: Sequence[EntryBuilder | EntryReader]
             info: _MetadataModule._InformationModule.Server
 
         class ClosesttimeseriesatResultTuple(NamedTuple):
@@ -874,7 +871,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.Server
 
         class LocationsResultTuple(NamedTuple):
-            locations: Sequence[_LocationModule]
+            locations: Sequence[LocationBuilder | LocationReader]
 
         class StreamlocationsResultTuple(NamedTuple):
             locationsCallback: _DatasetModule._GetLocationsCallbackModule.Server
@@ -972,10 +969,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[
-                _MetadataModule._EntryModule.Builder
-                | _MetadataModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryReader]
             info: _MetadataModule._InformationModule.InformationClient
 
         class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
@@ -985,7 +979,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResult(Awaitable[LocationsResult], Protocol):
-            locations: Sequence[_LocationModule.Builder | _LocationModule.Reader]
+            locations: Sequence[LocationReader]
 
         class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
             locationsCallback: (
@@ -1083,10 +1077,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[
-                _MetadataModule._EntryModule.Builder
-                | _MetadataModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryBuilder | EntryReader]
             info: _MetadataModule._InformationModule.InformationClient
 
         class LocationResult(Awaitable[LocationResult], Protocol):
@@ -1094,9 +1085,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             heightNN: float
             latlon: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
             timeSeries: _TimeSeriesModule.TimeSeriesClient
-            customData: Sequence[
-                _LocationModule._KVModule.Builder | _LocationModule._KVModule.Reader
-            ]
+            customData: Sequence[KVBuilder | KVReader]
 
         class ResolutionResultTuple(NamedTuple):
             resolution: TimeSeriesResolutionEnum
@@ -1121,7 +1110,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.Server
 
         class MetadataResultTuple(NamedTuple):
-            entries: Sequence[_MetadataModule._EntryModule]
+            entries: Sequence[EntryBuilder | EntryReader]
             info: _MetadataModule._InformationModule.Server
 
         class LocationResultTuple(NamedTuple):
@@ -1129,7 +1118,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             heightNN: float
             latlon: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
             timeSeries: _TimeSeriesModule.Server
-            customData: Sequence[_LocationModule._KVModule]
+            customData: Sequence[KVBuilder | KVReader]
 
         class ResolutionParams(Protocol): ...
 
@@ -1300,20 +1289,15 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[
-                _MetadataModule._EntryModule.Builder
-                | _MetadataModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryReader]
             info: _MetadataModule._InformationModule.InformationClient
 
         class LocationResult(Awaitable[LocationResult], Protocol):
-            id: _IdInformationModule.Builder | _IdInformationModule.Reader
+            id: _IdInformationModule.Reader
             heightNN: float
-            latlon: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            latlon: _LatLonCoordModule.Reader
             timeSeries: _TimeSeriesModule.TimeSeriesClient
-            customData: Sequence[
-                _LocationModule._KVModule.Builder | _LocationModule._KVModule.Reader
-            ]
+            customData: Sequence[KVReader]
 
         def resolution(self) -> _TimeSeriesModule.TimeSeriesClient.ResolutionResult: ...
         def range(self) -> _TimeSeriesModule.TimeSeriesClient.RangeResult: ...
@@ -1822,13 +1806,13 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         class GetavailabledatasetsResult(
             Awaitable[GetavailabledatasetsResult], Protocol
         ):
-            datasets: Sequence[_MetaPlusDataModule.Builder | _MetaPlusDataModule.Reader]
+            datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
 
         class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
             datasets: Sequence[_DatasetModule]
 
         class GetavailabledatasetsResultTuple(NamedTuple):
-            datasets: Sequence[_MetaPlusDataModule]
+            datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
 
         class GetdatasetsforResultTuple(NamedTuple):
             datasets: Sequence[_DatasetModule]
@@ -1872,7 +1856,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         class GetavailabledatasetsResult(
             Awaitable[GetavailabledatasetsResult], Protocol
         ):
-            datasets: Sequence[_MetaPlusDataModule.Builder | _MetaPlusDataModule.Reader]
+            datasets: Sequence[MetaPlusDataReader]
 
         class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
             datasets: Sequence[_DatasetModule]
@@ -2197,10 +2181,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
-            list: Sequence[
-                _AlterTimeSeriesWrapperModule._AlteredModule.Builder
-                | _AlterTimeSeriesWrapperModule._AlteredModule.Reader
-            ]
+            list: Sequence[AlteredBuilder | AlteredReader]
 
         class AlterResult(Awaitable[AlterResult], Protocol):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
@@ -2212,7 +2193,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             timeSeries: _TimeSeriesModule.Server
 
         class AlteredelementsResultTuple(NamedTuple):
-            list: Sequence[_AlterTimeSeriesWrapperModule._AlteredModule]
+            list: Sequence[AlteredBuilder | AlteredReader]
 
         class AlterResultTuple(NamedTuple):
             timeSeries: _TimeSeriesModule.Server
@@ -2312,10 +2293,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
-            list: Sequence[
-                _AlterTimeSeriesWrapperModule._AlteredModule.Builder
-                | _AlterTimeSeriesWrapperModule._AlteredModule.Reader
-            ]
+            list: Sequence[AlteredReader]
 
         class AlterResult(Awaitable[AlterResult], Protocol):
             timeSeries: _TimeSeriesModule.TimeSeriesClient

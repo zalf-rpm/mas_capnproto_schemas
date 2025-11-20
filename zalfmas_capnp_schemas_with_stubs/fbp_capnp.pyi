@@ -1139,14 +1139,11 @@ class _StartChannelsServiceModule(_IdentifiableModule):
     ) -> _StartChannelsServiceModule.StartChannelsServiceClient: ...
     class Server(_IdentifiableModule.Server):
         class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[
-                _ChannelModule._StartupInfoModule.Builder
-                | _ChannelModule._StartupInfoModule.Reader
-            ]
+            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
             stop: Any
 
         class StartResultTuple(NamedTuple):
-            startupInfos: Sequence[_ChannelModule._StartupInfoModule]
+            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
 
         class StartParams(Protocol):
             name: str
@@ -1179,10 +1176,7 @@ class _StartChannelsServiceModule(_IdentifiableModule):
 
     class StartChannelsServiceClient(_IdentifiableModule.IdentifiableClient):
         class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[
-                _ChannelModule._StartupInfoModule.Builder
-                | _ChannelModule._StartupInfoModule.Reader
-            ]
+            startupInfos: Sequence[StartupInfoReader]
             stop: Any
 
         def start(

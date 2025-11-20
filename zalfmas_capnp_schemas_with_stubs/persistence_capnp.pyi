@@ -930,12 +930,12 @@ class _PersistentModule(_InterfaceModule):
     ) -> _PersistentModule.PersistentClient: ...
     class Server(_DynamicCapabilityServer):
         class SaveResult(Awaitable[SaveResult], Protocol):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
-            unsaveSR: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefBuilder | SturdyRefReader
+            unsaveSR: SturdyRefBuilder | SturdyRefReader
 
         class SaveResultTuple(NamedTuple):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
-            unsaveSR: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefBuilder | SturdyRefReader
+            unsaveSR: SturdyRefBuilder | SturdyRefReader
 
         class SaveParams(Protocol):
             sealFor: OwnerReader
@@ -956,8 +956,8 @@ class _PersistentModule(_InterfaceModule):
 
     class PersistentClient(_DynamicCapabilityClient):
         class SaveResult(Awaitable[SaveResult], Protocol):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
-            unsaveSR: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefReader
+            unsaveSR: SturdyRefReader
 
         def save(
             self, sealFor: OwnerBuilder | OwnerReader | dict[str, Any] | None = None
@@ -1468,12 +1468,12 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
     ) -> _GatewayModule.GatewayClient: ...
     class Server(_IdentifiableModule.Server, _RestorerModule.Server):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefBuilder | SturdyRefReader
             heartbeat: _HeartbeatModule.HeartbeatClient
             secsHeartbeatInterval: int
 
         class RegisterResultTuple(NamedTuple):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefBuilder | SturdyRefReader
             heartbeat: _HeartbeatModule.Server
             secsHeartbeatInterval: int
 
@@ -1498,7 +1498,7 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
         _IdentifiableModule.IdentifiableClient, _RestorerModule.RestorerClient
     ):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
-            sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
+            sturdyRef: SturdyRefReader
             heartbeat: _HeartbeatModule.HeartbeatClient
             secsHeartbeatInterval: int
 

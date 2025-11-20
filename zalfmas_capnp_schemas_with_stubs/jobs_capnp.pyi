@@ -122,7 +122,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             job: JobBuilder | JobReader
 
         class NextjobResultTuple(NamedTuple):
-            job: _JobModule.Builder | _JobModule.Reader
+            job: JobBuilder | JobReader
 
         class NextjobParams(Protocol): ...
 

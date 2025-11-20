@@ -332,10 +332,10 @@ class _ClimateInstanceModule(_IdentifiableModule):
             result: XYPlusResultBuilder | XYPlusResultReader
 
         class RunResultTuple(NamedTuple):
-            result: _XYResultModule.Builder | _XYResultModule.Reader
+            result: XYResultBuilder | XYResultReader
 
         class RunsetResultTuple(NamedTuple):
-            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
+            result: XYPlusResultBuilder | XYPlusResultReader
 
         class RunParams(Protocol): ...
 

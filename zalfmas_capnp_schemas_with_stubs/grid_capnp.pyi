@@ -545,13 +545,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         ) -> _GridModule._CallbackModule.CallbackClient: ...
         class Server(_DynamicCapabilityServer):
             class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-                locations: Sequence[
-                    _GridModule._LocationModule.Builder
-                    | _GridModule._LocationModule.Reader
-                ]
+                locations: Sequence[LocationBuilder | LocationReader]
 
             class SendcellsResultTuple(NamedTuple):
-                locations: Sequence[_GridModule._LocationModule]
+                locations: Sequence[LocationBuilder | LocationReader]
 
             class SendcellsParams(Protocol):
                 maxCount: int
@@ -574,10 +571,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class CallbackClient(_DynamicCapabilityClient):
             class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-                locations: Sequence[
-                    _GridModule._LocationModule.Builder
-                    | _GridModule._LocationModule.Reader
-                ]
+                locations: Sequence[LocationReader]
 
             def sendCells(
                 self, maxCount: int | None = None
@@ -650,10 +644,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             val: ValueBuilder | ValueReader
             tl: RowColBuilder | RowColReader
             br: RowColBuilder | RowColReader
-            aggParts: Sequence[
-                _GridModule._AggregationPartModule.Builder
-                | _GridModule._AggregationPartModule.Reader
-            ]
+            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
             res: ResolutionBuilder | ResolutionReader
@@ -667,10 +658,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ValueatResult(Awaitable[ValueatResult], Protocol):
             val: ValueBuilder | ValueReader
-            aggParts: Sequence[
-                _GridModule._AggregationPartModule.Builder
-                | _GridModule._AggregationPartModule.Reader
-            ]
+            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
             tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
@@ -685,27 +673,24 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             unit: str
 
         class ClosestvalueatResultTuple(NamedTuple):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
-            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
-            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
-            aggParts: Sequence[_GridModule._AggregationPartModule]
+            val: ValueBuilder | ValueReader
+            tl: RowColBuilder | RowColReader
+            br: RowColBuilder | RowColReader
+            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class ResolutionResultTuple(NamedTuple):
-            res: (
-                _GridModule._ResolutionModule.Builder
-                | _GridModule._ResolutionModule.Reader
-            )
+            res: ResolutionBuilder | ResolutionReader
 
         class DimensionResultTuple(NamedTuple):
             rows: int
             cols: int
 
         class NodatavalueResultTuple(NamedTuple):
-            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            nodata: ValueBuilder | ValueReader
 
         class ValueatResultTuple(NamedTuple):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
-            aggParts: Sequence[_GridModule._AggregationPartModule]
+            val: ValueBuilder | ValueReader
+            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
 
         class LatlonboundsResultTuple(NamedTuple):
             tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
@@ -869,10 +854,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             val: ValueReader
             tl: RowColReader
             br: RowColReader
-            aggParts: Sequence[
-                _GridModule._AggregationPartModule.Builder
-                | _GridModule._AggregationPartModule.Reader
-            ]
+            aggParts: Sequence[AggregationPartReader]
 
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
             res: ResolutionReader
@@ -886,10 +868,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ValueatResult(Awaitable[ValueatResult], Protocol):
             val: ValueReader
-            aggParts: Sequence[
-                _GridModule._AggregationPartModule.Builder
-                | _GridModule._AggregationPartModule.Reader
-            ]
+            aggParts: Sequence[AggregationPartReader]
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
             tl: _LatLonCoordModule.Reader

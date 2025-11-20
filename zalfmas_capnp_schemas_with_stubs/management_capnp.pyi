@@ -585,13 +585,13 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
     ) -> _FertilizerModule.FertilizerClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-            nutrients: Sequence[_NutrientModule.Builder | _NutrientModule.Reader]
+            nutrients: Sequence[NutrientBuilder | NutrientReader]
 
         class ParametersResult(Awaitable[ParametersResult], Protocol):
             params: AnyPointer
 
         class NutrientsResultTuple(NamedTuple):
-            nutrients: Sequence[_NutrientModule]
+            nutrients: Sequence[NutrientBuilder | NutrientReader]
 
         class ParametersResultTuple(NamedTuple):
             params: AnyPointer
@@ -629,7 +629,7 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-            nutrients: Sequence[_NutrientModule.Builder | _NutrientModule.Reader]
+            nutrients: Sequence[NutrientReader]
 
         class ParametersResult(Awaitable[ParametersResult], Protocol):
             params: _DynamicObjectReader
@@ -2152,10 +2152,10 @@ class _ServiceModule(_IdentifiableModule):
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+            mgmt: Sequence[EventBuilder | EventReader]
 
         class ManagementatResultTuple(NamedTuple):
-            mgmt: Sequence[_EventModule]
+            mgmt: Sequence[EventBuilder | EventReader]
 
         class ManagementatParams(Protocol):
             lat: float
@@ -2178,7 +2178,7 @@ class _ServiceModule(_IdentifiableModule):
 
     class ServiceClient(_IdentifiableModule.IdentifiableClient):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+            mgmt: Sequence[EventReader]
 
         def managementAt(
             self, lat: float | None = None, lon: float | None = None

@@ -346,10 +346,7 @@ class _RegistryModule(_IdentifiableModule):
             description: str
 
         class EntriesResult(Awaitable[EntriesResult], Protocol):
-            entries: Sequence[
-                _RegistryModule._EntryModule.Builder
-                | _RegistryModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryBuilder | EntryReader]
 
         class SupportedcategoriesResultTuple(NamedTuple):
             pass
@@ -360,7 +357,7 @@ class _RegistryModule(_IdentifiableModule):
             description: str
 
         class EntriesResultTuple(NamedTuple):
-            entries: Sequence[_RegistryModule._EntryModule]
+            entries: Sequence[EntryBuilder | EntryReader]
 
         class SupportedcategoriesParams(Protocol): ...
 
@@ -421,10 +418,7 @@ class _RegistryModule(_IdentifiableModule):
             description: str
 
         class EntriesResult(Awaitable[EntriesResult], Protocol):
-            entries: Sequence[
-                _RegistryModule._EntryModule.Builder
-                | _RegistryModule._EntryModule.Reader
-            ]
+            entries: Sequence[EntryReader]
 
         def supportedCategories(
             self,

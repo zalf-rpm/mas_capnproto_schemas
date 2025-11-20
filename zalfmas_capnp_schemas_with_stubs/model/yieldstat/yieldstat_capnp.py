@@ -12,6 +12,9 @@ module_file = os.path.abspath(
 import_path = [
     here,
     os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas")),
+    os.path.abspath(
+        os.path.join(here, "../../../zalfmas_capnp_schemas/model/yieldstat")
+    ),
 ]
 ResultId = capnp.load(module_file, imports=import_path).ResultId
 RestInput = capnp.load(module_file, imports=import_path).RestInput

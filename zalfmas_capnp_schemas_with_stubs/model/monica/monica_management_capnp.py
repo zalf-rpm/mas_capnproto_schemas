@@ -15,6 +15,7 @@ module_file = os.path.abspath(
 import_path = [
     here,
     os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas")),
+    os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas/model/monica")),
 ]
 ILRDates = capnp.load(module_file, imports=import_path).ILRDates
 EventType = capnp.load(module_file, imports=import_path).EventType

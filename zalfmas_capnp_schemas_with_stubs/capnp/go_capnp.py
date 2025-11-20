@@ -9,4 +9,8 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../../zalfmas_capnp_schemas/capnp/go.capnp")
 )
-import_path = [here, os.path.abspath(os.path.join(here, "../../zalfmas_capnp_schemas"))]
+import_path = [
+    here,
+    os.path.abspath(os.path.join(here, "../../zalfmas_capnp_schemas")),
+    os.path.abspath(os.path.join(here, "../../zalfmas_capnp_schemas/capnp")),
+]

@@ -2780,10 +2780,10 @@ class _ServiceModule(_IdentifiableModule):
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+            mgmt: Sequence[EventBuilder | EventReader]
 
         class ManagementatResultTuple(NamedTuple):
-            mgmt: Sequence[_EventModule]
+            mgmt: Sequence[EventBuilder | EventReader]
 
         class ManagementatParams(Protocol):
             lat: float
@@ -2806,7 +2806,7 @@ class _ServiceModule(_IdentifiableModule):
 
     class ServiceClient(_IdentifiableModule.IdentifiableClient):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[_EventModule.Builder | _EventModule.Reader]
+            mgmt: Sequence[EventReader]
 
         def managementAt(
             self, lat: float | None = None, lon: float | None = None
