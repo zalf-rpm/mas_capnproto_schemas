@@ -10,11 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../zalfmas_capnp_schemas/persistence.capnp")
 )
-import_path = [
-    here,
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 VatId = capnp.load(module_file, imports=import_path).VatId
 Address = capnp.load(module_file, imports=import_path).Address
 VatPath = capnp.load(module_file, imports=import_path).VatPath

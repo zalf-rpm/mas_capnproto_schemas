@@ -8,11 +8,7 @@ import capnp
 capnp.remove_import_hook()
 here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas/soil.capnp"))
-import_path = [
-    here,
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 SType = capnp.load(module_file, imports=import_path).SType
 PropertyName = capnp.load(module_file, imports=import_path).PropertyName
 Layer = capnp.load(module_file, imports=import_path).Layer

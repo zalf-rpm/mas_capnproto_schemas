@@ -10,7 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../zalfmas_capnp_schemas/common.capnp")
 )
-import_path = [here, os.path.join(here, "../zalfmas_capnp_schemas")]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 IdInformation = capnp.load(module_file, imports=import_path).IdInformation
 Identifiable = capnp.load(module_file, imports=import_path).Identifiable
 StructuredText = capnp.load(module_file, imports=import_path).StructuredText

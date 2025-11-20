@@ -418,7 +418,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 ) -> _StoreModule._ContainerModule._EntryModule.EntryClient.GetvalueResult: ...
 
             class SetvalueRequest(Protocol):
-                value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
+                value: ValueBuilder
                 @overload
                 def init(self, name: Literal["value"]) -> ValueBuilder: ...
                 @overload
@@ -435,10 +435,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     key: str
 
                 class GetvalueResult(Awaitable[GetvalueResult], Protocol):
-                    value: (
-                        _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-                        | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
-                    )
+                    value: ValueBuilder | ValueReader
                     isUnset: bool
 
                 class SetvalueResult(Awaitable[SetvalueResult], Protocol):
@@ -457,20 +454,33 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 class SetvalueResultTuple(NamedTuple):
                     success: bool
 
+                class GetkeyParams(Protocol): ...
+
                 class GetkeyCallContext(Protocol):
-                    params: _StoreModule._ContainerModule._EntryModule.GetkeyRequest
+                    params: (
+                        _StoreModule._ContainerModule._EntryModule.Server.GetkeyParams
+                    )
                     results: (
                         _StoreModule._ContainerModule._EntryModule.Server.GetkeyResult
                     )
 
+                class GetvalueParams(Protocol): ...
+
                 class GetvalueCallContext(Protocol):
-                    params: _StoreModule._ContainerModule._EntryModule.GetvalueRequest
+                    params: (
+                        _StoreModule._ContainerModule._EntryModule.Server.GetvalueParams
+                    )
                     results: (
                         _StoreModule._ContainerModule._EntryModule.Server.GetvalueResult
                     )
 
+                class SetvalueParams(Protocol):
+                    value: ValueReader
+
                 class SetvalueCallContext(Protocol):
-                    params: _StoreModule._ContainerModule._EntryModule.SetvalueRequest
+                    params: (
+                        _StoreModule._ContainerModule._EntryModule.Server.SetvalueParams
+                    )
                     results: (
                         _StoreModule._ContainerModule._EntryModule.Server.SetvalueResult
                     )
@@ -478,7 +488,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 def getKey(
                     self,
                     _context: _StoreModule._ContainerModule._EntryModule.Server.GetkeyCallContext,
-                    **kwargs: Any,
+                    **kwargs: dict[str, Any],
                 ) -> Awaitable[
                     str
                     | _StoreModule._ContainerModule._EntryModule.Server.GetkeyResultTuple
@@ -491,7 +501,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 def getValue(
                     self,
                     _context: _StoreModule._ContainerModule._EntryModule.Server.GetvalueCallContext,
-                    **kwargs: Any,
+                    **kwargs: dict[str, Any],
                 ) -> Awaitable[
                     _StoreModule._ContainerModule._EntryModule.Server.GetvalueResultTuple
                     | None
@@ -502,9 +512,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 ) -> Awaitable[None]: ...
                 def setValue(
                     self,
-                    value: _StoreModule._ContainerModule._EntryModule._ValueModule.Reader,
+                    value: ValueReader,
                     _context: _StoreModule._ContainerModule._EntryModule.Server.SetvalueCallContext,
-                    **kwargs: Any,
+                    **kwargs: dict[str, Any],
                 ) -> Awaitable[
                     bool
                     | _StoreModule._ContainerModule._EntryModule.Server.SetvalueResultTuple
@@ -520,10 +530,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     key: str
 
                 class GetvalueResult(Awaitable[GetvalueResult], Protocol):
-                    value: (
-                        _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-                        | _StoreModule._ContainerModule._EntryModule._ValueModule.Reader
-                    )
+                    value: ValueReader
                     isUnset: bool
 
                 class SetvalueResult(Awaitable[SetvalueResult], Protocol):
@@ -548,9 +555,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     self,
                 ) -> _StoreModule._ContainerModule._EntryModule.GetvalueRequest: ...
                 def setValue_request(
-                    self,
-                    value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-                    | None = None,
+                    self, value: ValueBuilder | None = None
                 ) -> _StoreModule._ContainerModule._EntryModule.SetvalueRequest: ...
 
         Entry: _EntryModule
@@ -684,7 +689,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
         class AddentryRequest(Protocol):
             key: str
-            value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
+            value: ValueBuilder
             replaceExisting: bool
             @overload
             def init(self, name: Literal["value"]) -> ValueBuilder: ...
@@ -745,38 +750,57 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 entry: _StoreModule._ContainerModule._EntryModule.Server
                 success: bool
 
+            class ExportParams(Protocol): ...
+
             class ExportCallContext(Protocol):
-                params: _StoreModule._ContainerModule.ExportRequest
+                params: _StoreModule._ContainerModule.Server.ExportParams
                 results: _StoreModule._ContainerModule.Server.ExportResult
 
+            class DownloadentriesParams(Protocol): ...
+
             class DownloadentriesCallContext(Protocol):
-                params: _StoreModule._ContainerModule.DownloadentriesRequest
+                params: _StoreModule._ContainerModule.Server.DownloadentriesParams
                 results: _StoreModule._ContainerModule.Server.DownloadentriesResult
 
+            class ListentriesParams(Protocol): ...
+
             class ListentriesCallContext(Protocol):
-                params: _StoreModule._ContainerModule.ListentriesRequest
+                params: _StoreModule._ContainerModule.Server.ListentriesParams
                 results: _StoreModule._ContainerModule.Server.ListentriesResult
 
+            class GetentryParams(Protocol):
+                key: str
+
             class GetentryCallContext(Protocol):
-                params: _StoreModule._ContainerModule.GetentryRequest
+                params: _StoreModule._ContainerModule.Server.GetentryParams
                 results: _StoreModule._ContainerModule.Server.GetentryResult
 
+            class RemoveentryParams(Protocol):
+                key: str
+
             class RemoveentryCallContext(Protocol):
-                params: _StoreModule._ContainerModule.RemoveentryRequest
+                params: _StoreModule._ContainerModule.Server.RemoveentryParams
                 results: _StoreModule._ContainerModule.Server.RemoveentryResult
 
+            class ClearParams(Protocol): ...
+
             class ClearCallContext(Protocol):
-                params: _StoreModule._ContainerModule.ClearRequest
+                params: _StoreModule._ContainerModule.Server.ClearParams
                 results: _StoreModule._ContainerModule.Server.ClearResult
 
+            class AddentryParams(Protocol):
+                key: str
+                value: ValueReader
+                replaceExisting: bool
+
             class AddentryCallContext(Protocol):
-                params: _StoreModule._ContainerModule.AddentryRequest
+                params: _StoreModule._ContainerModule.Server.AddentryParams
                 results: _StoreModule._ContainerModule.Server.AddentryResult
 
             def export(
                 self,
                 _context: _StoreModule._ContainerModule.Server.ExportCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 str | _StoreModule._ContainerModule.Server.ExportResultTuple | None
             ]: ...
@@ -786,7 +810,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def downloadEntries(
                 self,
                 _context: _StoreModule._ContainerModule.Server.DownloadentriesCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _StoreModule._ContainerModule.Server.DownloadentriesResultTuple | None
             ]: ...
@@ -797,7 +821,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def listEntries(
                 self,
                 _context: _StoreModule._ContainerModule.Server.ListentriesCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _StoreModule._ContainerModule.Server.ListentriesResultTuple | None
             ]: ...
@@ -809,7 +833,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 self,
                 key: str,
                 _context: _StoreModule._ContainerModule.Server.GetentryCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _StoreModule._ContainerModule._EntryModule.Server
                 | _StoreModule._ContainerModule.Server.GetentryResultTuple
@@ -822,7 +846,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 self,
                 key: str,
                 _context: _StoreModule._ContainerModule.Server.RemoveentryCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _StoreModule._ContainerModule.Server.RemoveentryResultTuple
@@ -835,7 +859,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def clear(
                 self,
                 _context: _StoreModule._ContainerModule.Server.ClearCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool | _StoreModule._ContainerModule.Server.ClearResultTuple | None
             ]: ...
@@ -845,10 +869,10 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def addEntry(
                 self,
                 key: str,
-                value: _StoreModule._ContainerModule._EntryModule._ValueModule.Reader,
+                value: ValueReader,
                 replaceExisting: bool,
                 _context: _StoreModule._ContainerModule.Server.AddentryCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _StoreModule._ContainerModule.Server.AddentryResultTuple | None
             ]: ...
@@ -927,8 +951,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             def addEntry_request(
                 self,
                 key: str | None = None,
-                value: _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
-                | None = None,
+                value: ValueBuilder | None = None,
                 replaceExisting: bool | None = None,
             ) -> _StoreModule._ContainerModule.AddentryRequest: ...
 
@@ -1202,24 +1225,39 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
         class ImportcontainerResultTuple(NamedTuple):
             container: _StoreModule._ContainerModule.Server
 
+        class NewcontainerParams(Protocol):
+            name: str
+            description: str
+
         class NewcontainerCallContext(Protocol):
-            params: _StoreModule.NewcontainerRequest
+            params: _StoreModule.Server.NewcontainerParams
             results: _StoreModule.Server.NewcontainerResult
 
+        class ContainerwithidParams(Protocol):
+            id: str
+
         class ContainerwithidCallContext(Protocol):
-            params: _StoreModule.ContainerwithidRequest
+            params: _StoreModule.Server.ContainerwithidParams
             results: _StoreModule.Server.ContainerwithidResult
 
+        class ListcontainersParams(Protocol): ...
+
         class ListcontainersCallContext(Protocol):
-            params: _StoreModule.ListcontainersRequest
+            params: _StoreModule.Server.ListcontainersParams
             results: _StoreModule.Server.ListcontainersResult
 
+        class RemovecontainerParams(Protocol):
+            id: str
+
         class RemovecontainerCallContext(Protocol):
-            params: _StoreModule.RemovecontainerRequest
+            params: _StoreModule.Server.RemovecontainerParams
             results: _StoreModule.Server.RemovecontainerResult
 
+        class ImportcontainerParams(Protocol):
+            json: str
+
         class ImportcontainerCallContext(Protocol):
-            params: _StoreModule.ImportcontainerRequest
+            params: _StoreModule.Server.ImportcontainerParams
             results: _StoreModule.Server.ImportcontainerResult
 
         def newContainer(
@@ -1227,7 +1265,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             name: str,
             description: str,
             _context: _StoreModule.Server.NewcontainerCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _StoreModule._ContainerModule.Server
             | _StoreModule.Server.NewcontainerResultTuple
@@ -1240,7 +1278,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self,
             id: str,
             _context: _StoreModule.Server.ContainerwithidCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _StoreModule._ContainerModule.Server
             | _StoreModule.Server.ContainerwithidResultTuple
@@ -1250,7 +1288,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self, context: _StoreModule.Server.ContainerwithidCallContext
         ) -> Awaitable[None]: ...
         def listContainers(
-            self, _context: _StoreModule.Server.ListcontainersCallContext, **kwargs: Any
+            self,
+            _context: _StoreModule.Server.ListcontainersCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_StoreModule.Server.ListcontainersResultTuple | None]: ...
         def listContainers_context(
             self, context: _StoreModule.Server.ListcontainersCallContext
@@ -1259,7 +1299,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self,
             id: str,
             _context: _StoreModule.Server.RemovecontainerCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             bool | _StoreModule.Server.RemovecontainerResultTuple | None
         ]: ...
@@ -1270,7 +1310,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self,
             json: str,
             _context: _StoreModule.Server.ImportcontainerCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _StoreModule._ContainerModule.Server
             | _StoreModule.Server.ImportcontainerResultTuple

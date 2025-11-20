@@ -133,12 +133,16 @@ class _IdentifiableModule(_InterfaceModule):
             name: str
             description: str
 
+        class InfoParams(Protocol): ...
+
         class InfoCallContext(Protocol):
-            params: _IdentifiableModule.InfoRequest
+            params: _IdentifiableModule.Server.InfoParams
             results: _IdentifiableModule.Server.InfoResult
 
         def info(
-            self, _context: _IdentifiableModule.Server.InfoCallContext, **kwargs: Any
+            self,
+            _context: _IdentifiableModule.Server.InfoCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_IdentifiableModule.Server.InfoResultTuple | None]: ...
         def info_context(
             self, context: _IdentifiableModule.Server.InfoCallContext
@@ -866,12 +870,16 @@ class _HolderModule(_InterfaceModule):
         class ValueResultTuple(NamedTuple):
             value: AnyPointer
 
+        class ValueParams(Protocol): ...
+
         class ValueCallContext(Protocol):
-            params: _HolderModule.ValueRequest
+            params: _HolderModule.Server.ValueParams
             results: _HolderModule.Server.ValueResult
 
         def value(
-            self, _context: _HolderModule.Server.ValueCallContext, **kwargs: Any
+            self,
+            _context: _HolderModule.Server.ValueCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_HolderModule.Server.ValueResultTuple | None]: ...
         def value_context(
             self, context: _HolderModule.Server.ValueCallContext

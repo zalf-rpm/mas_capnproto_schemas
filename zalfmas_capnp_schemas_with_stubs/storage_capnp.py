@@ -10,11 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../zalfmas_capnp_schemas/storage.capnp")
 )
-import_path = [
-    here,
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 Store = capnp.load(module_file, imports=import_path).Store
 
 Store.Server.ContainerwithidResultTuple = NamedTuple(

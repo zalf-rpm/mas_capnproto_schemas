@@ -9,7 +9,10 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../../../zalfmas_capnp_schemas/model/monica/soil_params.capnp")
 )
-import_path = [here, os.path.join(here, "../../../zalfmas_capnp_schemas")]
+import_path = [
+    here,
+    os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas")),
+]
 SoilCharacteristicData = capnp.load(
     module_file, imports=import_path
 ).SoilCharacteristicData

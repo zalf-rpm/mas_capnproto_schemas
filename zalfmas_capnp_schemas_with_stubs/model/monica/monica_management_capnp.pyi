@@ -2785,8 +2785,12 @@ class _ServiceModule(_IdentifiableModule):
         class ManagementatResultTuple(NamedTuple):
             mgmt: Sequence[_EventModule]
 
+        class ManagementatParams(Protocol):
+            lat: float
+            lon: float
+
         class ManagementatCallContext(Protocol):
-            params: _ServiceModule.ManagementatRequest
+            params: _ServiceModule.Server.ManagementatParams
             results: _ServiceModule.Server.ManagementatResult
 
         def managementAt(
@@ -2794,7 +2798,7 @@ class _ServiceModule(_IdentifiableModule):
             lat: float,
             lon: float,
             _context: _ServiceModule.Server.ManagementatCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ServiceModule.Server.ManagementatResultTuple | None]: ...
         def managementAt_context(
             self, context: _ServiceModule.Server.ManagementatCallContext

@@ -553,15 +553,18 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             class SendcellsResultTuple(NamedTuple):
                 locations: Sequence[_GridModule._LocationModule]
 
+            class SendcellsParams(Protocol):
+                maxCount: int
+
             class SendcellsCallContext(Protocol):
-                params: _GridModule._CallbackModule.SendcellsRequest
+                params: _GridModule._CallbackModule.Server.SendcellsParams
                 results: _GridModule._CallbackModule.Server.SendcellsResult
 
             def sendCells(
                 self,
                 maxCount: int,
                 _context: _GridModule._CallbackModule.Server.SendcellsCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _GridModule._CallbackModule.Server.SendcellsResultTuple | None
             ]: ...
@@ -588,7 +591,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
     class ClosestvalueatRequest(Protocol):
         latlonCoord: _LatLonCoordModule.Builder
         ignoreNoData: bool
-        resolution: _GridModule._ResolutionModule.Builder
+        resolution: ResolutionBuilder
         agg: AggregationEnum
         returnRowCols: bool
         includeAggParts: bool
@@ -612,7 +615,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
     class ValueatRequest(Protocol):
         row: int
         col: int
-        resolution: _GridModule._ResolutionModule.Builder
+        resolution: ResolutionBuilder
         agg: AggregationEnum
         includeAggParts: bool
         @overload
@@ -626,8 +629,8 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _GridModule.GridClient.LatlonboundsResult: ...
 
     class StreamcellsRequest(Protocol):
-        topLeft: _GridModule._RowColModule.Builder
-        bottomRight: _GridModule._RowColModule.Builder
+        topLeft: RowColBuilder
+        bottomRight: RowColBuilder
         @overload
         def init(self, name: Literal["topLeft"]) -> RowColBuilder: ...
         @overload
@@ -644,29 +647,26 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
     ) -> _GridModule.GridClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
-            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
-            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            val: ValueBuilder | ValueReader
+            tl: RowColBuilder | RowColReader
+            br: RowColBuilder | RowColReader
             aggParts: Sequence[
                 _GridModule._AggregationPartModule.Builder
                 | _GridModule._AggregationPartModule.Reader
             ]
 
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-            res: (
-                _GridModule._ResolutionModule.Builder
-                | _GridModule._ResolutionModule.Reader
-            )
+            res: ResolutionBuilder | ResolutionReader
 
         class DimensionResult(Awaitable[DimensionResult], Protocol):
             rows: int
             cols: int
 
         class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
-            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            nodata: ValueBuilder | ValueReader
 
         class ValueatResult(Awaitable[ValueatResult], Protocol):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            val: ValueBuilder | ValueReader
             aggParts: Sequence[
                 _GridModule._AggregationPartModule.Builder
                 | _GridModule._AggregationPartModule.Reader
@@ -719,66 +719,102 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         class UnitResultTuple(NamedTuple):
             unit: str
 
+        class ClosestvalueatParams(Protocol):
+            latlonCoord: _LatLonCoordModule.Reader
+            ignoreNoData: bool
+            resolution: ResolutionReader
+            agg: AggregationEnum
+            returnRowCols: bool
+            includeAggParts: bool
+
         class ClosestvalueatCallContext(Protocol):
-            params: _GridModule.ClosestvalueatRequest
+            params: _GridModule.Server.ClosestvalueatParams
             results: _GridModule.Server.ClosestvalueatResult
 
+        class ResolutionParams(Protocol): ...
+
         class ResolutionCallContext(Protocol):
-            params: _GridModule.ResolutionRequest
+            params: _GridModule.Server.ResolutionParams
             results: _GridModule.Server.ResolutionResult
 
+        class DimensionParams(Protocol): ...
+
         class DimensionCallContext(Protocol):
-            params: _GridModule.DimensionRequest
+            params: _GridModule.Server.DimensionParams
             results: _GridModule.Server.DimensionResult
 
+        class NodatavalueParams(Protocol): ...
+
         class NodatavalueCallContext(Protocol):
-            params: _GridModule.NodatavalueRequest
+            params: _GridModule.Server.NodatavalueParams
             results: _GridModule.Server.NodatavalueResult
 
+        class ValueatParams(Protocol):
+            row: int
+            col: int
+            resolution: ResolutionReader
+            agg: AggregationEnum
+            includeAggParts: bool
+
         class ValueatCallContext(Protocol):
-            params: _GridModule.ValueatRequest
+            params: _GridModule.Server.ValueatParams
             results: _GridModule.Server.ValueatResult
 
+        class LatlonboundsParams(Protocol):
+            useCellCenter: bool
+
         class LatlonboundsCallContext(Protocol):
-            params: _GridModule.LatlonboundsRequest
+            params: _GridModule.Server.LatlonboundsParams
             results: _GridModule.Server.LatlonboundsResult
 
+        class StreamcellsParams(Protocol):
+            topLeft: RowColReader
+            bottomRight: RowColReader
+
         class StreamcellsCallContext(Protocol):
-            params: _GridModule.StreamcellsRequest
+            params: _GridModule.Server.StreamcellsParams
             results: _GridModule.Server.StreamcellsResult
 
+        class UnitParams(Protocol): ...
+
         class UnitCallContext(Protocol):
-            params: _GridModule.UnitRequest
+            params: _GridModule.Server.UnitParams
             results: _GridModule.Server.UnitResult
 
         def closestValueAt(
             self,
             latlonCoord: _LatLonCoordModule.Reader,
             ignoreNoData: bool,
-            resolution: _GridModule._ResolutionModule.Reader,
+            resolution: ResolutionReader,
             agg: AggregationEnum,
             returnRowCols: bool,
             includeAggParts: bool,
             _context: _GridModule.Server.ClosestvalueatCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.ClosestvalueatResultTuple | None]: ...
         def closestValueAt_context(
             self, context: _GridModule.Server.ClosestvalueatCallContext
         ) -> Awaitable[None]: ...
         def resolution(
-            self, _context: _GridModule.Server.ResolutionCallContext, **kwargs: Any
+            self,
+            _context: _GridModule.Server.ResolutionCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.ResolutionResultTuple | None]: ...
         def resolution_context(
             self, context: _GridModule.Server.ResolutionCallContext
         ) -> Awaitable[None]: ...
         def dimension(
-            self, _context: _GridModule.Server.DimensionCallContext, **kwargs: Any
+            self,
+            _context: _GridModule.Server.DimensionCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.DimensionResultTuple | None]: ...
         def dimension_context(
             self, context: _GridModule.Server.DimensionCallContext
         ) -> Awaitable[None]: ...
         def noDataValue(
-            self, _context: _GridModule.Server.NodatavalueCallContext, **kwargs: Any
+            self,
+            _context: _GridModule.Server.NodatavalueCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.NodatavalueResultTuple | None]: ...
         def noDataValue_context(
             self, context: _GridModule.Server.NodatavalueCallContext
@@ -787,11 +823,11 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             row: int,
             col: int,
-            resolution: _GridModule._ResolutionModule.Reader,
+            resolution: ResolutionReader,
             agg: AggregationEnum,
             includeAggParts: bool,
             _context: _GridModule.Server.ValueatCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.ValueatResultTuple | None]: ...
         def valueAt_context(
             self, context: _GridModule.Server.ValueatCallContext
@@ -800,17 +836,17 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             useCellCenter: bool,
             _context: _GridModule.Server.LatlonboundsCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GridModule.Server.LatlonboundsResultTuple | None]: ...
         def latLonBounds_context(
             self, context: _GridModule.Server.LatlonboundsCallContext
         ) -> Awaitable[None]: ...
         def streamCells(
             self,
-            topLeft: _GridModule._RowColModule.Reader,
-            bottomRight: _GridModule._RowColModule.Reader,
+            topLeft: RowColReader,
+            bottomRight: RowColReader,
             _context: _GridModule.Server.StreamcellsCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _GridModule._CallbackModule.Server
             | _GridModule.Server.StreamcellsResultTuple
@@ -820,7 +856,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self, context: _GridModule.Server.StreamcellsCallContext
         ) -> Awaitable[None]: ...
         def unit(
-            self, _context: _GridModule.Server.UnitCallContext, **kwargs: Any
+            self, _context: _GridModule.Server.UnitCallContext, **kwargs: dict[str, Any]
         ) -> Awaitable[str | _GridModule.Server.UnitResultTuple | None]: ...
         def unit_context(
             self, context: _GridModule.Server.UnitCallContext
@@ -830,39 +866,36 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
-            tl: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
-            br: _GridModule._RowColModule.Builder | _GridModule._RowColModule.Reader
+            val: ValueReader
+            tl: RowColReader
+            br: RowColReader
             aggParts: Sequence[
                 _GridModule._AggregationPartModule.Builder
                 | _GridModule._AggregationPartModule.Reader
             ]
 
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-            res: (
-                _GridModule._ResolutionModule.Builder
-                | _GridModule._ResolutionModule.Reader
-            )
+            res: ResolutionReader
 
         class DimensionResult(Awaitable[DimensionResult], Protocol):
             rows: int
             cols: int
 
         class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
-            nodata: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            nodata: ValueReader
 
         class ValueatResult(Awaitable[ValueatResult], Protocol):
-            val: _GridModule._ValueModule.Builder | _GridModule._ValueModule.Reader
+            val: ValueReader
             aggParts: Sequence[
                 _GridModule._AggregationPartModule.Builder
                 | _GridModule._AggregationPartModule.Reader
             ]
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-            tl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            tr: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            br: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
-            bl: _LatLonCoordModule.Builder | _LatLonCoordModule.Reader
+            tl: _LatLonCoordModule.Reader
+            tr: _LatLonCoordModule.Reader
+            br: _LatLonCoordModule.Reader
+            bl: _LatLonCoordModule.Reader
 
         class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
             callback: _GridModule._CallbackModule.CallbackClient
@@ -909,7 +942,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             latlonCoord: _LatLonCoordModule.Builder | None = None,
             ignoreNoData: bool | None = None,
-            resolution: _GridModule._ResolutionModule.Builder | None = None,
+            resolution: ResolutionBuilder | None = None,
             agg: AggregationEnum | None = None,
             returnRowCols: bool | None = None,
             includeAggParts: bool | None = None,
@@ -921,7 +954,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             row: int | None = None,
             col: int | None = None,
-            resolution: _GridModule._ResolutionModule.Builder | None = None,
+            resolution: ResolutionBuilder | None = None,
             agg: AggregationEnum | None = None,
             includeAggParts: bool | None = None,
         ) -> _GridModule.ValueatRequest: ...
@@ -930,8 +963,8 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         ) -> _GridModule.LatlonboundsRequest: ...
         def streamCells_request(
             self,
-            topLeft: _GridModule._RowColModule.Builder | None = None,
-            bottomRight: _GridModule._RowColModule.Builder | None = None,
+            topLeft: RowColBuilder | None = None,
+            bottomRight: RowColBuilder | None = None,
         ) -> _GridModule.StreamcellsRequest: ...
         def unit_request(self) -> _GridModule.UnitRequest: ...
 

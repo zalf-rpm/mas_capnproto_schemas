@@ -193,15 +193,18 @@ class _PersistentModule(_InterfaceModule):
         class SaveResultTuple(NamedTuple):
             sturdyRef: AnyPointer
 
+        class SaveParams(Protocol):
+            sealFor: AnyPointer
+
         class SaveCallContext(Protocol):
-            params: _PersistentModule.SaveRequest
+            params: _PersistentModule.Server.SaveParams
             results: _PersistentModule.Server.SaveResult
 
         def save(
             self,
             sealFor: AnyPointer,
             _context: _PersistentModule.Server.SaveCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
         def save_context(
             self, context: _PersistentModule.Server.SaveCallContext

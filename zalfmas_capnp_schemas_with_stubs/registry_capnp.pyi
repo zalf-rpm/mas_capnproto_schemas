@@ -86,31 +86,47 @@ class _AdminModule(_IdentifiableModule):
         class RegistryResultTuple(NamedTuple):
             pass
 
+        class AddcategoryParams(Protocol):
+            upsert: bool
+
         class AddcategoryCallContext(Protocol):
-            params: _AdminModule.AddcategoryRequest
+            params: _AdminModule.Server.AddcategoryParams
             results: _AdminModule.Server.AddcategoryResult
 
+        class RemovecategoryParams(Protocol):
+            categoryId: str
+            moveObjectsToCategoryId: str
+
         class RemovecategoryCallContext(Protocol):
-            params: _AdminModule.RemovecategoryRequest
+            params: _AdminModule.Server.RemovecategoryParams
             results: _AdminModule.Server.RemovecategoryResult
 
+        class MoveobjectsParams(Protocol):
+            objectIds: Sequence[str]
+            toCatId: str
+
         class MoveobjectsCallContext(Protocol):
-            params: _AdminModule.MoveobjectsRequest
+            params: _AdminModule.Server.MoveobjectsParams
             results: _AdminModule.Server.MoveobjectsResult
 
+        class RemoveobjectsParams(Protocol):
+            objectIds: Sequence[str]
+
         class RemoveobjectsCallContext(Protocol):
-            params: _AdminModule.RemoveobjectsRequest
+            params: _AdminModule.Server.RemoveobjectsParams
             results: _AdminModule.Server.RemoveobjectsResult
 
+        class RegistryParams(Protocol): ...
+
         class RegistryCallContext(Protocol):
-            params: _AdminModule.RegistryRequest
+            params: _AdminModule.Server.RegistryParams
             results: _AdminModule.Server.RegistryResult
 
         def addCategory(
             self,
             upsert: bool,
             _context: _AdminModule.Server.AddcategoryCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[bool | _AdminModule.Server.AddcategoryResultTuple | None]: ...
         def addCategory_context(
             self, context: _AdminModule.Server.AddcategoryCallContext
@@ -120,7 +136,7 @@ class _AdminModule(_IdentifiableModule):
             categoryId: str,
             moveObjectsToCategoryId: str,
             _context: _AdminModule.Server.RemovecategoryCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_AdminModule.Server.RemovecategoryResultTuple | None]: ...
         def removeCategory_context(
             self, context: _AdminModule.Server.RemovecategoryCallContext
@@ -130,7 +146,7 @@ class _AdminModule(_IdentifiableModule):
             objectIds: Sequence[str],
             toCatId: str,
             _context: _AdminModule.Server.MoveobjectsCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_AdminModule.Server.MoveobjectsResultTuple | None]: ...
         def moveObjects_context(
             self, context: _AdminModule.Server.MoveobjectsCallContext
@@ -139,13 +155,15 @@ class _AdminModule(_IdentifiableModule):
             self,
             objectIds: Sequence[str],
             _context: _AdminModule.Server.RemoveobjectsCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_AdminModule.Server.RemoveobjectsResultTuple | None]: ...
         def removeObjects_context(
             self, context: _AdminModule.Server.RemoveobjectsCallContext
         ) -> Awaitable[None]: ...
         def registry(
-            self, _context: _AdminModule.Server.RegistryCallContext, **kwargs: Any
+            self,
+            _context: _AdminModule.Server.RegistryCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_AdminModule.Server.RegistryResultTuple | None]: ...
         def registry_context(
             self, context: _AdminModule.Server.RegistryCallContext
@@ -344,22 +362,30 @@ class _RegistryModule(_IdentifiableModule):
         class EntriesResultTuple(NamedTuple):
             entries: Sequence[_RegistryModule._EntryModule]
 
+        class SupportedcategoriesParams(Protocol): ...
+
         class SupportedcategoriesCallContext(Protocol):
-            params: _RegistryModule.SupportedcategoriesRequest
+            params: _RegistryModule.Server.SupportedcategoriesParams
             results: _RegistryModule.Server.SupportedcategoriesResult
 
+        class CategoryinfoParams(Protocol):
+            categoryId: str
+
         class CategoryinfoCallContext(Protocol):
-            params: _RegistryModule.CategoryinfoRequest
+            params: _RegistryModule.Server.CategoryinfoParams
             results: _RegistryModule.Server.CategoryinfoResult
 
+        class EntriesParams(Protocol):
+            categoryId: str
+
         class EntriesCallContext(Protocol):
-            params: _RegistryModule.EntriesRequest
+            params: _RegistryModule.Server.EntriesParams
             results: _RegistryModule.Server.EntriesResult
 
         def supportedCategories(
             self,
             _context: _RegistryModule.Server.SupportedcategoriesCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _RegistryModule.Server.SupportedcategoriesResultTuple | None
         ]: ...
@@ -370,7 +396,7 @@ class _RegistryModule(_IdentifiableModule):
             self,
             categoryId: str,
             _context: _RegistryModule.Server.CategoryinfoCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_RegistryModule.Server.CategoryinfoResultTuple | None]: ...
         def categoryInfo_context(
             self, context: _RegistryModule.Server.CategoryinfoCallContext
@@ -379,7 +405,7 @@ class _RegistryModule(_IdentifiableModule):
             self,
             categoryId: str,
             _context: _RegistryModule.Server.EntriesCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_RegistryModule.Server.EntriesResultTuple | None]: ...
         def entries_context(
             self, context: _RegistryModule.Server.EntriesCallContext
@@ -643,14 +669,16 @@ class _RegistrarModule(_IdentifiableModule):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
+            class UnregisterParams(Protocol): ...
+
             class UnregisterCallContext(Protocol):
-                params: _RegistrarModule._UnregisterModule.UnregisterRequest
+                params: _RegistrarModule._UnregisterModule.Server.UnregisterParams
                 results: _RegistrarModule._UnregisterModule.Server.UnregisterResult
 
             def unregister(
                 self,
                 _context: _RegistrarModule._UnregisterModule.Server.UnregisterCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _RegistrarModule._UnregisterModule.Server.UnregisterResultTuple
@@ -680,7 +708,7 @@ class _RegistrarModule(_IdentifiableModule):
         cap: IdentifiableClient | _IdentifiableModule.Server
         regName: str
         categoryId: str
-        xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder
+        xDomain: CrossDomainRestoreBuilder
         @overload
         def init(self, name: Literal["xDomain"]) -> CrossDomainRestoreBuilder: ...
         @overload
@@ -698,8 +726,14 @@ class _RegistrarModule(_IdentifiableModule):
         class RegisterResultTuple(NamedTuple):
             unreg: _RegistrarModule._UnregisterModule.Server
 
+        class RegisterParams(Protocol):
+            cap: IdentifiableClient
+            regName: str
+            categoryId: str
+            xDomain: CrossDomainRestoreReader
+
         class RegisterCallContext(Protocol):
-            params: _RegistrarModule.RegisterRequest
+            params: _RegistrarModule.Server.RegisterParams
             results: _RegistrarModule.Server.RegisterResult
 
         def register(
@@ -707,9 +741,9 @@ class _RegistrarModule(_IdentifiableModule):
             cap: IdentifiableClient,
             regName: str,
             categoryId: str,
-            xDomain: _RegistrarModule._CrossDomainRestoreModule.Reader,
+            xDomain: CrossDomainRestoreReader,
             _context: _RegistrarModule.Server.RegisterCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_RegistrarModule.Server.RegisterResultTuple | None]: ...
         def register_context(
             self, context: _RegistrarModule.Server.RegisterCallContext
@@ -735,7 +769,7 @@ class _RegistrarModule(_IdentifiableModule):
             cap: IdentifiableClient | _IdentifiableModule.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
-            xDomain: _RegistrarModule._CrossDomainRestoreModule.Builder | None = None,
+            xDomain: CrossDomainRestoreBuilder | None = None,
         ) -> _RegistrarModule.RegisterRequest: ...
 
 Registrar: _RegistrarModule

@@ -436,21 +436,27 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 done: None
                 noMsg: None
 
+            class ReadParams(Protocol): ...
+
             class ReadCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.ReadRequest
+                params: _ChannelModule._ReaderModule.Server.ReadParams
                 results: _ChannelModule._ReaderModule.Server.ReadResult
 
+            class CloseParams(Protocol): ...
+
             class CloseCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.CloseRequest
+                params: _ChannelModule._ReaderModule.Server.CloseParams
+
+            class ReadifmsgParams(Protocol): ...
 
             class ReadifmsgCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.ReadifmsgRequest
+                params: _ChannelModule._ReaderModule.Server.ReadifmsgParams
                 results: _ChannelModule._ReaderModule.Server.ReadifmsgResult
 
             def read(
                 self,
                 _context: _ChannelModule._ReaderModule.Server.ReadCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ChannelModule._ReaderModule.Server.ReadResultTuple | None
             ]: ...
@@ -460,7 +466,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             def close(
                 self,
                 _context: _ChannelModule._ReaderModule.Server.CloseCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def close_context(
                 self, context: _ChannelModule._ReaderModule.Server.CloseCallContext
@@ -468,7 +474,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             def readIfMsg(
                 self,
                 _context: _ChannelModule._ReaderModule.Server.ReadifmsgCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ChannelModule._ReaderModule.Server.ReadifmsgResultTuple | None
             ]: ...
@@ -539,14 +545,26 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             class WriteifspaceResultTuple(NamedTuple):
                 success: bool
 
+            class WriteParams(Protocol):
+                value: AnyPointer
+                done: None
+                noMsg: None
+
             class WriteCallContext(Protocol):
-                params: _ChannelModule._WriterModule.WriteRequest
+                params: _ChannelModule._WriterModule.Server.WriteParams
+
+            class CloseParams(Protocol): ...
 
             class CloseCallContext(Protocol):
-                params: _ChannelModule._WriterModule.CloseRequest
+                params: _ChannelModule._WriterModule.Server.CloseParams
+
+            class WriteifspaceParams(Protocol):
+                value: AnyPointer
+                done: None
+                noMsg: None
 
             class WriteifspaceCallContext(Protocol):
-                params: _ChannelModule._WriterModule.WriteifspaceRequest
+                params: _ChannelModule._WriterModule.Server.WriteifspaceParams
                 results: _ChannelModule._WriterModule.Server.WriteifspaceResult
 
             def write(
@@ -555,7 +573,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 done: None,
                 noMsg: None,
                 _context: _ChannelModule._WriterModule.Server.WriteCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def write_context(
                 self, context: _ChannelModule._WriterModule.Server.WriteCallContext
@@ -563,7 +581,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             def close(
                 self,
                 _context: _ChannelModule._WriterModule.Server.CloseCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def close_context(
                 self, context: _ChannelModule._WriterModule.Server.CloseCallContext
@@ -574,7 +592,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 done: None,
                 noMsg: None,
                 _context: _ChannelModule._WriterModule.Server.WriteifspaceCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _ChannelModule._WriterModule.Server.WriteifspaceResultTuple
@@ -824,38 +842,55 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             r: _ChannelModule._ReaderModule.Server
             w: _ChannelModule._WriterModule.Server
 
+        class SetbuffersizeParams(Protocol):
+            size: int
+
         class SetbuffersizeCallContext(Protocol):
-            params: _ChannelModule.SetbuffersizeRequest
+            params: _ChannelModule.Server.SetbuffersizeParams
+
+        class ReaderParams(Protocol): ...
 
         class ReaderCallContext(Protocol):
-            params: _ChannelModule.ReaderRequest
+            params: _ChannelModule.Server.ReaderParams
             results: _ChannelModule.Server.ReaderResult
 
+        class WriterParams(Protocol): ...
+
         class WriterCallContext(Protocol):
-            params: _ChannelModule.WriterRequest
+            params: _ChannelModule.Server.WriterParams
             results: _ChannelModule.Server.WriterResult
 
+        class EndpointsParams(Protocol): ...
+
         class EndpointsCallContext(Protocol):
-            params: _ChannelModule.EndpointsRequest
+            params: _ChannelModule.Server.EndpointsParams
             results: _ChannelModule.Server.EndpointsResult
 
+        class SetautoclosesemanticsParams(Protocol):
+            cs: ChannelCloseSemanticsEnum
+
         class SetautoclosesemanticsCallContext(Protocol):
-            params: _ChannelModule.SetautoclosesemanticsRequest
+            params: _ChannelModule.Server.SetautoclosesemanticsParams
+
+        class CloseParams(Protocol):
+            waitForEmptyBuffer: bool
 
         class CloseCallContext(Protocol):
-            params: _ChannelModule.CloseRequest
+            params: _ChannelModule.Server.CloseParams
 
         def setBufferSize(
             self,
             size: int,
             _context: _ChannelModule.Server.SetbuffersizeCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def setBufferSize_context(
             self, context: _ChannelModule.Server.SetbuffersizeCallContext
         ) -> Awaitable[None]: ...
         def reader(
-            self, _context: _ChannelModule.Server.ReaderCallContext, **kwargs: Any
+            self,
+            _context: _ChannelModule.Server.ReaderCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _ChannelModule._ReaderModule.Server
             | _ChannelModule.Server.ReaderResultTuple
@@ -865,7 +900,9 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             self, context: _ChannelModule.Server.ReaderCallContext
         ) -> Awaitable[None]: ...
         def writer(
-            self, _context: _ChannelModule.Server.WriterCallContext, **kwargs: Any
+            self,
+            _context: _ChannelModule.Server.WriterCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _ChannelModule._WriterModule.Server
             | _ChannelModule.Server.WriterResultTuple
@@ -875,7 +912,9 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             self, context: _ChannelModule.Server.WriterCallContext
         ) -> Awaitable[None]: ...
         def endpoints(
-            self, _context: _ChannelModule.Server.EndpointsCallContext, **kwargs: Any
+            self,
+            _context: _ChannelModule.Server.EndpointsCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ChannelModule.Server.EndpointsResultTuple | None]: ...
         def endpoints_context(
             self, context: _ChannelModule.Server.EndpointsCallContext
@@ -884,7 +923,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             self,
             cs: ChannelCloseSemanticsEnum,
             _context: _ChannelModule.Server.SetautoclosesemanticsCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def setAutoCloseSemantics_context(
             self, context: _ChannelModule.Server.SetautoclosesemanticsCallContext
@@ -893,7 +932,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             self,
             waitForEmptyBuffer: bool,
             _context: _ChannelModule.Server.CloseCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def close_context(
             self, context: _ChannelModule.Server.CloseCallContext
@@ -1109,8 +1148,17 @@ class _StartChannelsServiceModule(_IdentifiableModule):
         class StartResultTuple(NamedTuple):
             startupInfos: Sequence[_ChannelModule._StartupInfoModule]
 
+        class StartParams(Protocol):
+            name: str
+            noOfChannels: int
+            noOfReaders: int
+            noOfWriters: int
+            readerSrts: Sequence[str]
+            writerSrts: Sequence[str]
+            bufferSize: int
+
         class StartCallContext(Protocol):
-            params: _StartChannelsServiceModule.StartRequest
+            params: _StartChannelsServiceModule.Server.StartParams
             results: _StartChannelsServiceModule.Server.StartResult
 
         def start(
@@ -1123,7 +1171,7 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             writerSrts: Sequence[str],
             bufferSize: int,
             _context: _StartChannelsServiceModule.Server.StartCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_StartChannelsServiceModule.Server.StartResultTuple | None]: ...
         def start_context(
             self, context: _StartChannelsServiceModule.Server.StartCallContext
@@ -1387,12 +1435,18 @@ class _ComponentModule(_StructModule):
             class StopResultTuple(NamedTuple):
                 success: bool
 
+            class StartParams(Protocol):
+                portInfosReaderSr: str
+                name: str
+
             class StartCallContext(Protocol):
-                params: _ComponentModule._RunnableModule.StartRequest
+                params: _ComponentModule._RunnableModule.Server.StartParams
                 results: _ComponentModule._RunnableModule.Server.StartResult
 
+            class StopParams(Protocol): ...
+
             class StopCallContext(Protocol):
-                params: _ComponentModule._RunnableModule.StopRequest
+                params: _ComponentModule._RunnableModule.Server.StopParams
                 results: _ComponentModule._RunnableModule.Server.StopResult
 
             def start(
@@ -1400,7 +1454,7 @@ class _ComponentModule(_StructModule):
                 portInfosReaderSr: str,
                 name: str,
                 _context: _ComponentModule._RunnableModule.Server.StartCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool | _ComponentModule._RunnableModule.Server.StartResultTuple | None
             ]: ...
@@ -1410,7 +1464,7 @@ class _ComponentModule(_StructModule):
             def stop(
                 self,
                 _context: _ComponentModule._RunnableModule.Server.StopCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool | _ComponentModule._RunnableModule.Server.StopResultTuple | None
             ]: ...

@@ -665,12 +665,15 @@ class _HeartbeatModule(_InterfaceModule):
     ) -> _HeartbeatModule.HeartbeatClient: ...
     class Server(_DynamicCapabilityServer):
         class BeatResult(Awaitable[None], Protocol): ...
+        class BeatParams(Protocol): ...
 
         class BeatCallContext(Protocol):
-            params: _HeartbeatModule.BeatRequest
+            params: _HeartbeatModule.Server.BeatParams
 
         def beat(
-            self, _context: _HeartbeatModule.Server.BeatCallContext, **kwargs: Any
+            self,
+            _context: _HeartbeatModule.Server.BeatCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def beat_context(
             self, context: _HeartbeatModule.Server.BeatCallContext
@@ -879,14 +882,16 @@ class _PersistentModule(_InterfaceModule):
             class ReleaseResultTuple(NamedTuple):
                 success: bool
 
+            class ReleaseParams(Protocol): ...
+
             class ReleaseCallContext(Protocol):
-                params: _PersistentModule._ReleaseSturdyRefModule.ReleaseRequest
+                params: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseParams
                 results: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResult
 
             def release(
                 self,
                 _context: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResultTuple
@@ -913,7 +918,7 @@ class _PersistentModule(_InterfaceModule):
         _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
     )
     class SaveRequest(Protocol):
-        sealFor: _SturdyRefModule._OwnerModule.Builder
+        sealFor: OwnerBuilder
         @overload
         def init(self, name: Literal["sealFor"]) -> OwnerBuilder: ...
         @overload
@@ -932,15 +937,18 @@ class _PersistentModule(_InterfaceModule):
             sturdyRef: _SturdyRefModule.Builder | _SturdyRefModule.Reader
             unsaveSR: _SturdyRefModule.Builder | _SturdyRefModule.Reader
 
+        class SaveParams(Protocol):
+            sealFor: OwnerReader
+
         class SaveCallContext(Protocol):
-            params: _PersistentModule.SaveRequest
+            params: _PersistentModule.Server.SaveParams
             results: _PersistentModule.Server.SaveResult
 
         def save(
             self,
-            sealFor: _SturdyRefModule._OwnerModule.Reader,
+            sealFor: OwnerReader,
             _context: _PersistentModule.Server.SaveCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
         def save_context(
             self, context: _PersistentModule.Server.SaveCallContext
@@ -955,7 +963,7 @@ class _PersistentModule(_InterfaceModule):
             self, sealFor: OwnerBuilder | OwnerReader | dict[str, Any] | None = None
         ) -> _PersistentModule.PersistentClient.SaveResult: ...
         def save_request(
-            self, sealFor: _SturdyRefModule._OwnerModule.Builder | None = None
+            self, sealFor: OwnerBuilder | None = None
         ) -> _PersistentModule.SaveRequest: ...
 
 Persistent: _PersistentModule
@@ -1059,8 +1067,8 @@ class _RestorerModule(_InterfaceModule):
     type RestoreParamsBuilder = _RestoreParamsModule.Builder
     RestoreParams: _RestoreParamsModule
     class RestoreRequest(Protocol):
-        localRef: _SturdyRefModule._TokenModule.Builder
-        sealedBy: _SturdyRefModule._OwnerModule.Builder
+        localRef: TokenBuilder
+        sealedBy: OwnerBuilder
         @overload
         def init(self, name: Literal["localRef"]) -> TokenBuilder: ...
         @overload
@@ -1079,16 +1087,20 @@ class _RestorerModule(_InterfaceModule):
         class RestoreResultTuple(NamedTuple):
             cap: AnyPointer
 
+        class RestoreParams(Protocol):
+            localRef: TokenReader
+            sealedBy: OwnerReader
+
         class RestoreCallContext(Protocol):
-            params: _RestorerModule.RestoreRequest
+            params: _RestorerModule.Server.RestoreParams
             results: _RestorerModule.Server.RestoreResult
 
         def restore(
             self,
-            localRef: _SturdyRefModule._TokenModule.Reader,
-            sealedBy: _SturdyRefModule._OwnerModule.Reader,
+            localRef: TokenReader,
+            sealedBy: OwnerReader,
             _context: _RestorerModule.Server.RestoreCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_RestorerModule.Server.RestoreResultTuple | None]: ...
         def restore_context(
             self, context: _RestorerModule.Server.RestoreCallContext
@@ -1105,8 +1117,8 @@ class _RestorerModule(_InterfaceModule):
         ) -> _RestorerModule.RestorerClient.RestoreResult: ...
         def restore_request(
             self,
-            localRef: _SturdyRefModule._TokenModule.Builder | None = None,
-            sealedBy: _SturdyRefModule._OwnerModule.Builder | None = None,
+            localRef: TokenBuilder | None = None,
+            sealedBy: OwnerBuilder | None = None,
         ) -> _RestorerModule.RestoreRequest: ...
 
 Restorer: _RestorerModule
@@ -1241,8 +1253,15 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 heartbeat: _HeartbeatModule.Server
                 secsHeartbeatInterval: int
 
+            class RegisterParams(Protocol):
+                base64VatId: str
+                host: str
+                port: int
+                alias: str
+                identityProof: bytes
+
             class RegisterCallContext(Protocol):
-                params: _HostPortResolverModule._RegistrarModule.RegisterRequest
+                params: _HostPortResolverModule._RegistrarModule.Server.RegisterParams
                 results: _HostPortResolverModule._RegistrarModule.Server.RegisterResult
 
             def register(
@@ -1253,7 +1272,7 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 alias: str,
                 identityProof: bytes,
                 _context: _HostPortResolverModule._RegistrarModule.Server.RegisterCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _HostPortResolverModule._RegistrarModule.Server.RegisterResultTuple
                 | None
@@ -1307,15 +1326,18 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             host: str
             port: int
 
+        class ResolveParams(Protocol):
+            id: str
+
         class ResolveCallContext(Protocol):
-            params: _HostPortResolverModule.ResolveRequest
+            params: _HostPortResolverModule.Server.ResolveParams
             results: _HostPortResolverModule.Server.ResolveResult
 
         def resolve(
             self,
             id: str,
             _context: _HostPortResolverModule.Server.ResolveCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_HostPortResolverModule.Server.ResolveResultTuple | None]: ...
         def resolve_context(
             self, context: _HostPortResolverModule.Server.ResolveCallContext
@@ -1455,15 +1477,18 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
             heartbeat: _HeartbeatModule.Server
             secsHeartbeatInterval: int
 
+        class RegisterParams(Protocol):
+            cap: AnyPointer
+
         class RegisterCallContext(Protocol):
-            params: _GatewayModule.RegisterRequest
+            params: _GatewayModule.Server.RegisterParams
             results: _GatewayModule.Server.RegisterResult
 
         def register(
             self,
             cap: AnyPointer,
             _context: _GatewayModule.Server.RegisterCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_GatewayModule.Server.RegisterResultTuple | None]: ...
         def register_context(
             self, context: _GatewayModule.Server.RegisterCallContext

@@ -45,14 +45,16 @@ class _ClusterModule(_StructModule):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
+            class UnregisterParams(Protocol): ...
+
             class UnregisterCallContext(Protocol):
-                params: _ClusterModule._UnregisterModule.UnregisterRequest
+                params: _ClusterModule._UnregisterModule.Server.UnregisterParams
                 results: _ClusterModule._UnregisterModule.Server.UnregisterResult
 
             def unregister(
                 self,
                 _context: _ClusterModule._UnregisterModule.Server.UnregisterCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _ClusterModule._UnregisterModule.Server.UnregisterResultTuple
@@ -106,19 +108,24 @@ class _ClusterModule(_StructModule):
             class AvailablemodelsResultTuple(NamedTuple):
                 pass
 
+            class RegistermodelinstancefactoryParams(Protocol):
+                aModelId: str
+
             class RegistermodelinstancefactoryCallContext(Protocol):
-                params: _ClusterModule._AdminMasterModule.RegistermodelinstancefactoryRequest
+                params: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryParams
                 results: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryResult
 
+            class AvailablemodelsParams(Protocol): ...
+
             class AvailablemodelsCallContext(Protocol):
-                params: _ClusterModule._AdminMasterModule.AvailablemodelsRequest
+                params: _ClusterModule._AdminMasterModule.Server.AvailablemodelsParams
                 results: _ClusterModule._AdminMasterModule.Server.AvailablemodelsResult
 
             def registerModelInstanceFactory(
                 self,
                 aModelId: str,
                 _context: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._UnregisterModule.Server
                 | _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryResultTuple
@@ -131,7 +138,7 @@ class _ClusterModule(_StructModule):
             def availableModels(
                 self,
                 _context: _ClusterModule._AdminMasterModule.Server.AvailablemodelsCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._AdminMasterModule.Server.AvailablemodelsResultTuple
                 | None
@@ -185,14 +192,16 @@ class _ClusterModule(_StructModule):
             class AvailablemodelsResultTuple(NamedTuple):
                 pass
 
+            class AvailablemodelsParams(Protocol): ...
+
             class AvailablemodelsCallContext(Protocol):
-                params: _ClusterModule._UserMasterModule.AvailablemodelsRequest
+                params: _ClusterModule._UserMasterModule.Server.AvailablemodelsParams
                 results: _ClusterModule._UserMasterModule.Server.AvailablemodelsResult
 
             def availableModels(
                 self,
                 _context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._UserMasterModule.Server.AvailablemodelsResultTuple
                 | None
@@ -288,33 +297,44 @@ class _ClusterModule(_StructModule):
             class ReservenumberofcoresResultTuple(NamedTuple):
                 reservedCores: int
 
+            class RegistermodelinstancefactoryParams(Protocol):
+                aModelId: str
+
             class RegistermodelinstancefactoryCallContext(Protocol):
-                params: (
-                    _ClusterModule._RuntimeModule.RegistermodelinstancefactoryRequest
-                )
+                params: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryParams
                 results: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResult
 
+            class AvailablemodelsParams(Protocol): ...
+
             class AvailablemodelsCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.AvailablemodelsRequest
+                params: _ClusterModule._RuntimeModule.Server.AvailablemodelsParams
                 results: _ClusterModule._RuntimeModule.Server.AvailablemodelsResult
 
+            class NumberofcoresParams(Protocol): ...
+
             class NumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.NumberofcoresRequest
+                params: _ClusterModule._RuntimeModule.Server.NumberofcoresParams
                 results: _ClusterModule._RuntimeModule.Server.NumberofcoresResult
 
+            class FreenumberofcoresParams(Protocol): ...
+
             class FreenumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.FreenumberofcoresRequest
+                params: _ClusterModule._RuntimeModule.Server.FreenumberofcoresParams
                 results: _ClusterModule._RuntimeModule.Server.FreenumberofcoresResult
 
+            class ReservenumberofcoresParams(Protocol):
+                reserveCores: int
+                aModelId: str
+
             class ReservenumberofcoresCallContext(Protocol):
-                params: _ClusterModule._RuntimeModule.ReservenumberofcoresRequest
+                params: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresParams
                 results: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResult
 
             def registerModelInstanceFactory(
                 self,
                 aModelId: str,
                 _context: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._UnregisterModule.Server
                 | _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResultTuple
@@ -327,7 +347,7 @@ class _ClusterModule(_StructModule):
             def availableModels(
                 self,
                 _context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._RuntimeModule.Server.AvailablemodelsResultTuple | None
             ]: ...
@@ -338,7 +358,7 @@ class _ClusterModule(_StructModule):
             def numberOfCores(
                 self,
                 _context: _ClusterModule._RuntimeModule.Server.NumberofcoresCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 int
                 | _ClusterModule._RuntimeModule.Server.NumberofcoresResultTuple
@@ -351,7 +371,7 @@ class _ClusterModule(_StructModule):
             def freeNumberOfCores(
                 self,
                 _context: _ClusterModule._RuntimeModule.Server.FreenumberofcoresCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 int
                 | _ClusterModule._RuntimeModule.Server.FreenumberofcoresResultTuple
@@ -366,7 +386,7 @@ class _ClusterModule(_StructModule):
                 reserveCores: int,
                 aModelId: str,
                 _context: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 int
                 | _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResultTuple
@@ -540,17 +560,21 @@ class _ClusterModule(_StructModule):
             class ValueResultTuple(NamedTuple):
                 val: AnyPointer
 
+            class ValueParams(Protocol): ...
+
             class ValueCallContext(Protocol):
-                params: _ClusterModule._ValueHolderModule.ValueRequest
+                params: _ClusterModule._ValueHolderModule.Server.ValueParams
                 results: _ClusterModule._ValueHolderModule.Server.ValueResult
 
+            class ReleaseParams(Protocol): ...
+
             class ReleaseCallContext(Protocol):
-                params: _ClusterModule._ValueHolderModule.ReleaseRequest
+                params: _ClusterModule._ValueHolderModule.Server.ReleaseParams
 
             def value(
                 self,
                 _context: _ClusterModule._ValueHolderModule.Server.ValueCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server.ValueResultTuple | None
             ]: ...
@@ -560,7 +584,7 @@ class _ClusterModule(_StructModule):
             def release(
                 self,
                 _context: _ClusterModule._ValueHolderModule.Server.ReleaseCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def release_context(
                 self,
@@ -680,46 +704,66 @@ class _ClusterModule(_StructModule):
             class RestoresturdyrefResultTuple(NamedTuple):
                 cap: _ClusterModule._ValueHolderModule.Server
 
+            class NewinstanceParams(Protocol): ...
+
             class NewinstanceCallContext(Protocol):
-                params: _ClusterModule._ModelInstanceFactoryModule.NewinstanceRequest
+                params: (
+                    _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceParams
+                )
                 results: (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceResult
                 )
 
+            class NewinstancesParams(Protocol):
+                numberOfInstances: int
+
             class NewinstancesCallContext(Protocol):
-                params: _ClusterModule._ModelInstanceFactoryModule.NewinstancesRequest
+                params: (
+                    _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesParams
+                )
                 results: (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesResult
                 )
 
+            class NewcloudviazmqpipelineproxiesParams(Protocol):
+                numberOfInstances: int
+
             class NewcloudviazmqpipelineproxiesCallContext(Protocol):
-                params: _ClusterModule._ModelInstanceFactoryModule.NewcloudviazmqpipelineproxiesRequest
+                params: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesParams
                 results: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesResult
 
+            class NewcloudviaproxyParams(Protocol):
+                numberOfInstances: int
+
             class NewcloudviaproxyCallContext(Protocol):
-                params: (
-                    _ClusterModule._ModelInstanceFactoryModule.NewcloudviaproxyRequest
-                )
+                params: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyParams
                 results: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyResult
 
+            class ModelidParams(Protocol): ...
+
             class ModelidCallContext(Protocol):
-                params: _ClusterModule._ModelInstanceFactoryModule.ModelidRequest
+                params: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidParams
                 results: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidResult
 
+            class RegistermodelinstanceParams(Protocol):
+                instance: AnyPointer
+                registrationToken: str
+
             class RegistermodelinstanceCallContext(Protocol):
-                params: _ClusterModule._ModelInstanceFactoryModule.RegistermodelinstanceRequest
+                params: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceParams
                 results: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceResult
 
+            class RestoresturdyrefParams(Protocol):
+                sturdyRef: str
+
             class RestoresturdyrefCallContext(Protocol):
-                params: (
-                    _ClusterModule._ModelInstanceFactoryModule.RestoresturdyrefRequest
-                )
+                params: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefParams
                 results: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefResult
 
             def newInstance(
                 self,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceResultTuple
@@ -733,7 +777,7 @@ class _ClusterModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesResultTuple
@@ -747,7 +791,7 @@ class _ClusterModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesResultTuple
@@ -761,7 +805,7 @@ class _ClusterModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyResultTuple
@@ -774,7 +818,7 @@ class _ClusterModule(_StructModule):
             def modelId(
                 self,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 str
                 | _ClusterModule._ModelInstanceFactoryModule.Server.ModelidResultTuple
@@ -789,7 +833,7 @@ class _ClusterModule(_StructModule):
                 instance: AnyPointer,
                 registrationToken: str,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._UnregisterModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceResultTuple
@@ -803,7 +847,7 @@ class _ClusterModule(_StructModule):
                 self,
                 sturdyRef: str,
                 _context: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ClusterModule._ValueHolderModule.Server
                 | _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefResultTuple

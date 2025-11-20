@@ -561,22 +561,30 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
             lat: float
             lon: float
 
+        class DataParams(Protocol): ...
+
         class DataCallContext(Protocol):
-            params: _ProfileModule.DataRequest
+            params: _ProfileModule.Server.DataParams
             results: _ProfileModule.Server.DataResult
 
+        class GeolocationParams(Protocol): ...
+
         class GeolocationCallContext(Protocol):
-            params: _ProfileModule.GeolocationRequest
+            params: _ProfileModule.Server.GeolocationParams
             results: _ProfileModule.Server.GeolocationResult
 
         def data(
-            self, _context: _ProfileModule.Server.DataCallContext, **kwargs: Any
+            self,
+            _context: _ProfileModule.Server.DataCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ProfileModule.Server.DataResultTuple | None]: ...
         def data_context(
             self, context: _ProfileModule.Server.DataCallContext
         ) -> Awaitable[None]: ...
         def geoLocation(
-            self, _context: _ProfileModule.Server.GeolocationCallContext, **kwargs: Any
+            self,
+            _context: _ProfileModule.Server.GeolocationCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ProfileModule.Server.GeolocationResultTuple | None]: ...
         def geoLocation_context(
             self, context: _ProfileModule.Server.GeolocationCallContext
@@ -618,15 +626,18 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             class NextprofilesResultTuple(NamedTuple):
                 profiles: Sequence[_ProfileModule]
 
+            class NextprofilesParams(Protocol):
+                maxCount: int
+
             class NextprofilesCallContext(Protocol):
-                params: _ServiceModule._StreamModule.NextprofilesRequest
+                params: _ServiceModule._StreamModule.Server.NextprofilesParams
                 results: _ServiceModule._StreamModule.Server.NextprofilesResult
 
             def nextProfiles(
                 self,
                 maxCount: int,
                 _context: _ServiceModule._StreamModule.Server.NextprofilesCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 _ServiceModule._StreamModule.Server.NextprofilesResultTuple | None
             ]: ...
@@ -673,7 +684,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> _ServiceModule.ServiceClient.GetallavailableparametersResult: ...
 
     class ClosestprofilesatRequest(Protocol):
-        query: _QueryModule.Builder
+        query: QueryBuilder
         @overload
         def init(self, name: Literal["query"]) -> QueryBuilder: ...
         @overload
@@ -734,20 +745,36 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         class StreamallprofilesResultTuple(NamedTuple):
             allProfiles: _ServiceModule._StreamModule.Server
 
+        class CheckavailableparametersParams(Protocol):
+            mandatory: Sequence[PropertyNameEnum]
+            optional: Sequence[PropertyNameEnum]
+            onlyRawData: bool
+
         class CheckavailableparametersCallContext(Protocol):
-            params: _ServiceModule.CheckavailableparametersRequest
+            params: _ServiceModule.Server.CheckavailableparametersParams
             results: _ServiceModule.Server.CheckavailableparametersResult
 
+        class GetallavailableparametersParams(Protocol):
+            onlyRawData: bool
+
         class GetallavailableparametersCallContext(Protocol):
-            params: _ServiceModule.GetallavailableparametersRequest
+            params: _ServiceModule.Server.GetallavailableparametersParams
             results: _ServiceModule.Server.GetallavailableparametersResult
 
+        class ClosestprofilesatParams(Protocol):
+            query: QueryReader
+
         class ClosestprofilesatCallContext(Protocol):
-            params: _ServiceModule.ClosestprofilesatRequest
+            params: _ServiceModule.Server.ClosestprofilesatParams
             results: _ServiceModule.Server.ClosestprofilesatResult
 
+        class StreamallprofilesParams(Protocol):
+            mandatory: Sequence[PropertyNameEnum]
+            optional: Sequence[PropertyNameEnum]
+            onlyRawData: bool
+
         class StreamallprofilesCallContext(Protocol):
-            params: _ServiceModule.StreamallprofilesRequest
+            params: _ServiceModule.Server.StreamallprofilesParams
             results: _ServiceModule.Server.StreamallprofilesResult
 
         def checkAvailableParameters(
@@ -756,7 +783,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             optional: Sequence[PropertyNameEnum],
             onlyRawData: bool,
             _context: _ServiceModule.Server.CheckavailableparametersCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _ServiceModule.Server.CheckavailableparametersResultTuple | None
         ]: ...
@@ -767,7 +794,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self,
             onlyRawData: bool,
             _context: _ServiceModule.Server.GetallavailableparametersCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _ServiceModule.Server.GetallavailableparametersResultTuple | None
         ]: ...
@@ -776,9 +803,9 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def closestProfilesAt(
             self,
-            query: _QueryModule.Reader,
+            query: QueryReader,
             _context: _ServiceModule.Server.ClosestprofilesatCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ServiceModule.Server.ClosestprofilesatResultTuple | None]: ...
         def closestProfilesAt_context(
             self, context: _ServiceModule.Server.ClosestprofilesatCallContext
@@ -789,7 +816,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             optional: Sequence[PropertyNameEnum],
             onlyRawData: bool,
             _context: _ServiceModule.Server.StreamallprofilesCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _ServiceModule._StreamModule.Server
             | _ServiceModule.Server.StreamallprofilesResultTuple
@@ -849,7 +876,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self, onlyRawData: bool | None = None
         ) -> _ServiceModule.GetallavailableparametersRequest: ...
         def closestProfilesAt_request(
-            self, query: _QueryModule.Builder | None = None
+            self, query: QueryBuilder | None = None
         ) -> _ServiceModule.ClosestprofilesatRequest: ...
         def streamAllProfiles_request(
             self,

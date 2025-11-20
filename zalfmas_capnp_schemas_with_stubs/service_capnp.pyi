@@ -65,24 +65,38 @@ class _AdminModule(_IdentifiableModule):
         class IdentitiesResultTuple(NamedTuple):
             pass
 
+        class HeartbeatParams(Protocol): ...
+
         class HeartbeatCallContext(Protocol):
-            params: _AdminModule.HeartbeatRequest
+            params: _AdminModule.Server.HeartbeatParams
+
+        class SettimeoutParams(Protocol):
+            seconds: int
 
         class SettimeoutCallContext(Protocol):
-            params: _AdminModule.SettimeoutRequest
+            params: _AdminModule.Server.SettimeoutParams
+
+        class StopParams(Protocol): ...
 
         class StopCallContext(Protocol):
-            params: _AdminModule.StopRequest
+            params: _AdminModule.Server.StopParams
+
+        class IdentitiesParams(Protocol): ...
 
         class IdentitiesCallContext(Protocol):
-            params: _AdminModule.IdentitiesRequest
+            params: _AdminModule.Server.IdentitiesParams
             results: _AdminModule.Server.IdentitiesResult
 
+        class UpdateidentityParams(Protocol):
+            oldId: str
+
         class UpdateidentityCallContext(Protocol):
-            params: _AdminModule.UpdateidentityRequest
+            params: _AdminModule.Server.UpdateidentityParams
 
         def heartbeat(
-            self, _context: _AdminModule.Server.HeartbeatCallContext, **kwargs: Any
+            self,
+            _context: _AdminModule.Server.HeartbeatCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def heartbeat_context(
             self, context: _AdminModule.Server.HeartbeatCallContext
@@ -91,19 +105,23 @@ class _AdminModule(_IdentifiableModule):
             self,
             seconds: int,
             _context: _AdminModule.Server.SettimeoutCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def setTimeout_context(
             self, context: _AdminModule.Server.SettimeoutCallContext
         ) -> Awaitable[None]: ...
         def stop(
-            self, _context: _AdminModule.Server.StopCallContext, **kwargs: Any
+            self,
+            _context: _AdminModule.Server.StopCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def stop_context(
             self, context: _AdminModule.Server.StopCallContext
         ) -> Awaitable[None]: ...
         def identities(
-            self, _context: _AdminModule.Server.IdentitiesCallContext, **kwargs: Any
+            self,
+            _context: _AdminModule.Server.IdentitiesCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_AdminModule.Server.IdentitiesResultTuple | None]: ...
         def identities_context(
             self, context: _AdminModule.Server.IdentitiesCallContext
@@ -112,7 +130,7 @@ class _AdminModule(_IdentifiableModule):
             self,
             oldId: str,
             _context: _AdminModule.Server.UpdateidentityCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def updateIdentity_context(
             self, context: _AdminModule.Server.UpdateidentityCallContext
@@ -163,12 +181,16 @@ class _SimpleFactoryModule(_IdentifiableModule):
         class CreateResultTuple(NamedTuple):
             caps: Sequence[_IdentifiableModule]
 
+        class CreateParams(Protocol): ...
+
         class CreateCallContext(Protocol):
-            params: _SimpleFactoryModule.CreateRequest
+            params: _SimpleFactoryModule.Server.CreateParams
             results: _SimpleFactoryModule.Server.CreateResult
 
         def create(
-            self, _context: _SimpleFactoryModule.Server.CreateCallContext, **kwargs: Any
+            self,
+            _context: _SimpleFactoryModule.Server.CreateCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_SimpleFactoryModule.Server.CreateResultTuple | None]: ...
         def create_context(
             self, context: _SimpleFactoryModule.Server.CreateCallContext
@@ -417,12 +439,19 @@ class _FactoryModule(_IdentifiableModule):
         class ServiceinterfacenamesResultTuple(NamedTuple):
             names: Sequence[str]
 
+        class CreateParams(Protocol):
+            timeoutSeconds: int
+            interfaceNameToRegistrySR: Sequence[_PairModule.Reader]
+            msgPayload: AnyPointer
+
         class CreateCallContext(Protocol):
-            params: _FactoryModule.CreateRequest
+            params: _FactoryModule.Server.CreateParams
             results: _FactoryModule.Server.CreateResult
 
+        class ServiceinterfacenamesParams(Protocol): ...
+
         class ServiceinterfacenamesCallContext(Protocol):
-            params: _FactoryModule.ServiceinterfacenamesRequest
+            params: _FactoryModule.Server.ServiceinterfacenamesParams
             results: _FactoryModule.Server.ServiceinterfacenamesResult
 
         def create(
@@ -431,7 +460,7 @@ class _FactoryModule(_IdentifiableModule):
             interfaceNameToRegistrySR: Sequence[_PairModule.Reader],
             msgPayload: AnyPointer,
             _context: _FactoryModule.Server.CreateCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_FactoryModule.Server.CreateResultTuple | None]: ...
         def create_context(
             self, context: _FactoryModule.Server.CreateCallContext
@@ -439,7 +468,7 @@ class _FactoryModule(_IdentifiableModule):
         def serviceInterfaceNames(
             self,
             _context: _FactoryModule.Server.ServiceinterfacenamesCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _FactoryModule.Server.ServiceinterfacenamesResultTuple | None
         ]: ...
@@ -497,12 +526,16 @@ class _StoppableModule(_InterfaceModule):
         class StopResultTuple(NamedTuple):
             success: bool
 
+        class StopParams(Protocol): ...
+
         class StopCallContext(Protocol):
-            params: _StoppableModule.StopRequest
+            params: _StoppableModule.Server.StopParams
             results: _StoppableModule.Server.StopResult
 
         def stop(
-            self, _context: _StoppableModule.Server.StopCallContext, **kwargs: Any
+            self,
+            _context: _StoppableModule.Server.StopCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[bool | _StoppableModule.Server.StopResultTuple | None]: ...
         def stop_context(
             self, context: _StoppableModule.Server.StopCallContext

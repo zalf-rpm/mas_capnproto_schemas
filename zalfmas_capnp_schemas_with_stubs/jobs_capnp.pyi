@@ -119,17 +119,21 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class NextjobResult(Awaitable[NextjobResult], Protocol):
-            job: _JobModule.Builder | _JobModule.Reader
+            job: JobBuilder | JobReader
 
         class NextjobResultTuple(NamedTuple):
             job: _JobModule.Builder | _JobModule.Reader
 
+        class NextjobParams(Protocol): ...
+
         class NextjobCallContext(Protocol):
-            params: _ServiceModule.NextjobRequest
+            params: _ServiceModule.Server.NextjobParams
             results: _ServiceModule.Server.NextjobResult
 
         def nextJob(
-            self, _context: _ServiceModule.Server.NextjobCallContext, **kwargs: Any
+            self,
+            _context: _ServiceModule.Server.NextjobCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ServiceModule.Server.NextjobResultTuple | None]: ...
         def nextJob_context(
             self, context: _ServiceModule.Server.NextjobCallContext
@@ -139,7 +143,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class NextjobResult(Awaitable[NextjobResult], Protocol):
-            job: _JobModule.Builder | _JobModule.Reader
+            job: JobReader
 
         def nextJob(self) -> _ServiceModule.ServiceClient.NextjobResult: ...
         def nextJob_request(self) -> _ServiceModule.NextjobRequest: ...

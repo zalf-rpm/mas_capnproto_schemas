@@ -10,7 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../../zalfmas_capnp_schemas/capnp/persistent.capnp")
 )
-import_path = [here, os.path.join(here, "../../zalfmas_capnp_schemas")]
+import_path = [here, os.path.abspath(os.path.join(here, "../../zalfmas_capnp_schemas"))]
 Persistent = capnp.load(module_file, imports=import_path).Persistent
 
 Persistent.Server.SaveResultTuple = NamedTuple(

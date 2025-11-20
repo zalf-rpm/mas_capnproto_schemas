@@ -59,32 +59,44 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
         class SpeciesResultTuple(NamedTuple):
             pass
 
+        class ParametersParams(Protocol): ...
+
         class ParametersCallContext(Protocol):
-            params: _CropModule.ParametersRequest
+            params: _CropModule.Server.ParametersParams
             results: _CropModule.Server.ParametersResult
 
+        class CultivarParams(Protocol): ...
+
         class CultivarCallContext(Protocol):
-            params: _CropModule.CultivarRequest
+            params: _CropModule.Server.CultivarParams
             results: _CropModule.Server.CultivarResult
 
+        class SpeciesParams(Protocol): ...
+
         class SpeciesCallContext(Protocol):
-            params: _CropModule.SpeciesRequest
+            params: _CropModule.Server.SpeciesParams
             results: _CropModule.Server.SpeciesResult
 
         def parameters(
-            self, _context: _CropModule.Server.ParametersCallContext, **kwargs: Any
+            self,
+            _context: _CropModule.Server.ParametersCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_CropModule.Server.ParametersResultTuple | None]: ...
         def parameters_context(
             self, context: _CropModule.Server.ParametersCallContext
         ) -> Awaitable[None]: ...
         def cultivar(
-            self, _context: _CropModule.Server.CultivarCallContext, **kwargs: Any
+            self,
+            _context: _CropModule.Server.CultivarCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_CropModule.Server.CultivarResultTuple | None]: ...
         def cultivar_context(
             self, context: _CropModule.Server.CultivarCallContext
         ) -> Awaitable[None]: ...
         def species(
-            self, _context: _CropModule.Server.SpeciesCallContext, **kwargs: Any
+            self,
+            _context: _CropModule.Server.SpeciesCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_CropModule.Server.SpeciesResultTuple | None]: ...
         def species_context(
             self, context: _CropModule.Server.SpeciesCallContext

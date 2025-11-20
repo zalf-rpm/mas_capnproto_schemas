@@ -40,12 +40,16 @@ class _ServiceModule(_InterfaceModule):
             config: AnyPointer
             noFurtherConfigs: bool
 
+        class NextconfigParams(Protocol): ...
+
         class NextconfigCallContext(Protocol):
-            params: _ServiceModule.NextconfigRequest
+            params: _ServiceModule.Server.NextconfigParams
             results: _ServiceModule.Server.NextconfigResult
 
         def nextConfig(
-            self, _context: _ServiceModule.Server.NextconfigCallContext, **kwargs: Any
+            self,
+            _context: _ServiceModule.Server.NextconfigCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ServiceModule.Server.NextconfigResultTuple | None]: ...
         def nextConfig_context(
             self, context: _ServiceModule.Server.NextconfigCallContext

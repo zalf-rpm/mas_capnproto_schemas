@@ -10,11 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../zalfmas_capnp_schemas/model.capnp")
 )
-import_path = [
-    here,
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 XYResult = capnp.load(module_file, imports=import_path).XYResult
 Stat = capnp.load(module_file, imports=import_path).Stat
 XYPlusResult = capnp.load(module_file, imports=import_path).XYPlusResult

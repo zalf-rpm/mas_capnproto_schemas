@@ -326,10 +326,10 @@ class _ClimateInstanceModule(_IdentifiableModule):
     ) -> _ClimateInstanceModule.ClimateInstanceClient: ...
     class Server(_IdentifiableModule.Server):
         class RunResult(Awaitable[RunResult], Protocol):
-            result: _XYResultModule.Builder | _XYResultModule.Reader
+            result: XYResultBuilder | XYResultReader
 
         class RunsetResult(Awaitable[RunsetResult], Protocol):
-            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
+            result: XYPlusResultBuilder | XYPlusResultReader
 
         class RunResultTuple(NamedTuple):
             result: _XYResultModule.Builder | _XYResultModule.Reader
@@ -337,16 +337,22 @@ class _ClimateInstanceModule(_IdentifiableModule):
         class RunsetResultTuple(NamedTuple):
             result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
 
+        class RunParams(Protocol): ...
+
         class RunCallContext(Protocol):
-            params: _ClimateInstanceModule.RunRequest
+            params: _ClimateInstanceModule.Server.RunParams
             results: _ClimateInstanceModule.Server.RunResult
 
+        class RunsetParams(Protocol): ...
+
         class RunsetCallContext(Protocol):
-            params: _ClimateInstanceModule.RunsetRequest
+            params: _ClimateInstanceModule.Server.RunsetParams
             results: _ClimateInstanceModule.Server.RunsetResult
 
         def run(
-            self, _context: _ClimateInstanceModule.Server.RunCallContext, **kwargs: Any
+            self,
+            _context: _ClimateInstanceModule.Server.RunCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ClimateInstanceModule.Server.RunResultTuple | None]: ...
         def run_context(
             self, context: _ClimateInstanceModule.Server.RunCallContext
@@ -354,7 +360,7 @@ class _ClimateInstanceModule(_IdentifiableModule):
         def runSet(
             self,
             _context: _ClimateInstanceModule.Server.RunsetCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ClimateInstanceModule.Server.RunsetResultTuple | None]: ...
         def runSet_context(
             self, context: _ClimateInstanceModule.Server.RunsetCallContext
@@ -362,10 +368,10 @@ class _ClimateInstanceModule(_IdentifiableModule):
 
     class ClimateInstanceClient(_IdentifiableModule.IdentifiableClient):
         class RunResult(Awaitable[RunResult], Protocol):
-            result: _XYResultModule.Builder | _XYResultModule.Reader
+            result: XYResultReader
 
         class RunsetResult(Awaitable[RunsetResult], Protocol):
-            result: _XYPlusResultModule.Builder | _XYPlusResultModule.Reader
+            result: XYPlusResultReader
 
         def run(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
         def runSet(
@@ -489,7 +495,7 @@ Env: _EnvModule
 
 class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModule):
     class RunRequest(Protocol):
-        env: _EnvModule.Builder
+        env: EnvBuilder
         @overload
         def init(self, name: Literal["env"]) -> EnvBuilder: ...
         @overload
@@ -508,15 +514,18 @@ class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModul
         class RunResultTuple(NamedTuple):
             result: AnyPointer
 
+        class RunParams(Protocol):
+            env: EnvReader
+
         class RunCallContext(Protocol):
-            params: _EnvInstanceModule.RunRequest
+            params: _EnvInstanceModule.Server.RunParams
             results: _EnvInstanceModule.Server.RunResult
 
         def run(
             self,
-            env: _EnvModule.Reader,
+            env: EnvReader,
             _context: _EnvInstanceModule.Server.RunCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_EnvInstanceModule.Server.RunResultTuple | None]: ...
         def run_context(
             self, context: _EnvInstanceModule.Server.RunCallContext
@@ -534,7 +543,7 @@ class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModul
             self, env: EnvBuilder | EnvReader | dict[str, Any] | None = None
         ) -> _EnvInstanceModule.EnvInstanceClient.RunResult: ...
         def run_request(
-            self, env: _EnvModule.Builder | None = None
+            self, env: EnvBuilder | None = None
         ) -> _EnvInstanceModule.RunRequest: ...
 
 EnvInstance: _EnvInstanceModule
@@ -556,8 +565,12 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
             class UnregisterResultTuple(NamedTuple):
                 success: bool
 
+            class UnregisterParams(Protocol): ...
+
             class UnregisterCallContext(Protocol):
-                params: _EnvInstanceProxyModule._UnregisterModule.UnregisterRequest
+                params: (
+                    _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterParams
+                )
                 results: (
                     _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterResult
                 )
@@ -565,7 +578,7 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
             def unregister(
                 self,
                 _context: _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterCallContext,
-                **kwargs: Any,
+                **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
                 | _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterResultTuple
@@ -607,15 +620,18 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
         class RegisterenvinstanceResultTuple(NamedTuple):
             unregister: _EnvInstanceProxyModule._UnregisterModule.Server
 
+        class RegisterenvinstanceParams(Protocol):
+            instance: EnvInstanceClient
+
         class RegisterenvinstanceCallContext(Protocol):
-            params: _EnvInstanceProxyModule.RegisterenvinstanceRequest
+            params: _EnvInstanceProxyModule.Server.RegisterenvinstanceParams
             results: _EnvInstanceProxyModule.Server.RegisterenvinstanceResult
 
         def registerEnvInstance(
             self,
             instance: EnvInstanceClient,
             _context: _EnvInstanceProxyModule.Server.RegisterenvinstanceCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _EnvInstanceProxyModule._UnregisterModule.Server
             | _EnvInstanceProxyModule.Server.RegisterenvinstanceResultTuple
@@ -683,22 +699,29 @@ class _InstanceFactoryModule(_IdentifiableModule):
         class NewinstancesResultTuple(NamedTuple):
             instances: Sequence[_IdentifiableModule]
 
+        class ModelinfoParams(Protocol): ...
+
         class ModelinfoCallContext(Protocol):
-            params: _InstanceFactoryModule.ModelinfoRequest
+            params: _InstanceFactoryModule.Server.ModelinfoParams
             results: _InstanceFactoryModule.Server.ModelinfoResult
 
+        class NewinstanceParams(Protocol): ...
+
         class NewinstanceCallContext(Protocol):
-            params: _InstanceFactoryModule.NewinstanceRequest
+            params: _InstanceFactoryModule.Server.NewinstanceParams
             results: _InstanceFactoryModule.Server.NewinstanceResult
 
+        class NewinstancesParams(Protocol):
+            numberOfInstances: int
+
         class NewinstancesCallContext(Protocol):
-            params: _InstanceFactoryModule.NewinstancesRequest
+            params: _InstanceFactoryModule.Server.NewinstancesParams
             results: _InstanceFactoryModule.Server.NewinstancesResult
 
         def modelInfo(
             self,
             _context: _InstanceFactoryModule.Server.ModelinfoCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_InstanceFactoryModule.Server.ModelinfoResultTuple | None]: ...
         def modelInfo_context(
             self, context: _InstanceFactoryModule.Server.ModelinfoCallContext
@@ -706,7 +729,7 @@ class _InstanceFactoryModule(_IdentifiableModule):
         def newInstance(
             self,
             _context: _InstanceFactoryModule.Server.NewinstanceCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _IdentifiableModule.Server
             | _InstanceFactoryModule.Server.NewinstanceResultTuple
@@ -719,7 +742,7 @@ class _InstanceFactoryModule(_IdentifiableModule):
             self,
             numberOfInstances: int,
             _context: _InstanceFactoryModule.Server.NewinstancesCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[
             _InstanceFactoryModule.Server.NewinstancesResultTuple | None
         ]: ...

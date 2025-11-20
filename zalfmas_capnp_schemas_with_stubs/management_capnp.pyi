@@ -596,16 +596,22 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
         class ParametersResultTuple(NamedTuple):
             params: AnyPointer
 
+        class NutrientsParams(Protocol): ...
+
         class NutrientsCallContext(Protocol):
-            params: _FertilizerModule.NutrientsRequest
+            params: _FertilizerModule.Server.NutrientsParams
             results: _FertilizerModule.Server.NutrientsResult
 
+        class ParametersParams(Protocol): ...
+
         class ParametersCallContext(Protocol):
-            params: _FertilizerModule.ParametersRequest
+            params: _FertilizerModule.Server.ParametersParams
             results: _FertilizerModule.Server.ParametersResult
 
         def nutrients(
-            self, _context: _FertilizerModule.Server.NutrientsCallContext, **kwargs: Any
+            self,
+            _context: _FertilizerModule.Server.NutrientsCallContext,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_FertilizerModule.Server.NutrientsResultTuple | None]: ...
         def nutrients_context(
             self, context: _FertilizerModule.Server.NutrientsCallContext
@@ -613,7 +619,7 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
         def parameters(
             self,
             _context: _FertilizerModule.Server.ParametersCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_FertilizerModule.Server.ParametersResultTuple | None]: ...
         def parameters_context(
             self, context: _FertilizerModule.Server.ParametersCallContext
@@ -2151,8 +2157,12 @@ class _ServiceModule(_IdentifiableModule):
         class ManagementatResultTuple(NamedTuple):
             mgmt: Sequence[_EventModule]
 
+        class ManagementatParams(Protocol):
+            lat: float
+            lon: float
+
         class ManagementatCallContext(Protocol):
-            params: _ServiceModule.ManagementatRequest
+            params: _ServiceModule.Server.ManagementatParams
             results: _ServiceModule.Server.ManagementatResult
 
         def managementAt(
@@ -2160,7 +2170,7 @@ class _ServiceModule(_IdentifiableModule):
             lat: float,
             lon: float,
             _context: _ServiceModule.Server.ManagementatCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_ServiceModule.Server.ManagementatResultTuple | None]: ...
         def managementAt_context(
             self, context: _ServiceModule.Server.ManagementatCallContext

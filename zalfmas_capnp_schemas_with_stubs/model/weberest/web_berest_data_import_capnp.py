@@ -13,7 +13,10 @@ module_file = os.path.abspath(
         "../../../zalfmas_capnp_schemas/model/weberest/web-berest-data-import.capnp",
     )
 )
-import_path = [here, os.path.join(here, "../../../zalfmas_capnp_schemas")]
+import_path = [
+    here,
+    os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas")),
+]
 DWLABImport = capnp.load(module_file, imports=import_path).DWLABImport
 
 DWLABImport.Server.ImportdataResultTuple = NamedTuple(

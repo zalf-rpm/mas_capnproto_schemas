@@ -10,11 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 module_file = os.path.abspath(
     os.path.join(here, "../zalfmas_capnp_schemas/service.capnp")
 )
-import_path = [
-    here,
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-    os.path.join(here, "../zalfmas_capnp_schemas"),
-]
+import_path = [here, os.path.abspath(os.path.join(here, "../zalfmas_capnp_schemas"))]
 Admin = capnp.load(module_file, imports=import_path).Admin
 SimpleFactory = capnp.load(module_file, imports=import_path).SimpleFactory
 Factory = capnp.load(module_file, imports=import_path).Factory

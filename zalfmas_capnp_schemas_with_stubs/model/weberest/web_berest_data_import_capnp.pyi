@@ -32,8 +32,13 @@ class _DWLABImportModule(_InterfaceModule):
             successA: bool
             successB: bool
 
+        class ImportdataParams(Protocol):
+            id: str
+            dwla: bytes
+            dwlb: bytes
+
         class ImportdataCallContext(Protocol):
-            params: _DWLABImportModule.ImportdataRequest
+            params: _DWLABImportModule.Server.ImportdataParams
             results: _DWLABImportModule.Server.ImportdataResult
 
         def importData(
@@ -42,7 +47,7 @@ class _DWLABImportModule(_InterfaceModule):
             dwla: bytes,
             dwlb: bytes,
             _context: _DWLABImportModule.Server.ImportdataCallContext,
-            **kwargs: Any,
+            **kwargs: dict[str, Any],
         ) -> Awaitable[_DWLABImportModule.Server.ImportdataResultTuple | None]: ...
         def importData_context(
             self, context: _DWLABImportModule.Server.ImportdataCallContext

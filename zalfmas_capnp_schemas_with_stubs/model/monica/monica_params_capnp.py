@@ -13,9 +13,8 @@ module_file = os.path.abspath(
 )
 import_path = [
     here,
-    os.path.join(here, "../../../zalfmas_capnp_schemas"),
-    os.path.join(here, "../../../zalfmas_capnp_schemas"),
-    os.path.join(here, "../../../zalfmas_capnp_schemas/model/monica"),
+    os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas")),
+    os.path.abspath(os.path.join(here, "../../../zalfmas_capnp_schemas/model/monica")),
 ]
 CropSpec = capnp.load(module_file, imports=import_path).CropSpec
 CropParameters = capnp.load(module_file, imports=import_path).CropParameters
