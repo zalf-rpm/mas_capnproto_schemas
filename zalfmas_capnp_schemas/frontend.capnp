@@ -17,4 +17,3 @@ using Common = import "common.capnp";
 
 #    addPublicKey @0 (srOwner :SturdyRef.Owner, publicKey :Data);
 #}
-

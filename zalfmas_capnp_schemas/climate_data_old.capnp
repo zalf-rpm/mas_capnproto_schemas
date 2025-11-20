@@ -31,7 +31,7 @@ struct ClimateData {
     co2 @11; # [ppm]
     o3 @12; # [ppm]
     et0 @13; # []
-		dewpointTemp @14; # [°C]
+    dewpointTemp @14; # [°C]
   }
 
   interface Station extends(Common.Identifiable) {
@@ -48,14 +48,14 @@ struct ClimateData {
     # the climate stations geo coordinate
 
     allTimeSeries @3 () -> (allTimeSeries :List(TimeSeries));
-    # get all time series available at this station 
+    # get all time series available at this station
 
     timeSeriesFor @4 (scenarioId :Text, realizationId :Text) -> (timeSeries :TimeSeries);
     # get the timeSeries at this station for the given scenario and realization
   }
 
   enum TimeResolution {
-    # which time resolution data may have 
+    # which time resolution data may have
     daily @0;
     hourly @1;
   }
@@ -121,7 +121,7 @@ struct ClimateData {
     # the climate scenario this realization belongs to
 
     closestTimeSeriesAt @1 (geoCoord :Geo.Coord) -> (timeSeries :List(TimeSeries));
-    # closest TimeSeries object which represents the whole time series 
+    # closest TimeSeries object which represents the whole time series
     # of the climate realization at the give climate coordinate
   }
 

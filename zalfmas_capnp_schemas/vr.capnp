@@ -19,11 +19,11 @@ struct RT {
     struct RegionParams {
         # parameters specific to a subregion of a VR
 
-        bounds @0 :Geo.RectBounds(Cell2D); 
+        bounds @0 :Geo.RectBounds(Cell2D);
         # bounds of region
-        # the bounds are inclusive 
+        # the bounds are inclusive
     }
-    
+
     interface Region {
         #represents a region in a VR
 
@@ -32,8 +32,6 @@ struct RT {
 
         startCachingData @1 () -> (stop :Funcs.Action);
         # start caching registered data
-
-
 
     }
 
@@ -62,7 +60,7 @@ struct RT {
 
     interface DataAtCell(T) {
         # getting data at at a given cell
-        # will only work for datasets created with a certain resolution and extend 
+        # will only work for datasets created with a certain resolution and extend
 
         getDataAtCell @0 Cell2D -> (data :T);
         # get data a certain cell
@@ -70,12 +68,11 @@ struct RT {
 
     interface DataAtLatLonCoord(T) {
         # getting data at at a given coordinate
-        # should work for all kinds of data as a coordinate is cell independent 
+        # should work for all kinds of data as a coordinate is cell independent
 
         getDataAtCoord @0 Geo.LatLonCoord -> (data :T);
         # get data a certain coordinate
     }
-
 
     interface DataService(T) extends(DataAtCell(T), DataAtLatLonCoord(T)) {
     }
@@ -92,10 +89,9 @@ struct RT {
         # map some geo-coordinate to a cell coordinate
     }
 
-
     interface VR extends(Region, Registry.Registry) {
-        # capability to a VR 
-        
+        # capability to a VR
+
         params @0 () -> VRParams;
         # get the parameters used to create this VR
 
@@ -112,10 +108,6 @@ struct RT {
         createSubRegion @3 RegionParams -> (unregister :Funcs.Action);
         # create a (sub-)region in this VR with the given parameters
 
-
     }
-
-    
-
 
 }
