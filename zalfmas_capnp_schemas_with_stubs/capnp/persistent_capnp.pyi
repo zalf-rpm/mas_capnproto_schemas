@@ -9,6 +9,8 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -24,6 +26,8 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
 
 class _PersistentModule(_InterfaceModule):
@@ -215,7 +219,7 @@ class _PersistentModule(_InterfaceModule):
             sturdyRef: _DynamicObjectReader
 
         def save(
-            self, sealFor: _DynamicObjectReader | None = None
+            self, sealFor: AnyPointer | None = None
         ) -> _PersistentModule.PersistentClient.SaveResult: ...
         def save_request(
             self, sealFor: AnyPointer | None = None

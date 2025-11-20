@@ -9,6 +9,9 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -31,6 +34,8 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
 
 class _IPModule(_StructModule):
@@ -41,7 +46,7 @@ class _IPModule(_StructModule):
             @property
             def desc(self) -> str: ...
             @property
-            def value(self) -> Any: ...
+            def value(self) -> _DynamicObjectReader: ...
             @override
             def as_builder(
                 self,
@@ -59,9 +64,9 @@ class _IPModule(_StructModule):
             @desc.setter
             def desc(self, value: str) -> None: ...
             @property
-            def value(self) -> Any: ...
+            def value(self) -> _DynamicObjectBuilder: ...
             @value.setter
-            def value(self, value: Any) -> None: ...
+            def value(self, value: AnyPointer) -> None: ...
             @override
             def as_reader(self) -> KVReader: ...
 
@@ -72,7 +77,7 @@ class _IPModule(_StructModule):
             allocate_seg_callable: Any = None,
             key: str | None = None,
             desc: str | None = None,
-            value: Any | None = None,
+            value: AnyPointer | None = None,
             **kwargs: Any,
         ) -> KVBuilder: ...
         @overload
@@ -134,7 +139,7 @@ class _IPModule(_StructModule):
         @property
         def attributes(self) -> Sequence[KVReader]: ...
         @property
-        def content(self) -> Any: ...
+        def content(self) -> _DynamicObjectReader: ...
         @property
         def type(self) -> IPTypeEnum: ...
         @override
@@ -152,9 +157,9 @@ class _IPModule(_StructModule):
             self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]
         ) -> None: ...
         @property
-        def content(self) -> Any: ...
+        def content(self) -> _DynamicObjectBuilder: ...
         @content.setter
-        def content(self, value: Any) -> None: ...
+        def content(self, value: AnyPointer) -> None: ...
         @property
         def type(self) -> IPTypeEnum: ...
         @type.setter
@@ -171,7 +176,7 @@ class _IPModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         attributes: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
-        content: Any | None = None,
+        content: AnyPointer | None = None,
         type: IPTypeEnum | None = None,
         **kwargs: Any,
     ) -> IPBuilder: ...
@@ -226,7 +231,7 @@ IP: _IPModule
 class _IIPModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def content(self) -> Any: ...
+        def content(self) -> _DynamicObjectReader: ...
         @override
         def as_builder(
             self,
@@ -236,9 +241,9 @@ class _IIPModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def content(self) -> Any: ...
+        def content(self) -> _DynamicObjectBuilder: ...
         @content.setter
-        def content(self, value: Any) -> None: ...
+        def content(self, value: AnyPointer) -> None: ...
         @override
         def as_reader(self) -> IIPReader: ...
 
@@ -247,7 +252,7 @@ class _IIPModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        content: Any | None = None,
+        content: AnyPointer | None = None,
         **kwargs: Any,
     ) -> IIPBuilder: ...
     @overload
@@ -616,7 +621,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
             def write(
                 self,
-                value: _DynamicObjectReader | None = None,
+                value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
             ) -> _ChannelModule._WriterModule.WriterClient.WriteResult: ...
@@ -625,7 +630,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             ) -> _ChannelModule._WriterModule.WriterClient.CloseResult: ...
             def writeIfSpace(
                 self,
-                value: _DynamicObjectReader | None = None,
+                value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
             ) -> _ChannelModule._WriterModule.WriterClient.WriteifspaceResult: ...

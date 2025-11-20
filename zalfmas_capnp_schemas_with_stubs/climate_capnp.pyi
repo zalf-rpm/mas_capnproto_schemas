@@ -9,6 +9,10 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
+    _DynamicObjectBuilder,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -25,6 +29,18 @@ from .common_capnp import (
 from .date_capnp import DateBuilder, DateReader
 from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import _PersistentModule
+
+# Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
+type AnyPointer = (
+    str
+    | bytes
+    | _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
+)
 
 class _GCMModule:
     cccmaCanEsm2: int
@@ -1386,7 +1402,7 @@ class _LocationModule(_StructModule):
             @property
             def key(self) -> str: ...
             @property
-            def value(self) -> Any: ...
+            def value(self) -> _DynamicObjectReader: ...
             @override
             def as_builder(
                 self,
@@ -1400,9 +1416,9 @@ class _LocationModule(_StructModule):
             @key.setter
             def key(self, value: str) -> None: ...
             @property
-            def value(self) -> Any: ...
+            def value(self) -> _DynamicObjectBuilder: ...
             @value.setter
-            def value(self, value: Any) -> None: ...
+            def value(self, value: AnyPointer) -> None: ...
             @override
             def as_reader(self) -> KVReader: ...
 
@@ -1412,7 +1428,7 @@ class _LocationModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             key: str | None = None,
-            value: Any | None = None,
+            value: AnyPointer | None = None,
             **kwargs: Any,
         ) -> KVBuilder: ...
         @overload

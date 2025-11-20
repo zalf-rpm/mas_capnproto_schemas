@@ -9,6 +9,8 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -26,7 +28,12 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
+
+# Type alias for Capability parameters
+type Capability = _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _VatIdModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -1082,10 +1089,10 @@ class _RestorerModule(_InterfaceModule):
     ) -> _RestorerModule.RestorerClient: ...
     class Server(_DynamicCapabilityServer):
         class RestoreResult(Awaitable[RestoreResult], Protocol):
-            cap: AnyPointer
+            cap: Capability
 
         class RestoreResultTuple(NamedTuple):
-            cap: AnyPointer
+            cap: Capability
 
         class RestoreParams(Protocol):
             localRef: TokenReader
@@ -1503,7 +1510,7 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
             secsHeartbeatInterval: int
 
         def register(
-            self, cap: _DynamicObjectReader | None = None
+            self, cap: AnyPointer | None = None
         ) -> _GatewayModule.GatewayClient.RegisterResult: ...
         def register_request(
             self, cap: AnyPointer | None = None

@@ -9,6 +9,7 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -23,6 +24,9 @@ from .common_capnp import (
     _IdentifiableModule,
 )
 from .persistence_capnp import _PersistentModule
+
+# Type alias for AnyStruct parameters
+type AnyStruct = _DynamicStructBuilder | _DynamicStructReader
 
 class _StoreModule(_IdentifiableModule, _PersistentModule):
     class _ContainerModule(_IdentifiableModule, _PersistentModule):
@@ -82,7 +86,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     @property
                     def dataListValue(self) -> Sequence[bytes]: ...
                     @property
-                    def anyValue(self) -> Any: ...
+                    def anyValue(self) -> _DynamicObjectReader: ...
                     @override
                     def which(
                         self,
@@ -228,9 +232,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     @dataListValue.setter
                     def dataListValue(self, value: Sequence[bytes]) -> None: ...
                     @property
-                    def anyValue(self) -> Any: ...
+                    def anyValue(self) -> _DynamicStructBuilder: ...
                     @anyValue.setter
-                    def anyValue(self, value: Any) -> None: ...
+                    def anyValue(self, value: AnyStruct | dict[str, Any]) -> None: ...
                     @override
                     def which(
                         self,
@@ -355,7 +359,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     textListValue: Sequence[str] | None = None,
                     dataValue: bytes | None = None,
                     dataListValue: Sequence[bytes] | None = None,
-                    anyValue: Any | None = None,
+                    anyValue: AnyStruct | dict[str, Any] | None = None,
                     **kwargs: Any,
                 ) -> ValueBuilder: ...
                 @overload

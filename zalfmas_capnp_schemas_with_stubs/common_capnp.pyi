@@ -9,6 +9,9 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -24,7 +27,12 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
+
+# Type alias for Capability parameters
+type Capability = _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _IdInformationModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -473,9 +481,9 @@ class _ValueModule(_StructModule):
         @property
         def d(self) -> bytes: ...
         @property
-        def p(self) -> Any: ...
+        def p(self) -> _DynamicObjectReader: ...
         @property
-        def cap(self) -> Any: ...
+        def cap(self) -> _DynamicObjectReader: ...
         @property
         def lf64(self) -> Sequence[float]: ...
         @property
@@ -602,13 +610,13 @@ class _ValueModule(_StructModule):
         @d.setter
         def d(self, value: bytes) -> None: ...
         @property
-        def p(self) -> Any: ...
+        def p(self) -> _DynamicObjectBuilder: ...
         @p.setter
-        def p(self, value: Any) -> None: ...
+        def p(self, value: AnyPointer) -> None: ...
         @property
-        def cap(self) -> Any: ...
+        def cap(self) -> _DynamicObjectReader: ...
         @cap.setter
-        def cap(self, value: Any) -> None: ...
+        def cap(self, value: Capability) -> None: ...
         @property
         def lf64(self) -> MutableSequence[float]: ...
         @lf64.setter
@@ -789,8 +797,8 @@ class _ValueModule(_StructModule):
         b: bool | None = None,
         t: str | None = None,
         d: bytes | None = None,
-        p: Any | None = None,
-        cap: Any | None = None,
+        p: AnyPointer | None = None,
+        cap: Capability | None = None,
         lf64: Sequence[float] | None = None,
         lf32: Sequence[float] | None = None,
         li64: Sequence[int] | None = None,

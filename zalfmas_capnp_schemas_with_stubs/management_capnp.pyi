@@ -9,6 +9,9 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -33,6 +36,8 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
 
 class _EventTypeModule:
@@ -443,7 +448,7 @@ class _EventModule(_StructModule):
         @property
         def after(self) -> AfterReader: ...
         @property
-        def params(self) -> Any: ...
+        def params(self) -> _DynamicObjectReader: ...
         @property
         def runAtStartOfDay(self) -> bool: ...
         @override
@@ -481,9 +486,9 @@ class _EventModule(_StructModule):
         @after.setter
         def after(self, value: AfterBuilder | AfterReader | dict[str, Any]) -> None: ...
         @property
-        def params(self) -> Any: ...
+        def params(self) -> _DynamicObjectBuilder: ...
         @params.setter
-        def params(self, value: Any) -> None: ...
+        def params(self, value: AnyPointer) -> None: ...
         @property
         def runAtStartOfDay(self) -> bool: ...
         @runAtStartOfDay.setter
@@ -519,7 +524,7 @@ class _EventModule(_StructModule):
         at: AtBuilder | dict[str, Any] | None = None,
         between: BetweenBuilder | dict[str, Any] | None = None,
         after: AfterBuilder | dict[str, Any] | None = None,
-        params: Any | None = None,
+        params: AnyPointer | None = None,
         runAtStartOfDay: bool | None = None,
         **kwargs: Any,
     ) -> EventBuilder: ...

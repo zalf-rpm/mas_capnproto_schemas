@@ -9,6 +9,8 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -26,6 +28,8 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
 
 class _ClusterModule(_StructModule):
@@ -525,7 +529,7 @@ class _ClusterModule(_StructModule):
             ) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.ModelidResult: ...
             def registerModelInstance(
                 self,
-                instance: _DynamicObjectReader | None = None,
+                instance: AnyPointer | None = None,
                 registrationToken: str | None = None,
             ) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.RegistermodelinstanceResult: ...
             def restoreSturdyRef(

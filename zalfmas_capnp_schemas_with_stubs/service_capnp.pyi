@@ -9,6 +9,8 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -33,7 +35,12 @@ type AnyPointer = (
     | _DynamicStructReader
     | _DynamicCapabilityClient
     | _DynamicCapabilityServer
+    | _DynamicListBuilder
+    | _DynamicListReader
 )
+
+# Type alias for Capability parameters
+type Capability = _DynamicCapabilityClient | _DynamicCapabilityServer
 
 class _AdminModule(_IdentifiableModule):
     class HeartbeatRequest(Protocol):
@@ -329,7 +336,7 @@ class _FactoryModule(_IdentifiableModule):
     class _AccessInfoModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def adminCap(self) -> Any: ...
+            def adminCap(self) -> _DynamicObjectReader: ...
             @property
             def serviceCaps(self) -> Sequence[_IdentifiableModule]: ...
             @property
@@ -343,9 +350,9 @@ class _FactoryModule(_IdentifiableModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def adminCap(self) -> Any: ...
+            def adminCap(self) -> _DynamicObjectReader: ...
             @adminCap.setter
-            def adminCap(self, value: Any) -> None: ...
+            def adminCap(self, value: Capability) -> None: ...
             @property
             def serviceCaps(self) -> MutableSequence[_IdentifiableModule]: ...
             @serviceCaps.setter
@@ -365,7 +372,7 @@ class _FactoryModule(_IdentifiableModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            adminCap: Any | None = None,
+            adminCap: Capability | None = None,
             serviceCaps: Sequence[_IdentifiableModule] | None = None,
             error: str | None = None,
             **kwargs: Any,
@@ -439,7 +446,7 @@ class _FactoryModule(_IdentifiableModule):
     ) -> _FactoryModule.FactoryClient: ...
     class Server(_IdentifiableModule.Server):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            adminCap: AnyPointer
+            adminCap: _DynamicCapabilityClient | _DynamicCapabilityServer
             serviceCaps: Sequence[_IdentifiableModule]
             error: str
 
@@ -449,7 +456,7 @@ class _FactoryModule(_IdentifiableModule):
             names: Sequence[str]
 
         class CreateResultTuple(NamedTuple):
-            adminCap: AnyPointer
+            adminCap: Capability
             serviceCaps: Sequence[
                 _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
             ]
@@ -497,7 +504,7 @@ class _FactoryModule(_IdentifiableModule):
 
     class FactoryClient(_IdentifiableModule.IdentifiableClient):
         class CreateResult(Awaitable[CreateResult], Protocol):
-            adminCap: _DynamicObjectReader
+            adminCap: _DynamicCapabilityClient
             serviceCaps: Sequence[_IdentifiableModule]
             error: str
 
@@ -512,7 +519,7 @@ class _FactoryModule(_IdentifiableModule):
             interfaceNameToRegistrySR: Sequence[_PairModule]
             | Sequence[dict[str, Any]]
             | None = None,
-            msgPayload: _DynamicObjectReader | None = None,
+            msgPayload: AnyPointer | None = None,
         ) -> _FactoryModule.FactoryClient.CreateResult: ...
         def serviceInterfaceNames(
             self,
