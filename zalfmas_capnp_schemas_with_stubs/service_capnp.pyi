@@ -598,10 +598,12 @@ Stoppable: _StoppableModule
 type AccessInfoBuilder = _FactoryModule._AccessInfoModule.Builder
 type AccessInfoReader = _FactoryModule._AccessInfoModule.Reader
 type AdminClient = _AdminModule.AdminClient
+type AdminServer = _AdminModule.Server
 type CreateParamsBuilder = _FactoryModule._CreateParamsModule.Builder
 type CreateParamsReader = _FactoryModule._CreateParamsModule.Reader
 type CreateResult = _FactoryModule.FactoryClient.CreateResult
 type FactoryClient = _FactoryModule.FactoryClient
+type FactoryServer = _FactoryModule.Server
 type HeartbeatResult = _AdminModule.AdminClient.HeartbeatResult
 type IdentitiesResult = _AdminModule.AdminClient.IdentitiesResult
 type ServiceinterfacenamesResult = (
@@ -609,6 +611,8 @@ type ServiceinterfacenamesResult = (
 )
 type SettimeoutResult = _AdminModule.AdminClient.SettimeoutResult
 type SimpleFactoryClient = _SimpleFactoryModule.SimpleFactoryClient
+type SimpleFactoryServer = _SimpleFactoryModule.Server
 type StopResult = _StoppableModule.StoppableClient.StopResult
 type StoppableClient = _StoppableModule.StoppableClient
+type StoppableServer = _StoppableModule.Server
 type UpdateidentityResult = _AdminModule.AdminClient.UpdateidentityResult

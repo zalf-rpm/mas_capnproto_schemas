@@ -2259,7 +2259,9 @@ type EventTypeEnum = (
     ]
 )
 type FertilizerClient = _FertilizerModule.FertilizerClient
+type FertilizerServer = _FertilizerModule.Server
 type FertilizerServiceClient = _FertilizerServiceModule.FertilizerServiceClient
+type FertilizerServiceServer = _FertilizerServiceModule.Server
 type HarvestBuilder = _ParamsModule._HarvestModule.Builder
 type HarvestReader = _ParamsModule._HarvestModule.Reader
 type IrrigationBuilder = _ParamsModule._IrrigationModule.Builder
@@ -2305,6 +2307,7 @@ type ParamsHarvestCropUsageEnum = int | Literal["greenManure", "biomassProductio
 type ParamsReader = _ParamsModule.Reader
 type PlantOrganEnum = int | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]
 type ServiceClient = _ServiceModule.ServiceClient
+type ServiceServer = _ServiceModule.Server
 type SowingBuilder = _ParamsModule._SowingModule.Builder
 type SowingReader = _ParamsModule._SowingModule.Reader
 type SpecBuilder = _ParamsModule._CuttingModule._SpecModule.Builder

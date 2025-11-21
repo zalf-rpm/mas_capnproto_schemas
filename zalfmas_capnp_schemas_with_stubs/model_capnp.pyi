@@ -633,6 +633,7 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
 
     Unregister: _UnregisterModule
     type UnregisterClient = _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
+    type UnregisterServer = _EnvInstanceProxyModule._UnregisterModule.Server
     class RegisterenvinstanceRequest(Protocol):
         instance: EnvInstanceClient | _EnvInstanceModule.Server
         def send(
@@ -828,11 +829,15 @@ InstanceFactory: _InstanceFactoryModule
 
 # Top-level type aliases for use in type annotations
 type ClimateInstanceClient = _ClimateInstanceModule.ClimateInstanceClient
+type ClimateInstanceServer = _ClimateInstanceModule.Server
 type EnvBuilder = _EnvModule.Builder
 type EnvInstanceClient = _EnvInstanceModule.EnvInstanceClient
 type EnvInstanceProxyClient = _EnvInstanceProxyModule.EnvInstanceProxyClient
+type EnvInstanceProxyServer = _EnvInstanceProxyModule.Server
+type EnvInstanceServer = _EnvInstanceModule.Server
 type EnvReader = _EnvModule.Reader
 type InstanceFactoryClient = _InstanceFactoryModule.InstanceFactoryClient
+type InstanceFactoryServer = _InstanceFactoryModule.Server
 type ModelinfoResult = _InstanceFactoryModule.InstanceFactoryClient.ModelinfoResult
 type NewinstanceResult = _InstanceFactoryModule.InstanceFactoryClient.NewinstanceResult
 type NewinstancesResult = (
@@ -850,6 +855,7 @@ type UnregisterClient = _EnvInstanceProxyModule._UnregisterModule.UnregisterClie
 type UnregisterResult = (
     _EnvInstanceProxyModule._UnregisterModule.UnregisterClient.UnregisterResult
 )
+type UnregisterServer = _EnvInstanceProxyModule._UnregisterModule.Server
 type XYPlusResultBuilder = _XYPlusResultModule.Builder
 type XYPlusResultReader = _XYPlusResultModule.Reader
 type XYResultBuilder = _XYResultModule.Builder

@@ -75,3 +75,4 @@ Service: _ServiceModule
 # Top-level type aliases for use in type annotations
 type NextconfigResult = _ServiceModule.ServiceClient.NextconfigResult
 type ServiceClient = _ServiceModule.ServiceClient
+type ServiceServer = _ServiceModule.Server

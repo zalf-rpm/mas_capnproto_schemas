@@ -523,6 +523,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
     Reader: _ReaderModule
     type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
+    type ReaderServer = _ChannelModule._ReaderModule.Server
     class _WriterModule(_IdentifiableModule, _PersistentModule):
         class WriteRequest(Protocol):
             value: AnyPointer
@@ -652,6 +653,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
     Writer: _WriterModule
     type WriterClient = _ChannelModule._WriterModule.WriterClient
+    type WriterServer = _ChannelModule._WriterModule.Server
     class _StartupInfoModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -1520,6 +1522,7 @@ class _ComponentModule(_StructModule):
 
     Runnable: _RunnableModule
     type RunnableClient = _ComponentModule._RunnableModule.RunnableClient
+    type RunnableServer = _ComponentModule._RunnableModule.Server
     class _ComponentTypeModule:
         standard: int
         iip: int
@@ -1763,6 +1766,7 @@ Component: _ComponentModule
 # Top-level type aliases for use in type annotations
 type ChannelClient = _ChannelModule.ChannelClient
 type ChannelCloseSemanticsEnum = int | Literal["fbp", "no"]
+type ChannelServer = _ChannelModule.Server
 type CloseResult = _ChannelModule.ChannelClient.CloseResult
 type ComponentBuilder = _ComponentModule.Builder
 type ComponentComponentTypeEnum = int | Literal["standard", "iip", "subflow", "view"]
@@ -1790,13 +1794,16 @@ type PortReader = _ComponentModule._PortModule.Reader
 type ReadResult = _ChannelModule._ReaderModule.ReaderClient.ReadResult
 type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
 type ReaderResult = _ChannelModule.ChannelClient.ReaderResult
+type ReaderServer = _ChannelModule._ReaderModule.Server
 type ReadifmsgResult = _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult
 type RunnableClient = _ComponentModule._RunnableModule.RunnableClient
+type RunnableServer = _ComponentModule._RunnableModule.Server
 type SetautoclosesemanticsResult = (
     _ChannelModule.ChannelClient.SetautoclosesemanticsResult
 )
 type SetbuffersizeResult = _ChannelModule.ChannelClient.SetbuffersizeResult
 type StartChannelsServiceClient = _StartChannelsServiceModule.StartChannelsServiceClient
+type StartChannelsServiceServer = _StartChannelsServiceModule.Server
 type StartResult = _ComponentModule._RunnableModule.RunnableClient.StartResult
 type StartupInfoBuilder = _ChannelModule._StartupInfoModule.Builder
 type StartupInfoReader = _ChannelModule._StartupInfoModule.Reader
@@ -1805,3 +1812,4 @@ type WriteResult = _ChannelModule._WriterModule.WriterClient.WriteResult
 type WriteifspaceResult = _ChannelModule._WriterModule.WriterClient.WriteifspaceResult
 type WriterClient = _ChannelModule._WriterModule.WriterClient
 type WriterResult = _ChannelModule.ChannelClient.WriterResult
+type WriterServer = _ChannelModule._WriterModule.Server

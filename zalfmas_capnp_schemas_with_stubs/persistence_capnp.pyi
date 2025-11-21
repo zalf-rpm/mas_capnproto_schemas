@@ -932,6 +932,7 @@ class _PersistentModule(_InterfaceModule):
     type ReleaseSturdyRefClient = (
         _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
     )
+    type ReleaseSturdyRefServer = _PersistentModule._ReleaseSturdyRefModule.Server
     class SaveRequest(Protocol):
         sealFor: OwnerBuilder
         @overload
@@ -1325,6 +1326,7 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
 
     Registrar: _RegistrarModule
     type RegistrarClient = _HostPortResolverModule._RegistrarModule.RegistrarClient
+    type RegistrarServer = _HostPortResolverModule._RegistrarModule.Server
     class ResolveRequest(Protocol):
         id: str
         def send(
@@ -1533,13 +1535,17 @@ type AddressBuilder = _AddressModule.Builder
 type AddressReader = _AddressModule.Reader
 type BeatResult = _HeartbeatModule.HeartbeatClient.BeatResult
 type GatewayClient = _GatewayModule.GatewayClient
+type GatewayServer = _GatewayModule.Server
 type HeartbeatClient = _HeartbeatModule.HeartbeatClient
+type HeartbeatServer = _HeartbeatModule.Server
 type HostPortResolverClient = _HostPortResolverModule.HostPortResolverClient
+type HostPortResolverServer = _HostPortResolverModule.Server
 type Ip6Builder = _AddressModule._Ip6Module.Builder
 type Ip6Reader = _AddressModule._Ip6Module.Reader
 type OwnerBuilder = _SturdyRefModule._OwnerModule.Builder
 type OwnerReader = _SturdyRefModule._OwnerModule.Reader
 type PersistentClient = _PersistentModule.PersistentClient
+type PersistentServer = _PersistentModule.Server
 type RegResultsBuilder = _GatewayModule._RegResultsModule.Builder
 type RegResultsReader = _GatewayModule._RegResultsModule.Reader
 type RegisterParamsBuilder = (
@@ -1550,17 +1556,20 @@ type RegisterParamsReader = (
 )
 type RegisterResult = _GatewayModule.GatewayClient.RegisterResult
 type RegistrarClient = _HostPortResolverModule._RegistrarModule.RegistrarClient
+type RegistrarServer = _HostPortResolverModule._RegistrarModule.Server
 type ReleaseResult = (
     _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient.ReleaseResult
 )
 type ReleaseSturdyRefClient = (
     _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
 )
+type ReleaseSturdyRefServer = _PersistentModule._ReleaseSturdyRefModule.Server
 type ResolveResult = _HostPortResolverModule.HostPortResolverClient.ResolveResult
 type RestoreParamsBuilder = _RestorerModule._RestoreParamsModule.Builder
 type RestoreParamsReader = _RestorerModule._RestoreParamsModule.Reader
 type RestoreResult = _RestorerModule.RestorerClient.RestoreResult
 type RestorerClient = _RestorerModule.RestorerClient
+type RestorerServer = _RestorerModule.Server
 type SaveParamsBuilder = _PersistentModule._SaveParamsModule.Builder
 type SaveParamsReader = _PersistentModule._SaveParamsModule.Reader
 type SaveResult = _PersistentModule.PersistentClient.SaveResult

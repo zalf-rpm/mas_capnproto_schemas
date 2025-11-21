@@ -85,6 +85,7 @@ class _ClusterModule(_StructModule):
 
     Unregister: _UnregisterModule
     type UnregisterClient = _ClusterModule._UnregisterModule.UnregisterClient
+    type UnregisterServer = _ClusterModule._UnregisterModule.Server
     class _AdminMasterModule(_IdentifiableModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
@@ -642,12 +643,15 @@ class _ClusterModule(_StructModule):
 
     ValueHolder: _ValueHolderModule
     type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
+    type ValueHolderServer = _ClusterModule._ValueHolderModule.Server
     ModelInstanceFactory: _ModelInstanceFactoryModule
     type ModelInstanceFactoryClient = (
         _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
     )
+    type ModelInstanceFactoryServer = _ClusterModule._ModelInstanceFactoryModule.Server
     AdminMaster: _AdminMasterModule
     type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
+    type AdminMasterServer = _ClusterModule._AdminMasterModule.Server
     class _UserMasterModule(_IdentifiableModule):
         class AvailablemodelsRequest(Protocol):
             def send(
@@ -709,6 +713,7 @@ class _ClusterModule(_StructModule):
 
     UserMaster: _UserMasterModule
     type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
+    type UserMasterServer = _ClusterModule._UserMasterModule.Server
     class _RuntimeModule(_IdentifiableModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
@@ -967,6 +972,7 @@ class _ClusterModule(_StructModule):
 
     Runtime: _RuntimeModule
     type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
+    type RuntimeServer = _ClusterModule._RuntimeModule.Server
     class _ZmqPipelineAddressesModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -1119,6 +1125,7 @@ Cluster: _ClusterModule
 
 # Top-level type aliases for use in type annotations
 type AdminMasterClient = _ClusterModule._AdminMasterModule.AdminMasterClient
+type AdminMasterServer = _ClusterModule._AdminMasterModule.Server
 type AvailablemodelsResult = (
     _ClusterModule._RuntimeModule.RuntimeClient.AvailablemodelsResult
 )
@@ -1130,6 +1137,7 @@ type FreenumberofcoresResult = (
 type ModelInstanceFactoryClient = (
     _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
 )
+type ModelInstanceFactoryServer = _ClusterModule._ModelInstanceFactoryModule.Server
 type ModelidResult = (
     _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.ModelidResult
 )
@@ -1150,12 +1158,16 @@ type ReservenumberofcoresResult = (
 )
 type RestoresturdyrefResult = _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.RestoresturdyrefResult
 type RuntimeClient = _ClusterModule._RuntimeModule.RuntimeClient
+type RuntimeServer = _ClusterModule._RuntimeModule.Server
 type UnregisterClient = _ClusterModule._UnregisterModule.UnregisterClient
 type UnregisterResult = (
     _ClusterModule._UnregisterModule.UnregisterClient.UnregisterResult
 )
+type UnregisterServer = _ClusterModule._UnregisterModule.Server
 type UserMasterClient = _ClusterModule._UserMasterModule.UserMasterClient
+type UserMasterServer = _ClusterModule._UserMasterModule.Server
 type ValueHolderClient = _ClusterModule._ValueHolderModule.ValueHolderClient
+type ValueHolderServer = _ClusterModule._ValueHolderModule.Server
 type ValueResult = _ClusterModule._ValueHolderModule.ValueHolderClient.ValueResult
 type ZmqPipelineAddressesBuilder = _ClusterModule._ZmqPipelineAddressesModule.Builder
 type ZmqPipelineAddressesReader = _ClusterModule._ZmqPipelineAddressesModule.Reader

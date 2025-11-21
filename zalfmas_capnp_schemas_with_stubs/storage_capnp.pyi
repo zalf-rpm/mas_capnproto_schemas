@@ -569,6 +569,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
         Entry: _EntryModule
         type EntryClient = _StoreModule._ContainerModule._EntryModule.EntryClient
+        type EntryServer = _StoreModule._ContainerModule._EntryModule.Server
         class _KeyAndEntryModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
@@ -976,6 +977,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
     Container: _ContainerModule
     type ContainerClient = _StoreModule._ContainerModule.ContainerClient
+    type ContainerServer = _StoreModule._ContainerModule.Server
     class _InfoAndContainerModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -1403,11 +1405,13 @@ Store: _StoreModule
 type AddentryResult = _StoreModule._ContainerModule.ContainerClient.AddentryResult
 type ClearResult = _StoreModule._ContainerModule.ContainerClient.ClearResult
 type ContainerClient = _StoreModule._ContainerModule.ContainerClient
+type ContainerServer = _StoreModule._ContainerModule.Server
 type ContainerwithidResult = _StoreModule.StoreClient.ContainerwithidResult
 type DownloadentriesResult = (
     _StoreModule._ContainerModule.ContainerClient.DownloadentriesResult
 )
 type EntryClient = _StoreModule._ContainerModule._EntryModule.EntryClient
+type EntryServer = _StoreModule._ContainerModule._EntryModule.Server
 type ExportResult = _StoreModule._ContainerModule.ContainerClient.ExportResult
 type GetentryResult = _StoreModule._ContainerModule.ContainerClient.GetentryResult
 type GetkeyResult = _StoreModule._ContainerModule._EntryModule.EntryClient.GetkeyResult
@@ -1430,5 +1434,6 @@ type SetvalueResult = (
     _StoreModule._ContainerModule._EntryModule.EntryClient.SetvalueResult
 )
 type StoreClient = _StoreModule.StoreClient
+type StoreServer = _StoreModule.Server
 type ValueBuilder = _StoreModule._ContainerModule._EntryModule._ValueModule.Builder
 type ValueReader = _StoreModule._ContainerModule._EntryModule._ValueModule.Reader

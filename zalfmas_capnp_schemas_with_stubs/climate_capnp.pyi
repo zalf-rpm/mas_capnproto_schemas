@@ -275,6 +275,7 @@ class _MetadataModule(_StructModule):
 
     Supported: _SupportedModule
     type SupportedClient = _MetadataModule._SupportedModule.SupportedClient
+    type SupportedServer = _MetadataModule._SupportedModule.Server
     class _ValueModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
@@ -693,6 +694,7 @@ class _MetadataModule(_StructModule):
 
     Information: _InformationModule
     type InformationClient = _MetadataModule._InformationModule.InformationClient
+    type InformationServer = _MetadataModule._InformationModule.Server
     class Reader(_DynamicStructReader):
         @property
         def entries(self) -> Sequence[EntryReader]: ...
@@ -840,6 +842,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
     type GetLocationsCallbackClient = (
         _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
     )
+    type GetLocationsCallbackServer = _DatasetModule._GetLocationsCallbackModule.Server
     class MetadataRequest(Protocol):
         def send(self) -> _DatasetModule.DatasetClient.MetadataResult: ...
 
@@ -2470,6 +2473,8 @@ type AlterTimeSeriesWrapperClient = (
 type AlterTimeSeriesWrapperFactoryClient = (
     _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient
 )
+type AlterTimeSeriesWrapperFactoryServer = _AlterTimeSeriesWrapperFactoryModule.Server
+type AlterTimeSeriesWrapperServer = _AlterTimeSeriesWrapperModule.Server
 type AlteredBuilder = _AlterTimeSeriesWrapperModule._AlteredModule.Builder
 type AlteredReader = _AlterTimeSeriesWrapperModule._AlteredModule.Reader
 type AlteredelementsResult = (
@@ -2478,6 +2483,7 @@ type AlteredelementsResult = (
 type CSVConfigBuilder = _CSVTimeSeriesFactoryModule._CSVConfigModule.Builder
 type CSVConfigReader = _CSVTimeSeriesFactoryModule._CSVConfigModule.Reader
 type CSVTimeSeriesFactoryClient = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient
+type CSVTimeSeriesFactoryServer = _CSVTimeSeriesFactoryModule.Server
 type CategoriesResult = (
     _MetadataModule._SupportedModule.SupportedClient.CategoriesResult
 )
@@ -2485,6 +2491,7 @@ type ClosesttimeseriesatResult = _DatasetModule.DatasetClient.Closesttimeseriesa
 type CreateResult = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient.CreateResult
 type DataResult = _TimeSeriesModule.TimeSeriesClient.DataResult
 type DatasetClient = _DatasetModule.DatasetClient
+type DatasetServer = _DatasetModule.Server
 type DatatResult = _TimeSeriesModule.TimeSeriesClient.DatatResult
 type ElementEnum = (
     int
@@ -2536,12 +2543,14 @@ type GCMEnum = (
 type GetLocationsCallbackClient = (
     _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
 )
+type GetLocationsCallbackServer = _DatasetModule._GetLocationsCallbackModule.Server
 type GetavailabledatasetsResult = (
     _ServiceModule.ServiceClient.GetavailabledatasetsResult
 )
 type GetdatasetsforResult = _ServiceModule.ServiceClient.GetdatasetsforResult
 type HeaderResult = _TimeSeriesModule.TimeSeriesClient.HeaderResult
 type InformationClient = _MetadataModule._InformationModule.InformationClient
+type InformationServer = _MetadataModule._InformationModule.Server
 type KVBuilder = _LocationModule._KVModule.Builder
 type KVReader = _LocationModule._KVModule.Reader
 type LocationBuilder = _LocationModule.Builder
@@ -2577,10 +2586,12 @@ type ReplacewrappedtimeseriesResult = _AlterTimeSeriesWrapperModule.AlterTimeSer
 type ResolutionResult = _TimeSeriesModule.TimeSeriesClient.ResolutionResult
 type SSPEnum = int | Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]
 type ServiceClient = _ServiceModule.ServiceClient
+type ServiceServer = _ServiceModule.Server
 type StreamlocationsResult = _DatasetModule.DatasetClient.StreamlocationsResult
 type SubheaderResult = _TimeSeriesModule.TimeSeriesClient.SubheaderResult
 type SubrangeResult = _TimeSeriesModule.TimeSeriesClient.SubrangeResult
 type SupportedClient = _MetadataModule._SupportedModule.SupportedClient
+type SupportedServer = _MetadataModule._SupportedModule.Server
 type SupportedvaluesResult = (
     _MetadataModule._SupportedModule.SupportedClient.SupportedvaluesResult
 )
@@ -2588,6 +2599,7 @@ type TimeSeriesClient = _TimeSeriesModule.TimeSeriesClient
 type TimeSeriesDataBuilder = _TimeSeriesDataModule.Builder
 type TimeSeriesDataReader = _TimeSeriesDataModule.Reader
 type TimeSeriesResolutionEnum = int | Literal["daily", "hourly"]
+type TimeSeriesServer = _TimeSeriesModule.Server
 type TimeseriesatResult = _DatasetModule.DatasetClient.TimeseriesatResult
 type ValueBuilder = _MetadataModule._ValueModule.Builder
 type ValueReader = _MetadataModule._ValueModule.Reader

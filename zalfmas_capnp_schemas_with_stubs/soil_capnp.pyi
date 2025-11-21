@@ -662,6 +662,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
     Stream: _StreamModule
     type StreamClient = _ServiceModule._StreamModule.StreamClient
+    type StreamServer = _ServiceModule._StreamModule.Server
     class CheckavailableparametersRequest(Protocol):
         mandatory: Sequence[PropertyNameEnum]
         optional: Sequence[PropertyNameEnum]
@@ -928,6 +929,7 @@ type NextprofilesResult = _ServiceModule._StreamModule.StreamClient.Nextprofiles
 type ProfileClient = _ProfileModule.ProfileClient
 type ProfileDataBuilder = _ProfileDataModule.Builder
 type ProfileDataReader = _ProfileDataModule.Reader
+type ProfileServer = _ProfileModule.Server
 type PropertyBuilder = _LayerModule._PropertyModule.Builder
 type PropertyNameEnum = (
     int
@@ -961,5 +963,7 @@ type ResultBuilder = _QueryModule._ResultModule.Builder
 type ResultReader = _QueryModule._ResultModule.Reader
 type STypeEnum = int | Literal["unknown", "ka5"]
 type ServiceClient = _ServiceModule.ServiceClient
+type ServiceServer = _ServiceModule.Server
 type StreamClient = _ServiceModule._StreamModule.StreamClient
+type StreamServer = _ServiceModule._StreamModule.Server
 type StreamallprofilesResult = _ServiceModule.ServiceClient.StreamallprofilesResult

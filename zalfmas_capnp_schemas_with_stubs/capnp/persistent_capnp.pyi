@@ -234,6 +234,7 @@ Persistent: _PersistentModule
 
 # Top-level type aliases for use in type annotations
 type PersistentClient = _PersistentModule.PersistentClient
+type PersistentServer = _PersistentModule.Server
 type SaveParamsBuilder = _PersistentModule._SaveParamsModule.Builder
 type SaveParamsReader = _PersistentModule._SaveParamsModule.Reader
 type SaveResult = _PersistentModule.PersistentClient.SaveResult

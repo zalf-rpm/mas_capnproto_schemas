@@ -922,10 +922,13 @@ IdentifiableHolder: _IdentifiableHolderModule
 
 # Top-level type aliases for use in type annotations
 type HolderClient = _HolderModule.HolderClient
+type HolderServer = _HolderModule.Server
 type IdInformationBuilder = _IdInformationModule.Builder
 type IdInformationReader = _IdInformationModule.Reader
 type IdentifiableClient = _IdentifiableModule.IdentifiableClient
 type IdentifiableHolderClient = _IdentifiableHolderModule.IdentifiableHolderClient
+type IdentifiableHolderServer = _IdentifiableHolderModule.Server
+type IdentifiableServer = _IdentifiableModule.Server
 type InfoResult = _IdentifiableModule.IdentifiableClient.InfoResult
 type PairBuilder = _PairModule.Builder
 type PairReader = _PairModule.Reader

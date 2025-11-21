@@ -748,6 +748,7 @@ class _RegistrarModule(_IdentifiableModule):
 
     Unregister: _UnregisterModule
     type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient
+    type UnregisterServer = _RegistrarModule._UnregisterModule.Server
     class RegisterRequest(Protocol):
         cap: IdentifiableClient | _IdentifiableModule.Server
         regName: str
@@ -828,6 +829,7 @@ Registrar: _RegistrarModule
 # Top-level type aliases for use in type annotations
 type AddcategoryResult = _AdminModule.AdminClient.AddcategoryResult
 type AdminClient = _AdminModule.AdminClient
+type AdminServer = _AdminModule.Server
 type CategoryinfoResult = _RegistryModule.RegistryClient.CategoryinfoResult
 type CrossDomainRestoreBuilder = _RegistrarModule._CrossDomainRestoreModule.Builder
 type CrossDomainRestoreReader = _RegistrarModule._CrossDomainRestoreModule.Reader
@@ -839,8 +841,10 @@ type RegParamsBuilder = _RegistrarModule._RegParamsModule.Builder
 type RegParamsReader = _RegistrarModule._RegParamsModule.Reader
 type RegisterResult = _RegistrarModule.RegistrarClient.RegisterResult
 type RegistrarClient = _RegistrarModule.RegistrarClient
+type RegistrarServer = _RegistrarModule.Server
 type RegistryClient = _RegistryModule.RegistryClient
 type RegistryResult = _AdminModule.AdminClient.RegistryResult
+type RegistryServer = _RegistryModule.Server
 type RemovecategoryResult = _AdminModule.AdminClient.RemovecategoryResult
 type RemoveobjectsResult = _AdminModule.AdminClient.RemoveobjectsResult
 type SupportedcategoriesResult = (
@@ -850,3 +854,4 @@ type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient
 type UnregisterResult = (
     _RegistrarModule._UnregisterModule.UnregisterClient.UnregisterResult
 )
+type UnregisterServer = _RegistrarModule._UnregisterModule.Server

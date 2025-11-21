@@ -2931,6 +2931,7 @@ type PlantOrganEnum = int | Literal["root", "leaf", "shoot", "fruit", "strukt", 
 type SaveStateBuilder = _ParamsModule._SaveStateModule.Builder
 type SaveStateReader = _ParamsModule._SaveStateModule.Reader
 type ServiceClient = _ServiceModule.ServiceClient
+type ServiceServer = _ServiceModule.Server
 type SowingBuilder = _ParamsModule._SowingModule.Builder
 type SowingReader = _ParamsModule._SowingModule.Reader
 type SpecBuilder = _ParamsModule._CuttingModule._SpecModule.Builder

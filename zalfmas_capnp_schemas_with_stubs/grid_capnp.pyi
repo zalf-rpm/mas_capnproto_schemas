@@ -581,6 +581,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
     Callback: _CallbackModule
     type CallbackClient = _GridModule._CallbackModule.CallbackClient
+    type CallbackServer = _GridModule._CallbackModule.Server
     class ClosestvalueatRequest(Protocol):
         latlonCoord: LatLonCoordBuilder
         ignoreNoData: bool
@@ -990,9 +991,11 @@ type AggregationEnum = (
 type AggregationPartBuilder = _GridModule._AggregationPartModule.Builder
 type AggregationPartReader = _GridModule._AggregationPartModule.Reader
 type CallbackClient = _GridModule._CallbackModule.CallbackClient
+type CallbackServer = _GridModule._CallbackModule.Server
 type ClosestvalueatResult = _GridModule.GridClient.ClosestvalueatResult
 type DimensionResult = _GridModule.GridClient.DimensionResult
 type GridClient = _GridModule.GridClient
+type GridServer = _GridModule.Server
 type LatlonboundsResult = _GridModule.GridClient.LatlonboundsResult
 type LocationBuilder = _GridModule._LocationModule.Builder
 type LocationReader = _GridModule._LocationModule.Reader
