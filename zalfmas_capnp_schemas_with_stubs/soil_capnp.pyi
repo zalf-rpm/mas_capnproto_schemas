@@ -640,7 +640,9 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
                 _context: _ServiceModule._StreamModule.Server.NextprofilesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ServiceModule._StreamModule.Server.NextprofilesResultTuple | None
+                Sequence[_ProfileModule]
+                | _ServiceModule._StreamModule.Server.NextprofilesResultTuple
+                | None
             ]: ...
             def nextProfiles_context(
                 self,
@@ -818,7 +820,11 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             query: QueryReader,
             _context: _ServiceModule.Server.ClosestprofilesatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ServiceModule.Server.ClosestprofilesatResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_ProfileModule]
+            | _ServiceModule.Server.ClosestprofilesatResultTuple
+            | None
+        ]: ...
         def closestProfilesAt_context(
             self, context: _ServiceModule.Server.ClosestprofilesatCallContext
         ) -> Awaitable[None]: ...

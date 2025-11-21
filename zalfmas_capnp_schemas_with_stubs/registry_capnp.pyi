@@ -20,6 +20,7 @@ from .common_capnp import (
     IdInformationBuilder,
     IdInformationReader,
     _IdentifiableModule,
+    _IdInformationModule,
 )
 from .persistence_capnp import (
     SturdyRefBuilder,
@@ -163,7 +164,11 @@ class _AdminModule(_IdentifiableModule):
             moveObjectsToCategoryId: str,
             _context: _AdminModule.Server.RemovecategoryCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_AdminModule.Server.RemovecategoryResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_IdentifiableModule]
+            | _AdminModule.Server.RemovecategoryResultTuple
+            | None
+        ]: ...
         def removeCategory_context(
             self, context: _AdminModule.Server.RemovecategoryCallContext
         ) -> Awaitable[None]: ...
@@ -173,7 +178,9 @@ class _AdminModule(_IdentifiableModule):
             toCatId: str,
             _context: _AdminModule.Server.MoveobjectsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_AdminModule.Server.MoveobjectsResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[str] | _AdminModule.Server.MoveobjectsResultTuple | None
+        ]: ...
         def moveObjects_context(
             self, context: _AdminModule.Server.MoveobjectsCallContext
         ) -> Awaitable[None]: ...
@@ -182,7 +189,11 @@ class _AdminModule(_IdentifiableModule):
             objectIds: Sequence[str],
             _context: _AdminModule.Server.RemoveobjectsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_AdminModule.Server.RemoveobjectsResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_IdentifiableModule]
+            | _AdminModule.Server.RemoveobjectsResultTuple
+            | None
+        ]: ...
         def removeObjects_context(
             self, context: _AdminModule.Server.RemoveobjectsCallContext
         ) -> Awaitable[None]: ...
@@ -417,7 +428,9 @@ class _RegistryModule(_IdentifiableModule):
             _context: _RegistryModule.Server.SupportedcategoriesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _RegistryModule.Server.SupportedcategoriesResultTuple | None
+            Sequence[_IdInformationModule]
+            | _RegistryModule.Server.SupportedcategoriesResultTuple
+            | None
         ]: ...
         def supportedCategories_context(
             self, context: _RegistryModule.Server.SupportedcategoriesCallContext
@@ -436,7 +449,11 @@ class _RegistryModule(_IdentifiableModule):
             categoryId: str,
             _context: _RegistryModule.Server.EntriesCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_RegistryModule.Server.EntriesResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_RegistryModule._EntryModule]
+            | _RegistryModule.Server.EntriesResultTuple
+            | None
+        ]: ...
         def entries_context(
             self, context: _RegistryModule.Server.EntriesCallContext
         ) -> Awaitable[None]: ...

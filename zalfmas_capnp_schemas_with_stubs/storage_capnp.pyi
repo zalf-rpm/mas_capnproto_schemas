@@ -23,6 +23,7 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
+    _PairModule,
 )
 from .persistence_capnp import _PersistentModule
 
@@ -830,7 +831,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 _context: _StoreModule._ContainerModule.Server.DownloadentriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _StoreModule._ContainerModule.Server.DownloadentriesResultTuple | None
+                Sequence[_PairModule]
+                | _StoreModule._ContainerModule.Server.DownloadentriesResultTuple
+                | None
             ]: ...
             def downloadEntries_context(
                 self,
@@ -841,7 +844,9 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 _context: _StoreModule._ContainerModule.Server.ListentriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _StoreModule._ContainerModule.Server.ListentriesResultTuple | None
+                Sequence[_StoreModule._ContainerModule._KeyAndEntryModule]
+                | _StoreModule._ContainerModule.Server.ListentriesResultTuple
+                | None
             ]: ...
             def listEntries_context(
                 self,
@@ -1315,7 +1320,11 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _StoreModule.Server.ListcontainersCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_StoreModule.Server.ListcontainersResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_StoreModule._InfoAndContainerModule]
+            | _StoreModule.Server.ListcontainersResultTuple
+            | None
+        ]: ...
         def listContainers_context(
             self, context: _StoreModule.Server.ListcontainersCallContext
         ) -> Awaitable[None]: ...

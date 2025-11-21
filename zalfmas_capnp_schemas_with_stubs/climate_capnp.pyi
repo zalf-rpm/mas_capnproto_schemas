@@ -25,6 +25,8 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
+    _IdInformationModule,
+    _PairModule,
 )
 from .date_capnp import DateBuilder, DateReader
 from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
@@ -228,7 +230,9 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._SupportedModule.Server.CategoriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _MetadataModule._SupportedModule.Server.CategoriesResultTuple | None
+                Sequence[_IdInformationModule]
+                | _MetadataModule._SupportedModule.Server.CategoriesResultTuple
+                | None
             ]: ...
             def categories_context(
                 self,
@@ -240,7 +244,8 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._SupportedModule.Server.SupportedvaluesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _MetadataModule._SupportedModule.Server.SupportedvaluesResultTuple
+                Sequence[_IdInformationModule]
+                | _MetadataModule._SupportedModule.Server.SupportedvaluesResultTuple
                 | None
             ]: ...
             def supportedValues_context(
@@ -657,7 +662,9 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._InformationModule.Server.ForallCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _MetadataModule._InformationModule.Server.ForallResultTuple | None
+                Sequence[_PairModule]
+                | _MetadataModule._InformationModule.Server.ForallResultTuple
+                | None
             ]: ...
             def forAll_context(
                 self,
@@ -811,7 +818,8 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
                 _context: _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsResultTuple
+                Sequence[_LocationModule]
+                | _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsResultTuple
                 | None
             ]: ...
             def nextLocations_context(
@@ -975,7 +983,11 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _DatasetModule.Server.LocationsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_DatasetModule.Server.LocationsResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_LocationModule]
+            | _DatasetModule.Server.LocationsResultTuple
+            | None
+        ]: ...
         def locations_context(
             self, context: _DatasetModule.Server.LocationsCallContext
         ) -> Awaitable[None]: ...
@@ -1246,7 +1258,9 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _TimeSeriesModule.Server.HeaderCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_TimeSeriesModule.Server.HeaderResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[ElementEnum] | _TimeSeriesModule.Server.HeaderResultTuple | None
+        ]: ...
         def header_context(
             self, context: _TimeSeriesModule.Server.HeaderCallContext
         ) -> Awaitable[None]: ...
@@ -1254,7 +1268,9 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _TimeSeriesModule.Server.DataCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_TimeSeriesModule.Server.DataResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[Sequence[float]] | _TimeSeriesModule.Server.DataResultTuple | None
+        ]: ...
         def data_context(
             self, context: _TimeSeriesModule.Server.DataCallContext
         ) -> Awaitable[None]: ...
@@ -1262,7 +1278,9 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _TimeSeriesModule.Server.DatatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_TimeSeriesModule.Server.DatatResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[Sequence[float]] | _TimeSeriesModule.Server.DatatResultTuple | None
+        ]: ...
         def dataT_context(
             self, context: _TimeSeriesModule.Server.DatatCallContext
         ) -> Awaitable[None]: ...
@@ -1876,7 +1894,9 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             _context: _ServiceModule.Server.GetavailabledatasetsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _ServiceModule.Server.GetavailabledatasetsResultTuple | None
+            Sequence[_MetaPlusDataModule]
+            | _ServiceModule.Server.GetavailabledatasetsResultTuple
+            | None
         ]: ...
         def getAvailableDatasets_context(
             self, context: _ServiceModule.Server.GetavailabledatasetsCallContext
@@ -1886,7 +1906,11 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             template: MetadataReader,
             _context: _ServiceModule.Server.GetdatasetsforCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ServiceModule.Server.GetdatasetsforResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_DatasetModule]
+            | _ServiceModule.Server.GetdatasetsforResultTuple
+            | None
+        ]: ...
         def getDatasetsFor_context(
             self, context: _ServiceModule.Server.GetdatasetsforCallContext
         ) -> Awaitable[None]: ...
@@ -2286,7 +2310,9 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             _context: _AlterTimeSeriesWrapperModule.Server.AlteredelementsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _AlterTimeSeriesWrapperModule.Server.AlteredelementsResultTuple | None
+            Sequence[_AlterTimeSeriesWrapperModule._AlteredModule]
+            | _AlterTimeSeriesWrapperModule.Server.AlteredelementsResultTuple
+            | None
         ]: ...
         def alteredElements_context(
             self,

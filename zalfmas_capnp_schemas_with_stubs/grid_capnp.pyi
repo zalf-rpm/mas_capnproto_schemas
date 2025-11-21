@@ -560,7 +560,9 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
                 _context: _GridModule._CallbackModule.Server.SendcellsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _GridModule._CallbackModule.Server.SendcellsResultTuple | None
+                Sequence[_GridModule._LocationModule]
+                | _GridModule._CallbackModule.Server.SendcellsResultTuple
+                | None
             ]: ...
             def sendCells_context(
                 self, context: _GridModule._CallbackModule.Server.SendcellsCallContext
@@ -787,7 +789,11 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _GridModule.Server.ResolutionCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.ResolutionResultTuple | None]: ...
+        ) -> Awaitable[
+            _GridModule._ResolutionModule.Builder
+            | _GridModule.Server.ResolutionResultTuple
+            | None
+        ]: ...
         def resolution_context(
             self, context: _GridModule.Server.ResolutionCallContext
         ) -> Awaitable[None]: ...
@@ -803,7 +809,11 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _GridModule.Server.NodatavalueCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.NodatavalueResultTuple | None]: ...
+        ) -> Awaitable[
+            _GridModule._ValueModule.Builder
+            | _GridModule.Server.NodatavalueResultTuple
+            | None
+        ]: ...
         def noDataValue_context(
             self, context: _GridModule.Server.NodatavalueCallContext
         ) -> Awaitable[None]: ...

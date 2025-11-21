@@ -1116,7 +1116,9 @@ class _RestorerModule(_InterfaceModule):
             sealedBy: OwnerReader,
             _context: _RestorerModule.Server.RestoreCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_RestorerModule.Server.RestoreResultTuple | None]: ...
+        ) -> Awaitable[
+            AnyPointer | _RestorerModule.Server.RestoreResultTuple | None
+        ]: ...
         def restore_context(
             self, context: _RestorerModule.Server.RestoreCallContext
         ) -> Awaitable[None]: ...

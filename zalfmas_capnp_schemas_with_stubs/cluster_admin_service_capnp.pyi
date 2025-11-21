@@ -165,7 +165,8 @@ class _ClusterModule(_StructModule):
                 _context: _ClusterModule._AdminMasterModule.Server.AvailablemodelsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ClusterModule._AdminMasterModule.Server.AvailablemodelsResultTuple
+                Sequence[_ClusterModule._ModelInstanceFactoryModule]
+                | _ClusterModule._AdminMasterModule.Server.AvailablemodelsResultTuple
                 | None
             ]: ...
             def availableModels_context(
@@ -603,7 +604,9 @@ class _ClusterModule(_StructModule):
                 _context: _ClusterModule._ValueHolderModule.Server.ValueCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ClusterModule._ValueHolderModule.Server.ValueResultTuple | None
+                AnyPointer
+                | _ClusterModule._ValueHolderModule.Server.ValueResultTuple
+                | None
             ]: ...
             def value_context(
                 self, context: _ClusterModule._ValueHolderModule.Server.ValueCallContext
@@ -680,7 +683,8 @@ class _ClusterModule(_StructModule):
                 _context: _ClusterModule._UserMasterModule.Server.AvailablemodelsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ClusterModule._UserMasterModule.Server.AvailablemodelsResultTuple
+                Sequence[_ClusterModule._ModelInstanceFactoryModule]
+                | _ClusterModule._UserMasterModule.Server.AvailablemodelsResultTuple
                 | None
             ]: ...
             def availableModels_context(
@@ -846,7 +850,9 @@ class _ClusterModule(_StructModule):
                 _context: _ClusterModule._RuntimeModule.Server.AvailablemodelsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ClusterModule._RuntimeModule.Server.AvailablemodelsResultTuple | None
+                Sequence[_ClusterModule._ModelInstanceFactoryModule]
+                | _ClusterModule._RuntimeModule.Server.AvailablemodelsResultTuple
+                | None
             ]: ...
             def availableModels_context(
                 self,

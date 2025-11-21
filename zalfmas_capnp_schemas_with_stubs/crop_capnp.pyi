@@ -20,6 +20,7 @@ from .common_capnp import (
     IdInformationBuilder,
     IdInformationReader,
     _IdentifiableModule,
+    _IdInformationModule,
 )
 from .persistence_capnp import _PersistentModule
 from .registry_capnp import _RegistryModule
@@ -92,7 +93,9 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _CropModule.Server.ParametersCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_CropModule.Server.ParametersResultTuple | None]: ...
+        ) -> Awaitable[
+            AnyPointer | _CropModule.Server.ParametersResultTuple | None
+        ]: ...
         def parameters_context(
             self, context: _CropModule.Server.ParametersCallContext
         ) -> Awaitable[None]: ...
@@ -100,7 +103,9 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _CropModule.Server.CultivarCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_CropModule.Server.CultivarResultTuple | None]: ...
+        ) -> Awaitable[
+            _IdInformationModule.Builder | _CropModule.Server.CultivarResultTuple | None
+        ]: ...
         def cultivar_context(
             self, context: _CropModule.Server.CultivarCallContext
         ) -> Awaitable[None]: ...
@@ -108,7 +113,9 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _CropModule.Server.SpeciesCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_CropModule.Server.SpeciesResultTuple | None]: ...
+        ) -> Awaitable[
+            _IdInformationModule.Builder | _CropModule.Server.SpeciesResultTuple | None
+        ]: ...
         def species_context(
             self, context: _CropModule.Server.SpeciesCallContext
         ) -> Awaitable[None]: ...

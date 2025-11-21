@@ -141,7 +141,9 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _ServiceModule.Server.NextjobCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ServiceModule.Server.NextjobResultTuple | None]: ...
+        ) -> Awaitable[
+            _JobModule.Builder | _ServiceModule.Server.NextjobResultTuple | None
+        ]: ...
         def nextJob_context(
             self, context: _ServiceModule.Server.NextjobCallContext
         ) -> Awaitable[None]: ...

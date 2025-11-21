@@ -617,7 +617,11 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _FertilizerModule.Server.NutrientsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_FertilizerModule.Server.NutrientsResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_NutrientModule]
+            | _FertilizerModule.Server.NutrientsResultTuple
+            | None
+        ]: ...
         def nutrients_context(
             self, context: _FertilizerModule.Server.NutrientsCallContext
         ) -> Awaitable[None]: ...
@@ -625,7 +629,9 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
             self,
             _context: _FertilizerModule.Server.ParametersCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_FertilizerModule.Server.ParametersResultTuple | None]: ...
+        ) -> Awaitable[
+            AnyPointer | _FertilizerModule.Server.ParametersResultTuple | None
+        ]: ...
         def parameters_context(
             self, context: _FertilizerModule.Server.ParametersCallContext
         ) -> Awaitable[None]: ...
@@ -2176,7 +2182,11 @@ class _ServiceModule(_IdentifiableModule):
             lon: float,
             _context: _ServiceModule.Server.ManagementatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ServiceModule.Server.ManagementatResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_EventModule]
+            | _ServiceModule.Server.ManagementatResultTuple
+            | None
+        ]: ...
         def managementAt_context(
             self, context: _ServiceModule.Server.ManagementatCallContext
         ) -> Awaitable[None]: ...

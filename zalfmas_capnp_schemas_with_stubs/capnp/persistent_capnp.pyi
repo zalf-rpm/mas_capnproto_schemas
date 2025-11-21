@@ -212,7 +212,9 @@ class _PersistentModule(_InterfaceModule):
             sealFor: AnyPointer,
             _context: _PersistentModule.Server.SaveCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
+        ) -> Awaitable[
+            AnyPointer | _PersistentModule.Server.SaveResultTuple | None
+        ]: ...
         def save_context(
             self, context: _PersistentModule.Server.SaveCallContext
         ) -> Awaitable[None]: ...

@@ -25,6 +25,7 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
+    _IdInformationModule,
     _PairModule,
 )
 
@@ -147,7 +148,11 @@ class _AdminModule(_IdentifiableModule):
             self,
             _context: _AdminModule.Server.IdentitiesCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_AdminModule.Server.IdentitiesResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_IdInformationModule]
+            | _AdminModule.Server.IdentitiesResultTuple
+            | None
+        ]: ...
         def identities_context(
             self, context: _AdminModule.Server.IdentitiesCallContext
         ) -> Awaitable[None]: ...
@@ -226,7 +231,11 @@ class _SimpleFactoryModule(_IdentifiableModule):
             self,
             _context: _SimpleFactoryModule.Server.CreateCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_SimpleFactoryModule.Server.CreateResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_IdentifiableModule]
+            | _SimpleFactoryModule.Server.CreateResultTuple
+            | None
+        ]: ...
         def create_context(
             self, context: _SimpleFactoryModule.Server.CreateCallContext
         ) -> Awaitable[None]: ...
@@ -504,7 +513,9 @@ class _FactoryModule(_IdentifiableModule):
             _context: _FactoryModule.Server.ServiceinterfacenamesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _FactoryModule.Server.ServiceinterfacenamesResultTuple | None
+            Sequence[str]
+            | _FactoryModule.Server.ServiceinterfacenamesResultTuple
+            | None
         ]: ...
         def serviceInterfaceNames_context(
             self, context: _FactoryModule.Server.ServiceinterfacenamesCallContext

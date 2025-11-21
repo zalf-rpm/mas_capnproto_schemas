@@ -2812,7 +2812,11 @@ class _ServiceModule(_IdentifiableModule):
             lon: float,
             _context: _ServiceModule.Server.ManagementatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ServiceModule.Server.ManagementatResultTuple | None]: ...
+        ) -> Awaitable[
+            Sequence[_EventModule]
+            | _ServiceModule.Server.ManagementatResultTuple
+            | None
+        ]: ...
         def managementAt_context(
             self, context: _ServiceModule.Server.ManagementatCallContext
         ) -> Awaitable[None]: ...

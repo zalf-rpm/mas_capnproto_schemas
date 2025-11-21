@@ -371,7 +371,11 @@ class _ClimateInstanceModule(_IdentifiableModule):
             timeSeries: TimeSeriesClient,
             _context: _ClimateInstanceModule.Server.RunCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ClimateInstanceModule.Server.RunResultTuple | None]: ...
+        ) -> Awaitable[
+            _XYResultModule.Builder
+            | _ClimateInstanceModule.Server.RunResultTuple
+            | None
+        ]: ...
         def run_context(
             self, context: _ClimateInstanceModule.Server.RunCallContext
         ) -> Awaitable[None]: ...
@@ -380,7 +384,11 @@ class _ClimateInstanceModule(_IdentifiableModule):
             dataset: Sequence[_TimeSeriesModule],
             _context: _ClimateInstanceModule.Server.RunsetCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ClimateInstanceModule.Server.RunsetResultTuple | None]: ...
+        ) -> Awaitable[
+            _XYPlusResultModule.Builder
+            | _ClimateInstanceModule.Server.RunsetResultTuple
+            | None
+        ]: ...
         def runSet_context(
             self, context: _ClimateInstanceModule.Server.RunsetCallContext
         ) -> Awaitable[None]: ...
@@ -547,7 +555,9 @@ class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModul
             env: EnvReader,
             _context: _EnvInstanceModule.Server.RunCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_EnvInstanceModule.Server.RunResultTuple | None]: ...
+        ) -> Awaitable[
+            AnyPointer | _EnvInstanceModule.Server.RunResultTuple | None
+        ]: ...
         def run_context(
             self, context: _EnvInstanceModule.Server.RunCallContext
         ) -> Awaitable[None]: ...
@@ -779,7 +789,9 @@ class _InstanceFactoryModule(_IdentifiableModule):
             _context: _InstanceFactoryModule.Server.NewinstancesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _InstanceFactoryModule.Server.NewinstancesResultTuple | None
+            Sequence[_IdentifiableModule]
+            | _InstanceFactoryModule.Server.NewinstancesResultTuple
+            | None
         ]: ...
         def newInstances_context(
             self, context: _InstanceFactoryModule.Server.NewinstancesCallContext
