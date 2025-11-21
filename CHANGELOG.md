@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.44](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.43...v0.1.44) (2025-11-21)
+
+
+### Features
+
+* add proper AnyPointer, AnyStruct, AnyList and Capability handling ([2cbc33e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/2cbc33e379b5b67199c40762734d7a27b9afab64))
+
+
+### Bug Fixes
+
+* imported type aliases ([d95d8a9](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/d95d8a97007182b9f1bd0557867e90ccef80e6a5))
+* proper readers and builders ([afff8a1](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/afff8a13659f77939a820de4272d84e4949f1a21))
+* Single value return for AnyTypes ([5729b6b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/5729b6b676c86468f166b434d2ca239290475355))
+
 ## [0.1.43](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.42...v0.1.43) (2025-11-20)
 
 
