@@ -135,7 +135,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class NextjobCallContext(Protocol):
             params: _ServiceModule.Server.NextjobParams
-            results: _ServiceModule.Server.NextjobResult
+            @property
+            def results(self) -> _ServiceModule.Server.NextjobResult: ...
 
         def nextJob(
             self,

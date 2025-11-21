@@ -2804,7 +2804,8 @@ class _ServiceModule(_IdentifiableModule):
 
         class ManagementatCallContext(Protocol):
             params: _ServiceModule.Server.ManagementatParams
-            results: _ServiceModule.Server.ManagementatResult
+            @property
+            def results(self) -> _ServiceModule.Server.ManagementatResult: ...
 
         def managementAt(
             self,

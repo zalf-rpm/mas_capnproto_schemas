@@ -152,7 +152,8 @@ class _IdentifiableModule(_InterfaceModule):
 
         class InfoCallContext(Protocol):
             params: _IdentifiableModule.Server.InfoParams
-            results: _IdentifiableModule.Server.InfoResult
+            @property
+            def results(self) -> IdInformationBuilder: ...
 
         def info(
             self,
@@ -889,7 +890,8 @@ class _HolderModule(_InterfaceModule):
 
         class ValueCallContext(Protocol):
             params: _HolderModule.Server.ValueParams
-            results: _HolderModule.Server.ValueResult
+            @property
+            def results(self) -> _HolderModule.Server.ValueResult: ...
 
         def value(
             self,

@@ -56,7 +56,10 @@ class _ClusterModule(_StructModule):
 
             class UnregisterCallContext(Protocol):
                 params: _ClusterModule._UnregisterModule.Server.UnregisterParams
-                results: _ClusterModule._UnregisterModule.Server.UnregisterResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._UnregisterModule.Server.UnregisterResult: ...
 
             def unregister(
                 self,
@@ -138,13 +141,19 @@ class _ClusterModule(_StructModule):
 
             class RegistermodelinstancefactoryCallContext(Protocol):
                 params: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryParams
-                results: _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._AdminMasterModule.Server.RegistermodelinstancefactoryResult: ...
 
             class AvailablemodelsParams(Protocol): ...
 
             class AvailablemodelsCallContext(Protocol):
                 params: _ClusterModule._AdminMasterModule.Server.AvailablemodelsParams
-                results: _ClusterModule._AdminMasterModule.Server.AvailablemodelsResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._AdminMasterModule.Server.AvailablemodelsResult: ...
 
             def registerModelInstanceFactory(
                 self,
@@ -343,9 +352,12 @@ class _ClusterModule(_StructModule):
                 params: (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceParams
                 )
-                results: (
+                @property
+                def results(
+                    self,
+                ) -> (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstanceResult
-                )
+                ): ...
 
             class NewinstancesParams(Protocol):
                 numberOfInstances: int
@@ -354,29 +366,43 @@ class _ClusterModule(_StructModule):
                 params: (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesParams
                 )
-                results: (
+                @property
+                def results(
+                    self,
+                ) -> (
                     _ClusterModule._ModelInstanceFactoryModule.Server.NewinstancesResult
-                )
+                ): ...
 
             class NewcloudviazmqpipelineproxiesParams(Protocol):
                 numberOfInstances: int
 
             class NewcloudviazmqpipelineproxiesCallContext(Protocol):
                 params: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesParams
-                results: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviazmqpipelineproxiesResult: ...
 
             class NewcloudviaproxyParams(Protocol):
                 numberOfInstances: int
 
             class NewcloudviaproxyCallContext(Protocol):
                 params: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyParams
-                results: _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._ModelInstanceFactoryModule.Server.NewcloudviaproxyResult: ...
 
             class ModelidParams(Protocol): ...
 
             class ModelidCallContext(Protocol):
                 params: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidParams
-                results: _ClusterModule._ModelInstanceFactoryModule.Server.ModelidResult
+                @property
+                def results(
+                    self,
+                ) -> (
+                    _ClusterModule._ModelInstanceFactoryModule.Server.ModelidResult
+                ): ...
 
             class RegistermodelinstanceParams(Protocol):
                 instance: AnyPointer
@@ -384,14 +410,20 @@ class _ClusterModule(_StructModule):
 
             class RegistermodelinstanceCallContext(Protocol):
                 params: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceParams
-                results: _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._ModelInstanceFactoryModule.Server.RegistermodelinstanceResult: ...
 
             class RestoresturdyrefParams(Protocol):
                 sturdyRef: str
 
             class RestoresturdyrefCallContext(Protocol):
                 params: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefParams
-                results: _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._ModelInstanceFactoryModule.Server.RestoresturdyrefResult: ...
 
             def newInstance(
                 self,
@@ -593,7 +625,10 @@ class _ClusterModule(_StructModule):
 
             class ValueCallContext(Protocol):
                 params: _ClusterModule._ValueHolderModule.Server.ValueParams
-                results: _ClusterModule._ValueHolderModule.Server.ValueResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._ValueHolderModule.Server.ValueResult: ...
 
             class ReleaseParams(Protocol): ...
 
@@ -680,7 +715,10 @@ class _ClusterModule(_StructModule):
 
             class AvailablemodelsCallContext(Protocol):
                 params: _ClusterModule._UserMasterModule.Server.AvailablemodelsParams
-                results: _ClusterModule._UserMasterModule.Server.AvailablemodelsResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._UserMasterModule.Server.AvailablemodelsResult: ...
 
             def availableModels(
                 self,
@@ -807,25 +845,37 @@ class _ClusterModule(_StructModule):
 
             class RegistermodelinstancefactoryCallContext(Protocol):
                 params: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryParams
-                results: _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._RuntimeModule.Server.RegistermodelinstancefactoryResult: ...
 
             class AvailablemodelsParams(Protocol): ...
 
             class AvailablemodelsCallContext(Protocol):
                 params: _ClusterModule._RuntimeModule.Server.AvailablemodelsParams
-                results: _ClusterModule._RuntimeModule.Server.AvailablemodelsResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._RuntimeModule.Server.AvailablemodelsResult: ...
 
             class NumberofcoresParams(Protocol): ...
 
             class NumberofcoresCallContext(Protocol):
                 params: _ClusterModule._RuntimeModule.Server.NumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.NumberofcoresResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._RuntimeModule.Server.NumberofcoresResult: ...
 
             class FreenumberofcoresParams(Protocol): ...
 
             class FreenumberofcoresCallContext(Protocol):
                 params: _ClusterModule._RuntimeModule.Server.FreenumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.FreenumberofcoresResult
+                @property
+                def results(
+                    self,
+                ) -> _ClusterModule._RuntimeModule.Server.FreenumberofcoresResult: ...
 
             class ReservenumberofcoresParams(Protocol):
                 reserveCores: int
@@ -833,7 +883,12 @@ class _ClusterModule(_StructModule):
 
             class ReservenumberofcoresCallContext(Protocol):
                 params: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresParams
-                results: _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResult
+                @property
+                def results(
+                    self,
+                ) -> (
+                    _ClusterModule._RuntimeModule.Server.ReservenumberofcoresResult
+                ): ...
 
             def registerModelInstanceFactory(
                 self,

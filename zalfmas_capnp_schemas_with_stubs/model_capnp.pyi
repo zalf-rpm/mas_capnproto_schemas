@@ -20,7 +20,10 @@ from capnp.lib.capnp import (
 )
 
 from .climate_capnp import TimeSeriesClient, _TimeSeriesModule
-from .common_capnp import _IdentifiableModule
+from .common_capnp import (
+    IdInformationBuilder,
+    _IdentifiableModule,
+)
 from .management_capnp import EventBuilder, EventReader
 from .persistence_capnp import _PersistentModule
 from .service_capnp import _StoppableModule
@@ -357,14 +360,16 @@ class _ClimateInstanceModule(_IdentifiableModule):
 
         class RunCallContext(Protocol):
             params: _ClimateInstanceModule.Server.RunParams
-            results: _ClimateInstanceModule.Server.RunResult
+            @property
+            def results(self) -> _ClimateInstanceModule.Server.RunResult: ...
 
         class RunsetParams(Protocol):
             dataset: Sequence[_TimeSeriesModule]
 
         class RunsetCallContext(Protocol):
             params: _ClimateInstanceModule.Server.RunsetParams
-            results: _ClimateInstanceModule.Server.RunsetResult
+            @property
+            def results(self) -> _ClimateInstanceModule.Server.RunsetResult: ...
 
         def run(
             self,
@@ -548,7 +553,8 @@ class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModul
 
         class RunCallContext(Protocol):
             params: _EnvInstanceModule.Server.RunParams
-            results: _EnvInstanceModule.Server.RunResult
+            @property
+            def results(self) -> _EnvInstanceModule.Server.RunResult: ...
 
         def run(
             self,
@@ -602,9 +608,12 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
                 params: (
                     _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterParams
                 )
-                results: (
+                @property
+                def results(
+                    self,
+                ) -> (
                     _EnvInstanceProxyModule._UnregisterModule.Server.UnregisterResult
-                )
+                ): ...
 
             def unregister(
                 self,
@@ -663,7 +672,10 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
 
         class RegisterenvinstanceCallContext(Protocol):
             params: _EnvInstanceProxyModule.Server.RegisterenvinstanceParams
-            results: _EnvInstanceProxyModule.Server.RegisterenvinstanceResult
+            @property
+            def results(
+                self,
+            ) -> _EnvInstanceProxyModule.Server.RegisterenvinstanceResult: ...
 
         def registerEnvInstance(
             self,
@@ -749,20 +761,23 @@ class _InstanceFactoryModule(_IdentifiableModule):
 
         class ModelinfoCallContext(Protocol):
             params: _InstanceFactoryModule.Server.ModelinfoParams
-            results: _InstanceFactoryModule.Server.ModelinfoResult
+            @property
+            def results(self) -> IdInformationBuilder: ...
 
         class NewinstanceParams(Protocol): ...
 
         class NewinstanceCallContext(Protocol):
             params: _InstanceFactoryModule.Server.NewinstanceParams
-            results: _InstanceFactoryModule.Server.NewinstanceResult
+            @property
+            def results(self) -> _InstanceFactoryModule.Server.NewinstanceResult: ...
 
         class NewinstancesParams(Protocol):
             numberOfInstances: int
 
         class NewinstancesCallContext(Protocol):
             params: _InstanceFactoryModule.Server.NewinstancesParams
-            results: _InstanceFactoryModule.Server.NewinstancesResult
+            @property
+            def results(self) -> _InstanceFactoryModule.Server.NewinstancesResult: ...
 
         def modelInfo(
             self,

@@ -552,7 +552,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
             class SendcellsCallContext(Protocol):
                 params: _GridModule._CallbackModule.Server.SendcellsParams
-                results: _GridModule._CallbackModule.Server.SendcellsResult
+                @property
+                def results(
+                    self,
+                ) -> _GridModule._CallbackModule.Server.SendcellsResult: ...
 
             def sendCells(
                 self,
@@ -720,25 +723,29 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ClosestvalueatCallContext(Protocol):
             params: _GridModule.Server.ClosestvalueatParams
-            results: _GridModule.Server.ClosestvalueatResult
+            @property
+            def results(self) -> _GridModule.Server.ClosestvalueatResult: ...
 
         class ResolutionParams(Protocol): ...
 
         class ResolutionCallContext(Protocol):
             params: _GridModule.Server.ResolutionParams
-            results: _GridModule.Server.ResolutionResult
+            @property
+            def results(self) -> _GridModule.Server.ResolutionResult: ...
 
         class DimensionParams(Protocol): ...
 
         class DimensionCallContext(Protocol):
             params: _GridModule.Server.DimensionParams
-            results: _GridModule.Server.DimensionResult
+            @property
+            def results(self) -> _GridModule.Server.DimensionResult: ...
 
         class NodatavalueParams(Protocol): ...
 
         class NodatavalueCallContext(Protocol):
             params: _GridModule.Server.NodatavalueParams
-            results: _GridModule.Server.NodatavalueResult
+            @property
+            def results(self) -> _GridModule.Server.NodatavalueResult: ...
 
         class ValueatParams(Protocol):
             row: int
@@ -749,14 +756,16 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ValueatCallContext(Protocol):
             params: _GridModule.Server.ValueatParams
-            results: _GridModule.Server.ValueatResult
+            @property
+            def results(self) -> _GridModule.Server.ValueatResult: ...
 
         class LatlonboundsParams(Protocol):
             useCellCenter: bool
 
         class LatlonboundsCallContext(Protocol):
             params: _GridModule.Server.LatlonboundsParams
-            results: _GridModule.Server.LatlonboundsResult
+            @property
+            def results(self) -> _GridModule.Server.LatlonboundsResult: ...
 
         class StreamcellsParams(Protocol):
             topLeft: RowColReader
@@ -764,13 +773,15 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class StreamcellsCallContext(Protocol):
             params: _GridModule.Server.StreamcellsParams
-            results: _GridModule.Server.StreamcellsResult
+            @property
+            def results(self) -> _GridModule.Server.StreamcellsResult: ...
 
         class UnitParams(Protocol): ...
 
         class UnitCallContext(Protocol):
             params: _GridModule.Server.UnitParams
-            results: _GridModule.Server.UnitResult
+            @property
+            def results(self) -> _GridModule.Server.UnitResult: ...
 
         def closestValueAt(
             self,

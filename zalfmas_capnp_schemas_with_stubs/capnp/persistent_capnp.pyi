@@ -205,7 +205,8 @@ class _PersistentModule(_InterfaceModule):
 
         class SaveCallContext(Protocol):
             params: _PersistentModule.Server.SaveParams
-            results: _PersistentModule.Server.SaveResult
+            @property
+            def results(self) -> SaveResultsBuilder: ...
 
         def save(
             self,

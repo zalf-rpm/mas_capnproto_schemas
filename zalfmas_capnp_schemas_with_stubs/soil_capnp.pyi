@@ -566,13 +566,15 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
 
         class DataCallContext(Protocol):
             params: _ProfileModule.Server.DataParams
-            results: _ProfileModule.Server.DataResult
+            @property
+            def results(self) -> ProfileDataBuilder: ...
 
         class GeolocationParams(Protocol): ...
 
         class GeolocationCallContext(Protocol):
             params: _ProfileModule.Server.GeolocationParams
-            results: _ProfileModule.Server.GeolocationResult
+            @property
+            def results(self) -> LatLonCoordBuilder: ...
 
         def data(
             self,
@@ -632,7 +634,10 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
             class NextprofilesCallContext(Protocol):
                 params: _ServiceModule._StreamModule.Server.NextprofilesParams
-                results: _ServiceModule._StreamModule.Server.NextprofilesResult
+                @property
+                def results(
+                    self,
+                ) -> _ServiceModule._StreamModule.Server.NextprofilesResult: ...
 
             def nextProfiles(
                 self,
@@ -765,14 +770,18 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class CheckavailableparametersCallContext(Protocol):
             params: _ServiceModule.Server.CheckavailableparametersParams
-            results: _ServiceModule.Server.CheckavailableparametersResult
+            @property
+            def results(self) -> ResultBuilder: ...
 
         class GetallavailableparametersParams(Protocol):
             onlyRawData: bool
 
         class GetallavailableparametersCallContext(Protocol):
             params: _ServiceModule.Server.GetallavailableparametersParams
-            results: _ServiceModule.Server.GetallavailableparametersResult
+            @property
+            def results(
+                self,
+            ) -> _ServiceModule.Server.GetallavailableparametersResult: ...
 
         class ClosestprofilesatParams(Protocol):
             coord: LatLonCoordReader
@@ -780,7 +789,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class ClosestprofilesatCallContext(Protocol):
             params: _ServiceModule.Server.ClosestprofilesatParams
-            results: _ServiceModule.Server.ClosestprofilesatResult
+            @property
+            def results(self) -> _ServiceModule.Server.ClosestprofilesatResult: ...
 
         class StreamallprofilesParams(Protocol):
             mandatory: Sequence[PropertyNameEnum]
@@ -789,7 +799,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class StreamallprofilesCallContext(Protocol):
             params: _ServiceModule.Server.StreamallprofilesParams
-            results: _ServiceModule.Server.StreamallprofilesResult
+            @property
+            def results(self) -> _ServiceModule.Server.StreamallprofilesResult: ...
 
         def checkAvailableParameters(
             self,

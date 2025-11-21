@@ -109,7 +109,8 @@ class _AdminModule(_IdentifiableModule):
 
         class IdentitiesCallContext(Protocol):
             params: _AdminModule.Server.IdentitiesParams
-            results: _AdminModule.Server.IdentitiesResult
+            @property
+            def results(self) -> _AdminModule.Server.IdentitiesResult: ...
 
         class UpdateidentityParams(Protocol):
             oldId: str
@@ -224,7 +225,8 @@ class _SimpleFactoryModule(_IdentifiableModule):
 
         class CreateCallContext(Protocol):
             params: _SimpleFactoryModule.Server.CreateParams
-            results: _SimpleFactoryModule.Server.CreateResult
+            @property
+            def results(self) -> _SimpleFactoryModule.Server.CreateResult: ...
 
         def create(
             self,
@@ -488,13 +490,15 @@ class _FactoryModule(_IdentifiableModule):
 
         class CreateCallContext(Protocol):
             params: _FactoryModule.Server.CreateParams
-            results: _FactoryModule.Server.CreateResult
+            @property
+            def results(self) -> AccessInfoBuilder: ...
 
         class ServiceinterfacenamesParams(Protocol): ...
 
         class ServiceinterfacenamesCallContext(Protocol):
             params: _FactoryModule.Server.ServiceinterfacenamesParams
-            results: _FactoryModule.Server.ServiceinterfacenamesResult
+            @property
+            def results(self) -> _FactoryModule.Server.ServiceinterfacenamesResult: ...
 
         def create(
             self,
@@ -574,7 +578,8 @@ class _StoppableModule(_InterfaceModule):
 
         class StopCallContext(Protocol):
             params: _StoppableModule.Server.StopParams
-            results: _StoppableModule.Server.StopResult
+            @property
+            def results(self) -> _StoppableModule.Server.StopResult: ...
 
         def stop(
             self,

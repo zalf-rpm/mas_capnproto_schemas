@@ -116,7 +116,8 @@ class _AdminModule(_IdentifiableModule):
 
         class AddcategoryCallContext(Protocol):
             params: _AdminModule.Server.AddcategoryParams
-            results: _AdminModule.Server.AddcategoryResult
+            @property
+            def results(self) -> _AdminModule.Server.AddcategoryResult: ...
 
         class RemovecategoryParams(Protocol):
             categoryId: str
@@ -124,7 +125,8 @@ class _AdminModule(_IdentifiableModule):
 
         class RemovecategoryCallContext(Protocol):
             params: _AdminModule.Server.RemovecategoryParams
-            results: _AdminModule.Server.RemovecategoryResult
+            @property
+            def results(self) -> _AdminModule.Server.RemovecategoryResult: ...
 
         class MoveobjectsParams(Protocol):
             objectIds: Sequence[str]
@@ -132,20 +134,23 @@ class _AdminModule(_IdentifiableModule):
 
         class MoveobjectsCallContext(Protocol):
             params: _AdminModule.Server.MoveobjectsParams
-            results: _AdminModule.Server.MoveobjectsResult
+            @property
+            def results(self) -> _AdminModule.Server.MoveobjectsResult: ...
 
         class RemoveobjectsParams(Protocol):
             objectIds: Sequence[str]
 
         class RemoveobjectsCallContext(Protocol):
             params: _AdminModule.Server.RemoveobjectsParams
-            results: _AdminModule.Server.RemoveobjectsResult
+            @property
+            def results(self) -> _AdminModule.Server.RemoveobjectsResult: ...
 
         class RegistryParams(Protocol): ...
 
         class RegistryCallContext(Protocol):
             params: _AdminModule.Server.RegistryParams
-            results: _AdminModule.Server.RegistryResult
+            @property
+            def results(self) -> _AdminModule.Server.RegistryResult: ...
 
         def addCategory(
             self,
@@ -406,21 +411,24 @@ class _RegistryModule(_IdentifiableModule):
 
         class SupportedcategoriesCallContext(Protocol):
             params: _RegistryModule.Server.SupportedcategoriesParams
-            results: _RegistryModule.Server.SupportedcategoriesResult
+            @property
+            def results(self) -> _RegistryModule.Server.SupportedcategoriesResult: ...
 
         class CategoryinfoParams(Protocol):
             categoryId: str
 
         class CategoryinfoCallContext(Protocol):
             params: _RegistryModule.Server.CategoryinfoParams
-            results: _RegistryModule.Server.CategoryinfoResult
+            @property
+            def results(self) -> IdInformationBuilder: ...
 
         class EntriesParams(Protocol):
             categoryId: str
 
         class EntriesCallContext(Protocol):
             params: _RegistryModule.Server.EntriesParams
-            results: _RegistryModule.Server.EntriesResult
+            @property
+            def results(self) -> _RegistryModule.Server.EntriesResult: ...
 
         def supportedCategories(
             self,
@@ -717,7 +725,10 @@ class _RegistrarModule(_IdentifiableModule):
 
             class UnregisterCallContext(Protocol):
                 params: _RegistrarModule._UnregisterModule.Server.UnregisterParams
-                results: _RegistrarModule._UnregisterModule.Server.UnregisterResult
+                @property
+                def results(
+                    self,
+                ) -> _RegistrarModule._UnregisterModule.Server.UnregisterResult: ...
 
             def unregister(
                 self,
@@ -786,7 +797,8 @@ class _RegistrarModule(_IdentifiableModule):
 
         class RegisterCallContext(Protocol):
             params: _RegistrarModule.Server.RegisterParams
-            results: _RegistrarModule.Server.RegisterResult
+            @property
+            def results(self) -> _RegistrarModule.Server.RegisterResult: ...
 
         def register(
             self,

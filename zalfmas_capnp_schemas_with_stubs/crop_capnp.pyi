@@ -75,19 +75,22 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
 
         class ParametersCallContext(Protocol):
             params: _CropModule.Server.ParametersParams
-            results: _CropModule.Server.ParametersResult
+            @property
+            def results(self) -> _CropModule.Server.ParametersResult: ...
 
         class CultivarParams(Protocol): ...
 
         class CultivarCallContext(Protocol):
             params: _CropModule.Server.CultivarParams
-            results: _CropModule.Server.CultivarResult
+            @property
+            def results(self) -> _CropModule.Server.CultivarResult: ...
 
         class SpeciesParams(Protocol): ...
 
         class SpeciesCallContext(Protocol):
             params: _CropModule.Server.SpeciesParams
-            results: _CropModule.Server.SpeciesResult
+            @property
+            def results(self) -> _CropModule.Server.SpeciesResult: ...
 
         def parameters(
             self,

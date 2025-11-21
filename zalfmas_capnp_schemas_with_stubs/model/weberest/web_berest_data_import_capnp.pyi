@@ -39,7 +39,8 @@ class _DWLABImportModule(_InterfaceModule):
 
         class ImportdataCallContext(Protocol):
             params: _DWLABImportModule.Server.ImportdataParams
-            results: _DWLABImportModule.Server.ImportdataResult
+            @property
+            def results(self) -> _DWLABImportModule.Server.ImportdataResult: ...
 
         def importData(
             self,

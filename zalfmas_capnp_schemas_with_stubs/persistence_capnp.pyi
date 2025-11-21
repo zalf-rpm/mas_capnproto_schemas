@@ -901,7 +901,10 @@ class _PersistentModule(_InterfaceModule):
 
             class ReleaseCallContext(Protocol):
                 params: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseParams
-                results: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResult
+                @property
+                def results(
+                    self,
+                ) -> _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResult: ...
 
             def release(
                 self,
@@ -958,7 +961,8 @@ class _PersistentModule(_InterfaceModule):
 
         class SaveCallContext(Protocol):
             params: _PersistentModule.Server.SaveParams
-            results: _PersistentModule.Server.SaveResult
+            @property
+            def results(self) -> SaveResultsBuilder: ...
 
         def save(
             self,
@@ -1109,7 +1113,8 @@ class _RestorerModule(_InterfaceModule):
 
         class RestoreCallContext(Protocol):
             params: _RestorerModule.Server.RestoreParams
-            results: _RestorerModule.Server.RestoreResult
+            @property
+            def results(self) -> _RestorerModule.Server.RestoreResult: ...
 
         def restore(
             self,
@@ -1280,7 +1285,10 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
 
             class RegisterCallContext(Protocol):
                 params: _HostPortResolverModule._RegistrarModule.Server.RegisterParams
-                results: _HostPortResolverModule._RegistrarModule.Server.RegisterResult
+                @property
+                def results(
+                    self,
+                ) -> _HostPortResolverModule._RegistrarModule.Server.RegisterResult: ...
 
             def register(
                 self,
@@ -1350,7 +1358,8 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
 
         class ResolveCallContext(Protocol):
             params: _HostPortResolverModule.Server.ResolveParams
-            results: _HostPortResolverModule.Server.ResolveResult
+            @property
+            def results(self) -> _HostPortResolverModule.Server.ResolveResult: ...
 
         def resolve(
             self,
@@ -1501,7 +1510,8 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
 
         class RegisterCallContext(Protocol):
             params: _GatewayModule.Server.RegisterParams
-            results: _GatewayModule.Server.RegisterResult
+            @property
+            def results(self) -> RegResultsBuilder: ...
 
         def register(
             self,

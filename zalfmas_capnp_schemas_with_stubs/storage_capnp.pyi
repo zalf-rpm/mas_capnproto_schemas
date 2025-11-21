@@ -469,9 +469,12 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     params: (
                         _StoreModule._ContainerModule._EntryModule.Server.GetkeyParams
                     )
-                    results: (
+                    @property
+                    def results(
+                        self,
+                    ) -> (
                         _StoreModule._ContainerModule._EntryModule.Server.GetkeyResult
-                    )
+                    ): ...
 
                 class GetvalueParams(Protocol): ...
 
@@ -479,9 +482,12 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     params: (
                         _StoreModule._ContainerModule._EntryModule.Server.GetvalueParams
                     )
-                    results: (
+                    @property
+                    def results(
+                        self,
+                    ) -> (
                         _StoreModule._ContainerModule._EntryModule.Server.GetvalueResult
-                    )
+                    ): ...
 
                 class SetvalueParams(Protocol):
                     value: ValueReader
@@ -490,9 +496,12 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                     params: (
                         _StoreModule._ContainerModule._EntryModule.Server.SetvalueParams
                     )
-                    results: (
+                    @property
+                    def results(
+                        self,
+                    ) -> (
                         _StoreModule._ContainerModule._EntryModule.Server.SetvalueResult
-                    )
+                    ): ...
 
                 def getKey(
                     self,
@@ -773,39 +782,57 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
             class ExportCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.ExportParams
-                results: _StoreModule._ContainerModule.Server.ExportResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.ExportResult: ...
 
             class DownloadentriesParams(Protocol): ...
 
             class DownloadentriesCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.DownloadentriesParams
-                results: _StoreModule._ContainerModule.Server.DownloadentriesResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.DownloadentriesResult: ...
 
             class ListentriesParams(Protocol): ...
 
             class ListentriesCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.ListentriesParams
-                results: _StoreModule._ContainerModule.Server.ListentriesResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.ListentriesResult: ...
 
             class GetentryParams(Protocol):
                 key: str
 
             class GetentryCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.GetentryParams
-                results: _StoreModule._ContainerModule.Server.GetentryResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.GetentryResult: ...
 
             class RemoveentryParams(Protocol):
                 key: str
 
             class RemoveentryCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.RemoveentryParams
-                results: _StoreModule._ContainerModule.Server.RemoveentryResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.RemoveentryResult: ...
 
             class ClearParams(Protocol): ...
 
             class ClearCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.ClearParams
-                results: _StoreModule._ContainerModule.Server.ClearResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.ClearResult: ...
 
             class AddentryParams(Protocol):
                 key: str
@@ -814,7 +841,10 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
             class AddentryCallContext(Protocol):
                 params: _StoreModule._ContainerModule.Server.AddentryParams
-                results: _StoreModule._ContainerModule.Server.AddentryResult
+                @property
+                def results(
+                    self,
+                ) -> _StoreModule._ContainerModule.Server.AddentryResult: ...
 
             def export(
                 self,
@@ -1261,34 +1291,39 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
 
         class NewcontainerCallContext(Protocol):
             params: _StoreModule.Server.NewcontainerParams
-            results: _StoreModule.Server.NewcontainerResult
+            @property
+            def results(self) -> _StoreModule.Server.NewcontainerResult: ...
 
         class ContainerwithidParams(Protocol):
             id: str
 
         class ContainerwithidCallContext(Protocol):
             params: _StoreModule.Server.ContainerwithidParams
-            results: _StoreModule.Server.ContainerwithidResult
+            @property
+            def results(self) -> _StoreModule.Server.ContainerwithidResult: ...
 
         class ListcontainersParams(Protocol): ...
 
         class ListcontainersCallContext(Protocol):
             params: _StoreModule.Server.ListcontainersParams
-            results: _StoreModule.Server.ListcontainersResult
+            @property
+            def results(self) -> _StoreModule.Server.ListcontainersResult: ...
 
         class RemovecontainerParams(Protocol):
             id: str
 
         class RemovecontainerCallContext(Protocol):
             params: _StoreModule.Server.RemovecontainerParams
-            results: _StoreModule.Server.RemovecontainerResult
+            @property
+            def results(self) -> _StoreModule.Server.RemovecontainerResult: ...
 
         class ImportcontainerParams(Protocol):
             json: str
 
         class ImportcontainerCallContext(Protocol):
             params: _StoreModule.Server.ImportcontainerParams
-            results: _StoreModule.Server.ImportcontainerResult
+            @property
+            def results(self) -> _StoreModule.Server.ImportcontainerResult: ...
 
         def newContainer(
             self,

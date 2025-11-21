@@ -605,13 +605,15 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
 
         class NutrientsCallContext(Protocol):
             params: _FertilizerModule.Server.NutrientsParams
-            results: _FertilizerModule.Server.NutrientsResult
+            @property
+            def results(self) -> _FertilizerModule.Server.NutrientsResult: ...
 
         class ParametersParams(Protocol): ...
 
         class ParametersCallContext(Protocol):
             params: _FertilizerModule.Server.ParametersParams
-            results: _FertilizerModule.Server.ParametersResult
+            @property
+            def results(self) -> _FertilizerModule.Server.ParametersResult: ...
 
         def nutrients(
             self,
@@ -2174,7 +2176,8 @@ class _ServiceModule(_IdentifiableModule):
 
         class ManagementatCallContext(Protocol):
             params: _ServiceModule.Server.ManagementatParams
-            results: _ServiceModule.Server.ManagementatResult
+            @property
+            def results(self) -> _ServiceModule.Server.ManagementatResult: ...
 
         def managementAt(
             self,

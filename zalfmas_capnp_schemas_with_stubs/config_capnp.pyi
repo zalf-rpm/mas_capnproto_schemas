@@ -51,7 +51,8 @@ class _ServiceModule(_InterfaceModule):
 
         class NextconfigCallContext(Protocol):
             params: _ServiceModule.Server.NextconfigParams
-            results: _ServiceModule.Server.NextconfigResult
+            @property
+            def results(self) -> _ServiceModule.Server.NextconfigResult: ...
 
         def nextConfig(
             self,

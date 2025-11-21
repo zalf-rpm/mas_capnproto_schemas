@@ -449,7 +449,8 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
             class ReadCallContext(Protocol):
                 params: _ChannelModule._ReaderModule.Server.ReadParams
-                results: _ChannelModule._ReaderModule.Server.ReadResult
+                @property
+                def results(self) -> MsgBuilder: ...
 
             class CloseParams(Protocol): ...
 
@@ -460,7 +461,8 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
             class ReadifmsgCallContext(Protocol):
                 params: _ChannelModule._ReaderModule.Server.ReadifmsgParams
-                results: _ChannelModule._ReaderModule.Server.ReadifmsgResult
+                @property
+                def results(self) -> MsgBuilder: ...
 
             def read(
                 self,
@@ -575,7 +577,10 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
             class WriteifspaceCallContext(Protocol):
                 params: _ChannelModule._WriterModule.Server.WriteifspaceParams
-                results: _ChannelModule._WriterModule.Server.WriteifspaceResult
+                @property
+                def results(
+                    self,
+                ) -> _ChannelModule._WriterModule.Server.WriteifspaceResult: ...
 
             def write(
                 self,
@@ -887,19 +892,22 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
 
         class ReaderCallContext(Protocol):
             params: _ChannelModule.Server.ReaderParams
-            results: _ChannelModule.Server.ReaderResult
+            @property
+            def results(self) -> _ChannelModule.Server.ReaderResult: ...
 
         class WriterParams(Protocol): ...
 
         class WriterCallContext(Protocol):
             params: _ChannelModule.Server.WriterParams
-            results: _ChannelModule.Server.WriterResult
+            @property
+            def results(self) -> _ChannelModule.Server.WriterResult: ...
 
         class EndpointsParams(Protocol): ...
 
         class EndpointsCallContext(Protocol):
             params: _ChannelModule.Server.EndpointsParams
-            results: _ChannelModule.Server.EndpointsResult
+            @property
+            def results(self) -> _ChannelModule.Server.EndpointsResult: ...
 
         class SetautoclosesemanticsParams(Protocol):
             cs: ChannelCloseSemanticsEnum
@@ -1192,7 +1200,8 @@ class _StartChannelsServiceModule(_IdentifiableModule):
 
         class StartCallContext(Protocol):
             params: _StartChannelsServiceModule.Server.StartParams
-            results: _StartChannelsServiceModule.Server.StartResult
+            @property
+            def results(self) -> _StartChannelsServiceModule.Server.StartResult: ...
 
         def start(
             self,
@@ -1471,13 +1480,19 @@ class _ComponentModule(_StructModule):
 
             class StartCallContext(Protocol):
                 params: _ComponentModule._RunnableModule.Server.StartParams
-                results: _ComponentModule._RunnableModule.Server.StartResult
+                @property
+                def results(
+                    self,
+                ) -> _ComponentModule._RunnableModule.Server.StartResult: ...
 
             class StopParams(Protocol): ...
 
             class StopCallContext(Protocol):
                 params: _ComponentModule._RunnableModule.Server.StopParams
-                results: _ComponentModule._RunnableModule.Server.StopResult
+                @property
+                def results(
+                    self,
+                ) -> _ComponentModule._RunnableModule.Server.StopResult: ...
 
             def start(
                 self,

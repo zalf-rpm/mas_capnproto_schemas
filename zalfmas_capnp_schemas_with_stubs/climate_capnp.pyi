@@ -214,14 +214,20 @@ class _MetadataModule(_StructModule):
 
             class CategoriesCallContext(Protocol):
                 params: _MetadataModule._SupportedModule.Server.CategoriesParams
-                results: _MetadataModule._SupportedModule.Server.CategoriesResult
+                @property
+                def results(
+                    self,
+                ) -> _MetadataModule._SupportedModule.Server.CategoriesResult: ...
 
             class SupportedvaluesParams(Protocol):
                 typeId: str
 
             class SupportedvaluesCallContext(Protocol):
                 params: _MetadataModule._SupportedModule.Server.SupportedvaluesParams
-                results: _MetadataModule._SupportedModule.Server.SupportedvaluesResult
+                @property
+                def results(
+                    self,
+                ) -> _MetadataModule._SupportedModule.Server.SupportedvaluesResult: ...
 
             def categories(
                 self,
@@ -636,13 +642,17 @@ class _MetadataModule(_StructModule):
 
             class ForoneCallContext(Protocol):
                 params: _MetadataModule._InformationModule.Server.ForoneParams
-                results: _MetadataModule._InformationModule.Server.ForoneResult
+                @property
+                def results(self) -> IdInformationBuilder: ...
 
             class ForallParams(Protocol): ...
 
             class ForallCallContext(Protocol):
                 params: _MetadataModule._InformationModule.Server.ForallParams
-                results: _MetadataModule._InformationModule.Server.ForallResult
+                @property
+                def results(
+                    self,
+                ) -> _MetadataModule._InformationModule.Server.ForallResult: ...
 
             def forOne(
                 self,
@@ -810,7 +820,10 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
 
             class NextlocationsCallContext(Protocol):
                 params: _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsParams
-                results: _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsResult
+                @property
+                def results(
+                    self,
+                ) -> _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsResult: ...
 
             def nextLocations(
                 self,
@@ -917,34 +930,39 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
 
         class MetadataCallContext(Protocol):
             params: _DatasetModule.Server.MetadataParams
-            results: _DatasetModule.Server.MetadataResult
+            @property
+            def results(self) -> MetadataBuilder: ...
 
         class ClosesttimeseriesatParams(Protocol):
             latlon: LatLonCoordReader
 
         class ClosesttimeseriesatCallContext(Protocol):
             params: _DatasetModule.Server.ClosesttimeseriesatParams
-            results: _DatasetModule.Server.ClosesttimeseriesatResult
+            @property
+            def results(self) -> _DatasetModule.Server.ClosesttimeseriesatResult: ...
 
         class TimeseriesatParams(Protocol):
             locationId: str
 
         class TimeseriesatCallContext(Protocol):
             params: _DatasetModule.Server.TimeseriesatParams
-            results: _DatasetModule.Server.TimeseriesatResult
+            @property
+            def results(self) -> _DatasetModule.Server.TimeseriesatResult: ...
 
         class LocationsParams(Protocol): ...
 
         class LocationsCallContext(Protocol):
             params: _DatasetModule.Server.LocationsParams
-            results: _DatasetModule.Server.LocationsResult
+            @property
+            def results(self) -> _DatasetModule.Server.LocationsResult: ...
 
         class StreamlocationsParams(Protocol):
             startAfterLocationId: str
 
         class StreamlocationsCallContext(Protocol):
             params: _DatasetModule.Server.StreamlocationsParams
-            results: _DatasetModule.Server.StreamlocationsResult
+            @property
+            def results(self) -> _DatasetModule.Server.StreamlocationsResult: ...
 
         def metadata(
             self,
@@ -1182,31 +1200,36 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
 
         class ResolutionCallContext(Protocol):
             params: _TimeSeriesModule.Server.ResolutionParams
-            results: _TimeSeriesModule.Server.ResolutionResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.ResolutionResult: ...
 
         class RangeParams(Protocol): ...
 
         class RangeCallContext(Protocol):
             params: _TimeSeriesModule.Server.RangeParams
-            results: _TimeSeriesModule.Server.RangeResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.RangeResult: ...
 
         class HeaderParams(Protocol): ...
 
         class HeaderCallContext(Protocol):
             params: _TimeSeriesModule.Server.HeaderParams
-            results: _TimeSeriesModule.Server.HeaderResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.HeaderResult: ...
 
         class DataParams(Protocol): ...
 
         class DataCallContext(Protocol):
             params: _TimeSeriesModule.Server.DataParams
-            results: _TimeSeriesModule.Server.DataResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.DataResult: ...
 
         class DatatParams(Protocol): ...
 
         class DatatCallContext(Protocol):
             params: _TimeSeriesModule.Server.DatatParams
-            results: _TimeSeriesModule.Server.DatatResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.DatatResult: ...
 
         class SubrangeParams(Protocol):
             start: DateReader
@@ -1214,26 +1237,30 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
 
         class SubrangeCallContext(Protocol):
             params: _TimeSeriesModule.Server.SubrangeParams
-            results: _TimeSeriesModule.Server.SubrangeResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.SubrangeResult: ...
 
         class SubheaderParams(Protocol):
             elements: Sequence[ElementEnum]
 
         class SubheaderCallContext(Protocol):
             params: _TimeSeriesModule.Server.SubheaderParams
-            results: _TimeSeriesModule.Server.SubheaderResult
+            @property
+            def results(self) -> _TimeSeriesModule.Server.SubheaderResult: ...
 
         class MetadataParams(Protocol): ...
 
         class MetadataCallContext(Protocol):
             params: _TimeSeriesModule.Server.MetadataParams
-            results: _TimeSeriesModule.Server.MetadataResult
+            @property
+            def results(self) -> MetadataBuilder: ...
 
         class LocationParams(Protocol): ...
 
         class LocationCallContext(Protocol):
             params: _TimeSeriesModule.Server.LocationParams
-            results: _TimeSeriesModule.Server.LocationResult
+            @property
+            def results(self) -> LocationBuilder: ...
 
         def resolution(
             self,
@@ -1881,14 +1908,16 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class GetavailabledatasetsCallContext(Protocol):
             params: _ServiceModule.Server.GetavailabledatasetsParams
-            results: _ServiceModule.Server.GetavailabledatasetsResult
+            @property
+            def results(self) -> _ServiceModule.Server.GetavailabledatasetsResult: ...
 
         class GetdatasetsforParams(Protocol):
             template: MetadataReader
 
         class GetdatasetsforCallContext(Protocol):
             params: _ServiceModule.Server.GetdatasetsforParams
-            results: _ServiceModule.Server.GetdatasetsforResult
+            @property
+            def results(self) -> _ServiceModule.Server.GetdatasetsforResult: ...
 
         def getAvailableDatasets(
             self,
@@ -2076,7 +2105,8 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
 
         class CreateCallContext(Protocol):
             params: _CSVTimeSeriesFactoryModule.Server.CreateParams
-            results: _CSVTimeSeriesFactoryModule.Server.CreateResult
+            @property
+            def results(self) -> _CSVTimeSeriesFactoryModule.Server.CreateResult: ...
 
         def create(
             self,
@@ -2265,13 +2295,19 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
 
         class WrappedtimeseriesCallContext(Protocol):
             params: _AlterTimeSeriesWrapperModule.Server.WrappedtimeseriesParams
-            results: _AlterTimeSeriesWrapperModule.Server.WrappedtimeseriesResult
+            @property
+            def results(
+                self,
+            ) -> _AlterTimeSeriesWrapperModule.Server.WrappedtimeseriesResult: ...
 
         class AlteredelementsParams(Protocol): ...
 
         class AlteredelementsCallContext(Protocol):
             params: _AlterTimeSeriesWrapperModule.Server.AlteredelementsParams
-            results: _AlterTimeSeriesWrapperModule.Server.AlteredelementsResult
+            @property
+            def results(
+                self,
+            ) -> _AlterTimeSeriesWrapperModule.Server.AlteredelementsResult: ...
 
         class AlterParams(Protocol):
             desc: AlteredReader
@@ -2279,7 +2315,8 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
 
         class AlterCallContext(Protocol):
             params: _AlterTimeSeriesWrapperModule.Server.AlterParams
-            results: _AlterTimeSeriesWrapperModule.Server.AlterResult
+            @property
+            def results(self) -> _AlterTimeSeriesWrapperModule.Server.AlterResult: ...
 
         class RemoveParams(Protocol):
             alteredElement: ElementEnum
@@ -2433,7 +2470,10 @@ class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
 
         class WrapCallContext(Protocol):
             params: _AlterTimeSeriesWrapperFactoryModule.Server.WrapParams
-            results: _AlterTimeSeriesWrapperFactoryModule.Server.WrapResult
+            @property
+            def results(
+                self,
+            ) -> _AlterTimeSeriesWrapperFactoryModule.Server.WrapResult: ...
 
         def wrap(
             self,
