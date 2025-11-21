@@ -2813,7 +2813,7 @@ class _ServiceModule(_IdentifiableModule):
             _context: _ServiceModule.Server.ManagementatCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_EventModule]
+            Sequence[EventBuilder | EventReader]
             | _ServiceModule.Server.ManagementatResultTuple
             | None
         ]: ...

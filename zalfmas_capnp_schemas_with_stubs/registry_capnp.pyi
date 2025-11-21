@@ -20,7 +20,6 @@ from .common_capnp import (
     IdInformationBuilder,
     IdInformationReader,
     _IdentifiableModule,
-    _IdInformationModule,
 )
 from .persistence_capnp import (
     SturdyRefBuilder,
@@ -428,7 +427,7 @@ class _RegistryModule(_IdentifiableModule):
             _context: _RegistryModule.Server.SupportedcategoriesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_IdInformationModule]
+            Sequence[IdInformationBuilder | IdInformationReader]
             | _RegistryModule.Server.SupportedcategoriesResultTuple
             | None
         ]: ...
@@ -450,7 +449,7 @@ class _RegistryModule(_IdentifiableModule):
             _context: _RegistryModule.Server.EntriesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_RegistryModule._EntryModule]
+            Sequence[EntryBuilder | EntryReader]
             | _RegistryModule.Server.EntriesResultTuple
             | None
         ]: ...

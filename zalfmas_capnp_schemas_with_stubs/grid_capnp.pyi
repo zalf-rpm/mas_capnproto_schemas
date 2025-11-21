@@ -560,7 +560,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
                 _context: _GridModule._CallbackModule.Server.SendcellsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_GridModule._LocationModule]
+                Sequence[LocationBuilder | LocationReader]
                 | _GridModule._CallbackModule.Server.SendcellsResultTuple
                 | None
             ]: ...

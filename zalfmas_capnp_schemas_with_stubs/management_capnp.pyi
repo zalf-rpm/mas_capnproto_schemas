@@ -618,7 +618,7 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
             _context: _FertilizerModule.Server.NutrientsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_NutrientModule]
+            Sequence[NutrientBuilder | NutrientReader]
             | _FertilizerModule.Server.NutrientsResultTuple
             | None
         ]: ...
@@ -2183,7 +2183,7 @@ class _ServiceModule(_IdentifiableModule):
             _context: _ServiceModule.Server.ManagementatCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_EventModule]
+            Sequence[EventBuilder | EventReader]
             | _ServiceModule.Server.ManagementatResultTuple
             | None
         ]: ...

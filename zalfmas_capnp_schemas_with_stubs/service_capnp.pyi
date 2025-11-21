@@ -25,7 +25,6 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
-    _IdInformationModule,
     _PairModule,
 )
 
@@ -149,7 +148,7 @@ class _AdminModule(_IdentifiableModule):
             _context: _AdminModule.Server.IdentitiesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_IdInformationModule]
+            Sequence[IdInformationBuilder | IdInformationReader]
             | _AdminModule.Server.IdentitiesResultTuple
             | None
         ]: ...

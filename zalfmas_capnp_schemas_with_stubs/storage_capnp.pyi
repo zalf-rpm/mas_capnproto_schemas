@@ -23,7 +23,6 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
-    _PairModule,
 )
 from .persistence_capnp import _PersistentModule
 
@@ -831,7 +830,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 _context: _StoreModule._ContainerModule.Server.DownloadentriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_PairModule]
+                Sequence[PairBuilder | PairReader]
                 | _StoreModule._ContainerModule.Server.DownloadentriesResultTuple
                 | None
             ]: ...
@@ -844,7 +843,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
                 _context: _StoreModule._ContainerModule.Server.ListentriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_StoreModule._ContainerModule._KeyAndEntryModule]
+                Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
                 | _StoreModule._ContainerModule.Server.ListentriesResultTuple
                 | None
             ]: ...
@@ -1321,7 +1320,7 @@ class _StoreModule(_IdentifiableModule, _PersistentModule):
             _context: _StoreModule.Server.ListcontainersCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_StoreModule._InfoAndContainerModule]
+            Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
             | _StoreModule.Server.ListcontainersResultTuple
             | None
         ]: ...

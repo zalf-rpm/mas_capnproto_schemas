@@ -25,8 +25,6 @@ from .common_capnp import (
     PairBuilder,
     PairReader,
     _IdentifiableModule,
-    _IdInformationModule,
-    _PairModule,
 )
 from .date_capnp import DateBuilder, DateReader
 from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
@@ -230,7 +228,7 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._SupportedModule.Server.CategoriesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_IdInformationModule]
+                Sequence[IdInformationBuilder | IdInformationReader]
                 | _MetadataModule._SupportedModule.Server.CategoriesResultTuple
                 | None
             ]: ...
@@ -244,7 +242,7 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._SupportedModule.Server.SupportedvaluesCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_IdInformationModule]
+                Sequence[IdInformationBuilder | IdInformationReader]
                 | _MetadataModule._SupportedModule.Server.SupportedvaluesResultTuple
                 | None
             ]: ...
@@ -662,7 +660,7 @@ class _MetadataModule(_StructModule):
                 _context: _MetadataModule._InformationModule.Server.ForallCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_PairModule]
+                Sequence[PairBuilder | PairReader]
                 | _MetadataModule._InformationModule.Server.ForallResultTuple
                 | None
             ]: ...
@@ -818,7 +816,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
                 _context: _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                Sequence[_LocationModule]
+                Sequence[LocationBuilder | LocationReader]
                 | _DatasetModule._GetLocationsCallbackModule.Server.NextlocationsResultTuple
                 | None
             ]: ...
@@ -984,7 +982,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             _context: _DatasetModule.Server.LocationsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_LocationModule]
+            Sequence[LocationBuilder | LocationReader]
             | _DatasetModule.Server.LocationsResultTuple
             | None
         ]: ...
@@ -1894,7 +1892,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             _context: _ServiceModule.Server.GetavailabledatasetsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_MetaPlusDataModule]
+            Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
             | _ServiceModule.Server.GetavailabledatasetsResultTuple
             | None
         ]: ...
@@ -2310,7 +2308,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             _context: _AlterTimeSeriesWrapperModule.Server.AlteredelementsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            Sequence[_AlterTimeSeriesWrapperModule._AlteredModule]
+            Sequence[AlteredBuilder | AlteredReader]
             | _AlterTimeSeriesWrapperModule.Server.AlteredelementsResultTuple
             | None
         ]: ...
