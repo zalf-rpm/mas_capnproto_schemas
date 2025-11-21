@@ -36,6 +36,8 @@ type AnyPointer = (
     | _DynamicCapabilityServer
     | _DynamicListBuilder
     | _DynamicListReader
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
 )
 
 class _IPModule(_StructModule):

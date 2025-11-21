@@ -11,6 +11,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -28,6 +29,8 @@ type AnyPointer = (
     | _DynamicCapabilityServer
     | _DynamicListBuilder
     | _DynamicListReader
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
 )
 
 class _PersistentModule(_InterfaceModule):

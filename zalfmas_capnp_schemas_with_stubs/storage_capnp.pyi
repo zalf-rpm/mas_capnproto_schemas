@@ -9,6 +9,7 @@ from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -26,7 +27,12 @@ from .common_capnp import (
 from .persistence_capnp import _PersistentModule
 
 # Type alias for AnyStruct parameters
-type AnyStruct = _DynamicStructBuilder | _DynamicStructReader
+type AnyStruct = (
+    _DynamicStructBuilder
+    | _DynamicStructReader
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
+)
 
 class _StoreModule(_IdentifiableModule, _PersistentModule):
     class _ContainerModule(_IdentifiableModule, _PersistentModule):

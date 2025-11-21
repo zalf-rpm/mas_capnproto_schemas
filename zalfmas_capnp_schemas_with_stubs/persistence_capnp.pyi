@@ -11,6 +11,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicObjectBuilder,
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -30,10 +31,17 @@ type AnyPointer = (
     | _DynamicCapabilityServer
     | _DynamicListBuilder
     | _DynamicListReader
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
 )
 
 # Type alias for Capability parameters
-type Capability = _DynamicCapabilityClient | _DynamicCapabilityServer
+type Capability = (
+    _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
+)
 
 class _VatIdModule(_StructModule):
     class Reader(_DynamicStructReader):
