@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -578,6 +578,21 @@ class _EventModule(_StructModule):
 
 Event: _EventModule
 
+class _SpecList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> SpecReader: ...
+        def __iter__(self) -> Iterator[SpecReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> SpecBuilder: ...
+        def __setitem__(
+            self, key: int, value: SpecReader | SpecBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[SpecBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> SpecBuilder: ...
+
 class _FertilizerModule(_IdentifiableModule, _PersistentModule):
     class NutrientsRequest(Protocol):
         def send(self) -> _FertilizerModule.FertilizerClient.NutrientsResult: ...
@@ -589,14 +604,28 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _FertilizerModule.FertilizerClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-            nutrients: Sequence[NutrientBuilder | NutrientReader]
+        class NutrientsResult(_DynamicStructBuilder):
+            @property
+            def nutrients(self) -> NutrientListBuilder: ...
+            @nutrients.setter
+            def nutrients(
+                self, value: NutrientListBuilder | NutrientListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["nutrients"], size: int | None = None
+            ) -> NutrientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class ParametersResult(Awaitable[ParametersResult], Protocol):
-            params: AnyPointer
+        class ParametersResult(_DynamicStructBuilder):
+            @property
+            def params(self) -> AnyPointer: ...
+            @params.setter
+            def params(self, value: AnyPointer) -> None: ...
 
         class NutrientsResultTuple(NamedTuple):
-            nutrients: Sequence[NutrientBuilder | NutrientReader]
+            nutrients: NutrientListBuilder | NutrientListReader
 
         class ParametersResultTuple(NamedTuple):
             params: AnyPointer
@@ -642,7 +671,7 @@ class _FertilizerModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class NutrientsResult(Awaitable[NutrientsResult], Protocol):
-            nutrients: Sequence[NutrientReader]
+            nutrients: NutrientListReader
 
         class ParametersResult(Awaitable[ParametersResult], Protocol):
             params: _DynamicObjectReader
@@ -760,6 +789,22 @@ class _NutrientModule(_StructModule):
     ) -> NutrientReader: ...
 
 Nutrient: _NutrientModule
+
+class _NutrientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> NutrientReader: ...
+        def __iter__(self) -> Iterator[NutrientReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> NutrientBuilder: ...
+        def __setitem__(
+            self, key: int, value: NutrientReader | NutrientBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[NutrientBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> NutrientBuilder: ...
+
 Fertilizer: _FertilizerModule
 
 class _ParamsModule(_StructModule):
@@ -1539,7 +1584,7 @@ class _ParamsModule(_StructModule):
         Spec: _SpecModule
         class Reader(_DynamicStructReader):
             @property
-            def cuttingSpec(self) -> Sequence[SpecReader]: ...
+            def cuttingSpec(self) -> SpecListReader: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
             @override
@@ -1551,11 +1596,10 @@ class _ParamsModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def cuttingSpec(self) -> MutableSequence[SpecBuilder]: ...
+            def cuttingSpec(self) -> SpecListBuilder: ...
             @cuttingSpec.setter
             def cuttingSpec(
-                self,
-                value: Sequence[SpecBuilder | SpecReader] | Sequence[dict[str, Any]],
+                self, value: SpecListBuilder | SpecListReader | dict[str, Any]
             ) -> None: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
@@ -1563,7 +1607,7 @@ class _ParamsModule(_StructModule):
             def cutMaxAssimilationRatePercentage(self, value: float) -> None: ...
             def init(
                 self, field: Literal["cuttingSpec"], size: int | None = None
-            ) -> MutableSequence[SpecBuilder]: ...
+            ) -> SpecListBuilder: ...
             @override
             def as_reader(self) -> CuttingReader: ...
 
@@ -1572,7 +1616,7 @@ class _ParamsModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            cuttingSpec: Sequence[SpecBuilder] | Sequence[dict[str, Any]] | None = None,
+            cuttingSpec: SpecListBuilder | dict[str, Any] | None = None,
             cutMaxAssimilationRatePercentage: float | None = None,
             **kwargs: Any,
         ) -> CuttingBuilder: ...
@@ -1991,7 +2035,7 @@ class _ParamsModule(_StructModule):
             @property
             def amount(self) -> float: ...
             @property
-            def nutrientConcentrations(self) -> Sequence[NutrientReader]: ...
+            def nutrientConcentrations(self) -> NutrientListReader: ...
             @override
             def as_builder(
                 self,
@@ -2005,16 +2049,14 @@ class _ParamsModule(_StructModule):
             @amount.setter
             def amount(self, value: float) -> None: ...
             @property
-            def nutrientConcentrations(self) -> MutableSequence[NutrientBuilder]: ...
+            def nutrientConcentrations(self) -> NutrientListBuilder: ...
             @nutrientConcentrations.setter
             def nutrientConcentrations(
-                self,
-                value: Sequence[NutrientBuilder | NutrientReader]
-                | Sequence[dict[str, Any]],
+                self, value: NutrientListBuilder | NutrientListReader | dict[str, Any]
             ) -> None: ...
             def init(
                 self, field: Literal["nutrientConcentrations"], size: int | None = None
-            ) -> MutableSequence[NutrientBuilder]: ...
+            ) -> NutrientListBuilder: ...
             @override
             def as_reader(self) -> IrrigationReader: ...
 
@@ -2024,9 +2066,7 @@ class _ParamsModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             amount: float | None = None,
-            nutrientConcentrations: Sequence[NutrientBuilder]
-            | Sequence[dict[str, Any]]
-            | None = None,
+            nutrientConcentrations: NutrientListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> IrrigationBuilder: ...
         @overload
@@ -2164,11 +2204,22 @@ class _ServiceModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server):
-        class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[EventBuilder | EventReader]
+        class ManagementatResult(_DynamicStructBuilder):
+            @property
+            def mgmt(self) -> EventListBuilder: ...
+            @mgmt.setter
+            def mgmt(
+                self, value: EventListBuilder | EventListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["mgmt"], size: int | None = None
+            ) -> EventListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class ManagementatResultTuple(NamedTuple):
-            mgmt: Sequence[EventBuilder | EventReader]
+            mgmt: EventListBuilder | EventListReader
 
         class ManagementatParams(Protocol):
             lat: float
@@ -2196,7 +2247,7 @@ class _ServiceModule(_IdentifiableModule):
 
     class ServiceClient(_IdentifiableModule.IdentifiableClient):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[EventReader]
+            mgmt: EventListReader
 
         def managementAt(
             self, lat: float | None = None, lon: float | None = None
@@ -2204,6 +2255,21 @@ class _ServiceModule(_IdentifiableModule):
         def managementAt_request(
             self, lat: float | None = None, lon: float | None = None
         ) -> _ServiceModule.ManagementatRequest: ...
+
+class _EventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventReader: ...
+        def __iter__(self) -> Iterator[EventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventBuilder: ...
+        def __setitem__(
+            self, key: int, value: EventReader | EventBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EventBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> EventBuilder: ...
 
 Service: _ServiceModule
 
@@ -2240,6 +2306,8 @@ type EventExternalTypeEnum = (
         "cutting",
     ]
 )
+type EventListBuilder = _EventList.Builder
+type EventListReader = _EventList.Reader
 type EventPhenoStageEnum = (
     int | Literal["emergence", "flowering", "anthesis", "maturity"]
 )
@@ -2275,6 +2343,8 @@ type MineralFertilizationReader = _ParamsModule._MineralFertilizationModule.Read
 type NDemandFertilizationBuilder = _ParamsModule._NDemandFertilizationModule.Builder
 type NDemandFertilizationReader = _ParamsModule._NDemandFertilizationModule.Reader
 type NutrientBuilder = _NutrientModule.Builder
+type NutrientListBuilder = _NutrientList.Builder
+type NutrientListReader = _NutrientList.Reader
 type NutrientNameEnum = (
     int
     | Literal[
@@ -2314,6 +2384,8 @@ type ServiceServer = _ServiceModule.Server
 type SowingBuilder = _ParamsModule._SowingModule.Builder
 type SowingReader = _ParamsModule._SowingModule.Reader
 type SpecBuilder = _ParamsModule._CuttingModule._SpecModule.Builder
+type SpecListBuilder = _SpecList.Builder
+type SpecListReader = _SpecList.Reader
 type SpecReader = _ParamsModule._CuttingModule._SpecModule.Reader
 type TillageBuilder = _ParamsModule._TillageModule.Builder
 type TillageReader = _ParamsModule._TillageModule.Reader

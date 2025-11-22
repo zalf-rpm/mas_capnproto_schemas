@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -39,6 +39,21 @@ type AnyPointer = (
     | _DynamicObjectReader
     | _DynamicObjectBuilder
 )
+
+class _KVList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVReader: ...
+        def __iter__(self) -> Iterator[KVReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVBuilder: ...
+        def __setitem__(
+            self, key: int, value: KVReader | KVBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[KVBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> KVBuilder: ...
 
 class _IPModule(_StructModule):
     class _KVModule(_StructModule):
@@ -139,7 +154,7 @@ class _IPModule(_StructModule):
     Type: _TypeModule
     class Reader(_DynamicStructReader):
         @property
-        def attributes(self) -> Sequence[KVReader]: ...
+        def attributes(self) -> KVListReader: ...
         @property
         def content(self) -> _DynamicObjectReader: ...
         @property
@@ -153,10 +168,10 @@ class _IPModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def attributes(self) -> MutableSequence[KVBuilder]: ...
+        def attributes(self) -> KVListBuilder: ...
         @attributes.setter
         def attributes(
-            self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]
+            self, value: KVListBuilder | KVListReader | dict[str, Any]
         ) -> None: ...
         @property
         def content(self) -> _DynamicObjectBuilder: ...
@@ -168,7 +183,7 @@ class _IPModule(_StructModule):
         def type(self, value: IPTypeEnum) -> None: ...
         def init(
             self, field: Literal["attributes"], size: int | None = None
-        ) -> MutableSequence[KVBuilder]: ...
+        ) -> KVListBuilder: ...
         @override
         def as_reader(self) -> IPReader: ...
 
@@ -177,7 +192,7 @@ class _IPModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        attributes: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+        attributes: KVListBuilder | dict[str, Any] | None = None,
         content: AnyPointer | None = None,
         type: IPTypeEnum | None = None,
         **kwargs: Any,
@@ -551,8 +566,11 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             class WriteResult(Awaitable[None], Protocol): ...
             class CloseResult(Awaitable[None], Protocol): ...
 
-            class WriteifspaceResult(Awaitable[WriteifspaceResult], Protocol):
-                success: bool
+            class WriteifspaceResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class WriteifspaceResultTuple(NamedTuple):
                 success: bool
@@ -668,15 +686,15 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             @property
             def channelSR(self) -> str: ...
             @property
-            def readerSRs(self) -> Sequence[str]: ...
+            def readerSRs(self) -> TextListReader: ...
             @property
-            def writerSRs(self) -> Sequence[str]: ...
+            def writerSRs(self) -> TextListReader: ...
             @property
             def channel(self) -> _ChannelModule.ChannelClient: ...
             @property
-            def readers(self) -> Sequence[_ChannelModule._ReaderModule]: ...
+            def readers(self) -> ReaderClientListReader: ...
             @property
-            def writers(self) -> Sequence[_ChannelModule._WriterModule]: ...
+            def writers(self) -> WriterClientListReader: ...
             @override
             def as_builder(
                 self,
@@ -698,13 +716,17 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             @channelSR.setter
             def channelSR(self, value: str) -> None: ...
             @property
-            def readerSRs(self) -> MutableSequence[str]: ...
+            def readerSRs(self) -> TextListBuilder: ...
             @readerSRs.setter
-            def readerSRs(self, value: Sequence[str]) -> None: ...
+            def readerSRs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
-            def writerSRs(self) -> MutableSequence[str]: ...
+            def writerSRs(self) -> TextListBuilder: ...
             @writerSRs.setter
-            def writerSRs(self, value: Sequence[str]) -> None: ...
+            def writerSRs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
             def channel(self) -> _ChannelModule.ChannelClient: ...
             @channel.setter
@@ -712,33 +734,39 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 self, value: _ChannelModule.ChannelClient | _ChannelModule.Server
             ) -> None: ...
             @property
-            def readers(self) -> MutableSequence[_ChannelModule._ReaderModule]: ...
+            def readers(self) -> ReaderClientListBuilder: ...
             @readers.setter
             def readers(
-                self, value: Sequence[_ChannelModule._ReaderModule]
+                self,
+                value: ReaderClientListBuilder
+                | ReaderClientListReader
+                | dict[str, Any],
             ) -> None: ...
             @property
-            def writers(self) -> MutableSequence[_ChannelModule._WriterModule]: ...
+            def writers(self) -> WriterClientListBuilder: ...
             @writers.setter
             def writers(
-                self, value: Sequence[_ChannelModule._WriterModule]
+                self,
+                value: WriterClientListBuilder
+                | WriterClientListReader
+                | dict[str, Any],
             ) -> None: ...
             @overload
             def init(
                 self, field: Literal["readerSRs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writerSRs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["readers"], size: int | None = None
-            ) -> MutableSequence[_ChannelModule._ReaderModule]: ...
+            ) -> ReaderClientListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writers"], size: int | None = None
-            ) -> MutableSequence[_ChannelModule._WriterModule]: ...
+            ) -> WriterClientListBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -752,11 +780,11 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             bufferSize: int | None = None,
             closeSemantics: ChannelCloseSemanticsEnum | None = None,
             channelSR: str | None = None,
-            readerSRs: Sequence[str] | None = None,
-            writerSRs: Sequence[str] | None = None,
+            readerSRs: TextListBuilder | dict[str, Any] | None = None,
+            writerSRs: TextListBuilder | dict[str, Any] | None = None,
             channel: _ChannelModule.ChannelClient | _ChannelModule.Server | None = None,
-            readers: Sequence[_ChannelModule._ReaderModule] | None = None,
-            writers: Sequence[_ChannelModule._WriterModule] | None = None,
+            readers: ReaderClientListBuilder | dict[str, Any] | None = None,
+            writers: WriterClientListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> StartupInfoBuilder: ...
         @overload
@@ -835,27 +863,63 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class SetbuffersizeResult(Awaitable[None], Protocol): ...
 
-        class ReaderResult(Awaitable[ReaderResult], Protocol):
-            r: (
+        class ReaderResult(_DynamicStructBuilder):
+            @property
+            def r(
+                self,
+            ) -> (
                 _ChannelModule._ReaderModule.Server
                 | _ChannelModule._ReaderModule.ReaderClient
-            )
+            ): ...
+            @r.setter
+            def r(
+                self,
+                value: _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient,
+            ) -> None: ...
 
-        class WriterResult(Awaitable[WriterResult], Protocol):
-            w: (
+        class WriterResult(_DynamicStructBuilder):
+            @property
+            def w(
+                self,
+            ) -> (
                 _ChannelModule._WriterModule.Server
                 | _ChannelModule._WriterModule.WriterClient
-            )
+            ): ...
+            @w.setter
+            def w(
+                self,
+                value: _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient,
+            ) -> None: ...
 
-        class EndpointsResult(Awaitable[EndpointsResult], Protocol):
-            r: (
+        class EndpointsResult(_DynamicStructBuilder):
+            @property
+            def r(
+                self,
+            ) -> (
                 _ChannelModule._ReaderModule.Server
                 | _ChannelModule._ReaderModule.ReaderClient
-            )
-            w: (
+            ): ...
+            @r.setter
+            def r(
+                self,
+                value: _ChannelModule._ReaderModule.Server
+                | _ChannelModule._ReaderModule.ReaderClient,
+            ) -> None: ...
+            @property
+            def w(
+                self,
+            ) -> (
                 _ChannelModule._WriterModule.Server
                 | _ChannelModule._WriterModule.WriterClient
-            )
+            ): ...
+            @w.setter
+            def w(
+                self,
+                value: _ChannelModule._WriterModule.Server
+                | _ChannelModule._WriterModule.WriterClient,
+            ) -> None: ...
 
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
@@ -1024,6 +1088,46 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             self, waitForEmptyBuffer: bool | None = None
         ) -> _ChannelModule.CloseRequest: ...
 
+class _TextList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> str: ...
+        def __iter__(self) -> Iterator[str]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> str: ...
+        def __setitem__(self, key: int, value: str) -> None: ...
+        def __iter__(self) -> Iterator[str]: ...
+
+class _ReaderClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ReaderClient: ...
+        def __iter__(self) -> Iterator[ReaderClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ReaderClient: ...
+        def __setitem__(
+            self, key: int, value: ReaderClient | _ChannelModule._ReaderModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[ReaderClient]: ...
+
+class _WriterClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> WriterClient: ...
+        def __iter__(self) -> Iterator[WriterClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> WriterClient: ...
+        def __setitem__(
+            self, key: int, value: WriterClient | _ChannelModule._WriterModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[WriterClient]: ...
+
 Channel: _ChannelModule
 
 class _StartChannelsServiceModule(_IdentifiableModule):
@@ -1038,9 +1142,9 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             @property
             def noOfWriters(self) -> int: ...
             @property
-            def readerSrts(self) -> Sequence[str]: ...
+            def readerSrts(self) -> TextListReader: ...
             @property
-            def writerSrts(self) -> Sequence[str]: ...
+            def writerSrts(self) -> TextListReader: ...
             @property
             def bufferSize(self) -> int: ...
             @override
@@ -1068,13 +1172,17 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             @noOfWriters.setter
             def noOfWriters(self, value: int) -> None: ...
             @property
-            def readerSrts(self) -> MutableSequence[str]: ...
+            def readerSrts(self) -> TextListBuilder: ...
             @readerSrts.setter
-            def readerSrts(self, value: Sequence[str]) -> None: ...
+            def readerSrts(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
-            def writerSrts(self) -> MutableSequence[str]: ...
+            def writerSrts(self) -> TextListBuilder: ...
             @writerSrts.setter
-            def writerSrts(self, value: Sequence[str]) -> None: ...
+            def writerSrts(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
             def bufferSize(self) -> int: ...
             @bufferSize.setter
@@ -1082,11 +1190,11 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             @overload
             def init(
                 self, field: Literal["readerSrts"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writerSrts"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -1101,8 +1209,8 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | dict[str, Any] | None = None,
+            writerSrts: TextListBuilder | dict[str, Any] | None = None,
             bufferSize: int | None = None,
             **kwargs: Any,
         ) -> ParamsBuilder: ...
@@ -1160,17 +1268,17 @@ class _StartChannelsServiceModule(_IdentifiableModule):
         noOfChannels: int
         noOfReaders: int
         noOfWriters: int
-        readerSrts: Sequence[str]
-        writerSrts: Sequence[str]
+        readerSrts: TextListBuilder | TextListReader | Sequence[Any]
+        writerSrts: TextListBuilder | TextListReader | Sequence[Any]
         bufferSize: int
         @overload
         def init(
             self, name: Literal["readerSrts"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(
             self, name: Literal["writerSrts"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(
@@ -1181,12 +1289,31 @@ class _StartChannelsServiceModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _StartChannelsServiceModule.StartChannelsServiceClient: ...
     class Server(_IdentifiableModule.Server):
-        class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
-            stop: _StoppableModule.Server | _StoppableModule.StoppableClient
+        class StartResult(_DynamicStructBuilder):
+            @property
+            def startupInfos(self) -> StartupInfoListBuilder: ...
+            @startupInfos.setter
+            def startupInfos(
+                self,
+                value: StartupInfoListBuilder | StartupInfoListReader | Sequence[Any],
+            ) -> None: ...
+            @property
+            def stop(
+                self,
+            ) -> _StoppableModule.Server | _StoppableModule.StoppableClient: ...
+            @stop.setter
+            def stop(
+                self, value: _StoppableModule.Server | _StoppableModule.StoppableClient
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["startupInfos"], size: int | None = None
+            ) -> StartupInfoListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class StartResultTuple(NamedTuple):
-            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
+            startupInfos: StartupInfoListBuilder | StartupInfoListReader
             stop: _StoppableModule.Server | _StoppableModule.StoppableClient
 
         class StartParams(Protocol):
@@ -1194,8 +1321,8 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int
             noOfReaders: int
             noOfWriters: int
-            readerSrts: Sequence[str]
-            writerSrts: Sequence[str]
+            readerSrts: TextListReader
+            writerSrts: TextListReader
             bufferSize: int
 
         class StartCallContext(Protocol):
@@ -1209,8 +1336,8 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int,
             noOfReaders: int,
             noOfWriters: int,
-            readerSrts: Sequence[str],
-            writerSrts: Sequence[str],
+            readerSrts: TextListReader,
+            writerSrts: TextListReader,
             bufferSize: int,
             _context: _StartChannelsServiceModule.Server.StartCallContext,
             **kwargs: dict[str, Any],
@@ -1221,7 +1348,7 @@ class _StartChannelsServiceModule(_IdentifiableModule):
 
     class StartChannelsServiceClient(_IdentifiableModule.IdentifiableClient):
         class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[StartupInfoReader]
+            startupInfos: StartupInfoListReader
             stop: _StoppableModule.StoppableClient
 
         def start(
@@ -1230,8 +1357,8 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            writerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
             bufferSize: int | None = None,
         ) -> _StartChannelsServiceModule.StartChannelsServiceClient.StartResult: ...
         def start_request(
@@ -1240,12 +1367,44 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            writerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
             bufferSize: int | None = None,
         ) -> _StartChannelsServiceModule.StartRequest: ...
 
+class _StartupInfoList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> StartupInfoReader: ...
+        def __iter__(self) -> Iterator[StartupInfoReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> StartupInfoBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: StartupInfoReader | StartupInfoBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[StartupInfoBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> StartupInfoBuilder: ...
+
 StartChannelsService: _StartChannelsServiceModule
+
+class _NameAndSRList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> NameAndSRReader: ...
+        def __iter__(self) -> Iterator[NameAndSRReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> NameAndSRBuilder: ...
+        def __setitem__(
+            self, key: int, value: NameAndSRReader | NameAndSRBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[NameAndSRBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> NameAndSRBuilder: ...
 
 class _PortInfosModule(_StructModule):
     class _NameAndSRModule(_StructModule):
@@ -1255,7 +1414,7 @@ class _PortInfosModule(_StructModule):
             @property
             def sr(self) -> str: ...
             @property
-            def srs(self) -> Sequence[str]: ...
+            def srs(self) -> TextListReader: ...
             @override
             def which(self) -> Literal["sr", "srs"]: ...
             @override
@@ -1275,14 +1434,16 @@ class _PortInfosModule(_StructModule):
             @sr.setter
             def sr(self, value: str) -> None: ...
             @property
-            def srs(self) -> MutableSequence[str]: ...
+            def srs(self) -> TextListBuilder: ...
             @srs.setter
-            def srs(self, value: Sequence[str]) -> None: ...
+            def srs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @override
             def which(self) -> Literal["sr", "srs"]: ...
             def init(
                 self, field: Literal["srs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @override
             def as_reader(self) -> NameAndSRReader: ...
 
@@ -1293,7 +1454,7 @@ class _PortInfosModule(_StructModule):
             allocate_seg_callable: Any = None,
             name: str | None = None,
             sr: str | None = None,
-            srs: Sequence[str] | None = None,
+            srs: TextListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> NameAndSRBuilder: ...
         @overload
@@ -1347,9 +1508,9 @@ class _PortInfosModule(_StructModule):
     NameAndSR: _NameAndSRModule
     class Reader(_DynamicStructReader):
         @property
-        def inPorts(self) -> Sequence[NameAndSRReader]: ...
+        def inPorts(self) -> NameAndSRListReader: ...
         @property
-        def outPorts(self) -> Sequence[NameAndSRReader]: ...
+        def outPorts(self) -> NameAndSRListReader: ...
         @override
         def as_builder(
             self,
@@ -1359,29 +1520,25 @@ class _PortInfosModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def inPorts(self) -> MutableSequence[NameAndSRBuilder]: ...
+        def inPorts(self) -> NameAndSRListBuilder: ...
         @inPorts.setter
         def inPorts(
-            self,
-            value: Sequence[NameAndSRBuilder | NameAndSRReader]
-            | Sequence[dict[str, Any]],
+            self, value: NameAndSRListBuilder | NameAndSRListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def outPorts(self) -> MutableSequence[NameAndSRBuilder]: ...
+        def outPorts(self) -> NameAndSRListBuilder: ...
         @outPorts.setter
         def outPorts(
-            self,
-            value: Sequence[NameAndSRBuilder | NameAndSRReader]
-            | Sequence[dict[str, Any]],
+            self, value: NameAndSRListBuilder | NameAndSRListReader | dict[str, Any]
         ) -> None: ...
         @overload
         def init(
             self, field: Literal["inPorts"], size: int | None = None
-        ) -> MutableSequence[NameAndSRBuilder]: ...
+        ) -> NameAndSRListBuilder: ...
         @overload
         def init(
             self, field: Literal["outPorts"], size: int | None = None
-        ) -> MutableSequence[NameAndSRBuilder]: ...
+        ) -> NameAndSRListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1392,8 +1549,8 @@ class _PortInfosModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        inPorts: Sequence[NameAndSRBuilder] | Sequence[dict[str, Any]] | None = None,
-        outPorts: Sequence[NameAndSRBuilder] | Sequence[dict[str, Any]] | None = None,
+        inPorts: NameAndSRListBuilder | dict[str, Any] | None = None,
+        outPorts: NameAndSRListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> PortInfosBuilder: ...
     @overload
@@ -1444,6 +1601,21 @@ class _PortInfosModule(_StructModule):
 
 PortInfos: _PortInfosModule
 
+class _PortList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PortReader: ...
+        def __iter__(self) -> Iterator[PortReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PortBuilder: ...
+        def __setitem__(
+            self, key: int, value: PortReader | PortBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[PortBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> PortBuilder: ...
+
 class _ComponentModule(_StructModule):
     class _RunnableModule(_IdentifiableModule):
         class StartRequest(Protocol):
@@ -1462,11 +1634,17 @@ class _ComponentModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ComponentModule._RunnableModule.RunnableClient: ...
         class Server(_IdentifiableModule.Server):
-            class StartResult(Awaitable[StartResult], Protocol):
-                success: bool
+            class StartResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
-            class StopResult(Awaitable[StopResult], Protocol):
-                success: bool
+            class StopResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class StartResultTuple(NamedTuple):
                 success: bool
@@ -1649,9 +1827,9 @@ class _ComponentModule(_StructModule):
         @property
         def type(self) -> ComponentComponentTypeEnum: ...
         @property
-        def inPorts(self) -> Sequence[PortReader]: ...
+        def inPorts(self) -> PortListReader: ...
         @property
-        def outPorts(self) -> Sequence[PortReader]: ...
+        def outPorts(self) -> PortListReader: ...
         @property
         def run(self) -> _ComponentModule._RunnableModule.RunnableClient: ...
         @property
@@ -1675,16 +1853,16 @@ class _ComponentModule(_StructModule):
         @type.setter
         def type(self, value: ComponentComponentTypeEnum) -> None: ...
         @property
-        def inPorts(self) -> MutableSequence[PortBuilder]: ...
+        def inPorts(self) -> PortListBuilder: ...
         @inPorts.setter
         def inPorts(
-            self, value: Sequence[PortBuilder | PortReader] | Sequence[dict[str, Any]]
+            self, value: PortListBuilder | PortListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def outPorts(self) -> MutableSequence[PortBuilder]: ...
+        def outPorts(self) -> PortListBuilder: ...
         @outPorts.setter
         def outPorts(
-            self, value: Sequence[PortBuilder | PortReader] | Sequence[dict[str, Any]]
+            self, value: PortListBuilder | PortListReader | dict[str, Any]
         ) -> None: ...
         @property
         def run(self) -> _ComponentModule._RunnableModule.RunnableClient: ...
@@ -1705,11 +1883,11 @@ class _ComponentModule(_StructModule):
         @overload
         def init(
             self, field: Literal["inPorts"], size: int | None = None
-        ) -> MutableSequence[PortBuilder]: ...
+        ) -> PortListBuilder: ...
         @overload
         def init(
             self, field: Literal["outPorts"], size: int | None = None
-        ) -> MutableSequence[PortBuilder]: ...
+        ) -> PortListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1722,8 +1900,8 @@ class _ComponentModule(_StructModule):
         allocate_seg_callable: Any = None,
         info: IdInformationBuilder | dict[str, Any] | None = None,
         type: ComponentComponentTypeEnum | None = None,
-        inPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,
-        outPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,
+        inPorts: PortListBuilder | dict[str, Any] | None = None,
+        outPorts: PortListBuilder | dict[str, Any] | None = None,
         run: _ComponentModule._RunnableModule.RunnableClient
         | _ComponentModule._RunnableModule.Server
         | None = None,
@@ -1795,19 +1973,27 @@ type IPBuilder = _IPModule.Builder
 type IPReader = _IPModule.Reader
 type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
 type KVBuilder = _IPModule._KVModule.Builder
+type KVListBuilder = _KVList.Builder
+type KVListReader = _KVList.Reader
 type KVReader = _IPModule._KVModule.Reader
 type MsgBuilder = _ChannelModule._MsgModule.Builder
 type MsgReader = _ChannelModule._MsgModule.Reader
 type NameAndSRBuilder = _PortInfosModule._NameAndSRModule.Builder
+type NameAndSRListBuilder = _NameAndSRList.Builder
+type NameAndSRListReader = _NameAndSRList.Reader
 type NameAndSRReader = _PortInfosModule._NameAndSRModule.Reader
 type ParamsBuilder = _StartChannelsServiceModule._ParamsModule.Builder
 type ParamsReader = _StartChannelsServiceModule._ParamsModule.Reader
 type PortBuilder = _ComponentModule._PortModule.Builder
 type PortInfosBuilder = _PortInfosModule.Builder
 type PortInfosReader = _PortInfosModule.Reader
+type PortListBuilder = _PortList.Builder
+type PortListReader = _PortList.Reader
 type PortReader = _ComponentModule._PortModule.Reader
 type ReadResult = _ChannelModule._ReaderModule.ReaderClient.ReadResult
 type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
+type ReaderClientListBuilder = _ReaderClientList.Builder
+type ReaderClientListReader = _ReaderClientList.Reader
 type ReaderResult = _ChannelModule.ChannelClient.ReaderResult
 type ReaderServer = _ChannelModule._ReaderModule.Server
 type ReadifmsgResult = _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult
@@ -1821,10 +2007,16 @@ type StartChannelsServiceClient = _StartChannelsServiceModule.StartChannelsServi
 type StartChannelsServiceServer = _StartChannelsServiceModule.Server
 type StartResult = _ComponentModule._RunnableModule.RunnableClient.StartResult
 type StartupInfoBuilder = _ChannelModule._StartupInfoModule.Builder
+type StartupInfoListBuilder = _StartupInfoList.Builder
+type StartupInfoListReader = _StartupInfoList.Reader
 type StartupInfoReader = _ChannelModule._StartupInfoModule.Reader
 type StopResult = _ComponentModule._RunnableModule.RunnableClient.StopResult
+type TextListBuilder = _TextList.Builder
+type TextListReader = _TextList.Reader
 type WriteResult = _ChannelModule._WriterModule.WriterClient.WriteResult
 type WriteifspaceResult = _ChannelModule._WriterModule.WriterClient.WriteifspaceResult
 type WriterClient = _ChannelModule._WriterModule.WriterClient
+type WriterClientListBuilder = _WriterClientList.Builder
+type WriterClientListReader = _WriterClientList.Reader
 type WriterResult = _ChannelModule.ChannelClient.WriterResult
 type WriterServer = _ChannelModule._WriterModule.Server

@@ -39,9 +39,15 @@ class _ServiceModule(_InterfaceModule):
         self, server: _DynamicCapabilityServer
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_DynamicCapabilityServer):
-        class NextconfigResult(Awaitable[NextconfigResult], Protocol):
-            config: AnyPointer
-            noFurtherConfigs: bool
+        class NextconfigResult(_DynamicStructBuilder):
+            @property
+            def config(self) -> AnyPointer: ...
+            @config.setter
+            def config(self, value: AnyPointer) -> None: ...
+            @property
+            def noFurtherConfigs(self) -> bool: ...
+            @noFurtherConfigs.setter
+            def noFurtherConfigs(self, value: bool) -> None: ...
 
         class NextconfigResultTuple(NamedTuple):
             config: AnyPointer

@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Sequence
+from collections.abc import Iterator
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _StructModule,
@@ -883,6 +885,21 @@ class _PlotModule(_StructModule):
 
 Plot: _PlotModule
 
+class _PlotList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PlotReader: ...
+        def __iter__(self) -> Iterator[PlotReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PlotBuilder: ...
+        def __setitem__(
+            self, key: int, value: PlotReader | PlotBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[PlotBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> PlotBuilder: ...
+
 class _ResidueModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1167,6 +1184,27 @@ class _InitialConditionsLayerModule(_StructModule):
 
 InitialConditionsLayer: _InitialConditionsLayerModule
 
+class _InitialConditionsLayerList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> InitialConditionsLayerReader: ...
+        def __iter__(self) -> Iterator[InitialConditionsLayerReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> InitialConditionsLayerBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: InitialConditionsLayerReader
+            | InitialConditionsLayerBuilder
+            | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[InitialConditionsLayerBuilder]: ...
+        def init(
+            self, index: int, size: int | None = None
+        ) -> InitialConditionsLayerBuilder: ...
+
 class _PlantingEventModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1333,6 +1371,23 @@ class _PlantingEventModule(_StructModule):
 
 PlantingEvent: _PlantingEventModule
 
+class _PlantingEventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PlantingEventReader: ...
+        def __iter__(self) -> Iterator[PlantingEventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PlantingEventBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: PlantingEventReader | PlantingEventBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[PlantingEventBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> PlantingEventBuilder: ...
+
 class _HarvestEventModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1452,6 +1507,23 @@ class _HarvestEventModule(_StructModule):
     ) -> HarvestEventReader: ...
 
 HarvestEvent: _HarvestEventModule
+
+class _HarvestEventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> HarvestEventReader: ...
+        def __iter__(self) -> Iterator[HarvestEventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> HarvestEventBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: HarvestEventReader | HarvestEventBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[HarvestEventBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> HarvestEventBuilder: ...
 
 class _IrrigationEventModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -1579,6 +1651,25 @@ class _IrrigationEventModule(_StructModule):
     ) -> IrrigationEventReader: ...
 
 IrrigationEvent: _IrrigationEventModule
+
+class _IrrigationEventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IrrigationEventReader: ...
+        def __iter__(self) -> Iterator[IrrigationEventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IrrigationEventBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: IrrigationEventReader | IrrigationEventBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[IrrigationEventBuilder]: ...
+        def init(
+            self, index: int, size: int | None = None
+        ) -> IrrigationEventBuilder: ...
 
 class _FertilizerEventModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -1721,6 +1812,25 @@ class _FertilizerEventModule(_StructModule):
 
 FertilizerEvent: _FertilizerEventModule
 
+class _FertilizerEventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> FertilizerEventReader: ...
+        def __iter__(self) -> Iterator[FertilizerEventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> FertilizerEventBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: FertilizerEventReader | FertilizerEventBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[FertilizerEventBuilder]: ...
+        def init(
+            self, index: int, size: int | None = None
+        ) -> FertilizerEventBuilder: ...
+
 class _EnvironmentModificationModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1834,6 +1944,27 @@ class _EnvironmentModificationModule(_StructModule):
 
 EnvironmentModification: _EnvironmentModificationModule
 
+class _EnvironmentModificationList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EnvironmentModificationReader: ...
+        def __iter__(self) -> Iterator[EnvironmentModificationReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EnvironmentModificationBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: EnvironmentModificationReader
+            | EnvironmentModificationBuilder
+            | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EnvironmentModificationBuilder]: ...
+        def init(
+            self, index: int, size: int | None = None
+        ) -> EnvironmentModificationBuilder: ...
+
 class _TreatmentModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -1871,23 +2002,21 @@ class _TreatmentModule(_StructModule):
         @property
         def notes(self) -> str: ...
         @property
-        def plots(self) -> Sequence[PlotReader]: ...
+        def plots(self) -> PlotListReader: ...
         @property
         def residue(self) -> ResidueReader: ...
         @property
-        def initialConditionsLayers(self) -> Sequence[InitialConditionsLayerReader]: ...
+        def initialConditionsLayers(self) -> InitialConditionsLayerListReader: ...
         @property
-        def plantingEvents(self) -> Sequence[PlantingEventReader]: ...
+        def plantingEvents(self) -> PlantingEventListReader: ...
         @property
-        def harvestEvents(self) -> Sequence[HarvestEventReader]: ...
+        def harvestEvents(self) -> HarvestEventListReader: ...
         @property
-        def irrigationEvents(self) -> Sequence[IrrigationEventReader]: ...
+        def irrigationEvents(self) -> IrrigationEventListReader: ...
         @property
-        def fertilizerEvents(self) -> Sequence[FertilizerEventReader]: ...
+        def fertilizerEvents(self) -> FertilizerEventListReader: ...
         @property
-        def environmentModifications(
-            self,
-        ) -> Sequence[EnvironmentModificationReader]: ...
+        def environmentModifications(self) -> EnvironmentModificationListReader: ...
         @property
         def experimentId(self) -> str: ...
         @property
@@ -1981,10 +2110,10 @@ class _TreatmentModule(_StructModule):
         @notes.setter
         def notes(self, value: str) -> None: ...
         @property
-        def plots(self) -> MutableSequence[PlotBuilder]: ...
+        def plots(self) -> PlotListBuilder: ...
         @plots.setter
         def plots(
-            self, value: Sequence[PlotBuilder | PlotReader] | Sequence[dict[str, Any]]
+            self, value: PlotListBuilder | PlotListReader | dict[str, Any]
         ) -> None: ...
         @property
         def residue(self) -> ResidueBuilder: ...
@@ -1993,60 +2122,54 @@ class _TreatmentModule(_StructModule):
             self, value: ResidueBuilder | ResidueReader | dict[str, Any]
         ) -> None: ...
         @property
-        def initialConditionsLayers(
-            self,
-        ) -> MutableSequence[InitialConditionsLayerBuilder]: ...
+        def initialConditionsLayers(self) -> InitialConditionsLayerListBuilder: ...
         @initialConditionsLayers.setter
         def initialConditionsLayers(
             self,
-            value: Sequence[
-                InitialConditionsLayerBuilder | InitialConditionsLayerReader
-            ]
-            | Sequence[dict[str, Any]],
+            value: InitialConditionsLayerListBuilder
+            | InitialConditionsLayerListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def plantingEvents(self) -> MutableSequence[PlantingEventBuilder]: ...
+        def plantingEvents(self) -> PlantingEventListBuilder: ...
         @plantingEvents.setter
         def plantingEvents(
             self,
-            value: Sequence[PlantingEventBuilder | PlantingEventReader]
-            | Sequence[dict[str, Any]],
+            value: PlantingEventListBuilder | PlantingEventListReader | dict[str, Any],
         ) -> None: ...
         @property
-        def harvestEvents(self) -> MutableSequence[HarvestEventBuilder]: ...
+        def harvestEvents(self) -> HarvestEventListBuilder: ...
         @harvestEvents.setter
         def harvestEvents(
             self,
-            value: Sequence[HarvestEventBuilder | HarvestEventReader]
-            | Sequence[dict[str, Any]],
+            value: HarvestEventListBuilder | HarvestEventListReader | dict[str, Any],
         ) -> None: ...
         @property
-        def irrigationEvents(self) -> MutableSequence[IrrigationEventBuilder]: ...
+        def irrigationEvents(self) -> IrrigationEventListBuilder: ...
         @irrigationEvents.setter
         def irrigationEvents(
             self,
-            value: Sequence[IrrigationEventBuilder | IrrigationEventReader]
-            | Sequence[dict[str, Any]],
+            value: IrrigationEventListBuilder
+            | IrrigationEventListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def fertilizerEvents(self) -> MutableSequence[FertilizerEventBuilder]: ...
+        def fertilizerEvents(self) -> FertilizerEventListBuilder: ...
         @fertilizerEvents.setter
         def fertilizerEvents(
             self,
-            value: Sequence[FertilizerEventBuilder | FertilizerEventReader]
-            | Sequence[dict[str, Any]],
+            value: FertilizerEventListBuilder
+            | FertilizerEventListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def environmentModifications(
-            self,
-        ) -> MutableSequence[EnvironmentModificationBuilder]: ...
+        def environmentModifications(self) -> EnvironmentModificationListBuilder: ...
         @environmentModifications.setter
         def environmentModifications(
             self,
-            value: Sequence[
-                EnvironmentModificationBuilder | EnvironmentModificationReader
-            ]
-            | Sequence[dict[str, Any]],
+            value: EnvironmentModificationListBuilder
+            | EnvironmentModificationListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
         def experimentId(self) -> str: ...
@@ -2087,31 +2210,31 @@ class _TreatmentModule(_StructModule):
         @overload
         def init(
             self, field: Literal["plots"], size: int | None = None
-        ) -> MutableSequence[PlotBuilder]: ...
+        ) -> PlotListBuilder: ...
         @overload
         def init(
             self, field: Literal["initialConditionsLayers"], size: int | None = None
-        ) -> MutableSequence[InitialConditionsLayerBuilder]: ...
+        ) -> InitialConditionsLayerListBuilder: ...
         @overload
         def init(
             self, field: Literal["plantingEvents"], size: int | None = None
-        ) -> MutableSequence[PlantingEventBuilder]: ...
+        ) -> PlantingEventListBuilder: ...
         @overload
         def init(
             self, field: Literal["harvestEvents"], size: int | None = None
-        ) -> MutableSequence[HarvestEventBuilder]: ...
+        ) -> HarvestEventListBuilder: ...
         @overload
         def init(
             self, field: Literal["irrigationEvents"], size: int | None = None
-        ) -> MutableSequence[IrrigationEventBuilder]: ...
+        ) -> IrrigationEventListBuilder: ...
         @overload
         def init(
             self, field: Literal["fertilizerEvents"], size: int | None = None
-        ) -> MutableSequence[FertilizerEventBuilder]: ...
+        ) -> FertilizerEventListBuilder: ...
         @overload
         def init(
             self, field: Literal["environmentModifications"], size: int | None = None
-        ) -> MutableSequence[EnvironmentModificationBuilder]: ...
+        ) -> EnvironmentModificationListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -2141,25 +2264,17 @@ class _TreatmentModule(_StructModule):
         plantingDensityLevel: int | None = None,
         numberOfBlocksOrReplicates: int | None = None,
         notes: str | None = None,
-        plots: Sequence[PlotBuilder] | Sequence[dict[str, Any]] | None = None,
+        plots: PlotListBuilder | dict[str, Any] | None = None,
         residue: ResidueBuilder | dict[str, Any] | None = None,
-        initialConditionsLayers: Sequence[InitialConditionsLayerBuilder]
-        | Sequence[dict[str, Any]]
+        initialConditionsLayers: InitialConditionsLayerListBuilder
+        | dict[str, Any]
         | None = None,
-        plantingEvents: Sequence[PlantingEventBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        harvestEvents: Sequence[HarvestEventBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        irrigationEvents: Sequence[IrrigationEventBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        fertilizerEvents: Sequence[FertilizerEventBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
-        environmentModifications: Sequence[EnvironmentModificationBuilder]
-        | Sequence[dict[str, Any]]
+        plantingEvents: PlantingEventListBuilder | dict[str, Any] | None = None,
+        harvestEvents: HarvestEventListBuilder | dict[str, Any] | None = None,
+        irrigationEvents: IrrigationEventListBuilder | dict[str, Any] | None = None,
+        fertilizerEvents: FertilizerEventListBuilder | dict[str, Any] | None = None,
+        environmentModifications: EnvironmentModificationListBuilder
+        | dict[str, Any]
         | None = None,
         experimentId: str | None = None,
         fieldId: str | None = None,
@@ -2215,6 +2330,21 @@ class _TreatmentModule(_StructModule):
 
 Treatment: _TreatmentModule
 
+class _TreatmentList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> TreatmentReader: ...
+        def __iter__(self) -> Iterator[TreatmentReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> TreatmentBuilder: ...
+        def __setitem__(
+            self, key: int, value: TreatmentReader | TreatmentBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[TreatmentBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> TreatmentBuilder: ...
+
 class _ExperimentDescriptionModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -2252,7 +2382,7 @@ class _ExperimentDescriptionModule(_StructModule):
         @property
         def notes(self) -> str: ...
         @property
-        def treatments(self) -> Sequence[TreatmentReader]: ...
+        def treatments(self) -> TreatmentListReader: ...
         @override
         def as_builder(
             self,
@@ -2330,16 +2460,14 @@ class _ExperimentDescriptionModule(_StructModule):
         @notes.setter
         def notes(self, value: str) -> None: ...
         @property
-        def treatments(self) -> MutableSequence[TreatmentBuilder]: ...
+        def treatments(self) -> TreatmentListBuilder: ...
         @treatments.setter
         def treatments(
-            self,
-            value: Sequence[TreatmentBuilder | TreatmentReader]
-            | Sequence[dict[str, Any]],
+            self, value: TreatmentListBuilder | TreatmentListReader | dict[str, Any]
         ) -> None: ...
         def init(
             self, field: Literal["treatments"], size: int | None = None
-        ) -> MutableSequence[TreatmentBuilder]: ...
+        ) -> TreatmentListBuilder: ...
         @override
         def as_reader(self) -> ExperimentDescriptionReader: ...
 
@@ -2365,7 +2493,7 @@ class _ExperimentDescriptionModule(_StructModule):
         plantingYear: int | None = None,
         harvestOperationYear: int | None = None,
         notes: str | None = None,
-        treatments: Sequence[TreatmentBuilder] | Sequence[dict[str, Any]] | None = None,
+        treatments: TreatmentListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> ExperimentDescriptionBuilder: ...
     @overload
@@ -2420,28 +2548,44 @@ ExperimentDescription: _ExperimentDescriptionModule
 type CultivarBuilder = _CultivarModule.Builder
 type CultivarReader = _CultivarModule.Reader
 type EnvironmentModificationBuilder = _EnvironmentModificationModule.Builder
+type EnvironmentModificationListBuilder = _EnvironmentModificationList.Builder
+type EnvironmentModificationListReader = _EnvironmentModificationList.Reader
 type EnvironmentModificationReader = _EnvironmentModificationModule.Reader
 type ExperimentDescriptionBuilder = _ExperimentDescriptionModule.Builder
 type ExperimentDescriptionReader = _ExperimentDescriptionModule.Reader
 type FertilizerEventBuilder = _FertilizerEventModule.Builder
+type FertilizerEventListBuilder = _FertilizerEventList.Builder
+type FertilizerEventListReader = _FertilizerEventList.Reader
 type FertilizerEventReader = _FertilizerEventModule.Reader
 type FieldBuilder = _FieldModule.Builder
 type FieldReader = _FieldModule.Reader
 type HarvestEventBuilder = _HarvestEventModule.Builder
+type HarvestEventListBuilder = _HarvestEventList.Builder
+type HarvestEventListReader = _HarvestEventList.Reader
 type HarvestEventReader = _HarvestEventModule.Reader
 type InitialConditionsLayerBuilder = _InitialConditionsLayerModule.Builder
+type InitialConditionsLayerListBuilder = _InitialConditionsLayerList.Builder
+type InitialConditionsLayerListReader = _InitialConditionsLayerList.Reader
 type InitialConditionsLayerReader = _InitialConditionsLayerModule.Reader
 type IrrigationEventBuilder = _IrrigationEventModule.Builder
+type IrrigationEventListBuilder = _IrrigationEventList.Builder
+type IrrigationEventListReader = _IrrigationEventList.Reader
 type IrrigationEventReader = _IrrigationEventModule.Reader
 type PlantingEventBuilder = _PlantingEventModule.Builder
+type PlantingEventListBuilder = _PlantingEventList.Builder
+type PlantingEventListReader = _PlantingEventList.Reader
 type PlantingEventReader = _PlantingEventModule.Reader
 type PlotBuilder = _PlotModule.Builder
+type PlotListBuilder = _PlotList.Builder
+type PlotListReader = _PlotList.Reader
 type PlotReader = _PlotModule.Reader
 type ResidueBuilder = _ResidueModule.Builder
 type ResidueReader = _ResidueModule.Reader
 type SoilMetadataBuilder = _SoilMetadataModule.Builder
 type SoilMetadataReader = _SoilMetadataModule.Reader
 type TreatmentBuilder = _TreatmentModule.Builder
+type TreatmentListBuilder = _TreatmentList.Builder
+type TreatmentListReader = _TreatmentList.Reader
 type TreatmentReader = _TreatmentModule.Reader
 type WeatherStationBuilder = _WeatherStationModule.Builder
 type WeatherStationReader = _WeatherStationModule.Reader

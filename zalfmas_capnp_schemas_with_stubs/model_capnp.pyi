@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -21,6 +21,7 @@ from capnp.lib.capnp import (
 
 from .climate_capnp import TimeSeriesClient, _TimeSeriesModule
 from .common_capnp import (
+    IdentifiableClient,
     IdInformationBuilder,
     _IdentifiableModule,
 )
@@ -43,12 +44,24 @@ type AnyPointer = (
     | _DynamicObjectBuilder
 )
 
+class _Float64List:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> float: ...
+        def __iter__(self) -> Iterator[float]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> float: ...
+        def __setitem__(self, key: int, value: float) -> None: ...
+        def __iter__(self) -> Iterator[float]: ...
+
 class _XYResultModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def xs(self) -> Sequence[float]: ...
+        def xs(self) -> Float64ListReader: ...
         @property
-        def ys(self) -> Sequence[float]: ...
+        def ys(self) -> Float64ListReader: ...
         @override
         def as_builder(
             self,
@@ -58,21 +71,25 @@ class _XYResultModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def xs(self) -> MutableSequence[float]: ...
+        def xs(self) -> Float64ListBuilder: ...
         @xs.setter
-        def xs(self, value: Sequence[float]) -> None: ...
+        def xs(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def ys(self) -> MutableSequence[float]: ...
+        def ys(self) -> Float64ListBuilder: ...
         @ys.setter
-        def ys(self, value: Sequence[float]) -> None: ...
+        def ys(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @overload
         def init(
             self, field: Literal["xs"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["ys"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -83,8 +100,8 @@ class _XYResultModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        xs: Sequence[float] | None = None,
-        ys: Sequence[float] | None = None,
+        xs: Float64ListBuilder | dict[str, Any] | None = None,
+        ys: Float64ListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> XYResultBuilder: ...
     @overload
@@ -148,7 +165,7 @@ class _StatModule(_StructModule):
         @property
         def type(self) -> StatTypeEnum: ...
         @property
-        def vs(self) -> Sequence[float]: ...
+        def vs(self) -> Float64ListReader: ...
         @override
         def as_builder(
             self,
@@ -162,12 +179,14 @@ class _StatModule(_StructModule):
         @type.setter
         def type(self, value: StatTypeEnum) -> None: ...
         @property
-        def vs(self) -> MutableSequence[float]: ...
+        def vs(self) -> Float64ListBuilder: ...
         @vs.setter
-        def vs(self, value: Sequence[float]) -> None: ...
+        def vs(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         def init(
             self, field: Literal["vs"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @override
         def as_reader(self) -> StatReader: ...
 
@@ -177,7 +196,7 @@ class _StatModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         type: StatTypeEnum | None = None,
-        vs: Sequence[float] | None = None,
+        vs: Float64ListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> StatBuilder: ...
     @overload
@@ -228,12 +247,27 @@ class _StatModule(_StructModule):
 
 Stat: _StatModule
 
+class _StatList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> StatReader: ...
+        def __iter__(self) -> Iterator[StatReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> StatBuilder: ...
+        def __setitem__(
+            self, key: int, value: StatReader | StatBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[StatBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> StatBuilder: ...
+
 class _XYPlusResultModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def xy(self) -> XYResultReader: ...
         @property
-        def stats(self) -> Sequence[StatReader]: ...
+        def stats(self) -> StatListReader: ...
         @override
         def as_builder(
             self,
@@ -249,10 +283,10 @@ class _XYPlusResultModule(_StructModule):
             self, value: XYResultBuilder | XYResultReader | dict[str, Any]
         ) -> None: ...
         @property
-        def stats(self) -> MutableSequence[StatBuilder]: ...
+        def stats(self) -> StatListBuilder: ...
         @stats.setter
         def stats(
-            self, value: Sequence[StatBuilder | StatReader] | Sequence[dict[str, Any]]
+            self, value: StatListBuilder | StatListReader | dict[str, Any]
         ) -> None: ...
         @overload
         def init(
@@ -261,7 +295,7 @@ class _XYPlusResultModule(_StructModule):
         @overload
         def init(
             self, field: Literal["stats"], size: int | None = None
-        ) -> MutableSequence[StatBuilder]: ...
+        ) -> StatListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -273,7 +307,7 @@ class _XYPlusResultModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
         xy: XYResultBuilder | dict[str, Any] | None = None,
-        stats: Sequence[StatBuilder] | Sequence[dict[str, Any]] | None = None,
+        stats: StatListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> XYPlusResultBuilder: ...
     @overload
@@ -330,11 +364,13 @@ class _ClimateInstanceModule(_IdentifiableModule):
         def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
 
     class RunsetRequest(Protocol):
-        dataset: Sequence[_TimeSeriesModule]
+        dataset: (
+            TimeSeriesClientListBuilder | TimeSeriesClientListReader | Sequence[Any]
+        )
         @overload
         def init(
             self, name: Literal["dataset"], size: int = ...
-        ) -> MutableSequence[_TimeSeriesModule]: ...
+        ) -> TimeSeriesClientListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
@@ -343,11 +379,33 @@ class _ClimateInstanceModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _ClimateInstanceModule.ClimateInstanceClient: ...
     class Server(_IdentifiableModule.Server):
-        class RunResult(Awaitable[RunResult], Protocol):
-            result: XYResultBuilder | XYResultReader
+        class RunResult(_DynamicStructBuilder):
+            @property
+            def result(self) -> XYResultBuilder: ...
+            @result.setter
+            def result(
+                self, value: XYResultBuilder | XYResultReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["result"], size: int | None = None
+            ) -> XYResultBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class RunsetResult(Awaitable[RunsetResult], Protocol):
-            result: XYPlusResultBuilder | XYPlusResultReader
+        class RunsetResult(_DynamicStructBuilder):
+            @property
+            def result(self) -> XYPlusResultBuilder: ...
+            @result.setter
+            def result(
+                self, value: XYPlusResultBuilder | XYPlusResultReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["result"], size: int | None = None
+            ) -> XYPlusResultBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class RunResultTuple(NamedTuple):
             result: XYResultBuilder | XYResultReader
@@ -364,7 +422,7 @@ class _ClimateInstanceModule(_IdentifiableModule):
             def results(self) -> _ClimateInstanceModule.Server.RunResult: ...
 
         class RunsetParams(Protocol):
-            dataset: Sequence[_TimeSeriesModule]
+            dataset: TimeSeriesClientListReader
 
         class RunsetCallContext(Protocol):
             params: _ClimateInstanceModule.Server.RunsetParams
@@ -386,7 +444,7 @@ class _ClimateInstanceModule(_IdentifiableModule):
         ) -> Awaitable[None]: ...
         def runSet(
             self,
-            dataset: Sequence[_TimeSeriesModule],
+            dataset: TimeSeriesClientListReader,
             _context: _ClimateInstanceModule.Server.RunsetCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -409,16 +467,53 @@ class _ClimateInstanceModule(_IdentifiableModule):
             self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None
         ) -> _ClimateInstanceModule.ClimateInstanceClient.RunResult: ...
         def runSet(
-            self, dataset: Sequence[_TimeSeriesModule] | None = None
+            self,
+            dataset: TimeSeriesClientListBuilder
+            | TimeSeriesClientListReader
+            | Sequence[Any]
+            | None = None,
         ) -> _ClimateInstanceModule.ClimateInstanceClient.RunsetResult: ...
         def run_request(
             self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None
         ) -> _ClimateInstanceModule.RunRequest: ...
         def runSet_request(
-            self, dataset: Sequence[_TimeSeriesModule] | None = None
+            self,
+            dataset: TimeSeriesClientListBuilder
+            | TimeSeriesClientListReader
+            | Sequence[Any]
+            | None = None,
         ) -> _ClimateInstanceModule.RunsetRequest: ...
 
+class _TimeSeriesClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> TimeSeriesClient: ...
+        def __iter__(self) -> Iterator[TimeSeriesClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> TimeSeriesClient: ...
+        def __setitem__(
+            self, key: int, value: TimeSeriesClient | _TimeSeriesModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[TimeSeriesClient]: ...
+
 ClimateInstance: _ClimateInstanceModule
+
+class _EventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventReader: ...
+        def __iter__(self) -> Iterator[EventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventBuilder: ...
+        def __setitem__(
+            self, key: int, value: EventReader | EventBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EventBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> EventBuilder: ...
 
 class _EnvModule(_StructModule):
     class Reader(_DynamicStructReader):
@@ -429,7 +524,7 @@ class _EnvModule(_StructModule):
         @property
         def soilProfile(self) -> _ProfileModule.ProfileClient: ...
         @property
-        def mgmtEvents(self) -> Sequence[EventReader]: ...
+        def mgmtEvents(self) -> EventListReader: ...
         @override
         def as_builder(
             self,
@@ -455,14 +550,14 @@ class _EnvModule(_StructModule):
             self, value: _ProfileModule.ProfileClient | _ProfileModule.Server
         ) -> None: ...
         @property
-        def mgmtEvents(self) -> MutableSequence[EventBuilder]: ...
+        def mgmtEvents(self) -> EventListBuilder: ...
         @mgmtEvents.setter
         def mgmtEvents(
-            self, value: Sequence[EventBuilder | EventReader] | Sequence[dict[str, Any]]
+            self, value: EventListBuilder | EventListReader | dict[str, Any]
         ) -> None: ...
         def init(
             self, field: Literal["mgmtEvents"], size: int | None = None
-        ) -> MutableSequence[EventBuilder]: ...
+        ) -> EventListBuilder: ...
         @override
         def as_reader(self) -> EnvReader: ...
 
@@ -476,7 +571,7 @@ class _EnvModule(_StructModule):
         | _TimeSeriesModule.Server
         | None = None,
         soilProfile: _ProfileModule.ProfileClient | _ProfileModule.Server | None = None,
-        mgmtEvents: Sequence[EventBuilder] | Sequence[dict[str, Any]] | None = None,
+        mgmtEvents: EventListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> EnvBuilder: ...
     @overload
@@ -542,8 +637,11 @@ class _EnvInstanceModule(_IdentifiableModule, _PersistentModule, _StoppableModul
     class Server(
         _IdentifiableModule.Server, _PersistentModule.Server, _StoppableModule.Server
     ):
-        class RunResult(Awaitable[RunResult], Protocol):
-            result: AnyPointer
+        class RunResult(_DynamicStructBuilder):
+            @property
+            def result(self) -> AnyPointer: ...
+            @result.setter
+            def result(self, value: AnyPointer) -> None: ...
 
         class RunResultTuple(NamedTuple):
             result: AnyPointer
@@ -596,8 +694,11 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
             self, server: _DynamicCapabilityServer
         ) -> _EnvInstanceProxyModule._UnregisterModule.UnregisterClient: ...
         class Server(_DynamicCapabilityServer):
-            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
-                success: bool
+            class UnregisterResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class UnregisterResultTuple(NamedTuple):
                 success: bool
@@ -655,11 +756,20 @@ class _EnvInstanceProxyModule(_EnvInstanceModule):
         self, server: _DynamicCapabilityServer
     ) -> _EnvInstanceProxyModule.EnvInstanceProxyClient: ...
     class Server(_EnvInstanceModule.Server):
-        class RegisterenvinstanceResult(Awaitable[RegisterenvinstanceResult], Protocol):
-            unregister: (
+        class RegisterenvinstanceResult(_DynamicStructBuilder):
+            @property
+            def unregister(
+                self,
+            ) -> (
                 _EnvInstanceProxyModule._UnregisterModule.Server
                 | _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
-            )
+            ): ...
+            @unregister.setter
+            def unregister(
+                self,
+                value: _EnvInstanceProxyModule._UnregisterModule.Server
+                | _EnvInstanceProxyModule._UnregisterModule.UnregisterClient,
+            ) -> None: ...
 
         class RegisterenvinstanceResultTuple(NamedTuple):
             unregister: (
@@ -732,15 +842,36 @@ class _InstanceFactoryModule(_IdentifiableModule):
             name: str
             description: str
 
-        class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
-            instance: (
+        class NewinstanceResult(_DynamicStructBuilder):
+            @property
+            def instance(
+                self,
+            ) -> (
                 _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            )
+            ): ...
+            @instance.setter
+            def instance(
+                self,
+                value: _IdentifiableModule.Server
+                | _IdentifiableModule.IdentifiableClient,
+            ) -> None: ...
 
-        class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-            instances: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+        class NewinstancesResult(_DynamicStructBuilder):
+            @property
+            def instances(self) -> IdentifiableClientListBuilder: ...
+            @instances.setter
+            def instances(
+                self,
+                value: IdentifiableClientListBuilder
+                | IdentifiableClientListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["instances"], size: int | None = None
+            ) -> IdentifiableClientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class ModelinfoResultTuple(NamedTuple):
             id: str
@@ -753,9 +884,7 @@ class _InstanceFactoryModule(_IdentifiableModule):
             )
 
         class NewinstancesResultTuple(NamedTuple):
-            instances: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+            instances: IdentifiableClientListBuilder | IdentifiableClientListReader
 
         class ModelinfoParams(Protocol): ...
 
@@ -823,7 +952,7 @@ class _InstanceFactoryModule(_IdentifiableModule):
             instance: _IdentifiableModule.IdentifiableClient
 
         class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-            instances: Sequence[_IdentifiableModule.IdentifiableClient]
+            instances: IdentifiableClientListReader
 
         def modelInfo(
             self,
@@ -840,6 +969,20 @@ class _InstanceFactoryModule(_IdentifiableModule):
             self, numberOfInstances: int | None = None
         ) -> _InstanceFactoryModule.NewinstancesRequest: ...
 
+class _IdentifiableClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdentifiableClient: ...
+        def __iter__(self) -> Iterator[IdentifiableClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdentifiableClient: ...
+        def __setitem__(
+            self, key: int, value: IdentifiableClient | _IdentifiableModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[IdentifiableClient]: ...
+
 InstanceFactory: _InstanceFactoryModule
 
 # Top-level type aliases for use in type annotations
@@ -851,6 +994,12 @@ type EnvInstanceProxyClient = _EnvInstanceProxyModule.EnvInstanceProxyClient
 type EnvInstanceProxyServer = _EnvInstanceProxyModule.Server
 type EnvInstanceServer = _EnvInstanceModule.Server
 type EnvReader = _EnvModule.Reader
+type EventListBuilder = _EventList.Builder
+type EventListReader = _EventList.Reader
+type Float64ListBuilder = _Float64List.Builder
+type Float64ListReader = _Float64List.Reader
+type IdentifiableClientListBuilder = _IdentifiableClientList.Builder
+type IdentifiableClientListReader = _IdentifiableClientList.Reader
 type InstanceFactoryClient = _InstanceFactoryModule.InstanceFactoryClient
 type InstanceFactoryServer = _InstanceFactoryModule.Server
 type ModelinfoResult = _InstanceFactoryModule.InstanceFactoryClient.ModelinfoResult
@@ -864,8 +1013,12 @@ type RegisterenvinstanceResult = (
 type RunResult = _EnvInstanceModule.EnvInstanceClient.RunResult
 type RunsetResult = _ClimateInstanceModule.ClimateInstanceClient.RunsetResult
 type StatBuilder = _StatModule.Builder
+type StatListBuilder = _StatList.Builder
+type StatListReader = _StatList.Reader
 type StatReader = _StatModule.Reader
 type StatTypeEnum = int | Literal["min", "max", "sd", "avg", "median"]
+type TimeSeriesClientListBuilder = _TimeSeriesClientList.Builder
+type TimeSeriesClientListReader = _TimeSeriesClientList.Reader
 type UnregisterClient = _EnvInstanceProxyModule._UnregisterModule.UnregisterClient
 type UnregisterResult = (
     _EnvInstanceProxyModule._UnregisterModule.UnregisterClient.UnregisterResult

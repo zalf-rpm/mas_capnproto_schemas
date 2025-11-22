@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -44,6 +46,21 @@ class _PropertyNameModule:
     cnRatio: int
     inGroundwater: int
     impenetrable: int
+
+class _PropertyList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PropertyReader: ...
+        def __iter__(self) -> Iterator[PropertyReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PropertyBuilder: ...
+        def __setitem__(
+            self, key: int, value: PropertyReader | PropertyBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[PropertyBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> PropertyBuilder: ...
 
 class _LayerModule(_StructModule):
     class _PropertyModule(_StructModule):
@@ -156,7 +173,7 @@ class _LayerModule(_StructModule):
     Property: _PropertyModule
     class Reader(_DynamicStructReader):
         @property
-        def properties(self) -> Sequence[PropertyReader]: ...
+        def properties(self) -> PropertyListReader: ...
         @property
         def size(self) -> float: ...
         @property
@@ -170,12 +187,10 @@ class _LayerModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def properties(self) -> MutableSequence[PropertyBuilder]: ...
+        def properties(self) -> PropertyListBuilder: ...
         @properties.setter
         def properties(
-            self,
-            value: Sequence[PropertyBuilder | PropertyReader]
-            | Sequence[dict[str, Any]],
+            self, value: PropertyListBuilder | PropertyListReader | dict[str, Any]
         ) -> None: ...
         @property
         def size(self) -> float: ...
@@ -187,7 +202,7 @@ class _LayerModule(_StructModule):
         def description(self, value: str) -> None: ...
         def init(
             self, field: Literal["properties"], size: int | None = None
-        ) -> MutableSequence[PropertyBuilder]: ...
+        ) -> PropertyListBuilder: ...
         @override
         def as_reader(self) -> LayerReader: ...
 
@@ -196,7 +211,7 @@ class _LayerModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        properties: Sequence[PropertyBuilder] | Sequence[dict[str, Any]] | None = None,
+        properties: PropertyListBuilder | dict[str, Any] | None = None,
         size: float | None = None,
         description: str | None = None,
         **kwargs: Any,
@@ -249,15 +264,27 @@ class _LayerModule(_StructModule):
 
 Layer: _LayerModule
 
+class _PropertyNameEnumList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PropertyNameEnum: ...
+        def __iter__(self) -> Iterator[PropertyNameEnum]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PropertyNameEnum: ...
+        def __setitem__(self, key: int, value: PropertyNameEnum) -> None: ...
+        def __iter__(self) -> Iterator[PropertyNameEnum]: ...
+
 class _QueryModule(_StructModule):
     class _ResultModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def failed(self) -> bool: ...
             @property
-            def mandatory(self) -> Sequence[PropertyNameEnum]: ...
+            def mandatory(self) -> PropertyNameEnumListReader: ...
             @property
-            def optional(self) -> Sequence[PropertyNameEnum]: ...
+            def optional(self) -> PropertyNameEnumListReader: ...
             @override
             def as_builder(
                 self,
@@ -271,21 +298,31 @@ class _QueryModule(_StructModule):
             @failed.setter
             def failed(self, value: bool) -> None: ...
             @property
-            def mandatory(self) -> MutableSequence[PropertyNameEnum]: ...
+            def mandatory(self) -> PropertyNameEnumListBuilder: ...
             @mandatory.setter
-            def mandatory(self, value: Sequence[PropertyNameEnum]) -> None: ...
+            def mandatory(
+                self,
+                value: PropertyNameEnumListBuilder
+                | PropertyNameEnumListReader
+                | dict[str, Any],
+            ) -> None: ...
             @property
-            def optional(self) -> MutableSequence[PropertyNameEnum]: ...
+            def optional(self) -> PropertyNameEnumListBuilder: ...
             @optional.setter
-            def optional(self, value: Sequence[PropertyNameEnum]) -> None: ...
+            def optional(
+                self,
+                value: PropertyNameEnumListBuilder
+                | PropertyNameEnumListReader
+                | dict[str, Any],
+            ) -> None: ...
             @overload
             def init(
                 self, field: Literal["mandatory"], size: int | None = None
-            ) -> MutableSequence[PropertyNameEnum]: ...
+            ) -> PropertyNameEnumListBuilder: ...
             @overload
             def init(
                 self, field: Literal["optional"], size: int | None = None
-            ) -> MutableSequence[PropertyNameEnum]: ...
+            ) -> PropertyNameEnumListBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -297,8 +334,8 @@ class _QueryModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             failed: bool | None = None,
-            mandatory: Sequence[PropertyNameEnum] | None = None,
-            optional: Sequence[PropertyNameEnum] | None = None,
+            mandatory: PropertyNameEnumListBuilder | dict[str, Any] | None = None,
+            optional: PropertyNameEnumListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> ResultBuilder: ...
         @overload
@@ -352,9 +389,9 @@ class _QueryModule(_StructModule):
     Result: _ResultModule
     class Reader(_DynamicStructReader):
         @property
-        def mandatory(self) -> Sequence[PropertyNameEnum]: ...
+        def mandatory(self) -> PropertyNameEnumListReader: ...
         @property
-        def optional(self) -> Sequence[PropertyNameEnum]: ...
+        def optional(self) -> PropertyNameEnumListReader: ...
         @property
         def onlyRawData(self) -> bool: ...
         @override
@@ -366,13 +403,23 @@ class _QueryModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def mandatory(self) -> MutableSequence[PropertyNameEnum]: ...
+        def mandatory(self) -> PropertyNameEnumListBuilder: ...
         @mandatory.setter
-        def mandatory(self, value: Sequence[PropertyNameEnum]) -> None: ...
+        def mandatory(
+            self,
+            value: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | dict[str, Any],
+        ) -> None: ...
         @property
-        def optional(self) -> MutableSequence[PropertyNameEnum]: ...
+        def optional(self) -> PropertyNameEnumListBuilder: ...
         @optional.setter
-        def optional(self, value: Sequence[PropertyNameEnum]) -> None: ...
+        def optional(
+            self,
+            value: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | dict[str, Any],
+        ) -> None: ...
         @property
         def onlyRawData(self) -> bool: ...
         @onlyRawData.setter
@@ -380,11 +427,11 @@ class _QueryModule(_StructModule):
         @overload
         def init(
             self, field: Literal["mandatory"], size: int | None = None
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(
             self, field: Literal["optional"], size: int | None = None
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -395,8 +442,8 @@ class _QueryModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        mandatory: Sequence[PropertyNameEnum] | None = None,
-        optional: Sequence[PropertyNameEnum] | None = None,
+        mandatory: PropertyNameEnumListBuilder | dict[str, Any] | None = None,
+        optional: PropertyNameEnumListBuilder | dict[str, Any] | None = None,
         onlyRawData: bool | None = None,
         **kwargs: Any,
     ) -> QueryBuilder: ...
@@ -448,10 +495,25 @@ class _QueryModule(_StructModule):
 
 Query: _QueryModule
 
+class _LayerList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LayerReader: ...
+        def __iter__(self) -> Iterator[LayerReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LayerBuilder: ...
+        def __setitem__(
+            self, key: int, value: LayerReader | LayerBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[LayerBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> LayerBuilder: ...
+
 class _ProfileDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def layers(self) -> Sequence[LayerReader]: ...
+        def layers(self) -> LayerListReader: ...
         @property
         def percentageOfArea(self) -> float: ...
         @override
@@ -463,10 +525,10 @@ class _ProfileDataModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def layers(self) -> MutableSequence[LayerBuilder]: ...
+        def layers(self) -> LayerListBuilder: ...
         @layers.setter
         def layers(
-            self, value: Sequence[LayerBuilder | LayerReader] | Sequence[dict[str, Any]]
+            self, value: LayerListBuilder | LayerListReader | dict[str, Any]
         ) -> None: ...
         @property
         def percentageOfArea(self) -> float: ...
@@ -474,7 +536,7 @@ class _ProfileDataModule(_StructModule):
         def percentageOfArea(self, value: float) -> None: ...
         def init(
             self, field: Literal["layers"], size: int | None = None
-        ) -> MutableSequence[LayerBuilder]: ...
+        ) -> LayerListBuilder: ...
         @override
         def as_reader(self) -> ProfileDataReader: ...
 
@@ -483,7 +545,7 @@ class _ProfileDataModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        layers: Sequence[LayerBuilder] | Sequence[dict[str, Any]] | None = None,
+        layers: LayerListBuilder | dict[str, Any] | None = None,
         percentageOfArea: float | None = None,
         **kwargs: Any,
     ) -> ProfileDataBuilder: ...
@@ -547,7 +609,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
     ) -> _ProfileModule.ProfileClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class DataResult(Awaitable[DataResult], Protocol):
-            layers: Sequence[LayerBuilder | LayerReader]
+            layers: LayerListBuilder | LayerListReader
             percentageOfArea: float
 
         class GeolocationResult(Awaitable[GeolocationResult], Protocol):
@@ -555,7 +617,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
             lon: float
 
         class DataResultTuple(NamedTuple):
-            layers: Sequence[LayerBuilder | LayerReader]
+            layers: LayerListBuilder | LayerListReader
             percentageOfArea: float
 
         class GeolocationResultTuple(NamedTuple):
@@ -597,7 +659,7 @@ class _ProfileModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class DataResult(Awaitable[DataResult], Protocol):
-            layers: Sequence[LayerReader]
+            layers: LayerListReader
             percentageOfArea: float
 
         class GeolocationResult(Awaitable[GeolocationResult], Protocol):
@@ -623,11 +685,25 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self, server: _DynamicCapabilityServer
         ) -> _ServiceModule._StreamModule.StreamClient: ...
         class Server(_DynamicCapabilityServer):
-            class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
-                profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
+            class NextprofilesResult(_DynamicStructBuilder):
+                @property
+                def profiles(self) -> ProfileClientListBuilder: ...
+                @profiles.setter
+                def profiles(
+                    self,
+                    value: ProfileClientListBuilder
+                    | ProfileClientListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["profiles"], size: int | None = None
+                ) -> ProfileClientListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class NextprofilesResultTuple(NamedTuple):
-                profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
+                profiles: ProfileClientListBuilder | ProfileClientListReader
 
             class NextprofilesParams(Protocol):
                 maxCount: int
@@ -656,7 +732,7 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         class StreamClient(_DynamicCapabilityClient):
             class NextprofilesResult(Awaitable[NextprofilesResult], Protocol):
-                profiles: Sequence[_ProfileModule.ProfileClient]
+                profiles: ProfileClientListReader
 
             def nextProfiles(
                 self, maxCount: int | None = None
@@ -669,17 +745,21 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
     type StreamClient = _ServiceModule._StreamModule.StreamClient
     type StreamServer = _ServiceModule._StreamModule.Server
     class CheckavailableparametersRequest(Protocol):
-        mandatory: Sequence[PropertyNameEnum]
-        optional: Sequence[PropertyNameEnum]
+        mandatory: (
+            PropertyNameEnumListBuilder | PropertyNameEnumListReader | Sequence[Any]
+        )
+        optional: (
+            PropertyNameEnumListBuilder | PropertyNameEnumListReader | Sequence[Any]
+        )
         onlyRawData: bool
         @overload
         def init(
             self, name: Literal["mandatory"], size: int = ...
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(
             self, name: Literal["optional"], size: int = ...
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(
@@ -704,17 +784,21 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
 
     class StreamallprofilesRequest(Protocol):
-        mandatory: Sequence[PropertyNameEnum]
-        optional: Sequence[PropertyNameEnum]
+        mandatory: (
+            PropertyNameEnumListBuilder | PropertyNameEnumListReader | Sequence[Any]
+        )
+        optional: (
+            PropertyNameEnumListBuilder | PropertyNameEnumListReader | Sequence[Any]
+        )
         onlyRawData: bool
         @overload
         def init(
             self, name: Literal["mandatory"], size: int = ...
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(
             self, name: Literal["optional"], size: int = ...
-        ) -> MutableSequence[PropertyNameEnum]: ...
+        ) -> PropertyNameEnumListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
@@ -727,35 +811,82 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             Awaitable[CheckavailableparametersResult], Protocol
         ):
             failed: bool
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListBuilder | PropertyNameEnumListReader
+            optional: PropertyNameEnumListBuilder | PropertyNameEnumListReader
 
-        class GetallavailableparametersResult(
-            Awaitable[GetallavailableparametersResult], Protocol
-        ):
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+        class GetallavailableparametersResult(_DynamicStructBuilder):
+            @property
+            def mandatory(self) -> PropertyNameEnumListBuilder: ...
+            @mandatory.setter
+            def mandatory(
+                self,
+                value: PropertyNameEnumListBuilder
+                | PropertyNameEnumListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @property
+            def optional(self) -> PropertyNameEnumListBuilder: ...
+            @optional.setter
+            def optional(
+                self,
+                value: PropertyNameEnumListBuilder
+                | PropertyNameEnumListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["mandatory"], size: int | None = None
+            ) -> PropertyNameEnumListBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["optional"], size: int | None = None
+            ) -> PropertyNameEnumListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
-            profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
+        class ClosestprofilesatResult(_DynamicStructBuilder):
+            @property
+            def profiles(self) -> ProfileClientListBuilder: ...
+            @profiles.setter
+            def profiles(
+                self,
+                value: ProfileClientListBuilder
+                | ProfileClientListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["profiles"], size: int | None = None
+            ) -> ProfileClientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
-            allProfiles: (
+        class StreamallprofilesResult(_DynamicStructBuilder):
+            @property
+            def allProfiles(
+                self,
+            ) -> (
                 _ServiceModule._StreamModule.Server
                 | _ServiceModule._StreamModule.StreamClient
-            )
+            ): ...
+            @allProfiles.setter
+            def allProfiles(
+                self,
+                value: _ServiceModule._StreamModule.Server
+                | _ServiceModule._StreamModule.StreamClient,
+            ) -> None: ...
 
         class CheckavailableparametersResultTuple(NamedTuple):
             failed: bool
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListBuilder | PropertyNameEnumListReader
+            optional: PropertyNameEnumListBuilder | PropertyNameEnumListReader
 
         class GetallavailableparametersResultTuple(NamedTuple):
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListBuilder | PropertyNameEnumListReader
+            optional: PropertyNameEnumListBuilder | PropertyNameEnumListReader
 
         class ClosestprofilesatResultTuple(NamedTuple):
-            profiles: Sequence[_ProfileModule.Server | _ProfileModule.ProfileClient]
+            profiles: ProfileClientListBuilder | ProfileClientListReader
 
         class StreamallprofilesResultTuple(NamedTuple):
             allProfiles: (
@@ -764,8 +895,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             )
 
         class CheckavailableparametersParams(Protocol):
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListReader
+            optional: PropertyNameEnumListReader
             onlyRawData: bool
 
         class CheckavailableparametersCallContext(Protocol):
@@ -793,8 +924,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             def results(self) -> _ServiceModule.Server.ClosestprofilesatResult: ...
 
         class StreamallprofilesParams(Protocol):
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListReader
+            optional: PropertyNameEnumListReader
             onlyRawData: bool
 
         class StreamallprofilesCallContext(Protocol):
@@ -804,8 +935,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
 
         def checkAvailableParameters(
             self,
-            mandatory: Sequence[PropertyNameEnum],
-            optional: Sequence[PropertyNameEnum],
+            mandatory: PropertyNameEnumListReader,
+            optional: PropertyNameEnumListReader,
             onlyRawData: bool,
             _context: _ServiceModule.Server.CheckavailableparametersCallContext,
             **kwargs: dict[str, Any],
@@ -842,8 +973,8 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def streamAllProfiles(
             self,
-            mandatory: Sequence[PropertyNameEnum],
-            optional: Sequence[PropertyNameEnum],
+            mandatory: PropertyNameEnumListReader,
+            optional: PropertyNameEnumListReader,
             onlyRawData: bool,
             _context: _ServiceModule.Server.StreamallprofilesCallContext,
             **kwargs: dict[str, Any],
@@ -863,25 +994,31 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             Awaitable[CheckavailableparametersResult], Protocol
         ):
             failed: bool
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListReader
+            optional: PropertyNameEnumListReader
 
         class GetallavailableparametersResult(
             Awaitable[GetallavailableparametersResult], Protocol
         ):
-            mandatory: Sequence[PropertyNameEnum]
-            optional: Sequence[PropertyNameEnum]
+            mandatory: PropertyNameEnumListReader
+            optional: PropertyNameEnumListReader
 
         class ClosestprofilesatResult(Awaitable[ClosestprofilesatResult], Protocol):
-            profiles: Sequence[_ProfileModule.ProfileClient]
+            profiles: ProfileClientListReader
 
         class StreamallprofilesResult(Awaitable[StreamallprofilesResult], Protocol):
             allProfiles: _ServiceModule._StreamModule.StreamClient
 
         def checkAvailableParameters(
             self,
-            mandatory: Sequence[PropertyNameEnum] | None = None,
-            optional: Sequence[PropertyNameEnum] | None = None,
+            mandatory: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
+            optional: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
             onlyRawData: bool | None = None,
         ) -> _ServiceModule.ServiceClient.CheckavailableparametersResult: ...
         def getAllAvailableParameters(
@@ -897,14 +1034,26 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> _ServiceModule.ServiceClient.ClosestprofilesatResult: ...
         def streamAllProfiles(
             self,
-            mandatory: Sequence[PropertyNameEnum] | None = None,
-            optional: Sequence[PropertyNameEnum] | None = None,
+            mandatory: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
+            optional: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
             onlyRawData: bool | None = None,
         ) -> _ServiceModule.ServiceClient.StreamallprofilesResult: ...
         def checkAvailableParameters_request(
             self,
-            mandatory: Sequence[PropertyNameEnum] | None = None,
-            optional: Sequence[PropertyNameEnum] | None = None,
+            mandatory: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
+            optional: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
             onlyRawData: bool | None = None,
         ) -> _ServiceModule.CheckavailableparametersRequest: ...
         def getAllAvailableParameters_request(
@@ -917,10 +1066,30 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         ) -> _ServiceModule.ClosestprofilesatRequest: ...
         def streamAllProfiles_request(
             self,
-            mandatory: Sequence[PropertyNameEnum] | None = None,
-            optional: Sequence[PropertyNameEnum] | None = None,
+            mandatory: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
+            optional: PropertyNameEnumListBuilder
+            | PropertyNameEnumListReader
+            | Sequence[Any]
+            | None = None,
             onlyRawData: bool | None = None,
         ) -> _ServiceModule.StreamallprofilesRequest: ...
+
+class _ProfileClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ProfileClient: ...
+        def __iter__(self) -> Iterator[ProfileClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ProfileClient: ...
+        def __setitem__(
+            self, key: int, value: ProfileClient | _ProfileModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[ProfileClient]: ...
 
 Service: _ServiceModule
 
@@ -935,13 +1104,19 @@ type GetallavailableparametersResult = (
     _ServiceModule.ServiceClient.GetallavailableparametersResult
 )
 type LayerBuilder = _LayerModule.Builder
+type LayerListBuilder = _LayerList.Builder
+type LayerListReader = _LayerList.Reader
 type LayerReader = _LayerModule.Reader
 type NextprofilesResult = _ServiceModule._StreamModule.StreamClient.NextprofilesResult
 type ProfileClient = _ProfileModule.ProfileClient
+type ProfileClientListBuilder = _ProfileClientList.Builder
+type ProfileClientListReader = _ProfileClientList.Reader
 type ProfileDataBuilder = _ProfileDataModule.Builder
 type ProfileDataReader = _ProfileDataModule.Reader
 type ProfileServer = _ProfileModule.Server
 type PropertyBuilder = _LayerModule._PropertyModule.Builder
+type PropertyListBuilder = _PropertyList.Builder
+type PropertyListReader = _PropertyList.Reader
 type PropertyNameEnum = (
     int
     | Literal[
@@ -967,6 +1142,8 @@ type PropertyNameEnum = (
         "impenetrable",
     ]
 )
+type PropertyNameEnumListBuilder = _PropertyNameEnumList.Builder
+type PropertyNameEnumListReader = _PropertyNameEnumList.Reader
 type PropertyReader = _LayerModule._PropertyModule.Reader
 type QueryBuilder = _QueryModule.Builder
 type QueryReader = _QueryModule.Reader

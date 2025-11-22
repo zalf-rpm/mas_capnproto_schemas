@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -541,11 +543,23 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             self, server: _DynamicCapabilityServer
         ) -> _GridModule._CallbackModule.CallbackClient: ...
         class Server(_DynamicCapabilityServer):
-            class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-                locations: Sequence[LocationBuilder | LocationReader]
+            class SendcellsResult(_DynamicStructBuilder):
+                @property
+                def locations(self) -> LocationListBuilder: ...
+                @locations.setter
+                def locations(
+                    self,
+                    value: LocationListBuilder | LocationListReader | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["locations"], size: int | None = None
+                ) -> LocationListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class SendcellsResultTuple(NamedTuple):
-                locations: Sequence[LocationBuilder | LocationReader]
+                locations: LocationListBuilder | LocationListReader
 
             class SendcellsParams(Protocol):
                 maxCount: int
@@ -573,7 +587,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class CallbackClient(_DynamicCapabilityClient):
             class SendcellsResult(Awaitable[SendcellsResult], Protocol):
-                locations: Sequence[LocationReader]
+                locations: LocationListReader
 
             def sendCells(
                 self, maxCount: int | None = None
@@ -643,46 +657,188 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _GridModule.GridClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
-            val: ValueBuilder | ValueReader
-            tl: RowColBuilder | RowColReader
-            br: RowColBuilder | RowColReader
-            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
+        class ClosestvalueatResult(_DynamicStructBuilder):
+            @property
+            def val(self) -> ValueBuilder: ...
+            @val.setter
+            def val(
+                self, value: ValueBuilder | ValueReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def tl(self) -> RowColBuilder: ...
+            @tl.setter
+            def tl(
+                self, value: RowColBuilder | RowColReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def br(self) -> RowColBuilder: ...
+            @br.setter
+            def br(
+                self, value: RowColBuilder | RowColReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def aggParts(self) -> AggregationPartListBuilder: ...
+            @aggParts.setter
+            def aggParts(
+                self,
+                value: AggregationPartListBuilder
+                | AggregationPartListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["val"], size: int | None = None
+            ) -> ValueBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["tl"], size: int | None = None
+            ) -> RowColBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["br"], size: int | None = None
+            ) -> RowColBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["aggParts"], size: int | None = None
+            ) -> AggregationPartListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-            res: ResolutionBuilder | ResolutionReader
+        class ResolutionResult(_DynamicStructBuilder):
+            @property
+            def res(self) -> ResolutionBuilder: ...
+            @res.setter
+            def res(
+                self, value: ResolutionBuilder | ResolutionReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["res"], size: int | None = None
+            ) -> ResolutionBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class DimensionResult(Awaitable[DimensionResult], Protocol):
-            rows: int
-            cols: int
+        class DimensionResult(_DynamicStructBuilder):
+            @property
+            def rows(self) -> int: ...
+            @rows.setter
+            def rows(self, value: int) -> None: ...
+            @property
+            def cols(self) -> int: ...
+            @cols.setter
+            def cols(self, value: int) -> None: ...
 
-        class NodatavalueResult(Awaitable[NodatavalueResult], Protocol):
-            nodata: ValueBuilder | ValueReader
+        class NodatavalueResult(_DynamicStructBuilder):
+            @property
+            def nodata(self) -> ValueBuilder: ...
+            @nodata.setter
+            def nodata(
+                self, value: ValueBuilder | ValueReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["nodata"], size: int | None = None
+            ) -> ValueBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class ValueatResult(Awaitable[ValueatResult], Protocol):
-            val: ValueBuilder | ValueReader
-            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
+        class ValueatResult(_DynamicStructBuilder):
+            @property
+            def val(self) -> ValueBuilder: ...
+            @val.setter
+            def val(
+                self, value: ValueBuilder | ValueReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def aggParts(self) -> AggregationPartListBuilder: ...
+            @aggParts.setter
+            def aggParts(
+                self,
+                value: AggregationPartListBuilder
+                | AggregationPartListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["val"], size: int | None = None
+            ) -> ValueBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["aggParts"], size: int | None = None
+            ) -> AggregationPartListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
-            tl: LatLonCoordBuilder | LatLonCoordReader
-            tr: LatLonCoordBuilder | LatLonCoordReader
-            br: LatLonCoordBuilder | LatLonCoordReader
-            bl: LatLonCoordBuilder | LatLonCoordReader
+        class LatlonboundsResult(_DynamicStructBuilder):
+            @property
+            def tl(self) -> LatLonCoordBuilder: ...
+            @tl.setter
+            def tl(
+                self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def tr(self) -> LatLonCoordBuilder: ...
+            @tr.setter
+            def tr(
+                self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def br(self) -> LatLonCoordBuilder: ...
+            @br.setter
+            def br(
+                self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def bl(self) -> LatLonCoordBuilder: ...
+            @bl.setter
+            def bl(
+                self, value: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["tl"], size: int | None = None
+            ) -> LatLonCoordBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["tr"], size: int | None = None
+            ) -> LatLonCoordBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["br"], size: int | None = None
+            ) -> LatLonCoordBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["bl"], size: int | None = None
+            ) -> LatLonCoordBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
-            callback: (
+        class StreamcellsResult(_DynamicStructBuilder):
+            @property
+            def callback(
+                self,
+            ) -> (
                 _GridModule._CallbackModule.Server
                 | _GridModule._CallbackModule.CallbackClient
-            )
+            ): ...
+            @callback.setter
+            def callback(
+                self,
+                value: _GridModule._CallbackModule.Server
+                | _GridModule._CallbackModule.CallbackClient,
+            ) -> None: ...
 
-        class UnitResult(Awaitable[UnitResult], Protocol):
-            unit: str
+        class UnitResult(_DynamicStructBuilder):
+            @property
+            def unit(self) -> str: ...
+            @unit.setter
+            def unit(self, value: str) -> None: ...
 
         class ClosestvalueatResultTuple(NamedTuple):
             val: ValueBuilder | ValueReader
             tl: RowColBuilder | RowColReader
             br: RowColBuilder | RowColReader
-            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
+            aggParts: AggregationPartListBuilder | AggregationPartListReader
 
         class ResolutionResultTuple(NamedTuple):
             res: ResolutionBuilder | ResolutionReader
@@ -696,7 +852,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ValueatResultTuple(NamedTuple):
             val: ValueBuilder | ValueReader
-            aggParts: Sequence[AggregationPartBuilder | AggregationPartReader]
+            aggParts: AggregationPartListBuilder | AggregationPartListReader
 
         class LatlonboundsResultTuple(NamedTuple):
             tl: LatLonCoordBuilder | LatLonCoordReader
@@ -879,7 +1035,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             val: ValueReader
             tl: RowColReader
             br: RowColReader
-            aggParts: Sequence[AggregationPartReader]
+            aggParts: AggregationPartListReader
 
         class ResolutionResult(Awaitable[ResolutionResult], Protocol):
             res: ResolutionReader
@@ -893,7 +1049,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class ValueatResult(Awaitable[ValueatResult], Protocol):
             val: ValueReader
-            aggParts: Sequence[AggregationPartReader]
+            aggParts: AggregationPartListReader
 
         class LatlonboundsResult(Awaitable[LatlonboundsResult], Protocol):
             tl: LatLonCoordReader
@@ -975,6 +1131,40 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         ) -> _GridModule.StreamcellsRequest: ...
         def unit_request(self) -> _GridModule.UnitRequest: ...
 
+class _LocationList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LocationReader: ...
+        def __iter__(self) -> Iterator[LocationReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LocationBuilder: ...
+        def __setitem__(
+            self, key: int, value: LocationReader | LocationBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[LocationBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> LocationBuilder: ...
+
+class _AggregationPartList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> AggregationPartReader: ...
+        def __iter__(self) -> Iterator[AggregationPartReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> AggregationPartBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: AggregationPartReader | AggregationPartBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[AggregationPartBuilder]: ...
+        def init(
+            self, index: int, size: int | None = None
+        ) -> AggregationPartBuilder: ...
+
 Grid: _GridModule
 
 # Top-level type aliases for use in type annotations
@@ -1000,6 +1190,8 @@ type AggregationEnum = (
     ]
 )
 type AggregationPartBuilder = _GridModule._AggregationPartModule.Builder
+type AggregationPartListBuilder = _AggregationPartList.Builder
+type AggregationPartListReader = _AggregationPartList.Reader
 type AggregationPartReader = _GridModule._AggregationPartModule.Reader
 type CallbackClient = _GridModule._CallbackModule.CallbackClient
 type CallbackServer = _GridModule._CallbackModule.Server
@@ -1009,6 +1201,8 @@ type GridClient = _GridModule.GridClient
 type GridServer = _GridModule.Server
 type LatlonboundsResult = _GridModule.GridClient.LatlonboundsResult
 type LocationBuilder = _GridModule._LocationModule.Builder
+type LocationListBuilder = _LocationList.Builder
+type LocationListReader = _LocationList.Reader
 type LocationReader = _GridModule._LocationModule.Reader
 type NodatavalueResult = _GridModule.GridClient.NodatavalueResult
 type ResolutionBuilder = _GridModule._ResolutionModule.Builder

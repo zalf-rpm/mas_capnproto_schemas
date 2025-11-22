@@ -125,8 +125,17 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class NextjobResult(Awaitable[NextjobResult], Protocol):
-            job: JobBuilder | JobReader
+        class NextjobResult(_DynamicStructBuilder):
+            @property
+            def job(self) -> JobBuilder: ...
+            @job.setter
+            def job(self, value: JobBuilder | JobReader | dict[str, Any]) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["job"], size: int | None = None
+            ) -> JobBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class NextjobResultTuple(NamedTuple):
             job: JobBuilder | JobReader

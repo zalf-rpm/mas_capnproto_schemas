@@ -8,6 +8,7 @@ from typing import Any, NamedTuple, Protocol
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicStructBuilder,
     _InterfaceModule,
 )
 
@@ -22,10 +23,19 @@ class _DWLABImportModule(_InterfaceModule):
         self, server: _DynamicCapabilityServer
     ) -> _DWLABImportModule.DWLABImportClient: ...
     class Server(_DynamicCapabilityServer):
-        class ImportdataResult(Awaitable[ImportdataResult], Protocol):
-            id: str
-            successA: bool
-            successB: bool
+        class ImportdataResult(_DynamicStructBuilder):
+            @property
+            def id(self) -> str: ...
+            @id.setter
+            def id(self, value: str) -> None: ...
+            @property
+            def successA(self) -> bool: ...
+            @successA.setter
+            def successA(self, value: bool) -> None: ...
+            @property
+            def successB(self) -> bool: ...
+            @successB.setter
+            def successB(self, value: bool) -> None: ...
 
         class ImportdataResultTuple(NamedTuple):
             id: str

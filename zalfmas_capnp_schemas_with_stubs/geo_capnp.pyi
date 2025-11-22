@@ -37,12 +37,6 @@ class _CoordTypeModule:
     latlon: int
 
 class _EPSGModule(_StructModule):
-    wgs84: int
-    utm21S: int
-    utm32N: int
-    gk5: int
-    gk4: int
-    gk3: int
     class Reader(_DynamicStructReader):
         @override
         def as_builder(

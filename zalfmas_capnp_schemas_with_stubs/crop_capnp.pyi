@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable
-from typing import Any, NamedTuple, Protocol
+from typing import Any, Literal, NamedTuple, Protocol, overload
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
@@ -53,14 +53,39 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _CropModule.CropClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class ParametersResult(Awaitable[ParametersResult], Protocol):
-            params: AnyPointer
+        class ParametersResult(_DynamicStructBuilder):
+            @property
+            def params(self) -> AnyPointer: ...
+            @params.setter
+            def params(self, value: AnyPointer) -> None: ...
 
-        class CultivarResult(Awaitable[CultivarResult], Protocol):
-            info: IdInformationBuilder | IdInformationReader
+        class CultivarResult(_DynamicStructBuilder):
+            @property
+            def info(self) -> IdInformationBuilder: ...
+            @info.setter
+            def info(
+                self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["info"], size: int | None = None
+            ) -> IdInformationBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class SpeciesResult(Awaitable[SpeciesResult], Protocol):
-            info: IdInformationBuilder | IdInformationReader
+        class SpeciesResult(_DynamicStructBuilder):
+            @property
+            def info(self) -> IdInformationBuilder: ...
+            @info.setter
+            def info(
+                self, value: IdInformationBuilder | IdInformationReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["info"], size: int | None = None
+            ) -> IdInformationBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class ParametersResultTuple(NamedTuple):
             params: AnyPointer

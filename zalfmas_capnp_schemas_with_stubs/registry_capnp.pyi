@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceModule,
@@ -45,22 +47,22 @@ class _AdminModule(_IdentifiableModule):
         def send(self) -> _AdminModule.AdminClient.RemovecategoryResult: ...
 
     class MoveobjectsRequest(Protocol):
-        objectIds: Sequence[str]
+        objectIds: TextListBuilder | TextListReader | Sequence[Any]
         toCatId: str
         @overload
         def init(
             self, name: Literal["objectIds"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _AdminModule.AdminClient.MoveobjectsResult: ...
 
     class RemoveobjectsRequest(Protocol):
-        objectIds: Sequence[str]
+        objectIds: TextListBuilder | TextListReader | Sequence[Any]
         @overload
         def init(
             self, name: Literal["objectIds"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _AdminModule.AdminClient.RemoveobjectsResult: ...
@@ -72,40 +74,81 @@ class _AdminModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _AdminModule.AdminClient: ...
     class Server(_IdentifiableModule.Server):
-        class AddcategoryResult(Awaitable[AddcategoryResult], Protocol):
-            success: bool
+        class AddcategoryResult(_DynamicStructBuilder):
+            @property
+            def success(self) -> bool: ...
+            @success.setter
+            def success(self, value: bool) -> None: ...
 
-        class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
-            removedObjects: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+        class RemovecategoryResult(_DynamicStructBuilder):
+            @property
+            def removedObjects(self) -> IdentifiableClientListBuilder: ...
+            @removedObjects.setter
+            def removedObjects(
+                self,
+                value: IdentifiableClientListBuilder
+                | IdentifiableClientListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["removedObjects"], size: int | None = None
+            ) -> IdentifiableClientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
-            movedObjectIds: Sequence[str]
+        class MoveobjectsResult(_DynamicStructBuilder):
+            @property
+            def movedObjectIds(self) -> TextListBuilder: ...
+            @movedObjectIds.setter
+            def movedObjectIds(
+                self, value: TextListBuilder | TextListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["movedObjectIds"], size: int | None = None
+            ) -> TextListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
-            removedObjects: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+        class RemoveobjectsResult(_DynamicStructBuilder):
+            @property
+            def removedObjects(self) -> IdentifiableClientListBuilder: ...
+            @removedObjects.setter
+            def removedObjects(
+                self,
+                value: IdentifiableClientListBuilder
+                | IdentifiableClientListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["removedObjects"], size: int | None = None
+            ) -> IdentifiableClientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class RegistryResult(Awaitable[RegistryResult], Protocol):
-            registry: _RegistryModule.Server | _RegistryModule.RegistryClient
+        class RegistryResult(_DynamicStructBuilder):
+            @property
+            def registry(
+                self,
+            ) -> _RegistryModule.Server | _RegistryModule.RegistryClient: ...
+            @registry.setter
+            def registry(
+                self, value: _RegistryModule.Server | _RegistryModule.RegistryClient
+            ) -> None: ...
 
         class AddcategoryResultTuple(NamedTuple):
             success: bool
 
         class RemovecategoryResultTuple(NamedTuple):
-            removedObjects: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+            removedObjects: IdentifiableClientListBuilder | IdentifiableClientListReader
 
         class MoveobjectsResultTuple(NamedTuple):
-            movedObjectIds: Sequence[str]
+            movedObjectIds: TextListBuilder | TextListReader
 
         class RemoveobjectsResultTuple(NamedTuple):
-            removedObjects: Sequence[
-                _IdentifiableModule.Server | _IdentifiableModule.IdentifiableClient
-            ]
+            removedObjects: IdentifiableClientListBuilder | IdentifiableClientListReader
 
         class RegistryResultTuple(NamedTuple):
             registry: _RegistryModule.Server | _RegistryModule.RegistryClient
@@ -129,7 +172,7 @@ class _AdminModule(_IdentifiableModule):
             def results(self) -> _AdminModule.Server.RemovecategoryResult: ...
 
         class MoveobjectsParams(Protocol):
-            objectIds: Sequence[str]
+            objectIds: TextListReader
             toCatId: str
 
         class MoveobjectsCallContext(Protocol):
@@ -138,7 +181,7 @@ class _AdminModule(_IdentifiableModule):
             def results(self) -> _AdminModule.Server.MoveobjectsResult: ...
 
         class RemoveobjectsParams(Protocol):
-            objectIds: Sequence[str]
+            objectIds: TextListReader
 
         class RemoveobjectsCallContext(Protocol):
             params: _AdminModule.Server.RemoveobjectsParams
@@ -178,7 +221,7 @@ class _AdminModule(_IdentifiableModule):
         ) -> Awaitable[None]: ...
         def moveObjects(
             self,
-            objectIds: Sequence[str],
+            objectIds: TextListReader,
             toCatId: str,
             _context: _AdminModule.Server.MoveobjectsCallContext,
             **kwargs: dict[str, Any],
@@ -190,7 +233,7 @@ class _AdminModule(_IdentifiableModule):
         ) -> Awaitable[None]: ...
         def removeObjects(
             self,
-            objectIds: Sequence[str],
+            objectIds: TextListReader,
             _context: _AdminModule.Server.RemoveobjectsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -217,13 +260,13 @@ class _AdminModule(_IdentifiableModule):
             success: bool
 
         class RemovecategoryResult(Awaitable[RemovecategoryResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule.IdentifiableClient]
+            removedObjects: IdentifiableClientListReader
 
         class MoveobjectsResult(Awaitable[MoveobjectsResult], Protocol):
-            movedObjectIds: Sequence[str]
+            movedObjectIds: TextListReader
 
         class RemoveobjectsResult(Awaitable[RemoveobjectsResult], Protocol):
-            removedObjects: Sequence[_IdentifiableModule.IdentifiableClient]
+            removedObjects: IdentifiableClientListReader
 
         class RegistryResult(Awaitable[RegistryResult], Protocol):
             registry: _RegistryModule.RegistryClient
@@ -242,10 +285,13 @@ class _AdminModule(_IdentifiableModule):
             moveObjectsToCategoryId: str | None = None,
         ) -> _AdminModule.AdminClient.RemovecategoryResult: ...
         def moveObjects(
-            self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
+            self,
+            objectIds: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            toCatId: str | None = None,
         ) -> _AdminModule.AdminClient.MoveobjectsResult: ...
         def removeObjects(
-            self, objectIds: Sequence[str] | None = None
+            self,
+            objectIds: TextListBuilder | TextListReader | Sequence[Any] | None = None,
         ) -> _AdminModule.AdminClient.RemoveobjectsResult: ...
         def registry(self) -> _AdminModule.AdminClient.RegistryResult: ...
         def addCategory_request(
@@ -259,12 +305,41 @@ class _AdminModule(_IdentifiableModule):
             moveObjectsToCategoryId: str | None = None,
         ) -> _AdminModule.RemovecategoryRequest: ...
         def moveObjects_request(
-            self, objectIds: Sequence[str] | None = None, toCatId: str | None = None
+            self,
+            objectIds: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            toCatId: str | None = None,
         ) -> _AdminModule.MoveobjectsRequest: ...
         def removeObjects_request(
-            self, objectIds: Sequence[str] | None = None
+            self,
+            objectIds: TextListBuilder | TextListReader | Sequence[Any] | None = None,
         ) -> _AdminModule.RemoveobjectsRequest: ...
         def registry_request(self) -> _AdminModule.RegistryRequest: ...
+
+class _IdentifiableClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdentifiableClient: ...
+        def __iter__(self) -> Iterator[IdentifiableClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdentifiableClient: ...
+        def __setitem__(
+            self, key: int, value: IdentifiableClient | _IdentifiableModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[IdentifiableClient]: ...
+
+class _TextList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> str: ...
+        def __iter__(self) -> Iterator[str]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> str: ...
+        def __setitem__(self, key: int, value: str) -> None: ...
+        def __iter__(self) -> Iterator[str]: ...
 
 class _RegistryModule(_IdentifiableModule):
     class _EntryModule(_StructModule):
@@ -385,19 +460,44 @@ class _RegistryModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _RegistryModule.RegistryClient: ...
     class Server(_IdentifiableModule.Server):
-        class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
-            cats: Sequence[IdInformationBuilder | IdInformationReader]
+        class SupportedcategoriesResult(_DynamicStructBuilder):
+            @property
+            def cats(self) -> IdInformationListBuilder: ...
+            @cats.setter
+            def cats(
+                self,
+                value: IdInformationListBuilder
+                | IdInformationListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["cats"], size: int | None = None
+            ) -> IdInformationListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
             id: str
             name: str
             description: str
 
-        class EntriesResult(Awaitable[EntriesResult], Protocol):
-            entries: Sequence[EntryBuilder | EntryReader]
+        class EntriesResult(_DynamicStructBuilder):
+            @property
+            def entries(self) -> EntryListBuilder: ...
+            @entries.setter
+            def entries(
+                self, value: EntryListBuilder | EntryListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["entries"], size: int | None = None
+            ) -> EntryListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class SupportedcategoriesResultTuple(NamedTuple):
-            cats: Sequence[IdInformationBuilder | IdInformationReader]
+            cats: IdInformationListBuilder | IdInformationListReader
 
         class CategoryinfoResultTuple(NamedTuple):
             id: str
@@ -405,7 +505,7 @@ class _RegistryModule(_IdentifiableModule):
             description: str
 
         class EntriesResultTuple(NamedTuple):
-            entries: Sequence[EntryBuilder | EntryReader]
+            entries: EntryListBuilder | EntryListReader
 
         class SupportedcategoriesParams(Protocol): ...
 
@@ -467,7 +567,7 @@ class _RegistryModule(_IdentifiableModule):
 
     class RegistryClient(_IdentifiableModule.IdentifiableClient):
         class SupportedcategoriesResult(Awaitable[SupportedcategoriesResult], Protocol):
-            cats: Sequence[IdInformationReader]
+            cats: IdInformationListReader
 
         class CategoryinfoResult(Awaitable[CategoryinfoResult], Protocol):
             id: str
@@ -475,7 +575,7 @@ class _RegistryModule(_IdentifiableModule):
             description: str
 
         class EntriesResult(Awaitable[EntriesResult], Protocol):
-            entries: Sequence[EntryReader]
+            entries: EntryListReader
 
         def supportedCategories(
             self,
@@ -495,6 +595,38 @@ class _RegistryModule(_IdentifiableModule):
         def entries_request(
             self, categoryId: str | None = None
         ) -> _RegistryModule.EntriesRequest: ...
+
+class _IdInformationList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdInformationReader: ...
+        def __iter__(self) -> Iterator[IdInformationReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdInformationBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: IdInformationReader | IdInformationBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[IdInformationBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> IdInformationBuilder: ...
+
+class _EntryList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EntryReader: ...
+        def __iter__(self) -> Iterator[EntryReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EntryBuilder: ...
+        def __setitem__(
+            self, key: int, value: EntryReader | EntryBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EntryBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> EntryBuilder: ...
 
 Registry: _RegistryModule
 Admin: _AdminModule
@@ -715,8 +847,11 @@ class _RegistrarModule(_IdentifiableModule):
             self, server: _DynamicCapabilityServer
         ) -> _RegistrarModule._UnregisterModule.UnregisterClient: ...
         class Server(_DynamicCapabilityServer):
-            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
-                success: bool
+            class UnregisterResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class UnregisterResultTuple(NamedTuple):
                 success: bool
@@ -775,12 +910,32 @@ class _RegistrarModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _RegistrarModule.RegistrarClient: ...
     class Server(_IdentifiableModule.Server):
-        class RegisterResult(Awaitable[RegisterResult], Protocol):
-            unreg: (
+        class RegisterResult(_DynamicStructBuilder):
+            @property
+            def unreg(
+                self,
+            ) -> (
                 _RegistrarModule._UnregisterModule.Server
                 | _RegistrarModule._UnregisterModule.UnregisterClient
-            )
-            reregSR: SturdyRefBuilder | SturdyRefReader
+            ): ...
+            @unreg.setter
+            def unreg(
+                self,
+                value: _RegistrarModule._UnregisterModule.Server
+                | _RegistrarModule._UnregisterModule.UnregisterClient,
+            ) -> None: ...
+            @property
+            def reregSR(self) -> SturdyRefBuilder: ...
+            @reregSR.setter
+            def reregSR(
+                self, value: SturdyRefBuilder | SturdyRefReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["reregSR"], size: int | None = None
+            ) -> SturdyRefBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class RegisterResultTuple(NamedTuple):
             unreg: (
@@ -847,7 +1002,13 @@ type CrossDomainRestoreBuilder = _RegistrarModule._CrossDomainRestoreModule.Buil
 type CrossDomainRestoreReader = _RegistrarModule._CrossDomainRestoreModule.Reader
 type EntriesResult = _RegistryModule.RegistryClient.EntriesResult
 type EntryBuilder = _RegistryModule._EntryModule.Builder
+type EntryListBuilder = _EntryList.Builder
+type EntryListReader = _EntryList.Reader
 type EntryReader = _RegistryModule._EntryModule.Reader
+type IdInformationListBuilder = _IdInformationList.Builder
+type IdInformationListReader = _IdInformationList.Reader
+type IdentifiableClientListBuilder = _IdentifiableClientList.Builder
+type IdentifiableClientListReader = _IdentifiableClientList.Reader
 type MoveobjectsResult = _AdminModule.AdminClient.MoveobjectsResult
 type RegParamsBuilder = _RegistrarModule._RegParamsModule.Builder
 type RegParamsReader = _RegistrarModule._RegParamsModule.Reader
@@ -862,6 +1023,8 @@ type RemoveobjectsResult = _AdminModule.AdminClient.RemoveobjectsResult
 type SupportedcategoriesResult = (
     _RegistryModule.RegistryClient.SupportedcategoriesResult
 )
+type TextListBuilder = _TextList.Builder
+type TextListReader = _TextList.Reader
 type UnregisterClient = _RegistrarModule._UnregisterModule.UnregisterClient
 type UnregisterResult = (
     _RegistrarModule._UnregisterModule.UnregisterClient.UnregisterResult

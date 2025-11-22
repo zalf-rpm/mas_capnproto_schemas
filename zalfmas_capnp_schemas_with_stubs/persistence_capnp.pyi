@@ -891,8 +891,11 @@ class _PersistentModule(_InterfaceModule):
             self, server: _DynamicCapabilityServer
         ) -> _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient: ...
         class Server(_DynamicCapabilityServer):
-            class ReleaseResult(Awaitable[ReleaseResult], Protocol):
-                success: bool
+            class ReleaseResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class ReleaseResultTuple(NamedTuple):
                 success: bool
@@ -1101,8 +1104,11 @@ class _RestorerModule(_InterfaceModule):
         self, server: _DynamicCapabilityServer
     ) -> _RestorerModule.RestorerClient: ...
     class Server(_DynamicCapabilityServer):
-        class RestoreResult(Awaitable[RestoreResult], Protocol):
-            cap: Capability
+        class RestoreResult(_DynamicStructBuilder):
+            @property
+            def cap(self) -> Capability: ...
+            @cap.setter
+            def cap(self, value: Capability) -> None: ...
 
         class RestoreResultTuple(NamedTuple):
             cap: Capability
@@ -1268,9 +1274,20 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             self, server: _DynamicCapabilityServer
         ) -> _HostPortResolverModule._RegistrarModule.RegistrarClient: ...
         class Server(_DynamicCapabilityServer):
-            class RegisterResult(Awaitable[RegisterResult], Protocol):
-                heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
-                secsHeartbeatInterval: int
+            class RegisterResult(_DynamicStructBuilder):
+                @property
+                def heartbeat(
+                    self,
+                ) -> _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient: ...
+                @heartbeat.setter
+                def heartbeat(
+                    self,
+                    value: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient,
+                ) -> None: ...
+                @property
+                def secsHeartbeatInterval(self) -> int: ...
+                @secsHeartbeatInterval.setter
+                def secsHeartbeatInterval(self, value: int) -> None: ...
 
             class RegisterResultTuple(NamedTuple):
                 heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
@@ -1345,9 +1362,15 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
         self, server: _DynamicCapabilityServer
     ) -> _HostPortResolverModule.HostPortResolverClient: ...
     class Server(_IdentifiableModule.Server, _RestorerModule.Server):
-        class ResolveResult(Awaitable[ResolveResult], Protocol):
-            host: str
-            port: int
+        class ResolveResult(_DynamicStructBuilder):
+            @property
+            def host(self) -> str: ...
+            @host.setter
+            def host(self, value: str) -> None: ...
+            @property
+            def port(self) -> int: ...
+            @port.setter
+            def port(self, value: int) -> None: ...
 
         class ResolveResultTuple(NamedTuple):
             host: str

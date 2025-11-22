@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Sequence
+from collections.abc import Iterator
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _StructModule,
@@ -179,6 +181,23 @@ class _RestInputModule(_StructModule):
 
 RestInput: _RestInputModule
 
+class _ResultToValueList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ResultToValueReader: ...
+        def __iter__(self) -> Iterator[ResultToValueReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ResultToValueBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: ResultToValueReader | ResultToValueBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[ResultToValueBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> ResultToValueBuilder: ...
+
 class _ResultModule(_StructModule):
     class _ResultToValueModule(_StructModule):
         class Reader(_DynamicStructReader):
@@ -269,7 +288,7 @@ class _ResultModule(_StructModule):
         @property
         def isNoData(self) -> bool: ...
         @property
-        def values(self) -> Sequence[ResultToValueReader]: ...
+        def values(self) -> ResultToValueListReader: ...
         @override
         def as_builder(
             self,
@@ -287,16 +306,15 @@ class _ResultModule(_StructModule):
         @isNoData.setter
         def isNoData(self, value: bool) -> None: ...
         @property
-        def values(self) -> MutableSequence[ResultToValueBuilder]: ...
+        def values(self) -> ResultToValueListBuilder: ...
         @values.setter
         def values(
             self,
-            value: Sequence[ResultToValueBuilder | ResultToValueReader]
-            | Sequence[dict[str, Any]],
+            value: ResultToValueListBuilder | ResultToValueListReader | dict[str, Any],
         ) -> None: ...
         def init(
             self, field: Literal["values"], size: int | None = None
-        ) -> MutableSequence[ResultToValueBuilder]: ...
+        ) -> ResultToValueListBuilder: ...
         @override
         def as_reader(self) -> ResultReader: ...
 
@@ -307,7 +325,7 @@ class _ResultModule(_StructModule):
         allocate_seg_callable: Any = None,
         cultivar: str | None = None,
         isNoData: bool | None = None,
-        values: Sequence[ResultToValueBuilder] | Sequence[dict[str, Any]] | None = None,
+        values: ResultToValueListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> ResultBuilder: ...
     @overload
@@ -357,6 +375,23 @@ class _ResultModule(_StructModule):
     ) -> ResultReader: ...
 
 Result: _ResultModule
+
+class _YearToResultList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> YearToResultReader: ...
+        def __iter__(self) -> Iterator[YearToResultReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> YearToResultBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: YearToResultReader | YearToResultBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[YearToResultBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> YearToResultBuilder: ...
 
 class _OutputModule(_StructModule):
     class _YearToResultModule(_StructModule):
@@ -455,7 +490,7 @@ class _OutputModule(_StructModule):
         @property
         def reason(self) -> str: ...
         @property
-        def results(self) -> Sequence[YearToResultReader]: ...
+        def results(self) -> YearToResultListReader: ...
         @override
         def as_builder(
             self,
@@ -477,16 +512,15 @@ class _OutputModule(_StructModule):
         @reason.setter
         def reason(self, value: str) -> None: ...
         @property
-        def results(self) -> MutableSequence[YearToResultBuilder]: ...
+        def results(self) -> YearToResultListBuilder: ...
         @results.setter
         def results(
             self,
-            value: Sequence[YearToResultBuilder | YearToResultReader]
-            | Sequence[dict[str, Any]],
+            value: YearToResultListBuilder | YearToResultListReader | dict[str, Any],
         ) -> None: ...
         def init(
             self, field: Literal["results"], size: int | None = None
-        ) -> MutableSequence[YearToResultBuilder]: ...
+        ) -> YearToResultListBuilder: ...
         @override
         def as_reader(self) -> OutputReader: ...
 
@@ -498,7 +532,7 @@ class _OutputModule(_StructModule):
         id: str | None = None,
         runFailed: bool | None = None,
         reason: str | None = None,
-        results: Sequence[YearToResultBuilder] | Sequence[dict[str, Any]] | None = None,
+        results: YearToResultListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> OutputBuilder: ...
     @overload
@@ -568,6 +602,10 @@ type ResultIdEnum = (
 )
 type ResultReader = _ResultModule.Reader
 type ResultToValueBuilder = _ResultModule._ResultToValueModule.Builder
+type ResultToValueListBuilder = _ResultToValueList.Builder
+type ResultToValueListReader = _ResultToValueList.Reader
 type ResultToValueReader = _ResultModule._ResultToValueModule.Reader
 type YearToResultBuilder = _OutputModule._YearToResultModule.Builder
+type YearToResultListBuilder = _YearToResultList.Builder
+type YearToResultListReader = _YearToResultList.Reader
 type YearToResultReader = _OutputModule._YearToResultModule.Reader

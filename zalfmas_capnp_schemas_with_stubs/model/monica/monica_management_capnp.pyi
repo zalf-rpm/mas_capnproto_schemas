@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -711,6 +711,36 @@ class _EventModule(_StructModule):
 
 Event: _EventModule
 
+class _KVList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVReader: ...
+        def __iter__(self) -> Iterator[KVReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVBuilder: ...
+        def __setitem__(
+            self, key: int, value: KVReader | KVBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[KVBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> KVBuilder: ...
+
+class _SpecList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> SpecReader: ...
+        def __iter__(self) -> Iterator[SpecReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> SpecBuilder: ...
+        def __setitem__(
+            self, key: int, value: SpecReader | SpecBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[SpecBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> SpecBuilder: ...
+
 class _ParamsModule(_StructModule):
     class _DailyWeatherModule(_StructModule):
         class _KVModule(_StructModule):
@@ -798,7 +828,7 @@ class _ParamsModule(_StructModule):
         KV: _KVModule
         class Reader(_DynamicStructReader):
             @property
-            def data(self) -> Sequence[KVReader]: ...
+            def data(self) -> KVListReader: ...
             @override
             def as_builder(
                 self,
@@ -808,14 +838,14 @@ class _ParamsModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def data(self) -> MutableSequence[KVBuilder]: ...
+            def data(self) -> KVListBuilder: ...
             @data.setter
             def data(
-                self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]
+                self, value: KVListBuilder | KVListReader | dict[str, Any]
             ) -> None: ...
             def init(
                 self, field: Literal["data"], size: int | None = None
-            ) -> MutableSequence[KVBuilder]: ...
+            ) -> KVListBuilder: ...
             @override
             def as_reader(self) -> DailyWeatherReader: ...
 
@@ -824,7 +854,7 @@ class _ParamsModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            data: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+            data: KVListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> DailyWeatherBuilder: ...
         @overload
@@ -1652,7 +1682,7 @@ class _ParamsModule(_StructModule):
         Spec: _SpecModule
         class Reader(_DynamicStructReader):
             @property
-            def cuttingSpec(self) -> Sequence[SpecReader]: ...
+            def cuttingSpec(self) -> SpecListReader: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
             @override
@@ -1664,11 +1694,10 @@ class _ParamsModule(_StructModule):
 
         class Builder(_DynamicStructBuilder):
             @property
-            def cuttingSpec(self) -> MutableSequence[SpecBuilder]: ...
+            def cuttingSpec(self) -> SpecListBuilder: ...
             @cuttingSpec.setter
             def cuttingSpec(
-                self,
-                value: Sequence[SpecBuilder | SpecReader] | Sequence[dict[str, Any]],
+                self, value: SpecListBuilder | SpecListReader | dict[str, Any]
             ) -> None: ...
             @property
             def cutMaxAssimilationRatePercentage(self) -> float: ...
@@ -1676,7 +1705,7 @@ class _ParamsModule(_StructModule):
             def cutMaxAssimilationRatePercentage(self, value: float) -> None: ...
             def init(
                 self, field: Literal["cuttingSpec"], size: int | None = None
-            ) -> MutableSequence[SpecBuilder]: ...
+            ) -> SpecListBuilder: ...
             @override
             def as_reader(self) -> CuttingReader: ...
 
@@ -1685,7 +1714,7 @@ class _ParamsModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
-            cuttingSpec: Sequence[SpecBuilder] | Sequence[dict[str, Any]] | None = None,
+            cuttingSpec: SpecListBuilder | dict[str, Any] | None = None,
             cutMaxAssimilationRatePercentage: float | None = None,
             **kwargs: Any,
         ) -> CuttingBuilder: ...
@@ -2792,11 +2821,22 @@ class _ServiceModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server):
-        class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[EventBuilder | EventReader]
+        class ManagementatResult(_DynamicStructBuilder):
+            @property
+            def mgmt(self) -> EventListBuilder: ...
+            @mgmt.setter
+            def mgmt(
+                self, value: EventListBuilder | EventListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["mgmt"], size: int | None = None
+            ) -> EventListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class ManagementatResultTuple(NamedTuple):
-            mgmt: Sequence[EventBuilder | EventReader]
+            mgmt: EventListBuilder | EventListReader
 
         class ManagementatParams(Protocol):
             lat: float
@@ -2824,7 +2864,7 @@ class _ServiceModule(_IdentifiableModule):
 
     class ServiceClient(_IdentifiableModule.IdentifiableClient):
         class ManagementatResult(Awaitable[ManagementatResult], Protocol):
-            mgmt: Sequence[EventReader]
+            mgmt: EventListReader
 
         def managementAt(
             self, lat: float | None = None, lon: float | None = None
@@ -2832,6 +2872,21 @@ class _ServiceModule(_IdentifiableModule):
         def managementAt_request(
             self, lat: float | None = None, lon: float | None = None
         ) -> _ServiceModule.ManagementatRequest: ...
+
+class _EventList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventReader: ...
+        def __iter__(self) -> Iterator[EventReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EventBuilder: ...
+        def __setitem__(
+            self, key: int, value: EventReader | EventBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EventBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> EventBuilder: ...
 
 Service: _ServiceModule
 
@@ -2873,6 +2928,8 @@ type EventExternalTypeEnum = (
         "weather",
     ]
 )
+type EventListBuilder = _EventList.Builder
+type EventListReader = _EventList.Reader
 type EventPhenoStageEnum = (
     int | Literal["emergence", "flowering", "anthesis", "maturity"]
 )
@@ -2901,6 +2958,8 @@ type ILRDatesReader = _ILRDatesModule.Reader
 type IrrigationBuilder = _ParamsModule._IrrigationModule.Builder
 type IrrigationReader = _ParamsModule._IrrigationModule.Reader
 type KVBuilder = _ParamsModule._DailyWeatherModule._KVModule.Builder
+type KVListBuilder = _KVList.Builder
+type KVListReader = _KVList.Reader
 type KVReader = _ParamsModule._DailyWeatherModule._KVModule.Reader
 type ManagementatResult = _ServiceModule.ServiceClient.ManagementatResult
 type MineralFertilizationBuilder = _ParamsModule._MineralFertilizationModule.Builder
@@ -2936,6 +2995,8 @@ type ServiceServer = _ServiceModule.Server
 type SowingBuilder = _ParamsModule._SowingModule.Builder
 type SowingReader = _ParamsModule._SowingModule.Reader
 type SpecBuilder = _ParamsModule._CuttingModule._SpecModule.Builder
+type SpecListBuilder = _SpecList.Builder
+type SpecListReader = _SpecList.Reader
 type SpecReader = _ParamsModule._CuttingModule._SpecModule.Reader
 type TillageBuilder = _ParamsModule._TillageModule.Builder
 type TillageReader = _ParamsModule._TillageModule.Reader

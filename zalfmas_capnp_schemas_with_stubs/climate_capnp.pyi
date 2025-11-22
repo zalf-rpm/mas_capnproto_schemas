@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, MutableSequence, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -179,6 +179,53 @@ class _EnsembleMemberModule(_StructModule):
 
 EnsembleMember: _EnsembleMemberModule
 
+class _IdInformationList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdInformationReader: ...
+        def __iter__(self) -> Iterator[IdInformationReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> IdInformationBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: IdInformationReader | IdInformationBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[IdInformationBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> IdInformationBuilder: ...
+
+class _PairList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PairReader: ...
+        def __iter__(self) -> Iterator[PairReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> PairBuilder: ...
+        def __setitem__(
+            self, key: int, value: PairReader | PairBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[PairBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> PairBuilder: ...
+
+class _EntryList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EntryReader: ...
+        def __iter__(self) -> Iterator[EntryReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> EntryBuilder: ...
+        def __setitem__(
+            self, key: int, value: EntryReader | EntryBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[EntryBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> EntryBuilder: ...
+
 class _MetadataModule(_StructModule):
     class _SupportedModule(_InterfaceModule):
         class CategoriesRequest(Protocol):
@@ -198,17 +245,45 @@ class _MetadataModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _MetadataModule._SupportedModule.SupportedClient: ...
         class Server(_DynamicCapabilityServer):
-            class CategoriesResult(Awaitable[CategoriesResult], Protocol):
-                types: Sequence[IdInformationBuilder | IdInformationReader]
+            class CategoriesResult(_DynamicStructBuilder):
+                @property
+                def types(self) -> IdInformationListBuilder: ...
+                @types.setter
+                def types(
+                    self,
+                    value: IdInformationListBuilder
+                    | IdInformationListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["types"], size: int | None = None
+                ) -> IdInformationListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
-            class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
-                values: Sequence[IdInformationBuilder | IdInformationReader]
+            class SupportedvaluesResult(_DynamicStructBuilder):
+                @property
+                def values(self) -> IdInformationListBuilder: ...
+                @values.setter
+                def values(
+                    self,
+                    value: IdInformationListBuilder
+                    | IdInformationListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["values"], size: int | None = None
+                ) -> IdInformationListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class CategoriesResultTuple(NamedTuple):
-                types: Sequence[IdInformationBuilder | IdInformationReader]
+                types: IdInformationListBuilder | IdInformationListReader
 
             class SupportedvaluesResultTuple(NamedTuple):
-                values: Sequence[IdInformationBuilder | IdInformationReader]
+                values: IdInformationListBuilder | IdInformationListReader
 
             class CategoriesParams(Protocol): ...
 
@@ -259,10 +334,10 @@ class _MetadataModule(_StructModule):
 
         class SupportedClient(_DynamicCapabilityClient):
             class CategoriesResult(Awaitable[CategoriesResult], Protocol):
-                types: Sequence[IdInformationReader]
+                types: IdInformationListReader
 
             class SupportedvaluesResult(Awaitable[SupportedvaluesResult], Protocol):
-                values: Sequence[IdInformationReader]
+                values: IdInformationListReader
 
             def categories(
                 self,
@@ -626,8 +701,19 @@ class _MetadataModule(_StructModule):
                 name: str
                 description: str
 
-            class ForallResult(Awaitable[ForallResult], Protocol):
-                all: Sequence[PairBuilder | PairReader]
+            class ForallResult(_DynamicStructBuilder):
+                @property
+                def all(self) -> PairListBuilder: ...
+                @all.setter
+                def all(
+                    self, value: PairListBuilder | PairListReader | Sequence[Any]
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["all"], size: int | None = None
+                ) -> PairListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class ForoneResultTuple(NamedTuple):
                 id: str
@@ -635,7 +721,7 @@ class _MetadataModule(_StructModule):
                 description: str
 
             class ForallResultTuple(NamedTuple):
-                all: Sequence[PairBuilder | PairReader]
+                all: PairListBuilder | PairListReader
 
             class ForoneParams(Protocol):
                 entry: EntryReader
@@ -687,7 +773,7 @@ class _MetadataModule(_StructModule):
                 description: str
 
             class ForallResult(Awaitable[ForallResult], Protocol):
-                all: Sequence[PairReader]
+                all: PairListReader
 
             def forOne(
                 self, entry: EntryBuilder | EntryReader | dict[str, Any] | None = None
@@ -707,7 +793,7 @@ class _MetadataModule(_StructModule):
     type InformationServer = _MetadataModule._InformationModule.Server
     class Reader(_DynamicStructReader):
         @property
-        def entries(self) -> Sequence[EntryReader]: ...
+        def entries(self) -> EntryListReader: ...
         @property
         def info(self) -> _MetadataModule._InformationModule.InformationClient: ...
         @override
@@ -719,10 +805,10 @@ class _MetadataModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def entries(self) -> MutableSequence[EntryBuilder]: ...
+        def entries(self) -> EntryListBuilder: ...
         @entries.setter
         def entries(
-            self, value: Sequence[EntryBuilder | EntryReader] | Sequence[dict[str, Any]]
+            self, value: EntryListBuilder | EntryListReader | dict[str, Any]
         ) -> None: ...
         @property
         def info(self) -> _MetadataModule._InformationModule.InformationClient: ...
@@ -734,7 +820,7 @@ class _MetadataModule(_StructModule):
         ) -> None: ...
         def init(
             self, field: Literal["entries"], size: int | None = None
-        ) -> MutableSequence[EntryBuilder]: ...
+        ) -> EntryListBuilder: ...
         @override
         def as_reader(self) -> MetadataReader: ...
 
@@ -743,7 +829,7 @@ class _MetadataModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        entries: Sequence[EntryBuilder] | Sequence[dict[str, Any]] | None = None,
+        entries: EntryListBuilder | dict[str, Any] | None = None,
         info: _MetadataModule._InformationModule.InformationClient
         | _MetadataModule._InformationModule.Server
         | None = None,
@@ -809,11 +895,23 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             self, server: _DynamicCapabilityServer
         ) -> _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient: ...
         class Server(_DynamicCapabilityServer):
-            class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
-                locations: Sequence[LocationBuilder | LocationReader]
+            class NextlocationsResult(_DynamicStructBuilder):
+                @property
+                def locations(self) -> LocationListBuilder: ...
+                @locations.setter
+                def locations(
+                    self,
+                    value: LocationListBuilder | LocationListReader | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["locations"], size: int | None = None
+                ) -> LocationListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class NextlocationsResultTuple(NamedTuple):
-                locations: Sequence[LocationBuilder | LocationReader]
+                locations: LocationListBuilder | LocationListReader
 
             class NextlocationsParams(Protocol):
                 maxCount: int
@@ -842,7 +940,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
 
         class GetLocationsCallbackClient(_DynamicCapabilityClient):
             class NextlocationsResult(Awaitable[NextlocationsResult], Protocol):
-                locations: Sequence[LocationReader]
+                locations: LocationListReader
 
             def nextLocations(
                 self, maxCount: int | None = None
@@ -883,29 +981,65 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
     ) -> _DatasetModule.DatasetClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[EntryBuilder | EntryReader]
+            entries: EntryListBuilder | EntryListReader
             info: (
                 _MetadataModule._InformationModule.Server
                 | _MetadataModule._InformationModule.InformationClient
             )
 
-        class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class ClosesttimeseriesatResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
-        class TimeseriesatResult(Awaitable[TimeseriesatResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class TimeseriesatResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
-        class LocationsResult(Awaitable[LocationsResult], Protocol):
-            locations: Sequence[LocationBuilder | LocationReader]
+        class LocationsResult(_DynamicStructBuilder):
+            @property
+            def locations(self) -> LocationListBuilder: ...
+            @locations.setter
+            def locations(
+                self, value: LocationListBuilder | LocationListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["locations"], size: int | None = None
+            ) -> LocationListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
-            locationsCallback: (
+        class StreamlocationsResult(_DynamicStructBuilder):
+            @property
+            def locationsCallback(
+                self,
+            ) -> (
                 _DatasetModule._GetLocationsCallbackModule.Server
                 | _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient
-            )
+            ): ...
+            @locationsCallback.setter
+            def locationsCallback(
+                self,
+                value: _DatasetModule._GetLocationsCallbackModule.Server
+                | _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient,
+            ) -> None: ...
 
         class MetadataResultTuple(NamedTuple):
-            entries: Sequence[EntryBuilder | EntryReader]
+            entries: EntryListBuilder | EntryListReader
             info: (
                 _MetadataModule._InformationModule.Server
                 | _MetadataModule._InformationModule.InformationClient
@@ -918,7 +1052,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResultTuple(NamedTuple):
-            locations: Sequence[LocationBuilder | LocationReader]
+            locations: LocationListBuilder | LocationListReader
 
         class StreamlocationsResultTuple(NamedTuple):
             locationsCallback: (
@@ -1028,7 +1162,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
         _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
     ):
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[EntryReader]
+            entries: EntryListReader
             info: _MetadataModule._InformationModule.InformationClient
 
         class ClosesttimeseriesatResult(Awaitable[ClosesttimeseriesatResult], Protocol):
@@ -1038,7 +1172,7 @@ class _DatasetModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class LocationsResult(Awaitable[LocationsResult], Protocol):
-            locations: Sequence[LocationReader]
+            locations: LocationListReader
 
         class StreamlocationsResult(Awaitable[StreamlocationsResult], Protocol):
             locationsCallback: (
@@ -1105,11 +1239,11 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.SubrangeResult: ...
 
     class SubheaderRequest(Protocol):
-        elements: Sequence[ElementEnum]
+        elements: ElementEnumListBuilder | ElementEnumListReader | Sequence[Any]
         @overload
         def init(
             self, name: Literal["elements"], size: int = ...
-        ) -> MutableSequence[ElementEnum]: ...
+        ) -> ElementEnumListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(self) -> _TimeSeriesModule.TimeSeriesClient.SubheaderResult: ...
@@ -1124,30 +1258,105 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _TimeSeriesModule.TimeSeriesClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class ResolutionResult(Awaitable[ResolutionResult], Protocol):
-            resolution: TimeSeriesResolutionEnum
+        class ResolutionResult(_DynamicStructBuilder):
+            @property
+            def resolution(self) -> TimeSeriesResolutionEnum: ...
+            @resolution.setter
+            def resolution(self, value: TimeSeriesResolutionEnum) -> None: ...
 
-        class RangeResult(Awaitable[RangeResult], Protocol):
-            startDate: DateBuilder | DateReader
-            endDate: DateBuilder | DateReader
+        class RangeResult(_DynamicStructBuilder):
+            @property
+            def startDate(self) -> DateBuilder: ...
+            @startDate.setter
+            def startDate(
+                self, value: DateBuilder | DateReader | dict[str, Any]
+            ) -> None: ...
+            @property
+            def endDate(self) -> DateBuilder: ...
+            @endDate.setter
+            def endDate(
+                self, value: DateBuilder | DateReader | dict[str, Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["startDate"], size: int | None = None
+            ) -> DateBuilder: ...
+            @overload
+            def init(
+                self, field: Literal["endDate"], size: int | None = None
+            ) -> DateBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class HeaderResult(Awaitable[HeaderResult], Protocol):
-            header: Sequence[ElementEnum]
+        class HeaderResult(_DynamicStructBuilder):
+            @property
+            def header(self) -> ElementEnumListBuilder: ...
+            @header.setter
+            def header(
+                self,
+                value: ElementEnumListBuilder | ElementEnumListReader | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["header"], size: int | None = None
+            ) -> ElementEnumListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class DataResult(Awaitable[DataResult], Protocol):
-            data: Sequence[Sequence[float]]
+        class DataResult(_DynamicStructBuilder):
+            @property
+            def data(self) -> Float32ListListBuilder: ...
+            @data.setter
+            def data(
+                self,
+                value: Float32ListListBuilder | Float32ListListReader | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["data"], size: int | None = None
+            ) -> Float32ListListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class DatatResult(Awaitable[DatatResult], Protocol):
-            data: Sequence[Sequence[float]]
+        class DatatResult(_DynamicStructBuilder):
+            @property
+            def data(self) -> Float32ListListBuilder: ...
+            @data.setter
+            def data(
+                self,
+                value: Float32ListListBuilder | Float32ListListReader | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["data"], size: int | None = None
+            ) -> Float32ListListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class SubrangeResult(Awaitable[SubrangeResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class SubrangeResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
-        class SubheaderResult(Awaitable[SubheaderResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class SubheaderResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[EntryBuilder | EntryReader]
+            entries: EntryListBuilder | EntryListReader
             info: (
                 _MetadataModule._InformationModule.Server
                 | _MetadataModule._InformationModule.InformationClient
@@ -1158,7 +1367,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             heightNN: float
             latlon: LatLonCoordBuilder | LatLonCoordReader
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
-            customData: Sequence[KVBuilder | KVReader]
+            customData: KVListBuilder | KVListReader
 
         class ResolutionResultTuple(NamedTuple):
             resolution: TimeSeriesResolutionEnum
@@ -1168,13 +1377,13 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             endDate: DateBuilder | DateReader
 
         class HeaderResultTuple(NamedTuple):
-            header: Sequence[ElementEnum]
+            header: ElementEnumListBuilder | ElementEnumListReader
 
         class DataResultTuple(NamedTuple):
-            data: Sequence[Sequence[float]]
+            data: Float32ListListBuilder | Float32ListListReader
 
         class DatatResultTuple(NamedTuple):
-            data: Sequence[Sequence[float]]
+            data: Float32ListListBuilder | Float32ListListReader
 
         class SubrangeResultTuple(NamedTuple):
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
@@ -1183,7 +1392,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResultTuple(NamedTuple):
-            entries: Sequence[EntryBuilder | EntryReader]
+            entries: EntryListBuilder | EntryListReader
             info: (
                 _MetadataModule._InformationModule.Server
                 | _MetadataModule._InformationModule.InformationClient
@@ -1194,7 +1403,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             heightNN: float
             latlon: LatLonCoordBuilder | LatLonCoordReader
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
-            customData: Sequence[KVBuilder | KVReader]
+            customData: KVListBuilder | KVListReader
 
         class ResolutionParams(Protocol): ...
 
@@ -1241,7 +1450,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             def results(self) -> _TimeSeriesModule.Server.SubrangeResult: ...
 
         class SubheaderParams(Protocol):
-            elements: Sequence[ElementEnum]
+            elements: ElementEnumListReader
 
         class SubheaderCallContext(Protocol):
             params: _TimeSeriesModule.Server.SubheaderParams
@@ -1328,7 +1537,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
         ) -> Awaitable[None]: ...
         def subheader(
             self,
-            elements: Sequence[ElementEnum],
+            elements: ElementEnumListReader,
             _context: _TimeSeriesModule.Server.SubheaderCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
@@ -1367,13 +1576,13 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             endDate: DateReader
 
         class HeaderResult(Awaitable[HeaderResult], Protocol):
-            header: Sequence[ElementEnum]
+            header: ElementEnumListReader
 
         class DataResult(Awaitable[DataResult], Protocol):
-            data: Sequence[Sequence[float]]
+            data: Float32ListListReader
 
         class DatatResult(Awaitable[DatatResult], Protocol):
-            data: Sequence[Sequence[float]]
+            data: Float32ListListReader
 
         class SubrangeResult(Awaitable[SubrangeResult], Protocol):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
@@ -1382,7 +1591,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class MetadataResult(Awaitable[MetadataResult], Protocol):
-            entries: Sequence[EntryReader]
+            entries: EntryListReader
             info: _MetadataModule._InformationModule.InformationClient
 
         class LocationResult(Awaitable[LocationResult], Protocol):
@@ -1390,7 +1599,7 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             heightNN: float
             latlon: LatLonCoordReader
             timeSeries: _TimeSeriesModule.TimeSeriesClient
-            customData: Sequence[KVReader]
+            customData: KVListReader
 
         def resolution(self) -> _TimeSeriesModule.TimeSeriesClient.ResolutionResult: ...
         def range(self) -> _TimeSeriesModule.TimeSeriesClient.RangeResult: ...
@@ -1403,7 +1612,11 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             end: DateBuilder | DateReader | dict[str, Any] | None = None,
         ) -> _TimeSeriesModule.TimeSeriesClient.SubrangeResult: ...
         def subheader(
-            self, elements: Sequence[ElementEnum] | None = None
+            self,
+            elements: ElementEnumListBuilder
+            | ElementEnumListReader
+            | Sequence[Any]
+            | None = None,
         ) -> _TimeSeriesModule.TimeSeriesClient.SubheaderResult: ...
         def metadata(self) -> _TimeSeriesModule.TimeSeriesClient.MetadataResult: ...
         def location(self) -> _TimeSeriesModule.TimeSeriesClient.LocationResult: ...
@@ -1416,7 +1629,11 @@ class _TimeSeriesModule(_IdentifiableModule, _PersistentModule):
             self, start: DateBuilder | None = None, end: DateBuilder | None = None
         ) -> _TimeSeriesModule.SubrangeRequest: ...
         def subheader_request(
-            self, elements: Sequence[ElementEnum] | None = None
+            self,
+            elements: ElementEnumListBuilder
+            | ElementEnumListReader
+            | Sequence[Any]
+            | None = None,
         ) -> _TimeSeriesModule.SubheaderRequest: ...
         def metadata_request(self) -> _TimeSeriesModule.MetadataRequest: ...
         def location_request(self) -> _TimeSeriesModule.LocationRequest: ...
@@ -1441,6 +1658,62 @@ class _ElementModule:
     snowfallFlux: int
     surfaceDownwellingLongwaveRadiation: int
     potET: int
+
+class _ElementEnumList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ElementEnum: ...
+        def __iter__(self) -> Iterator[ElementEnum]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ElementEnum: ...
+        def __setitem__(self, key: int, value: ElementEnum) -> None: ...
+        def __iter__(self) -> Iterator[ElementEnum]: ...
+
+class _Float32List:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> float: ...
+        def __iter__(self) -> Iterator[float]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> float: ...
+        def __setitem__(self, key: int, value: float) -> None: ...
+        def __iter__(self) -> Iterator[float]: ...
+
+class _Float32ListList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> Float32ListReader: ...
+        def __iter__(self) -> Iterator[Float32ListReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> Float32ListBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: Float32ListReader | Float32ListBuilder | Sequence[Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[Float32ListBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> Float32ListBuilder: ...
+
+class _KVList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVReader: ...
+        def __iter__(self) -> Iterator[KVReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> KVBuilder: ...
+        def __setitem__(
+            self, key: int, value: KVReader | KVBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[KVBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> KVBuilder: ...
 
 TimeSeries: _TimeSeriesModule
 
@@ -1538,7 +1811,7 @@ class _LocationModule(_StructModule):
         @property
         def timeSeries(self) -> _TimeSeriesModule.TimeSeriesClient: ...
         @property
-        def customData(self) -> Sequence[KVReader]: ...
+        def customData(self) -> KVListReader: ...
         @override
         def as_builder(
             self,
@@ -1570,10 +1843,10 @@ class _LocationModule(_StructModule):
             self, value: _TimeSeriesModule.TimeSeriesClient | _TimeSeriesModule.Server
         ) -> None: ...
         @property
-        def customData(self) -> MutableSequence[KVBuilder]: ...
+        def customData(self) -> KVListBuilder: ...
         @customData.setter
         def customData(
-            self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]
+            self, value: KVListBuilder | KVListReader | dict[str, Any]
         ) -> None: ...
         @overload
         def init(
@@ -1586,7 +1859,7 @@ class _LocationModule(_StructModule):
         @overload
         def init(
             self, field: Literal["customData"], size: int | None = None
-        ) -> MutableSequence[KVBuilder]: ...
+        ) -> KVListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1603,7 +1876,7 @@ class _LocationModule(_StructModule):
         timeSeries: _TimeSeriesModule.TimeSeriesClient
         | _TimeSeriesModule.Server
         | None = None,
-        customData: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+        customData: KVListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> LocationBuilder: ...
     @overload
@@ -1653,6 +1926,22 @@ class _LocationModule(_StructModule):
     ) -> LocationReader: ...
 
 Location: _LocationModule
+
+class _LocationList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LocationReader: ...
+        def __iter__(self) -> Iterator[LocationReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> LocationBuilder: ...
+        def __setitem__(
+            self, key: int, value: LocationReader | LocationBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[LocationBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> LocationBuilder: ...
+
 Dataset: _DatasetModule
 
 class _MetaPlusDataModule(_StructModule):
@@ -1747,11 +2036,11 @@ MetaPlusData: _MetaPlusDataModule
 class _TimeSeriesDataModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
-        def data(self) -> Sequence[Sequence[float]]: ...
+        def data(self) -> Float32ListListReader: ...
         @property
         def isTransposed(self) -> bool: ...
         @property
-        def header(self) -> Sequence[ElementEnum]: ...
+        def header(self) -> ElementEnumListReader: ...
         @property
         def startDate(self) -> DateReader: ...
         @property
@@ -1767,17 +2056,21 @@ class _TimeSeriesDataModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def data(self) -> MutableSequence[MutableSequence[float]]: ...
+        def data(self) -> Float32ListListBuilder: ...
         @data.setter
-        def data(self, value: Sequence[Sequence[float]]) -> None: ...
+        def data(
+            self, value: Float32ListListBuilder | Float32ListListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def isTransposed(self) -> bool: ...
         @isTransposed.setter
         def isTransposed(self, value: bool) -> None: ...
         @property
-        def header(self) -> MutableSequence[ElementEnum]: ...
+        def header(self) -> ElementEnumListBuilder: ...
         @header.setter
-        def header(self, value: Sequence[ElementEnum]) -> None: ...
+        def header(
+            self, value: ElementEnumListBuilder | ElementEnumListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def startDate(self) -> DateBuilder: ...
         @startDate.setter
@@ -1803,11 +2096,11 @@ class _TimeSeriesDataModule(_StructModule):
         @overload
         def init(
             self, field: Literal["data"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float32ListListBuilder: ...
         @overload
         def init(
             self, field: Literal["header"], size: int | None = None
-        ) -> MutableSequence[ElementEnum]: ...
+        ) -> ElementEnumListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1818,9 +2111,9 @@ class _TimeSeriesDataModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        data: Sequence[Sequence[float]] | None = None,
+        data: Float32ListListBuilder | dict[str, Any] | None = None,
         isTransposed: bool | None = None,
-        header: Sequence[ElementEnum] | None = None,
+        header: ElementEnumListBuilder | dict[str, Any] | None = None,
         startDate: DateBuilder | dict[str, Any] | None = None,
         endDate: DateBuilder | dict[str, Any] | None = None,
         resolution: TimeSeriesResolutionEnum | None = None,
@@ -1890,19 +2183,43 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         self, server: _DynamicCapabilityServer
     ) -> _ServiceModule.ServiceClient: ...
     class Server(_IdentifiableModule.Server, _PersistentModule.Server):
-        class GetavailabledatasetsResult(
-            Awaitable[GetavailabledatasetsResult], Protocol
-        ):
-            datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
+        class GetavailabledatasetsResult(_DynamicStructBuilder):
+            @property
+            def datasets(self) -> MetaPlusDataListBuilder: ...
+            @datasets.setter
+            def datasets(
+                self,
+                value: MetaPlusDataListBuilder | MetaPlusDataListReader | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["datasets"], size: int | None = None
+            ) -> MetaPlusDataListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
-            datasets: Sequence[_DatasetModule.Server | _DatasetModule.DatasetClient]
+        class GetdatasetsforResult(_DynamicStructBuilder):
+            @property
+            def datasets(self) -> DatasetClientListBuilder: ...
+            @datasets.setter
+            def datasets(
+                self,
+                value: DatasetClientListBuilder
+                | DatasetClientListReader
+                | Sequence[Any],
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["datasets"], size: int | None = None
+            ) -> DatasetClientListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class GetavailabledatasetsResultTuple(NamedTuple):
-            datasets: Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
+            datasets: MetaPlusDataListBuilder | MetaPlusDataListReader
 
         class GetdatasetsforResultTuple(NamedTuple):
-            datasets: Sequence[_DatasetModule.Server | _DatasetModule.DatasetClient]
+            datasets: DatasetClientListBuilder | DatasetClientListReader
 
         class GetavailabledatasetsParams(Protocol): ...
 
@@ -1951,10 +2268,10 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
         class GetavailabledatasetsResult(
             Awaitable[GetavailabledatasetsResult], Protocol
         ):
-            datasets: Sequence[MetaPlusDataReader]
+            datasets: MetaPlusDataListReader
 
         class GetdatasetsforResult(Awaitable[GetdatasetsforResult], Protocol):
-            datasets: Sequence[_DatasetModule.DatasetClient]
+            datasets: DatasetClientListReader
 
         def getAvailableDatasets(
             self,
@@ -1970,6 +2287,37 @@ class _ServiceModule(_IdentifiableModule, _PersistentModule):
             self, template: MetadataBuilder | None = None
         ) -> _ServiceModule.GetdatasetsforRequest: ...
 
+class _MetaPlusDataList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> MetaPlusDataReader: ...
+        def __iter__(self) -> Iterator[MetaPlusDataReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> MetaPlusDataBuilder: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: MetaPlusDataReader | MetaPlusDataBuilder | dict[str, Any],
+        ) -> None: ...
+        def __iter__(self) -> Iterator[MetaPlusDataBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> MetaPlusDataBuilder: ...
+
+class _DatasetClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> DatasetClient: ...
+        def __iter__(self) -> Iterator[DatasetClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> DatasetClient: ...
+        def __setitem__(
+            self, key: int, value: DatasetClient | _DatasetModule.Server
+        ) -> None: ...
+        def __iter__(self) -> Iterator[DatasetClient]: ...
+
 Service: _ServiceModule
 
 class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
@@ -1978,7 +2326,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             @property
             def sep(self) -> str: ...
             @property
-            def headerMap(self) -> Sequence[PairReader]: ...
+            def headerMap(self) -> PairListReader: ...
             @property
             def skipLinesToHeader(self) -> int: ...
             @property
@@ -1996,11 +2344,10 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             @sep.setter
             def sep(self, value: str) -> None: ...
             @property
-            def headerMap(self) -> MutableSequence[PairBuilder]: ...
+            def headerMap(self) -> PairListBuilder: ...
             @headerMap.setter
             def headerMap(
-                self,
-                value: Sequence[PairBuilder | PairReader] | Sequence[dict[str, Any]],
+                self, value: PairListBuilder | PairListReader | dict[str, Any]
             ) -> None: ...
             @property
             def skipLinesToHeader(self) -> int: ...
@@ -2012,7 +2359,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             def skipLinesFromHeaderToData(self, value: int) -> None: ...
             def init(
                 self, field: Literal["headerMap"], size: int | None = None
-            ) -> MutableSequence[PairBuilder]: ...
+            ) -> PairListBuilder: ...
             @override
             def as_reader(self) -> CSVConfigReader: ...
 
@@ -2022,7 +2369,7 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Any = None,
             sep: str | None = None,
-            headerMap: Sequence[PairBuilder] | Sequence[dict[str, Any]] | None = None,
+            headerMap: PairListBuilder | dict[str, Any] | None = None,
             skipLinesToHeader: int | None = None,
             skipLinesFromHeaderToData: int | None = None,
             **kwargs: Any,
@@ -2091,9 +2438,20 @@ class _CSVTimeSeriesFactoryModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient: ...
     class Server(_IdentifiableModule.Server):
-        class CreateResult(Awaitable[CreateResult], Protocol):
-            timeseries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
-            error: str
+        class CreateResult(_DynamicStructBuilder):
+            @property
+            def timeseries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeseries.setter
+            def timeseries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
+            @property
+            def error(self) -> str: ...
+            @error.setter
+            def error(self, value: str) -> None: ...
 
         class CreateResultTuple(NamedTuple):
             timeseries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
@@ -2270,14 +2628,41 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
         self, server: _DynamicCapabilityServer
     ) -> _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient: ...
     class Server(_TimeSeriesModule.Server):
-        class WrappedtimeseriesResult(Awaitable[WrappedtimeseriesResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class WrappedtimeseriesResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
-        class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
-            list: Sequence[AlteredBuilder | AlteredReader]
+        class AlteredelementsResult(_DynamicStructBuilder):
+            @property
+            def list(self) -> AlteredListBuilder: ...
+            @list.setter
+            def list(
+                self, value: AlteredListBuilder | AlteredListReader | Sequence[Any]
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["list"], size: int | None = None
+            ) -> AlteredListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
-        class AlterResult(Awaitable[AlterResult], Protocol):
-            timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
+        class AlterResult(_DynamicStructBuilder):
+            @property
+            def timeSeries(
+                self,
+            ) -> _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient: ...
+            @timeSeries.setter
+            def timeSeries(
+                self,
+                value: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient,
+            ) -> None: ...
 
         class RemoveResult(Awaitable[None], Protocol): ...
         class ReplacewrappedtimeseriesResult(Awaitable[None], Protocol): ...
@@ -2286,7 +2671,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResultTuple(NamedTuple):
-            list: Sequence[AlteredBuilder | AlteredReader]
+            list: AlteredListBuilder | AlteredListReader
 
         class AlterResultTuple(NamedTuple):
             timeSeries: _TimeSeriesModule.Server | _TimeSeriesModule.TimeSeriesClient
@@ -2395,7 +2780,7 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
 
         class AlteredelementsResult(Awaitable[AlteredelementsResult], Protocol):
-            list: Sequence[AlteredReader]
+            list: AlteredListReader
 
         class AlterResult(Awaitable[AlterResult], Protocol):
             timeSeries: _TimeSeriesModule.TimeSeriesClient
@@ -2440,6 +2825,21 @@ class _AlterTimeSeriesWrapperModule(_TimeSeriesModule):
             self, timeSeries: TimeSeriesClient | _TimeSeriesModule.Server | None = None
         ) -> _AlterTimeSeriesWrapperModule.ReplacewrappedtimeseriesRequest: ...
 
+class _AlteredList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> AlteredReader: ...
+        def __iter__(self) -> Iterator[AlteredReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> AlteredBuilder: ...
+        def __setitem__(
+            self, key: int, value: AlteredReader | AlteredBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[AlteredBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> AlteredBuilder: ...
+
 AlterTimeSeriesWrapper: _AlterTimeSeriesWrapperModule
 
 class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
@@ -2453,11 +2853,20 @@ class _AlterTimeSeriesWrapperFactoryModule(_IdentifiableModule):
         self, server: _DynamicCapabilityServer
     ) -> _AlterTimeSeriesWrapperFactoryModule.AlterTimeSeriesWrapperFactoryClient: ...
     class Server(_IdentifiableModule.Server):
-        class WrapResult(Awaitable[WrapResult], Protocol):
-            wrapper: (
+        class WrapResult(_DynamicStructBuilder):
+            @property
+            def wrapper(
+                self,
+            ) -> (
                 _AlterTimeSeriesWrapperModule.Server
                 | _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient
-            )
+            ): ...
+            @wrapper.setter
+            def wrapper(
+                self,
+                value: _AlterTimeSeriesWrapperModule.Server
+                | _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient,
+            ) -> None: ...
 
         class WrapResultTuple(NamedTuple):
             wrapper: (
@@ -2516,6 +2925,8 @@ type AlterTimeSeriesWrapperFactoryClient = (
 type AlterTimeSeriesWrapperFactoryServer = _AlterTimeSeriesWrapperFactoryModule.Server
 type AlterTimeSeriesWrapperServer = _AlterTimeSeriesWrapperModule.Server
 type AlteredBuilder = _AlterTimeSeriesWrapperModule._AlteredModule.Builder
+type AlteredListBuilder = _AlteredList.Builder
+type AlteredListReader = _AlteredList.Reader
 type AlteredReader = _AlterTimeSeriesWrapperModule._AlteredModule.Reader
 type AlteredelementsResult = (
     _AlterTimeSeriesWrapperModule.AlterTimeSeriesWrapperClient.AlteredelementsResult
@@ -2531,6 +2942,8 @@ type ClosesttimeseriesatResult = _DatasetModule.DatasetClient.Closesttimeseriesa
 type CreateResult = _CSVTimeSeriesFactoryModule.CSVTimeSeriesFactoryClient.CreateResult
 type DataResult = _TimeSeriesModule.TimeSeriesClient.DataResult
 type DatasetClient = _DatasetModule.DatasetClient
+type DatasetClientListBuilder = _DatasetClientList.Builder
+type DatasetClientListReader = _DatasetClientList.Reader
 type DatasetServer = _DatasetModule.Server
 type DatatResult = _TimeSeriesModule.TimeSeriesClient.DatatResult
 type ElementEnum = (
@@ -2557,10 +2970,18 @@ type ElementEnum = (
         "potET",
     ]
 )
+type ElementEnumListBuilder = _ElementEnumList.Builder
+type ElementEnumListReader = _ElementEnumList.Reader
 type EnsembleMemberBuilder = _EnsembleMemberModule.Builder
 type EnsembleMemberReader = _EnsembleMemberModule.Reader
 type EntryBuilder = _MetadataModule._EntryModule.Builder
+type EntryListBuilder = _EntryList.Builder
+type EntryListReader = _EntryList.Reader
 type EntryReader = _MetadataModule._EntryModule.Reader
+type Float32ListBuilder = _Float32List.Builder
+type Float32ListListBuilder = _Float32ListList.Builder
+type Float32ListListReader = _Float32ListList.Reader
+type Float32ListReader = _Float32List.Reader
 type ForallResult = _MetadataModule._InformationModule.InformationClient.ForallResult
 type ForoneResult = _MetadataModule._InformationModule.InformationClient.ForoneResult
 type GCMEnum = (
@@ -2589,20 +3010,30 @@ type GetavailabledatasetsResult = (
 )
 type GetdatasetsforResult = _ServiceModule.ServiceClient.GetdatasetsforResult
 type HeaderResult = _TimeSeriesModule.TimeSeriesClient.HeaderResult
+type IdInformationListBuilder = _IdInformationList.Builder
+type IdInformationListReader = _IdInformationList.Reader
 type InformationClient = _MetadataModule._InformationModule.InformationClient
 type InformationServer = _MetadataModule._InformationModule.Server
 type KVBuilder = _LocationModule._KVModule.Builder
+type KVListBuilder = _KVList.Builder
+type KVListReader = _KVList.Reader
 type KVReader = _LocationModule._KVModule.Reader
 type LocationBuilder = _LocationModule.Builder
+type LocationListBuilder = _LocationList.Builder
+type LocationListReader = _LocationList.Reader
 type LocationReader = _LocationModule.Reader
 type LocationResult = _TimeSeriesModule.TimeSeriesClient.LocationResult
 type LocationsResult = _DatasetModule.DatasetClient.LocationsResult
 type MetaPlusDataBuilder = _MetaPlusDataModule.Builder
+type MetaPlusDataListBuilder = _MetaPlusDataList.Builder
+type MetaPlusDataListReader = _MetaPlusDataList.Reader
 type MetaPlusDataReader = _MetaPlusDataModule.Reader
 type MetadataBuilder = _MetadataModule.Builder
 type MetadataReader = _MetadataModule.Reader
 type MetadataResult = _DatasetModule.DatasetClient.MetadataResult
 type NextlocationsResult = _DatasetModule._GetLocationsCallbackModule.GetLocationsCallbackClient.NextlocationsResult
+type PairListBuilder = _PairList.Builder
+type PairListReader = _PairList.Reader
 type RCMEnum = (
     int
     | Literal[

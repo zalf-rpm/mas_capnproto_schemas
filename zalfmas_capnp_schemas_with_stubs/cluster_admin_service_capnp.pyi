@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Sequence
+from collections.abc import Awaitable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
 
@@ -35,6 +35,23 @@ type AnyPointer = (
     | _DynamicObjectBuilder
 )
 
+class _ModelInstanceFactoryClientList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ModelInstanceFactoryClient: ...
+        def __iter__(self) -> Iterator[ModelInstanceFactoryClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> ModelInstanceFactoryClient: ...
+        def __setitem__(
+            self,
+            key: int,
+            value: ModelInstanceFactoryClient
+            | _ClusterModule._ModelInstanceFactoryModule.Server,
+        ) -> None: ...
+        def __iter__(self) -> Iterator[ModelInstanceFactoryClient]: ...
+
 class _ClusterModule(_StructModule):
     class _UnregisterModule(_InterfaceModule):
         class UnregisterRequest(Protocol):
@@ -46,8 +63,11 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._UnregisterModule.UnregisterClient: ...
         class Server(_DynamicCapabilityServer):
-            class UnregisterResult(Awaitable[UnregisterResult], Protocol):
-                success: bool
+            class UnregisterResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class UnregisterResultTuple(NamedTuple):
                 success: bool
@@ -109,19 +129,37 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._AdminMasterModule.AdminMasterClient: ...
         class Server(_IdentifiableModule.Server):
-            class RegistermodelinstancefactoryResult(
-                Awaitable[RegistermodelinstancefactoryResult], Protocol
-            ):
-                unregister: (
+            class RegistermodelinstancefactoryResult(_DynamicStructBuilder):
+                @property
+                def unregister(
+                    self,
+                ) -> (
                     _ClusterModule._UnregisterModule.Server
                     | _ClusterModule._UnregisterModule.UnregisterClient
-                )
+                ): ...
+                @unregister.setter
+                def unregister(
+                    self,
+                    value: _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient,
+                ) -> None: ...
 
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+            class AvailablemodelsResult(_DynamicStructBuilder):
+                @property
+                def factories(self) -> ModelInstanceFactoryClientListBuilder: ...
+                @factories.setter
+                def factories(
+                    self,
+                    value: ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["factories"], size: int | None = None
+                ) -> ModelInstanceFactoryClientListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class RegistermodelinstancefactoryResultTuple(NamedTuple):
                 unregister: (
@@ -130,10 +168,10 @@ class _ClusterModule(_StructModule):
                 )
 
             class AvailablemodelsResultTuple(NamedTuple):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: (
+                    ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                )
 
             class RegistermodelinstancefactoryParams(Protocol):
                 aModelId: str
@@ -191,9 +229,7 @@ class _ClusterModule(_StructModule):
                 unregister: _ClusterModule._UnregisterModule.UnregisterClient
 
             class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: ModelInstanceFactoryClientListReader
 
             def registerModelInstanceFactory(
                 self,
@@ -264,48 +300,101 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient: ...
         class Server(_IdentifiableModule.Server):
-            class NewinstanceResult(Awaitable[NewinstanceResult], Protocol):
-                instance: (
+            class NewinstanceResult(_DynamicStructBuilder):
+                @property
+                def instance(
+                    self,
+                ) -> (
                     _ClusterModule._ValueHolderModule.Server
                     | _ClusterModule._ValueHolderModule.ValueHolderClient
-                )
+                ): ...
+                @instance.setter
+                def instance(
+                    self,
+                    value: _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient,
+                ) -> None: ...
 
-            class NewinstancesResult(Awaitable[NewinstancesResult], Protocol):
-                instances: (
+            class NewinstancesResult(_DynamicStructBuilder):
+                @property
+                def instances(
+                    self,
+                ) -> (
                     _ClusterModule._ValueHolderModule.Server
                     | _ClusterModule._ValueHolderModule.ValueHolderClient
-                )
+                ): ...
+                @instances.setter
+                def instances(
+                    self,
+                    value: _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient,
+                ) -> None: ...
 
-            class NewcloudviazmqpipelineproxiesResult(
-                Awaitable[NewcloudviazmqpipelineproxiesResult], Protocol
-            ):
-                proxyAddresses: (
+            class NewcloudviazmqpipelineproxiesResult(_DynamicStructBuilder):
+                @property
+                def proxyAddresses(
+                    self,
+                ) -> (
                     _ClusterModule._ValueHolderModule.Server
                     | _ClusterModule._ValueHolderModule.ValueHolderClient
-                )
+                ): ...
+                @proxyAddresses.setter
+                def proxyAddresses(
+                    self,
+                    value: _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient,
+                ) -> None: ...
 
-            class NewcloudviaproxyResult(Awaitable[NewcloudviaproxyResult], Protocol):
-                proxy: (
+            class NewcloudviaproxyResult(_DynamicStructBuilder):
+                @property
+                def proxy(
+                    self,
+                ) -> (
                     _ClusterModule._ValueHolderModule.Server
                     | _ClusterModule._ValueHolderModule.ValueHolderClient
-                )
+                ): ...
+                @proxy.setter
+                def proxy(
+                    self,
+                    value: _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient,
+                ) -> None: ...
 
-            class ModelidResult(Awaitable[ModelidResult], Protocol):
-                id: str
+            class ModelidResult(_DynamicStructBuilder):
+                @property
+                def id(self) -> str: ...
+                @id.setter
+                def id(self, value: str) -> None: ...
 
-            class RegistermodelinstanceResult(
-                Awaitable[RegistermodelinstanceResult], Protocol
-            ):
-                unregister: (
+            class RegistermodelinstanceResult(_DynamicStructBuilder):
+                @property
+                def unregister(
+                    self,
+                ) -> (
                     _ClusterModule._UnregisterModule.Server
                     | _ClusterModule._UnregisterModule.UnregisterClient
-                )
+                ): ...
+                @unregister.setter
+                def unregister(
+                    self,
+                    value: _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient,
+                ) -> None: ...
 
-            class RestoresturdyrefResult(Awaitable[RestoresturdyrefResult], Protocol):
-                cap: (
+            class RestoresturdyrefResult(_DynamicStructBuilder):
+                @property
+                def cap(
+                    self,
+                ) -> (
                     _ClusterModule._ValueHolderModule.Server
                     | _ClusterModule._ValueHolderModule.ValueHolderClient
-                )
+                ): ...
+                @cap.setter
+                def cap(
+                    self,
+                    value: _ClusterModule._ValueHolderModule.Server
+                    | _ClusterModule._ValueHolderModule.ValueHolderClient,
+                ) -> None: ...
 
             class NewinstanceResultTuple(NamedTuple):
                 instance: (
@@ -613,8 +702,11 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._ValueHolderModule.ValueHolderClient: ...
         class Server(_DynamicCapabilityServer):
-            class ValueResult(Awaitable[ValueResult], Protocol):
-                val: AnyPointer
+            class ValueResult(_DynamicStructBuilder):
+                @property
+                def val(self) -> AnyPointer: ...
+                @val.setter
+                def val(self, value: AnyPointer) -> None: ...
 
             class ReleaseResult(Awaitable[None], Protocol): ...
 
@@ -699,17 +791,28 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._UserMasterModule.UserMasterClient: ...
         class Server(_IdentifiableModule.Server):
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+            class AvailablemodelsResult(_DynamicStructBuilder):
+                @property
+                def factories(self) -> ModelInstanceFactoryClientListBuilder: ...
+                @factories.setter
+                def factories(
+                    self,
+                    value: ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["factories"], size: int | None = None
+                ) -> ModelInstanceFactoryClientListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
             class AvailablemodelsResultTuple(NamedTuple):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: (
+                    ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                )
 
             class AvailablemodelsParams(Protocol): ...
 
@@ -736,9 +839,7 @@ class _ClusterModule(_StructModule):
 
         class UserMasterClient(_IdentifiableModule.IdentifiableClient):
             class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: ModelInstanceFactoryClientListReader
 
             def availableModels(
                 self,
@@ -793,30 +894,55 @@ class _ClusterModule(_StructModule):
             self, server: _DynamicCapabilityServer
         ) -> _ClusterModule._RuntimeModule.RuntimeClient: ...
         class Server(_IdentifiableModule.Server):
-            class RegistermodelinstancefactoryResult(
-                Awaitable[RegistermodelinstancefactoryResult], Protocol
-            ):
-                unregister: (
+            class RegistermodelinstancefactoryResult(_DynamicStructBuilder):
+                @property
+                def unregister(
+                    self,
+                ) -> (
                     _ClusterModule._UnregisterModule.Server
                     | _ClusterModule._UnregisterModule.UnregisterClient
-                )
+                ): ...
+                @unregister.setter
+                def unregister(
+                    self,
+                    value: _ClusterModule._UnregisterModule.Server
+                    | _ClusterModule._UnregisterModule.UnregisterClient,
+                ) -> None: ...
 
-            class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+            class AvailablemodelsResult(_DynamicStructBuilder):
+                @property
+                def factories(self) -> ModelInstanceFactoryClientListBuilder: ...
+                @factories.setter
+                def factories(
+                    self,
+                    value: ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                    | Sequence[Any],
+                ) -> None: ...
+                @overload
+                def init(
+                    self, field: Literal["factories"], size: int | None = None
+                ) -> ModelInstanceFactoryClientListBuilder: ...
+                @overload
+                def init(self, field: str, size: int | None = None) -> Any: ...
 
-            class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
-                cores: int
+            class NumberofcoresResult(_DynamicStructBuilder):
+                @property
+                def cores(self) -> int: ...
+                @cores.setter
+                def cores(self, value: int) -> None: ...
 
-            class FreenumberofcoresResult(Awaitable[FreenumberofcoresResult], Protocol):
-                cores: int
+            class FreenumberofcoresResult(_DynamicStructBuilder):
+                @property
+                def cores(self) -> int: ...
+                @cores.setter
+                def cores(self, value: int) -> None: ...
 
-            class ReservenumberofcoresResult(
-                Awaitable[ReservenumberofcoresResult], Protocol
-            ):
-                reservedCores: int
+            class ReservenumberofcoresResult(_DynamicStructBuilder):
+                @property
+                def reservedCores(self) -> int: ...
+                @reservedCores.setter
+                def reservedCores(self, value: int) -> None: ...
 
             class RegistermodelinstancefactoryResultTuple(NamedTuple):
                 unregister: (
@@ -825,10 +951,10 @@ class _ClusterModule(_StructModule):
                 )
 
             class AvailablemodelsResultTuple(NamedTuple):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.Server
-                    | _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: (
+                    ModelInstanceFactoryClientListBuilder
+                    | ModelInstanceFactoryClientListReader
+                )
 
             class NumberofcoresResultTuple(NamedTuple):
                 cores: int
@@ -967,9 +1093,7 @@ class _ClusterModule(_StructModule):
                 unregister: _ClusterModule._UnregisterModule.UnregisterClient
 
             class AvailablemodelsResult(Awaitable[AvailablemodelsResult], Protocol):
-                factories: Sequence[
-                    _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
-                ]
+                factories: ModelInstanceFactoryClientListReader
 
             class NumberofcoresResult(Awaitable[NumberofcoresResult], Protocol):
                 cores: int
@@ -1192,6 +1316,8 @@ type FreenumberofcoresResult = (
 type ModelInstanceFactoryClient = (
     _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient
 )
+type ModelInstanceFactoryClientListBuilder = _ModelInstanceFactoryClientList.Builder
+type ModelInstanceFactoryClientListReader = _ModelInstanceFactoryClientList.Reader
 type ModelInstanceFactoryServer = _ClusterModule._ModelInstanceFactoryModule.Server
 type ModelidResult = (
     _ClusterModule._ModelInstanceFactoryModule.ModelInstanceFactoryClient.ModelidResult

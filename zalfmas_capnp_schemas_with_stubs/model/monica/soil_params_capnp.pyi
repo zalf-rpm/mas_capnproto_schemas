@@ -2,15 +2,32 @@
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Sequence
+from collections.abc import Iterator
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _DynamicListBuilder,
+    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _StructModule,
 )
+
+class _DataList:
+    class Reader(_DynamicListReader):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> DataReader: ...
+        def __iter__(self) -> Iterator[DataReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        def __len__(self) -> int: ...
+        def __getitem__(self, key: int) -> DataBuilder: ...
+        def __setitem__(
+            self, key: int, value: DataReader | DataBuilder | dict[str, Any]
+        ) -> None: ...
+        def __iter__(self) -> Iterator[DataBuilder]: ...
+        def init(self, index: int, size: int | None = None) -> DataBuilder: ...
 
 class _SoilCharacteristicDataModule(_StructModule):
     class _DataModule(_StructModule):
@@ -119,7 +136,7 @@ class _SoilCharacteristicDataModule(_StructModule):
     Data: _DataModule
     class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[DataReader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListReader: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @override
         def as_builder(
             self,
@@ -129,14 +146,14 @@ class _SoilCharacteristicDataModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> MutableSequence[DataBuilder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListBuilder: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
         def list(
-            self, value: Sequence[DataBuilder | DataReader] | Sequence[dict[str, Any]]
+            self, value: DataListBuilder | DataListReader | dict[str, Any]
         ) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         def init(
             self, field: Literal["list"], size: int | None = None
-        ) -> MutableSequence[DataBuilder]: ...
+        ) -> DataListBuilder: ...
         @override
         def as_reader(self) -> SoilCharacteristicDataReader: ...
 
@@ -145,7 +162,7 @@ class _SoilCharacteristicDataModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        list: Sequence[DataBuilder] | Sequence[dict[str, Any]] | None = None,
+        list: DataListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilCharacteristicDataBuilder: ...
     @overload
@@ -303,7 +320,7 @@ class _SoilCharacteristicModifierModule(_StructModule):
     Data: _DataModule
     class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[DataReader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListReader: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @override
         def as_builder(
             self,
@@ -313,14 +330,14 @@ class _SoilCharacteristicModifierModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> MutableSequence[DataBuilder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListBuilder: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
         def list(
-            self, value: Sequence[DataBuilder | DataReader] | Sequence[dict[str, Any]]
+            self, value: DataListBuilder | DataListReader | dict[str, Any]
         ) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         def init(
             self, field: Literal["list"], size: int | None = None
-        ) -> MutableSequence[DataBuilder]: ...
+        ) -> DataListBuilder: ...
         @override
         def as_reader(self) -> SoilCharacteristicModifierReader: ...
 
@@ -329,7 +346,7 @@ class _SoilCharacteristicModifierModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        list: Sequence[DataBuilder] | Sequence[dict[str, Any]] | None = None,
+        list: DataListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilCharacteristicModifierBuilder: ...
     @overload
@@ -473,7 +490,7 @@ class _CapillaryRiseRateModule(_StructModule):
     Data: _DataModule
     class Reader(_DynamicStructReader):
         @property
-        def list(self) -> Sequence[DataReader]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListReader: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @override
         def as_builder(
             self,
@@ -483,14 +500,14 @@ class _CapillaryRiseRateModule(_StructModule):
 
     class Builder(_DynamicStructBuilder):
         @property
-        def list(self) -> MutableSequence[DataBuilder]: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+        def list(self) -> DataListBuilder: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         @list.setter
         def list(
-            self, value: Sequence[DataBuilder | DataReader] | Sequence[dict[str, Any]]
+            self, value: DataListBuilder | DataListReader | dict[str, Any]
         ) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
         def init(
             self, field: Literal["list"], size: int | None = None
-        ) -> MutableSequence[DataBuilder]: ...
+        ) -> DataListBuilder: ...
         @override
         def as_reader(self) -> CapillaryRiseRateReader: ...
 
@@ -499,7 +516,7 @@ class _CapillaryRiseRateModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Any = None,
-        list: Sequence[DataBuilder] | Sequence[dict[str, Any]] | None = None,
+        list: DataListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> CapillaryRiseRateBuilder: ...
     @overload
@@ -554,6 +571,8 @@ CapillaryRiseRate: _CapillaryRiseRateModule
 type CapillaryRiseRateBuilder = _CapillaryRiseRateModule.Builder
 type CapillaryRiseRateReader = _CapillaryRiseRateModule.Reader
 type DataBuilder = _CapillaryRiseRateModule._DataModule.Builder
+type DataListBuilder = _DataList.Builder
+type DataListReader = _DataList.Reader
 type DataReader = _CapillaryRiseRateModule._DataModule.Reader
 type SoilCharacteristicDataBuilder = _SoilCharacteristicDataModule.Builder
 type SoilCharacteristicDataReader = _SoilCharacteristicDataModule.Reader
