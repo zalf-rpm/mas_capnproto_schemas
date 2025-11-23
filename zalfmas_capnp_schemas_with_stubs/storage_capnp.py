@@ -1,9 +1,8 @@
 """This is an automatically generated stub for `storage.capnp`."""
 
 import os
-from typing import NamedTuple
-
 import capnp
+from typing import NamedTuple
 
 capnp.remove_import_hook()
 here = os.path.dirname(os.path.abspath(__file__))

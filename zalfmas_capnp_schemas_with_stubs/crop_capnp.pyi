@@ -1,29 +1,26 @@
 """This is an automatically generated stub for `crop.capnp`."""
 
 from __future__ import annotations
-
-from collections.abc import Awaitable
-from typing import Any, Literal, NamedTuple, Protocol, overload
-
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
 )
-
+from .common_capnp import _IdentifiableInterfaceModule
+from .persistence_capnp import _PersistentInterfaceModule
 from .common_capnp import (
-    IdInformationBuilder,
+    _IdInformationStructModule,
     IdInformationReader,
-    _IdentifiableModule,
-    _IdInformationModule,
+    IdInformationBuilder,
 )
-from .persistence_capnp import _PersistentModule
-from .registry_capnp import _RegistryModule
+from .registry_capnp import _RegistryInterfaceModule
+from collections.abc import Awaitable
+from typing import Literal, overload, override, Protocol, Any, NamedTuple
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (
@@ -39,20 +36,23 @@ type AnyPointer = (
     | _DynamicObjectBuilder
 )
 
-class _CropModule(_IdentifiableModule, _PersistentModule):
+class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
     class ParametersRequest(Protocol):
-        def send(self) -> _CropModule.CropClient.ParametersResult: ...
+        def send(self) -> _CropInterfaceModule.CropClient.ParametersResult: ...
 
     class CultivarRequest(Protocol):
-        def send(self) -> _CropModule.CropClient.CultivarResult: ...
+        def send(self) -> _CropInterfaceModule.CropClient.CultivarResult: ...
 
     class SpeciesRequest(Protocol):
-        def send(self) -> _CropModule.CropClient.SpeciesResult: ...
+        def send(self) -> _CropInterfaceModule.CropClient.SpeciesResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _CropModule.CropClient: ...
-    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+    ) -> _CropInterfaceModule.CropClient: ...
+    class Server(
+        _IdentifiableInterfaceModule.Server, _PersistentInterfaceModule.Server
+    ):
         class ParametersResult(_DynamicStructBuilder):
             @property
             def params(self) -> AnyPointer: ...
@@ -99,57 +99,62 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
         class ParametersParams(Protocol): ...
 
         class ParametersCallContext(Protocol):
-            params: _CropModule.Server.ParametersParams
+            params: _CropInterfaceModule.Server.ParametersParams
             @property
-            def results(self) -> _CropModule.Server.ParametersResult: ...
+            def results(self) -> _CropInterfaceModule.Server.ParametersResult: ...
 
         class CultivarParams(Protocol): ...
 
         class CultivarCallContext(Protocol):
-            params: _CropModule.Server.CultivarParams
+            params: _CropInterfaceModule.Server.CultivarParams
             @property
-            def results(self) -> _CropModule.Server.CultivarResult: ...
+            def results(self) -> _CropInterfaceModule.Server.CultivarResult: ...
 
         class SpeciesParams(Protocol): ...
 
         class SpeciesCallContext(Protocol):
-            params: _CropModule.Server.SpeciesParams
+            params: _CropInterfaceModule.Server.SpeciesParams
             @property
-            def results(self) -> _CropModule.Server.SpeciesResult: ...
+            def results(self) -> _CropInterfaceModule.Server.SpeciesResult: ...
 
         def parameters(
             self,
-            _context: _CropModule.Server.ParametersCallContext,
+            _context: _CropInterfaceModule.Server.ParametersCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            AnyPointer | _CropModule.Server.ParametersResultTuple | None
+            AnyPointer | _CropInterfaceModule.Server.ParametersResultTuple | None
         ]: ...
         def parameters_context(
-            self, context: _CropModule.Server.ParametersCallContext
+            self, context: _CropInterfaceModule.Server.ParametersCallContext
         ) -> Awaitable[None]: ...
         def cultivar(
             self,
-            _context: _CropModule.Server.CultivarCallContext,
+            _context: _CropInterfaceModule.Server.CultivarCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _IdInformationModule.Builder | _CropModule.Server.CultivarResultTuple | None
+            _IdInformationStructModule.Builder
+            | _CropInterfaceModule.Server.CultivarResultTuple
+            | None
         ]: ...
         def cultivar_context(
-            self, context: _CropModule.Server.CultivarCallContext
+            self, context: _CropInterfaceModule.Server.CultivarCallContext
         ) -> Awaitable[None]: ...
         def species(
             self,
-            _context: _CropModule.Server.SpeciesCallContext,
+            _context: _CropInterfaceModule.Server.SpeciesCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _IdInformationModule.Builder | _CropModule.Server.SpeciesResultTuple | None
+            _IdInformationStructModule.Builder
+            | _CropInterfaceModule.Server.SpeciesResultTuple
+            | None
         ]: ...
         def species_context(
-            self, context: _CropModule.Server.SpeciesCallContext
+            self, context: _CropInterfaceModule.Server.SpeciesCallContext
         ) -> Awaitable[None]: ...
 
     class CropClient(
-        _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
+        _IdentifiableInterfaceModule.IdentifiableClient,
+        _PersistentInterfaceModule.PersistentClient,
     ):
         class ParametersResult(Awaitable[ParametersResult], Protocol):
             params: _DynamicObjectReader
@@ -160,29 +165,30 @@ class _CropModule(_IdentifiableModule, _PersistentModule):
         class SpeciesResult(Awaitable[SpeciesResult], Protocol):
             info: IdInformationReader
 
-        def parameters(self) -> _CropModule.CropClient.ParametersResult: ...
-        def cultivar(self) -> _CropModule.CropClient.CultivarResult: ...
-        def species(self) -> _CropModule.CropClient.SpeciesResult: ...
-        def parameters_request(self) -> _CropModule.ParametersRequest: ...
-        def cultivar_request(self) -> _CropModule.CultivarRequest: ...
-        def species_request(self) -> _CropModule.SpeciesRequest: ...
+        def parameters(self) -> _CropInterfaceModule.CropClient.ParametersResult: ...
+        def cultivar(self) -> _CropInterfaceModule.CropClient.CultivarResult: ...
+        def species(self) -> _CropInterfaceModule.CropClient.SpeciesResult: ...
+        def parameters_request(self) -> _CropInterfaceModule.ParametersRequest: ...
+        def cultivar_request(self) -> _CropInterfaceModule.CultivarRequest: ...
+        def species_request(self) -> _CropInterfaceModule.SpeciesRequest: ...
 
-Crop: _CropModule
+Crop: _CropInterfaceModule
 
-class _ServiceModule(_RegistryModule):
+class _ServiceInterfaceModule(_RegistryInterfaceModule):
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _ServiceModule.ServiceClient: ...
-    class Server(_RegistryModule.Server): ...
-    class ServiceClient(_RegistryModule.RegistryClient): ...
+    ) -> _ServiceInterfaceModule.ServiceClient: ...
+    class Server(_RegistryInterfaceModule.Server): ...
+    class ServiceClient(_RegistryInterfaceModule.RegistryClient): ...
 
-Service: _ServiceModule
+Service: _ServiceInterfaceModule
 
 # Top-level type aliases for use in type annotations
-type CropClient = _CropModule.CropClient
-type CropServer = _CropModule.Server
-type CultivarResult = _CropModule.CropClient.CultivarResult
-type ParametersResult = _CropModule.CropClient.ParametersResult
-type ServiceClient = _ServiceModule.ServiceClient
-type ServiceServer = _ServiceModule.Server
-type SpeciesResult = _CropModule.CropClient.SpeciesResult
+type CropClient = _CropInterfaceModule.CropClient
+type CropServer = _CropInterfaceModule.Server
+type CultivarResult = _CropInterfaceModule.CropClient.CultivarResult
+type ParametersResult = _CropInterfaceModule.CropClient.ParametersResult
+type ServiceClient = _ServiceInterfaceModule.ServiceClient
+type ServiceServer = _ServiceInterfaceModule.Server
+type SpeciesResult = _CropInterfaceModule.CropClient.SpeciesResult

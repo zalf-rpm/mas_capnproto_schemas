@@ -1,7 +1,6 @@
 """This is an automatically generated stub for `frontend.capnp`."""
 
 import os
-
 import capnp
 
 capnp.remove_import_hook()

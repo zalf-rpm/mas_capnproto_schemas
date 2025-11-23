@@ -1,7 +1,6 @@
 """This is an automatically generated stub for `sim_setup.capnp`."""
 
 import os
-
 import capnp
 
 capnp.remove_import_hook()

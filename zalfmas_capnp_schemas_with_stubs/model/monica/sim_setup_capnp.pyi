@@ -1,17 +1,12 @@
 """This is an automatically generated stub for `sim_setup.capnp`."""
 
 from __future__ import annotations
-
+from capnp.lib.capnp import _DynamicStructBuilder, _DynamicStructReader, _StructModule
 from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, overload, override
+from collections.abc import Callable
+from typing import Literal, overload, override, Any, IO
 
-from capnp.lib.capnp import (
-    _DynamicStructBuilder,
-    _DynamicStructReader,
-    _StructModule,
-)
-
-class _SetupModule(_StructModule):
+class _SetupStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def runId(self) -> int: ...
@@ -73,7 +68,7 @@ class _SetupModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SetupBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -196,7 +191,7 @@ class _SetupModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         runId: int | None = None,
         sowingTime: str | None = None,
         harvestTime: str | None = None,
@@ -227,19 +222,20 @@ class _SetupModule(_StructModule):
         comment: str | None = None,
         **kwargs: Any,
     ) -> SetupBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SetupReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SetupReader]: ...
@@ -247,34 +243,35 @@ class _SetupModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SetupBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SetupReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SetupReader: ...
 
-Setup: _SetupModule
+Setup: _SetupStructModule
 
 # Top-level type aliases for use in type annotations
-type SetupBuilder = _SetupModule.Builder
-type SetupReader = _SetupModule.Reader
+type SetupBuilder = _SetupStructModule.Builder
+type SetupReader = _SetupStructModule.Reader

@@ -1,27 +1,24 @@
 """This is an automatically generated stub for `grid.capnp`."""
 
 from __future__ import annotations
-
-from collections.abc import Awaitable, Iterator, Sequence
-from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
-
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicListBuilder,
-    _DynamicListReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _InterfaceModule,
     _StructModule,
 )
+from .common_capnp import _IdentifiableInterfaceModule
+from .persistence_capnp import _PersistentInterfaceModule
+from contextlib import AbstractContextManager
+from .geo_capnp import LatLonCoordReader, LatLonCoordBuilder
+from collections.abc import Iterator, Sequence, Awaitable, Callable
+from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
 
-from .common_capnp import _IdentifiableModule
-from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
-from .persistence_capnp import _PersistentModule
-
-class _AggregationModule:
+class _AggregationEnumModule:
     none: int
     wAvg: int
     wMedian: int
@@ -39,8 +36,8 @@ class _AggregationModule:
     wMax: int
     iMax: int
 
-class _GridModule(_IdentifiableModule, _PersistentModule):
-    class _ValueModule(_StructModule):
+class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
+    class _ValueStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def f(self) -> float: ...
@@ -56,7 +53,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> ValueBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -85,26 +82,27 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             f: float | None = None,
             i: int | None = None,
             ui: int | None = None,
             no: bool | None = None,
             **kwargs: Any,
         ) -> ValueBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[ValueReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[ValueReader]: ...
@@ -112,36 +110,37 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[ValueBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ValueReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ValueReader: ...
 
-    type ValueReader = _ValueModule.Reader
-    type ValueBuilder = _ValueModule.Builder
-    Value: _ValueModule
-    class _ResolutionModule(_StructModule):
+    type ValueReader = _ValueStructModule.Reader
+    type ValueBuilder = _ValueStructModule.Builder
+    Value: _ValueStructModule
+    class _ResolutionStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def meter(self) -> int: ...
@@ -153,7 +152,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> ResolutionBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -174,24 +173,25 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             meter: int | None = None,
             degree: float | None = None,
             **kwargs: Any,
         ) -> ResolutionBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[ResolutionReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[ResolutionReader]: ...
@@ -199,36 +199,37 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[ResolutionBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ResolutionReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ResolutionReader: ...
 
-    type ResolutionReader = _ResolutionModule.Reader
-    type ResolutionBuilder = _ResolutionModule.Builder
-    Resolution: _ResolutionModule
-    class _RowColModule(_StructModule):
+    type ResolutionReader = _ResolutionStructModule.Reader
+    type ResolutionBuilder = _ResolutionStructModule.Builder
+    Resolution: _ResolutionStructModule
+    class _RowColStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def row(self) -> int: ...
@@ -238,7 +239,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> RowColBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -257,24 +258,25 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             row: int | None = None,
             col: int | None = None,
             **kwargs: Any,
         ) -> RowColBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[RowColReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[RowColReader]: ...
@@ -282,36 +284,37 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[RowColBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RowColReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RowColReader: ...
 
-    type RowColReader = _RowColModule.Reader
-    type RowColBuilder = _RowColModule.Builder
-    RowCol: _RowColModule
-    class _AggregationPartModule(_StructModule):
+    type RowColReader = _RowColStructModule.Reader
+    type RowColBuilder = _RowColStructModule.Builder
+    RowCol: _RowColStructModule
+    class _AggregationPartStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def value(self) -> ValueReader: ...
@@ -325,7 +328,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> AggregationPartBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -349,6 +352,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def iValue(self) -> float: ...
             @iValue.setter
             def iValue(self, value: float) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["value"], size: int | None = None
@@ -366,26 +370,27 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             value: ValueBuilder | dict[str, Any] | None = None,
             rowCol: RowColBuilder | dict[str, Any] | None = None,
             areaFrac: float | None = None,
             iValue: float | None = None,
             **kwargs: Any,
         ) -> AggregationPartBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[AggregationPartReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[AggregationPartReader]: ...
@@ -393,36 +398,37 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[AggregationPartBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AggregationPartReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AggregationPartReader: ...
 
-    type AggregationPartReader = _AggregationPartModule.Reader
-    type AggregationPartBuilder = _AggregationPartModule.Builder
-    AggregationPart: _AggregationPartModule
-    class _LocationModule(_StructModule):
+    type AggregationPartReader = _AggregationPartStructModule.Reader
+    type AggregationPartBuilder = _AggregationPartStructModule.Builder
+    AggregationPart: _AggregationPartStructModule
+    class _LocationStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def latLonCoord(self) -> LatLonCoordReader: ...
@@ -434,7 +440,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> LocationBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -456,6 +462,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def value(
                 self, value: ValueBuilder | ValueReader | dict[str, Any]
             ) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["latLonCoord"], size: int | None = None
@@ -477,25 +484,26 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             latLonCoord: LatLonCoordBuilder | dict[str, Any] | None = None,
             rowCol: RowColBuilder | dict[str, Any] | None = None,
             value: ValueBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> LocationBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[LocationReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[LocationReader]: ...
@@ -503,45 +511,47 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[LocationBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> LocationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> LocationReader: ...
 
-    type LocationReader = _LocationModule.Reader
-    type LocationBuilder = _LocationModule.Builder
-    Location: _LocationModule
-    class _CallbackModule(_InterfaceModule):
+    type LocationReader = _LocationStructModule.Reader
+    type LocationBuilder = _LocationStructModule.Builder
+    Location: _LocationStructModule
+    class _CallbackInterfaceModule(_InterfaceModule):
         class SendcellsRequest(Protocol):
             maxCount: int
             def send(
                 self,
-            ) -> _GridModule._CallbackModule.CallbackClient.SendcellsResult: ...
+            ) -> _GridInterfaceModule._CallbackInterfaceModule.CallbackClient.SendcellsResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _GridModule._CallbackModule.CallbackClient: ...
+        ) -> _GridInterfaceModule._CallbackInterfaceModule.CallbackClient: ...
         class Server(_DynamicCapabilityServer):
             class SendcellsResult(_DynamicStructBuilder):
                 @property
@@ -565,24 +575,29 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
                 maxCount: int
 
             class SendcellsCallContext(Protocol):
-                params: _GridModule._CallbackModule.Server.SendcellsParams
+                params: (
+                    _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsParams
+                )
                 @property
                 def results(
                     self,
-                ) -> _GridModule._CallbackModule.Server.SendcellsResult: ...
+                ) -> (
+                    _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsResult
+                ): ...
 
             def sendCells(
                 self,
                 maxCount: int,
-                _context: _GridModule._CallbackModule.Server.SendcellsCallContext,
+                _context: _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
                 Sequence[LocationBuilder | LocationReader]
-                | _GridModule._CallbackModule.Server.SendcellsResultTuple
+                | _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsResultTuple
                 | None
             ]: ...
             def sendCells_context(
-                self, context: _GridModule._CallbackModule.Server.SendcellsCallContext
+                self,
+                context: _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsCallContext,
             ) -> Awaitable[None]: ...
 
         class CallbackClient(_DynamicCapabilityClient):
@@ -591,14 +606,14 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
             def sendCells(
                 self, maxCount: int | None = None
-            ) -> _GridModule._CallbackModule.CallbackClient.SendcellsResult: ...
+            ) -> _GridInterfaceModule._CallbackInterfaceModule.CallbackClient.SendcellsResult: ...
             def sendCells_request(
                 self, maxCount: int | None = None
-            ) -> _GridModule._CallbackModule.SendcellsRequest: ...
+            ) -> _GridInterfaceModule._CallbackInterfaceModule.SendcellsRequest: ...
 
-    Callback: _CallbackModule
-    type CallbackClient = _GridModule._CallbackModule.CallbackClient
-    type CallbackServer = _GridModule._CallbackModule.Server
+    Callback: _CallbackInterfaceModule
+    type CallbackClient = _GridInterfaceModule._CallbackInterfaceModule.CallbackClient
+    type CallbackServer = _GridInterfaceModule._CallbackInterfaceModule.Server
     class ClosestvalueatRequest(Protocol):
         latlonCoord: LatLonCoordBuilder
         ignoreNoData: bool
@@ -612,16 +627,16 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def init(self, name: Literal["resolution"]) -> ResolutionBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> _GridModule.GridClient.ClosestvalueatResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.ClosestvalueatResult: ...
 
     class ResolutionRequest(Protocol):
-        def send(self) -> _GridModule.GridClient.ResolutionResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.ResolutionResult: ...
 
     class DimensionRequest(Protocol):
-        def send(self) -> _GridModule.GridClient.DimensionResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.DimensionResult: ...
 
     class NodatavalueRequest(Protocol):
-        def send(self) -> _GridModule.GridClient.NodatavalueResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.NodatavalueResult: ...
 
     class ValueatRequest(Protocol):
         row: int
@@ -633,11 +648,11 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def init(self, name: Literal["resolution"]) -> ResolutionBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> _GridModule.GridClient.ValueatResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.ValueatResult: ...
 
     class LatlonboundsRequest(Protocol):
         useCellCenter: bool
-        def send(self) -> _GridModule.GridClient.LatlonboundsResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.LatlonboundsResult: ...
 
     class StreamcellsRequest(Protocol):
         topLeft: RowColBuilder
@@ -648,15 +663,18 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
         def init(self, name: Literal["bottomRight"]) -> RowColBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> _GridModule.GridClient.StreamcellsResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.StreamcellsResult: ...
 
     class UnitRequest(Protocol):
-        def send(self) -> _GridModule.GridClient.UnitResult: ...
+        def send(self) -> _GridInterfaceModule.GridClient.UnitResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _GridModule.GridClient: ...
-    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+    ) -> _GridInterfaceModule.GridClient: ...
+    class Server(
+        _IdentifiableInterfaceModule.Server, _PersistentInterfaceModule.Server
+    ):
         class ClosestvalueatResult(_DynamicStructBuilder):
             @property
             def val(self) -> ValueBuilder: ...
@@ -818,14 +836,14 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             def callback(
                 self,
             ) -> (
-                _GridModule._CallbackModule.Server
-                | _GridModule._CallbackModule.CallbackClient
+                _GridInterfaceModule._CallbackInterfaceModule.Server
+                | _GridInterfaceModule._CallbackInterfaceModule.CallbackClient
             ): ...
             @callback.setter
             def callback(
                 self,
-                value: _GridModule._CallbackModule.Server
-                | _GridModule._CallbackModule.CallbackClient,
+                value: _GridInterfaceModule._CallbackInterfaceModule.Server
+                | _GridInterfaceModule._CallbackInterfaceModule.CallbackClient,
             ) -> None: ...
 
         class UnitResult(_DynamicStructBuilder):
@@ -862,8 +880,8 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
 
         class StreamcellsResultTuple(NamedTuple):
             callback: (
-                _GridModule._CallbackModule.Server
-                | _GridModule._CallbackModule.CallbackClient
+                _GridInterfaceModule._CallbackInterfaceModule.Server
+                | _GridInterfaceModule._CallbackInterfaceModule.CallbackClient
             )
 
         class UnitResultTuple(NamedTuple):
@@ -878,30 +896,30 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             includeAggParts: bool
 
         class ClosestvalueatCallContext(Protocol):
-            params: _GridModule.Server.ClosestvalueatParams
+            params: _GridInterfaceModule.Server.ClosestvalueatParams
             @property
-            def results(self) -> _GridModule.Server.ClosestvalueatResult: ...
+            def results(self) -> _GridInterfaceModule.Server.ClosestvalueatResult: ...
 
         class ResolutionParams(Protocol): ...
 
         class ResolutionCallContext(Protocol):
-            params: _GridModule.Server.ResolutionParams
+            params: _GridInterfaceModule.Server.ResolutionParams
             @property
-            def results(self) -> _GridModule.Server.ResolutionResult: ...
+            def results(self) -> _GridInterfaceModule.Server.ResolutionResult: ...
 
         class DimensionParams(Protocol): ...
 
         class DimensionCallContext(Protocol):
-            params: _GridModule.Server.DimensionParams
+            params: _GridInterfaceModule.Server.DimensionParams
             @property
-            def results(self) -> _GridModule.Server.DimensionResult: ...
+            def results(self) -> _GridInterfaceModule.Server.DimensionResult: ...
 
         class NodatavalueParams(Protocol): ...
 
         class NodatavalueCallContext(Protocol):
-            params: _GridModule.Server.NodatavalueParams
+            params: _GridInterfaceModule.Server.NodatavalueParams
             @property
-            def results(self) -> _GridModule.Server.NodatavalueResult: ...
+            def results(self) -> _GridInterfaceModule.Server.NodatavalueResult: ...
 
         class ValueatParams(Protocol):
             row: int
@@ -911,33 +929,33 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             includeAggParts: bool
 
         class ValueatCallContext(Protocol):
-            params: _GridModule.Server.ValueatParams
+            params: _GridInterfaceModule.Server.ValueatParams
             @property
-            def results(self) -> _GridModule.Server.ValueatResult: ...
+            def results(self) -> _GridInterfaceModule.Server.ValueatResult: ...
 
         class LatlonboundsParams(Protocol):
             useCellCenter: bool
 
         class LatlonboundsCallContext(Protocol):
-            params: _GridModule.Server.LatlonboundsParams
+            params: _GridInterfaceModule.Server.LatlonboundsParams
             @property
-            def results(self) -> _GridModule.Server.LatlonboundsResult: ...
+            def results(self) -> _GridInterfaceModule.Server.LatlonboundsResult: ...
 
         class StreamcellsParams(Protocol):
             topLeft: RowColReader
             bottomRight: RowColReader
 
         class StreamcellsCallContext(Protocol):
-            params: _GridModule.Server.StreamcellsParams
+            params: _GridInterfaceModule.Server.StreamcellsParams
             @property
-            def results(self) -> _GridModule.Server.StreamcellsResult: ...
+            def results(self) -> _GridInterfaceModule.Server.StreamcellsResult: ...
 
         class UnitParams(Protocol): ...
 
         class UnitCallContext(Protocol):
-            params: _GridModule.Server.UnitParams
+            params: _GridInterfaceModule.Server.UnitParams
             @property
-            def results(self) -> _GridModule.Server.UnitResult: ...
+            def results(self) -> _GridInterfaceModule.Server.UnitResult: ...
 
         def closestValueAt(
             self,
@@ -947,43 +965,45 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             agg: AggregationEnum,
             returnRowCols: bool,
             includeAggParts: bool,
-            _context: _GridModule.Server.ClosestvalueatCallContext,
+            _context: _GridInterfaceModule.Server.ClosestvalueatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.ClosestvalueatResultTuple | None]: ...
+        ) -> Awaitable[
+            _GridInterfaceModule.Server.ClosestvalueatResultTuple | None
+        ]: ...
         def closestValueAt_context(
-            self, context: _GridModule.Server.ClosestvalueatCallContext
+            self, context: _GridInterfaceModule.Server.ClosestvalueatCallContext
         ) -> Awaitable[None]: ...
         def resolution(
             self,
-            _context: _GridModule.Server.ResolutionCallContext,
+            _context: _GridInterfaceModule.Server.ResolutionCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _GridModule._ResolutionModule.Builder
-            | _GridModule.Server.ResolutionResultTuple
+            _GridInterfaceModule._ResolutionStructModule.Builder
+            | _GridInterfaceModule.Server.ResolutionResultTuple
             | None
         ]: ...
         def resolution_context(
-            self, context: _GridModule.Server.ResolutionCallContext
+            self, context: _GridInterfaceModule.Server.ResolutionCallContext
         ) -> Awaitable[None]: ...
         def dimension(
             self,
-            _context: _GridModule.Server.DimensionCallContext,
+            _context: _GridInterfaceModule.Server.DimensionCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.DimensionResultTuple | None]: ...
+        ) -> Awaitable[_GridInterfaceModule.Server.DimensionResultTuple | None]: ...
         def dimension_context(
-            self, context: _GridModule.Server.DimensionCallContext
+            self, context: _GridInterfaceModule.Server.DimensionCallContext
         ) -> Awaitable[None]: ...
         def noDataValue(
             self,
-            _context: _GridModule.Server.NodatavalueCallContext,
+            _context: _GridInterfaceModule.Server.NodatavalueCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _GridModule._ValueModule.Builder
-            | _GridModule.Server.NodatavalueResultTuple
+            _GridInterfaceModule._ValueStructModule.Builder
+            | _GridInterfaceModule.Server.NodatavalueResultTuple
             | None
         ]: ...
         def noDataValue_context(
-            self, context: _GridModule.Server.NodatavalueCallContext
+            self, context: _GridInterfaceModule.Server.NodatavalueCallContext
         ) -> Awaitable[None]: ...
         def valueAt(
             self,
@@ -992,44 +1012,47 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             resolution: ResolutionReader,
             agg: AggregationEnum,
             includeAggParts: bool,
-            _context: _GridModule.Server.ValueatCallContext,
+            _context: _GridInterfaceModule.Server.ValueatCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.ValueatResultTuple | None]: ...
+        ) -> Awaitable[_GridInterfaceModule.Server.ValueatResultTuple | None]: ...
         def valueAt_context(
-            self, context: _GridModule.Server.ValueatCallContext
+            self, context: _GridInterfaceModule.Server.ValueatCallContext
         ) -> Awaitable[None]: ...
         def latLonBounds(
             self,
             useCellCenter: bool,
-            _context: _GridModule.Server.LatlonboundsCallContext,
+            _context: _GridInterfaceModule.Server.LatlonboundsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GridModule.Server.LatlonboundsResultTuple | None]: ...
+        ) -> Awaitable[_GridInterfaceModule.Server.LatlonboundsResultTuple | None]: ...
         def latLonBounds_context(
-            self, context: _GridModule.Server.LatlonboundsCallContext
+            self, context: _GridInterfaceModule.Server.LatlonboundsCallContext
         ) -> Awaitable[None]: ...
         def streamCells(
             self,
             topLeft: RowColReader,
             bottomRight: RowColReader,
-            _context: _GridModule.Server.StreamcellsCallContext,
+            _context: _GridInterfaceModule.Server.StreamcellsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _GridModule._CallbackModule.Server
-            | _GridModule.Server.StreamcellsResultTuple
+            _GridInterfaceModule._CallbackInterfaceModule.Server
+            | _GridInterfaceModule.Server.StreamcellsResultTuple
             | None
         ]: ...
         def streamCells_context(
-            self, context: _GridModule.Server.StreamcellsCallContext
+            self, context: _GridInterfaceModule.Server.StreamcellsCallContext
         ) -> Awaitable[None]: ...
         def unit(
-            self, _context: _GridModule.Server.UnitCallContext, **kwargs: dict[str, Any]
-        ) -> Awaitable[str | _GridModule.Server.UnitResultTuple | None]: ...
+            self,
+            _context: _GridInterfaceModule.Server.UnitCallContext,
+            **kwargs: dict[str, Any],
+        ) -> Awaitable[str | _GridInterfaceModule.Server.UnitResultTuple | None]: ...
         def unit_context(
-            self, context: _GridModule.Server.UnitCallContext
+            self, context: _GridInterfaceModule.Server.UnitCallContext
         ) -> Awaitable[None]: ...
 
     class GridClient(
-        _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
+        _IdentifiableInterfaceModule.IdentifiableClient,
+        _PersistentInterfaceModule.PersistentClient,
     ):
         class ClosestvalueatResult(Awaitable[ClosestvalueatResult], Protocol):
             val: ValueReader
@@ -1058,7 +1081,7 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             bl: LatLonCoordReader
 
         class StreamcellsResult(Awaitable[StreamcellsResult], Protocol):
-            callback: _GridModule._CallbackModule.CallbackClient
+            callback: _GridInterfaceModule._CallbackInterfaceModule.CallbackClient
 
         class UnitResult(Awaitable[UnitResult], Protocol):
             unit: str
@@ -1077,10 +1100,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             agg: AggregationEnum | None = None,
             returnRowCols: bool | None = None,
             includeAggParts: bool | None = None,
-        ) -> _GridModule.GridClient.ClosestvalueatResult: ...
-        def resolution(self) -> _GridModule.GridClient.ResolutionResult: ...
-        def dimension(self) -> _GridModule.GridClient.DimensionResult: ...
-        def noDataValue(self) -> _GridModule.GridClient.NodatavalueResult: ...
+        ) -> _GridInterfaceModule.GridClient.ClosestvalueatResult: ...
+        def resolution(self) -> _GridInterfaceModule.GridClient.ResolutionResult: ...
+        def dimension(self) -> _GridInterfaceModule.GridClient.DimensionResult: ...
+        def noDataValue(self) -> _GridInterfaceModule.GridClient.NodatavalueResult: ...
         def valueAt(
             self,
             row: int | None = None,
@@ -1091,16 +1114,16 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             | None = None,
             agg: AggregationEnum | None = None,
             includeAggParts: bool | None = None,
-        ) -> _GridModule.GridClient.ValueatResult: ...
+        ) -> _GridInterfaceModule.GridClient.ValueatResult: ...
         def latLonBounds(
             self, useCellCenter: bool | None = None
-        ) -> _GridModule.GridClient.LatlonboundsResult: ...
+        ) -> _GridInterfaceModule.GridClient.LatlonboundsResult: ...
         def streamCells(
             self,
             topLeft: RowColBuilder | RowColReader | dict[str, Any] | None = None,
             bottomRight: RowColBuilder | RowColReader | dict[str, Any] | None = None,
-        ) -> _GridModule.GridClient.StreamcellsResult: ...
-        def unit(self) -> _GridModule.GridClient.UnitResult: ...
+        ) -> _GridInterfaceModule.GridClient.StreamcellsResult: ...
+        def unit(self) -> _GridInterfaceModule.GridClient.UnitResult: ...
         def closestValueAt_request(
             self,
             latlonCoord: LatLonCoordBuilder | None = None,
@@ -1109,10 +1132,10 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             agg: AggregationEnum | None = None,
             returnRowCols: bool | None = None,
             includeAggParts: bool | None = None,
-        ) -> _GridModule.ClosestvalueatRequest: ...
-        def resolution_request(self) -> _GridModule.ResolutionRequest: ...
-        def dimension_request(self) -> _GridModule.DimensionRequest: ...
-        def noDataValue_request(self) -> _GridModule.NodatavalueRequest: ...
+        ) -> _GridInterfaceModule.ClosestvalueatRequest: ...
+        def resolution_request(self) -> _GridInterfaceModule.ResolutionRequest: ...
+        def dimension_request(self) -> _GridInterfaceModule.DimensionRequest: ...
+        def noDataValue_request(self) -> _GridInterfaceModule.NodatavalueRequest: ...
         def valueAt_request(
             self,
             row: int | None = None,
@@ -1120,52 +1143,68 @@ class _GridModule(_IdentifiableModule, _PersistentModule):
             resolution: ResolutionBuilder | None = None,
             agg: AggregationEnum | None = None,
             includeAggParts: bool | None = None,
-        ) -> _GridModule.ValueatRequest: ...
+        ) -> _GridInterfaceModule.ValueatRequest: ...
         def latLonBounds_request(
             self, useCellCenter: bool | None = None
-        ) -> _GridModule.LatlonboundsRequest: ...
+        ) -> _GridInterfaceModule.LatlonboundsRequest: ...
         def streamCells_request(
             self,
             topLeft: RowColBuilder | None = None,
             bottomRight: RowColBuilder | None = None,
-        ) -> _GridModule.StreamcellsRequest: ...
-        def unit_request(self) -> _GridModule.UnitRequest: ...
+        ) -> _GridInterfaceModule.StreamcellsRequest: ...
+        def unit_request(self) -> _GridInterfaceModule.UnitRequest: ...
 
 class _LocationList:
     class Reader(_DynamicListReader):
+        @override
         def __len__(self) -> int: ...
+        @override
         def __getitem__(self, key: int) -> LocationReader: ...
+        @override
         def __iter__(self) -> Iterator[LocationReader]: ...
 
     class Builder(_DynamicListBuilder):
+        @override
         def __len__(self) -> int: ...
+        @override
         def __getitem__(self, key: int) -> LocationBuilder: ...
+        @override
         def __setitem__(
             self, key: int, value: LocationReader | LocationBuilder | dict[str, Any]
         ) -> None: ...
+        @override
         def __iter__(self) -> Iterator[LocationBuilder]: ...
+        @override
         def init(self, index: int, size: int | None = None) -> LocationBuilder: ...
 
 class _AggregationPartList:
     class Reader(_DynamicListReader):
+        @override
         def __len__(self) -> int: ...
+        @override
         def __getitem__(self, key: int) -> AggregationPartReader: ...
+        @override
         def __iter__(self) -> Iterator[AggregationPartReader]: ...
 
     class Builder(_DynamicListBuilder):
+        @override
         def __len__(self) -> int: ...
+        @override
         def __getitem__(self, key: int) -> AggregationPartBuilder: ...
+        @override
         def __setitem__(
             self,
             key: int,
             value: AggregationPartReader | AggregationPartBuilder | dict[str, Any],
         ) -> None: ...
+        @override
         def __iter__(self) -> Iterator[AggregationPartBuilder]: ...
+        @override
         def init(
             self, index: int, size: int | None = None
         ) -> AggregationPartBuilder: ...
 
-Grid: _GridModule
+Grid: _GridInterfaceModule
 
 # Top-level type aliases for use in type annotations
 type AggregationEnum = (
@@ -1189,30 +1228,32 @@ type AggregationEnum = (
         "iMax",
     ]
 )
-type AggregationPartBuilder = _GridModule._AggregationPartModule.Builder
+type AggregationPartBuilder = _GridInterfaceModule._AggregationPartStructModule.Builder
 type AggregationPartListBuilder = _AggregationPartList.Builder
 type AggregationPartListReader = _AggregationPartList.Reader
-type AggregationPartReader = _GridModule._AggregationPartModule.Reader
-type CallbackClient = _GridModule._CallbackModule.CallbackClient
-type CallbackServer = _GridModule._CallbackModule.Server
-type ClosestvalueatResult = _GridModule.GridClient.ClosestvalueatResult
-type DimensionResult = _GridModule.GridClient.DimensionResult
-type GridClient = _GridModule.GridClient
-type GridServer = _GridModule.Server
-type LatlonboundsResult = _GridModule.GridClient.LatlonboundsResult
-type LocationBuilder = _GridModule._LocationModule.Builder
+type AggregationPartReader = _GridInterfaceModule._AggregationPartStructModule.Reader
+type CallbackClient = _GridInterfaceModule._CallbackInterfaceModule.CallbackClient
+type CallbackServer = _GridInterfaceModule._CallbackInterfaceModule.Server
+type ClosestvalueatResult = _GridInterfaceModule.GridClient.ClosestvalueatResult
+type DimensionResult = _GridInterfaceModule.GridClient.DimensionResult
+type GridClient = _GridInterfaceModule.GridClient
+type GridServer = _GridInterfaceModule.Server
+type LatlonboundsResult = _GridInterfaceModule.GridClient.LatlonboundsResult
+type LocationBuilder = _GridInterfaceModule._LocationStructModule.Builder
 type LocationListBuilder = _LocationList.Builder
 type LocationListReader = _LocationList.Reader
-type LocationReader = _GridModule._LocationModule.Reader
-type NodatavalueResult = _GridModule.GridClient.NodatavalueResult
-type ResolutionBuilder = _GridModule._ResolutionModule.Builder
-type ResolutionReader = _GridModule._ResolutionModule.Reader
-type ResolutionResult = _GridModule.GridClient.ResolutionResult
-type RowColBuilder = _GridModule._RowColModule.Builder
-type RowColReader = _GridModule._RowColModule.Reader
-type SendcellsResult = _GridModule._CallbackModule.CallbackClient.SendcellsResult
-type StreamcellsResult = _GridModule.GridClient.StreamcellsResult
-type UnitResult = _GridModule.GridClient.UnitResult
-type ValueBuilder = _GridModule._ValueModule.Builder
-type ValueReader = _GridModule._ValueModule.Reader
-type ValueatResult = _GridModule.GridClient.ValueatResult
+type LocationReader = _GridInterfaceModule._LocationStructModule.Reader
+type NodatavalueResult = _GridInterfaceModule.GridClient.NodatavalueResult
+type ResolutionBuilder = _GridInterfaceModule._ResolutionStructModule.Builder
+type ResolutionReader = _GridInterfaceModule._ResolutionStructModule.Reader
+type ResolutionResult = _GridInterfaceModule.GridClient.ResolutionResult
+type RowColBuilder = _GridInterfaceModule._RowColStructModule.Builder
+type RowColReader = _GridInterfaceModule._RowColStructModule.Reader
+type SendcellsResult = (
+    _GridInterfaceModule._CallbackInterfaceModule.CallbackClient.SendcellsResult
+)
+type StreamcellsResult = _GridInterfaceModule.GridClient.StreamcellsResult
+type UnitResult = _GridInterfaceModule.GridClient.UnitResult
+type ValueBuilder = _GridInterfaceModule._ValueStructModule.Builder
+type ValueReader = _GridInterfaceModule._ValueStructModule.Reader
+type ValueatResult = _GridInterfaceModule.GridClient.ValueatResult
