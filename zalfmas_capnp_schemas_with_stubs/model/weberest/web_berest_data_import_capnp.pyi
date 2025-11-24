@@ -61,7 +61,7 @@ class _DWLABImportInterfaceModule(_InterfaceModule):
             dwla: bytes,
             dwlb: bytes,
             _context: _DWLABImportInterfaceModule.Server.ImportdataCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _DWLABImportInterfaceModule.Server.ImportdataResultTuple | None
         ]: ...

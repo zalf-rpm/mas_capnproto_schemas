@@ -2943,7 +2943,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
             lat: float,
             lon: float,
             _context: _ServiceInterfaceModule.Server.ManagementatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[EventBuilder | EventReader]
             | _ServiceInterfaceModule.Server.ManagementatResultTuple

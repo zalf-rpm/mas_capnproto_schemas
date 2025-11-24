@@ -705,7 +705,7 @@ class _HeartbeatInterfaceModule(_InterfaceModule):
         def beat(
             self,
             _context: _HeartbeatInterfaceModule.Server.BeatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def beat_context(
             self, context: _HeartbeatInterfaceModule.Server.BeatCallContext
@@ -936,7 +936,7 @@ class _PersistentInterfaceModule(_InterfaceModule):
             def release(
                 self,
                 _context: _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseResultTuple
@@ -996,7 +996,7 @@ class _PersistentInterfaceModule(_InterfaceModule):
             self,
             sealFor: OwnerReader,
             _context: _PersistentInterfaceModule.Server.SaveCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_PersistentInterfaceModule.Server.SaveResultTuple | None]: ...
         def save_context(
             self, context: _PersistentInterfaceModule.Server.SaveCallContext
@@ -1156,7 +1156,7 @@ class _RestorerInterfaceModule(_InterfaceModule):
             localRef: TokenReader,
             sealedBy: OwnerReader,
             _context: _RestorerInterfaceModule.Server.RestoreCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _RestorerInterfaceModule.Server.RestoreResultTuple | None
         ]: ...
@@ -1356,7 +1356,7 @@ class _HostPortResolverInterfaceModule(
                 alias: str,
                 identityProof: bytes,
                 _context: _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterResultTuple
                 | None
@@ -1434,7 +1434,7 @@ class _HostPortResolverInterfaceModule(
             self,
             id: str,
             _context: _HostPortResolverInterfaceModule.Server.ResolveCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _HostPortResolverInterfaceModule.Server.ResolveResultTuple | None
         ]: ...
@@ -1601,7 +1601,7 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
             self,
             cap: AnyPointer,
             _context: _GatewayInterfaceModule.Server.RegisterCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_GatewayInterfaceModule.Server.RegisterResultTuple | None]: ...
         def register_context(
             self, context: _GatewayInterfaceModule.Server.RegisterCallContext

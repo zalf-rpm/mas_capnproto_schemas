@@ -325,7 +325,7 @@ class _MetadataStructModule(_StructModule):
             def categories(
                 self,
                 _context: _MetadataStructModule._SupportedInterfaceModule.Server.CategoriesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[IdInformationBuilder | IdInformationReader]
                 | _MetadataStructModule._SupportedInterfaceModule.Server.CategoriesResultTuple
@@ -339,7 +339,7 @@ class _MetadataStructModule(_StructModule):
                 self,
                 typeId: str,
                 _context: _MetadataStructModule._SupportedInterfaceModule.Server.SupportedvaluesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[IdInformationBuilder | IdInformationReader]
                 | _MetadataStructModule._SupportedInterfaceModule.Server.SupportedvaluesResultTuple
@@ -771,7 +771,7 @@ class _MetadataStructModule(_StructModule):
                 self,
                 entry: EntryReader,
                 _context: _MetadataStructModule._InformationInterfaceModule.Server.ForoneCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _MetadataStructModule._InformationInterfaceModule.Server.ForoneResultTuple
                 | None
@@ -783,7 +783,7 @@ class _MetadataStructModule(_StructModule):
             def forAll(
                 self,
                 _context: _MetadataStructModule._InformationInterfaceModule.Server.ForallCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[PairBuilder | PairReader]
                 | _MetadataStructModule._InformationInterfaceModule.Server.ForallResultTuple
@@ -965,7 +965,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
                 maxCount: int,
                 _context: _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule.Server.NextlocationsCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[LocationBuilder | LocationReader]
                 | _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule.Server.NextlocationsResultTuple
@@ -1164,7 +1164,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def metadata(
             self,
             _context: _DatasetInterfaceModule.Server.MetadataCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_DatasetInterfaceModule.Server.MetadataResultTuple | None]: ...
         def metadata_context(
             self, context: _DatasetInterfaceModule.Server.MetadataCallContext
@@ -1173,7 +1173,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             latlon: LatLonCoordReader,
             _context: _DatasetInterfaceModule.Server.ClosesttimeseriesatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _DatasetInterfaceModule.Server.ClosesttimeseriesatResultTuple
@@ -1186,7 +1186,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             locationId: str,
             _context: _DatasetInterfaceModule.Server.TimeseriesatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _DatasetInterfaceModule.Server.TimeseriesatResultTuple
@@ -1198,7 +1198,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def locations(
             self,
             _context: _DatasetInterfaceModule.Server.LocationsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[LocationBuilder | LocationReader]
             | _DatasetInterfaceModule.Server.LocationsResultTuple
@@ -1211,7 +1211,7 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             startAfterLocationId: str,
             _context: _DatasetInterfaceModule.Server.StreamlocationsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule.Server
             | _DatasetInterfaceModule.Server.StreamlocationsResultTuple
@@ -1573,7 +1573,7 @@ class _TimeSeriesInterfaceModule(
         def resolution(
             self,
             _context: _TimeSeriesInterfaceModule.Server.ResolutionCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             TimeSeriesResolutionEnum
             | _TimeSeriesInterfaceModule.Server.ResolutionResultTuple
@@ -1585,7 +1585,7 @@ class _TimeSeriesInterfaceModule(
         def range(
             self,
             _context: _TimeSeriesInterfaceModule.Server.RangeCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_TimeSeriesInterfaceModule.Server.RangeResultTuple | None]: ...
         def range_context(
             self, context: _TimeSeriesInterfaceModule.Server.RangeCallContext
@@ -1593,7 +1593,7 @@ class _TimeSeriesInterfaceModule(
         def header(
             self,
             _context: _TimeSeriesInterfaceModule.Server.HeaderCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[ElementEnum]
             | _TimeSeriesInterfaceModule.Server.HeaderResultTuple
@@ -1605,7 +1605,7 @@ class _TimeSeriesInterfaceModule(
         def data(
             self,
             _context: _TimeSeriesInterfaceModule.Server.DataCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[Sequence[float]]
             | _TimeSeriesInterfaceModule.Server.DataResultTuple
@@ -1617,7 +1617,7 @@ class _TimeSeriesInterfaceModule(
         def dataT(
             self,
             _context: _TimeSeriesInterfaceModule.Server.DatatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[Sequence[float]]
             | _TimeSeriesInterfaceModule.Server.DatatResultTuple
@@ -1631,7 +1631,7 @@ class _TimeSeriesInterfaceModule(
             start: DateReader,
             end: DateReader,
             _context: _TimeSeriesInterfaceModule.Server.SubrangeCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _TimeSeriesInterfaceModule.Server.SubrangeResultTuple
@@ -1644,7 +1644,7 @@ class _TimeSeriesInterfaceModule(
             self,
             elements: ElementEnumListReader,
             _context: _TimeSeriesInterfaceModule.Server.SubheaderCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _TimeSeriesInterfaceModule.Server.SubheaderResultTuple
@@ -1656,7 +1656,7 @@ class _TimeSeriesInterfaceModule(
         def metadata(
             self,
             _context: _TimeSeriesInterfaceModule.Server.MetadataCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server.MetadataResultTuple | None
         ]: ...
@@ -1666,7 +1666,7 @@ class _TimeSeriesInterfaceModule(
         def location(
             self,
             _context: _TimeSeriesInterfaceModule.Server.LocationCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server.LocationResultTuple | None
         ]: ...
@@ -2425,7 +2425,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def getAvailableDatasets(
             self,
             _context: _ServiceInterfaceModule.Server.GetavailabledatasetsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[MetaPlusDataBuilder | MetaPlusDataReader]
             | _ServiceInterfaceModule.Server.GetavailabledatasetsResultTuple
@@ -2439,7 +2439,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             template: MetadataReader,
             _context: _ServiceInterfaceModule.Server.GetdatasetsforCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_DatasetInterfaceModule]
             | _ServiceInterfaceModule.Server.GetdatasetsforResultTuple
@@ -2689,7 +2689,7 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
             csvData: str,
             config: CSVConfigReader,
             _context: _CSVTimeSeriesFactoryInterfaceModule.Server.CreateCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _CSVTimeSeriesFactoryInterfaceModule.Server.CreateResultTuple | None
         ]: ...
@@ -2963,7 +2963,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         def wrappedTimeSeries(
             self,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.WrappedtimeseriesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _AlterTimeSeriesWrapperInterfaceModule.Server.WrappedtimeseriesResultTuple
@@ -2976,7 +2976,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         def alteredElements(
             self,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.AlteredelementsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[AlteredBuilder | AlteredReader]
             | _AlterTimeSeriesWrapperInterfaceModule.Server.AlteredelementsResultTuple
@@ -2991,7 +2991,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             desc: AlteredReader,
             asNewTimeSeries: bool,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.AlterCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _TimeSeriesInterfaceModule.Server
             | _AlterTimeSeriesWrapperInterfaceModule.Server.AlterResultTuple
@@ -3005,7 +3005,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             self,
             alteredElement: ElementEnum,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.RemoveCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def remove_context(
             self,
@@ -3015,7 +3015,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             self,
             timeSeries: TimeSeriesClient,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.ReplacewrappedtimeseriesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def replaceWrappedTimeSeries_context(
             self,
@@ -3148,7 +3148,7 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
             self,
             timeSeries: TimeSeriesClient,
             _context: _AlterTimeSeriesWrapperFactoryInterfaceModule.Server.WrapCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _AlterTimeSeriesWrapperInterfaceModule.Server
             | _AlterTimeSeriesWrapperFactoryInterfaceModule.Server.WrapResultTuple

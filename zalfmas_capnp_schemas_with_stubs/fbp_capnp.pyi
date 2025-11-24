@@ -508,7 +508,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def read(
                 self,
                 _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadResultTuple
                 | None
@@ -520,7 +520,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def close(
                 self,
                 _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.CloseCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[None]: ...
             def close_context(
                 self,
@@ -529,7 +529,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def readIfMsg(
                 self,
                 _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgResultTuple
                 | None
@@ -665,7 +665,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 done: None,
                 noMsg: None,
                 _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[None]: ...
             def write_context(
                 self,
@@ -674,7 +674,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def close(
                 self,
                 _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.CloseCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[None]: ...
             def close_context(
                 self,
@@ -686,7 +686,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 done: None,
                 noMsg: None,
                 _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceResultTuple
@@ -1069,7 +1069,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             size: int,
             _context: _ChannelInterfaceModule.Server.SetbuffersizeCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def setBufferSize_context(
             self, context: _ChannelInterfaceModule.Server.SetbuffersizeCallContext
@@ -1077,7 +1077,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def reader(
             self,
             _context: _ChannelInterfaceModule.Server.ReaderCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ChannelInterfaceModule._ReaderInterfaceModule.Server
             | _ChannelInterfaceModule.Server.ReaderResultTuple
@@ -1089,7 +1089,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def writer(
             self,
             _context: _ChannelInterfaceModule.Server.WriterCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ChannelInterfaceModule._WriterInterfaceModule.Server
             | _ChannelInterfaceModule.Server.WriterResultTuple
@@ -1101,7 +1101,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def endpoints(
             self,
             _context: _ChannelInterfaceModule.Server.EndpointsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_ChannelInterfaceModule.Server.EndpointsResultTuple | None]: ...
         def endpoints_context(
             self, context: _ChannelInterfaceModule.Server.EndpointsCallContext
@@ -1110,7 +1110,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             cs: ChannelCloseSemanticsEnum,
             _context: _ChannelInterfaceModule.Server.SetautoclosesemanticsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def setAutoCloseSemantics_context(
             self,
@@ -1120,7 +1120,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             waitForEmptyBuffer: bool,
             _context: _ChannelInterfaceModule.Server.CloseCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def close_context(
             self, context: _ChannelInterfaceModule.Server.CloseCallContext
@@ -1465,7 +1465,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             writerSrts: TextListReader,
             bufferSize: int,
             _context: _StartChannelsServiceInterfaceModule.Server.StartCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _StartChannelsServiceInterfaceModule.Server.StartResultTuple | None
         ]: ...
@@ -1845,7 +1845,7 @@ class _ComponentStructModule(_StructModule):
                 portInfosReaderSr: str,
                 name: str,
                 _context: _ComponentStructModule._RunnableInterfaceModule.Server.StartCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _ComponentStructModule._RunnableInterfaceModule.Server.StartResultTuple
@@ -1858,7 +1858,7 @@ class _ComponentStructModule(_StructModule):
             def stop(
                 self,
                 _context: _ComponentStructModule._RunnableInterfaceModule.Server.StopCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _ComponentStructModule._RunnableInterfaceModule.Server.StopResultTuple

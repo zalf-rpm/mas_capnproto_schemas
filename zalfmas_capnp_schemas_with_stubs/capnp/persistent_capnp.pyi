@@ -215,7 +215,7 @@ class _PersistentInterfaceModule(_InterfaceModule):
             self,
             sealFor: AnyPointer,
             _context: _PersistentInterfaceModule.Server.SaveCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _PersistentInterfaceModule.Server.SaveResultTuple | None
         ]: ...

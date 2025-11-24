@@ -89,7 +89,7 @@ class _ClusterStructModule(_StructModule):
             def unregister(
                 self,
                 _context: _ClusterStructModule._UnregisterInterfaceModule.Server.UnregisterCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _ClusterStructModule._UnregisterInterfaceModule.Server.UnregisterResultTuple
@@ -206,7 +206,7 @@ class _ClusterStructModule(_StructModule):
                 aModelId: str,
                 aFactory: ModelInstanceFactoryClient,
                 _context: _ClusterStructModule._AdminMasterInterfaceModule.Server.RegistermodelinstancefactoryCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._UnregisterInterfaceModule.Server
                 | _ClusterStructModule._AdminMasterInterfaceModule.Server.RegistermodelinstancefactoryResultTuple
@@ -219,7 +219,7 @@ class _ClusterStructModule(_StructModule):
             def availableModels(
                 self,
                 _context: _ClusterStructModule._AdminMasterInterfaceModule.Server.AvailablemodelsCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[_ClusterStructModule._ModelInstanceFactoryInterfaceModule]
                 | _ClusterStructModule._AdminMasterInterfaceModule.Server.AvailablemodelsResultTuple
@@ -518,7 +518,7 @@ class _ClusterStructModule(_StructModule):
             def newInstance(
                 self,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewinstanceCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._ValueHolderInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewinstanceResultTuple
@@ -532,7 +532,7 @@ class _ClusterStructModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewinstancesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._ValueHolderInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewinstancesResultTuple
@@ -546,7 +546,7 @@ class _ClusterStructModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewcloudviazmqpipelineproxiesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._ValueHolderInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewcloudviazmqpipelineproxiesResultTuple
@@ -560,7 +560,7 @@ class _ClusterStructModule(_StructModule):
                 self,
                 numberOfInstances: int,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewcloudviaproxyCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._ValueHolderInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.NewcloudviaproxyResultTuple
@@ -573,7 +573,7 @@ class _ClusterStructModule(_StructModule):
             def modelId(
                 self,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.ModelidCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 str
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.ModelidResultTuple
@@ -588,7 +588,7 @@ class _ClusterStructModule(_StructModule):
                 instance: AnyPointer,
                 registrationToken: str,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.RegistermodelinstanceCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._UnregisterInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.RegistermodelinstanceResultTuple
@@ -602,7 +602,7 @@ class _ClusterStructModule(_StructModule):
                 self,
                 sturdyRef: str,
                 _context: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.RestoresturdyrefCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._ValueHolderInterfaceModule.Server
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server.RestoresturdyrefResultTuple
@@ -748,7 +748,7 @@ class _ClusterStructModule(_StructModule):
             def value(
                 self,
                 _context: _ClusterStructModule._ValueHolderInterfaceModule.Server.ValueCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 AnyPointer
                 | _ClusterStructModule._ValueHolderInterfaceModule.Server.ValueResultTuple
@@ -761,7 +761,7 @@ class _ClusterStructModule(_StructModule):
             def release(
                 self,
                 _context: _ClusterStructModule._ValueHolderInterfaceModule.Server.ReleaseCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[None]: ...
             def release_context(
                 self,
@@ -848,7 +848,7 @@ class _ClusterStructModule(_StructModule):
             def availableModels(
                 self,
                 _context: _ClusterStructModule._UserMasterInterfaceModule.Server.AvailablemodelsCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[_ClusterStructModule._ModelInstanceFactoryInterfaceModule]
                 | _ClusterStructModule._UserMasterInterfaceModule.Server.AvailablemodelsResultTuple
@@ -1040,7 +1040,7 @@ class _ClusterStructModule(_StructModule):
                 aModelId: str,
                 aFactory: ModelInstanceFactoryClient,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.RegistermodelinstancefactoryCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _ClusterStructModule._UnregisterInterfaceModule.Server
                 | _ClusterStructModule._RuntimeInterfaceModule.Server.RegistermodelinstancefactoryResultTuple
@@ -1053,7 +1053,7 @@ class _ClusterStructModule(_StructModule):
             def availableModels(
                 self,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.AvailablemodelsCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[_ClusterStructModule._ModelInstanceFactoryInterfaceModule]
                 | _ClusterStructModule._RuntimeInterfaceModule.Server.AvailablemodelsResultTuple
@@ -1066,7 +1066,7 @@ class _ClusterStructModule(_StructModule):
             def numberOfCores(
                 self,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.NumberofcoresCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 int
                 | _ClusterStructModule._RuntimeInterfaceModule.Server.NumberofcoresResultTuple
@@ -1079,7 +1079,7 @@ class _ClusterStructModule(_StructModule):
             def freeNumberOfCores(
                 self,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.FreenumberofcoresCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 int
                 | _ClusterStructModule._RuntimeInterfaceModule.Server.FreenumberofcoresResultTuple
@@ -1094,7 +1094,7 @@ class _ClusterStructModule(_StructModule):
                 reserveCores: int,
                 aModelId: str,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.ReservenumberofcoresCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 int
                 | _ClusterStructModule._RuntimeInterfaceModule.Server.ReservenumberofcoresResultTuple

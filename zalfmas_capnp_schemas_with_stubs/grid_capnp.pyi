@@ -589,7 +589,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
                 maxCount: int,
                 _context: _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[LocationBuilder | LocationReader]
                 | _GridInterfaceModule._CallbackInterfaceModule.Server.SendcellsResultTuple
@@ -966,7 +966,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             returnRowCols: bool,
             includeAggParts: bool,
             _context: _GridInterfaceModule.Server.ClosestvalueatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _GridInterfaceModule.Server.ClosestvalueatResultTuple | None
         ]: ...
@@ -976,7 +976,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def resolution(
             self,
             _context: _GridInterfaceModule.Server.ResolutionCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _GridInterfaceModule._ResolutionStructModule.Builder
             | _GridInterfaceModule.Server.ResolutionResultTuple
@@ -988,7 +988,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def dimension(
             self,
             _context: _GridInterfaceModule.Server.DimensionCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_GridInterfaceModule.Server.DimensionResultTuple | None]: ...
         def dimension_context(
             self, context: _GridInterfaceModule.Server.DimensionCallContext
@@ -996,7 +996,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def noDataValue(
             self,
             _context: _GridInterfaceModule.Server.NodatavalueCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _GridInterfaceModule._ValueStructModule.Builder
             | _GridInterfaceModule.Server.NodatavalueResultTuple
@@ -1013,7 +1013,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             agg: AggregationEnum,
             includeAggParts: bool,
             _context: _GridInterfaceModule.Server.ValueatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_GridInterfaceModule.Server.ValueatResultTuple | None]: ...
         def valueAt_context(
             self, context: _GridInterfaceModule.Server.ValueatCallContext
@@ -1022,7 +1022,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             self,
             useCellCenter: bool,
             _context: _GridInterfaceModule.Server.LatlonboundsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_GridInterfaceModule.Server.LatlonboundsResultTuple | None]: ...
         def latLonBounds_context(
             self, context: _GridInterfaceModule.Server.LatlonboundsCallContext
@@ -1032,7 +1032,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             topLeft: RowColReader,
             bottomRight: RowColReader,
             _context: _GridInterfaceModule.Server.StreamcellsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _GridInterfaceModule._CallbackInterfaceModule.Server
             | _GridInterfaceModule.Server.StreamcellsResultTuple
@@ -1042,9 +1042,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             self, context: _GridInterfaceModule.Server.StreamcellsCallContext
         ) -> Awaitable[None]: ...
         def unit(
-            self,
-            _context: _GridInterfaceModule.Server.UnitCallContext,
-            **kwargs: dict[str, Any],
+            self, _context: _GridInterfaceModule.Server.UnitCallContext, **kwargs: Any
         ) -> Awaitable[str | _GridInterfaceModule.Server.UnitResultTuple | None]: ...
         def unit_context(
             self, context: _GridInterfaceModule.Server.UnitCallContext
