@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.1.44](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.43...v0.1.44) (2025-11-25)
+
+
+### Features
+
+* add proper AnyPointer, AnyStruct, AnyList and Capability handling ([2cbc33e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/2cbc33e379b5b67199c40762734d7a27b9afab64))
+* add proper list builders and reader ([232047d](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/232047d2955341c5b983c6052a22d1c4b6766aed))
+* add top level server types ([f0c66c4](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/f0c66c4338644725b5702599a2fc983e338279fb))
+* flesh out module names and align generated better to base stubs. ([06eadac](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/06eadac7234f6b760f3bc8903d14d4150717da08))
+* flesh out the _Schema types ([6245dad](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/6245dadc1cebaa2c9d63fd1e22be9e262cedc67e))
+* for plain struct context.results return the builder isntance of the struct ([3b76c9b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/3b76c9b2bfb0f7c9ec5145299d0a26e126988436))
+
+
+### Bug Fixes
+
+* added missing RunnableFactory ([b4b3f02](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/b4b3f021fb9a89f84a4e35bf6319490f50b75af7))
+* imported type aliases ([d95d8a9](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/d95d8a97007182b9f1bd0557867e90ccef80e6a5))
+* proper readers and builders ([afff8a1](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/afff8a13659f77939a820de4272d84e4949f1a21))
+* Single value return for AnyTypes ([5729b6b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/5729b6b676c86468f166b434d2ca239290475355))
+
 ## [0.1.43](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.42...v0.1.43) (2025-11-20)
 
 
