@@ -172,6 +172,13 @@ struct Component {
       # stop the component
     }
 
+    interface RunnableFactory extends(Common.Identifiable) {
+      # interface to create Runnable instances
+
+      create @0 () -> (r :Runnable);
+      # create a new Runnable instance
+    }
+
     enum ComponentType {
         standard    @0; # standard FBP component
         iip         @1; # initial information packet
@@ -201,7 +208,7 @@ struct Component {
     inPorts       @2 :List(Port); # the components allowed input ports
     outPorts      @3 :List(Port); # the components allowed input ports
 
-    run           @4 :Runnable; # if non null, interface to runtime instance of this component
+    runFactory    @4 :RunnableFactory; # if non null, interface to runtime instances of this component
 
     defaultConfig @5 :Text; # default configuration for component
 }
