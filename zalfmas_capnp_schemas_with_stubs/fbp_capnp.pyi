@@ -1,30 +1,24 @@
 """This is an automatically generated stub for `fbp.capnp`."""
 
 from __future__ import annotations
-
-from collections.abc import Awaitable, MutableSequence, Sequence
-from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
-
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _StructModule,
 )
-
-from .common_capnp import (
-    IdInformationBuilder,
-    IdInformationReader,
-    _IdentifiableModule,
-)
-from .persistence_capnp import _PersistentModule
-from .service_capnp import _StoppableModule
+from contextlib import AbstractContextManager
+from .common_capnp import _IdentifiableInterfaceModule
+from .persistence_capnp import _PersistentInterfaceModule
+from .service_capnp import _StoppableInterfaceModule
+from .common_capnp import IdInformationReader, IdInformationBuilder
+from collections.abc import Iterator, Sequence, Awaitable, Callable
+from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (
@@ -40,8 +34,31 @@ type AnyPointer = (
     | _DynamicObjectBuilder
 )
 
-class _IPModule(_StructModule):
-    class _KVModule(_StructModule):
+class _KVList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> KVReader: ...
+        @override
+        def __iter__(self) -> Iterator[KVReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> KVBuilder: ...
+        @override
+        def __setitem__(
+            self, key: int, value: KVReader | KVBuilder | dict[str, Any]
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[KVBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> KVBuilder: ...
+
+class _IPStructModule(_StructModule):
+    class _KVStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def key(self) -> str: ...
@@ -53,7 +70,7 @@ class _IPModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> KVBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -76,25 +93,26 @@ class _IPModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             key: str | None = None,
             desc: str | None = None,
             value: AnyPointer | None = None,
             **kwargs: Any,
         ) -> KVBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[KVReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[KVReader]: ...
@@ -102,44 +120,45 @@ class _IPModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[KVBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> KVReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> KVReader: ...
 
-    type KVReader = _KVModule.Reader
-    type KVBuilder = _KVModule.Builder
-    KV: _KVModule
-    class _TypeModule:
+    type KVReader = _KVStructModule.Reader
+    type KVBuilder = _KVStructModule.Builder
+    KV: _KVStructModule
+    class _TypeEnumModule:
         standard: int
         openBracket: int
         closeBracket: int
 
-    Type: _TypeModule
+    Type: _TypeEnumModule
     class Reader(_DynamicStructReader):
         @property
-        def attributes(self) -> Sequence[KVReader]: ...
+        def attributes(self) -> KVListReader: ...
         @property
         def content(self) -> _DynamicObjectReader: ...
         @property
@@ -148,15 +167,15 @@ class _IPModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> IPBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def attributes(self) -> MutableSequence[KVBuilder]: ...
+        def attributes(self) -> KVListBuilder: ...
         @attributes.setter
         def attributes(
-            self, value: Sequence[KVBuilder | KVReader] | Sequence[dict[str, Any]]
+            self, value: KVListBuilder | KVListReader | dict[str, Any]
         ) -> None: ...
         @property
         def content(self) -> _DynamicObjectBuilder: ...
@@ -166,9 +185,10 @@ class _IPModule(_StructModule):
         def type(self) -> IPTypeEnum: ...
         @type.setter
         def type(self, value: IPTypeEnum) -> None: ...
+        @override
         def init(
             self, field: Literal["attributes"], size: int | None = None
-        ) -> MutableSequence[KVBuilder]: ...
+        ) -> KVListBuilder: ...
         @override
         def as_reader(self) -> IPReader: ...
 
@@ -176,25 +196,26 @@ class _IPModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        attributes: Sequence[KVBuilder] | Sequence[dict[str, Any]] | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        attributes: KVListBuilder | dict[str, Any] | None = None,
         content: AnyPointer | None = None,
         type: IPTypeEnum | None = None,
         **kwargs: Any,
     ) -> IPBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[IPReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[IPReader]: ...
@@ -202,35 +223,36 @@ class _IPModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[IPBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> IPReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> IPReader: ...
 
-IP: _IPModule
+IP: _IPStructModule
 
-class _IIPModule(_StructModule):
+class _IIPStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def content(self) -> _DynamicObjectReader: ...
@@ -238,7 +260,7 @@ class _IIPModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> IIPBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -253,23 +275,24 @@ class _IIPModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         content: AnyPointer | None = None,
         **kwargs: Any,
     ) -> IIPBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[IIPReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[IIPReader]: ...
@@ -277,41 +300,42 @@ class _IIPModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[IIPBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> IIPReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> IIPReader: ...
 
-IIP: _IIPModule
+IIP: _IIPStructModule
 
-class _ChannelModule(_IdentifiableModule, _PersistentModule):
-    class _CloseSemanticsModule:
+class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
+    class _CloseSemanticsEnumModule:
         fbp: int
         no: int
 
-    CloseSemantics: _CloseSemanticsModule
-    class _MsgModule(_StructModule):
+    CloseSemantics: _CloseSemanticsEnumModule
+    class _MsgStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def value(self) -> _DynamicObjectReader: ...
@@ -325,7 +349,7 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> MsgBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -350,25 +374,26 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             value: AnyPointer | None = None,
             done: None | None = None,
             noMsg: None | None = None,
             **kwargs: Any,
         ) -> MsgBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[MsgReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[MsgReader]: ...
@@ -376,51 +401,65 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[MsgBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> MsgReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> MsgReader: ...
 
-    type MsgReader = _MsgModule.Reader
-    type MsgBuilder = _MsgModule.Builder
-    Msg: _MsgModule
-    class _ReaderModule(_IdentifiableModule, _PersistentModule):
+    type MsgReader = _MsgStructModule.Reader
+    type MsgBuilder = _MsgStructModule.Builder
+    Msg: _MsgStructModule
+    class _ReaderInterfaceModule(
+        _IdentifiableInterfaceModule, _PersistentInterfaceModule
+    ):
         class ReadRequest(Protocol):
-            def send(self) -> _ChannelModule._ReaderModule.ReaderClient.ReadResult: ...
+            def send(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadResult
+            ): ...
 
         class CloseRequest(Protocol):
-            def send(self) -> _ChannelModule._ReaderModule.ReaderClient.CloseResult: ...
+            def send(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.CloseResult
+            ): ...
 
         class ReadifmsgRequest(Protocol):
             def send(
                 self,
-            ) -> _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult: ...
+            ) -> _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadifmsgResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _ChannelModule._ReaderModule.ReaderClient: ...
-        class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        ) -> _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient: ...
+        class Server(
+            _IdentifiableInterfaceModule.Server, _PersistentInterfaceModule.Server
+        ):
             class ReadResult(Awaitable[ReadResult], Protocol):
                 value: AnyPointer
                 done: None
@@ -448,51 +487,61 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             class ReadParams(Protocol): ...
 
             class ReadCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.Server.ReadParams
-                results: _ChannelModule._ReaderModule.Server.ReadResult
+                params: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadParams
+                @property
+                def results(self) -> MsgBuilder: ...
 
             class CloseParams(Protocol): ...
 
             class CloseCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.Server.CloseParams
+                params: (
+                    _ChannelInterfaceModule._ReaderInterfaceModule.Server.CloseParams
+                )
 
             class ReadifmsgParams(Protocol): ...
 
             class ReadifmsgCallContext(Protocol):
-                params: _ChannelModule._ReaderModule.Server.ReadifmsgParams
-                results: _ChannelModule._ReaderModule.Server.ReadifmsgResult
+                params: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgParams
+                @property
+                def results(self) -> MsgBuilder: ...
 
             def read(
                 self,
-                _context: _ChannelModule._ReaderModule.Server.ReadCallContext,
+                _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ChannelModule._ReaderModule.Server.ReadResultTuple | None
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadResultTuple
+                | None
             ]: ...
             def read_context(
-                self, context: _ChannelModule._ReaderModule.Server.ReadCallContext
+                self,
+                context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadCallContext,
             ) -> Awaitable[None]: ...
             def close(
                 self,
-                _context: _ChannelModule._ReaderModule.Server.CloseCallContext,
+                _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.CloseCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def close_context(
-                self, context: _ChannelModule._ReaderModule.Server.CloseCallContext
+                self,
+                context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.CloseCallContext,
             ) -> Awaitable[None]: ...
             def readIfMsg(
                 self,
-                _context: _ChannelModule._ReaderModule.Server.ReadifmsgCallContext,
+                _context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _ChannelModule._ReaderModule.Server.ReadifmsgResultTuple | None
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgResultTuple
+                | None
             ]: ...
             def readIfMsg_context(
-                self, context: _ChannelModule._ReaderModule.Server.ReadifmsgCallContext
+                self,
+                context: _ChannelInterfaceModule._ReaderInterfaceModule.Server.ReadifmsgCallContext,
             ) -> Awaitable[None]: ...
 
         class ReaderClient(
-            _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
+            _IdentifiableInterfaceModule.IdentifiableClient,
+            _PersistentInterfaceModule.PersistentClient,
         ):
             class ReadResult(Awaitable[ReadResult], Protocol):
                 value: _DynamicObjectReader
@@ -508,30 +557,51 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 noMsg: None
                 def which(self) -> Literal["value", "done", "noMsg"]: ...
 
-            def read(self) -> _ChannelModule._ReaderModule.ReaderClient.ReadResult: ...
+            def read(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadResult
+            ): ...
             def close(
                 self,
-            ) -> _ChannelModule._ReaderModule.ReaderClient.CloseResult: ...
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.CloseResult
+            ): ...
             def readIfMsg(
                 self,
-            ) -> _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult: ...
-            def read_request(self) -> _ChannelModule._ReaderModule.ReadRequest: ...
-            def close_request(self) -> _ChannelModule._ReaderModule.CloseRequest: ...
+            ) -> _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadifmsgResult: ...
+            def read_request(
+                self,
+            ) -> _ChannelInterfaceModule._ReaderInterfaceModule.ReadRequest: ...
+            def close_request(
+                self,
+            ) -> _ChannelInterfaceModule._ReaderInterfaceModule.CloseRequest: ...
             def readIfMsg_request(
                 self,
-            ) -> _ChannelModule._ReaderModule.ReadifmsgRequest: ...
+            ) -> _ChannelInterfaceModule._ReaderInterfaceModule.ReadifmsgRequest: ...
 
-    Reader: _ReaderModule
-    type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
-    class _WriterModule(_IdentifiableModule, _PersistentModule):
+    Reader: _ReaderInterfaceModule
+    type ReaderClient = _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
+    type ReaderServer = _ChannelInterfaceModule._ReaderInterfaceModule.Server
+    class _WriterInterfaceModule(
+        _IdentifiableInterfaceModule, _PersistentInterfaceModule
+    ):
         class WriteRequest(Protocol):
             value: AnyPointer
             done: None
             noMsg: None
-            def send(self) -> _ChannelModule._WriterModule.WriterClient.WriteResult: ...
+            def send(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteResult
+            ): ...
 
         class CloseRequest(Protocol):
-            def send(self) -> _ChannelModule._WriterModule.WriterClient.CloseResult: ...
+            def send(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.CloseResult
+            ): ...
 
         class WriteifspaceRequest(Protocol):
             value: AnyPointer
@@ -539,17 +609,23 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             noMsg: None
             def send(
                 self,
-            ) -> _ChannelModule._WriterModule.WriterClient.WriteifspaceResult: ...
+            ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteifspaceResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _ChannelModule._WriterModule.WriterClient: ...
-        class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+        ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriterClient: ...
+        class Server(
+            _IdentifiableInterfaceModule.Server, _PersistentInterfaceModule.Server
+        ):
             class WriteResult(Awaitable[None], Protocol): ...
             class CloseResult(Awaitable[None], Protocol): ...
 
-            class WriteifspaceResult(Awaitable[WriteifspaceResult], Protocol):
-                success: bool
+            class WriteifspaceResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class WriteifspaceResultTuple(NamedTuple):
                 success: bool
@@ -560,12 +636,16 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 noMsg: None
 
             class WriteCallContext(Protocol):
-                params: _ChannelModule._WriterModule.Server.WriteParams
+                params: (
+                    _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteParams
+                )
 
             class CloseParams(Protocol): ...
 
             class CloseCallContext(Protocol):
-                params: _ChannelModule._WriterModule.Server.CloseParams
+                params: (
+                    _ChannelInterfaceModule._WriterInterfaceModule.Server.CloseParams
+                )
 
             class WriteifspaceParams(Protocol):
                 value: AnyPointer
@@ -573,47 +653,53 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 noMsg: None
 
             class WriteifspaceCallContext(Protocol):
-                params: _ChannelModule._WriterModule.Server.WriteifspaceParams
-                results: _ChannelModule._WriterModule.Server.WriteifspaceResult
+                params: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceParams
+                @property
+                def results(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceResult: ...
 
             def write(
                 self,
                 value: AnyPointer,
                 done: None,
                 noMsg: None,
-                _context: _ChannelModule._WriterModule.Server.WriteCallContext,
+                _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def write_context(
-                self, context: _ChannelModule._WriterModule.Server.WriteCallContext
+                self,
+                context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteCallContext,
             ) -> Awaitable[None]: ...
             def close(
                 self,
-                _context: _ChannelModule._WriterModule.Server.CloseCallContext,
+                _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.CloseCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[None]: ...
             def close_context(
-                self, context: _ChannelModule._WriterModule.Server.CloseCallContext
+                self,
+                context: _ChannelInterfaceModule._WriterInterfaceModule.Server.CloseCallContext,
             ) -> Awaitable[None]: ...
             def writeIfSpace(
                 self,
                 value: AnyPointer,
                 done: None,
                 noMsg: None,
-                _context: _ChannelModule._WriterModule.Server.WriteifspaceCallContext,
+                _context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
-                | _ChannelModule._WriterModule.Server.WriteifspaceResultTuple
+                | _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceResultTuple
                 | None
             ]: ...
             def writeIfSpace_context(
                 self,
-                context: _ChannelModule._WriterModule.Server.WriteifspaceCallContext,
+                context: _ChannelInterfaceModule._WriterInterfaceModule.Server.WriteifspaceCallContext,
             ) -> Awaitable[None]: ...
 
         class WriterClient(
-            _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
+            _IdentifiableInterfaceModule.IdentifiableClient,
+            _PersistentInterfaceModule.PersistentClient,
         ):
             class WriteResult(Awaitable[None], Protocol): ...
             class CloseResult(Awaitable[None], Protocol): ...
@@ -626,33 +712,40 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
                 value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
-            ) -> _ChannelModule._WriterModule.WriterClient.WriteResult: ...
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteResult
+            ): ...
             def close(
                 self,
-            ) -> _ChannelModule._WriterModule.WriterClient.CloseResult: ...
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.CloseResult
+            ): ...
             def writeIfSpace(
                 self,
                 value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
-            ) -> _ChannelModule._WriterModule.WriterClient.WriteifspaceResult: ...
+            ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteifspaceResult: ...
             def write_request(
                 self,
                 value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
-            ) -> _ChannelModule._WriterModule.WriteRequest: ...
-            def close_request(self) -> _ChannelModule._WriterModule.CloseRequest: ...
+            ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriteRequest: ...
+            def close_request(
+                self,
+            ) -> _ChannelInterfaceModule._WriterInterfaceModule.CloseRequest: ...
             def writeIfSpace_request(
                 self,
                 value: AnyPointer | None = None,
                 done: None | None = None,
                 noMsg: None | None = None,
-            ) -> _ChannelModule._WriterModule.WriteifspaceRequest: ...
+            ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriteifspaceRequest: ...
 
-    Writer: _WriterModule
-    type WriterClient = _ChannelModule._WriterModule.WriterClient
-    class _StartupInfoModule(_StructModule):
+    Writer: _WriterInterfaceModule
+    type WriterClient = _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
+    type WriterServer = _ChannelInterfaceModule._WriterInterfaceModule.Server
+    class _StartupInfoStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def bufferSize(self) -> int: ...
@@ -661,20 +754,20 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             @property
             def channelSR(self) -> str: ...
             @property
-            def readerSRs(self) -> Sequence[str]: ...
+            def readerSRs(self) -> TextListReader: ...
             @property
-            def writerSRs(self) -> Sequence[str]: ...
+            def writerSRs(self) -> TextListReader: ...
             @property
-            def channel(self) -> _ChannelModule.ChannelClient: ...
+            def channel(self) -> _ChannelInterfaceModule.ChannelClient: ...
             @property
-            def readers(self) -> Sequence[_ChannelModule._ReaderModule]: ...
+            def readers(self) -> ReaderClientListReader: ...
             @property
-            def writers(self) -> Sequence[_ChannelModule._WriterModule]: ...
+            def writers(self) -> WriterClientListReader: ...
             @override
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> StartupInfoBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -691,47 +784,60 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
             @channelSR.setter
             def channelSR(self, value: str) -> None: ...
             @property
-            def readerSRs(self) -> MutableSequence[str]: ...
+            def readerSRs(self) -> TextListBuilder: ...
             @readerSRs.setter
-            def readerSRs(self, value: Sequence[str]) -> None: ...
+            def readerSRs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
-            def writerSRs(self) -> MutableSequence[str]: ...
+            def writerSRs(self) -> TextListBuilder: ...
             @writerSRs.setter
-            def writerSRs(self, value: Sequence[str]) -> None: ...
+            def writerSRs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
-            def channel(self) -> _ChannelModule.ChannelClient: ...
+            def channel(self) -> _ChannelInterfaceModule.ChannelClient: ...
             @channel.setter
             def channel(
-                self, value: _ChannelModule.ChannelClient | _ChannelModule.Server
+                self,
+                value: _ChannelInterfaceModule.ChannelClient
+                | _ChannelInterfaceModule.Server,
             ) -> None: ...
             @property
-            def readers(self) -> MutableSequence[_ChannelModule._ReaderModule]: ...
+            def readers(self) -> ReaderClientListBuilder: ...
             @readers.setter
             def readers(
-                self, value: Sequence[_ChannelModule._ReaderModule]
+                self,
+                value: ReaderClientListBuilder
+                | ReaderClientListReader
+                | dict[str, Any],
             ) -> None: ...
             @property
-            def writers(self) -> MutableSequence[_ChannelModule._WriterModule]: ...
+            def writers(self) -> WriterClientListBuilder: ...
             @writers.setter
             def writers(
-                self, value: Sequence[_ChannelModule._WriterModule]
+                self,
+                value: WriterClientListBuilder
+                | WriterClientListReader
+                | dict[str, Any],
             ) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["readerSRs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writerSRs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["readers"], size: int | None = None
-            ) -> MutableSequence[_ChannelModule._ReaderModule]: ...
+            ) -> ReaderClientListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writers"], size: int | None = None
-            ) -> MutableSequence[_ChannelModule._WriterModule]: ...
+            ) -> WriterClientListBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -741,30 +847,33 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             bufferSize: int | None = None,
             closeSemantics: ChannelCloseSemanticsEnum | None = None,
             channelSR: str | None = None,
-            readerSRs: Sequence[str] | None = None,
-            writerSRs: Sequence[str] | None = None,
-            channel: _ChannelModule.ChannelClient | _ChannelModule.Server | None = None,
-            readers: Sequence[_ChannelModule._ReaderModule] | None = None,
-            writers: Sequence[_ChannelModule._WriterModule] | None = None,
+            readerSRs: TextListBuilder | dict[str, Any] | None = None,
+            writerSRs: TextListBuilder | dict[str, Any] | None = None,
+            channel: _ChannelInterfaceModule.ChannelClient
+            | _ChannelInterfaceModule.Server
+            | None = None,
+            readers: ReaderClientListBuilder | dict[str, Any] | None = None,
+            writers: WriterClientListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> StartupInfoBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[StartupInfoReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[StartupInfoReader]: ...
@@ -772,255 +881,369 @@ class _ChannelModule(_IdentifiableModule, _PersistentModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[StartupInfoBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> StartupInfoReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> StartupInfoReader: ...
 
-    type StartupInfoReader = _StartupInfoModule.Reader
-    type StartupInfoBuilder = _StartupInfoModule.Builder
-    StartupInfo: _StartupInfoModule
+    type StartupInfoReader = _StartupInfoStructModule.Reader
+    type StartupInfoBuilder = _StartupInfoStructModule.Builder
+    StartupInfo: _StartupInfoStructModule
     class SetbuffersizeRequest(Protocol):
         size: int
-        def send(self) -> _ChannelModule.ChannelClient.SetbuffersizeResult: ...
+        def send(self) -> _ChannelInterfaceModule.ChannelClient.SetbuffersizeResult: ...
 
     class ReaderRequest(Protocol):
-        def send(self) -> _ChannelModule.ChannelClient.ReaderResult: ...
+        def send(self) -> _ChannelInterfaceModule.ChannelClient.ReaderResult: ...
 
     class WriterRequest(Protocol):
-        def send(self) -> _ChannelModule.ChannelClient.WriterResult: ...
+        def send(self) -> _ChannelInterfaceModule.ChannelClient.WriterResult: ...
 
     class EndpointsRequest(Protocol):
-        def send(self) -> _ChannelModule.ChannelClient.EndpointsResult: ...
+        def send(self) -> _ChannelInterfaceModule.ChannelClient.EndpointsResult: ...
 
     class SetautoclosesemanticsRequest(Protocol):
         cs: ChannelCloseSemanticsEnum
-        def send(self) -> _ChannelModule.ChannelClient.SetautoclosesemanticsResult: ...
+        def send(
+            self,
+        ) -> _ChannelInterfaceModule.ChannelClient.SetautoclosesemanticsResult: ...
 
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
-        def send(self) -> _ChannelModule.ChannelClient.CloseResult: ...
+        def send(self) -> _ChannelInterfaceModule.ChannelClient.CloseResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _ChannelModule.ChannelClient: ...
-    class Server(_IdentifiableModule.Server, _PersistentModule.Server):
+    ) -> _ChannelInterfaceModule.ChannelClient: ...
+    class Server(
+        _IdentifiableInterfaceModule.Server, _PersistentInterfaceModule.Server
+    ):
         class SetbuffersizeResult(Awaitable[None], Protocol): ...
 
-        class ReaderResult(Awaitable[ReaderResult], Protocol):
-            r: (
-                _ChannelModule._ReaderModule.Server
-                | _ChannelModule._ReaderModule.ReaderClient
-            )
+        class ReaderResult(_DynamicStructBuilder):
+            @property
+            def r(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
+            ): ...
+            @r.setter
+            def r(
+                self,
+                value: _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient,
+            ) -> None: ...
 
-        class WriterResult(Awaitable[WriterResult], Protocol):
-            w: (
-                _ChannelModule._WriterModule.Server
-                | _ChannelModule._WriterModule.WriterClient
-            )
+        class WriterResult(_DynamicStructBuilder):
+            @property
+            def w(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
+            ): ...
+            @w.setter
+            def w(
+                self,
+                value: _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient,
+            ) -> None: ...
 
-        class EndpointsResult(Awaitable[EndpointsResult], Protocol):
-            r: (
-                _ChannelModule._ReaderModule.Server
-                | _ChannelModule._ReaderModule.ReaderClient
-            )
-            w: (
-                _ChannelModule._WriterModule.Server
-                | _ChannelModule._WriterModule.WriterClient
-            )
+        class EndpointsResult(_DynamicStructBuilder):
+            @property
+            def r(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
+            ): ...
+            @r.setter
+            def r(
+                self,
+                value: _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient,
+            ) -> None: ...
+            @property
+            def w(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
+            ): ...
+            @w.setter
+            def w(
+                self,
+                value: _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient,
+            ) -> None: ...
 
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
 
         class ReaderResultTuple(NamedTuple):
             r: (
-                _ChannelModule._ReaderModule.Server
-                | _ChannelModule._ReaderModule.ReaderClient
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
             )
 
         class WriterResultTuple(NamedTuple):
             w: (
-                _ChannelModule._WriterModule.Server
-                | _ChannelModule._WriterModule.WriterClient
+                _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
             )
 
         class EndpointsResultTuple(NamedTuple):
             r: (
-                _ChannelModule._ReaderModule.Server
-                | _ChannelModule._ReaderModule.ReaderClient
+                _ChannelInterfaceModule._ReaderInterfaceModule.Server
+                | _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
             )
             w: (
-                _ChannelModule._WriterModule.Server
-                | _ChannelModule._WriterModule.WriterClient
+                _ChannelInterfaceModule._WriterInterfaceModule.Server
+                | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
             )
 
         class SetbuffersizeParams(Protocol):
             size: int
 
         class SetbuffersizeCallContext(Protocol):
-            params: _ChannelModule.Server.SetbuffersizeParams
+            params: _ChannelInterfaceModule.Server.SetbuffersizeParams
 
         class ReaderParams(Protocol): ...
 
         class ReaderCallContext(Protocol):
-            params: _ChannelModule.Server.ReaderParams
-            results: _ChannelModule.Server.ReaderResult
+            params: _ChannelInterfaceModule.Server.ReaderParams
+            @property
+            def results(self) -> _ChannelInterfaceModule.Server.ReaderResult: ...
 
         class WriterParams(Protocol): ...
 
         class WriterCallContext(Protocol):
-            params: _ChannelModule.Server.WriterParams
-            results: _ChannelModule.Server.WriterResult
+            params: _ChannelInterfaceModule.Server.WriterParams
+            @property
+            def results(self) -> _ChannelInterfaceModule.Server.WriterResult: ...
 
         class EndpointsParams(Protocol): ...
 
         class EndpointsCallContext(Protocol):
-            params: _ChannelModule.Server.EndpointsParams
-            results: _ChannelModule.Server.EndpointsResult
+            params: _ChannelInterfaceModule.Server.EndpointsParams
+            @property
+            def results(self) -> _ChannelInterfaceModule.Server.EndpointsResult: ...
 
         class SetautoclosesemanticsParams(Protocol):
             cs: ChannelCloseSemanticsEnum
 
         class SetautoclosesemanticsCallContext(Protocol):
-            params: _ChannelModule.Server.SetautoclosesemanticsParams
+            params: _ChannelInterfaceModule.Server.SetautoclosesemanticsParams
 
         class CloseParams(Protocol):
             waitForEmptyBuffer: bool
 
         class CloseCallContext(Protocol):
-            params: _ChannelModule.Server.CloseParams
+            params: _ChannelInterfaceModule.Server.CloseParams
 
         def setBufferSize(
             self,
             size: int,
-            _context: _ChannelModule.Server.SetbuffersizeCallContext,
+            _context: _ChannelInterfaceModule.Server.SetbuffersizeCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def setBufferSize_context(
-            self, context: _ChannelModule.Server.SetbuffersizeCallContext
+            self, context: _ChannelInterfaceModule.Server.SetbuffersizeCallContext
         ) -> Awaitable[None]: ...
         def reader(
             self,
-            _context: _ChannelModule.Server.ReaderCallContext,
+            _context: _ChannelInterfaceModule.Server.ReaderCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _ChannelModule._ReaderModule.Server
-            | _ChannelModule.Server.ReaderResultTuple
+            _ChannelInterfaceModule._ReaderInterfaceModule.Server
+            | _ChannelInterfaceModule.Server.ReaderResultTuple
             | None
         ]: ...
         def reader_context(
-            self, context: _ChannelModule.Server.ReaderCallContext
+            self, context: _ChannelInterfaceModule.Server.ReaderCallContext
         ) -> Awaitable[None]: ...
         def writer(
             self,
-            _context: _ChannelModule.Server.WriterCallContext,
+            _context: _ChannelInterfaceModule.Server.WriterCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            _ChannelModule._WriterModule.Server
-            | _ChannelModule.Server.WriterResultTuple
+            _ChannelInterfaceModule._WriterInterfaceModule.Server
+            | _ChannelInterfaceModule.Server.WriterResultTuple
             | None
         ]: ...
         def writer_context(
-            self, context: _ChannelModule.Server.WriterCallContext
+            self, context: _ChannelInterfaceModule.Server.WriterCallContext
         ) -> Awaitable[None]: ...
         def endpoints(
             self,
-            _context: _ChannelModule.Server.EndpointsCallContext,
+            _context: _ChannelInterfaceModule.Server.EndpointsCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_ChannelModule.Server.EndpointsResultTuple | None]: ...
+        ) -> Awaitable[_ChannelInterfaceModule.Server.EndpointsResultTuple | None]: ...
         def endpoints_context(
-            self, context: _ChannelModule.Server.EndpointsCallContext
+            self, context: _ChannelInterfaceModule.Server.EndpointsCallContext
         ) -> Awaitable[None]: ...
         def setAutoCloseSemantics(
             self,
             cs: ChannelCloseSemanticsEnum,
-            _context: _ChannelModule.Server.SetautoclosesemanticsCallContext,
+            _context: _ChannelInterfaceModule.Server.SetautoclosesemanticsCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def setAutoCloseSemantics_context(
-            self, context: _ChannelModule.Server.SetautoclosesemanticsCallContext
+            self,
+            context: _ChannelInterfaceModule.Server.SetautoclosesemanticsCallContext,
         ) -> Awaitable[None]: ...
         def close(
             self,
             waitForEmptyBuffer: bool,
-            _context: _ChannelModule.Server.CloseCallContext,
+            _context: _ChannelInterfaceModule.Server.CloseCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def close_context(
-            self, context: _ChannelModule.Server.CloseCallContext
+            self, context: _ChannelInterfaceModule.Server.CloseCallContext
         ) -> Awaitable[None]: ...
 
     class ChannelClient(
-        _IdentifiableModule.IdentifiableClient, _PersistentModule.PersistentClient
+        _IdentifiableInterfaceModule.IdentifiableClient,
+        _PersistentInterfaceModule.PersistentClient,
     ):
         class SetbuffersizeResult(Awaitable[None], Protocol): ...
 
         class ReaderResult(Awaitable[ReaderResult], Protocol):
-            r: _ChannelModule._ReaderModule.ReaderClient
+            r: _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
 
         class WriterResult(Awaitable[WriterResult], Protocol):
-            w: _ChannelModule._WriterModule.WriterClient
+            w: _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
 
         class EndpointsResult(Awaitable[EndpointsResult], Protocol):
-            r: _ChannelModule._ReaderModule.ReaderClient
-            w: _ChannelModule._WriterModule.WriterClient
+            r: _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
+            w: _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
 
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
 
         def setBufferSize(
             self, size: int | None = None
-        ) -> _ChannelModule.ChannelClient.SetbuffersizeResult: ...
-        def reader(self) -> _ChannelModule.ChannelClient.ReaderResult: ...
-        def writer(self) -> _ChannelModule.ChannelClient.WriterResult: ...
-        def endpoints(self) -> _ChannelModule.ChannelClient.EndpointsResult: ...
+        ) -> _ChannelInterfaceModule.ChannelClient.SetbuffersizeResult: ...
+        def reader(self) -> _ChannelInterfaceModule.ChannelClient.ReaderResult: ...
+        def writer(self) -> _ChannelInterfaceModule.ChannelClient.WriterResult: ...
+        def endpoints(
+            self,
+        ) -> _ChannelInterfaceModule.ChannelClient.EndpointsResult: ...
         def setAutoCloseSemantics(
             self, cs: ChannelCloseSemanticsEnum | None = None
-        ) -> _ChannelModule.ChannelClient.SetautoclosesemanticsResult: ...
+        ) -> _ChannelInterfaceModule.ChannelClient.SetautoclosesemanticsResult: ...
         def close(
             self, waitForEmptyBuffer: bool | None = None
-        ) -> _ChannelModule.ChannelClient.CloseResult: ...
+        ) -> _ChannelInterfaceModule.ChannelClient.CloseResult: ...
         def setBufferSize_request(
             self, size: int | None = None
-        ) -> _ChannelModule.SetbuffersizeRequest: ...
-        def reader_request(self) -> _ChannelModule.ReaderRequest: ...
-        def writer_request(self) -> _ChannelModule.WriterRequest: ...
-        def endpoints_request(self) -> _ChannelModule.EndpointsRequest: ...
+        ) -> _ChannelInterfaceModule.SetbuffersizeRequest: ...
+        def reader_request(self) -> _ChannelInterfaceModule.ReaderRequest: ...
+        def writer_request(self) -> _ChannelInterfaceModule.WriterRequest: ...
+        def endpoints_request(self) -> _ChannelInterfaceModule.EndpointsRequest: ...
         def setAutoCloseSemantics_request(
             self, cs: ChannelCloseSemanticsEnum | None = None
-        ) -> _ChannelModule.SetautoclosesemanticsRequest: ...
+        ) -> _ChannelInterfaceModule.SetautoclosesemanticsRequest: ...
         def close_request(
             self, waitForEmptyBuffer: bool | None = None
-        ) -> _ChannelModule.CloseRequest: ...
+        ) -> _ChannelInterfaceModule.CloseRequest: ...
 
-Channel: _ChannelModule
+class _TextList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
 
-class _StartChannelsServiceModule(_IdentifiableModule):
-    class _ParamsModule(_StructModule):
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __setitem__(self, key: int, value: str) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
+
+class _ReaderClientList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ReaderClient: ...
+        @override
+        def __iter__(self) -> Iterator[ReaderClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ReaderClient: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: ReaderClient | _ChannelInterfaceModule._ReaderInterfaceModule.Server,
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ReaderClient]: ...
+
+class _WriterClientList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> WriterClient: ...
+        @override
+        def __iter__(self) -> Iterator[WriterClient]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> WriterClient: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: WriterClient | _ChannelInterfaceModule._WriterInterfaceModule.Server,
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[WriterClient]: ...
+
+Channel: _ChannelInterfaceModule
+
+class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
+    class _ParamsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @property
             def noOfChannels(self) -> int: ...
             @property
@@ -1028,23 +1251,23 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             @property
             def noOfWriters(self) -> int: ...
             @property
-            def readerSrts(self) -> Sequence[str]: ...
+            def readerSrts(self) -> TextListReader: ...
             @property
-            def writerSrts(self) -> Sequence[str]: ...
+            def writerSrts(self) -> TextListReader: ...
             @property
             def bufferSize(self) -> int: ...
             @override
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> ParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @name.setter
-            def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self, value: str) -> None: ...
             @property
             def noOfChannels(self) -> int: ...
             @noOfChannels.setter
@@ -1058,25 +1281,30 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             @noOfWriters.setter
             def noOfWriters(self, value: int) -> None: ...
             @property
-            def readerSrts(self) -> MutableSequence[str]: ...
+            def readerSrts(self) -> TextListBuilder: ...
             @readerSrts.setter
-            def readerSrts(self, value: Sequence[str]) -> None: ...
+            def readerSrts(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
-            def writerSrts(self) -> MutableSequence[str]: ...
+            def writerSrts(self) -> TextListBuilder: ...
             @writerSrts.setter
-            def writerSrts(self, value: Sequence[str]) -> None: ...
+            def writerSrts(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @property
             def bufferSize(self) -> int: ...
             @bufferSize.setter
             def bufferSize(self, value: int) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["readerSrts"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(
                 self, field: Literal["writerSrts"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @overload
             def init(self, field: str, size: int | None = None) -> Any: ...
             @override
@@ -1086,29 +1314,30 @@ class _StartChannelsServiceModule(_IdentifiableModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             name: str | None = None,
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | dict[str, Any] | None = None,
+            writerSrts: TextListBuilder | dict[str, Any] | None = None,
             bufferSize: int | None = None,
             **kwargs: Any,
         ) -> ParamsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[ParamsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[ParamsReader]: ...
@@ -1116,81 +1345,115 @@ class _StartChannelsServiceModule(_IdentifiableModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[ParamsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ParamsReader: ...
 
-    type ParamsReader = _ParamsModule.Reader
-    type ParamsBuilder = _ParamsModule.Builder
-    Params: _ParamsModule
+    type ParamsReader = _ParamsStructModule.Reader
+    type ParamsBuilder = _ParamsStructModule.Builder
+    Params: _ParamsStructModule
     class StartRequest(Protocol):
         name: str
         noOfChannels: int
         noOfReaders: int
         noOfWriters: int
-        readerSrts: Sequence[str]
-        writerSrts: Sequence[str]
+        readerSrts: TextListBuilder | TextListReader | Sequence[Any]
+        writerSrts: TextListBuilder | TextListReader | Sequence[Any]
         bufferSize: int
         @overload
         def init(
             self, name: Literal["readerSrts"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(
             self, name: Literal["writerSrts"], size: int = ...
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
         def send(
             self,
-        ) -> _StartChannelsServiceModule.StartChannelsServiceClient.StartResult: ...
+        ) -> (
+            _StartChannelsServiceInterfaceModule.StartChannelsServiceClient.StartResult
+        ): ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _StartChannelsServiceModule.StartChannelsServiceClient: ...
-    class Server(_IdentifiableModule.Server):
-        class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
-            stop: _StoppableModule.Server | _StoppableModule.StoppableClient
+    ) -> _StartChannelsServiceInterfaceModule.StartChannelsServiceClient: ...
+    class Server(_IdentifiableInterfaceModule.Server):
+        class StartResult(_DynamicStructBuilder):
+            @property
+            def startupInfos(self) -> StartupInfoListBuilder: ...
+            @startupInfos.setter
+            def startupInfos(
+                self,
+                value: StartupInfoListBuilder | StartupInfoListReader | Sequence[Any],
+            ) -> None: ...
+            @property
+            def stop(
+                self,
+            ) -> (
+                _StoppableInterfaceModule.Server
+                | _StoppableInterfaceModule.StoppableClient
+            ): ...
+            @stop.setter
+            def stop(
+                self,
+                value: _StoppableInterfaceModule.Server
+                | _StoppableInterfaceModule.StoppableClient,
+            ) -> None: ...
+            @overload
+            def init(
+                self, field: Literal["startupInfos"], size: int | None = None
+            ) -> StartupInfoListBuilder: ...
+            @overload
+            def init(self, field: str, size: int | None = None) -> Any: ...
 
         class StartResultTuple(NamedTuple):
-            startupInfos: Sequence[StartupInfoBuilder | StartupInfoReader]
-            stop: _StoppableModule.Server | _StoppableModule.StoppableClient
+            startupInfos: StartupInfoListBuilder | StartupInfoListReader
+            stop: (
+                _StoppableInterfaceModule.Server
+                | _StoppableInterfaceModule.StoppableClient
+            )
 
         class StartParams(Protocol):
             name: str
             noOfChannels: int
             noOfReaders: int
             noOfWriters: int
-            readerSrts: Sequence[str]
-            writerSrts: Sequence[str]
+            readerSrts: TextListReader
+            writerSrts: TextListReader
             bufferSize: int
 
         class StartCallContext(Protocol):
-            params: _StartChannelsServiceModule.Server.StartParams
-            results: _StartChannelsServiceModule.Server.StartResult
+            params: _StartChannelsServiceInterfaceModule.Server.StartParams
+            @property
+            def results(
+                self,
+            ) -> _StartChannelsServiceInterfaceModule.Server.StartResult: ...
 
         def start(
             self,
@@ -1198,20 +1461,22 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int,
             noOfReaders: int,
             noOfWriters: int,
-            readerSrts: Sequence[str],
-            writerSrts: Sequence[str],
+            readerSrts: TextListReader,
+            writerSrts: TextListReader,
             bufferSize: int,
-            _context: _StartChannelsServiceModule.Server.StartCallContext,
+            _context: _StartChannelsServiceInterfaceModule.Server.StartCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_StartChannelsServiceModule.Server.StartResultTuple | None]: ...
+        ) -> Awaitable[
+            _StartChannelsServiceInterfaceModule.Server.StartResultTuple | None
+        ]: ...
         def start_context(
-            self, context: _StartChannelsServiceModule.Server.StartCallContext
+            self, context: _StartChannelsServiceInterfaceModule.Server.StartCallContext
         ) -> Awaitable[None]: ...
 
-    class StartChannelsServiceClient(_IdentifiableModule.IdentifiableClient):
+    class StartChannelsServiceClient(_IdentifiableInterfaceModule.IdentifiableClient):
         class StartResult(Awaitable[StartResult], Protocol):
-            startupInfos: Sequence[StartupInfoReader]
-            stop: _StoppableModule.StoppableClient
+            startupInfos: StartupInfoListReader
+            stop: _StoppableInterfaceModule.StoppableClient
 
         def start(
             self,
@@ -1219,59 +1484,112 @@ class _StartChannelsServiceModule(_IdentifiableModule):
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            writerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
             bufferSize: int | None = None,
-        ) -> _StartChannelsServiceModule.StartChannelsServiceClient.StartResult: ...
+        ) -> (
+            _StartChannelsServiceInterfaceModule.StartChannelsServiceClient.StartResult
+        ): ...
         def start_request(
             self,
             name: str | None = None,
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: Sequence[str] | None = None,
-            writerSrts: Sequence[str] | None = None,
+            readerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
+            writerSrts: TextListBuilder | TextListReader | Sequence[Any] | None = None,
             bufferSize: int | None = None,
-        ) -> _StartChannelsServiceModule.StartRequest: ...
+        ) -> _StartChannelsServiceInterfaceModule.StartRequest: ...
 
-StartChannelsService: _StartChannelsServiceModule
+class _StartupInfoList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> StartupInfoReader: ...
+        @override
+        def __iter__(self) -> Iterator[StartupInfoReader]: ...
 
-class _PortInfosModule(_StructModule):
-    class _NameAndSRModule(_StructModule):
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> StartupInfoBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: StartupInfoReader | StartupInfoBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[StartupInfoBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> StartupInfoBuilder: ...
+
+StartChannelsService: _StartChannelsServiceInterfaceModule
+
+class _NameAndSRList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> NameAndSRReader: ...
+        @override
+        def __iter__(self) -> Iterator[NameAndSRReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> NameAndSRBuilder: ...
+        @override
+        def __setitem__(
+            self, key: int, value: NameAndSRReader | NameAndSRBuilder | dict[str, Any]
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[NameAndSRBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> NameAndSRBuilder: ...
+
+class _PortInfosStructModule(_StructModule):
+    class _NameAndSRStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @property
             def sr(self) -> str: ...
             @property
-            def srs(self) -> Sequence[str]: ...
+            def srs(self) -> TextListReader: ...
             @override
             def which(self) -> Literal["sr", "srs"]: ...
             @override
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> NameAndSRBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @name.setter
-            def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self, value: str) -> None: ...
             @property
             def sr(self) -> str: ...
             @sr.setter
             def sr(self, value: str) -> None: ...
             @property
-            def srs(self) -> MutableSequence[str]: ...
+            def srs(self) -> TextListBuilder: ...
             @srs.setter
-            def srs(self, value: Sequence[str]) -> None: ...
+            def srs(
+                self, value: TextListBuilder | TextListReader | dict[str, Any]
+            ) -> None: ...
             @override
             def which(self) -> Literal["sr", "srs"]: ...
+            @override
             def init(
                 self, field: Literal["srs"], size: int | None = None
-            ) -> MutableSequence[str]: ...
+            ) -> TextListBuilder: ...
             @override
             def as_reader(self) -> NameAndSRReader: ...
 
@@ -1279,25 +1597,26 @@ class _PortInfosModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             name: str | None = None,
             sr: str | None = None,
-            srs: Sequence[str] | None = None,
+            srs: TextListBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> NameAndSRBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[NameAndSRReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[NameAndSRReader]: ...
@@ -1305,72 +1624,70 @@ class _PortInfosModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[NameAndSRBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> NameAndSRReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> NameAndSRReader: ...
 
-    type NameAndSRReader = _NameAndSRModule.Reader
-    type NameAndSRBuilder = _NameAndSRModule.Builder
-    NameAndSR: _NameAndSRModule
+    type NameAndSRReader = _NameAndSRStructModule.Reader
+    type NameAndSRBuilder = _NameAndSRStructModule.Builder
+    NameAndSR: _NameAndSRStructModule
     class Reader(_DynamicStructReader):
         @property
-        def inPorts(self) -> Sequence[NameAndSRReader]: ...
+        def inPorts(self) -> NameAndSRListReader: ...
         @property
-        def outPorts(self) -> Sequence[NameAndSRReader]: ...
+        def outPorts(self) -> NameAndSRListReader: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> PortInfosBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def inPorts(self) -> MutableSequence[NameAndSRBuilder]: ...
+        def inPorts(self) -> NameAndSRListBuilder: ...
         @inPorts.setter
         def inPorts(
-            self,
-            value: Sequence[NameAndSRBuilder | NameAndSRReader]
-            | Sequence[dict[str, Any]],
+            self, value: NameAndSRListBuilder | NameAndSRListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def outPorts(self) -> MutableSequence[NameAndSRBuilder]: ...
+        def outPorts(self) -> NameAndSRListBuilder: ...
         @outPorts.setter
         def outPorts(
-            self,
-            value: Sequence[NameAndSRBuilder | NameAndSRReader]
-            | Sequence[dict[str, Any]],
+            self, value: NameAndSRListBuilder | NameAndSRListReader | dict[str, Any]
         ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["inPorts"], size: int | None = None
-        ) -> MutableSequence[NameAndSRBuilder]: ...
+        ) -> NameAndSRListBuilder: ...
         @overload
         def init(
             self, field: Literal["outPorts"], size: int | None = None
-        ) -> MutableSequence[NameAndSRBuilder]: ...
+        ) -> NameAndSRListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1380,24 +1697,25 @@ class _PortInfosModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        inPorts: Sequence[NameAndSRBuilder] | Sequence[dict[str, Any]] | None = None,
-        outPorts: Sequence[NameAndSRBuilder] | Sequence[dict[str, Any]] | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        inPorts: NameAndSRListBuilder | dict[str, Any] | None = None,
+        outPorts: NameAndSRListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> PortInfosBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[PortInfosReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[PortInfosReader]: ...
@@ -1405,57 +1723,88 @@ class _PortInfosModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[PortInfosBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> PortInfosReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> PortInfosReader: ...
 
-PortInfos: _PortInfosModule
+PortInfos: _PortInfosStructModule
 
-class _ComponentModule(_StructModule):
-    class _RunnableModule(_IdentifiableModule):
+class _PortList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> PortReader: ...
+        @override
+        def __iter__(self) -> Iterator[PortReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> PortBuilder: ...
+        @override
+        def __setitem__(
+            self, key: int, value: PortReader | PortBuilder | dict[str, Any]
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[PortBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> PortBuilder: ...
+
+class _ComponentStructModule(_StructModule):
+    class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
         class StartRequest(Protocol):
             portInfosReaderSr: str
             name: str
             def send(
                 self,
-            ) -> _ComponentModule._RunnableModule.RunnableClient.StartResult: ...
+            ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StartResult: ...
 
         class StopRequest(Protocol):
             def send(
                 self,
-            ) -> _ComponentModule._RunnableModule.RunnableClient.StopResult: ...
+            ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StopResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _ComponentModule._RunnableModule.RunnableClient: ...
-        class Server(_IdentifiableModule.Server):
-            class StartResult(Awaitable[StartResult], Protocol):
-                success: bool
+        ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient: ...
+        class Server(_IdentifiableInterfaceModule.Server):
+            class StartResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
-            class StopResult(Awaitable[StopResult], Protocol):
-                success: bool
+            class StopResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class StartResultTuple(NamedTuple):
                 success: bool
@@ -1468,39 +1817,59 @@ class _ComponentModule(_StructModule):
                 name: str
 
             class StartCallContext(Protocol):
-                params: _ComponentModule._RunnableModule.Server.StartParams
-                results: _ComponentModule._RunnableModule.Server.StartResult
+                params: (
+                    _ComponentStructModule._RunnableInterfaceModule.Server.StartParams
+                )
+                @property
+                def results(
+                    self,
+                ) -> (
+                    _ComponentStructModule._RunnableInterfaceModule.Server.StartResult
+                ): ...
 
             class StopParams(Protocol): ...
 
             class StopCallContext(Protocol):
-                params: _ComponentModule._RunnableModule.Server.StopParams
-                results: _ComponentModule._RunnableModule.Server.StopResult
+                params: (
+                    _ComponentStructModule._RunnableInterfaceModule.Server.StopParams
+                )
+                @property
+                def results(
+                    self,
+                ) -> (
+                    _ComponentStructModule._RunnableInterfaceModule.Server.StopResult
+                ): ...
 
             def start(
                 self,
                 portInfosReaderSr: str,
                 name: str,
-                _context: _ComponentModule._RunnableModule.Server.StartCallContext,
+                _context: _ComponentStructModule._RunnableInterfaceModule.Server.StartCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                bool | _ComponentModule._RunnableModule.Server.StartResultTuple | None
+                bool
+                | _ComponentStructModule._RunnableInterfaceModule.Server.StartResultTuple
+                | None
             ]: ...
             def start_context(
-                self, context: _ComponentModule._RunnableModule.Server.StartCallContext
+                self,
+                context: _ComponentStructModule._RunnableInterfaceModule.Server.StartCallContext,
             ) -> Awaitable[None]: ...
             def stop(
                 self,
-                _context: _ComponentModule._RunnableModule.Server.StopCallContext,
+                _context: _ComponentStructModule._RunnableInterfaceModule.Server.StopCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                bool | _ComponentModule._RunnableModule.Server.StopResultTuple | None
+                bool
+                | _ComponentStructModule._RunnableInterfaceModule.Server.StopResultTuple
+                | None
             ]: ...
             def stop_context(
-                self, context: _ComponentModule._RunnableModule.Server.StopCallContext
+                self,
+                context: _ComponentStructModule._RunnableInterfaceModule.Server.StopCallContext,
             ) -> Awaitable[None]: ...
 
-        class RunnableClient(_IdentifiableModule.IdentifiableClient):
+        class RunnableClient(_IdentifiableInterfaceModule.IdentifiableClient):
             class StartResult(Awaitable[StartResult], Protocol):
                 success: bool
 
@@ -1509,36 +1878,39 @@ class _ComponentModule(_StructModule):
 
             def start(
                 self, portInfosReaderSr: str | None = None, name: str | None = None
-            ) -> _ComponentModule._RunnableModule.RunnableClient.StartResult: ...
+            ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StartResult: ...
             def stop(
                 self,
-            ) -> _ComponentModule._RunnableModule.RunnableClient.StopResult: ...
+            ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StopResult: ...
             def start_request(
                 self, portInfosReaderSr: str | None = None, name: str | None = None
-            ) -> _ComponentModule._RunnableModule.StartRequest: ...
-            def stop_request(self) -> _ComponentModule._RunnableModule.StopRequest: ...
+            ) -> _ComponentStructModule._RunnableInterfaceModule.StartRequest: ...
+            def stop_request(
+                self,
+            ) -> _ComponentStructModule._RunnableInterfaceModule.StopRequest: ...
 
-    Runnable: _RunnableModule
-    type RunnableClient = _ComponentModule._RunnableModule.RunnableClient
-    class _ComponentTypeModule:
+    Runnable: _RunnableInterfaceModule
+    type RunnableClient = _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+    type RunnableServer = _ComponentStructModule._RunnableInterfaceModule.Server
+    class _ComponentTypeEnumModule:
         standard: int
         iip: int
         subflow: int
         view: int
 
-    ComponentType: _ComponentTypeModule
-    class _PortModule(_StructModule):
-        class _PortTypeModule:
+    ComponentType: _ComponentTypeEnumModule
+    class _PortStructModule(_StructModule):
+        class _PortTypeEnumModule:
             standard: int
 
-        PortType: _PortTypeModule
-        class _ContentTypeModule:
+        PortType: _PortTypeEnumModule
+        class _ContentTypeEnumModule:
             structuredText: int
 
-        ContentType: _ContentTypeModule
+        ContentType: _ContentTypeEnumModule
         class Reader(_DynamicStructReader):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @property
             def contentType(self) -> str: ...
             @property
@@ -1547,14 +1919,14 @@ class _ComponentModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> PortBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
-            def name(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self) -> str: ...
             @name.setter
-            def name(self, value: str) -> None: ...  # pyright: ignore[reportIncompatibleVariableOverride,reportIncompatibleMethodOverride]
+            def name(self, value: str) -> None: ...
             @property
             def contentType(self) -> str: ...
             @contentType.setter
@@ -1570,25 +1942,26 @@ class _ComponentModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             name: str | None = None,
             contentType: str | None = None,
             type: ComponentPortPortTypeEnum | None = None,
             **kwargs: Any,
         ) -> PortBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[PortReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[PortReader]: ...
@@ -1596,53 +1969,56 @@ class _ComponentModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[PortBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> PortReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> PortReader: ...
 
-    type PortReader = _PortModule.Reader
-    type PortBuilder = _PortModule.Builder
-    Port: _PortModule
+    type PortReader = _PortStructModule.Reader
+    type PortBuilder = _PortStructModule.Builder
+    Port: _PortStructModule
     class Reader(_DynamicStructReader):
         @property
         def info(self) -> IdInformationReader: ...
         @property
         def type(self) -> ComponentComponentTypeEnum: ...
         @property
-        def inPorts(self) -> Sequence[PortReader]: ...
+        def inPorts(self) -> PortListReader: ...
         @property
-        def outPorts(self) -> Sequence[PortReader]: ...
+        def outPorts(self) -> PortListReader: ...
         @property
-        def run(self) -> _ComponentModule._RunnableModule.RunnableClient: ...
+        def run(
+            self,
+        ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient: ...
         @property
         def defaultConfig(self) -> str: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> ComponentBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -1657,29 +2033,32 @@ class _ComponentModule(_StructModule):
         @type.setter
         def type(self, value: ComponentComponentTypeEnum) -> None: ...
         @property
-        def inPorts(self) -> MutableSequence[PortBuilder]: ...
+        def inPorts(self) -> PortListBuilder: ...
         @inPorts.setter
         def inPorts(
-            self, value: Sequence[PortBuilder | PortReader] | Sequence[dict[str, Any]]
+            self, value: PortListBuilder | PortListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def outPorts(self) -> MutableSequence[PortBuilder]: ...
+        def outPorts(self) -> PortListBuilder: ...
         @outPorts.setter
         def outPorts(
-            self, value: Sequence[PortBuilder | PortReader] | Sequence[dict[str, Any]]
+            self, value: PortListBuilder | PortListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def run(self) -> _ComponentModule._RunnableModule.RunnableClient: ...
+        def run(
+            self,
+        ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient: ...
         @run.setter
         def run(
             self,
-            value: _ComponentModule._RunnableModule.RunnableClient
-            | _ComponentModule._RunnableModule.Server,
+            value: _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+            | _ComponentStructModule._RunnableInterfaceModule.Server,
         ) -> None: ...
         @property
         def defaultConfig(self) -> str: ...
         @defaultConfig.setter
         def defaultConfig(self, value: str) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["info"], size: int | None = None
@@ -1687,11 +2066,11 @@ class _ComponentModule(_StructModule):
         @overload
         def init(
             self, field: Literal["inPorts"], size: int | None = None
-        ) -> MutableSequence[PortBuilder]: ...
+        ) -> PortListBuilder: ...
         @overload
         def init(
             self, field: Literal["outPorts"], size: int | None = None
-        ) -> MutableSequence[PortBuilder]: ...
+        ) -> PortListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1701,30 +2080,31 @@ class _ComponentModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         info: IdInformationBuilder | dict[str, Any] | None = None,
         type: ComponentComponentTypeEnum | None = None,
-        inPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,
-        outPorts: Sequence[PortBuilder] | Sequence[dict[str, Any]] | None = None,
-        run: _ComponentModule._RunnableModule.RunnableClient
-        | _ComponentModule._RunnableModule.Server
+        inPorts: PortListBuilder | dict[str, Any] | None = None,
+        outPorts: PortListBuilder | dict[str, Any] | None = None,
+        run: _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+        | _ComponentStructModule._RunnableInterfaceModule.Server
         | None = None,
         defaultConfig: str | None = None,
         **kwargs: Any,
     ) -> ComponentBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[ComponentReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[ComponentReader]: ...
@@ -1732,76 +2112,108 @@ class _ComponentModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[ComponentBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> ComponentReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> ComponentReader: ...
 
-Component: _ComponentModule
+Component: _ComponentStructModule
 
 # Top-level type aliases for use in type annotations
-type ChannelClient = _ChannelModule.ChannelClient
+type ChannelClient = _ChannelInterfaceModule.ChannelClient
 type ChannelCloseSemanticsEnum = int | Literal["fbp", "no"]
-type CloseResult = _ChannelModule.ChannelClient.CloseResult
-type ComponentBuilder = _ComponentModule.Builder
+type ChannelServer = _ChannelInterfaceModule.Server
+type CloseResult = _ChannelInterfaceModule.ChannelClient.CloseResult
+type ComponentBuilder = _ComponentStructModule.Builder
 type ComponentComponentTypeEnum = int | Literal["standard", "iip", "subflow", "view"]
 type ComponentPortContentTypeEnum = int | Literal["structuredText"]
 type ComponentPortPortTypeEnum = int | Literal["standard"]
-type ComponentReader = _ComponentModule.Reader
-type EndpointsResult = _ChannelModule.ChannelClient.EndpointsResult
-type IIPBuilder = _IIPModule.Builder
-type IIPReader = _IIPModule.Reader
-type IPBuilder = _IPModule.Builder
-type IPReader = _IPModule.Reader
+type ComponentReader = _ComponentStructModule.Reader
+type EndpointsResult = _ChannelInterfaceModule.ChannelClient.EndpointsResult
+type IIPBuilder = _IIPStructModule.Builder
+type IIPReader = _IIPStructModule.Reader
+type IPBuilder = _IPStructModule.Builder
+type IPReader = _IPStructModule.Reader
 type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
-type KVBuilder = _IPModule._KVModule.Builder
-type KVReader = _IPModule._KVModule.Reader
-type MsgBuilder = _ChannelModule._MsgModule.Builder
-type MsgReader = _ChannelModule._MsgModule.Reader
-type NameAndSRBuilder = _PortInfosModule._NameAndSRModule.Builder
-type NameAndSRReader = _PortInfosModule._NameAndSRModule.Reader
-type ParamsBuilder = _StartChannelsServiceModule._ParamsModule.Builder
-type ParamsReader = _StartChannelsServiceModule._ParamsModule.Reader
-type PortBuilder = _ComponentModule._PortModule.Builder
-type PortInfosBuilder = _PortInfosModule.Builder
-type PortInfosReader = _PortInfosModule.Reader
-type PortReader = _ComponentModule._PortModule.Reader
-type ReadResult = _ChannelModule._ReaderModule.ReaderClient.ReadResult
-type ReaderClient = _ChannelModule._ReaderModule.ReaderClient
-type ReaderResult = _ChannelModule.ChannelClient.ReaderResult
-type ReadifmsgResult = _ChannelModule._ReaderModule.ReaderClient.ReadifmsgResult
-type RunnableClient = _ComponentModule._RunnableModule.RunnableClient
-type SetautoclosesemanticsResult = (
-    _ChannelModule.ChannelClient.SetautoclosesemanticsResult
+type KVBuilder = _IPStructModule._KVStructModule.Builder
+type KVListBuilder = _KVList.Builder
+type KVListReader = _KVList.Reader
+type KVReader = _IPStructModule._KVStructModule.Reader
+type MsgBuilder = _ChannelInterfaceModule._MsgStructModule.Builder
+type MsgReader = _ChannelInterfaceModule._MsgStructModule.Reader
+type NameAndSRBuilder = _PortInfosStructModule._NameAndSRStructModule.Builder
+type NameAndSRListBuilder = _NameAndSRList.Builder
+type NameAndSRListReader = _NameAndSRList.Reader
+type NameAndSRReader = _PortInfosStructModule._NameAndSRStructModule.Reader
+type ParamsBuilder = _StartChannelsServiceInterfaceModule._ParamsStructModule.Builder
+type ParamsReader = _StartChannelsServiceInterfaceModule._ParamsStructModule.Reader
+type PortBuilder = _ComponentStructModule._PortStructModule.Builder
+type PortInfosBuilder = _PortInfosStructModule.Builder
+type PortInfosReader = _PortInfosStructModule.Reader
+type PortListBuilder = _PortList.Builder
+type PortListReader = _PortList.Reader
+type PortReader = _ComponentStructModule._PortStructModule.Reader
+type ReadResult = _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadResult
+type ReaderClient = _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
+type ReaderClientListBuilder = _ReaderClientList.Builder
+type ReaderClientListReader = _ReaderClientList.Reader
+type ReaderResult = _ChannelInterfaceModule.ChannelClient.ReaderResult
+type ReaderServer = _ChannelInterfaceModule._ReaderInterfaceModule.Server
+type ReadifmsgResult = (
+    _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadifmsgResult
 )
-type SetbuffersizeResult = _ChannelModule.ChannelClient.SetbuffersizeResult
-type StartChannelsServiceClient = _StartChannelsServiceModule.StartChannelsServiceClient
-type StartResult = _ComponentModule._RunnableModule.RunnableClient.StartResult
-type StartupInfoBuilder = _ChannelModule._StartupInfoModule.Builder
-type StartupInfoReader = _ChannelModule._StartupInfoModule.Reader
-type StopResult = _ComponentModule._RunnableModule.RunnableClient.StopResult
-type WriteResult = _ChannelModule._WriterModule.WriterClient.WriteResult
-type WriteifspaceResult = _ChannelModule._WriterModule.WriterClient.WriteifspaceResult
-type WriterClient = _ChannelModule._WriterModule.WriterClient
-type WriterResult = _ChannelModule.ChannelClient.WriterResult
+type RunnableClient = _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+type RunnableServer = _ComponentStructModule._RunnableInterfaceModule.Server
+type SetautoclosesemanticsResult = (
+    _ChannelInterfaceModule.ChannelClient.SetautoclosesemanticsResult
+)
+type SetbuffersizeResult = _ChannelInterfaceModule.ChannelClient.SetbuffersizeResult
+type StartChannelsServiceClient = (
+    _StartChannelsServiceInterfaceModule.StartChannelsServiceClient
+)
+type StartChannelsServiceServer = _StartChannelsServiceInterfaceModule.Server
+type StartResult = (
+    _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StartResult
+)
+type StartupInfoBuilder = _ChannelInterfaceModule._StartupInfoStructModule.Builder
+type StartupInfoListBuilder = _StartupInfoList.Builder
+type StartupInfoListReader = _StartupInfoList.Reader
+type StartupInfoReader = _ChannelInterfaceModule._StartupInfoStructModule.Reader
+type StopResult = (
+    _ComponentStructModule._RunnableInterfaceModule.RunnableClient.StopResult
+)
+type TextListBuilder = _TextList.Builder
+type TextListReader = _TextList.Reader
+type WriteResult = (
+    _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteResult
+)
+type WriteifspaceResult = (
+    _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteifspaceResult
+)
+type WriterClient = _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
+type WriterClientListBuilder = _WriterClientList.Builder
+type WriterClientListReader = _WriterClientList.Reader
+type WriterResult = _ChannelInterfaceModule.ChannelClient.WriterResult
+type WriterServer = _ChannelInterfaceModule._WriterInterfaceModule.Server

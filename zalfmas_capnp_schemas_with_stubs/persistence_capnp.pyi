@@ -1,25 +1,22 @@
 """This is an automatically generated stub for `persistence.capnp`."""
 
 from __future__ import annotations
-
-from collections.abc import Awaitable
-from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
-
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _InterfaceModule,
     _StructModule,
 )
-
-from .common_capnp import _IdentifiableModule
+from contextlib import AbstractContextManager
+from .common_capnp import _IdentifiableInterfaceModule
+from collections.abc import Awaitable, Callable
+from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (
@@ -43,7 +40,7 @@ type Capability = (
     | _DynamicObjectBuilder
 )
 
-class _VatIdModule(_StructModule):
+class _VatIdStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def publicKey0(self) -> int: ...
@@ -57,7 +54,7 @@ class _VatIdModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> VatIdBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -84,26 +81,27 @@ class _VatIdModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         publicKey0: int | None = None,
         publicKey1: int | None = None,
         publicKey2: int | None = None,
         publicKey3: int | None = None,
         **kwargs: Any,
     ) -> VatIdBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[VatIdReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[VatIdReader]: ...
@@ -111,36 +109,37 @@ class _VatIdModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[VatIdBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> VatIdReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> VatIdReader: ...
 
-VatId: _VatIdModule
+VatId: _VatIdStructModule
 
-class _AddressModule(_StructModule):
-    class _Ip6Module(_StructModule):
+class _AddressStructModule(_StructModule):
+    class _AddressIp6StructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def lower64(self) -> int: ...
@@ -150,8 +149,8 @@ class _AddressModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
-            ) -> Ip6Builder: ...
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            ) -> AddressIp6Builder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
@@ -163,69 +162,71 @@ class _AddressModule(_StructModule):
             @upper64.setter
             def upper64(self, value: int) -> None: ...
             @override
-            def as_reader(self) -> Ip6Reader: ...
+            def as_reader(self) -> AddressIp6Reader: ...
 
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             lower64: int | None = None,
             upper64: int | None = None,
             **kwargs: Any,
-        ) -> Ip6Builder: ...
+        ) -> AddressIp6Builder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> AbstractContextManager[Ip6Reader]: ...
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[AddressIp6Reader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[Ip6Reader]: ...
+        ) -> AbstractContextManager[AddressIp6Reader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[Ip6Builder]: ...
+        ) -> AbstractContextManager[AddressIp6Builder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Ip6Reader: ...
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AddressIp6Reader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
-        ) -> Ip6Reader: ...
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AddressIp6Reader: ...
 
-    type Ip6Reader = _Ip6Module.Reader
-    type Ip6Builder = _Ip6Module.Builder
-    Ip6: _Ip6Module
+    type AddressIp6Reader = _AddressIp6StructModule.Reader
+    type AddressIp6Builder = _AddressIp6StructModule.Builder
+    AddressIp6: _AddressIp6StructModule
     class Reader(_DynamicStructReader):
         @property
-        def ip6(self) -> Ip6Reader: ...
+        def ip6(self) -> AddressIp6Reader: ...
         @property
         def port(self) -> int: ...
         @property
@@ -236,14 +237,16 @@ class _AddressModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> AddressBuilder: ...
 
     class Builder(_DynamicStructBuilder):
         @property
-        def ip6(self) -> Ip6Builder: ...
+        def ip6(self) -> AddressIp6Builder: ...
         @ip6.setter
-        def ip6(self, value: Ip6Builder | Ip6Reader | dict[str, Any]) -> None: ...
+        def ip6(
+            self, value: AddressIp6Builder | AddressIp6Reader | dict[str, Any]
+        ) -> None: ...
         @property
         def port(self) -> int: ...
         @port.setter
@@ -254,9 +257,10 @@ class _AddressModule(_StructModule):
         def host(self, value: str) -> None: ...
         @override
         def which(self) -> Literal["ip6", "host"]: ...
+        @override
         def init(
             self, field: Literal["ip6"], size: int | None = None
-        ) -> Ip6Builder: ...
+        ) -> AddressIp6Builder: ...
         @override
         def as_reader(self) -> AddressReader: ...
 
@@ -264,25 +268,26 @@ class _AddressModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
-        ip6: Ip6Builder | dict[str, Any] | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ip6: AddressIp6Builder | dict[str, Any] | None = None,
         port: int | None = None,
         host: str | None = None,
         **kwargs: Any,
     ) -> AddressBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[AddressReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[AddressReader]: ...
@@ -290,35 +295,36 @@ class _AddressModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[AddressBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AddressReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AddressReader: ...
 
-Address: _AddressModule
+Address: _AddressStructModule
 
-class _VatPathModule(_StructModule):
+class _VatPathStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def id(self) -> VatIdReader: ...
@@ -328,7 +334,7 @@ class _VatPathModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> VatPathBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -342,6 +348,7 @@ class _VatPathModule(_StructModule):
         def address(
             self, value: AddressBuilder | AddressReader | dict[str, Any]
         ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["id"], size: int | None = None
@@ -359,24 +366,25 @@ class _VatPathModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         id: VatIdBuilder | dict[str, Any] | None = None,
         address: AddressBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> VatPathBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[VatPathReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[VatPathReader]: ...
@@ -384,36 +392,37 @@ class _VatPathModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[VatPathBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> VatPathReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> VatPathReader: ...
 
-VatPath: _VatPathModule
+VatPath: _VatPathStructModule
 
-class _SturdyRefModule(_StructModule):
-    class _OwnerModule(_StructModule):
+class _SturdyRefStructModule(_StructModule):
+    class _OwnerStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def guid(self) -> str: ...
@@ -421,7 +430,7 @@ class _SturdyRefModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> OwnerBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -436,23 +445,24 @@ class _SturdyRefModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             guid: str | None = None,
             **kwargs: Any,
         ) -> OwnerBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[OwnerReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[OwnerReader]: ...
@@ -460,36 +470,37 @@ class _SturdyRefModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[OwnerBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> OwnerReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> OwnerReader: ...
 
-    type OwnerReader = _OwnerModule.Reader
-    type OwnerBuilder = _OwnerModule.Builder
-    Owner: _OwnerModule
-    class _TokenModule(_StructModule):
+    type OwnerReader = _OwnerStructModule.Reader
+    type OwnerBuilder = _OwnerStructModule.Builder
+    Owner: _OwnerStructModule
+    class _TokenStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def text(self) -> str: ...
@@ -501,7 +512,7 @@ class _SturdyRefModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> TokenBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -522,24 +533,25 @@ class _SturdyRefModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             text: str | None = None,
             data: bytes | None = None,
             **kwargs: Any,
         ) -> TokenBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[TokenReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[TokenReader]: ...
@@ -547,35 +559,36 @@ class _SturdyRefModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[TokenBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> TokenReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> TokenReader: ...
 
-    type TokenReader = _TokenModule.Reader
-    type TokenBuilder = _TokenModule.Builder
-    Token: _TokenModule
+    type TokenReader = _TokenStructModule.Reader
+    type TokenBuilder = _TokenStructModule.Builder
+    Token: _TokenStructModule
     class Reader(_DynamicStructReader):
         @property
         def vat(self) -> VatPathReader: ...
@@ -585,7 +598,7 @@ class _SturdyRefModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SturdyRefBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -601,6 +614,7 @@ class _SturdyRefModule(_StructModule):
         def localRef(
             self, value: TokenBuilder | TokenReader | dict[str, Any]
         ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["vat"], size: int | None = None
@@ -618,24 +632,25 @@ class _SturdyRefModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         vat: VatPathBuilder | dict[str, Any] | None = None,
         localRef: TokenBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SturdyRefBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SturdyRefReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SturdyRefReader]: ...
@@ -643,67 +658,69 @@ class _SturdyRefModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SturdyRefBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SturdyRefReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SturdyRefReader: ...
 
-SturdyRef: _SturdyRefModule
+SturdyRef: _SturdyRefStructModule
 
-class _HeartbeatModule(_InterfaceModule):
+class _HeartbeatInterfaceModule(_InterfaceModule):
     class BeatRequest(Protocol):
-        def send(self) -> _HeartbeatModule.HeartbeatClient.BeatResult: ...
+        def send(self) -> _HeartbeatInterfaceModule.HeartbeatClient.BeatResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _HeartbeatModule.HeartbeatClient: ...
+    ) -> _HeartbeatInterfaceModule.HeartbeatClient: ...
     class Server(_DynamicCapabilityServer):
         class BeatResult(Awaitable[None], Protocol): ...
         class BeatParams(Protocol): ...
 
         class BeatCallContext(Protocol):
-            params: _HeartbeatModule.Server.BeatParams
+            params: _HeartbeatInterfaceModule.Server.BeatParams
 
         def beat(
             self,
-            _context: _HeartbeatModule.Server.BeatCallContext,
+            _context: _HeartbeatInterfaceModule.Server.BeatCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[None]: ...
         def beat_context(
-            self, context: _HeartbeatModule.Server.BeatCallContext
+            self, context: _HeartbeatInterfaceModule.Server.BeatCallContext
         ) -> Awaitable[None]: ...
 
     class HeartbeatClient(_DynamicCapabilityClient):
         class BeatResult(Awaitable[None], Protocol): ...
 
-        def beat(self) -> _HeartbeatModule.HeartbeatClient.BeatResult: ...
-        def beat_request(self) -> _HeartbeatModule.BeatRequest: ...
+        def beat(self) -> _HeartbeatInterfaceModule.HeartbeatClient.BeatResult: ...
+        def beat_request(self) -> _HeartbeatInterfaceModule.BeatRequest: ...
 
-Heartbeat: _HeartbeatModule
+Heartbeat: _HeartbeatInterfaceModule
 
-class _PersistentModule(_InterfaceModule):
-    class _SaveParamsModule(_StructModule):
+class _PersistentInterfaceModule(_InterfaceModule):
+    class _SaveParamsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def sealFor(self) -> OwnerReader: ...
@@ -711,7 +728,7 @@ class _PersistentModule(_InterfaceModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> SaveParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -721,6 +738,7 @@ class _PersistentModule(_InterfaceModule):
             def sealFor(
                 self, value: OwnerBuilder | OwnerReader | dict[str, Any]
             ) -> None: ...
+            @override
             def init(
                 self, field: Literal["sealFor"], size: int | None = None
             ) -> OwnerBuilder: ...
@@ -731,23 +749,24 @@ class _PersistentModule(_InterfaceModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             sealFor: OwnerBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> SaveParamsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[SaveParamsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[SaveParamsReader]: ...
@@ -755,36 +774,37 @@ class _PersistentModule(_InterfaceModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[SaveParamsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> SaveParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> SaveParamsReader: ...
 
-    type SaveParamsReader = _SaveParamsModule.Reader
-    type SaveParamsBuilder = _SaveParamsModule.Builder
-    SaveParams: _SaveParamsModule
-    class _SaveResultsModule(_StructModule):
+    type SaveParamsReader = _SaveParamsStructModule.Reader
+    type SaveParamsBuilder = _SaveParamsStructModule.Builder
+    SaveParams: _SaveParamsStructModule
+    class _SaveResultsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def sturdyRef(self) -> SturdyRefReader: ...
@@ -794,7 +814,7 @@ class _PersistentModule(_InterfaceModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> SaveResultsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -810,6 +830,7 @@ class _PersistentModule(_InterfaceModule):
             def unsaveSR(
                 self, value: SturdyRefBuilder | SturdyRefReader | dict[str, Any]
             ) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["sturdyRef"], size: int | None = None
@@ -827,24 +848,25 @@ class _PersistentModule(_InterfaceModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             sturdyRef: SturdyRefBuilder | dict[str, Any] | None = None,
             unsaveSR: SturdyRefBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> SaveResultsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[SaveResultsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[SaveResultsReader]: ...
@@ -852,47 +874,52 @@ class _PersistentModule(_InterfaceModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[SaveResultsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> SaveResultsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> SaveResultsReader: ...
 
-    type SaveResultsReader = _SaveResultsModule.Reader
-    type SaveResultsBuilder = _SaveResultsModule.Builder
-    SaveResults: _SaveResultsModule
-    class _ReleaseSturdyRefModule(_InterfaceModule):
+    type SaveResultsReader = _SaveResultsStructModule.Reader
+    type SaveResultsBuilder = _SaveResultsStructModule.Builder
+    SaveResults: _SaveResultsStructModule
+    class _ReleaseSturdyRefInterfaceModule(_InterfaceModule):
         class ReleaseRequest(Protocol):
             def send(
                 self,
-            ) -> _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient.ReleaseResult: ...
+            ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient.ReleaseResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient: ...
+        ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient: ...
         class Server(_DynamicCapabilityServer):
-            class ReleaseResult(Awaitable[ReleaseResult], Protocol):
-                success: bool
+            class ReleaseResult(_DynamicStructBuilder):
+                @property
+                def success(self) -> bool: ...
+                @success.setter
+                def success(self, value: bool) -> None: ...
 
             class ReleaseResultTuple(NamedTuple):
                 success: bool
@@ -900,21 +927,24 @@ class _PersistentModule(_InterfaceModule):
             class ReleaseParams(Protocol): ...
 
             class ReleaseCallContext(Protocol):
-                params: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseParams
-                results: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResult
+                params: _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseParams
+                @property
+                def results(
+                    self,
+                ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseResult: ...
 
             def release(
                 self,
-                _context: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseCallContext,
+                _context: _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
                 bool
-                | _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseResultTuple
+                | _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseResultTuple
                 | None
             ]: ...
             def release_context(
                 self,
-                context: _PersistentModule._ReleaseSturdyRefModule.Server.ReleaseCallContext,
+                context: _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server.ReleaseCallContext,
             ) -> Awaitable[None]: ...
 
         class ReleaseSturdyRefClient(_DynamicCapabilityClient):
@@ -923,14 +953,15 @@ class _PersistentModule(_InterfaceModule):
 
             def release(
                 self,
-            ) -> _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient.ReleaseResult: ...
+            ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient.ReleaseResult: ...
             def release_request(
                 self,
-            ) -> _PersistentModule._ReleaseSturdyRefModule.ReleaseRequest: ...
+            ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseRequest: ...
 
-    ReleaseSturdyRef: _ReleaseSturdyRefModule
-    type ReleaseSturdyRefClient = (
-        _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
+    ReleaseSturdyRef: _ReleaseSturdyRefInterfaceModule
+    type ReleaseSturdyRefClient = _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient
+    type ReleaseSturdyRefServer = (
+        _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server
     )
     class SaveRequest(Protocol):
         sealFor: OwnerBuilder
@@ -938,11 +969,12 @@ class _PersistentModule(_InterfaceModule):
         def init(self, name: Literal["sealFor"]) -> OwnerBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> _PersistentModule.PersistentClient.SaveResult: ...
+        def send(self) -> _PersistentInterfaceModule.PersistentClient.SaveResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _PersistentModule.PersistentClient: ...
+    ) -> _PersistentInterfaceModule.PersistentClient: ...
     class Server(_DynamicCapabilityServer):
         class SaveResult(Awaitable[SaveResult], Protocol):
             sturdyRef: SturdyRefBuilder | SturdyRefReader
@@ -956,17 +988,18 @@ class _PersistentModule(_InterfaceModule):
             sealFor: OwnerReader
 
         class SaveCallContext(Protocol):
-            params: _PersistentModule.Server.SaveParams
-            results: _PersistentModule.Server.SaveResult
+            params: _PersistentInterfaceModule.Server.SaveParams
+            @property
+            def results(self) -> SaveResultsBuilder: ...
 
         def save(
             self,
             sealFor: OwnerReader,
-            _context: _PersistentModule.Server.SaveCallContext,
+            _context: _PersistentInterfaceModule.Server.SaveCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_PersistentModule.Server.SaveResultTuple | None]: ...
+        ) -> Awaitable[_PersistentInterfaceModule.Server.SaveResultTuple | None]: ...
         def save_context(
-            self, context: _PersistentModule.Server.SaveCallContext
+            self, context: _PersistentInterfaceModule.Server.SaveCallContext
         ) -> Awaitable[None]: ...
 
     class PersistentClient(_DynamicCapabilityClient):
@@ -976,15 +1009,15 @@ class _PersistentModule(_InterfaceModule):
 
         def save(
             self, sealFor: OwnerBuilder | OwnerReader | dict[str, Any] | None = None
-        ) -> _PersistentModule.PersistentClient.SaveResult: ...
+        ) -> _PersistentInterfaceModule.PersistentClient.SaveResult: ...
         def save_request(
             self, sealFor: OwnerBuilder | None = None
-        ) -> _PersistentModule.SaveRequest: ...
+        ) -> _PersistentInterfaceModule.SaveRequest: ...
 
-Persistent: _PersistentModule
+Persistent: _PersistentInterfaceModule
 
-class _RestorerModule(_InterfaceModule):
-    class _RestoreParamsModule(_StructModule):
+class _RestorerInterfaceModule(_InterfaceModule):
+    class _RestoreParamsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def localRef(self) -> TokenReader: ...
@@ -994,7 +1027,7 @@ class _RestorerModule(_InterfaceModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> RestoreParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -1010,6 +1043,7 @@ class _RestorerModule(_InterfaceModule):
             def sealedBy(
                 self, value: OwnerBuilder | OwnerReader | dict[str, Any]
             ) -> None: ...
+            @override
             @overload
             def init(
                 self, field: Literal["localRef"], size: int | None = None
@@ -1027,24 +1061,25 @@ class _RestorerModule(_InterfaceModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             localRef: TokenBuilder | dict[str, Any] | None = None,
             sealedBy: OwnerBuilder | dict[str, Any] | None = None,
             **kwargs: Any,
         ) -> RestoreParamsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[RestoreParamsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[RestoreParamsReader]: ...
@@ -1052,35 +1087,36 @@ class _RestorerModule(_InterfaceModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[RestoreParamsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RestoreParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RestoreParamsReader: ...
 
-    type RestoreParamsReader = _RestoreParamsModule.Reader
-    type RestoreParamsBuilder = _RestoreParamsModule.Builder
-    RestoreParams: _RestoreParamsModule
+    type RestoreParamsReader = _RestoreParamsStructModule.Reader
+    type RestoreParamsBuilder = _RestoreParamsStructModule.Builder
+    RestoreParams: _RestoreParamsStructModule
     class RestoreRequest(Protocol):
         localRef: TokenBuilder
         sealedBy: OwnerBuilder
@@ -1090,14 +1126,18 @@ class _RestorerModule(_InterfaceModule):
         def init(self, name: Literal["sealedBy"]) -> OwnerBuilder: ...
         @overload
         def init(self, name: str, size: int = ...) -> Any: ...
-        def send(self) -> _RestorerModule.RestorerClient.RestoreResult: ...
+        def send(self) -> _RestorerInterfaceModule.RestorerClient.RestoreResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _RestorerModule.RestorerClient: ...
+    ) -> _RestorerInterfaceModule.RestorerClient: ...
     class Server(_DynamicCapabilityServer):
-        class RestoreResult(Awaitable[RestoreResult], Protocol):
-            cap: Capability
+        class RestoreResult(_DynamicStructBuilder):
+            @property
+            def cap(self) -> Capability: ...
+            @cap.setter
+            def cap(self, value: Capability) -> None: ...
 
         class RestoreResultTuple(NamedTuple):
             cap: Capability
@@ -1107,20 +1147,21 @@ class _RestorerModule(_InterfaceModule):
             sealedBy: OwnerReader
 
         class RestoreCallContext(Protocol):
-            params: _RestorerModule.Server.RestoreParams
-            results: _RestorerModule.Server.RestoreResult
+            params: _RestorerInterfaceModule.Server.RestoreParams
+            @property
+            def results(self) -> _RestorerInterfaceModule.Server.RestoreResult: ...
 
         def restore(
             self,
             localRef: TokenReader,
             sealedBy: OwnerReader,
-            _context: _RestorerModule.Server.RestoreCallContext,
+            _context: _RestorerInterfaceModule.Server.RestoreCallContext,
             **kwargs: dict[str, Any],
         ) -> Awaitable[
-            AnyPointer | _RestorerModule.Server.RestoreResultTuple | None
+            AnyPointer | _RestorerInterfaceModule.Server.RestoreResultTuple | None
         ]: ...
         def restore_context(
-            self, context: _RestorerModule.Server.RestoreCallContext
+            self, context: _RestorerInterfaceModule.Server.RestoreCallContext
         ) -> Awaitable[None]: ...
 
     class RestorerClient(_DynamicCapabilityClient):
@@ -1131,18 +1172,20 @@ class _RestorerModule(_InterfaceModule):
             self,
             localRef: TokenBuilder | TokenReader | dict[str, Any] | None = None,
             sealedBy: OwnerBuilder | OwnerReader | dict[str, Any] | None = None,
-        ) -> _RestorerModule.RestorerClient.RestoreResult: ...
+        ) -> _RestorerInterfaceModule.RestorerClient.RestoreResult: ...
         def restore_request(
             self,
             localRef: TokenBuilder | None = None,
             sealedBy: OwnerBuilder | None = None,
-        ) -> _RestorerModule.RestoreRequest: ...
+        ) -> _RestorerInterfaceModule.RestoreRequest: ...
 
-Restorer: _RestorerModule
+Restorer: _RestorerInterfaceModule
 
-class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
-    class _RegistrarModule(_InterfaceModule):
-        class _RegisterParamsModule(_StructModule):
+class _HostPortResolverInterfaceModule(
+    _IdentifiableInterfaceModule, _RestorerInterfaceModule
+):
+    class _RegistrarInterfaceModule(_InterfaceModule):
+        class _RegisterParamsStructModule(_StructModule):
             class Reader(_DynamicStructReader):
                 @property
                 def base64VatId(self) -> str: ...
@@ -1158,7 +1201,7 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 def as_builder(
                     self,
                     num_first_segment_words: int | None = None,
-                    allocate_seg_callable: Any = None,
+                    allocate_seg_callable: Callable[[int], bytearray] | None = None,
                 ) -> RegisterParamsBuilder: ...
 
             class Builder(_DynamicStructBuilder):
@@ -1189,7 +1232,7 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
                 base64VatId: str | None = None,
                 host: str | None = None,
                 port: int | None = None,
@@ -1197,19 +1240,20 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 identityProof: bytes | None = None,
                 **kwargs: Any,
             ) -> RegisterParamsBuilder: ...
+            @override
             @overload
             def from_bytes(
                 self,
                 buf: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
             ) -> AbstractContextManager[RegisterParamsReader]: ...
             @overload
             def from_bytes(
                 self,
                 buf: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
                 *,
                 builder: Literal[False],
             ) -> AbstractContextManager[RegisterParamsReader]: ...
@@ -1217,35 +1261,36 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             def from_bytes(
                 self,
                 buf: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
             ) -> AbstractContextManager[RegisterParamsBuilder]: ...
+            @override
             def from_bytes_packed(
                 self,
                 buf: bytes,
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
             ) -> _DynamicStructReader: ...
             @override
             def read(
                 self,
                 file: IO[str] | IO[bytes],
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
             ) -> RegisterParamsReader: ...
             @override
             def read_packed(
                 self,
                 file: IO[str] | IO[bytes],
-                traversal_limit_in_words: int | None = ...,
-                nesting_limit: int | None = ...,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
             ) -> RegisterParamsReader: ...
 
-        type RegisterParamsReader = _RegisterParamsModule.Reader
-        type RegisterParamsBuilder = _RegisterParamsModule.Builder
-        RegisterParams: _RegisterParamsModule
+        type RegisterParamsReader = _RegisterParamsStructModule.Reader
+        type RegisterParamsBuilder = _RegisterParamsStructModule.Builder
+        RegisterParams: _RegisterParamsStructModule
         class RegisterRequest(Protocol):
             base64VatId: str
             host: str
@@ -1254,20 +1299,39 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             identityProof: bytes
             def send(
                 self,
-            ) -> (
-                _HostPortResolverModule._RegistrarModule.RegistrarClient.RegisterResult
-            ): ...
+            ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegistrarClient.RegisterResult: ...
 
+        @override
         def _new_client(
             self, server: _DynamicCapabilityServer
-        ) -> _HostPortResolverModule._RegistrarModule.RegistrarClient: ...
+        ) -> (
+            _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegistrarClient
+        ): ...
         class Server(_DynamicCapabilityServer):
-            class RegisterResult(Awaitable[RegisterResult], Protocol):
-                heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
-                secsHeartbeatInterval: int
+            class RegisterResult(_DynamicStructBuilder):
+                @property
+                def heartbeat(
+                    self,
+                ) -> (
+                    _HeartbeatInterfaceModule.Server
+                    | _HeartbeatInterfaceModule.HeartbeatClient
+                ): ...
+                @heartbeat.setter
+                def heartbeat(
+                    self,
+                    value: _HeartbeatInterfaceModule.Server
+                    | _HeartbeatInterfaceModule.HeartbeatClient,
+                ) -> None: ...
+                @property
+                def secsHeartbeatInterval(self) -> int: ...
+                @secsHeartbeatInterval.setter
+                def secsHeartbeatInterval(self, value: int) -> None: ...
 
             class RegisterResultTuple(NamedTuple):
-                heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
+                heartbeat: (
+                    _HeartbeatInterfaceModule.Server
+                    | _HeartbeatInterfaceModule.HeartbeatClient
+                )
                 secsHeartbeatInterval: int
 
             class RegisterParams(Protocol):
@@ -1278,8 +1342,11 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 identityProof: bytes
 
             class RegisterCallContext(Protocol):
-                params: _HostPortResolverModule._RegistrarModule.Server.RegisterParams
-                results: _HostPortResolverModule._RegistrarModule.Server.RegisterResult
+                params: _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterParams
+                @property
+                def results(
+                    self,
+                ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterResult: ...
 
             def register(
                 self,
@@ -1288,20 +1355,20 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 port: int,
                 alias: str,
                 identityProof: bytes,
-                _context: _HostPortResolverModule._RegistrarModule.Server.RegisterCallContext,
+                _context: _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterCallContext,
                 **kwargs: dict[str, Any],
             ) -> Awaitable[
-                _HostPortResolverModule._RegistrarModule.Server.RegisterResultTuple
+                _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterResultTuple
                 | None
             ]: ...
             def register_context(
                 self,
-                context: _HostPortResolverModule._RegistrarModule.Server.RegisterCallContext,
+                context: _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server.RegisterCallContext,
             ) -> Awaitable[None]: ...
 
         class RegistrarClient(_DynamicCapabilityClient):
             class RegisterResult(Awaitable[RegisterResult], Protocol):
-                heartbeat: _HeartbeatModule.HeartbeatClient
+                heartbeat: _HeartbeatInterfaceModule.HeartbeatClient
                 secsHeartbeatInterval: int
 
             def register(
@@ -1311,9 +1378,7 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 port: int | None = None,
                 alias: str | None = None,
                 identityProof: bytes | None = None,
-            ) -> (
-                _HostPortResolverModule._RegistrarModule.RegistrarClient.RegisterResult
-            ): ...
+            ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegistrarClient.RegisterResult: ...
             def register_request(
                 self,
                 base64VatId: str | None = None,
@@ -1321,23 +1386,35 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
                 port: int | None = None,
                 alias: str | None = None,
                 identityProof: bytes | None = None,
-            ) -> _HostPortResolverModule._RegistrarModule.RegisterRequest: ...
+            ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegisterRequest: ...
 
-    Registrar: _RegistrarModule
-    type RegistrarClient = _HostPortResolverModule._RegistrarModule.RegistrarClient
+    Registrar: _RegistrarInterfaceModule
+    type RegistrarClient = (
+        _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegistrarClient
+    )
+    type RegistrarServer = (
+        _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server
+    )
     class ResolveRequest(Protocol):
         id: str
         def send(
             self,
-        ) -> _HostPortResolverModule.HostPortResolverClient.ResolveResult: ...
+        ) -> _HostPortResolverInterfaceModule.HostPortResolverClient.ResolveResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _HostPortResolverModule.HostPortResolverClient: ...
-    class Server(_IdentifiableModule.Server, _RestorerModule.Server):
-        class ResolveResult(Awaitable[ResolveResult], Protocol):
-            host: str
-            port: int
+    ) -> _HostPortResolverInterfaceModule.HostPortResolverClient: ...
+    class Server(_IdentifiableInterfaceModule.Server, _RestorerInterfaceModule.Server):
+        class ResolveResult(_DynamicStructBuilder):
+            @property
+            def host(self) -> str: ...
+            @host.setter
+            def host(self, value: str) -> None: ...
+            @property
+            def port(self) -> int: ...
+            @port.setter
+            def port(self, value: int) -> None: ...
 
         class ResolveResultTuple(NamedTuple):
             host: str
@@ -1347,21 +1424,27 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
             id: str
 
         class ResolveCallContext(Protocol):
-            params: _HostPortResolverModule.Server.ResolveParams
-            results: _HostPortResolverModule.Server.ResolveResult
+            params: _HostPortResolverInterfaceModule.Server.ResolveParams
+            @property
+            def results(
+                self,
+            ) -> _HostPortResolverInterfaceModule.Server.ResolveResult: ...
 
         def resolve(
             self,
             id: str,
-            _context: _HostPortResolverModule.Server.ResolveCallContext,
+            _context: _HostPortResolverInterfaceModule.Server.ResolveCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_HostPortResolverModule.Server.ResolveResultTuple | None]: ...
+        ) -> Awaitable[
+            _HostPortResolverInterfaceModule.Server.ResolveResultTuple | None
+        ]: ...
         def resolve_context(
-            self, context: _HostPortResolverModule.Server.ResolveCallContext
+            self, context: _HostPortResolverInterfaceModule.Server.ResolveCallContext
         ) -> Awaitable[None]: ...
 
     class HostPortResolverClient(
-        _IdentifiableModule.IdentifiableClient, _RestorerModule.RestorerClient
+        _IdentifiableInterfaceModule.IdentifiableClient,
+        _RestorerInterfaceModule.RestorerClient,
     ):
         class ResolveResult(Awaitable[ResolveResult], Protocol):
             host: str
@@ -1369,27 +1452,27 @@ class _HostPortResolverModule(_IdentifiableModule, _RestorerModule):
 
         def resolve(
             self, id: str | None = None
-        ) -> _HostPortResolverModule.HostPortResolverClient.ResolveResult: ...
+        ) -> _HostPortResolverInterfaceModule.HostPortResolverClient.ResolveResult: ...
         def resolve_request(
             self, id: str | None = None
-        ) -> _HostPortResolverModule.ResolveRequest: ...
+        ) -> _HostPortResolverInterfaceModule.ResolveRequest: ...
 
-HostPortResolver: _HostPortResolverModule
+HostPortResolver: _HostPortResolverInterfaceModule
 
-class _GatewayModule(_IdentifiableModule, _RestorerModule):
-    class _RegResultsModule(_StructModule):
+class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceModule):
+    class _RegResultsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def sturdyRef(self) -> SturdyRefReader: ...
             @property
-            def heartbeat(self) -> _HeartbeatModule.HeartbeatClient: ...
+            def heartbeat(self) -> _HeartbeatInterfaceModule.HeartbeatClient: ...
             @property
             def secsHeartbeatInterval(self) -> int: ...
             @override
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> RegResultsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -1400,15 +1483,18 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
                 self, value: SturdyRefBuilder | SturdyRefReader | dict[str, Any]
             ) -> None: ...
             @property
-            def heartbeat(self) -> _HeartbeatModule.HeartbeatClient: ...
+            def heartbeat(self) -> _HeartbeatInterfaceModule.HeartbeatClient: ...
             @heartbeat.setter
             def heartbeat(
-                self, value: _HeartbeatModule.HeartbeatClient | _HeartbeatModule.Server
+                self,
+                value: _HeartbeatInterfaceModule.HeartbeatClient
+                | _HeartbeatInterfaceModule.Server,
             ) -> None: ...
             @property
             def secsHeartbeatInterval(self) -> int: ...
             @secsHeartbeatInterval.setter
             def secsHeartbeatInterval(self, value: int) -> None: ...
+            @override
             def init(
                 self, field: Literal["sturdyRef"], size: int | None = None
             ) -> SturdyRefBuilder: ...
@@ -1419,27 +1505,28 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             sturdyRef: SturdyRefBuilder | dict[str, Any] | None = None,
-            heartbeat: _HeartbeatModule.HeartbeatClient
-            | _HeartbeatModule.Server
+            heartbeat: _HeartbeatInterfaceModule.HeartbeatClient
+            | _HeartbeatInterfaceModule.Server
             | None = None,
             secsHeartbeatInterval: int | None = None,
             **kwargs: Any,
         ) -> RegResultsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[RegResultsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[RegResultsReader]: ...
@@ -1447,130 +1534,147 @@ class _GatewayModule(_IdentifiableModule, _RestorerModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[RegResultsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RegResultsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> RegResultsReader: ...
 
-    type RegResultsReader = _RegResultsModule.Reader
-    type RegResultsBuilder = _RegResultsModule.Builder
-    RegResults: _RegResultsModule
+    type RegResultsReader = _RegResultsStructModule.Reader
+    type RegResultsBuilder = _RegResultsStructModule.Builder
+    RegResults: _RegResultsStructModule
     class RegisterRequest(Protocol):
         cap: AnyPointer
-        def send(self) -> _GatewayModule.GatewayClient.RegisterResult: ...
+        def send(self) -> _GatewayInterfaceModule.GatewayClient.RegisterResult: ...
 
+    @override
     def _new_client(
         self, server: _DynamicCapabilityServer
-    ) -> _GatewayModule.GatewayClient: ...
-    class Server(_IdentifiableModule.Server, _RestorerModule.Server):
+    ) -> _GatewayInterfaceModule.GatewayClient: ...
+    class Server(_IdentifiableInterfaceModule.Server, _RestorerInterfaceModule.Server):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
             sturdyRef: SturdyRefBuilder | SturdyRefReader
-            heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
+            heartbeat: (
+                _HeartbeatInterfaceModule.Server
+                | _HeartbeatInterfaceModule.HeartbeatClient
+            )
             secsHeartbeatInterval: int
 
         class RegisterResultTuple(NamedTuple):
             sturdyRef: SturdyRefBuilder | SturdyRefReader
-            heartbeat: _HeartbeatModule.Server | _HeartbeatModule.HeartbeatClient
+            heartbeat: (
+                _HeartbeatInterfaceModule.Server
+                | _HeartbeatInterfaceModule.HeartbeatClient
+            )
             secsHeartbeatInterval: int
 
         class RegisterParams(Protocol):
             cap: AnyPointer
 
         class RegisterCallContext(Protocol):
-            params: _GatewayModule.Server.RegisterParams
-            results: _GatewayModule.Server.RegisterResult
+            params: _GatewayInterfaceModule.Server.RegisterParams
+            @property
+            def results(self) -> RegResultsBuilder: ...
 
         def register(
             self,
             cap: AnyPointer,
-            _context: _GatewayModule.Server.RegisterCallContext,
+            _context: _GatewayInterfaceModule.Server.RegisterCallContext,
             **kwargs: dict[str, Any],
-        ) -> Awaitable[_GatewayModule.Server.RegisterResultTuple | None]: ...
+        ) -> Awaitable[_GatewayInterfaceModule.Server.RegisterResultTuple | None]: ...
         def register_context(
-            self, context: _GatewayModule.Server.RegisterCallContext
+            self, context: _GatewayInterfaceModule.Server.RegisterCallContext
         ) -> Awaitable[None]: ...
 
     class GatewayClient(
-        _IdentifiableModule.IdentifiableClient, _RestorerModule.RestorerClient
+        _IdentifiableInterfaceModule.IdentifiableClient,
+        _RestorerInterfaceModule.RestorerClient,
     ):
         class RegisterResult(Awaitable[RegisterResult], Protocol):
             sturdyRef: SturdyRefReader
-            heartbeat: _HeartbeatModule.HeartbeatClient
+            heartbeat: _HeartbeatInterfaceModule.HeartbeatClient
             secsHeartbeatInterval: int
 
         def register(
             self, cap: AnyPointer | None = None
-        ) -> _GatewayModule.GatewayClient.RegisterResult: ...
+        ) -> _GatewayInterfaceModule.GatewayClient.RegisterResult: ...
         def register_request(
             self, cap: AnyPointer | None = None
-        ) -> _GatewayModule.RegisterRequest: ...
+        ) -> _GatewayInterfaceModule.RegisterRequest: ...
 
-Gateway: _GatewayModule
+Gateway: _GatewayInterfaceModule
 
 # Top-level type aliases for use in type annotations
-type AddressBuilder = _AddressModule.Builder
-type AddressReader = _AddressModule.Reader
-type BeatResult = _HeartbeatModule.HeartbeatClient.BeatResult
-type GatewayClient = _GatewayModule.GatewayClient
-type HeartbeatClient = _HeartbeatModule.HeartbeatClient
-type HostPortResolverClient = _HostPortResolverModule.HostPortResolverClient
-type Ip6Builder = _AddressModule._Ip6Module.Builder
-type Ip6Reader = _AddressModule._Ip6Module.Reader
-type OwnerBuilder = _SturdyRefModule._OwnerModule.Builder
-type OwnerReader = _SturdyRefModule._OwnerModule.Reader
-type PersistentClient = _PersistentModule.PersistentClient
-type RegResultsBuilder = _GatewayModule._RegResultsModule.Builder
-type RegResultsReader = _GatewayModule._RegResultsModule.Reader
-type RegisterParamsBuilder = (
-    _HostPortResolverModule._RegistrarModule._RegisterParamsModule.Builder
+type AddressBuilder = _AddressStructModule.Builder
+type AddressIp6Builder = _AddressStructModule._AddressIp6StructModule.Builder
+type AddressIp6Reader = _AddressStructModule._AddressIp6StructModule.Reader
+type AddressReader = _AddressStructModule.Reader
+type BeatResult = _HeartbeatInterfaceModule.HeartbeatClient.BeatResult
+type GatewayClient = _GatewayInterfaceModule.GatewayClient
+type GatewayServer = _GatewayInterfaceModule.Server
+type HeartbeatClient = _HeartbeatInterfaceModule.HeartbeatClient
+type HeartbeatServer = _HeartbeatInterfaceModule.Server
+type HostPortResolverClient = _HostPortResolverInterfaceModule.HostPortResolverClient
+type HostPortResolverServer = _HostPortResolverInterfaceModule.Server
+type OwnerBuilder = _SturdyRefStructModule._OwnerStructModule.Builder
+type OwnerReader = _SturdyRefStructModule._OwnerStructModule.Reader
+type PersistentClient = _PersistentInterfaceModule.PersistentClient
+type PersistentServer = _PersistentInterfaceModule.Server
+type RegResultsBuilder = _GatewayInterfaceModule._RegResultsStructModule.Builder
+type RegResultsReader = _GatewayInterfaceModule._RegResultsStructModule.Reader
+type RegisterParamsBuilder = _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule.Builder
+type RegisterParamsReader = _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule.Reader
+type RegisterResult = _GatewayInterfaceModule.GatewayClient.RegisterResult
+type RegistrarClient = (
+    _HostPortResolverInterfaceModule._RegistrarInterfaceModule.RegistrarClient
 )
-type RegisterParamsReader = (
-    _HostPortResolverModule._RegistrarModule._RegisterParamsModule.Reader
-)
-type RegisterResult = _GatewayModule.GatewayClient.RegisterResult
-type RegistrarClient = _HostPortResolverModule._RegistrarModule.RegistrarClient
-type ReleaseResult = (
-    _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient.ReleaseResult
-)
+type RegistrarServer = _HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server
+type ReleaseResult = _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient.ReleaseResult
 type ReleaseSturdyRefClient = (
-    _PersistentModule._ReleaseSturdyRefModule.ReleaseSturdyRefClient
+    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.ReleaseSturdyRefClient
 )
-type ResolveResult = _HostPortResolverModule.HostPortResolverClient.ResolveResult
-type RestoreParamsBuilder = _RestorerModule._RestoreParamsModule.Builder
-type RestoreParamsReader = _RestorerModule._RestoreParamsModule.Reader
-type RestoreResult = _RestorerModule.RestorerClient.RestoreResult
-type RestorerClient = _RestorerModule.RestorerClient
-type SaveParamsBuilder = _PersistentModule._SaveParamsModule.Builder
-type SaveParamsReader = _PersistentModule._SaveParamsModule.Reader
-type SaveResult = _PersistentModule.PersistentClient.SaveResult
-type SaveResultsBuilder = _PersistentModule._SaveResultsModule.Builder
-type SaveResultsReader = _PersistentModule._SaveResultsModule.Reader
-type SturdyRefBuilder = _SturdyRefModule.Builder
-type SturdyRefReader = _SturdyRefModule.Reader
-type TokenBuilder = _SturdyRefModule._TokenModule.Builder
-type TokenReader = _SturdyRefModule._TokenModule.Reader
-type VatIdBuilder = _VatIdModule.Builder
-type VatIdReader = _VatIdModule.Reader
-type VatPathBuilder = _VatPathModule.Builder
-type VatPathReader = _VatPathModule.Reader
+type ReleaseSturdyRefServer = (
+    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server
+)
+type ResolveResult = (
+    _HostPortResolverInterfaceModule.HostPortResolverClient.ResolveResult
+)
+type RestoreParamsBuilder = _RestorerInterfaceModule._RestoreParamsStructModule.Builder
+type RestoreParamsReader = _RestorerInterfaceModule._RestoreParamsStructModule.Reader
+type RestoreResult = _RestorerInterfaceModule.RestorerClient.RestoreResult
+type RestorerClient = _RestorerInterfaceModule.RestorerClient
+type RestorerServer = _RestorerInterfaceModule.Server
+type SaveParamsBuilder = _PersistentInterfaceModule._SaveParamsStructModule.Builder
+type SaveParamsReader = _PersistentInterfaceModule._SaveParamsStructModule.Reader
+type SaveResult = _PersistentInterfaceModule.PersistentClient.SaveResult
+type SaveResultsBuilder = _PersistentInterfaceModule._SaveResultsStructModule.Builder
+type SaveResultsReader = _PersistentInterfaceModule._SaveResultsStructModule.Reader
+type SturdyRefBuilder = _SturdyRefStructModule.Builder
+type SturdyRefReader = _SturdyRefStructModule.Reader
+type TokenBuilder = _SturdyRefStructModule._TokenStructModule.Builder
+type TokenReader = _SturdyRefStructModule._TokenStructModule.Reader
+type VatIdBuilder = _VatIdStructModule.Builder
+type VatIdReader = _VatIdStructModule.Reader
+type VatPathBuilder = _VatPathStructModule.Builder
+type VatPathReader = _VatPathStructModule.Reader

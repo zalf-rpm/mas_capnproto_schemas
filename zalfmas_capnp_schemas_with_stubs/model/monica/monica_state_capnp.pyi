@@ -1,56 +1,61 @@
 """This is an automatically generated stub for `monica_state.capnp`."""
 
 from __future__ import annotations
-
-from collections.abc import MutableSequence, Sequence
-from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, overload, override
-
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _DynamicListBuilder,
+    _DynamicListReader,
     _StructModule,
 )
-
-from ...date_capnp import DateBuilder, DateReader
-from .monica_management_capnp import _ParamsModule
+from contextlib import AbstractContextManager
+from .monica_params_capnp import SiteParametersReader, SiteParametersBuilder
 from .monica_params_capnp import (
-    AutomaticHarvestParametersBuilder,
-    AutomaticHarvestParametersReader,
-    CropModuleParametersBuilder,
-    CropModuleParametersReader,
-    CropParametersBuilder,
-    CropParametersReader,
-    CropResidueParametersBuilder,
-    CropResidueParametersReader,
-    CultivarParametersBuilder,
-    CultivarParametersReader,
-    EnvironmentParametersBuilder,
     EnvironmentParametersReader,
-    MeasuredGroundwaterTableInformationBuilder,
-    MeasuredGroundwaterTableInformationReader,
-    SimulationParametersBuilder,
-    SimulationParametersReader,
-    SiteParametersBuilder,
-    SiteParametersReader,
-    SoilMoistureModuleParametersBuilder,
-    SoilMoistureModuleParametersReader,
-    SoilOrganicModuleParametersBuilder,
-    SoilOrganicModuleParametersReader,
-    SoilParametersBuilder,
-    SoilParametersReader,
-    SoilTemperatureModuleParametersBuilder,
-    SoilTemperatureModuleParametersReader,
-    SoilTransportModuleParametersBuilder,
-    SoilTransportModuleParametersReader,
-    SpeciesParametersBuilder,
-    SpeciesParametersReader,
-    YieldComponentBuilder,
-    YieldComponentReader,
-    _VocModule,
+    EnvironmentParametersBuilder,
 )
+from .monica_params_capnp import CropModuleParametersReader, CropModuleParametersBuilder
+from .monica_params_capnp import SimulationParametersReader, SimulationParametersBuilder
+from .monica_params_capnp import (
+    MeasuredGroundwaterTableInformationReader,
+    MeasuredGroundwaterTableInformationBuilder,
+)
+from .monica_management_capnp import _ParamsStructModule
+from .monica_params_capnp import YieldComponentReader, YieldComponentBuilder
+from .monica_params_capnp import _VocStructModule
+from .monica_params_capnp import SpeciesParametersReader, SpeciesParametersBuilder
+from .monica_params_capnp import CultivarParametersReader, CultivarParametersBuilder
+from .monica_params_capnp import (
+    CropResidueParametersReader,
+    CropResidueParametersBuilder,
+)
+from .monica_params_capnp import SoilParametersReader, SoilParametersBuilder
+from .monica_params_capnp import (
+    SoilTemperatureModuleParametersReader,
+    SoilTemperatureModuleParametersBuilder,
+)
+from .monica_params_capnp import (
+    SoilMoistureModuleParametersReader,
+    SoilMoistureModuleParametersBuilder,
+)
+from .monica_params_capnp import (
+    SoilOrganicModuleParametersReader,
+    SoilOrganicModuleParametersBuilder,
+)
+from .monica_params_capnp import (
+    SoilTransportModuleParametersReader,
+    SoilTransportModuleParametersBuilder,
+)
+from ...date_capnp import DateReader, DateBuilder
+from .monica_params_capnp import (
+    AutomaticHarvestParametersReader,
+    AutomaticHarvestParametersBuilder,
+)
+from .monica_params_capnp import CropParametersReader, CropParametersBuilder
+from collections.abc import Iterator, Sequence, Callable
+from typing import Literal, overload, override, Any, IO
 
-class _MaybeBoolModule(_StructModule):
+class _MaybeBoolStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def value(self) -> bool: ...
@@ -58,7 +63,7 @@ class _MaybeBoolModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> MaybeBoolBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -73,23 +78,24 @@ class _MaybeBoolModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         value: bool | None = None,
         **kwargs: Any,
     ) -> MaybeBoolBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[MaybeBoolReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[MaybeBoolReader]: ...
@@ -97,35 +103,126 @@ class _MaybeBoolModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[MaybeBoolBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> MaybeBoolReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> MaybeBoolReader: ...
 
-MaybeBool: _MaybeBoolModule
+MaybeBool: _MaybeBoolStructModule
 
-class _CropModuleStateModule(_StructModule):
+class _BoolList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> bool: ...
+        @override
+        def __iter__(self) -> Iterator[bool]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> bool: ...
+        @override
+        def __setitem__(self, key: int, value: bool) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[bool]: ...
+
+class _Float64List:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> float: ...
+        @override
+        def __iter__(self) -> Iterator[float]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> float: ...
+        @override
+        def __setitem__(self, key: int, value: float) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[float]: ...
+
+class _Float64ListList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> Float64ListReader: ...
+        @override
+        def __iter__(self) -> Iterator[Float64ListReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> Float64ListBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: Float64ListReader | Float64ListBuilder | Sequence[Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[Float64ListBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> Float64ListBuilder: ...
+
+class _YieldComponentList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> YieldComponentReader: ...
+        @override
+        def __iter__(self) -> Iterator[YieldComponentReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> YieldComponentBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: YieldComponentReader | YieldComponentBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[YieldComponentBuilder]: ...
+        @override
+        def init(
+            self, index: int, size: int | None = None
+        ) -> YieldComponentBuilder: ...
+
+class _CropModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def frostKillOn(self) -> bool: ...
@@ -146,11 +243,11 @@ class _CropModuleStateModule(_StructModule):
         @property
         def abovegroundBiomassOld(self) -> float: ...
         @property
-        def pcAbovegroundOrgan(self) -> Sequence[bool]: ...
+        def pcAbovegroundOrgan(self) -> BoolListReader: ...
         @property
         def actualTranspiration(self) -> float: ...
         @property
-        def pcAssimilatePartitioningCoeff(self) -> Sequence[Sequence[float]]: ...
+        def pcAssimilatePartitioningCoeff(self) -> Float64ListListReader: ...
         @property
         def pcAssimilateReallocation(self) -> float: ...
         @property
@@ -160,9 +257,9 @@ class _CropModuleStateModule(_StructModule):
         @property
         def astronomicDayLenght(self) -> float: ...
         @property
-        def pcBaseDaylength(self) -> Sequence[float]: ...
+        def pcBaseDaylength(self) -> Float64ListReader: ...
         @property
-        def pcBaseTemperature(self) -> Sequence[float]: ...
+        def pcBaseTemperature(self) -> Float64ListReader: ...
         @property
         def pcBeginSensitivePhaseHeatStress(self) -> float: ...
         @property
@@ -178,7 +275,7 @@ class _CropModuleStateModule(_StructModule):
         @property
         def criticalNConcentration(self) -> float: ...
         @property
-        def pcCriticalOxygenContent(self) -> Sequence[float]: ...
+        def pcCriticalOxygenContent(self) -> Float64ListReader: ...
         @property
         def pcCriticalTemperatureHeatStress(self) -> float: ...
         @property
@@ -202,9 +299,9 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcCropSpecificMaxRootingDepth(self) -> float: ...
         @property
-        def cropWaterUptake(self) -> Sequence[float]: ...
+        def cropWaterUptake(self) -> Float64ListReader: ...
         @property
-        def currentTemperatureSum(self) -> Sequence[float]: ...
+        def currentTemperatureSum(self) -> Float64ListReader: ...
         @property
         def currentTotalTemperatureSum(self) -> float: ...
         @property
@@ -214,7 +311,7 @@ class _CropModuleStateModule(_StructModule):
         @property
         def daylengthFactor(self) -> float: ...
         @property
-        def pcDaylengthRequirement(self) -> Sequence[float]: ...
+        def pcDaylengthRequirement(self) -> Float64ListReader: ...
         @property
         def daysAfterBeginFlowering(self) -> int: ...
         @property
@@ -234,7 +331,7 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcDroughtImpactOnFertilityFactor(self) -> float: ...
         @property
-        def pcDroughtStressThreshold(self) -> Sequence[float]: ...
+        def pcDroughtStressThreshold(self) -> Float64ListReader: ...
         @property
         def pcEmergenceFloodingControlOn(self) -> bool: ...
         @property
@@ -288,7 +385,7 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcInitialKcFactor(self) -> float: ...
         @property
-        def pcInitialOrganBiomass(self) -> Sequence[float]: ...
+        def pcInitialOrganBiomass(self) -> Float64ListReader: ...
         @property
         def pcInitialRootingDepth(self) -> float: ...
         @property
@@ -298,9 +395,9 @@ class _CropModuleStateModule(_StructModule):
         @property
         def leafAreaIndex(self) -> float: ...
         @property
-        def sunlitLeafAreaIndex(self) -> Sequence[float]: ...
+        def sunlitLeafAreaIndex(self) -> Float64ListReader: ...
         @property
-        def shadedLeafAreaIndex(self) -> Sequence[float]: ...
+        def shadedLeafAreaIndex(self) -> Float64ListReader: ...
         @property
         def pcLowTemperatureExposure(self) -> float: ...
         @property
@@ -368,31 +465,31 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcNumberOfOrgans(self) -> float: ...
         @property
-        def nUptakeFromLayer(self) -> Sequence[float]: ...
+        def nUptakeFromLayer(self) -> Float64ListReader: ...
         @property
-        def pcOptimumTemperature(self) -> Sequence[float]: ...
+        def pcOptimumTemperature(self) -> Float64ListReader: ...
         @property
-        def organBiomass(self) -> Sequence[float]: ...
+        def organBiomass(self) -> Float64ListReader: ...
         @property
-        def organDeadBiomass(self) -> Sequence[float]: ...
+        def organDeadBiomass(self) -> Float64ListReader: ...
         @property
-        def organGreenBiomass(self) -> Sequence[float]: ...
+        def organGreenBiomass(self) -> Float64ListReader: ...
         @property
-        def organGrowthIncrement(self) -> Sequence[float]: ...
+        def organGrowthIncrement(self) -> Float64ListReader: ...
         @property
-        def pcOrganGrowthRespiration(self) -> Sequence[float]: ...
+        def pcOrganGrowthRespiration(self) -> Float64ListReader: ...
         @property
-        def pcOrganIdsForPrimaryYield(self) -> Sequence[YieldComponentReader]: ...
+        def pcOrganIdsForPrimaryYield(self) -> YieldComponentListReader: ...
         @property
-        def pcOrganIdsForSecondaryYield(self) -> Sequence[YieldComponentReader]: ...
+        def pcOrganIdsForSecondaryYield(self) -> YieldComponentListReader: ...
         @property
-        def pcOrganIdsForCutting(self) -> Sequence[YieldComponentReader]: ...
+        def pcOrganIdsForCutting(self) -> YieldComponentListReader: ...
         @property
-        def pcOrganMaintenanceRespiration(self) -> Sequence[float]: ...
+        def pcOrganMaintenanceRespiration(self) -> Float64ListReader: ...
         @property
-        def organSenescenceIncrement(self) -> Sequence[float]: ...
+        def organSenescenceIncrement(self) -> Float64ListReader: ...
         @property
-        def pcOrganSenescenceRate(self) -> Sequence[Sequence[float]]: ...
+        def pcOrganSenescenceRate(self) -> Float64ListListReader: ...
         @property
         def overcastDayRadiation(self) -> float: ...
         @property
@@ -426,13 +523,13 @@ class _CropModuleStateModule(_StructModule):
         @property
         def rootBiomassOld(self) -> float: ...
         @property
-        def rootDensity(self) -> Sequence[float]: ...
+        def rootDensity(self) -> Float64ListReader: ...
         @property
-        def rootDiameter(self) -> Sequence[float]: ...
+        def rootDiameter(self) -> Float64ListReader: ...
         @property
         def pcRootDistributionParam(self) -> float: ...
         @property
-        def rootEffectivity(self) -> Sequence[float]: ...
+        def rootEffectivity(self) -> Float64ListReader: ...
         @property
         def pcRootFormFactor(self) -> float: ...
         @property
@@ -450,13 +547,13 @@ class _CropModuleStateModule(_StructModule):
         @property
         def soilCoverage(self) -> float: ...
         @property
-        def vsSoilMineralNContent(self) -> Sequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
         @property
         def soilSpecificMaxRootingDepth(self) -> float: ...
         @property
         def vsSoilSpecificMaxRootingDepth(self) -> float: ...
         @property
-        def pcSpecificLeafArea(self) -> Sequence[float]: ...
+        def pcSpecificLeafArea(self) -> Float64ListReader: ...
         @property
         def pcSpecificRootLength(self) -> float: ...
         @property
@@ -466,15 +563,15 @@ class _CropModuleStateModule(_StructModule):
         @property
         def pcStageAtMaxHeight(self) -> float: ...
         @property
-        def pcStageMaxRootNConcentration(self) -> Sequence[float]: ...
+        def pcStageMaxRootNConcentration(self) -> Float64ListReader: ...
         @property
-        def pcStageKcFactor(self) -> Sequence[float]: ...
+        def pcStageKcFactor(self) -> Float64ListReader: ...
         @property
-        def pcStageTemperatureSum(self) -> Sequence[float]: ...
+        def pcStageTemperatureSum(self) -> Float64ListReader: ...
         @property
         def stomataResistance(self) -> float: ...
         @property
-        def pcStorageOrgan(self) -> Sequence[bool]: ...
+        def pcStorageOrgan(self) -> BoolListReader: ...
         @property
         def storageOrgan(self) -> int: ...
         @property
@@ -508,9 +605,9 @@ class _CropModuleStateModule(_StructModule):
         @property
         def temperatureSumToFlowering(self) -> float: ...
         @property
-        def transpiration(self) -> Sequence[float]: ...
+        def transpiration(self) -> Float64ListReader: ...
         @property
-        def transpirationRedux(self) -> Sequence[float]: ...
+        def transpirationRedux(self) -> Float64ListReader: ...
         @property
         def transpirationDeficit(self) -> float: ...
         @property
@@ -518,7 +615,7 @@ class _CropModuleStateModule(_StructModule):
         @property
         def vernalisationFactor(self) -> float: ...
         @property
-        def pcVernalisationRequirement(self) -> Sequence[float]: ...
+        def pcVernalisationRequirement(self) -> Float64ListReader: ...
         @property
         def pcWaterDeficitResponseOn(self) -> bool: ...
         @property
@@ -560,13 +657,13 @@ class _CropModuleStateModule(_StructModule):
         @property
         def stepSize240(self) -> int: ...
         @property
-        def rad24(self) -> Sequence[float]: ...
+        def rad24(self) -> Float64ListReader: ...
         @property
-        def rad240(self) -> Sequence[float]: ...
+        def rad240(self) -> Float64ListReader: ...
         @property
-        def tfol24(self) -> Sequence[float]: ...
+        def tfol24(self) -> Float64ListReader: ...
         @property
-        def tfol240(self) -> Sequence[float]: ...
+        def tfol240(self) -> Float64ListReader: ...
         @property
         def index24(self) -> int: ...
         @property
@@ -576,13 +673,17 @@ class _CropModuleStateModule(_StructModule):
         @property
         def full240(self) -> bool: ...
         @property
-        def guentherEmissions(self) -> _VocModule._EmissionsModule.Reader: ...
+        def guentherEmissions(
+            self,
+        ) -> _VocStructModule._EmissionsStructModule.Reader: ...
         @property
-        def jjvEmissions(self) -> _VocModule._EmissionsModule.Reader: ...
+        def jjvEmissions(self) -> _VocStructModule._EmissionsStructModule.Reader: ...
         @property
-        def vocSpecies(self) -> _VocModule._SpeciesDataModule.Reader: ...
+        def vocSpecies(self) -> _VocStructModule._SpeciesDataStructModule.Reader: ...
         @property
-        def cropPhotosynthesisResults(self) -> _VocModule._CPDataModule.Reader: ...
+        def cropPhotosynthesisResults(
+            self,
+        ) -> _VocStructModule._CPDataStructModule.Reader: ...
         @property
         def speciesParams(self) -> SpeciesParametersReader: ...
         @property
@@ -599,7 +700,7 @@ class _CropModuleStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> CropModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -640,20 +741,20 @@ class _CropModuleStateModule(_StructModule):
         @abovegroundBiomassOld.setter
         def abovegroundBiomassOld(self, value: float) -> None: ...
         @property
-        def pcAbovegroundOrgan(self) -> MutableSequence[bool]: ...
+        def pcAbovegroundOrgan(self) -> BoolListBuilder: ...
         @pcAbovegroundOrgan.setter
-        def pcAbovegroundOrgan(self, value: Sequence[bool]) -> None: ...
+        def pcAbovegroundOrgan(
+            self, value: BoolListBuilder | BoolListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def actualTranspiration(self) -> float: ...
         @actualTranspiration.setter
         def actualTranspiration(self, value: float) -> None: ...
         @property
-        def pcAssimilatePartitioningCoeff(
-            self,
-        ) -> MutableSequence[MutableSequence[float]]: ...
+        def pcAssimilatePartitioningCoeff(self) -> Float64ListListBuilder: ...
         @pcAssimilatePartitioningCoeff.setter
         def pcAssimilatePartitioningCoeff(
-            self, value: Sequence[Sequence[float]]
+            self, value: Float64ListListBuilder | Float64ListListReader | dict[str, Any]
         ) -> None: ...
         @property
         def pcAssimilateReallocation(self) -> float: ...
@@ -672,13 +773,17 @@ class _CropModuleStateModule(_StructModule):
         @astronomicDayLenght.setter
         def astronomicDayLenght(self, value: float) -> None: ...
         @property
-        def pcBaseDaylength(self) -> MutableSequence[float]: ...
+        def pcBaseDaylength(self) -> Float64ListBuilder: ...
         @pcBaseDaylength.setter
-        def pcBaseDaylength(self, value: Sequence[float]) -> None: ...
+        def pcBaseDaylength(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcBaseTemperature(self) -> MutableSequence[float]: ...
+        def pcBaseTemperature(self) -> Float64ListBuilder: ...
         @pcBaseTemperature.setter
-        def pcBaseTemperature(self, value: Sequence[float]) -> None: ...
+        def pcBaseTemperature(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcBeginSensitivePhaseHeatStress(self) -> float: ...
         @pcBeginSensitivePhaseHeatStress.setter
@@ -708,9 +813,11 @@ class _CropModuleStateModule(_StructModule):
         @criticalNConcentration.setter
         def criticalNConcentration(self, value: float) -> None: ...
         @property
-        def pcCriticalOxygenContent(self) -> MutableSequence[float]: ...
+        def pcCriticalOxygenContent(self) -> Float64ListBuilder: ...
         @pcCriticalOxygenContent.setter
-        def pcCriticalOxygenContent(self, value: Sequence[float]) -> None: ...
+        def pcCriticalOxygenContent(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcCriticalTemperatureHeatStress(self) -> float: ...
         @pcCriticalTemperatureHeatStress.setter
@@ -756,13 +863,17 @@ class _CropModuleStateModule(_StructModule):
         @pcCropSpecificMaxRootingDepth.setter
         def pcCropSpecificMaxRootingDepth(self, value: float) -> None: ...
         @property
-        def cropWaterUptake(self) -> MutableSequence[float]: ...
+        def cropWaterUptake(self) -> Float64ListBuilder: ...
         @cropWaterUptake.setter
-        def cropWaterUptake(self, value: Sequence[float]) -> None: ...
+        def cropWaterUptake(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def currentTemperatureSum(self) -> MutableSequence[float]: ...
+        def currentTemperatureSum(self) -> Float64ListBuilder: ...
         @currentTemperatureSum.setter
-        def currentTemperatureSum(self, value: Sequence[float]) -> None: ...
+        def currentTemperatureSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def currentTotalTemperatureSum(self) -> float: ...
         @currentTotalTemperatureSum.setter
@@ -780,9 +891,11 @@ class _CropModuleStateModule(_StructModule):
         @daylengthFactor.setter
         def daylengthFactor(self, value: float) -> None: ...
         @property
-        def pcDaylengthRequirement(self) -> MutableSequence[float]: ...
+        def pcDaylengthRequirement(self) -> Float64ListBuilder: ...
         @pcDaylengthRequirement.setter
-        def pcDaylengthRequirement(self, value: Sequence[float]) -> None: ...
+        def pcDaylengthRequirement(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def daysAfterBeginFlowering(self) -> int: ...
         @daysAfterBeginFlowering.setter
@@ -820,9 +933,11 @@ class _CropModuleStateModule(_StructModule):
         @pcDroughtImpactOnFertilityFactor.setter
         def pcDroughtImpactOnFertilityFactor(self, value: float) -> None: ...
         @property
-        def pcDroughtStressThreshold(self) -> MutableSequence[float]: ...
+        def pcDroughtStressThreshold(self) -> Float64ListBuilder: ...
         @pcDroughtStressThreshold.setter
-        def pcDroughtStressThreshold(self, value: Sequence[float]) -> None: ...
+        def pcDroughtStressThreshold(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcEmergenceFloodingControlOn(self) -> bool: ...
         @pcEmergenceFloodingControlOn.setter
@@ -928,9 +1043,11 @@ class _CropModuleStateModule(_StructModule):
         @pcInitialKcFactor.setter
         def pcInitialKcFactor(self, value: float) -> None: ...
         @property
-        def pcInitialOrganBiomass(self) -> MutableSequence[float]: ...
+        def pcInitialOrganBiomass(self) -> Float64ListBuilder: ...
         @pcInitialOrganBiomass.setter
-        def pcInitialOrganBiomass(self, value: Sequence[float]) -> None: ...
+        def pcInitialOrganBiomass(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcInitialRootingDepth(self) -> float: ...
         @pcInitialRootingDepth.setter
@@ -948,13 +1065,17 @@ class _CropModuleStateModule(_StructModule):
         @leafAreaIndex.setter
         def leafAreaIndex(self, value: float) -> None: ...
         @property
-        def sunlitLeafAreaIndex(self) -> MutableSequence[float]: ...
+        def sunlitLeafAreaIndex(self) -> Float64ListBuilder: ...
         @sunlitLeafAreaIndex.setter
-        def sunlitLeafAreaIndex(self, value: Sequence[float]) -> None: ...
+        def sunlitLeafAreaIndex(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def shadedLeafAreaIndex(self) -> MutableSequence[float]: ...
+        def shadedLeafAreaIndex(self) -> Float64ListBuilder: ...
         @shadedLeafAreaIndex.setter
-        def shadedLeafAreaIndex(self, value: Sequence[float]) -> None: ...
+        def shadedLeafAreaIndex(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcLowTemperatureExposure(self) -> float: ...
         @pcLowTemperatureExposure.setter
@@ -1088,73 +1209,92 @@ class _CropModuleStateModule(_StructModule):
         @pcNumberOfOrgans.setter
         def pcNumberOfOrgans(self, value: float) -> None: ...
         @property
-        def nUptakeFromLayer(self) -> MutableSequence[float]: ...
+        def nUptakeFromLayer(self) -> Float64ListBuilder: ...
         @nUptakeFromLayer.setter
-        def nUptakeFromLayer(self, value: Sequence[float]) -> None: ...
+        def nUptakeFromLayer(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcOptimumTemperature(self) -> MutableSequence[float]: ...
+        def pcOptimumTemperature(self) -> Float64ListBuilder: ...
         @pcOptimumTemperature.setter
-        def pcOptimumTemperature(self, value: Sequence[float]) -> None: ...
+        def pcOptimumTemperature(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def organBiomass(self) -> MutableSequence[float]: ...
+        def organBiomass(self) -> Float64ListBuilder: ...
         @organBiomass.setter
-        def organBiomass(self, value: Sequence[float]) -> None: ...
+        def organBiomass(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def organDeadBiomass(self) -> MutableSequence[float]: ...
+        def organDeadBiomass(self) -> Float64ListBuilder: ...
         @organDeadBiomass.setter
-        def organDeadBiomass(self, value: Sequence[float]) -> None: ...
+        def organDeadBiomass(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def organGreenBiomass(self) -> MutableSequence[float]: ...
+        def organGreenBiomass(self) -> Float64ListBuilder: ...
         @organGreenBiomass.setter
-        def organGreenBiomass(self, value: Sequence[float]) -> None: ...
+        def organGreenBiomass(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def organGrowthIncrement(self) -> MutableSequence[float]: ...
+        def organGrowthIncrement(self) -> Float64ListBuilder: ...
         @organGrowthIncrement.setter
-        def organGrowthIncrement(self, value: Sequence[float]) -> None: ...
+        def organGrowthIncrement(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcOrganGrowthRespiration(self) -> MutableSequence[float]: ...
+        def pcOrganGrowthRespiration(self) -> Float64ListBuilder: ...
         @pcOrganGrowthRespiration.setter
-        def pcOrganGrowthRespiration(self, value: Sequence[float]) -> None: ...
+        def pcOrganGrowthRespiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcOrganIdsForPrimaryYield(
-            self,
-        ) -> MutableSequence[YieldComponentBuilder]: ...
+        def pcOrganIdsForPrimaryYield(self) -> YieldComponentListBuilder: ...
         @pcOrganIdsForPrimaryYield.setter
         def pcOrganIdsForPrimaryYield(
             self,
-            value: Sequence[YieldComponentBuilder | YieldComponentReader]
-            | Sequence[dict[str, Any]],
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def pcOrganIdsForSecondaryYield(
-            self,
-        ) -> MutableSequence[YieldComponentBuilder]: ...
+        def pcOrganIdsForSecondaryYield(self) -> YieldComponentListBuilder: ...
         @pcOrganIdsForSecondaryYield.setter
         def pcOrganIdsForSecondaryYield(
             self,
-            value: Sequence[YieldComponentBuilder | YieldComponentReader]
-            | Sequence[dict[str, Any]],
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def pcOrganIdsForCutting(self) -> MutableSequence[YieldComponentBuilder]: ...
+        def pcOrganIdsForCutting(self) -> YieldComponentListBuilder: ...
         @pcOrganIdsForCutting.setter
         def pcOrganIdsForCutting(
             self,
-            value: Sequence[YieldComponentBuilder | YieldComponentReader]
-            | Sequence[dict[str, Any]],
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
-        def pcOrganMaintenanceRespiration(self) -> MutableSequence[float]: ...
+        def pcOrganMaintenanceRespiration(self) -> Float64ListBuilder: ...
         @pcOrganMaintenanceRespiration.setter
-        def pcOrganMaintenanceRespiration(self, value: Sequence[float]) -> None: ...
+        def pcOrganMaintenanceRespiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def organSenescenceIncrement(self) -> MutableSequence[float]: ...
+        def organSenescenceIncrement(self) -> Float64ListBuilder: ...
         @organSenescenceIncrement.setter
-        def organSenescenceIncrement(self, value: Sequence[float]) -> None: ...
+        def organSenescenceIncrement(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcOrganSenescenceRate(self) -> MutableSequence[MutableSequence[float]]: ...
+        def pcOrganSenescenceRate(self) -> Float64ListListBuilder: ...
         @pcOrganSenescenceRate.setter
-        def pcOrganSenescenceRate(self, value: Sequence[Sequence[float]]) -> None: ...
+        def pcOrganSenescenceRate(
+            self, value: Float64ListListBuilder | Float64ListListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def overcastDayRadiation(self) -> float: ...
         @overcastDayRadiation.setter
@@ -1220,21 +1360,27 @@ class _CropModuleStateModule(_StructModule):
         @rootBiomassOld.setter
         def rootBiomassOld(self, value: float) -> None: ...
         @property
-        def rootDensity(self) -> MutableSequence[float]: ...
+        def rootDensity(self) -> Float64ListBuilder: ...
         @rootDensity.setter
-        def rootDensity(self, value: Sequence[float]) -> None: ...
+        def rootDensity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def rootDiameter(self) -> MutableSequence[float]: ...
+        def rootDiameter(self) -> Float64ListBuilder: ...
         @rootDiameter.setter
-        def rootDiameter(self, value: Sequence[float]) -> None: ...
+        def rootDiameter(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcRootDistributionParam(self) -> float: ...
         @pcRootDistributionParam.setter
         def pcRootDistributionParam(self, value: float) -> None: ...
         @property
-        def rootEffectivity(self) -> MutableSequence[float]: ...
+        def rootEffectivity(self) -> Float64ListBuilder: ...
         @rootEffectivity.setter
-        def rootEffectivity(self, value: Sequence[float]) -> None: ...
+        def rootEffectivity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcRootFormFactor(self) -> float: ...
         @pcRootFormFactor.setter
@@ -1268,9 +1414,11 @@ class _CropModuleStateModule(_StructModule):
         @soilCoverage.setter
         def soilCoverage(self, value: float) -> None: ...
         @property
-        def vsSoilMineralNContent(self) -> MutableSequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
         @vsSoilMineralNContent.setter
-        def vsSoilMineralNContent(self, value: Sequence[float]) -> None: ...
+        def vsSoilMineralNContent(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def soilSpecificMaxRootingDepth(self) -> float: ...
         @soilSpecificMaxRootingDepth.setter
@@ -1280,9 +1428,11 @@ class _CropModuleStateModule(_StructModule):
         @vsSoilSpecificMaxRootingDepth.setter
         def vsSoilSpecificMaxRootingDepth(self, value: float) -> None: ...
         @property
-        def pcSpecificLeafArea(self) -> MutableSequence[float]: ...
+        def pcSpecificLeafArea(self) -> Float64ListBuilder: ...
         @pcSpecificLeafArea.setter
-        def pcSpecificLeafArea(self, value: Sequence[float]) -> None: ...
+        def pcSpecificLeafArea(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcSpecificRootLength(self) -> float: ...
         @pcSpecificRootLength.setter
@@ -1300,25 +1450,33 @@ class _CropModuleStateModule(_StructModule):
         @pcStageAtMaxHeight.setter
         def pcStageAtMaxHeight(self, value: float) -> None: ...
         @property
-        def pcStageMaxRootNConcentration(self) -> MutableSequence[float]: ...
+        def pcStageMaxRootNConcentration(self) -> Float64ListBuilder: ...
         @pcStageMaxRootNConcentration.setter
-        def pcStageMaxRootNConcentration(self, value: Sequence[float]) -> None: ...
+        def pcStageMaxRootNConcentration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcStageKcFactor(self) -> MutableSequence[float]: ...
+        def pcStageKcFactor(self) -> Float64ListBuilder: ...
         @pcStageKcFactor.setter
-        def pcStageKcFactor(self, value: Sequence[float]) -> None: ...
+        def pcStageKcFactor(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def pcStageTemperatureSum(self) -> MutableSequence[float]: ...
+        def pcStageTemperatureSum(self) -> Float64ListBuilder: ...
         @pcStageTemperatureSum.setter
-        def pcStageTemperatureSum(self, value: Sequence[float]) -> None: ...
+        def pcStageTemperatureSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def stomataResistance(self) -> float: ...
         @stomataResistance.setter
         def stomataResistance(self, value: float) -> None: ...
         @property
-        def pcStorageOrgan(self) -> MutableSequence[bool]: ...
+        def pcStorageOrgan(self) -> BoolListBuilder: ...
         @pcStorageOrgan.setter
-        def pcStorageOrgan(self, value: Sequence[bool]) -> None: ...
+        def pcStorageOrgan(
+            self, value: BoolListBuilder | BoolListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def storageOrgan(self) -> int: ...
         @storageOrgan.setter
@@ -1384,13 +1542,17 @@ class _CropModuleStateModule(_StructModule):
         @temperatureSumToFlowering.setter
         def temperatureSumToFlowering(self, value: float) -> None: ...
         @property
-        def transpiration(self) -> MutableSequence[float]: ...
+        def transpiration(self) -> Float64ListBuilder: ...
         @transpiration.setter
-        def transpiration(self, value: Sequence[float]) -> None: ...
+        def transpiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def transpirationRedux(self) -> MutableSequence[float]: ...
+        def transpirationRedux(self) -> Float64ListBuilder: ...
         @transpirationRedux.setter
-        def transpirationRedux(self, value: Sequence[float]) -> None: ...
+        def transpirationRedux(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def transpirationDeficit(self) -> float: ...
         @transpirationDeficit.setter
@@ -1404,9 +1566,11 @@ class _CropModuleStateModule(_StructModule):
         @vernalisationFactor.setter
         def vernalisationFactor(self, value: float) -> None: ...
         @property
-        def pcVernalisationRequirement(self) -> MutableSequence[float]: ...
+        def pcVernalisationRequirement(self) -> Float64ListBuilder: ...
         @pcVernalisationRequirement.setter
-        def pcVernalisationRequirement(self, value: Sequence[float]) -> None: ...
+        def pcVernalisationRequirement(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pcWaterDeficitResponseOn(self) -> bool: ...
         @pcWaterDeficitResponseOn.setter
@@ -1488,21 +1652,29 @@ class _CropModuleStateModule(_StructModule):
         @stepSize240.setter
         def stepSize240(self, value: int) -> None: ...
         @property
-        def rad24(self) -> MutableSequence[float]: ...
+        def rad24(self) -> Float64ListBuilder: ...
         @rad24.setter
-        def rad24(self, value: Sequence[float]) -> None: ...
+        def rad24(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def rad240(self) -> MutableSequence[float]: ...
+        def rad240(self) -> Float64ListBuilder: ...
         @rad240.setter
-        def rad240(self, value: Sequence[float]) -> None: ...
+        def rad240(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def tfol24(self) -> MutableSequence[float]: ...
+        def tfol24(self) -> Float64ListBuilder: ...
         @tfol24.setter
-        def tfol24(self, value: Sequence[float]) -> None: ...
+        def tfol24(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def tfol240(self) -> MutableSequence[float]: ...
+        def tfol240(self) -> Float64ListBuilder: ...
         @tfol240.setter
-        def tfol240(self, value: Sequence[float]) -> None: ...
+        def tfol240(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def index24(self) -> int: ...
         @index24.setter
@@ -1520,39 +1692,43 @@ class _CropModuleStateModule(_StructModule):
         @full240.setter
         def full240(self, value: bool) -> None: ...
         @property
-        def guentherEmissions(self) -> _VocModule._EmissionsModule.Builder: ...
+        def guentherEmissions(
+            self,
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
         @guentherEmissions.setter
         def guentherEmissions(
             self,
-            value: _VocModule._EmissionsModule.Builder
-            | _VocModule._EmissionsModule.Reader
+            value: _VocStructModule._EmissionsStructModule.Builder
+            | _VocStructModule._EmissionsStructModule.Reader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def jjvEmissions(self) -> _VocModule._EmissionsModule.Builder: ...
+        def jjvEmissions(self) -> _VocStructModule._EmissionsStructModule.Builder: ...
         @jjvEmissions.setter
         def jjvEmissions(
             self,
-            value: _VocModule._EmissionsModule.Builder
-            | _VocModule._EmissionsModule.Reader
+            value: _VocStructModule._EmissionsStructModule.Builder
+            | _VocStructModule._EmissionsStructModule.Reader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def vocSpecies(self) -> _VocModule._SpeciesDataModule.Builder: ...
+        def vocSpecies(self) -> _VocStructModule._SpeciesDataStructModule.Builder: ...
         @vocSpecies.setter
         def vocSpecies(
             self,
-            value: _VocModule._SpeciesDataModule.Builder
-            | _VocModule._SpeciesDataModule.Reader
+            value: _VocStructModule._SpeciesDataStructModule.Builder
+            | _VocStructModule._SpeciesDataStructModule.Reader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def cropPhotosynthesisResults(self) -> _VocModule._CPDataModule.Builder: ...
+        def cropPhotosynthesisResults(
+            self,
+        ) -> _VocStructModule._CPDataStructModule.Builder: ...
         @cropPhotosynthesisResults.setter
         def cropPhotosynthesisResults(
             self,
-            value: _VocModule._CPDataModule.Builder
-            | _VocModule._CPDataModule.Reader
+            value: _VocStructModule._CPDataStructModule.Builder
+            | _VocStructModule._CPDataStructModule.Reader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -1592,22 +1768,23 @@ class _CropModuleStateModule(_StructModule):
         def lt50m(self) -> float: ...
         @lt50m.setter
         def lt50m(self, value: float) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["guentherEmissions"], size: int | None = None
-        ) -> _VocModule._EmissionsModule.Builder: ...
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
         @overload
         def init(
             self, field: Literal["jjvEmissions"], size: int | None = None
-        ) -> _VocModule._EmissionsModule.Builder: ...
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
         @overload
         def init(
             self, field: Literal["vocSpecies"], size: int | None = None
-        ) -> _VocModule._SpeciesDataModule.Builder: ...
+        ) -> _VocStructModule._SpeciesDataStructModule.Builder: ...
         @overload
         def init(
             self, field: Literal["cropPhotosynthesisResults"], size: int | None = None
-        ) -> _VocModule._CPDataModule.Builder: ...
+        ) -> _VocStructModule._CPDataStructModule.Builder: ...
         @overload
         def init(
             self, field: Literal["speciesParams"], size: int | None = None
@@ -1623,173 +1800,173 @@ class _CropModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["pcAbovegroundOrgan"], size: int | None = None
-        ) -> MutableSequence[bool]: ...
+        ) -> BoolListBuilder: ...
         @overload
         def init(
             self,
             field: Literal["pcAssimilatePartitioningCoeff"],
             size: int | None = None,
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcBaseDaylength"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcBaseTemperature"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcCriticalOxygenContent"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["cropWaterUptake"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["currentTemperatureSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcDaylengthRequirement"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcDroughtStressThreshold"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcInitialOrganBiomass"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["sunlitLeafAreaIndex"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["shadedLeafAreaIndex"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["nUptakeFromLayer"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOptimumTemperature"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["organBiomass"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["organDeadBiomass"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["organGreenBiomass"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["organGrowthIncrement"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOrganGrowthRespiration"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOrganIdsForPrimaryYield"], size: int | None = None
-        ) -> MutableSequence[YieldComponentBuilder]: ...
+        ) -> YieldComponentListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOrganIdsForSecondaryYield"], size: int | None = None
-        ) -> MutableSequence[YieldComponentBuilder]: ...
+        ) -> YieldComponentListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOrganIdsForCutting"], size: int | None = None
-        ) -> MutableSequence[YieldComponentBuilder]: ...
+        ) -> YieldComponentListBuilder: ...
         @overload
         def init(
             self,
             field: Literal["pcOrganMaintenanceRespiration"],
             size: int | None = None,
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["organSenescenceIncrement"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcOrganSenescenceRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListListBuilder: ...
         @overload
         def init(
             self, field: Literal["rootDensity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["rootDiameter"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["rootEffectivity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["vsSoilMineralNContent"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcSpecificLeafArea"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self,
             field: Literal["pcStageMaxRootNConcentration"],
             size: int | None = None,
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcStageKcFactor"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcStageTemperatureSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcStorageOrgan"], size: int | None = None
-        ) -> MutableSequence[bool]: ...
+        ) -> BoolListBuilder: ...
         @overload
         def init(
             self, field: Literal["transpiration"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["transpirationRedux"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["pcVernalisationRequirement"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["rad24"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["rad240"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["tfol24"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["tfol240"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -1799,7 +1976,7 @@ class _CropModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         frostKillOn: bool | None = None,
         ktko: float | None = None,
         ktkc: float | None = None,
@@ -1809,15 +1986,17 @@ class _CropModuleStateModule(_StructModule):
         vsLatitude: float | None = None,
         abovegroundBiomass: float | None = None,
         abovegroundBiomassOld: float | None = None,
-        pcAbovegroundOrgan: Sequence[bool] | None = None,
+        pcAbovegroundOrgan: BoolListBuilder | dict[str, Any] | None = None,
         actualTranspiration: float | None = None,
-        pcAssimilatePartitioningCoeff: Sequence[Sequence[float]] | None = None,
+        pcAssimilatePartitioningCoeff: Float64ListListBuilder
+        | dict[str, Any]
+        | None = None,
         pcAssimilateReallocation: float | None = None,
         assimilates: float | None = None,
         assimilationRate: float | None = None,
         astronomicDayLenght: float | None = None,
-        pcBaseDaylength: Sequence[float] | None = None,
-        pcBaseTemperature: Sequence[float] | None = None,
+        pcBaseDaylength: Float64ListBuilder | dict[str, Any] | None = None,
+        pcBaseTemperature: Float64ListBuilder | dict[str, Any] | None = None,
         pcBeginSensitivePhaseHeatStress: float | None = None,
         belowgroundBiomass: float | None = None,
         belowgroundBiomassOld: float | None = None,
@@ -1825,7 +2004,7 @@ class _CropModuleStateModule(_StructModule):
         clearDayRadiation: float | None = None,
         pcCo2Method: int | None = None,
         criticalNConcentration: float | None = None,
-        pcCriticalOxygenContent: Sequence[float] | None = None,
+        pcCriticalOxygenContent: Float64ListBuilder | dict[str, Any] | None = None,
         pcCriticalTemperatureHeatStress: float | None = None,
         cropDiameter: float | None = None,
         cropFrostRedux: float | None = None,
@@ -1837,13 +2016,13 @@ class _CropModuleStateModule(_StructModule):
         cropNDemand: float | None = None,
         cropNRedux: float | None = None,
         pcCropSpecificMaxRootingDepth: float | None = None,
-        cropWaterUptake: Sequence[float] | None = None,
-        currentTemperatureSum: Sequence[float] | None = None,
+        cropWaterUptake: Float64ListBuilder | dict[str, Any] | None = None,
+        currentTemperatureSum: Float64ListBuilder | dict[str, Any] | None = None,
         currentTotalTemperatureSum: float | None = None,
         currentTotalTemperatureSumRoot: float | None = None,
         pcCuttingDelayDays: int | None = None,
         daylengthFactor: float | None = None,
-        pcDaylengthRequirement: Sequence[float] | None = None,
+        pcDaylengthRequirement: Float64ListBuilder | dict[str, Any] | None = None,
         daysAfterBeginFlowering: int | None = None,
         declination: float | None = None,
         pcDefaultRadiationUseEfficiency: float | None = None,
@@ -1853,7 +2032,7 @@ class _CropModuleStateModule(_StructModule):
         noOfCropSteps: int | None = None,
         droughtImpactOnFertility: float | None = None,
         pcDroughtImpactOnFertilityFactor: float | None = None,
-        pcDroughtStressThreshold: Sequence[float] | None = None,
+        pcDroughtStressThreshold: Float64ListBuilder | dict[str, Any] | None = None,
         pcEmergenceFloodingControlOn: bool | None = None,
         pcEmergenceMoistureControlOn: bool | None = None,
         pcEndSensitivePhaseHeatStress: float | None = None,
@@ -1880,13 +2059,13 @@ class _CropModuleStateModule(_StructModule):
         pcHeatSumIrrigationEnd: float | None = None,
         vsHeightNN: float | None = None,
         pcInitialKcFactor: float | None = None,
-        pcInitialOrganBiomass: Sequence[float] | None = None,
+        pcInitialOrganBiomass: Float64ListBuilder | dict[str, Any] | None = None,
         pcInitialRootingDepth: float | None = None,
         interceptionStorage: float | None = None,
         kcFactor: float | None = None,
         leafAreaIndex: float | None = None,
-        sunlitLeafAreaIndex: Sequence[float] | None = None,
-        shadedLeafAreaIndex: Sequence[float] | None = None,
+        sunlitLeafAreaIndex: Float64ListBuilder | dict[str, Any] | None = None,
+        shadedLeafAreaIndex: Float64ListBuilder | dict[str, Any] | None = None,
         pcLowTemperatureExposure: float | None = None,
         pcLimitingTemperatureHeatStress: float | None = None,
         lt50: float | None = None,
@@ -1920,25 +2099,25 @@ class _CropModuleStateModule(_StructModule):
         pcNitrogenResponseOn: bool | None = None,
         pcNumberOfDevelopmentalStages: float | None = None,
         pcNumberOfOrgans: float | None = None,
-        nUptakeFromLayer: Sequence[float] | None = None,
-        pcOptimumTemperature: Sequence[float] | None = None,
-        organBiomass: Sequence[float] | None = None,
-        organDeadBiomass: Sequence[float] | None = None,
-        organGreenBiomass: Sequence[float] | None = None,
-        organGrowthIncrement: Sequence[float] | None = None,
-        pcOrganGrowthRespiration: Sequence[float] | None = None,
-        pcOrganIdsForPrimaryYield: Sequence[YieldComponentBuilder]
-        | Sequence[dict[str, Any]]
+        nUptakeFromLayer: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOptimumTemperature: Float64ListBuilder | dict[str, Any] | None = None,
+        organBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organDeadBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organGreenBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organGrowthIncrement: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganGrowthRespiration: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganIdsForPrimaryYield: YieldComponentListBuilder
+        | dict[str, Any]
         | None = None,
-        pcOrganIdsForSecondaryYield: Sequence[YieldComponentBuilder]
-        | Sequence[dict[str, Any]]
+        pcOrganIdsForSecondaryYield: YieldComponentListBuilder
+        | dict[str, Any]
         | None = None,
-        pcOrganIdsForCutting: Sequence[YieldComponentBuilder]
-        | Sequence[dict[str, Any]]
+        pcOrganIdsForCutting: YieldComponentListBuilder | dict[str, Any] | None = None,
+        pcOrganMaintenanceRespiration: Float64ListBuilder
+        | dict[str, Any]
         | None = None,
-        pcOrganMaintenanceRespiration: Sequence[float] | None = None,
-        organSenescenceIncrement: Sequence[float] | None = None,
-        pcOrganSenescenceRate: Sequence[Sequence[float]] | None = None,
+        organSenescenceIncrement: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganSenescenceRate: Float64ListListBuilder | dict[str, Any] | None = None,
         overcastDayRadiation: float | None = None,
         oxygenDeficit: float | None = None,
         pcPartBiologicalNFixation: float | None = None,
@@ -1955,10 +2134,10 @@ class _CropModuleStateModule(_StructModule):
         pcRespiratoryStress: float | None = None,
         rootBiomass: float | None = None,
         rootBiomassOld: float | None = None,
-        rootDensity: Sequence[float] | None = None,
-        rootDiameter: Sequence[float] | None = None,
+        rootDensity: Float64ListBuilder | dict[str, Any] | None = None,
+        rootDiameter: Float64ListBuilder | dict[str, Any] | None = None,
         pcRootDistributionParam: float | None = None,
-        rootEffectivity: Sequence[float] | None = None,
+        rootEffectivity: Float64ListBuilder | dict[str, Any] | None = None,
         pcRootFormFactor: float | None = None,
         pcRootGrowthLag: float | None = None,
         rootingDepth: int | None = None,
@@ -1967,19 +2146,19 @@ class _CropModuleStateModule(_StructModule):
         pcRootPenetrationRate: float | None = None,
         vmSaturationDeficit: float | None = None,
         soilCoverage: float | None = None,
-        vsSoilMineralNContent: Sequence[float] | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
         soilSpecificMaxRootingDepth: float | None = None,
         vsSoilSpecificMaxRootingDepth: float | None = None,
-        pcSpecificLeafArea: Sequence[float] | None = None,
+        pcSpecificLeafArea: Float64ListBuilder | dict[str, Any] | None = None,
         pcSpecificRootLength: float | None = None,
         pcStageAfterCut: int | None = None,
         pcStageAtMaxDiameter: float | None = None,
         pcStageAtMaxHeight: float | None = None,
-        pcStageMaxRootNConcentration: Sequence[float] | None = None,
-        pcStageKcFactor: Sequence[float] | None = None,
-        pcStageTemperatureSum: Sequence[float] | None = None,
+        pcStageMaxRootNConcentration: Float64ListBuilder | dict[str, Any] | None = None,
+        pcStageKcFactor: Float64ListBuilder | dict[str, Any] | None = None,
+        pcStageTemperatureSum: Float64ListBuilder | dict[str, Any] | None = None,
         stomataResistance: float | None = None,
-        pcStorageOrgan: Sequence[bool] | None = None,
+        pcStorageOrgan: BoolListBuilder | dict[str, Any] | None = None,
         storageOrgan: int | None = None,
         targetNConcentration: float | None = None,
         timeStep: float | None = None,
@@ -1996,12 +2175,12 @@ class _CropModuleStateModule(_StructModule):
         totalRootLength: float | None = None,
         totalTemperatureSum: float | None = None,
         temperatureSumToFlowering: float | None = None,
-        transpiration: Sequence[float] | None = None,
-        transpirationRedux: Sequence[float] | None = None,
+        transpiration: Float64ListBuilder | dict[str, Any] | None = None,
+        transpirationRedux: Float64ListBuilder | dict[str, Any] | None = None,
         transpirationDeficit: float | None = None,
         vernalisationDays: float | None = None,
         vernalisationFactor: float | None = None,
-        pcVernalisationRequirement: Sequence[float] | None = None,
+        pcVernalisationRequirement: Float64ListBuilder | dict[str, Any] | None = None,
         pcWaterDeficitResponseOn: bool | None = None,
         o3Senescence: float | None = None,
         o3LongTermDamage: float | None = None,
@@ -2022,24 +2201,24 @@ class _CropModuleStateModule(_StructModule):
         maturityReached: bool | None = None,
         stepSize24: int | None = None,
         stepSize240: int | None = None,
-        rad24: Sequence[float] | None = None,
-        rad240: Sequence[float] | None = None,
-        tfol24: Sequence[float] | None = None,
-        tfol240: Sequence[float] | None = None,
+        rad24: Float64ListBuilder | dict[str, Any] | None = None,
+        rad240: Float64ListBuilder | dict[str, Any] | None = None,
+        tfol24: Float64ListBuilder | dict[str, Any] | None = None,
+        tfol240: Float64ListBuilder | dict[str, Any] | None = None,
         index24: int | None = None,
         index240: int | None = None,
         full24: bool | None = None,
         full240: bool | None = None,
-        guentherEmissions: _VocModule._EmissionsModule.Builder
+        guentherEmissions: _VocStructModule._EmissionsStructModule.Builder
         | dict[str, Any]
         | None = None,
-        jjvEmissions: _VocModule._EmissionsModule.Builder
+        jjvEmissions: _VocStructModule._EmissionsStructModule.Builder
         | dict[str, Any]
         | None = None,
-        vocSpecies: _VocModule._SpeciesDataModule.Builder
+        vocSpecies: _VocStructModule._SpeciesDataStructModule.Builder
         | dict[str, Any]
         | None = None,
-        cropPhotosynthesisResults: _VocModule._CPDataModule.Builder
+        cropPhotosynthesisResults: _VocStructModule._CPDataStructModule.Builder
         | dict[str, Any]
         | None = None,
         speciesParams: SpeciesParametersBuilder | dict[str, Any] | None = None,
@@ -2050,19 +2229,20 @@ class _CropModuleStateModule(_StructModule):
         lt50m: float | None = None,
         **kwargs: Any,
     ) -> CropModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[CropModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[CropModuleStateReader]: ...
@@ -2070,35 +2250,65 @@ class _CropModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[CropModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> CropModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> CropModuleStateReader: ...
 
-CropModuleState: _CropModuleStateModule
+CropModuleState: _CropModuleStateStructModule
 
-class _AOMPropertiesModule(_StructModule):
+class _DelayedNMinApplicationParamsList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DelayedNMinApplicationParamsReader: ...
+        @override
+        def __iter__(self) -> Iterator[DelayedNMinApplicationParamsReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DelayedNMinApplicationParamsBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: DelayedNMinApplicationParamsReader
+            | DelayedNMinApplicationParamsBuilder
+            | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[DelayedNMinApplicationParamsBuilder]: ...
+        @override
+        def init(
+            self, index: int, size: int | None = None
+        ) -> DelayedNMinApplicationParamsBuilder: ...
+
+class _AOMPropertiesStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def aomSlow(self) -> float: ...
@@ -2146,7 +2356,7 @@ class _AOMPropertiesModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> AOMPropertiesBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -2241,7 +2451,7 @@ class _AOMPropertiesModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         aomSlow: float | None = None,
         aomFast: float | None = None,
         aomSlowDecRatetoSMBSlow: float | None = None,
@@ -2265,19 +2475,20 @@ class _AOMPropertiesModule(_StructModule):
         noVolatilization: bool | None = None,
         **kwargs: Any,
     ) -> AOMPropertiesBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[AOMPropertiesReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[AOMPropertiesReader]: ...
@@ -2285,42 +2496,68 @@ class _AOMPropertiesModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[AOMPropertiesBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AOMPropertiesReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AOMPropertiesReader: ...
 
-AOMProperties: _AOMPropertiesModule
+AOMProperties: _AOMPropertiesStructModule
 
-class _SoilLayerStateModule(_StructModule):
+class _AOMPropertiesList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> AOMPropertiesReader: ...
+        @override
+        def __iter__(self) -> Iterator[AOMPropertiesReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> AOMPropertiesBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: AOMPropertiesReader | AOMPropertiesBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[AOMPropertiesBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> AOMPropertiesBuilder: ...
+
+class _SoilLayerStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def layerThickness(self) -> float: ...
         @property
         def soilWaterFlux(self) -> float: ...
         @property
-        def voAOMPool(self) -> Sequence[AOMPropertiesReader]: ...
+        def voAOMPool(self) -> AOMPropertiesListReader: ...
         @property
         def somSlow(self) -> float: ...
         @property
@@ -2349,7 +2586,7 @@ class _SoilLayerStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilLayerStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -2362,12 +2599,11 @@ class _SoilLayerStateModule(_StructModule):
         @soilWaterFlux.setter
         def soilWaterFlux(self, value: float) -> None: ...
         @property
-        def voAOMPool(self) -> MutableSequence[AOMPropertiesBuilder]: ...
+        def voAOMPool(self) -> AOMPropertiesListBuilder: ...
         @voAOMPool.setter
         def voAOMPool(
             self,
-            value: Sequence[AOMPropertiesBuilder | AOMPropertiesReader]
-            | Sequence[dict[str, Any]],
+            value: AOMPropertiesListBuilder | AOMPropertiesListReader | dict[str, Any],
         ) -> None: ...
         @property
         def somSlow(self) -> float: ...
@@ -2419,6 +2655,7 @@ class _SoilLayerStateModule(_StructModule):
         def soilTemperature(self) -> float: ...
         @soilTemperature.setter
         def soilTemperature(self, value: float) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["sps"], size: int | None = None
@@ -2426,7 +2663,7 @@ class _SoilLayerStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["voAOMPool"], size: int | None = None
-        ) -> MutableSequence[AOMPropertiesBuilder]: ...
+        ) -> AOMPropertiesListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -2436,12 +2673,10 @@ class _SoilLayerStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         layerThickness: float | None = None,
         soilWaterFlux: float | None = None,
-        voAOMPool: Sequence[AOMPropertiesBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
+        voAOMPool: AOMPropertiesListBuilder | dict[str, Any] | None = None,
         somSlow: float | None = None,
         somFast: float | None = None,
         smbSlow: float | None = None,
@@ -2456,19 +2691,20 @@ class _SoilLayerStateModule(_StructModule):
         soilTemperature: float | None = None,
         **kwargs: Any,
     ) -> SoilLayerStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilLayerStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilLayerStateReader]: ...
@@ -2476,41 +2712,69 @@ class _SoilLayerStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilLayerStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilLayerStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilLayerStateReader: ...
 
-SoilLayerState: _SoilLayerStateModule
+SoilLayerState: _SoilLayerStateStructModule
 
-class _SoilColumnStateModule(_StructModule):
-    class _DelayedNMinApplicationParamsModule(_StructModule):
+class _SoilLayerStateList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> SoilLayerStateReader: ...
+        @override
+        def __iter__(self) -> Iterator[SoilLayerStateReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> SoilLayerStateBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: SoilLayerStateReader | SoilLayerStateBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[SoilLayerStateBuilder]: ...
+        @override
+        def init(
+            self, index: int, size: int | None = None
+        ) -> SoilLayerStateBuilder: ...
+
+class _SoilColumnStateStructModule(_StructModule):
+    class _DelayedNMinApplicationParamsStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def fp(
                 self,
-            ) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Reader: ...
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader: ...
             @property
             def samplingDepth(self) -> float: ...
             @property
@@ -2527,21 +2791,19 @@ class _SoilColumnStateModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> DelayedNMinApplicationParamsBuilder: ...
 
         class Builder(_DynamicStructBuilder):
             @property
             def fp(
                 self,
-            ) -> (
-                _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
-            ): ...
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
             @fp.setter
             def fp(
                 self,
-                value: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
-                | _ParamsModule._MineralFertilizationModule._ParametersModule.Reader
+                value: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+                | _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader
                 | dict[str, Any],
             ) -> None: ...
             @property
@@ -2568,11 +2830,10 @@ class _SoilColumnStateModule(_StructModule):
             def topDressingDelay(self) -> float: ...
             @topDressingDelay.setter
             def topDressingDelay(self, value: float) -> None: ...
+            @override
             def init(
                 self, field: Literal["fp"], size: int | None = None
-            ) -> (
-                _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
-            ): ...
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
             @override
             def as_reader(self) -> DelayedNMinApplicationParamsReader: ...
 
@@ -2580,8 +2841,8 @@ class _SoilColumnStateModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
-            fp: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            fp: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
             | dict[str, Any]
             | None = None,
             samplingDepth: float | None = None,
@@ -2592,19 +2853,20 @@ class _SoilColumnStateModule(_StructModule):
             topDressingDelay: float | None = None,
             **kwargs: Any,
         ) -> DelayedNMinApplicationParamsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[DelayedNMinApplicationParamsReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[DelayedNMinApplicationParamsReader]: ...
@@ -2612,37 +2874,40 @@ class _SoilColumnStateModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[DelayedNMinApplicationParamsBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> DelayedNMinApplicationParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> DelayedNMinApplicationParamsReader: ...
 
-    type DelayedNMinApplicationParamsReader = _DelayedNMinApplicationParamsModule.Reader
-    type DelayedNMinApplicationParamsBuilder = (
-        _DelayedNMinApplicationParamsModule.Builder
+    type DelayedNMinApplicationParamsReader = (
+        _DelayedNMinApplicationParamsStructModule.Reader
     )
-    DelayedNMinApplicationParams: _DelayedNMinApplicationParamsModule
+    type DelayedNMinApplicationParamsBuilder = (
+        _DelayedNMinApplicationParamsStructModule.Builder
+    )
+    DelayedNMinApplicationParams: _DelayedNMinApplicationParamsStructModule
     class Reader(_DynamicStructReader):
         @property
         def vsSurfaceWaterStorage(self) -> float: ...
@@ -2667,24 +2932,22 @@ class _SoilColumnStateModule(_StructModule):
         @property
         def vfTopDressingPartition(
             self,
-        ) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Reader: ...
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader: ...
         @property
         def vfTopDressingDelay(self) -> int: ...
         @property
         def cropModule(self) -> CropModuleStateReader: ...
         @property
-        def delayedNMinApplications(
-            self,
-        ) -> Sequence[DelayedNMinApplicationParamsReader]: ...
+        def delayedNMinApplications(self) -> DelayedNMinApplicationParamsListReader: ...
         @property
         def pmCriticalMoistureDepth(self) -> float: ...
         @property
-        def layers(self) -> Sequence[SoilLayerStateReader]: ...
+        def layers(self) -> SoilLayerStateListReader: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilColumnStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -2731,12 +2994,12 @@ class _SoilColumnStateModule(_StructModule):
         @property
         def vfTopDressingPartition(
             self,
-        ) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
         @vfTopDressingPartition.setter
         def vfTopDressingPartition(
             self,
-            value: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
-            | _ParamsModule._MineralFertilizationModule._ParametersModule.Reader
+            value: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+            | _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader
             | dict[str, Any],
         ) -> None: ...
         @property
@@ -2752,31 +3015,32 @@ class _SoilColumnStateModule(_StructModule):
         @property
         def delayedNMinApplications(
             self,
-        ) -> MutableSequence[DelayedNMinApplicationParamsBuilder]: ...
+        ) -> DelayedNMinApplicationParamsListBuilder: ...
         @delayedNMinApplications.setter
         def delayedNMinApplications(
             self,
-            value: Sequence[
-                DelayedNMinApplicationParamsBuilder | DelayedNMinApplicationParamsReader
-            ]
-            | Sequence[dict[str, Any]],
+            value: DelayedNMinApplicationParamsListBuilder
+            | DelayedNMinApplicationParamsListReader
+            | dict[str, Any],
         ) -> None: ...
         @property
         def pmCriticalMoistureDepth(self) -> float: ...
         @pmCriticalMoistureDepth.setter
         def pmCriticalMoistureDepth(self, value: float) -> None: ...
         @property
-        def layers(self) -> MutableSequence[SoilLayerStateBuilder]: ...
+        def layers(self) -> SoilLayerStateListBuilder: ...
         @layers.setter
         def layers(
             self,
-            value: Sequence[SoilLayerStateBuilder | SoilLayerStateReader]
-            | Sequence[dict[str, Any]],
+            value: SoilLayerStateListBuilder
+            | SoilLayerStateListReader
+            | dict[str, Any],
         ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["vfTopDressingPartition"], size: int | None = None
-        ) -> _ParamsModule._MineralFertilizationModule._ParametersModule.Builder: ...
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
         @overload
         def init(
             self, field: Literal["cropModule"], size: int | None = None
@@ -2784,11 +3048,11 @@ class _SoilColumnStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["delayedNMinApplications"], size: int | None = None
-        ) -> MutableSequence[DelayedNMinApplicationParamsBuilder]: ...
+        ) -> DelayedNMinApplicationParamsListBuilder: ...
         @overload
         def init(
             self, field: Literal["layers"], size: int | None = None
-        ) -> MutableSequence[SoilLayerStateBuilder]: ...
+        ) -> SoilLayerStateListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -2798,7 +3062,7 @@ class _SoilColumnStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         vsSurfaceWaterStorage: float | None = None,
         vsInterceptionStorage: float | None = None,
         vmGroundwaterTable: int | None = None,
@@ -2809,33 +3073,32 @@ class _SoilColumnStateModule(_StructModule):
         psMaxMineralisationDepth: float | None = None,
         vsNumberOfOrganicLayers: float | None = None,
         vfTopDressing: float | None = None,
-        vfTopDressingPartition: _ParamsModule._MineralFertilizationModule._ParametersModule.Builder
+        vfTopDressingPartition: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
         | dict[str, Any]
         | None = None,
         vfTopDressingDelay: int | None = None,
         cropModule: CropModuleStateBuilder | dict[str, Any] | None = None,
-        delayedNMinApplications: Sequence[DelayedNMinApplicationParamsBuilder]
-        | Sequence[dict[str, Any]]
+        delayedNMinApplications: DelayedNMinApplicationParamsListBuilder
+        | dict[str, Any]
         | None = None,
         pmCriticalMoistureDepth: float | None = None,
-        layers: Sequence[SoilLayerStateBuilder]
-        | Sequence[dict[str, Any]]
-        | None = None,
+        layers: SoilLayerStateListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilColumnStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilColumnStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilColumnStateReader]: ...
@@ -2843,35 +3106,36 @@ class _SoilColumnStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilColumnStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilColumnStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilColumnStateReader: ...
 
-SoilColumnState: _SoilColumnStateModule
+SoilColumnState: _SoilColumnStateStructModule
 
-class _SoilTemperatureModuleStateModule(_StructModule):
+class _SoilTemperatureModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def soilSurfaceTemperature(self) -> float: ...
@@ -2888,34 +3152,34 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @property
         def vsNumberOfLayers(self) -> int: ...
         @property
-        def vsSoilMoistureConst(self) -> Sequence[float]: ...
+        def vsSoilMoistureConst(self) -> Float64ListReader: ...
         @property
-        def soilTemperature(self) -> Sequence[float]: ...
+        def soilTemperature(self) -> Float64ListReader: ...
         @property
-        def v(self) -> Sequence[float]: ...
+        def v(self) -> Float64ListReader: ...
         @property
-        def volumeMatrix(self) -> Sequence[float]: ...
+        def volumeMatrix(self) -> Float64ListReader: ...
         @property
-        def volumeMatrixOld(self) -> Sequence[float]: ...
+        def volumeMatrixOld(self) -> Float64ListReader: ...
         @property
-        def b(self) -> Sequence[float]: ...
+        def b(self) -> Float64ListReader: ...
         @property
-        def matrixPrimaryDiagonal(self) -> Sequence[float]: ...
+        def matrixPrimaryDiagonal(self) -> Float64ListReader: ...
         @property
-        def matrixSecundaryDiagonal(self) -> Sequence[float]: ...
+        def matrixSecundaryDiagonal(self) -> Float64ListReader: ...
         @property
         def heatFlow(self) -> float: ...
         @property
-        def heatConductivity(self) -> Sequence[float]: ...
+        def heatConductivity(self) -> Float64ListReader: ...
         @property
-        def heatConductivityMean(self) -> Sequence[float]: ...
+        def heatConductivityMean(self) -> Float64ListReader: ...
         @property
-        def heatCapacity(self) -> Sequence[float]: ...
+        def heatCapacity(self) -> Float64ListReader: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilTemperatureModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -2957,53 +3221,76 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @vsNumberOfLayers.setter
         def vsNumberOfLayers(self, value: int) -> None: ...
         @property
-        def vsSoilMoistureConst(self) -> MutableSequence[float]: ...
+        def vsSoilMoistureConst(self) -> Float64ListBuilder: ...
         @vsSoilMoistureConst.setter
-        def vsSoilMoistureConst(self, value: Sequence[float]) -> None: ...
+        def vsSoilMoistureConst(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def soilTemperature(self) -> MutableSequence[float]: ...
+        def soilTemperature(self) -> Float64ListBuilder: ...
         @soilTemperature.setter
-        def soilTemperature(self, value: Sequence[float]) -> None: ...
+        def soilTemperature(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def v(self) -> MutableSequence[float]: ...
+        def v(self) -> Float64ListBuilder: ...
         @v.setter
-        def v(self, value: Sequence[float]) -> None: ...
+        def v(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def volumeMatrix(self) -> MutableSequence[float]: ...
+        def volumeMatrix(self) -> Float64ListBuilder: ...
         @volumeMatrix.setter
-        def volumeMatrix(self, value: Sequence[float]) -> None: ...
+        def volumeMatrix(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def volumeMatrixOld(self) -> MutableSequence[float]: ...
+        def volumeMatrixOld(self) -> Float64ListBuilder: ...
         @volumeMatrixOld.setter
-        def volumeMatrixOld(self, value: Sequence[float]) -> None: ...
+        def volumeMatrixOld(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def b(self) -> MutableSequence[float]: ...
+        def b(self) -> Float64ListBuilder: ...
         @b.setter
-        def b(self, value: Sequence[float]) -> None: ...
+        def b(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def matrixPrimaryDiagonal(self) -> MutableSequence[float]: ...
+        def matrixPrimaryDiagonal(self) -> Float64ListBuilder: ...
         @matrixPrimaryDiagonal.setter
-        def matrixPrimaryDiagonal(self, value: Sequence[float]) -> None: ...
+        def matrixPrimaryDiagonal(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def matrixSecundaryDiagonal(self) -> MutableSequence[float]: ...
+        def matrixSecundaryDiagonal(self) -> Float64ListBuilder: ...
         @matrixSecundaryDiagonal.setter
-        def matrixSecundaryDiagonal(self, value: Sequence[float]) -> None: ...
+        def matrixSecundaryDiagonal(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def heatFlow(self) -> float: ...
         @heatFlow.setter
         def heatFlow(self, value: float) -> None: ...
         @property
-        def heatConductivity(self) -> MutableSequence[float]: ...
+        def heatConductivity(self) -> Float64ListBuilder: ...
         @heatConductivity.setter
-        def heatConductivity(self, value: Sequence[float]) -> None: ...
+        def heatConductivity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def heatConductivityMean(self) -> MutableSequence[float]: ...
+        def heatConductivityMean(self) -> Float64ListBuilder: ...
         @heatConductivityMean.setter
-        def heatConductivityMean(self, value: Sequence[float]) -> None: ...
+        def heatConductivityMean(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def heatCapacity(self) -> MutableSequence[float]: ...
+        def heatCapacity(self) -> Float64ListBuilder: ...
         @heatCapacity.setter
-        def heatCapacity(self, value: Sequence[float]) -> None: ...
+        def heatCapacity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
@@ -3019,47 +3306,47 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["vsSoilMoistureConst"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilTemperature"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["v"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["volumeMatrix"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["volumeMatrixOld"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["b"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["matrixPrimaryDiagonal"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["matrixSecundaryDiagonal"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["heatConductivity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["heatConductivityMean"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["heatCapacity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -3069,7 +3356,7 @@ class _SoilTemperatureModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         soilSurfaceTemperature: float | None = None,
         moduleParams: SoilTemperatureModuleParametersBuilder
         | dict[str, Any]
@@ -3079,33 +3366,34 @@ class _SoilTemperatureModuleStateModule(_StructModule):
         soilColumnVtBottomLayer: SoilLayerStateBuilder | dict[str, Any] | None = None,
         numberOfLayers: int | None = None,
         vsNumberOfLayers: int | None = None,
-        vsSoilMoistureConst: Sequence[float] | None = None,
-        soilTemperature: Sequence[float] | None = None,
-        v: Sequence[float] | None = None,
-        volumeMatrix: Sequence[float] | None = None,
-        volumeMatrixOld: Sequence[float] | None = None,
-        b: Sequence[float] | None = None,
-        matrixPrimaryDiagonal: Sequence[float] | None = None,
-        matrixSecundaryDiagonal: Sequence[float] | None = None,
+        vsSoilMoistureConst: Float64ListBuilder | dict[str, Any] | None = None,
+        soilTemperature: Float64ListBuilder | dict[str, Any] | None = None,
+        v: Float64ListBuilder | dict[str, Any] | None = None,
+        volumeMatrix: Float64ListBuilder | dict[str, Any] | None = None,
+        volumeMatrixOld: Float64ListBuilder | dict[str, Any] | None = None,
+        b: Float64ListBuilder | dict[str, Any] | None = None,
+        matrixPrimaryDiagonal: Float64ListBuilder | dict[str, Any] | None = None,
+        matrixSecundaryDiagonal: Float64ListBuilder | dict[str, Any] | None = None,
         heatFlow: float | None = None,
-        heatConductivity: Sequence[float] | None = None,
-        heatConductivityMean: Sequence[float] | None = None,
-        heatCapacity: Sequence[float] | None = None,
+        heatConductivity: Float64ListBuilder | dict[str, Any] | None = None,
+        heatConductivityMean: Float64ListBuilder | dict[str, Any] | None = None,
+        heatCapacity: Float64ListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilTemperatureModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilTemperatureModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilTemperatureModuleStateReader]: ...
@@ -3113,35 +3401,36 @@ class _SoilTemperatureModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilTemperatureModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilTemperatureModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilTemperatureModuleStateReader: ...
 
-SoilTemperatureModuleState: _SoilTemperatureModuleStateModule
+SoilTemperatureModuleState: _SoilTemperatureModuleStateStructModule
 
-class _FrostModuleStateModule(_StructModule):
+class _FrostModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def pmHydraulicConductivityRedux(self) -> float: ...
@@ -3156,7 +3445,7 @@ class _FrostModuleStateModule(_StructModule):
         @property
         def frostDays(self) -> int: ...
         @property
-        def lambdaRedux(self) -> Sequence[float]: ...
+        def lambdaRedux(self) -> Float64ListReader: ...
         @property
         def temperatureUnderSnow(self) -> float: ...
         @property
@@ -3167,7 +3456,7 @@ class _FrostModuleStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> FrostModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -3196,9 +3485,11 @@ class _FrostModuleStateModule(_StructModule):
         @frostDays.setter
         def frostDays(self, value: int) -> None: ...
         @property
-        def lambdaRedux(self) -> MutableSequence[float]: ...
+        def lambdaRedux(self) -> Float64ListBuilder: ...
         @lambdaRedux.setter
-        def lambdaRedux(self, value: Sequence[float]) -> None: ...
+        def lambdaRedux(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def temperatureUnderSnow(self) -> float: ...
         @temperatureUnderSnow.setter
@@ -3211,9 +3502,10 @@ class _FrostModuleStateModule(_StructModule):
         def ptTimeStep(self) -> float: ...
         @ptTimeStep.setter
         def ptTimeStep(self, value: float) -> None: ...
+        @override
         def init(
             self, field: Literal["lambdaRedux"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @override
         def as_reader(self) -> FrostModuleStateReader: ...
 
@@ -3221,32 +3513,33 @@ class _FrostModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         pmHydraulicConductivityRedux: float | None = None,
         frostDepth: float | None = None,
         accumulatedFrostDepth: float | None = None,
         negativeDegreeDays: float | None = None,
         thawDepth: float | None = None,
         frostDays: int | None = None,
-        lambdaRedux: Sequence[float] | None = None,
+        lambdaRedux: Float64ListBuilder | dict[str, Any] | None = None,
         temperatureUnderSnow: float | None = None,
         hydraulicConductivityRedux: float | None = None,
         ptTimeStep: float | None = None,
         **kwargs: Any,
     ) -> FrostModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[FrostModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[FrostModuleStateReader]: ...
@@ -3254,35 +3547,36 @@ class _FrostModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[FrostModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> FrostModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> FrostModuleStateReader: ...
 
-FrostModuleState: _FrostModuleStateModule
+FrostModuleState: _FrostModuleStateStructModule
 
-class _SnowModuleStateModule(_StructModule):
+class _SnowModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def snowRetentionCapacityMax(self) -> float: ...
@@ -3328,7 +3622,7 @@ class _SnowModuleStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SnowModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -3419,7 +3713,7 @@ class _SnowModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         snowRetentionCapacityMax: float | None = None,
         snowDensity: float | None = None,
         snowDepth: float | None = None,
@@ -3442,19 +3736,20 @@ class _SnowModuleStateModule(_StructModule):
         snowRetentionCapacityMin: float | None = None,
         **kwargs: Any,
     ) -> SnowModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SnowModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SnowModuleStateReader]: ...
@@ -3462,35 +3757,36 @@ class _SnowModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SnowModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SnowModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SnowModuleStateReader: ...
 
-SnowModuleState: _SnowModuleStateModule
+SnowModuleState: _SnowModuleStateStructModule
 
-class _SoilMoistureModuleStateModule(_StructModule):
+class _SoilMoistureModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def frostComponent(self) -> FrostModuleStateReader: ...
@@ -3515,25 +3811,25 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def actualTranspiration(self) -> float: ...
         @property
-        def availableWater(self) -> Sequence[float]: ...
+        def availableWater(self) -> Float64ListReader: ...
         @property
         def capillaryRise(self) -> float: ...
         @property
-        def capillaryRiseRate(self) -> Sequence[float]: ...
+        def capillaryRiseRate(self) -> Float64ListReader: ...
         @property
-        def capillaryWater(self) -> Sequence[float]: ...
+        def capillaryWater(self) -> Float64ListReader: ...
         @property
-        def capillaryWater70(self) -> Sequence[float]: ...
+        def capillaryWater70(self) -> Float64ListReader: ...
         @property
-        def evaporation(self) -> Sequence[float]: ...
+        def evaporation(self) -> Float64ListReader: ...
         @property
-        def evapotranspiration(self) -> Sequence[float]: ...
+        def evapotranspiration(self) -> Float64ListReader: ...
         @property
-        def fieldCapacity(self) -> Sequence[float]: ...
+        def fieldCapacity(self) -> Float64ListReader: ...
         @property
         def fluxAtLowerBoundary(self) -> float: ...
         @property
-        def gravitationalWater(self) -> Sequence[float]: ...
+        def gravitationalWater(self) -> Float64ListReader: ...
         @property
         def grossPrecipitation(self) -> float: ...
         @property
@@ -3543,7 +3839,7 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def groundwaterTable(self) -> int: ...
         @property
-        def heatConductivity(self) -> Sequence[float]: ...
+        def heatConductivity(self) -> Float64ListReader: ...
         @property
         def hydraulicConductivityRedux(self) -> float: ...
         @property
@@ -3553,13 +3849,13 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def vcKcFactor(self) -> float: ...
         @property
-        def lambda_(self) -> Sequence[float]: ...
+        def lambda_(self) -> Float64ListReader: ...
         @property
         def lambdaReduced(self) -> float: ...
         @property
         def vsLatitude(self) -> float: ...
         @property
-        def layerThickness(self) -> Sequence[float]: ...
+        def layerThickness(self) -> Float64ListReader: ...
         @property
         def pmLayerThickness(self) -> float: ...
         @property
@@ -3579,11 +3875,11 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def vwNetRadiation(self) -> float: ...
         @property
-        def permanentWiltingPoint(self) -> Sequence[float]: ...
+        def permanentWiltingPoint(self) -> Float64ListReader: ...
         @property
         def vcPercentageSoilCoverage(self) -> float: ...
         @property
-        def percolationRate(self) -> Sequence[float]: ...
+        def percolationRate(self) -> Float64ListReader: ...
         @property
         def vwPrecipitation(self) -> float: ...
         @property
@@ -3591,17 +3887,17 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def relativeHumidity(self) -> float: ...
         @property
-        def residualEvapotranspiration(self) -> Sequence[float]: ...
+        def residualEvapotranspiration(self) -> Float64ListReader: ...
         @property
-        def saturatedHydraulicConductivity(self) -> Sequence[float]: ...
+        def saturatedHydraulicConductivity(self) -> Float64ListReader: ...
         @property
-        def soilMoisture(self) -> Sequence[float]: ...
+        def soilMoisture(self) -> Float64ListReader: ...
         @property
         def soilMoisturecrit(self) -> float: ...
         @property
         def soilMoistureDeficit(self) -> float: ...
         @property
-        def soilPoreVolume(self) -> Sequence[float]: ...
+        def soilPoreVolume(self) -> Float64ListReader: ...
         @property
         def vcStomataResistance(self) -> float: ...
         @property
@@ -3617,16 +3913,16 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @property
         def totalWaterRemoval(self) -> float: ...
         @property
-        def transpiration(self) -> Sequence[float]: ...
+        def transpiration(self) -> Float64ListReader: ...
         @property
         def transpirationDeficit(self) -> float: ...
         @property
-        def waterFlux(self) -> Sequence[float]: ...
+        def waterFlux(self) -> Float64ListReader: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilMoistureModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -3685,45 +3981,61 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @actualTranspiration.setter
         def actualTranspiration(self, value: float) -> None: ...
         @property
-        def availableWater(self) -> MutableSequence[float]: ...
+        def availableWater(self) -> Float64ListBuilder: ...
         @availableWater.setter
-        def availableWater(self, value: Sequence[float]) -> None: ...
+        def availableWater(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def capillaryRise(self) -> float: ...
         @capillaryRise.setter
         def capillaryRise(self, value: float) -> None: ...
         @property
-        def capillaryRiseRate(self) -> MutableSequence[float]: ...
+        def capillaryRiseRate(self) -> Float64ListBuilder: ...
         @capillaryRiseRate.setter
-        def capillaryRiseRate(self, value: Sequence[float]) -> None: ...
+        def capillaryRiseRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def capillaryWater(self) -> MutableSequence[float]: ...
+        def capillaryWater(self) -> Float64ListBuilder: ...
         @capillaryWater.setter
-        def capillaryWater(self, value: Sequence[float]) -> None: ...
+        def capillaryWater(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def capillaryWater70(self) -> MutableSequence[float]: ...
+        def capillaryWater70(self) -> Float64ListBuilder: ...
         @capillaryWater70.setter
-        def capillaryWater70(self, value: Sequence[float]) -> None: ...
+        def capillaryWater70(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def evaporation(self) -> MutableSequence[float]: ...
+        def evaporation(self) -> Float64ListBuilder: ...
         @evaporation.setter
-        def evaporation(self, value: Sequence[float]) -> None: ...
+        def evaporation(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def evapotranspiration(self) -> MutableSequence[float]: ...
+        def evapotranspiration(self) -> Float64ListBuilder: ...
         @evapotranspiration.setter
-        def evapotranspiration(self, value: Sequence[float]) -> None: ...
+        def evapotranspiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def fieldCapacity(self) -> MutableSequence[float]: ...
+        def fieldCapacity(self) -> Float64ListBuilder: ...
         @fieldCapacity.setter
-        def fieldCapacity(self, value: Sequence[float]) -> None: ...
+        def fieldCapacity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def fluxAtLowerBoundary(self) -> float: ...
         @fluxAtLowerBoundary.setter
         def fluxAtLowerBoundary(self, value: float) -> None: ...
         @property
-        def gravitationalWater(self) -> MutableSequence[float]: ...
+        def gravitationalWater(self) -> Float64ListBuilder: ...
         @gravitationalWater.setter
-        def gravitationalWater(self, value: Sequence[float]) -> None: ...
+        def gravitationalWater(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def grossPrecipitation(self) -> float: ...
         @grossPrecipitation.setter
@@ -3741,9 +4053,11 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @groundwaterTable.setter
         def groundwaterTable(self, value: int) -> None: ...
         @property
-        def heatConductivity(self) -> MutableSequence[float]: ...
+        def heatConductivity(self) -> Float64ListBuilder: ...
         @heatConductivity.setter
-        def heatConductivity(self, value: Sequence[float]) -> None: ...
+        def heatConductivity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def hydraulicConductivityRedux(self) -> float: ...
         @hydraulicConductivityRedux.setter
@@ -3761,9 +4075,11 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @vcKcFactor.setter
         def vcKcFactor(self, value: float) -> None: ...
         @property
-        def lambda_(self) -> MutableSequence[float]: ...
+        def lambda_(self) -> Float64ListBuilder: ...
         @lambda_.setter
-        def lambda_(self, value: Sequence[float]) -> None: ...
+        def lambda_(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def lambdaReduced(self) -> float: ...
         @lambdaReduced.setter
@@ -3773,9 +4089,11 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @vsLatitude.setter
         def vsLatitude(self, value: float) -> None: ...
         @property
-        def layerThickness(self) -> MutableSequence[float]: ...
+        def layerThickness(self) -> Float64ListBuilder: ...
         @layerThickness.setter
-        def layerThickness(self, value: Sequence[float]) -> None: ...
+        def layerThickness(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def pmLayerThickness(self) -> float: ...
         @pmLayerThickness.setter
@@ -3813,17 +4131,21 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @vwNetRadiation.setter
         def vwNetRadiation(self, value: float) -> None: ...
         @property
-        def permanentWiltingPoint(self) -> MutableSequence[float]: ...
+        def permanentWiltingPoint(self) -> Float64ListBuilder: ...
         @permanentWiltingPoint.setter
-        def permanentWiltingPoint(self, value: Sequence[float]) -> None: ...
+        def permanentWiltingPoint(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def vcPercentageSoilCoverage(self) -> float: ...
         @vcPercentageSoilCoverage.setter
         def vcPercentageSoilCoverage(self, value: float) -> None: ...
         @property
-        def percolationRate(self) -> MutableSequence[float]: ...
+        def percolationRate(self) -> Float64ListBuilder: ...
         @percolationRate.setter
-        def percolationRate(self, value: Sequence[float]) -> None: ...
+        def percolationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def vwPrecipitation(self) -> float: ...
         @vwPrecipitation.setter
@@ -3837,17 +4159,23 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @relativeHumidity.setter
         def relativeHumidity(self, value: float) -> None: ...
         @property
-        def residualEvapotranspiration(self) -> MutableSequence[float]: ...
+        def residualEvapotranspiration(self) -> Float64ListBuilder: ...
         @residualEvapotranspiration.setter
-        def residualEvapotranspiration(self, value: Sequence[float]) -> None: ...
+        def residualEvapotranspiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def saturatedHydraulicConductivity(self) -> MutableSequence[float]: ...
+        def saturatedHydraulicConductivity(self) -> Float64ListBuilder: ...
         @saturatedHydraulicConductivity.setter
-        def saturatedHydraulicConductivity(self, value: Sequence[float]) -> None: ...
+        def saturatedHydraulicConductivity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def soilMoisture(self) -> MutableSequence[float]: ...
+        def soilMoisture(self) -> Float64ListBuilder: ...
         @soilMoisture.setter
-        def soilMoisture(self, value: Sequence[float]) -> None: ...
+        def soilMoisture(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def soilMoisturecrit(self) -> float: ...
         @soilMoisturecrit.setter
@@ -3857,9 +4185,11 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @soilMoistureDeficit.setter
         def soilMoistureDeficit(self, value: float) -> None: ...
         @property
-        def soilPoreVolume(self) -> MutableSequence[float]: ...
+        def soilPoreVolume(self) -> Float64ListBuilder: ...
         @soilPoreVolume.setter
-        def soilPoreVolume(self, value: Sequence[float]) -> None: ...
+        def soilPoreVolume(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def vcStomataResistance(self) -> float: ...
         @vcStomataResistance.setter
@@ -3889,17 +4219,22 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @totalWaterRemoval.setter
         def totalWaterRemoval(self, value: float) -> None: ...
         @property
-        def transpiration(self) -> MutableSequence[float]: ...
+        def transpiration(self) -> Float64ListBuilder: ...
         @transpiration.setter
-        def transpiration(self, value: Sequence[float]) -> None: ...
+        def transpiration(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def transpirationDeficit(self) -> float: ...
         @transpirationDeficit.setter
         def transpirationDeficit(self, value: float) -> None: ...
         @property
-        def waterFlux(self) -> MutableSequence[float]: ...
+        def waterFlux(self) -> Float64ListBuilder: ...
         @waterFlux.setter
-        def waterFlux(self, value: Sequence[float]) -> None: ...
+        def waterFlux(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["frostComponent"], size: int | None = None
@@ -3915,81 +4250,81 @@ class _SoilMoistureModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["availableWater"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["capillaryRiseRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["capillaryWater"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["capillaryWater70"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["evaporation"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["evapotranspiration"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["fieldCapacity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["gravitationalWater"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["heatConductivity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["lambda_"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["layerThickness"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["permanentWiltingPoint"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["percolationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["residualEvapotranspiration"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self,
             field: Literal["saturatedHydraulicConductivity"],
             size: int | None = None,
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilMoisture"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilPoreVolume"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["transpiration"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["waterFlux"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -3999,7 +4334,7 @@ class _SoilMoistureModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         frostComponent: FrostModuleStateBuilder | dict[str, Any] | None = None,
         snowComponent: SnowModuleStateBuilder | dict[str, Any] | None = None,
         xSACriticalSoilMoisture: float | None = None,
@@ -4013,29 +4348,29 @@ class _SoilMoistureModuleStateModule(_StructModule):
         actualEvaporation: float | None = None,
         actualEvapotranspiration: float | None = None,
         actualTranspiration: float | None = None,
-        availableWater: Sequence[float] | None = None,
+        availableWater: Float64ListBuilder | dict[str, Any] | None = None,
         capillaryRise: float | None = None,
-        capillaryRiseRate: Sequence[float] | None = None,
-        capillaryWater: Sequence[float] | None = None,
-        capillaryWater70: Sequence[float] | None = None,
-        evaporation: Sequence[float] | None = None,
-        evapotranspiration: Sequence[float] | None = None,
-        fieldCapacity: Sequence[float] | None = None,
+        capillaryRiseRate: Float64ListBuilder | dict[str, Any] | None = None,
+        capillaryWater: Float64ListBuilder | dict[str, Any] | None = None,
+        capillaryWater70: Float64ListBuilder | dict[str, Any] | None = None,
+        evaporation: Float64ListBuilder | dict[str, Any] | None = None,
+        evapotranspiration: Float64ListBuilder | dict[str, Any] | None = None,
+        fieldCapacity: Float64ListBuilder | dict[str, Any] | None = None,
         fluxAtLowerBoundary: float | None = None,
-        gravitationalWater: Sequence[float] | None = None,
+        gravitationalWater: Float64ListBuilder | dict[str, Any] | None = None,
         grossPrecipitation: float | None = None,
         groundwaterAdded: float | None = None,
         groundwaterDischarge: float | None = None,
         groundwaterTable: int | None = None,
-        heatConductivity: Sequence[float] | None = None,
+        heatConductivity: Float64ListBuilder | dict[str, Any] | None = None,
         hydraulicConductivityRedux: float | None = None,
         infiltration: float | None = None,
         interception: float | None = None,
         vcKcFactor: float | None = None,
-        lambda_: Sequence[float] | None = None,
+        lambda_: Float64ListBuilder | dict[str, Any] | None = None,
         lambdaReduced: float | None = None,
         vsLatitude: float | None = None,
-        layerThickness: Sequence[float] | None = None,
+        layerThickness: Float64ListBuilder | dict[str, Any] | None = None,
         pmLayerThickness: float | None = None,
         pmLeachingDepth: float | None = None,
         pmLeachingDepthLayer: int | None = None,
@@ -4045,18 +4380,20 @@ class _SoilMoistureModuleStateModule(_StructModule):
         vwMinAirTemperature: float | None = None,
         vcNetPrecipitation: float | None = None,
         vwNetRadiation: float | None = None,
-        permanentWiltingPoint: Sequence[float] | None = None,
+        permanentWiltingPoint: Float64ListBuilder | dict[str, Any] | None = None,
         vcPercentageSoilCoverage: float | None = None,
-        percolationRate: Sequence[float] | None = None,
+        percolationRate: Float64ListBuilder | dict[str, Any] | None = None,
         vwPrecipitation: float | None = None,
         referenceEvapotranspiration: float | None = None,
         relativeHumidity: float | None = None,
-        residualEvapotranspiration: Sequence[float] | None = None,
-        saturatedHydraulicConductivity: Sequence[float] | None = None,
-        soilMoisture: Sequence[float] | None = None,
+        residualEvapotranspiration: Float64ListBuilder | dict[str, Any] | None = None,
+        saturatedHydraulicConductivity: Float64ListBuilder
+        | dict[str, Any]
+        | None = None,
+        soilMoisture: Float64ListBuilder | dict[str, Any] | None = None,
         soilMoisturecrit: float | None = None,
         soilMoistureDeficit: float | None = None,
-        soilPoreVolume: Sequence[float] | None = None,
+        soilPoreVolume: Float64ListBuilder | dict[str, Any] | None = None,
         vcStomataResistance: float | None = None,
         surfaceRoughness: float | None = None,
         surfaceRunOff: float | None = None,
@@ -4064,24 +4401,25 @@ class _SoilMoistureModuleStateModule(_StructModule):
         surfaceWaterStorage: float | None = None,
         ptTimeStep: float | None = None,
         totalWaterRemoval: float | None = None,
-        transpiration: Sequence[float] | None = None,
+        transpiration: Float64ListBuilder | dict[str, Any] | None = None,
         transpirationDeficit: float | None = None,
-        waterFlux: Sequence[float] | None = None,
+        waterFlux: Float64ListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilMoistureModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilMoistureModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilMoistureModuleStateReader]: ...
@@ -4089,35 +4427,36 @@ class _SoilMoistureModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilMoistureModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilMoistureModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilMoistureModuleStateReader: ...
 
-SoilMoistureModuleState: _SoilMoistureModuleStateModule
+SoilMoistureModuleState: _SoilMoistureModuleStateStructModule
 
-class _SoilOrganicModuleStateModule(_StructModule):
+class _SoilOrganicModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def incorporation(self) -> bool: ...
@@ -4134,31 +4473,31 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @property
         def irrigationAmount(self) -> float: ...
         @property
-        def actAmmoniaOxidationRate(self) -> Sequence[float]: ...
+        def actAmmoniaOxidationRate(self) -> Float64ListReader: ...
         @property
-        def actNitrificationRate(self) -> Sequence[float]: ...
+        def actNitrificationRate(self) -> Float64ListReader: ...
         @property
-        def actDenitrificationRate(self) -> Sequence[float]: ...
+        def actDenitrificationRate(self) -> Float64ListReader: ...
         @property
-        def aomFastDeltaSum(self) -> Sequence[float]: ...
+        def aomFastDeltaSum(self) -> Float64ListReader: ...
         @property
-        def aomFastInput(self) -> Sequence[float]: ...
+        def aomFastInput(self) -> Float64ListReader: ...
         @property
-        def aomFastSum(self) -> Sequence[float]: ...
+        def aomFastSum(self) -> Float64ListReader: ...
         @property
-        def aomSlowDeltaSum(self) -> Sequence[float]: ...
+        def aomSlowDeltaSum(self) -> Float64ListReader: ...
         @property
-        def aomSlowInput(self) -> Sequence[float]: ...
+        def aomSlowInput(self) -> Float64ListReader: ...
         @property
-        def aomSlowSum(self) -> Sequence[float]: ...
+        def aomSlowSum(self) -> Float64ListReader: ...
         @property
-        def cBalance(self) -> Sequence[float]: ...
+        def cBalance(self) -> Float64ListReader: ...
         @property
         def decomposerRespiration(self) -> float: ...
         @property
         def errorMessage(self) -> str: ...
         @property
-        def inertSoilOrganicC(self) -> Sequence[float]: ...
+        def inertSoilOrganicC(self) -> Float64ListReader: ...
         @property
         def n2oProduced(self) -> float: ...
         @property
@@ -4172,27 +4511,27 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @property
         def netNMineralisation(self) -> float: ...
         @property
-        def netNMineralisationRate(self) -> Sequence[float]: ...
+        def netNMineralisationRate(self) -> Float64ListReader: ...
         @property
         def totalNH3Volatilised(self) -> float: ...
         @property
         def nh3Volatilised(self) -> float: ...
         @property
-        def smbCO2EvolutionRate(self) -> Sequence[float]: ...
+        def smbCO2EvolutionRate(self) -> Float64ListReader: ...
         @property
-        def smbFastDelta(self) -> Sequence[float]: ...
+        def smbFastDelta(self) -> Float64ListReader: ...
         @property
-        def smbSlowDelta(self) -> Sequence[float]: ...
+        def smbSlowDelta(self) -> Float64ListReader: ...
         @property
-        def vsSoilMineralNContent(self) -> Sequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
         @property
-        def soilOrganicC(self) -> Sequence[float]: ...
+        def soilOrganicC(self) -> Float64ListReader: ...
         @property
-        def somFastDelta(self) -> Sequence[float]: ...
+        def somFastDelta(self) -> Float64ListReader: ...
         @property
-        def somFastInput(self) -> Sequence[float]: ...
+        def somFastInput(self) -> Float64ListReader: ...
         @property
-        def somSlowDelta(self) -> Sequence[float]: ...
+        def somSlowDelta(self) -> Float64ListReader: ...
         @property
         def sumDenitrification(self) -> float: ...
         @property
@@ -4205,7 +4544,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilOrganicModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -4243,45 +4582,65 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @irrigationAmount.setter
         def irrigationAmount(self, value: float) -> None: ...
         @property
-        def actAmmoniaOxidationRate(self) -> MutableSequence[float]: ...
+        def actAmmoniaOxidationRate(self) -> Float64ListBuilder: ...
         @actAmmoniaOxidationRate.setter
-        def actAmmoniaOxidationRate(self, value: Sequence[float]) -> None: ...
+        def actAmmoniaOxidationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def actNitrificationRate(self) -> MutableSequence[float]: ...
+        def actNitrificationRate(self) -> Float64ListBuilder: ...
         @actNitrificationRate.setter
-        def actNitrificationRate(self, value: Sequence[float]) -> None: ...
+        def actNitrificationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def actDenitrificationRate(self) -> MutableSequence[float]: ...
+        def actDenitrificationRate(self) -> Float64ListBuilder: ...
         @actDenitrificationRate.setter
-        def actDenitrificationRate(self, value: Sequence[float]) -> None: ...
+        def actDenitrificationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomFastDeltaSum(self) -> MutableSequence[float]: ...
+        def aomFastDeltaSum(self) -> Float64ListBuilder: ...
         @aomFastDeltaSum.setter
-        def aomFastDeltaSum(self, value: Sequence[float]) -> None: ...
+        def aomFastDeltaSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomFastInput(self) -> MutableSequence[float]: ...
+        def aomFastInput(self) -> Float64ListBuilder: ...
         @aomFastInput.setter
-        def aomFastInput(self, value: Sequence[float]) -> None: ...
+        def aomFastInput(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomFastSum(self) -> MutableSequence[float]: ...
+        def aomFastSum(self) -> Float64ListBuilder: ...
         @aomFastSum.setter
-        def aomFastSum(self, value: Sequence[float]) -> None: ...
+        def aomFastSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomSlowDeltaSum(self) -> MutableSequence[float]: ...
+        def aomSlowDeltaSum(self) -> Float64ListBuilder: ...
         @aomSlowDeltaSum.setter
-        def aomSlowDeltaSum(self, value: Sequence[float]) -> None: ...
+        def aomSlowDeltaSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomSlowInput(self) -> MutableSequence[float]: ...
+        def aomSlowInput(self) -> Float64ListBuilder: ...
         @aomSlowInput.setter
-        def aomSlowInput(self, value: Sequence[float]) -> None: ...
+        def aomSlowInput(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def aomSlowSum(self) -> MutableSequence[float]: ...
+        def aomSlowSum(self) -> Float64ListBuilder: ...
         @aomSlowSum.setter
-        def aomSlowSum(self, value: Sequence[float]) -> None: ...
+        def aomSlowSum(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def cBalance(self) -> MutableSequence[float]: ...
+        def cBalance(self) -> Float64ListBuilder: ...
         @cBalance.setter
-        def cBalance(self, value: Sequence[float]) -> None: ...
+        def cBalance(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def decomposerRespiration(self) -> float: ...
         @decomposerRespiration.setter
@@ -4291,9 +4650,11 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @errorMessage.setter
         def errorMessage(self, value: str) -> None: ...
         @property
-        def inertSoilOrganicC(self) -> MutableSequence[float]: ...
+        def inertSoilOrganicC(self) -> Float64ListBuilder: ...
         @inertSoilOrganicC.setter
-        def inertSoilOrganicC(self, value: Sequence[float]) -> None: ...
+        def inertSoilOrganicC(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def n2oProduced(self) -> float: ...
         @n2oProduced.setter
@@ -4319,9 +4680,11 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @netNMineralisation.setter
         def netNMineralisation(self, value: float) -> None: ...
         @property
-        def netNMineralisationRate(self) -> MutableSequence[float]: ...
+        def netNMineralisationRate(self) -> Float64ListBuilder: ...
         @netNMineralisationRate.setter
-        def netNMineralisationRate(self, value: Sequence[float]) -> None: ...
+        def netNMineralisationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def totalNH3Volatilised(self) -> float: ...
         @totalNH3Volatilised.setter
@@ -4331,37 +4694,53 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @nh3Volatilised.setter
         def nh3Volatilised(self, value: float) -> None: ...
         @property
-        def smbCO2EvolutionRate(self) -> MutableSequence[float]: ...
+        def smbCO2EvolutionRate(self) -> Float64ListBuilder: ...
         @smbCO2EvolutionRate.setter
-        def smbCO2EvolutionRate(self, value: Sequence[float]) -> None: ...
+        def smbCO2EvolutionRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def smbFastDelta(self) -> MutableSequence[float]: ...
+        def smbFastDelta(self) -> Float64ListBuilder: ...
         @smbFastDelta.setter
-        def smbFastDelta(self, value: Sequence[float]) -> None: ...
+        def smbFastDelta(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def smbSlowDelta(self) -> MutableSequence[float]: ...
+        def smbSlowDelta(self) -> Float64ListBuilder: ...
         @smbSlowDelta.setter
-        def smbSlowDelta(self, value: Sequence[float]) -> None: ...
+        def smbSlowDelta(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def vsSoilMineralNContent(self) -> MutableSequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
         @vsSoilMineralNContent.setter
-        def vsSoilMineralNContent(self, value: Sequence[float]) -> None: ...
+        def vsSoilMineralNContent(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def soilOrganicC(self) -> MutableSequence[float]: ...
+        def soilOrganicC(self) -> Float64ListBuilder: ...
         @soilOrganicC.setter
-        def soilOrganicC(self, value: Sequence[float]) -> None: ...
+        def soilOrganicC(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def somFastDelta(self) -> MutableSequence[float]: ...
+        def somFastDelta(self) -> Float64ListBuilder: ...
         @somFastDelta.setter
-        def somFastDelta(self, value: Sequence[float]) -> None: ...
+        def somFastDelta(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def somFastInput(self) -> MutableSequence[float]: ...
+        def somFastInput(self) -> Float64ListBuilder: ...
         @somFastInput.setter
-        def somFastInput(self, value: Sequence[float]) -> None: ...
+        def somFastInput(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def somSlowDelta(self) -> MutableSequence[float]: ...
+        def somSlowDelta(self) -> Float64ListBuilder: ...
         @somSlowDelta.setter
-        def somSlowDelta(self, value: Sequence[float]) -> None: ...
+        def somSlowDelta(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def sumDenitrification(self) -> float: ...
         @sumDenitrification.setter
@@ -4378,6 +4757,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
         def sumNH3Volatilised(self) -> float: ...
         @sumNH3Volatilised.setter
         def sumNH3Volatilised(self, value: float) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
@@ -4385,83 +4765,83 @@ class _SoilOrganicModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["actAmmoniaOxidationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["actNitrificationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["actDenitrificationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomFastDeltaSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomFastInput"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomFastSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomSlowDeltaSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomSlowInput"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["aomSlowSum"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["cBalance"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["inertSoilOrganicC"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["netNMineralisationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["smbCO2EvolutionRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["smbFastDelta"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["smbSlowDelta"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["vsSoilMineralNContent"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilOrganicC"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["somFastDelta"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["somFastInput"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["somSlowDelta"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -4471,7 +4851,7 @@ class _SoilOrganicModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         incorporation: bool | None = None,
         totalDenitrification: float | None = None,
         moduleParams: SoilOrganicModuleParametersBuilder | dict[str, Any] | None = None,
@@ -4479,55 +4859,56 @@ class _SoilOrganicModuleStateModule(_StructModule):
         vsNumberOfOrganicLayers: int | None = None,
         addedOrganicMatter: bool | None = None,
         irrigationAmount: float | None = None,
-        actAmmoniaOxidationRate: Sequence[float] | None = None,
-        actNitrificationRate: Sequence[float] | None = None,
-        actDenitrificationRate: Sequence[float] | None = None,
-        aomFastDeltaSum: Sequence[float] | None = None,
-        aomFastInput: Sequence[float] | None = None,
-        aomFastSum: Sequence[float] | None = None,
-        aomSlowDeltaSum: Sequence[float] | None = None,
-        aomSlowInput: Sequence[float] | None = None,
-        aomSlowSum: Sequence[float] | None = None,
-        cBalance: Sequence[float] | None = None,
+        actAmmoniaOxidationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        actNitrificationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        actDenitrificationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastDeltaSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastInput: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowDeltaSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowInput: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowSum: Float64ListBuilder | dict[str, Any] | None = None,
+        cBalance: Float64ListBuilder | dict[str, Any] | None = None,
         decomposerRespiration: float | None = None,
         errorMessage: str | None = None,
-        inertSoilOrganicC: Sequence[float] | None = None,
+        inertSoilOrganicC: Float64ListBuilder | dict[str, Any] | None = None,
         n2oProduced: float | None = None,
         n2oProducedNit: float | None = None,
         n2oProducedDenit: float | None = None,
         netEcosystemExchange: float | None = None,
         netEcosystemProduction: float | None = None,
         netNMineralisation: float | None = None,
-        netNMineralisationRate: Sequence[float] | None = None,
+        netNMineralisationRate: Float64ListBuilder | dict[str, Any] | None = None,
         totalNH3Volatilised: float | None = None,
         nh3Volatilised: float | None = None,
-        smbCO2EvolutionRate: Sequence[float] | None = None,
-        smbFastDelta: Sequence[float] | None = None,
-        smbSlowDelta: Sequence[float] | None = None,
-        vsSoilMineralNContent: Sequence[float] | None = None,
-        soilOrganicC: Sequence[float] | None = None,
-        somFastDelta: Sequence[float] | None = None,
-        somFastInput: Sequence[float] | None = None,
-        somSlowDelta: Sequence[float] | None = None,
+        smbCO2EvolutionRate: Float64ListBuilder | dict[str, Any] | None = None,
+        smbFastDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        smbSlowDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
+        soilOrganicC: Float64ListBuilder | dict[str, Any] | None = None,
+        somFastDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        somFastInput: Float64ListBuilder | dict[str, Any] | None = None,
+        somSlowDelta: Float64ListBuilder | dict[str, Any] | None = None,
         sumDenitrification: float | None = None,
         sumNetNMineralisation: float | None = None,
         sumN2OProduced: float | None = None,
         sumNH3Volatilised: float | None = None,
         **kwargs: Any,
     ) -> SoilOrganicModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilOrganicModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilOrganicModuleStateReader]: ...
@@ -4535,50 +4916,51 @@ class _SoilOrganicModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilOrganicModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilOrganicModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilOrganicModuleStateReader: ...
 
-SoilOrganicModuleState: _SoilOrganicModuleStateModule
+SoilOrganicModuleState: _SoilOrganicModuleStateStructModule
 
-class _SoilTransportModuleStateModule(_StructModule):
+class _SoilTransportModuleStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def pcMinimumAvailableN(self) -> float: ...
         @property
         def moduleParams(self) -> SoilTransportModuleParametersReader: ...
         @property
-        def convection(self) -> Sequence[float]: ...
+        def convection(self) -> Float64ListReader: ...
         @property
         def cropNUptake(self) -> float: ...
         @property
-        def diffusionCoeff(self) -> Sequence[float]: ...
+        def diffusionCoeff(self) -> Float64ListReader: ...
         @property
-        def dispersion(self) -> Sequence[float]: ...
+        def dispersion(self) -> Float64ListReader: ...
         @property
-        def dispersionCoeff(self) -> Sequence[float]: ...
+        def dispersionCoeff(self) -> Float64ListReader: ...
         @property
         def vsLeachingDepth(self) -> float: ...
         @property
@@ -4586,26 +4968,26 @@ class _SoilTransportModuleStateModule(_StructModule):
         @property
         def vsNDeposition(self) -> float: ...
         @property
-        def vcNUptakeFromLayer(self) -> Sequence[float]: ...
+        def vcNUptakeFromLayer(self) -> Float64ListReader: ...
         @property
-        def poreWaterVelocity(self) -> Sequence[float]: ...
+        def poreWaterVelocity(self) -> Float64ListReader: ...
         @property
-        def vsSoilMineralNContent(self) -> Sequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
         @property
-        def soilNO3(self) -> Sequence[float]: ...
+        def soilNO3(self) -> Float64ListReader: ...
         @property
-        def soilNO3aq(self) -> Sequence[float]: ...
+        def soilNO3aq(self) -> Float64ListReader: ...
         @property
         def timeStep(self) -> float: ...
         @property
-        def totalDispersion(self) -> Sequence[float]: ...
+        def totalDispersion(self) -> Float64ListReader: ...
         @property
-        def percolationRate(self) -> Sequence[float]: ...
+        def percolationRate(self) -> Float64ListReader: ...
         @override
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> SoilTransportModuleStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -4623,25 +5005,33 @@ class _SoilTransportModuleStateModule(_StructModule):
             | dict[str, Any],
         ) -> None: ...
         @property
-        def convection(self) -> MutableSequence[float]: ...
+        def convection(self) -> Float64ListBuilder: ...
         @convection.setter
-        def convection(self, value: Sequence[float]) -> None: ...
+        def convection(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def cropNUptake(self) -> float: ...
         @cropNUptake.setter
         def cropNUptake(self, value: float) -> None: ...
         @property
-        def diffusionCoeff(self) -> MutableSequence[float]: ...
+        def diffusionCoeff(self) -> Float64ListBuilder: ...
         @diffusionCoeff.setter
-        def diffusionCoeff(self, value: Sequence[float]) -> None: ...
+        def diffusionCoeff(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def dispersion(self) -> MutableSequence[float]: ...
+        def dispersion(self) -> Float64ListBuilder: ...
         @dispersion.setter
-        def dispersion(self, value: Sequence[float]) -> None: ...
+        def dispersion(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def dispersionCoeff(self) -> MutableSequence[float]: ...
+        def dispersionCoeff(self) -> Float64ListBuilder: ...
         @dispersionCoeff.setter
-        def dispersionCoeff(self, value: Sequence[float]) -> None: ...
+        def dispersionCoeff(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def vsLeachingDepth(self) -> float: ...
         @vsLeachingDepth.setter
@@ -4655,37 +5045,52 @@ class _SoilTransportModuleStateModule(_StructModule):
         @vsNDeposition.setter
         def vsNDeposition(self, value: float) -> None: ...
         @property
-        def vcNUptakeFromLayer(self) -> MutableSequence[float]: ...
+        def vcNUptakeFromLayer(self) -> Float64ListBuilder: ...
         @vcNUptakeFromLayer.setter
-        def vcNUptakeFromLayer(self, value: Sequence[float]) -> None: ...
+        def vcNUptakeFromLayer(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def poreWaterVelocity(self) -> MutableSequence[float]: ...
+        def poreWaterVelocity(self) -> Float64ListBuilder: ...
         @poreWaterVelocity.setter
-        def poreWaterVelocity(self, value: Sequence[float]) -> None: ...
+        def poreWaterVelocity(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def vsSoilMineralNContent(self) -> MutableSequence[float]: ...
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
         @vsSoilMineralNContent.setter
-        def vsSoilMineralNContent(self, value: Sequence[float]) -> None: ...
+        def vsSoilMineralNContent(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def soilNO3(self) -> MutableSequence[float]: ...
+        def soilNO3(self) -> Float64ListBuilder: ...
         @soilNO3.setter
-        def soilNO3(self, value: Sequence[float]) -> None: ...
+        def soilNO3(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def soilNO3aq(self) -> MutableSequence[float]: ...
+        def soilNO3aq(self) -> Float64ListBuilder: ...
         @soilNO3aq.setter
-        def soilNO3aq(self, value: Sequence[float]) -> None: ...
+        def soilNO3aq(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def timeStep(self) -> float: ...
         @timeStep.setter
         def timeStep(self, value: float) -> None: ...
         @property
-        def totalDispersion(self) -> MutableSequence[float]: ...
+        def totalDispersion(self) -> Float64ListBuilder: ...
         @totalDispersion.setter
-        def totalDispersion(self, value: Sequence[float]) -> None: ...
+        def totalDispersion(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def percolationRate(self) -> MutableSequence[float]: ...
+        def percolationRate(self) -> Float64ListBuilder: ...
         @percolationRate.setter
-        def percolationRate(self, value: Sequence[float]) -> None: ...
+        def percolationRate(
+            self, value: Float64ListBuilder | Float64ListReader | dict[str, Any]
+        ) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["moduleParams"], size: int | None = None
@@ -4693,47 +5098,47 @@ class _SoilTransportModuleStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["convection"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["diffusionCoeff"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["dispersion"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["dispersionCoeff"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["vcNUptakeFromLayer"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["poreWaterVelocity"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["vsSoilMineralNContent"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilNO3"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["soilNO3aq"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["totalDispersion"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(
             self, field: Literal["percolationRate"], size: int | None = None
-        ) -> MutableSequence[float]: ...
+        ) -> Float64ListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -4743,42 +5148,43 @@ class _SoilTransportModuleStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         pcMinimumAvailableN: float | None = None,
         moduleParams: SoilTransportModuleParametersBuilder
         | dict[str, Any]
         | None = None,
-        convection: Sequence[float] | None = None,
+        convection: Float64ListBuilder | dict[str, Any] | None = None,
         cropNUptake: float | None = None,
-        diffusionCoeff: Sequence[float] | None = None,
-        dispersion: Sequence[float] | None = None,
-        dispersionCoeff: Sequence[float] | None = None,
+        diffusionCoeff: Float64ListBuilder | dict[str, Any] | None = None,
+        dispersion: Float64ListBuilder | dict[str, Any] | None = None,
+        dispersionCoeff: Float64ListBuilder | dict[str, Any] | None = None,
         vsLeachingDepth: float | None = None,
         leachingAtBoundary: float | None = None,
         vsNDeposition: float | None = None,
-        vcNUptakeFromLayer: Sequence[float] | None = None,
-        poreWaterVelocity: Sequence[float] | None = None,
-        vsSoilMineralNContent: Sequence[float] | None = None,
-        soilNO3: Sequence[float] | None = None,
-        soilNO3aq: Sequence[float] | None = None,
+        vcNUptakeFromLayer: Float64ListBuilder | dict[str, Any] | None = None,
+        poreWaterVelocity: Float64ListBuilder | dict[str, Any] | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
+        soilNO3: Float64ListBuilder | dict[str, Any] | None = None,
+        soilNO3aq: Float64ListBuilder | dict[str, Any] | None = None,
         timeStep: float | None = None,
-        totalDispersion: Sequence[float] | None = None,
-        percolationRate: Sequence[float] | None = None,
+        totalDispersion: Float64ListBuilder | dict[str, Any] | None = None,
+        percolationRate: Float64ListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> SoilTransportModuleStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[SoilTransportModuleStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[SoilTransportModuleStateReader]: ...
@@ -4786,36 +5192,106 @@ class _SoilTransportModuleStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[SoilTransportModuleStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilTransportModuleStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> SoilTransportModuleStateReader: ...
 
-SoilTransportModuleState: _SoilTransportModuleStateModule
+SoilTransportModuleState: _SoilTransportModuleStateStructModule
 
-class _MonicaModelStateModule(_StructModule):
-    class _ACDToValueModule(_StructModule):
+class _ACDToValueList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueReader: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueBuilder: ...
+        @override
+        def __setitem__(
+            self, key: int, value: ACDToValueReader | ACDToValueBuilder | dict[str, Any]
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> ACDToValueBuilder: ...
+
+class _ACDToValueListList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueListReader: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueListReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueListBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: ACDToValueListReader | ACDToValueListBuilder | Sequence[Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueListBuilder]: ...
+        @override
+        def init(
+            self, index: int, size: int | None = None
+        ) -> ACDToValueListBuilder: ...
+
+class _TextList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __setitem__(self, key: int, value: str) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
+
+class _MonicaModelStateStructModule(_StructModule):
+    class _ACDToValueStructModule(_StructModule):
         class Reader(_DynamicStructReader):
             @property
             def acd(self) -> int: ...
@@ -4825,7 +5301,7 @@ class _MonicaModelStateModule(_StructModule):
             def as_builder(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Any = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
             ) -> ACDToValueBuilder: ...
 
         class Builder(_DynamicStructBuilder):
@@ -4844,24 +5320,25 @@ class _MonicaModelStateModule(_StructModule):
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
             acd: int | None = None,
             value: float | None = None,
             **kwargs: Any,
         ) -> ACDToValueBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> AbstractContextManager[ACDToValueReader]: ...
         @overload
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[False],
         ) -> AbstractContextManager[ACDToValueReader]: ...
@@ -4869,35 +5346,36 @@ class _MonicaModelStateModule(_StructModule):
         def from_bytes(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[ACDToValueBuilder]: ...
+        @override
         def from_bytes_packed(
             self,
             buf: bytes,
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> _DynamicStructReader: ...
         @override
         def read(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ACDToValueReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = ...,
-            nesting_limit: int | None = ...,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
         ) -> ACDToValueReader: ...
 
-    type ACDToValueReader = _ACDToValueModule.Reader
-    type ACDToValueBuilder = _ACDToValueModule.Builder
-    ACDToValue: _ACDToValueModule
+    type ACDToValueReader = _ACDToValueStructModule.Reader
+    type ACDToValueBuilder = _ACDToValueStructModule.Builder
+    ACDToValue: _ACDToValueStructModule
     class Reader(_DynamicStructReader):
         @property
         def sitePs(self) -> SiteParametersReader: ...
@@ -4956,11 +5434,11 @@ class _MonicaModelStateModule(_StructModule):
         @property
         def currentStepDate(self) -> DateReader: ...
         @property
-        def climateData(self) -> Sequence[Sequence[ACDToValueReader]]: ...
+        def climateData(self) -> ACDToValueListListReader: ...
         @property
-        def currentEvents(self) -> Sequence[str]: ...
+        def currentEvents(self) -> TextListReader: ...
         @property
-        def previousDaysEvents(self) -> Sequence[str]: ...
+        def previousDaysEvents(self) -> TextListReader: ...
         @property
         def clearCropUponNextDay(self) -> bool: ...
         @property
@@ -4975,7 +5453,7 @@ class _MonicaModelStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> MonicaModelStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -5138,21 +5616,26 @@ class _MonicaModelStateModule(_StructModule):
             self, value: DateBuilder | DateReader | dict[str, Any]
         ) -> None: ...
         @property
-        def climateData(self) -> Sequence[Sequence[ACDToValueBuilder]]: ...
+        def climateData(self) -> ACDToValueListListBuilder: ...
         @climateData.setter
         def climateData(
             self,
-            value: Sequence[Sequence[ACDToValueBuilder | ACDToValueReader]]
+            value: ACDToValueListListBuilder
+            | ACDToValueListListReader
             | dict[str, Any],
         ) -> None: ...
         @property
-        def currentEvents(self) -> MutableSequence[str]: ...
+        def currentEvents(self) -> TextListBuilder: ...
         @currentEvents.setter
-        def currentEvents(self, value: Sequence[str]) -> None: ...
+        def currentEvents(
+            self, value: TextListBuilder | TextListReader | dict[str, Any]
+        ) -> None: ...
         @property
-        def previousDaysEvents(self) -> MutableSequence[str]: ...
+        def previousDaysEvents(self) -> TextListBuilder: ...
         @previousDaysEvents.setter
-        def previousDaysEvents(self, value: Sequence[str]) -> None: ...
+        def previousDaysEvents(
+            self, value: TextListBuilder | TextListReader | dict[str, Any]
+        ) -> None: ...
         @property
         def clearCropUponNextDay(self) -> bool: ...
         @clearCropUponNextDay.setter
@@ -5173,6 +5656,7 @@ class _MonicaModelStateModule(_StructModule):
         def accuHeatStress(self) -> float: ...
         @accuHeatStress.setter
         def accuHeatStress(self, value: float) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["sitePs"], size: int | None = None
@@ -5224,15 +5708,15 @@ class _MonicaModelStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["climateData"], size: int | None = None
-        ) -> MutableSequence[ACDToValueBuilder]: ...
+        ) -> ACDToValueListListBuilder: ...
         @overload
         def init(
             self, field: Literal["currentEvents"], size: int | None = None
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(
             self, field: Literal["previousDaysEvents"], size: int | None = None
-        ) -> MutableSequence[str]: ...
+        ) -> TextListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -5242,7 +5726,7 @@ class _MonicaModelStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         sitePs: SiteParametersBuilder | dict[str, Any] | None = None,
         cultivationMethodCount: int | None = None,
         envPs: EnvironmentParametersBuilder | dict[str, Any] | None = None,
@@ -5274,9 +5758,9 @@ class _MonicaModelStateModule(_StructModule):
         optCarbonExportedResidues: float | None = None,
         optCarbonReturnedResidues: float | None = None,
         currentStepDate: DateBuilder | dict[str, Any] | None = None,
-        climateData: Sequence[Sequence[ACDToValueBuilder]] | None = None,
-        currentEvents: Sequence[str] | None = None,
-        previousDaysEvents: Sequence[str] | None = None,
+        climateData: ACDToValueListListBuilder | dict[str, Any] | None = None,
+        currentEvents: TextListBuilder | dict[str, Any] | None = None,
+        previousDaysEvents: TextListBuilder | dict[str, Any] | None = None,
         clearCropUponNextDay: bool | None = None,
         daysWithCrop: int | None = None,
         accuNStress: float | None = None,
@@ -5284,19 +5768,20 @@ class _MonicaModelStateModule(_StructModule):
         accuHeatStress: float | None = None,
         **kwargs: Any,
     ) -> MonicaModelStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[MonicaModelStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[MonicaModelStateReader]: ...
@@ -5304,35 +5789,36 @@ class _MonicaModelStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[MonicaModelStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> MonicaModelStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> MonicaModelStateReader: ...
 
-MonicaModelState: _MonicaModelStateModule
+MonicaModelState: _MonicaModelStateStructModule
 
-class _RuntimeStateModule(_StructModule):
+class _RuntimeStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def modelState(self) -> MonicaModelStateReader: ...
@@ -5340,7 +5826,7 @@ class _RuntimeStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> RuntimeStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -5351,6 +5837,7 @@ class _RuntimeStateModule(_StructModule):
             self,
             value: MonicaModelStateBuilder | MonicaModelStateReader | dict[str, Any],
         ) -> None: ...
+        @override
         def init(
             self, field: Literal["modelState"], size: int | None = None
         ) -> MonicaModelStateBuilder: ...
@@ -5361,23 +5848,24 @@ class _RuntimeStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         modelState: MonicaModelStateBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> RuntimeStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[RuntimeStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[RuntimeStateReader]: ...
@@ -5385,35 +5873,59 @@ class _RuntimeStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[RuntimeStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> RuntimeStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> RuntimeStateReader: ...
 
-RuntimeState: _RuntimeStateModule
+RuntimeState: _RuntimeStateStructModule
 
-class _CropStateModule(_StructModule):
+class _DateList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DateReader: ...
+        @override
+        def __iter__(self) -> Iterator[DateReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DateBuilder: ...
+        @override
+        def __setitem__(
+            self, key: int, value: DateReader | DateBuilder | dict[str, Any]
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[DateBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> DateBuilder: ...
+
+class _CropStateStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def automaticHarvestParams(self) -> AutomaticHarvestParametersReader: ...
@@ -5430,7 +5942,7 @@ class _CropStateModule(_StructModule):
         @property
         def isPerennialCrop(self) -> MaybeBoolReader: ...
         @property
-        def cuttingDates(self) -> Sequence[DateReader]: ...
+        def cuttingDates(self) -> DateListReader: ...
         @property
         def cropParams(self) -> CropParametersReader: ...
         @property
@@ -5445,7 +5957,7 @@ class _CropStateModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> CropStateBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -5491,10 +6003,10 @@ class _CropStateModule(_StructModule):
             self, value: MaybeBoolBuilder | MaybeBoolReader | dict[str, Any]
         ) -> None: ...
         @property
-        def cuttingDates(self) -> MutableSequence[DateBuilder]: ...
+        def cuttingDates(self) -> DateListBuilder: ...
         @cuttingDates.setter
         def cuttingDates(
-            self, value: Sequence[DateBuilder | DateReader] | Sequence[dict[str, Any]]
+            self, value: DateListBuilder | DateListReader | dict[str, Any]
         ) -> None: ...
         @property
         def cropParams(self) -> CropParametersBuilder: ...
@@ -5525,6 +6037,7 @@ class _CropStateModule(_StructModule):
         def automaticHarvest(self) -> bool: ...
         @automaticHarvest.setter
         def automaticHarvest(self, value: bool) -> None: ...
+        @override
         @overload
         def init(
             self, field: Literal["automaticHarvestParams"], size: int | None = None
@@ -5560,7 +6073,7 @@ class _CropStateModule(_StructModule):
         @overload
         def init(
             self, field: Literal["cuttingDates"], size: int | None = None
-        ) -> MutableSequence[DateBuilder]: ...
+        ) -> DateListBuilder: ...
         @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
@@ -5570,7 +6083,7 @@ class _CropStateModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         automaticHarvestParams: AutomaticHarvestParametersBuilder
         | dict[str, Any]
         | None = None,
@@ -5580,7 +6093,7 @@ class _CropStateModule(_StructModule):
         harvestDate: DateBuilder | dict[str, Any] | None = None,
         isWinterCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
         isPerennialCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
-        cuttingDates: Sequence[DateBuilder] | Sequence[dict[str, Any]] | None = None,
+        cuttingDates: DateListBuilder | dict[str, Any] | None = None,
         cropParams: CropParametersBuilder | dict[str, Any] | None = None,
         perennialCropParams: CropParametersBuilder | dict[str, Any] | None = None,
         residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
@@ -5588,19 +6101,20 @@ class _CropStateModule(_StructModule):
         automaticHarvest: bool | None = None,
         **kwargs: Any,
     ) -> CropStateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[CropStateReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[CropStateReader]: ...
@@ -5608,35 +6122,36 @@ class _CropStateModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[CropStateBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> CropStateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> CropStateReader: ...
 
-CropState: _CropStateModule
+CropState: _CropStateStructModule
 
-class _ICDataModule(_StructModule):
+class _ICDataStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
         def noCrop(self) -> None: ...
@@ -5650,7 +6165,7 @@ class _ICDataModule(_StructModule):
         def as_builder(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Any = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
         ) -> ICDataBuilder: ...
 
     class Builder(_DynamicStructBuilder):
@@ -5675,25 +6190,26 @@ class _ICDataModule(_StructModule):
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Any = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
         noCrop: None | None = None,
         height: float | None = None,
         lait: float | None = None,
         **kwargs: Any,
     ) -> ICDataBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> AbstractContextManager[ICDataReader]: ...
     @overload
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[False],
     ) -> AbstractContextManager[ICDataReader]: ...
@@ -5701,70 +6217,93 @@ class _ICDataModule(_StructModule):
     def from_bytes(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[ICDataBuilder]: ...
+    @override
     def from_bytes_packed(
         self,
         buf: bytes,
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> _DynamicStructReader: ...
     @override
     def read(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> ICDataReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
-        traversal_limit_in_words: int | None = ...,
-        nesting_limit: int | None = ...,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
     ) -> ICDataReader: ...
 
-ICData: _ICDataModule
+ICData: _ICDataStructModule
 
 # Top-level type aliases for use in type annotations
-type ACDToValueBuilder = _MonicaModelStateModule._ACDToValueModule.Builder
-type ACDToValueReader = _MonicaModelStateModule._ACDToValueModule.Reader
-type AOMPropertiesBuilder = _AOMPropertiesModule.Builder
-type AOMPropertiesReader = _AOMPropertiesModule.Reader
-type CropModuleStateBuilder = _CropModuleStateModule.Builder
-type CropModuleStateReader = _CropModuleStateModule.Reader
-type CropStateBuilder = _CropStateModule.Builder
-type CropStateReader = _CropStateModule.Reader
+type ACDToValueBuilder = _MonicaModelStateStructModule._ACDToValueStructModule.Builder
+type ACDToValueListBuilder = _ACDToValueList.Builder
+type ACDToValueListListBuilder = _ACDToValueListList.Builder
+type ACDToValueListListReader = _ACDToValueListList.Reader
+type ACDToValueListReader = _ACDToValueList.Reader
+type ACDToValueReader = _MonicaModelStateStructModule._ACDToValueStructModule.Reader
+type AOMPropertiesBuilder = _AOMPropertiesStructModule.Builder
+type AOMPropertiesListBuilder = _AOMPropertiesList.Builder
+type AOMPropertiesListReader = _AOMPropertiesList.Reader
+type AOMPropertiesReader = _AOMPropertiesStructModule.Reader
+type BoolListBuilder = _BoolList.Builder
+type BoolListReader = _BoolList.Reader
+type CropModuleStateBuilder = _CropModuleStateStructModule.Builder
+type CropModuleStateReader = _CropModuleStateStructModule.Reader
+type CropStateBuilder = _CropStateStructModule.Builder
+type CropStateReader = _CropStateStructModule.Reader
+type DateListBuilder = _DateList.Builder
+type DateListReader = _DateList.Reader
 type DelayedNMinApplicationParamsBuilder = (
-    _SoilColumnStateModule._DelayedNMinApplicationParamsModule.Builder
+    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule.Builder
 )
+type DelayedNMinApplicationParamsListBuilder = _DelayedNMinApplicationParamsList.Builder
+type DelayedNMinApplicationParamsListReader = _DelayedNMinApplicationParamsList.Reader
 type DelayedNMinApplicationParamsReader = (
-    _SoilColumnStateModule._DelayedNMinApplicationParamsModule.Reader
+    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule.Reader
 )
-type FrostModuleStateBuilder = _FrostModuleStateModule.Builder
-type FrostModuleStateReader = _FrostModuleStateModule.Reader
-type ICDataBuilder = _ICDataModule.Builder
-type ICDataReader = _ICDataModule.Reader
-type MaybeBoolBuilder = _MaybeBoolModule.Builder
-type MaybeBoolReader = _MaybeBoolModule.Reader
-type MonicaModelStateBuilder = _MonicaModelStateModule.Builder
-type MonicaModelStateReader = _MonicaModelStateModule.Reader
-type RuntimeStateBuilder = _RuntimeStateModule.Builder
-type RuntimeStateReader = _RuntimeStateModule.Reader
-type SnowModuleStateBuilder = _SnowModuleStateModule.Builder
-type SnowModuleStateReader = _SnowModuleStateModule.Reader
-type SoilColumnStateBuilder = _SoilColumnStateModule.Builder
-type SoilColumnStateReader = _SoilColumnStateModule.Reader
-type SoilLayerStateBuilder = _SoilLayerStateModule.Builder
-type SoilLayerStateReader = _SoilLayerStateModule.Reader
-type SoilMoistureModuleStateBuilder = _SoilMoistureModuleStateModule.Builder
-type SoilMoistureModuleStateReader = _SoilMoistureModuleStateModule.Reader
-type SoilOrganicModuleStateBuilder = _SoilOrganicModuleStateModule.Builder
-type SoilOrganicModuleStateReader = _SoilOrganicModuleStateModule.Reader
-type SoilTemperatureModuleStateBuilder = _SoilTemperatureModuleStateModule.Builder
-type SoilTemperatureModuleStateReader = _SoilTemperatureModuleStateModule.Reader
-type SoilTransportModuleStateBuilder = _SoilTransportModuleStateModule.Builder
-type SoilTransportModuleStateReader = _SoilTransportModuleStateModule.Reader
+type Float64ListBuilder = _Float64List.Builder
+type Float64ListListBuilder = _Float64ListList.Builder
+type Float64ListListReader = _Float64ListList.Reader
+type Float64ListReader = _Float64List.Reader
+type FrostModuleStateBuilder = _FrostModuleStateStructModule.Builder
+type FrostModuleStateReader = _FrostModuleStateStructModule.Reader
+type ICDataBuilder = _ICDataStructModule.Builder
+type ICDataReader = _ICDataStructModule.Reader
+type MaybeBoolBuilder = _MaybeBoolStructModule.Builder
+type MaybeBoolReader = _MaybeBoolStructModule.Reader
+type MonicaModelStateBuilder = _MonicaModelStateStructModule.Builder
+type MonicaModelStateReader = _MonicaModelStateStructModule.Reader
+type RuntimeStateBuilder = _RuntimeStateStructModule.Builder
+type RuntimeStateReader = _RuntimeStateStructModule.Reader
+type SnowModuleStateBuilder = _SnowModuleStateStructModule.Builder
+type SnowModuleStateReader = _SnowModuleStateStructModule.Reader
+type SoilColumnStateBuilder = _SoilColumnStateStructModule.Builder
+type SoilColumnStateReader = _SoilColumnStateStructModule.Reader
+type SoilLayerStateBuilder = _SoilLayerStateStructModule.Builder
+type SoilLayerStateListBuilder = _SoilLayerStateList.Builder
+type SoilLayerStateListReader = _SoilLayerStateList.Reader
+type SoilLayerStateReader = _SoilLayerStateStructModule.Reader
+type SoilMoistureModuleStateBuilder = _SoilMoistureModuleStateStructModule.Builder
+type SoilMoistureModuleStateReader = _SoilMoistureModuleStateStructModule.Reader
+type SoilOrganicModuleStateBuilder = _SoilOrganicModuleStateStructModule.Builder
+type SoilOrganicModuleStateReader = _SoilOrganicModuleStateStructModule.Reader
+type SoilTemperatureModuleStateBuilder = _SoilTemperatureModuleStateStructModule.Builder
+type SoilTemperatureModuleStateReader = _SoilTemperatureModuleStateStructModule.Reader
+type SoilTransportModuleStateBuilder = _SoilTransportModuleStateStructModule.Builder
+type SoilTransportModuleStateReader = _SoilTransportModuleStateStructModule.Reader
+type TextListBuilder = _TextList.Builder
+type TextListReader = _TextList.Reader
+type YieldComponentListBuilder = _YieldComponentList.Builder
+type YieldComponentListReader = _YieldComponentList.Reader
