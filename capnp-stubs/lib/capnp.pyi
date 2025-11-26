@@ -532,6 +532,10 @@ class _DynamicObjectReader:
     ) -> crop_capnp.ServiceClient: ...
     @overload
     def as_interface(
+        self, schema: fbp_capnp._ComponentStructModule._RunnableFactoryInterfaceModule
+    ) -> fbp_capnp.RunnableFactoryClient: ...
+    @overload
+    def as_interface(
         self, schema: fbp_capnp._ComponentStructModule._RunnableInterfaceModule
     ) -> fbp_capnp.RunnableClient: ...
     @overload
@@ -1632,6 +1636,10 @@ class _CapabilityClient:
     def cast_as(
         self, schema: crop_capnp._ServiceInterfaceModule
     ) -> crop_capnp.ServiceClient: ...
+    @overload
+    def cast_as(
+        self, schema: fbp_capnp._ComponentStructModule._RunnableFactoryInterfaceModule
+    ) -> fbp_capnp.RunnableFactoryClient: ...
     @overload
     def cast_as(
         self, schema: fbp_capnp._ComponentStructModule._RunnableInterfaceModule

@@ -1892,6 +1892,83 @@ class _ComponentStructModule(_StructModule):
     Runnable: _RunnableInterfaceModule
     type RunnableClient = _ComponentStructModule._RunnableInterfaceModule.RunnableClient
     type RunnableServer = _ComponentStructModule._RunnableInterfaceModule.Server
+    class _RunnableFactoryInterfaceModule(_IdentifiableInterfaceModule):
+        class CreateRequest(Protocol):
+            def send(
+                self,
+            ) -> _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient.CreateResult: ...
+
+        @override
+        def _new_client(
+            self, server: _DynamicCapabilityServer
+        ) -> (
+            _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+        ): ...
+        class Server(_IdentifiableInterfaceModule.Server):
+            class CreateResult(_DynamicStructBuilder):
+                @property
+                def r(
+                    self,
+                ) -> (
+                    _ComponentStructModule._RunnableInterfaceModule.Server
+                    | _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+                ): ...
+                @r.setter
+                def r(
+                    self,
+                    value: _ComponentStructModule._RunnableInterfaceModule.Server
+                    | _ComponentStructModule._RunnableInterfaceModule.RunnableClient,
+                ) -> None: ...
+
+            class CreateResultTuple(NamedTuple):
+                r: (
+                    _ComponentStructModule._RunnableInterfaceModule.Server
+                    | _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+                )
+
+            class CreateParams(Protocol): ...
+
+            class CreateCallContext(Protocol):
+                params: _ComponentStructModule._RunnableFactoryInterfaceModule.Server.CreateParams
+                @property
+                def results(
+                    self,
+                ) -> _ComponentStructModule._RunnableFactoryInterfaceModule.Server.CreateResult: ...
+
+            def create(
+                self,
+                _context: _ComponentStructModule._RunnableFactoryInterfaceModule.Server.CreateCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[
+                _ComponentStructModule._RunnableInterfaceModule.Server
+                | _ComponentStructModule._RunnableFactoryInterfaceModule.Server.CreateResultTuple
+                | None
+            ]: ...
+            def create_context(
+                self,
+                context: _ComponentStructModule._RunnableFactoryInterfaceModule.Server.CreateCallContext,
+            ) -> Awaitable[None]: ...
+
+        class RunnableFactoryClient(_IdentifiableInterfaceModule.IdentifiableClient):
+            class CreateResult(Awaitable[CreateResult], Protocol):
+                r: _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+
+            def create(
+                self,
+            ) -> _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient.CreateResult: ...
+            def create_request(
+                self,
+            ) -> (
+                _ComponentStructModule._RunnableFactoryInterfaceModule.CreateRequest
+            ): ...
+
+    RunnableFactory: _RunnableFactoryInterfaceModule
+    type RunnableFactoryClient = (
+        _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+    )
+    type RunnableFactoryServer = (
+        _ComponentStructModule._RunnableFactoryInterfaceModule.Server
+    )
     class _ComponentTypeEnumModule:
         standard: int
         iip: int
@@ -2009,9 +2086,11 @@ class _ComponentStructModule(_StructModule):
         @property
         def outPorts(self) -> PortListReader: ...
         @property
-        def run(
+        def runFactory(
             self,
-        ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient: ...
+        ) -> (
+            _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+        ): ...
         @property
         def defaultConfig(self) -> str: ...
         @override
@@ -2045,14 +2124,16 @@ class _ComponentStructModule(_StructModule):
             self, value: PortListBuilder | PortListReader | dict[str, Any]
         ) -> None: ...
         @property
-        def run(
+        def runFactory(
             self,
-        ) -> _ComponentStructModule._RunnableInterfaceModule.RunnableClient: ...
-        @run.setter
-        def run(
+        ) -> (
+            _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+        ): ...
+        @runFactory.setter
+        def runFactory(
             self,
-            value: _ComponentStructModule._RunnableInterfaceModule.RunnableClient
-            | _ComponentStructModule._RunnableInterfaceModule.Server,
+            value: _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+            | _ComponentStructModule._RunnableFactoryInterfaceModule.Server,
         ) -> None: ...
         @property
         def defaultConfig(self) -> str: ...
@@ -2085,8 +2166,8 @@ class _ComponentStructModule(_StructModule):
         type: ComponentComponentTypeEnum | None = None,
         inPorts: PortListBuilder | dict[str, Any] | None = None,
         outPorts: PortListBuilder | dict[str, Any] | None = None,
-        run: _ComponentStructModule._RunnableInterfaceModule.RunnableClient
-        | _ComponentStructModule._RunnableInterfaceModule.Server
+        runFactory: _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+        | _ComponentStructModule._RunnableFactoryInterfaceModule.Server
         | None = None,
         defaultConfig: str | None = None,
         **kwargs: Any,
@@ -2151,6 +2232,7 @@ type ComponentComponentTypeEnum = int | Literal["standard", "iip", "subflow", "v
 type ComponentPortContentTypeEnum = int | Literal["structuredText"]
 type ComponentPortPortTypeEnum = int | Literal["standard"]
 type ComponentReader = _ComponentStructModule.Reader
+type CreateResult = _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient.CreateResult
 type EndpointsResult = _ChannelInterfaceModule.ChannelClient.EndpointsResult
 type IIPBuilder = _IIPStructModule.Builder
 type IIPReader = _IIPStructModule.Reader
@@ -2185,6 +2267,12 @@ type ReadifmsgResult = (
     _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadifmsgResult
 )
 type RunnableClient = _ComponentStructModule._RunnableInterfaceModule.RunnableClient
+type RunnableFactoryClient = (
+    _ComponentStructModule._RunnableFactoryInterfaceModule.RunnableFactoryClient
+)
+type RunnableFactoryServer = (
+    _ComponentStructModule._RunnableFactoryInterfaceModule.Server
+)
 type RunnableServer = _ComponentStructModule._RunnableInterfaceModule.Server
 type SetautoclosesemanticsResult = (
     _ChannelInterfaceModule.ChannelClient.SetautoclosesemanticsResult
