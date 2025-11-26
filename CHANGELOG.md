@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.45](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.44...v0.1.45) (2025-11-26)
+
+
+### Bug Fixes
+
+* change kwargs type to any and ass ssl context ([174539e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/174539ea9699df5014a8118034bea705e4d900b8))
+
 ## [0.1.44](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.43...v0.1.44) (2025-11-25)
 
 
