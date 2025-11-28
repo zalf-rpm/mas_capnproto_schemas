@@ -1,17 +1,21 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Test
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd227ef68de0bc647UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd227ef68de0bc647UL)
+    ]
     public class S : ICapnpSerializable
     {
         public const UInt64 typeId = 0xd227ef68de0bc647UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -29,27 +33,25 @@ namespace Mas.Schema.Test
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Test.IX C
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Test.IX C { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public Mas.Schema.Test.IX C => ctx.ReadCap<Mas.Schema.Test.IX>(0);
         }
 
@@ -68,22 +70,37 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdcf28e81fa4de615UL), Proxy(typeof(X_Proxy)), Skeleton(typeof(X_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xdcf28e81fa4de615UL),
+        Proxy(typeof(X_Proxy)),
+        Skeleton(typeof(X_Skeleton))
+    ]
     public interface IX : IDisposable
     {
         Task<string> M(long i, CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdcf28e81fa4de615UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xdcf28e81fa4de615UL)
+    ]
     public class X_Proxy : Proxy, IX
     {
         public async Task<string> M(long i, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.X.Params_M.WRITER>();
-            var arg_ = new Mas.Schema.Test.X.Params_M()
-            {I = i};
+            var arg_ = new Mas.Schema.Test.X.Params_M() { I = i };
             arg_?.serialize(in_);
-            using (var d_ = await Call(15920944321609459221UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    15920944321609459221UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Test.X.Result_M>(d_);
                 return (r_.T);
@@ -91,7 +108,10 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdcf28e81fa4de615UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xdcf28e81fa4de615UL)
+    ]
     public class X_Skeleton : Skeleton<IX>
     {
         public X_Skeleton()
@@ -100,19 +120,21 @@ namespace Mas.Schema.Test
         }
 
         public override ulong InterfaceId => 15920944321609459221UL;
+
         Task<AnswerOrCounterquestion> M(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
                 var in_ = CapnpSerializable.Create<Mas.Schema.Test.X.Params_M>(d_);
-                return Impatient.MaybeTailCall(Impl.M(in_.I, cancellationToken_), t =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.X.Result_M.WRITER>();
-                    var r_ = new Mas.Schema.Test.X.Result_M{T = t};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                return Impatient.MaybeTailCall(
+                    Impl.M(in_.I, cancellationToken_),
+                    t =>
+                    {
+                        var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.X.Result_M.WRITER>();
+                        var r_ = new Mas.Schema.Test.X.Result_M { T = t };
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -120,10 +142,14 @@ namespace Mas.Schema.Test
 
     public static class X
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc68563695ada2a40UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc68563695ada2a40UL)
+        ]
         public class Params_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0xc68563695ada2a40UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -141,27 +167,25 @@ namespace Mas.Schema.Test
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public long I
-            {
-                get;
-                set;
-            }
+            public long I { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public long I => ctx.ReadDataLong(0UL, 0L);
             }
 
@@ -180,10 +204,14 @@ namespace Mas.Schema.Test
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x86aae6bcee1a970dUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x86aae6bcee1a970dUL)
+        ]
         public class Result_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0x86aae6bcee1a970dUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -201,27 +229,25 @@ namespace Mas.Schema.Test
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string T
-            {
-                get;
-                set;
-            }
+            public string T { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string T => ctx.ReadText(0, null);
             }
 
@@ -241,22 +267,37 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xac121e5aa82ca6bdUL), Proxy(typeof(Y_Proxy)), Skeleton(typeof(Y_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xac121e5aa82ca6bdUL),
+        Proxy(typeof(Y_Proxy)),
+        Skeleton(typeof(Y_Skeleton))
+    ]
     public interface IY : IDisposable
     {
         Task M(string hello, CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xac121e5aa82ca6bdUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xac121e5aa82ca6bdUL)
+    ]
     public class Y_Proxy : Proxy, IY
     {
         public async Task M(string hello, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.Y.Params_M.WRITER>();
-            var arg_ = new Mas.Schema.Test.Y.Params_M()
-            {Hello = hello};
+            var arg_ = new Mas.Schema.Test.Y.Params_M() { Hello = hello };
             arg_?.serialize(in_);
-            using (var d_ = await Call(12399006098821785277UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    12399006098821785277UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Test.Y.Result_M>(d_);
                 return;
@@ -264,7 +305,10 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xac121e5aa82ca6bdUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xac121e5aa82ca6bdUL)
+    ]
     public class Y_Skeleton : Skeleton<IY>
     {
         public Y_Skeleton()
@@ -273,7 +317,11 @@ namespace Mas.Schema.Test
         }
 
         public override ulong InterfaceId => 12399006098821785277UL;
-        async Task<AnswerOrCounterquestion> M(DeserializerState d_, CancellationToken cancellationToken_)
+
+        async Task<AnswerOrCounterquestion> M(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
         {
             using (d_)
             {
@@ -287,10 +335,14 @@ namespace Mas.Schema.Test
 
     public static class Y
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc102bb9ca7ace092UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc102bb9ca7ace092UL)
+        ]
         public class Params_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0xc102bb9ca7ace092UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -308,27 +360,25 @@ namespace Mas.Schema.Test
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string Hello
-            {
-                get;
-                set;
-            }
+            public string Hello { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string Hello => ctx.ReadText(0, null);
             }
 
@@ -347,39 +397,42 @@ namespace Mas.Schema.Test
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdcf58b9bef546812UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xdcf58b9bef546812UL)
+        ]
         public class Result_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0xdcf58b9bef546812UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 applyDefaults();
             }
 
-            public void serialize(WRITER writer)
-            {
-            }
+            public void serialize(WRITER writer) { }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
             {
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             }
 
@@ -393,22 +446,37 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL), Proxy(typeof(Z_Proxy)), Skeleton(typeof(Z_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc64526206425c2abUL),
+        Proxy(typeof(Z_Proxy)),
+        Skeleton(typeof(Z_Skeleton))
+    ]
     public interface IZ : IDisposable
     {
         Task<double> M(long n, CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc64526206425c2abUL)
+    ]
     public class Z_Proxy : Proxy, IZ
     {
         public async Task<double> M(long n, CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Test.Z.Params_M.WRITER>();
-            var arg_ = new Mas.Schema.Test.Z.Params_M()
-            {N = n};
+            var arg_ = new Mas.Schema.Test.Z.Params_M() { N = n };
             arg_?.serialize(in_);
-            using (var d_ = await Call(14286867313463771819UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    14286867313463771819UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Test.Z.Result_M>(d_);
                 return (r_.R);
@@ -416,7 +484,10 @@ namespace Mas.Schema.Test
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc64526206425c2abUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc64526206425c2abUL)
+    ]
     public class Z_Skeleton : Skeleton<IZ>
     {
         public Z_Skeleton()
@@ -425,19 +496,21 @@ namespace Mas.Schema.Test
         }
 
         public override ulong InterfaceId => 14286867313463771819UL;
+
         Task<AnswerOrCounterquestion> M(DeserializerState d_, CancellationToken cancellationToken_)
         {
             using (d_)
             {
                 var in_ = CapnpSerializable.Create<Mas.Schema.Test.Z.Params_M>(d_);
-                return Impatient.MaybeTailCall(Impl.M(in_.N, cancellationToken_), r =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.Z.Result_M.WRITER>();
-                    var r_ = new Mas.Schema.Test.Z.Result_M{R = r};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                return Impatient.MaybeTailCall(
+                    Impl.M(in_.N, cancellationToken_),
+                    r =>
+                    {
+                        var s_ = SerializerState.CreateForRpc<Mas.Schema.Test.Z.Result_M.WRITER>();
+                        var r_ = new Mas.Schema.Test.Z.Result_M { R = r };
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -445,10 +518,14 @@ namespace Mas.Schema.Test
 
     public static class Z
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf01d08c96dc98cc9UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf01d08c96dc98cc9UL)
+        ]
         public class Params_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0xf01d08c96dc98cc9UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -466,27 +543,25 @@ namespace Mas.Schema.Test
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public long N
-            {
-                get;
-                set;
-            }
+            public long N { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public long N => ctx.ReadDataLong(0UL, 0L);
             }
 
@@ -505,10 +580,14 @@ namespace Mas.Schema.Test
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd444a663531a6b53UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd444a663531a6b53UL)
+        ]
         public class Result_M : ICapnpSerializable
         {
             public const UInt64 typeId = 0xd444a663531a6b53UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -526,27 +605,25 @@ namespace Mas.Schema.Test
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double R
-            {
-                get;
-                set;
-            }
+            public double R { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double R => ctx.ReadDataDouble(0UL, 0);
             }
 
