@@ -112,13 +112,9 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public string SoilType { get; set; }
-
             public short SoilRawDensity { get; set; }
-
             public byte AirCapacity { get; set; }
-
             public byte FieldCapacity { get; set; }
-
             public byte NFieldCapacity { get; set; }
 
             public struct READER
@@ -155,25 +151,21 @@ namespace Mas.Schema.Soil
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public short SoilRawDensity
                 {
                     get => this.ReadDataShort(0UL, (short)0);
                     set => this.WriteData(0UL, value, (short)0);
                 }
-
                 public byte AirCapacity
                 {
                     get => this.ReadDataByte(16UL, (byte)0);
                     set => this.WriteData(16UL, value, (byte)0);
                 }
-
                 public byte FieldCapacity
                 {
                     get => this.ReadDataByte(24UL, (byte)0);
                     set => this.WriteData(24UL, value, (byte)0);
                 }
-
                 public byte NFieldCapacity
                 {
                     get => this.ReadDataByte(32UL, (byte)0);
@@ -287,13 +279,9 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public string SoilType { get; set; }
-
             public float OrganicMatter { get; set; }
-
             public sbyte AirCapacity { get; set; }
-
             public sbyte FieldCapacity { get; set; }
-
             public sbyte NFieldCapacity { get; set; }
 
             public struct READER
@@ -330,25 +318,21 @@ namespace Mas.Schema.Soil
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public float OrganicMatter
                 {
                     get => this.ReadDataFloat(0UL, 0F);
                     set => this.WriteData(0UL, value, 0F);
                 }
-
                 public sbyte AirCapacity
                 {
                     get => this.ReadDataSByte(32UL, (sbyte)0);
                     set => this.WriteData(32UL, value, (sbyte)0);
                 }
-
                 public sbyte FieldCapacity
                 {
                     get => this.ReadDataSByte(40UL, (sbyte)0);
                     set => this.WriteData(40UL, value, (sbyte)0);
                 }
-
                 public sbyte NFieldCapacity
                 {
                     get => this.ReadDataSByte(48UL, (sbyte)0);
@@ -458,9 +442,7 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public string SoilType { get; set; }
-
             public byte Distance { get; set; }
-
             public float Rate { get; set; }
 
             public struct READER
@@ -495,13 +477,11 @@ namespace Mas.Schema.Soil
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public byte Distance
                 {
                     get => this.ReadDataByte(0UL, (byte)0);
                     set => this.WriteData(0UL, value, (byte)0);
                 }
-
                 public float Rate
                 {
                     get => this.ReadDataFloat(32UL, 0F);

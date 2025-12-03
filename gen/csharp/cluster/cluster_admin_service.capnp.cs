@@ -58,8 +58,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xe8b1f7a192651bbeUL),
-            Proxy(typeof(Unregister_Proxy)),
-            Skeleton(typeof(Unregister_Skeleton))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.Unregister_Proxy)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.Unregister_Skeleton))
         ]
         public interface IUnregister : IDisposable
         {
@@ -253,8 +253,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xbf24278c65f633ceUL),
-            Proxy(typeof(AdminMaster_Proxy)),
-            Skeleton(typeof(AdminMaster_Skeleton))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.AdminMaster_Proxy)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.AdminMaster_Skeleton))
         ]
         public interface IAdminMaster : Mas.Schema.Common.IIdentifiable
         {
@@ -469,7 +469,6 @@ namespace Mas.Schema.Cluster
                 public void applyDefaults() { }
 
                 public string AModelId { get; set; }
-
                 public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get; set; }
 
                 public struct READER
@@ -505,7 +504,6 @@ namespace Mas.Schema.Cluster
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
                     }
-
                     public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
                     {
                         get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1);
@@ -699,8 +697,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xec42c6df28354b60UL),
-            Proxy(typeof(UserMaster_Proxy)),
-            Skeleton(typeof(UserMaster_Skeleton))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.UserMaster_Proxy)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.UserMaster_Skeleton))
         ]
         public interface IUserMaster : Mas.Schema.Common.IIdentifiable
         {
@@ -931,8 +929,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xf849848fea5c4776UL),
-            Proxy(typeof(Runtime_Proxy)),
-            Skeleton(typeof(Runtime_Skeleton))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.Runtime_Proxy)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.Runtime_Skeleton))
         ]
         public interface IRuntime : Mas.Schema.Common.IIdentifiable
         {
@@ -1322,7 +1320,6 @@ namespace Mas.Schema.Cluster
                 public void applyDefaults() { }
 
                 public string AModelId { get; set; }
-
                 public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory { get; set; }
 
                 public struct READER
@@ -1358,7 +1355,6 @@ namespace Mas.Schema.Cluster
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
                     }
-
                     public Mas.Schema.Cluster.Cluster.IModelInstanceFactory AFactory
                     {
                         get => ReadCap<Mas.Schema.Cluster.Cluster.IModelInstanceFactory>(1);
@@ -1802,7 +1798,6 @@ namespace Mas.Schema.Cluster
                 public void applyDefaults() { }
 
                 public short ReserveCores { get; set; }
-
                 public string AModelId { get; set; }
 
                 public struct READER
@@ -1837,7 +1832,6 @@ namespace Mas.Schema.Cluster
                         get => this.ReadDataShort(0UL, (short)0);
                         set => this.WriteData(0UL, value, (short)0);
                     }
-
                     public string AModelId
                     {
                         get => this.ReadText(0, null);
@@ -1940,7 +1934,6 @@ namespace Mas.Schema.Cluster
             public void applyDefaults() { }
 
             public string Input { get; set; }
-
             public string Output { get; set; }
 
             public struct READER
@@ -1974,7 +1967,6 @@ namespace Mas.Schema.Cluster
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Output
                 {
                     get => this.ReadText(1, null);
@@ -1986,8 +1978,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xd6acf080dcf2b4c8UL),
-            Proxy(typeof(ValueHolder_Proxy<>)),
-            Skeleton(typeof(ValueHolder_Skeleton<>))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.ValueHolder_Proxy<>)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.ValueHolder_Skeleton<>))
         ]
         public interface IValueHolder<TT> : IDisposable
             where TT : class
@@ -2326,8 +2318,8 @@ namespace Mas.Schema.Cluster
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xfd9959998f9f0ebeUL),
-            Proxy(typeof(ModelInstanceFactory_Proxy)),
-            Skeleton(typeof(ModelInstanceFactory_Skeleton))
+            Proxy(typeof(Mas.Schema.Cluster.Cluster.ModelInstanceFactory_Proxy)),
+            Skeleton(typeof(Mas.Schema.Cluster.Cluster.ModelInstanceFactory_Skeleton))
         ]
         public interface IModelInstanceFactory : Mas.Schema.Common.IIdentifiable
         {
@@ -3501,7 +3493,6 @@ namespace Mas.Schema.Cluster
                 }
 
                 public BareProxy Instance { get; set; }
-
                 public string RegistrationToken { get; set; }
 
                 public struct READER
@@ -3536,7 +3527,6 @@ namespace Mas.Schema.Cluster
                         get => ReadCap<BareProxy>(0);
                         set => LinkObject(0, value);
                     }
-
                     public string RegistrationToken
                     {
                         get => this.ReadText(1, "");

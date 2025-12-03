@@ -11,8 +11,8 @@ namespace Mas.Schema.Crop
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xe88d97a324bf5c84UL),
-        Proxy(typeof(Crop_Proxy)),
-        Skeleton(typeof(Crop_Skeleton))
+        Proxy(typeof(Mas.Schema.Crop.Crop_Proxy)),
+        Skeleton(typeof(Mas.Schema.Crop.Crop_Skeleton))
     ]
     public interface ICrop : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -567,8 +567,8 @@ namespace Mas.Schema.Crop
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x8ddcc2b6c0386bc4UL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Crop.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Crop.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Registry.IRegistry { }
 

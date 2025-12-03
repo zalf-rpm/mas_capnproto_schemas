@@ -42,9 +42,7 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Fbp.IP.KV> Attributes { get; set; }
-
         public object Content { get; set; }
-
         public Mas.Schema.Fbp.IP.Type TheType { get; set; } = Mas.Schema.Fbp.IP.Type.standard;
 
         public struct READER
@@ -82,13 +80,11 @@ namespace Mas.Schema.Fbp
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.IP.KV.WRITER>>(0);
                 set => Link(0, value);
             }
-
             public DynamicSerializerState Content
             {
                 get => BuildPointer<DynamicSerializerState>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Fbp.IP.Type TheType
             {
                 get => (Mas.Schema.Fbp.IP.Type)this.ReadDataUShort(0UL, (ushort)0);
@@ -128,9 +124,7 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Key { get; set; }
-
             public string Desc { get; set; }
-
             public object Value { get; set; }
 
             public struct READER
@@ -165,13 +159,11 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Desc
                 {
                     get => this.ReadText(1, null);
                     set => this.WriteText(1, value, null);
                 }
-
                 public DynamicSerializerState Value
                 {
                     get => BuildPointer<DynamicSerializerState>(2);
@@ -257,8 +249,8 @@ namespace Mas.Schema.Fbp
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x9c62c32b2ff2b1e8UL),
-        Proxy(typeof(Channel_Proxy<>)),
-        Skeleton(typeof(Channel_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Fbp.Channel_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Fbp.Channel_Skeleton<>))
     ]
     public interface IChannel<TV>
         : Mas.Schema.Common.IIdentifiable,
@@ -767,7 +759,6 @@ namespace Mas.Schema.Fbp
                     get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
-
                 public DynamicSerializerState Value
                 {
                     get => which == WHICH.Value ? BuildPointer<DynamicSerializerState>(0) : default;
@@ -818,19 +809,12 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public ulong BufferSize { get; set; }
-
             public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics { get; set; }
-
             public string ChannelSR { get; set; }
-
             public IReadOnlyList<string> ReaderSRs { get; set; }
-
             public IReadOnlyList<string> WriterSRs { get; set; }
-
             public Mas.Schema.Fbp.IChannel<TV> Channel { get; set; }
-
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IReader> Readers { get; set; }
-
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers { get; set; }
 
             public struct READER
@@ -878,7 +862,6 @@ namespace Mas.Schema.Fbp
                     get => this.ReadDataULong(0UL, 0UL);
                     set => this.WriteData(0UL, value, 0UL);
                 }
-
                 public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics
                 {
                     get =>
@@ -886,38 +869,32 @@ namespace Mas.Schema.Fbp
                             this.ReadDataUShort(64UL, (ushort)0);
                     set => this.WriteData(64UL, (ushort)value, (ushort)0);
                 }
-
                 public string ChannelSR
                 {
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ListOfTextSerializer ReaderSRs
                 {
                     get => BuildPointer<ListOfTextSerializer>(1);
                     set => Link(1, value);
                 }
-
                 public ListOfTextSerializer WriterSRs
                 {
                     get => BuildPointer<ListOfTextSerializer>(2);
                     set => Link(2, value);
                 }
-
                 public Mas.Schema.Fbp.IChannel<TV> Channel
                 {
                     get => ReadCap<Mas.Schema.Fbp.IChannel<TV>>(3);
                     set => LinkObject(3, value);
                 }
-
                 public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader> Readers
                 {
                     get =>
                         BuildPointer<ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader>>(4);
                     set => Link(4, value);
                 }
-
                 public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers
                 {
                     get =>
@@ -930,8 +907,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0x8bc69192f3bc97ccUL),
-            Proxy(typeof(Channel<>.Reader_Proxy)),
-            Skeleton(typeof(Channel<>.Reader_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Channel<>.Reader_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Reader_Skeleton))
         ]
         public interface IReader
             : Mas.Schema.Common.IIdentifiable,
@@ -1348,8 +1325,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xf7fec613b4a8c79fUL),
-            Proxy(typeof(Channel<>.Writer_Proxy)),
-            Skeleton(typeof(Channel<>.Writer_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Channel<>.Writer_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Writer_Skeleton))
         ]
         public interface IWriter
             : Mas.Schema.Common.IIdentifiable,
@@ -2189,7 +2166,6 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public Mas.Schema.Fbp.Channel<TV>.IReader R { get; set; }
-
             public Mas.Schema.Fbp.Channel<TV>.IWriter W { get; set; }
 
             public struct READER
@@ -2225,7 +2201,6 @@ namespace Mas.Schema.Fbp
                     get => ReadCap<Mas.Schema.Fbp.Channel<TV>.IReader>(0);
                     set => LinkObject(0, value);
                 }
-
                 public Mas.Schema.Fbp.Channel<TV>.IWriter W
                 {
                     get => ReadCap<Mas.Schema.Fbp.Channel<TV>.IWriter>(1);
@@ -2461,8 +2436,8 @@ namespace Mas.Schema.Fbp
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xd0cd6d829b810229UL),
-        Proxy(typeof(StartChannelsService_Proxy)),
-        Skeleton(typeof(StartChannelsService_Skeleton))
+        Proxy(typeof(Mas.Schema.Fbp.StartChannelsService_Proxy)),
+        Skeleton(typeof(Mas.Schema.Fbp.StartChannelsService_Skeleton))
     ]
     public interface IStartChannelsService : Mas.Schema.Common.IIdentifiable
     {
@@ -2622,14 +2597,11 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Name { get; set; }
-
             public ushort NoOfChannels { get; set; } = 1;
             public ushort NoOfReaders { get; set; } = 1;
             public ushort NoOfWriters { get; set; } = 1;
             public IReadOnlyList<string> ReaderSrts { get; set; }
-
             public IReadOnlyList<string> WriterSrts { get; set; }
-
             public ushort BufferSize { get; set; } = 1;
 
             public struct READER
@@ -2670,37 +2642,31 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ushort NoOfChannels
                 {
                     get => this.ReadDataUShort(0UL, (ushort)1);
                     set => this.WriteData(0UL, value, (ushort)1);
                 }
-
                 public ushort NoOfReaders
                 {
                     get => this.ReadDataUShort(16UL, (ushort)1);
                     set => this.WriteData(16UL, value, (ushort)1);
                 }
-
                 public ushort NoOfWriters
                 {
                     get => this.ReadDataUShort(32UL, (ushort)1);
                     set => this.WriteData(32UL, value, (ushort)1);
                 }
-
                 public ListOfTextSerializer ReaderSrts
                 {
                     get => BuildPointer<ListOfTextSerializer>(1);
                     set => Link(1, value);
                 }
-
                 public ListOfTextSerializer WriterSrts
                 {
                     get => BuildPointer<ListOfTextSerializer>(2);
                     set => Link(2, value);
                 }
-
                 public ushort BufferSize
                 {
                     get => this.ReadDataUShort(48UL, (ushort)1);
@@ -2741,7 +2707,6 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo> StartupInfos { get; set; }
-
             public Mas.Schema.Service.IStoppable Stop { get; set; }
 
             public struct READER
@@ -2781,7 +2746,6 @@ namespace Mas.Schema.Fbp
                         >(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Service.IStoppable Stop
                 {
                     get => ReadCap<Mas.Schema.Service.IStoppable>(1);
@@ -2825,7 +2789,6 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Fbp.PortInfos.NameAndSR> InPorts { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.PortInfos.NameAndSR> OutPorts { get; set; }
 
         public struct READER
@@ -2866,7 +2829,6 @@ namespace Mas.Schema.Fbp
                     >(0);
                 set => Link(0, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.PortInfos.NameAndSR.WRITER> OutPorts
             {
                 get =>
@@ -3011,19 +2973,16 @@ namespace Mas.Schema.Fbp
                     get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
-
                 public string Name
                 {
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Sr
                 {
                     get => which == WHICH.Sr ? this.ReadText(1, null) : default;
                     set => this.WriteText(1, value, null);
                 }
-
                 public ListOfTextSerializer Srs
                 {
                     get => which == WHICH.Srs ? BuildPointer<ListOfTextSerializer>(1) : default;
@@ -3075,15 +3034,10 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public Mas.Schema.Common.IdInformation Info { get; set; }
-
         public Mas.Schema.Fbp.Component.ComponentType Type { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> InPorts { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> OutPorts { get; set; }
-
         public Mas.Schema.Fbp.Component.IRunnableFactory RunFactory { get; set; }
-
         public string DefaultConfig { get; set; }
 
         public struct READER
@@ -3129,33 +3083,28 @@ namespace Mas.Schema.Fbp
                 get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                 set => Link(0, value);
             }
-
             public Mas.Schema.Fbp.Component.ComponentType Type
             {
                 get => (Mas.Schema.Fbp.Component.ComponentType)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> InPorts
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(1);
                 set => Link(1, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> OutPorts
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(2);
                 set => Link(2, value);
             }
-
             public Mas.Schema.Fbp.Component.IRunnableFactory RunFactory
             {
                 get => ReadCap<Mas.Schema.Fbp.Component.IRunnableFactory>(3);
                 set => LinkObject(3, value);
             }
-
             public string DefaultConfig
             {
                 get => this.ReadText(4, null);
@@ -3166,8 +3115,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xcb17668f2d39c70fUL),
-            Proxy(typeof(Runnable_Proxy)),
-            Skeleton(typeof(Runnable_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Component.Runnable_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Component.Runnable_Skeleton))
         ]
         public interface IRunnable : Mas.Schema.Common.IIdentifiable
         {
@@ -3361,7 +3310,6 @@ namespace Mas.Schema.Fbp
                 public void applyDefaults() { }
 
                 public string PortInfosReaderSr { get; set; }
-
                 public string Name { get; set; }
 
                 public struct READER
@@ -3396,7 +3344,6 @@ namespace Mas.Schema.Fbp
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
                     }
-
                     public string Name
                     {
                         get => this.ReadText(1, null);
@@ -3584,8 +3531,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0x98d0eca7dc936df4UL),
-            Proxy(typeof(RunnableFactory_Proxy)),
-            Skeleton(typeof(RunnableFactory_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Component.RunnableFactory_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Component.RunnableFactory_Skeleton))
         ]
         public interface IRunnableFactory : Mas.Schema.Common.IIdentifiable
         {
@@ -3852,9 +3799,7 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Name { get; set; }
-
             public string TheContentType { get; set; }
-
             public Mas.Schema.Fbp.Component.Port.PortType Type { get; set; } =
                 Mas.Schema.Fbp.Component.Port.PortType.standard;
 
@@ -3891,13 +3836,11 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string TheContentType
                 {
                     get => this.ReadText(1, null);
                     set => this.WriteText(1, value, null);
                 }
-
                 public Mas.Schema.Fbp.Component.Port.PortType Type
                 {
                     get =>

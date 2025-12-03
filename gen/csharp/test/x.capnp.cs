@@ -73,8 +73,8 @@ namespace Mas.Schema.Test
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xdcf28e81fa4de615UL),
-        Proxy(typeof(X_Proxy)),
-        Skeleton(typeof(X_Skeleton))
+        Proxy(typeof(Mas.Schema.Test.X_Proxy)),
+        Skeleton(typeof(Mas.Schema.Test.X_Skeleton))
     ]
     public interface IX : IDisposable
     {
@@ -270,8 +270,8 @@ namespace Mas.Schema.Test
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xac121e5aa82ca6bdUL),
-        Proxy(typeof(Y_Proxy)),
-        Skeleton(typeof(Y_Skeleton))
+        Proxy(typeof(Mas.Schema.Test.Y_Proxy)),
+        Skeleton(typeof(Mas.Schema.Test.Y_Skeleton))
     ]
     public interface IY : IDisposable
     {
@@ -449,8 +449,8 @@ namespace Mas.Schema.Test
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xc64526206425c2abUL),
-        Proxy(typeof(Z_Proxy)),
-        Skeleton(typeof(Z_Skeleton))
+        Proxy(typeof(Mas.Schema.Test.Z_Proxy)),
+        Skeleton(typeof(Mas.Schema.Test.Z_Skeleton))
     ]
     public interface IZ : IDisposable
     {
