@@ -40,9 +40,7 @@ namespace Mas.Schema.Common
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public string Description { get; set; }
 
         public struct READER
@@ -77,13 +75,11 @@ namespace Mas.Schema.Common
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string Description
             {
                 get => this.ReadText(2, null);
@@ -95,8 +91,8 @@ namespace Mas.Schema.Common
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xb2afd1cb599c48d5UL),
-        Proxy(typeof(Identifiable_Proxy)),
-        Skeleton(typeof(Identifiable_Skeleton))
+        Proxy(typeof(Mas.Schema.Common.Identifiable_Proxy)),
+        Skeleton(typeof(Mas.Schema.Common.Identifiable_Skeleton))
     ]
     public interface IIdentifiable : IDisposable
     {
@@ -252,9 +248,7 @@ namespace Mas.Schema.Common
         public void applyDefaults() { }
 
         public string Value { get; set; }
-
         public Mas.Schema.Common.StructuredText.structure Structure { get; set; }
-
         public Mas.Schema.Common.StructuredText.Type TheType { get; set; } =
             Mas.Schema.Common.StructuredText.Type.unstructured;
 
@@ -291,12 +285,10 @@ namespace Mas.Schema.Common
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public structure.WRITER Structure
             {
                 get => Rewrap<structure.WRITER>();
             }
-
             public Mas.Schema.Common.StructuredText.Type TheType
             {
                 get => (Mas.Schema.Common.StructuredText.Type)this.ReadDataUShort(16UL, (ushort)0);
@@ -1185,98 +1177,82 @@ namespace Mas.Schema.Common
                 get => (WHICH)this.ReadDataUShort(64U, (ushort)0);
                 set => this.WriteData(64U, (ushort)value, (ushort)0);
             }
-
             public double F64
             {
                 get => which == WHICH.F64 ? this.ReadDataDouble(0UL, 0) : default;
                 set => this.WriteData(0UL, value, 0);
             }
-
             public float F32
             {
                 get => which == WHICH.F32 ? this.ReadDataFloat(0UL, 0F) : default;
                 set => this.WriteData(0UL, value, 0F);
             }
-
             public long I64
             {
                 get => which == WHICH.I64 ? this.ReadDataLong(0UL, 0L) : default;
                 set => this.WriteData(0UL, value, 0L);
             }
-
             public int I32
             {
                 get => which == WHICH.I32 ? this.ReadDataInt(0UL, 0) : default;
                 set => this.WriteData(0UL, value, 0);
             }
-
             public short I16
             {
                 get => which == WHICH.I16 ? this.ReadDataShort(0UL, (short)0) : default;
                 set => this.WriteData(0UL, value, (short)0);
             }
-
             public sbyte I8
             {
                 get => which == WHICH.I8 ? this.ReadDataSByte(0UL, (sbyte)0) : default;
                 set => this.WriteData(0UL, value, (sbyte)0);
             }
-
             public ulong Ui64
             {
                 get => which == WHICH.Ui64 ? this.ReadDataULong(0UL, 0UL) : default;
                 set => this.WriteData(0UL, value, 0UL);
             }
-
             public uint Ui32
             {
                 get => which == WHICH.Ui32 ? this.ReadDataUInt(0UL, 0U) : default;
                 set => this.WriteData(0UL, value, 0U);
             }
-
             public ushort Ui16
             {
                 get => which == WHICH.Ui16 ? this.ReadDataUShort(0UL, (ushort)0) : default;
                 set => this.WriteData(0UL, value, (ushort)0);
             }
-
             public byte Ui8
             {
                 get => which == WHICH.Ui8 ? this.ReadDataByte(0UL, (byte)0) : default;
                 set => this.WriteData(0UL, value, (byte)0);
             }
-
             public bool B
             {
                 get => which == WHICH.B ? this.ReadDataBool(0UL, false) : default;
                 set => this.WriteData(0UL, value, false);
             }
-
             public string T
             {
                 get => which == WHICH.T ? this.ReadText(0, null) : default;
                 set => this.WriteText(0, value, null);
             }
-
             public ListOfPrimitivesSerializer<byte> D
             {
                 get =>
                     which == WHICH.D ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
                 set => Link(0, value);
             }
-
             public DynamicSerializerState P
             {
                 get => which == WHICH.P ? BuildPointer<DynamicSerializerState>(0) : default;
                 set => Link(0, value);
             }
-
             public BareProxy Cap
             {
                 get => which == WHICH.Cap ? ReadCap<BareProxy>(0) : default;
                 set => LinkObject(0, value);
             }
-
             public ListOfPrimitivesSerializer<double> Lf64
             {
                 get =>
@@ -1285,7 +1261,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<float> Lf32
             {
                 get =>
@@ -1294,7 +1269,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<long> Li64
             {
                 get =>
@@ -1303,7 +1277,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<int> Li32
             {
                 get =>
@@ -1312,7 +1285,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<short> Li16
             {
                 get =>
@@ -1321,7 +1293,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<sbyte> Li8
             {
                 get =>
@@ -1330,7 +1301,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<ulong> Lui64
             {
                 get =>
@@ -1339,7 +1309,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<uint> Lui32
             {
                 get =>
@@ -1348,7 +1317,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<ushort> Lui16
             {
                 get =>
@@ -1357,7 +1325,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<byte> Lui8
             {
                 get =>
@@ -1366,19 +1333,16 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfBitsSerializer Lb
             {
                 get => which == WHICH.Lb ? BuildPointer<ListOfBitsSerializer>(0) : default;
                 set => Link(0, value);
             }
-
             public ListOfTextSerializer Lt
             {
                 get => which == WHICH.Lt ? BuildPointer<ListOfTextSerializer>(0) : default;
                 set => Link(0, value);
             }
-
             public ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>> Ld
             {
                 get =>
@@ -1389,7 +1353,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfCapsSerializer<BareProxy> Lcap
             {
                 get =>
@@ -1398,7 +1361,6 @@ namespace Mas.Schema.Common
                         : default;
                 set => Link(0, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER> Lpair
             {
                 get =>
@@ -1444,7 +1406,6 @@ namespace Mas.Schema.Common
         public void applyDefaults() { }
 
         public TF Fst { get; set; }
-
         public TS Snd { get; set; }
 
         public struct READER
@@ -1478,7 +1439,6 @@ namespace Mas.Schema.Common
                 get => BuildPointer<DynamicSerializerState>(0);
                 set => Link(0, value);
             }
-
             public DynamicSerializerState Snd
             {
                 get => BuildPointer<DynamicSerializerState>(1);
@@ -1490,8 +1450,8 @@ namespace Mas.Schema.Common
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xc83045ccbb0b6ac5UL),
-        Proxy(typeof(Holder_Proxy<>)),
-        Skeleton(typeof(Holder_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Common.Holder_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Common.Holder_Skeleton<>))
     ]
     public interface IHolder<TT> : IDisposable
         where TT : class
@@ -1686,8 +1646,8 @@ namespace Mas.Schema.Common
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xee543d7c305d56f6UL),
-        Proxy(typeof(IdentifiableHolder_Proxy<>)),
-        Skeleton(typeof(IdentifiableHolder_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Common.IdentifiableHolder_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Common.IdentifiableHolder_Skeleton<>))
     ]
     public interface IIdentifiableHolder<TT>
         : Mas.Schema.Common.IIdentifiable,

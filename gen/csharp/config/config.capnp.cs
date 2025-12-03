@@ -11,8 +11,8 @@ namespace Mas.Schema.Config
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x860d660620aefcdaUL),
-        Proxy(typeof(Service_Proxy<>)),
-        Skeleton(typeof(Service_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Config.Service_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Config.Service_Skeleton<>))
     ]
     public interface IService<TC> : IDisposable
         where TC : class
@@ -177,7 +177,6 @@ namespace Mas.Schema.Config
             public void applyDefaults() { }
 
             public TC Config { get; set; }
-
             public bool NoFurtherConfigs { get; set; } = false;
 
             public struct READER
@@ -211,7 +210,6 @@ namespace Mas.Schema.Config
                     get => BuildPointer<DynamicSerializerState>(0);
                     set => Link(0, value);
                 }
-
                 public bool NoFurtherConfigs
                 {
                     get => this.ReadDataBool(0UL, false);

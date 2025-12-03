@@ -11,8 +11,8 @@ namespace Mas.Schema.Model.Weberest
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xa1a4ad9d143eaa6fUL),
-        Proxy(typeof(DWLABImport_Proxy)),
-        Skeleton(typeof(DWLABImport_Skeleton))
+        Proxy(typeof(Mas.Schema.Model.Weberest.DWLABImport_Proxy)),
+        Skeleton(typeof(Mas.Schema.Model.Weberest.DWLABImport_Skeleton))
     ]
     public interface IDWLABImport : IDisposable
     {
@@ -143,9 +143,7 @@ namespace Mas.Schema.Model.Weberest
             public void applyDefaults() { }
 
             public string Id { get; set; }
-
             public IReadOnlyList<byte> Dwla { get; set; }
-
             public IReadOnlyList<byte> Dwlb { get; set; }
 
             public struct READER
@@ -180,13 +178,11 @@ namespace Mas.Schema.Model.Weberest
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ListOfPrimitivesSerializer<byte> Dwla
                 {
                     get => BuildPointer<ListOfPrimitivesSerializer<byte>>(1);
                     set => Link(1, value);
                 }
-
                 public ListOfPrimitivesSerializer<byte> Dwlb
                 {
                     get => BuildPointer<ListOfPrimitivesSerializer<byte>>(2);
@@ -227,9 +223,7 @@ namespace Mas.Schema.Model.Weberest
             public void applyDefaults() { }
 
             public string Id { get; set; }
-
             public bool SuccessA { get; set; }
-
             public bool SuccessB { get; set; }
 
             public struct READER
@@ -264,13 +258,11 @@ namespace Mas.Schema.Model.Weberest
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public bool SuccessA
                 {
                     get => this.ReadDataBool(0UL, false);
                     set => this.WriteData(0UL, value, false);
                 }
-
                 public bool SuccessB
                 {
                     get => this.ReadDataBool(1UL, false);

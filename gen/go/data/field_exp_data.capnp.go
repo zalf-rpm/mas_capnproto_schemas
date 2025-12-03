@@ -12,3850 +12,3999 @@ import (
 	math "math"
 )
 
-type WeatherStation struct{ capnp.Struct }
+type WeatherStation capnp.Struct
 
 // WeatherStation_TypeID is the unique identifier for the type WeatherStation.
 const WeatherStation_TypeID = 0xbfa2d703516408b8
 
 func NewWeatherStation(s *capnp.Segment) (WeatherStation, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8})
-	return WeatherStation{st}, err
+	return WeatherStation(st), err
 }
 
 func NewRootWeatherStation(s *capnp.Segment) (WeatherStation, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8})
-	return WeatherStation{st}, err
+	return WeatherStation(st), err
 }
 
 func ReadRootWeatherStation(msg *capnp.Message) (WeatherStation, error) {
 	root, err := msg.Root()
-	return WeatherStation{root.Struct()}, err
+	return WeatherStation(root.Struct()), err
 }
 
 func (s WeatherStation) String() string {
-	str, _ := text.Marshal(0xbfa2d703516408b8, s.Struct)
+	str, _ := text.Marshal(0xbfa2d703516408b8, capnp.Struct(s))
 	return str
 }
 
+func (s WeatherStation) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (WeatherStation) DecodeFromPtr(p capnp.Ptr) WeatherStation {
+	return WeatherStation(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s WeatherStation) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s WeatherStation) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s WeatherStation) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s WeatherStation) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s WeatherStation) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s WeatherStation) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s WeatherStation) Name() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasName() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s WeatherStation) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetName(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s WeatherStation) InstituteName() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasInstituteName() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s WeatherStation) InstituteNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetInstituteName(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s WeatherStation) Site() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasSite() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s WeatherStation) SiteBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetSite(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s WeatherStation) Country() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasCountry() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s WeatherStation) CountryBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetCountry(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s WeatherStation) Location2ndLevel() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasLocation2ndLevel() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s WeatherStation) Location2ndLevelBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetLocation2ndLevel(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s WeatherStation) Location3rdLevel() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasLocation3rdLevel() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s WeatherStation) Location3rdLevelBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetLocation3rdLevel(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s WeatherStation) LatitudeInDecDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(0) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(0) ^ 0xc0c3878000000000)
 }
 
 func (s WeatherStation) SetLatitudeInDecDeg(v float64) {
-	s.Struct.SetUint64(0, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(0, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s WeatherStation) LongitudeInDecDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xc0c3878000000000)
 }
 
 func (s WeatherStation) SetLongitudeInDecDeg(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s WeatherStation) ElevationM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(16) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(16) ^ 0xc0c3878000000000)
 }
 
 func (s WeatherStation) SetElevationM(v float64) {
-	s.Struct.SetUint64(16, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(16, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s WeatherStation) YearlyAvgTempInDegC() float64 {
-	return math.Float64frombits(s.Struct.Uint64(24) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(24) ^ 0xc0c3878000000000)
 }
 
 func (s WeatherStation) SetYearlyAvgTempInDegC(v float64) {
-	s.Struct.SetUint64(24, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(24, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s WeatherStation) AmplitudeOfMonthlyAvgTempsInDegC() float64 {
-	return math.Float64frombits(s.Struct.Uint64(32) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(32) ^ 0xc0c3878000000000)
 }
 
 func (s WeatherStation) SetAmplitudeOfMonthlyAvgTempsInDegC(v float64) {
-	s.Struct.SetUint64(32, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(32, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s WeatherStation) TempSensorHeightInM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(40) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(40) ^ 0xbff0000000000000)
 }
 
 func (s WeatherStation) SetTempSensorHeightInM(v float64) {
-	s.Struct.SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s WeatherStation) RefHeightWeatherMeasurementInM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(48) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(48) ^ 0xbff0000000000000)
 }
 
 func (s WeatherStation) SetRefHeightWeatherMeasurementInM(v float64) {
-	s.Struct.SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s WeatherStation) RefHeightWindspeedMeasurementInM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(56) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(56) ^ 0xbff0000000000000)
 }
 
 func (s WeatherStation) SetRefHeightWindspeedMeasurementInM(v float64) {
-	s.Struct.SetUint64(56, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(56, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s WeatherStation) AnnualCO2ConcentrationInPPM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(64) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(64) ^ 0xbff0000000000000)
 }
 
 func (s WeatherStation) SetAnnualCO2ConcentrationInPPM(v float64) {
-	s.Struct.SetUint64(64, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(64, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s WeatherStation) Notes() (string, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.Text(), err
 }
 
 func (s WeatherStation) HasNotes() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s WeatherStation) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.TextBytes(), err
 }
 
 func (s WeatherStation) SetNotes(v string) error {
-	return s.Struct.SetText(7, v)
+	return capnp.Struct(s).SetText(7, v)
 }
 
 // WeatherStation_List is a list of WeatherStation.
-type WeatherStation_List struct{ capnp.List }
+type WeatherStation_List = capnp.StructList[WeatherStation]
 
 // NewWeatherStation creates a new list of WeatherStation.
 func NewWeatherStation_List(s *capnp.Segment, sz int32) (WeatherStation_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8}, sz)
-	return WeatherStation_List{l}, err
-}
-
-func (s WeatherStation_List) At(i int) WeatherStation { return WeatherStation{s.List.Struct(i)} }
-
-func (s WeatherStation_List) Set(i int, v WeatherStation) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s WeatherStation_List) String() string {
-	str, _ := text.MarshalList(0xbfa2d703516408b8, s.List)
-	return str
+	return capnp.StructList[WeatherStation](l), err
 }
 
 // WeatherStation_Future is a wrapper for a WeatherStation promised by a client call.
 type WeatherStation_Future struct{ *capnp.Future }
 
-func (p WeatherStation_Future) Struct() (WeatherStation, error) {
-	s, err := p.Future.Struct()
-	return WeatherStation{s}, err
+func (f WeatherStation_Future) Struct() (WeatherStation, error) {
+	p, err := f.Future.Ptr()
+	return WeatherStation(p.Struct()), err
 }
 
-type SoilMetadata struct{ capnp.Struct }
+type SoilMetadata capnp.Struct
 
 // SoilMetadata_TypeID is the unique identifier for the type SoilMetadata.
 const SoilMetadata_TypeID = 0x86836f1366e5f73f
 
 func NewSoilMetadata(s *capnp.Segment) (SoilMetadata, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8})
-	return SoilMetadata{st}, err
+	return SoilMetadata(st), err
 }
 
 func NewRootSoilMetadata(s *capnp.Segment) (SoilMetadata, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8})
-	return SoilMetadata{st}, err
+	return SoilMetadata(st), err
 }
 
 func ReadRootSoilMetadata(msg *capnp.Message) (SoilMetadata, error) {
 	root, err := msg.Root()
-	return SoilMetadata{root.Struct()}, err
+	return SoilMetadata(root.Struct()), err
 }
 
 func (s SoilMetadata) String() string {
-	str, _ := text.Marshal(0x86836f1366e5f73f, s.Struct)
+	str, _ := text.Marshal(0x86836f1366e5f73f, capnp.Struct(s))
 	return str
 }
 
+func (s SoilMetadata) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (SoilMetadata) DecodeFromPtr(p capnp.Ptr) SoilMetadata {
+	return SoilMetadata(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s SoilMetadata) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s SoilMetadata) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s SoilMetadata) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s SoilMetadata) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s SoilMetadata) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s SoilMetadata) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s SoilMetadata) Name() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasName() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s SoilMetadata) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetName(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s SoilMetadata) Source() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasSource() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s SoilMetadata) SourceBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetSource(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s SoilMetadata) DepthInCM() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s SoilMetadata) SetDepthInCM(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s SoilMetadata) ObstableDepthInCM() int16 {
-	return int16(s.Struct.Uint16(2) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(2) ^ 65535)
 }
 
 func (s SoilMetadata) SetObstableDepthInCM(v int16) {
-	s.Struct.SetUint16(2, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(2, uint16(v)^65535)
 }
 
 func (s SoilMetadata) DepthOfTopsoilInCM() int16 {
-	return int16(s.Struct.Uint16(4) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(4) ^ 65535)
 }
 
 func (s SoilMetadata) SetDepthOfTopsoilInCM(v int16) {
-	s.Struct.SetUint16(4, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(4, uint16(v)^65535)
 }
 
 func (s SoilMetadata) DrainageRatePerDay() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetDrainageRatePerDay(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) RunoffCureNoSCS() float64 {
-	return math.Float64frombits(s.Struct.Uint64(16) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(16) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetRunoffCureNoSCS(v float64) {
-	s.Struct.SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SoilAvailableWaterContentInCM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(24) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(24) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetSoilAvailableWaterContentInCM(v float64) {
-	s.Struct.SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SurfaceStoneCoverAsFraction() float64 {
-	return math.Float64frombits(s.Struct.Uint64(32) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(32) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetSurfaceStoneCoverAsFraction(v float64) {
-	s.Struct.SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SoilAlbedo() float64 {
-	return math.Float64frombits(s.Struct.Uint64(40) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(40) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetSoilAlbedo(v float64) {
-	s.Struct.SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SoilEvaporationLimitInMM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(48) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(48) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetSoilEvaporationLimitInMM(v float64) {
-	s.Struct.SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) MineralizationFactor() float64 {
-	return math.Float64frombits(s.Struct.Uint64(56) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(56) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetMineralizationFactor(v float64) {
-	s.Struct.SetUint64(56, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(56, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SoilFertilityOnFoto() float64 {
-	return math.Float64frombits(s.Struct.Uint64(64) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(64) ^ 0xbff0000000000000)
 }
 
 func (s SoilMetadata) SetSoilFertilityOnFoto(v float64) {
-	s.Struct.SetUint64(64, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(64, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s SoilMetadata) SoilClassificationSystem() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasSoilClassificationSystem() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s SoilMetadata) SoilClassificationSystemBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetSoilClassificationSystem(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s SoilMetadata) SoilTexture() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasSoilTexture() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s SoilMetadata) SoilTextureBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetSoilTexture(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s SoilMetadata) Classification() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasClassification() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s SoilMetadata) ClassificationBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetClassification(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s SoilMetadata) Notes() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s SoilMetadata) HasNotes() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s SoilMetadata) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s SoilMetadata) SetNotes(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s SoilMetadata) Profile() soil.Profile {
-	p, _ := s.Struct.Ptr(7)
-	return soil.Profile{Client: p.Interface().Client()}
+	p, _ := capnp.Struct(s).Ptr(7)
+	return soil.Profile(p.Interface().Client())
 }
 
 func (s SoilMetadata) HasProfile() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s SoilMetadata) SetProfile(v soil.Profile) error {
-	if !v.Client.IsValid() {
-		return s.Struct.SetPtr(7, capnp.Ptr{})
+	if !v.IsValid() {
+		return capnp.Struct(s).SetPtr(7, capnp.Ptr{})
 	}
 	seg := s.Segment()
-	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
-	return s.Struct.SetPtr(7, in.ToPtr())
+	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
+	return capnp.Struct(s).SetPtr(7, in.ToPtr())
 }
 
 // SoilMetadata_List is a list of SoilMetadata.
-type SoilMetadata_List struct{ capnp.List }
+type SoilMetadata_List = capnp.StructList[SoilMetadata]
 
 // NewSoilMetadata creates a new list of SoilMetadata.
 func NewSoilMetadata_List(s *capnp.Segment, sz int32) (SoilMetadata_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 72, PointerCount: 8}, sz)
-	return SoilMetadata_List{l}, err
-}
-
-func (s SoilMetadata_List) At(i int) SoilMetadata { return SoilMetadata{s.List.Struct(i)} }
-
-func (s SoilMetadata_List) Set(i int, v SoilMetadata) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s SoilMetadata_List) String() string {
-	str, _ := text.MarshalList(0x86836f1366e5f73f, s.List)
-	return str
+	return capnp.StructList[SoilMetadata](l), err
 }
 
 // SoilMetadata_Future is a wrapper for a SoilMetadata promised by a client call.
 type SoilMetadata_Future struct{ *capnp.Future }
 
-func (p SoilMetadata_Future) Struct() (SoilMetadata, error) {
-	s, err := p.Future.Struct()
-	return SoilMetadata{s}, err
+func (f SoilMetadata_Future) Struct() (SoilMetadata, error) {
+	p, err := f.Future.Ptr()
+	return SoilMetadata(p.Struct()), err
 }
-
 func (p SoilMetadata_Future) Profile() soil.Profile {
-	return soil.Profile{Client: p.Future.Field(7, nil).Client()}
+	return soil.Profile(p.Future.Field(7, nil).Client())
 }
 
-type Field struct{ capnp.Struct }
+type Field capnp.Struct
 
 // Field_TypeID is the unique identifier for the type Field.
 const Field_TypeID = 0xc158bd732092cde5
 
 func NewField(s *capnp.Segment) (Field, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 7})
-	return Field{st}, err
+	return Field(st), err
 }
 
 func NewRootField(s *capnp.Segment) (Field, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 7})
-	return Field{st}, err
+	return Field(st), err
 }
 
 func ReadRootField(msg *capnp.Message) (Field, error) {
 	root, err := msg.Root()
-	return Field{root.Struct()}, err
+	return Field(root.Struct()), err
 }
 
 func (s Field) String() string {
-	str, _ := text.Marshal(0xc158bd732092cde5, s.Struct)
+	str, _ := text.Marshal(0xc158bd732092cde5, capnp.Struct(s))
 	return str
 }
 
+func (s Field) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Field) DecodeFromPtr(p capnp.Ptr) Field {
+	return Field(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Field) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Field) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Field) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Field) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s Field) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s Field) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s Field) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s Field) Name() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s Field) HasName() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s Field) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetName(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s Field) LatitudeInDecDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(0) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(0) ^ 0xc0c3878000000000)
 }
 
 func (s Field) SetLatitudeInDecDeg(v float64) {
-	s.Struct.SetUint64(0, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(0, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s Field) LongitudeInDecDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xc0c3878000000000)
 }
 
 func (s Field) SetLongitudeInDecDeg(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s Field) ElevationInM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(16) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(16) ^ 0xc0c3878000000000)
 }
 
 func (s Field) SetElevationInM(v float64) {
-	s.Struct.SetUint64(16, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(16, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s Field) SlopeDegreeInDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(24) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(24) ^ 0xbff0000000000000)
 }
 
 func (s Field) SetSlopeDegreeInDeg(v float64) {
-	s.Struct.SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s Field) DrainageType() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s Field) HasDrainageType() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Field) DrainageTypeBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetDrainageType(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s Field) DistanceToWeatherStationInKM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(32) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(32) ^ 0xbff0000000000000)
 }
 
 func (s Field) SetDistanceToWeatherStationInKM(v float64) {
-	s.Struct.SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s Field) Country() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s Field) HasCountry() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s Field) CountryBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetCountry(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s Field) SubCountry() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s Field) HasSubCountry() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s Field) SubCountryBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetSubCountry(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s Field) SubSubCountry() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s Field) HasSubSubCountry() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s Field) SubSubCountryBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetSubSubCountry(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s Field) Notes() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s Field) HasNotes() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s Field) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s Field) SetNotes(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 // Field_List is a list of Field.
-type Field_List struct{ capnp.List }
+type Field_List = capnp.StructList[Field]
 
 // NewField creates a new list of Field.
 func NewField_List(s *capnp.Segment, sz int32) (Field_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 40, PointerCount: 7}, sz)
-	return Field_List{l}, err
-}
-
-func (s Field_List) At(i int) Field { return Field{s.List.Struct(i)} }
-
-func (s Field_List) Set(i int, v Field) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s Field_List) String() string {
-	str, _ := text.MarshalList(0xc158bd732092cde5, s.List)
-	return str
+	return capnp.StructList[Field](l), err
 }
 
 // Field_Future is a wrapper for a Field promised by a client call.
 type Field_Future struct{ *capnp.Future }
 
-func (p Field_Future) Struct() (Field, error) {
-	s, err := p.Future.Struct()
-	return Field{s}, err
+func (f Field_Future) Struct() (Field, error) {
+	p, err := f.Future.Ptr()
+	return Field(p.Struct()), err
 }
 
-type ExperimentDescription struct{ capnp.Struct }
+type ExperimentDescription capnp.Struct
 
 // ExperimentDescription_TypeID is the unique identifier for the type ExperimentDescription.
 const ExperimentDescription_TypeID = 0x9d795a72a27f67d7
 
 func NewExperimentDescription(s *capnp.Segment) (ExperimentDescription, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 16})
-	return ExperimentDescription{st}, err
+	return ExperimentDescription(st), err
 }
 
 func NewRootExperimentDescription(s *capnp.Segment) (ExperimentDescription, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 16})
-	return ExperimentDescription{st}, err
+	return ExperimentDescription(st), err
 }
 
 func ReadRootExperimentDescription(msg *capnp.Message) (ExperimentDescription, error) {
 	root, err := msg.Root()
-	return ExperimentDescription{root.Struct()}, err
+	return ExperimentDescription(root.Struct()), err
 }
 
 func (s ExperimentDescription) String() string {
-	str, _ := text.Marshal(0x9d795a72a27f67d7, s.Struct)
+	str, _ := text.Marshal(0x9d795a72a27f67d7, capnp.Struct(s))
 	return str
 }
 
+func (s ExperimentDescription) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (ExperimentDescription) DecodeFromPtr(p capnp.Ptr) ExperimentDescription {
+	return ExperimentDescription(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s ExperimentDescription) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s ExperimentDescription) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s ExperimentDescription) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s ExperimentDescription) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s ExperimentDescription) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s ExperimentDescription) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s ExperimentDescription) SuiteId() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasSuiteId() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s ExperimentDescription) SuiteIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetSuiteId(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s ExperimentDescription) Name() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasName() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s ExperimentDescription) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetName(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s ExperimentDescription) ResearchInfrastructureName() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasResearchInfrastructureName() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s ExperimentDescription) ResearchInfrastructureNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetResearchInfrastructureName(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s ExperimentDescription) InstituteName() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasInstituteName() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s ExperimentDescription) InstituteNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetInstituteName(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s ExperimentDescription) ResearchUnitName() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasResearchUnitName() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s ExperimentDescription) ResearchUnitNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetResearchUnitName(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s ExperimentDescription) ExperimentalFacilityName() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasExperimentalFacilityName() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s ExperimentDescription) ExperimentalFacilityNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetExperimentalFacilityName(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s ExperimentDescription) SiteName() (string, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasSiteName() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s ExperimentDescription) SiteNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetSiteName(v string) error {
-	return s.Struct.SetText(7, v)
+	return capnp.Struct(s).SetText(7, v)
 }
 
 func (s ExperimentDescription) SiteType() (string, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasSiteType() bool {
-	return s.Struct.HasPtr(8)
+	return capnp.Struct(s).HasPtr(8)
 }
 
 func (s ExperimentDescription) SiteTypeBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetSiteType(v string) error {
-	return s.Struct.SetText(8, v)
+	return capnp.Struct(s).SetText(8, v)
 }
 
 func (s ExperimentDescription) MainExperimentFactor() (string, error) {
-	p, err := s.Struct.Ptr(9)
+	p, err := capnp.Struct(s).Ptr(9)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasMainExperimentFactor() bool {
-	return s.Struct.HasPtr(9)
+	return capnp.Struct(s).HasPtr(9)
 }
 
 func (s ExperimentDescription) MainExperimentFactorBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(9)
+	p, err := capnp.Struct(s).Ptr(9)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetMainExperimentFactor(v string) error {
-	return s.Struct.SetText(9, v)
+	return capnp.Struct(s).SetText(9, v)
 }
 
 func (s ExperimentDescription) ExperimentalFactorCombinations() (string, error) {
-	p, err := s.Struct.Ptr(10)
+	p, err := capnp.Struct(s).Ptr(10)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasExperimentalFactorCombinations() bool {
-	return s.Struct.HasPtr(10)
+	return capnp.Struct(s).HasPtr(10)
 }
 
 func (s ExperimentDescription) ExperimentalFactorCombinationsBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(10)
+	p, err := capnp.Struct(s).Ptr(10)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetExperimentalFactorCombinations(v string) error {
-	return s.Struct.SetText(10, v)
+	return capnp.Struct(s).SetText(10, v)
 }
 
 func (s ExperimentDescription) ExperimentType() (string, error) {
-	p, err := s.Struct.Ptr(11)
+	p, err := capnp.Struct(s).Ptr(11)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasExperimentType() bool {
-	return s.Struct.HasPtr(11)
+	return capnp.Struct(s).HasPtr(11)
 }
 
 func (s ExperimentDescription) ExperimentTypeBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(11)
+	p, err := capnp.Struct(s).Ptr(11)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetExperimentType(v string) error {
-	return s.Struct.SetText(11, v)
+	return capnp.Struct(s).SetText(11, v)
 }
 
 func (s ExperimentDescription) ManagementType() (string, error) {
-	p, err := s.Struct.Ptr(12)
+	p, err := capnp.Struct(s).Ptr(12)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasManagementType() bool {
-	return s.Struct.HasPtr(12)
+	return capnp.Struct(s).HasPtr(12)
 }
 
 func (s ExperimentDescription) ManagementTypeBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(12)
+	p, err := capnp.Struct(s).Ptr(12)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetManagementType(v string) error {
-	return s.Struct.SetText(12, v)
+	return capnp.Struct(s).SetText(12, v)
 }
 
 func (s ExperimentDescription) CroppingSystem() (string, error) {
-	p, err := s.Struct.Ptr(13)
+	p, err := capnp.Struct(s).Ptr(13)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasCroppingSystem() bool {
-	return s.Struct.HasPtr(13)
+	return capnp.Struct(s).HasPtr(13)
 }
 
 func (s ExperimentDescription) CroppingSystemBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(13)
+	p, err := capnp.Struct(s).Ptr(13)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetCroppingSystem(v string) error {
-	return s.Struct.SetText(13, v)
+	return capnp.Struct(s).SetText(13, v)
 }
 
 func (s ExperimentDescription) PlantingYear() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s ExperimentDescription) SetPlantingYear(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s ExperimentDescription) HarvestOperationYear() int16 {
-	return int16(s.Struct.Uint16(2) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(2) ^ 65535)
 }
 
 func (s ExperimentDescription) SetHarvestOperationYear(v int16) {
-	s.Struct.SetUint16(2, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(2, uint16(v)^65535)
 }
 
 func (s ExperimentDescription) Notes() (string, error) {
-	p, err := s.Struct.Ptr(14)
+	p, err := capnp.Struct(s).Ptr(14)
 	return p.Text(), err
 }
 
 func (s ExperimentDescription) HasNotes() bool {
-	return s.Struct.HasPtr(14)
+	return capnp.Struct(s).HasPtr(14)
 }
 
 func (s ExperimentDescription) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(14)
+	p, err := capnp.Struct(s).Ptr(14)
 	return p.TextBytes(), err
 }
 
 func (s ExperimentDescription) SetNotes(v string) error {
-	return s.Struct.SetText(14, v)
+	return capnp.Struct(s).SetText(14, v)
 }
 
 func (s ExperimentDescription) Treatments() (Treatment_List, error) {
-	p, err := s.Struct.Ptr(15)
-	return Treatment_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(15)
+	return Treatment_List(p.List()), err
 }
 
 func (s ExperimentDescription) HasTreatments() bool {
-	return s.Struct.HasPtr(15)
+	return capnp.Struct(s).HasPtr(15)
 }
 
 func (s ExperimentDescription) SetTreatments(v Treatment_List) error {
-	return s.Struct.SetPtr(15, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(15, v.ToPtr())
 }
 
 // NewTreatments sets the treatments field to a newly
 // allocated Treatment_List, preferring placement in s's segment.
 func (s ExperimentDescription) NewTreatments(n int32) (Treatment_List, error) {
-	l, err := NewTreatment_List(s.Struct.Segment(), n)
+	l, err := NewTreatment_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return Treatment_List{}, err
 	}
-	err = s.Struct.SetPtr(15, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(15, l.ToPtr())
 	return l, err
 }
 
 // ExperimentDescription_List is a list of ExperimentDescription.
-type ExperimentDescription_List struct{ capnp.List }
+type ExperimentDescription_List = capnp.StructList[ExperimentDescription]
 
 // NewExperimentDescription creates a new list of ExperimentDescription.
 func NewExperimentDescription_List(s *capnp.Segment, sz int32) (ExperimentDescription_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 16}, sz)
-	return ExperimentDescription_List{l}, err
-}
-
-func (s ExperimentDescription_List) At(i int) ExperimentDescription {
-	return ExperimentDescription{s.List.Struct(i)}
-}
-
-func (s ExperimentDescription_List) Set(i int, v ExperimentDescription) error {
-	return s.List.SetStruct(i, v.Struct)
-}
-
-func (s ExperimentDescription_List) String() string {
-	str, _ := text.MarshalList(0x9d795a72a27f67d7, s.List)
-	return str
+	return capnp.StructList[ExperimentDescription](l), err
 }
 
 // ExperimentDescription_Future is a wrapper for a ExperimentDescription promised by a client call.
 type ExperimentDescription_Future struct{ *capnp.Future }
 
-func (p ExperimentDescription_Future) Struct() (ExperimentDescription, error) {
-	s, err := p.Future.Struct()
-	return ExperimentDescription{s}, err
+func (f ExperimentDescription_Future) Struct() (ExperimentDescription, error) {
+	p, err := f.Future.Ptr()
+	return ExperimentDescription(p.Struct()), err
 }
 
-type Treatment struct{ capnp.Struct }
+type Treatment capnp.Struct
 
 // Treatment_TypeID is the unique identifier for the type Treatment.
 const Treatment_TypeID = 0xff1381363c7abd06
 
 func NewTreatment(s *capnp.Segment) (Treatment, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 20})
-	return Treatment{st}, err
+	return Treatment(st), err
 }
 
 func NewRootTreatment(s *capnp.Segment) (Treatment, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 20})
-	return Treatment{st}, err
+	return Treatment(st), err
 }
 
 func ReadRootTreatment(msg *capnp.Message) (Treatment, error) {
 	root, err := msg.Root()
-	return Treatment{root.Struct()}, err
+	return Treatment(root.Struct()), err
 }
 
 func (s Treatment) String() string {
-	str, _ := text.Marshal(0xff1381363c7abd06, s.Struct)
+	str, _ := text.Marshal(0xff1381363c7abd06, capnp.Struct(s))
 	return str
 }
 
+func (s Treatment) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Treatment) DecodeFromPtr(p capnp.Ptr) Treatment {
+	return Treatment(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Treatment) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Treatment) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Treatment) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Treatment) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s Treatment) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s Treatment) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s Treatment) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s Treatment) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(16)
+	p, err := capnp.Struct(s).Ptr(16)
 	return p.Text(), err
 }
 
 func (s Treatment) HasExperimentId() bool {
-	return s.Struct.HasPtr(16)
+	return capnp.Struct(s).HasPtr(16)
 }
 
 func (s Treatment) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(16)
+	p, err := capnp.Struct(s).Ptr(16)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetExperimentId(v string) error {
-	return s.Struct.SetText(16, v)
+	return capnp.Struct(s).SetText(16, v)
 }
 
 func (s Treatment) FieldId() (string, error) {
-	p, err := s.Struct.Ptr(17)
+	p, err := capnp.Struct(s).Ptr(17)
 	return p.Text(), err
 }
 
 func (s Treatment) HasFieldId() bool {
-	return s.Struct.HasPtr(17)
+	return capnp.Struct(s).HasPtr(17)
 }
 
 func (s Treatment) FieldIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(17)
+	p, err := capnp.Struct(s).Ptr(17)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetFieldId(v string) error {
-	return s.Struct.SetText(17, v)
+	return capnp.Struct(s).SetText(17, v)
 }
 
 func (s Treatment) Field() (Field, error) {
-	p, err := s.Struct.Ptr(1)
-	return Field{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(1)
+	return Field(p.Struct()), err
 }
 
 func (s Treatment) HasField() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s Treatment) SetField(v Field) error {
-	return s.Struct.SetPtr(1, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(1, capnp.Struct(v).ToPtr())
 }
 
 // NewField sets the field field to a newly
 // allocated Field struct, preferring placement in s's segment.
 func (s Treatment) NewField() (Field, error) {
-	ss, err := NewField(s.Struct.Segment())
+	ss, err := NewField(capnp.Struct(s).Segment())
 	if err != nil {
 		return Field{}, err
 	}
-	err = s.Struct.SetPtr(1, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(1, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Treatment) WeatherStationId() (string, error) {
-	p, err := s.Struct.Ptr(18)
+	p, err := capnp.Struct(s).Ptr(18)
 	return p.Text(), err
 }
 
 func (s Treatment) HasWeatherStationId() bool {
-	return s.Struct.HasPtr(18)
+	return capnp.Struct(s).HasPtr(18)
 }
 
 func (s Treatment) WeatherStationIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(18)
+	p, err := capnp.Struct(s).Ptr(18)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetWeatherStationId(v string) error {
-	return s.Struct.SetText(18, v)
+	return capnp.Struct(s).SetText(18, v)
 }
 
 func (s Treatment) WeatherStation() (WeatherStation, error) {
-	p, err := s.Struct.Ptr(2)
-	return WeatherStation{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(2)
+	return WeatherStation(p.Struct()), err
 }
 
 func (s Treatment) HasWeatherStation() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Treatment) SetWeatherStation(v WeatherStation) error {
-	return s.Struct.SetPtr(2, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewWeatherStation sets the weatherStation field to a newly
 // allocated WeatherStation struct, preferring placement in s's segment.
 func (s Treatment) NewWeatherStation() (WeatherStation, error) {
-	ss, err := NewWeatherStation(s.Struct.Segment())
+	ss, err := NewWeatherStation(capnp.Struct(s).Segment())
 	if err != nil {
 		return WeatherStation{}, err
 	}
-	err = s.Struct.SetPtr(2, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Treatment) WeatherStationDataset() (string, error) {
-	p, err := s.Struct.Ptr(19)
+	p, err := capnp.Struct(s).Ptr(19)
 	return p.Text(), err
 }
 
 func (s Treatment) HasWeatherStationDataset() bool {
-	return s.Struct.HasPtr(19)
+	return capnp.Struct(s).HasPtr(19)
 }
 
 func (s Treatment) WeatherStationDatasetBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(19)
+	p, err := capnp.Struct(s).Ptr(19)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetWeatherStationDataset(v string) error {
-	return s.Struct.SetText(19, v)
+	return capnp.Struct(s).SetText(19, v)
 }
 
 func (s Treatment) WeatherStationTimeseries() climate.TimeSeries {
-	p, _ := s.Struct.Ptr(3)
-	return climate.TimeSeries{Client: p.Interface().Client()}
+	p, _ := capnp.Struct(s).Ptr(3)
+	return climate.TimeSeries(p.Interface().Client())
 }
 
 func (s Treatment) HasWeatherStationTimeseries() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s Treatment) SetWeatherStationTimeseries(v climate.TimeSeries) error {
-	if !v.Client.IsValid() {
-		return s.Struct.SetPtr(3, capnp.Ptr{})
+	if !v.IsValid() {
+		return capnp.Struct(s).SetPtr(3, capnp.Ptr{})
 	}
 	seg := s.Segment()
-	in := capnp.NewInterface(seg, seg.Message().AddCap(v.Client))
-	return s.Struct.SetPtr(3, in.ToPtr())
+	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
+	return capnp.Struct(s).SetPtr(3, in.ToPtr())
 }
 
 func (s Treatment) Name() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s Treatment) HasName() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s Treatment) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetName(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s Treatment) SimulationStartDate() (common.Date, error) {
-	p, err := s.Struct.Ptr(5)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(5)
+	return common.Date(p.Struct()), err
 }
 
 func (s Treatment) HasSimulationStartDate() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s Treatment) SetSimulationStartDate(v common.Date) error {
-	return s.Struct.SetPtr(5, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(5, capnp.Struct(v).ToPtr())
 }
 
 // NewSimulationStartDate sets the simulationStartDate field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s Treatment) NewSimulationStartDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(5, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(5, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Treatment) SimulationEndDate() (common.Date, error) {
-	p, err := s.Struct.Ptr(6)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(6)
+	return common.Date(p.Struct()), err
 }
 
 func (s Treatment) HasSimulationEndDate() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s Treatment) SetSimulationEndDate(v common.Date) error {
-	return s.Struct.SetPtr(6, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(6, capnp.Struct(v).ToPtr())
 }
 
 // NewSimulationEndDate sets the simulationEndDate field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s Treatment) NewSimulationEndDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(6, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(6, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Treatment) IrrigationApplied() bool {
-	return s.Struct.Bit(0)
+	return capnp.Struct(s).Bit(0)
 }
 
 func (s Treatment) SetIrrigationApplied(v bool) {
-	s.Struct.SetBit(0, v)
+	capnp.Struct(s).SetBit(0, v)
 }
 
 func (s Treatment) FertilizerApplied() bool {
-	return s.Struct.Bit(1)
+	return capnp.Struct(s).Bit(1)
 }
 
 func (s Treatment) SetFertilizerApplied(v bool) {
-	s.Struct.SetBit(1, v)
+	capnp.Struct(s).SetBit(1, v)
 }
 
 func (s Treatment) IrrigationLevel() int8 {
-	return int8(s.Struct.Uint8(1) ^ 255)
+	return int8(capnp.Struct(s).Uint8(1) ^ 255)
 }
 
 func (s Treatment) SetIrrigationLevel(v int8) {
-	s.Struct.SetUint8(1, uint8(v)^255)
+	capnp.Struct(s).SetUint8(1, uint8(v)^255)
 }
 
 func (s Treatment) FertilizerLevel() int8 {
-	return int8(s.Struct.Uint8(2) ^ 255)
+	return int8(capnp.Struct(s).Uint8(2) ^ 255)
 }
 
 func (s Treatment) SetFertilizerLevel(v int8) {
-	s.Struct.SetUint8(2, uint8(v)^255)
+	capnp.Struct(s).SetUint8(2, uint8(v)^255)
 }
 
 func (s Treatment) PlantingDateLevel() int8 {
-	return int8(s.Struct.Uint8(3) ^ 255)
+	return int8(capnp.Struct(s).Uint8(3) ^ 255)
 }
 
 func (s Treatment) SetPlantingDateLevel(v int8) {
-	s.Struct.SetUint8(3, uint8(v)^255)
+	capnp.Struct(s).SetUint8(3, uint8(v)^255)
 }
 
 func (s Treatment) EnvironmentalModificationsLevel() int8 {
-	return int8(s.Struct.Uint8(4) ^ 255)
+	return int8(capnp.Struct(s).Uint8(4) ^ 255)
 }
 
 func (s Treatment) SetEnvironmentalModificationsLevel(v int8) {
-	s.Struct.SetUint8(4, uint8(v)^255)
+	capnp.Struct(s).SetUint8(4, uint8(v)^255)
 }
 
 func (s Treatment) InitialConditionsLevel() int8 {
-	return int8(s.Struct.Uint8(5) ^ 255)
+	return int8(capnp.Struct(s).Uint8(5) ^ 255)
 }
 
 func (s Treatment) SetInitialConditionsLevel(v int8) {
-	s.Struct.SetUint8(5, uint8(v)^255)
+	capnp.Struct(s).SetUint8(5, uint8(v)^255)
 }
 
 func (s Treatment) PlantingDensityLevel() int8 {
-	return int8(s.Struct.Uint8(6) ^ 255)
+	return int8(capnp.Struct(s).Uint8(6) ^ 255)
 }
 
 func (s Treatment) SetPlantingDensityLevel(v int8) {
-	s.Struct.SetUint8(6, uint8(v)^255)
+	capnp.Struct(s).SetUint8(6, uint8(v)^255)
 }
 
 func (s Treatment) NumberOfBlocksOrReplicates() int8 {
-	return int8(s.Struct.Uint8(7) ^ 255)
+	return int8(capnp.Struct(s).Uint8(7) ^ 255)
 }
 
 func (s Treatment) SetNumberOfBlocksOrReplicates(v int8) {
-	s.Struct.SetUint8(7, uint8(v)^255)
+	capnp.Struct(s).SetUint8(7, uint8(v)^255)
 }
 
 func (s Treatment) Notes() (string, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.Text(), err
 }
 
 func (s Treatment) HasNotes() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s Treatment) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.TextBytes(), err
 }
 
 func (s Treatment) SetNotes(v string) error {
-	return s.Struct.SetText(7, v)
+	return capnp.Struct(s).SetText(7, v)
 }
 
 func (s Treatment) Plots() (Plot_List, error) {
-	p, err := s.Struct.Ptr(8)
-	return Plot_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(8)
+	return Plot_List(p.List()), err
 }
 
 func (s Treatment) HasPlots() bool {
-	return s.Struct.HasPtr(8)
+	return capnp.Struct(s).HasPtr(8)
 }
 
 func (s Treatment) SetPlots(v Plot_List) error {
-	return s.Struct.SetPtr(8, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(8, v.ToPtr())
 }
 
 // NewPlots sets the plots field to a newly
 // allocated Plot_List, preferring placement in s's segment.
 func (s Treatment) NewPlots(n int32) (Plot_List, error) {
-	l, err := NewPlot_List(s.Struct.Segment(), n)
+	l, err := NewPlot_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return Plot_List{}, err
 	}
-	err = s.Struct.SetPtr(8, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(8, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) Residue() (Residue, error) {
-	p, err := s.Struct.Ptr(9)
-	return Residue{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(9)
+	return Residue(p.Struct()), err
 }
 
 func (s Treatment) HasResidue() bool {
-	return s.Struct.HasPtr(9)
+	return capnp.Struct(s).HasPtr(9)
 }
 
 func (s Treatment) SetResidue(v Residue) error {
-	return s.Struct.SetPtr(9, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(9, capnp.Struct(v).ToPtr())
 }
 
 // NewResidue sets the residue field to a newly
 // allocated Residue struct, preferring placement in s's segment.
 func (s Treatment) NewResidue() (Residue, error) {
-	ss, err := NewResidue(s.Struct.Segment())
+	ss, err := NewResidue(capnp.Struct(s).Segment())
 	if err != nil {
 		return Residue{}, err
 	}
-	err = s.Struct.SetPtr(9, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(9, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Treatment) InitialConditionsLayers() (InitialConditionsLayer_List, error) {
-	p, err := s.Struct.Ptr(10)
-	return InitialConditionsLayer_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(10)
+	return InitialConditionsLayer_List(p.List()), err
 }
 
 func (s Treatment) HasInitialConditionsLayers() bool {
-	return s.Struct.HasPtr(10)
+	return capnp.Struct(s).HasPtr(10)
 }
 
 func (s Treatment) SetInitialConditionsLayers(v InitialConditionsLayer_List) error {
-	return s.Struct.SetPtr(10, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(10, v.ToPtr())
 }
 
 // NewInitialConditionsLayers sets the initialConditionsLayers field to a newly
 // allocated InitialConditionsLayer_List, preferring placement in s's segment.
 func (s Treatment) NewInitialConditionsLayers(n int32) (InitialConditionsLayer_List, error) {
-	l, err := NewInitialConditionsLayer_List(s.Struct.Segment(), n)
+	l, err := NewInitialConditionsLayer_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return InitialConditionsLayer_List{}, err
 	}
-	err = s.Struct.SetPtr(10, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(10, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) PlantingEvents() (PlantingEvent_List, error) {
-	p, err := s.Struct.Ptr(11)
-	return PlantingEvent_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(11)
+	return PlantingEvent_List(p.List()), err
 }
 
 func (s Treatment) HasPlantingEvents() bool {
-	return s.Struct.HasPtr(11)
+	return capnp.Struct(s).HasPtr(11)
 }
 
 func (s Treatment) SetPlantingEvents(v PlantingEvent_List) error {
-	return s.Struct.SetPtr(11, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(11, v.ToPtr())
 }
 
 // NewPlantingEvents sets the plantingEvents field to a newly
 // allocated PlantingEvent_List, preferring placement in s's segment.
 func (s Treatment) NewPlantingEvents(n int32) (PlantingEvent_List, error) {
-	l, err := NewPlantingEvent_List(s.Struct.Segment(), n)
+	l, err := NewPlantingEvent_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return PlantingEvent_List{}, err
 	}
-	err = s.Struct.SetPtr(11, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(11, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) HarvestEvents() (HarvestEvent_List, error) {
-	p, err := s.Struct.Ptr(12)
-	return HarvestEvent_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(12)
+	return HarvestEvent_List(p.List()), err
 }
 
 func (s Treatment) HasHarvestEvents() bool {
-	return s.Struct.HasPtr(12)
+	return capnp.Struct(s).HasPtr(12)
 }
 
 func (s Treatment) SetHarvestEvents(v HarvestEvent_List) error {
-	return s.Struct.SetPtr(12, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(12, v.ToPtr())
 }
 
 // NewHarvestEvents sets the harvestEvents field to a newly
 // allocated HarvestEvent_List, preferring placement in s's segment.
 func (s Treatment) NewHarvestEvents(n int32) (HarvestEvent_List, error) {
-	l, err := NewHarvestEvent_List(s.Struct.Segment(), n)
+	l, err := NewHarvestEvent_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return HarvestEvent_List{}, err
 	}
-	err = s.Struct.SetPtr(12, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(12, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) IrrigationEvents() (IrrigationEvent_List, error) {
-	p, err := s.Struct.Ptr(13)
-	return IrrigationEvent_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(13)
+	return IrrigationEvent_List(p.List()), err
 }
 
 func (s Treatment) HasIrrigationEvents() bool {
-	return s.Struct.HasPtr(13)
+	return capnp.Struct(s).HasPtr(13)
 }
 
 func (s Treatment) SetIrrigationEvents(v IrrigationEvent_List) error {
-	return s.Struct.SetPtr(13, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(13, v.ToPtr())
 }
 
 // NewIrrigationEvents sets the irrigationEvents field to a newly
 // allocated IrrigationEvent_List, preferring placement in s's segment.
 func (s Treatment) NewIrrigationEvents(n int32) (IrrigationEvent_List, error) {
-	l, err := NewIrrigationEvent_List(s.Struct.Segment(), n)
+	l, err := NewIrrigationEvent_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return IrrigationEvent_List{}, err
 	}
-	err = s.Struct.SetPtr(13, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(13, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) FertilizerEvents() (FertilizerEvent_List, error) {
-	p, err := s.Struct.Ptr(14)
-	return FertilizerEvent_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(14)
+	return FertilizerEvent_List(p.List()), err
 }
 
 func (s Treatment) HasFertilizerEvents() bool {
-	return s.Struct.HasPtr(14)
+	return capnp.Struct(s).HasPtr(14)
 }
 
 func (s Treatment) SetFertilizerEvents(v FertilizerEvent_List) error {
-	return s.Struct.SetPtr(14, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(14, v.ToPtr())
 }
 
 // NewFertilizerEvents sets the fertilizerEvents field to a newly
 // allocated FertilizerEvent_List, preferring placement in s's segment.
 func (s Treatment) NewFertilizerEvents(n int32) (FertilizerEvent_List, error) {
-	l, err := NewFertilizerEvent_List(s.Struct.Segment(), n)
+	l, err := NewFertilizerEvent_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return FertilizerEvent_List{}, err
 	}
-	err = s.Struct.SetPtr(14, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(14, l.ToPtr())
 	return l, err
 }
-
 func (s Treatment) EnvironmentModifications() (EnvironmentModification_List, error) {
-	p, err := s.Struct.Ptr(15)
-	return EnvironmentModification_List{List: p.List()}, err
+	p, err := capnp.Struct(s).Ptr(15)
+	return EnvironmentModification_List(p.List()), err
 }
 
 func (s Treatment) HasEnvironmentModifications() bool {
-	return s.Struct.HasPtr(15)
+	return capnp.Struct(s).HasPtr(15)
 }
 
 func (s Treatment) SetEnvironmentModifications(v EnvironmentModification_List) error {
-	return s.Struct.SetPtr(15, v.List.ToPtr())
+	return capnp.Struct(s).SetPtr(15, v.ToPtr())
 }
 
 // NewEnvironmentModifications sets the environmentModifications field to a newly
 // allocated EnvironmentModification_List, preferring placement in s's segment.
 func (s Treatment) NewEnvironmentModifications(n int32) (EnvironmentModification_List, error) {
-	l, err := NewEnvironmentModification_List(s.Struct.Segment(), n)
+	l, err := NewEnvironmentModification_List(capnp.Struct(s).Segment(), n)
 	if err != nil {
 		return EnvironmentModification_List{}, err
 	}
-	err = s.Struct.SetPtr(15, l.List.ToPtr())
+	err = capnp.Struct(s).SetPtr(15, l.ToPtr())
 	return l, err
 }
 
 // Treatment_List is a list of Treatment.
-type Treatment_List struct{ capnp.List }
+type Treatment_List = capnp.StructList[Treatment]
 
 // NewTreatment creates a new list of Treatment.
 func NewTreatment_List(s *capnp.Segment, sz int32) (Treatment_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 20}, sz)
-	return Treatment_List{l}, err
-}
-
-func (s Treatment_List) At(i int) Treatment { return Treatment{s.List.Struct(i)} }
-
-func (s Treatment_List) Set(i int, v Treatment) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s Treatment_List) String() string {
-	str, _ := text.MarshalList(0xff1381363c7abd06, s.List)
-	return str
+	return capnp.StructList[Treatment](l), err
 }
 
 // Treatment_Future is a wrapper for a Treatment promised by a client call.
 type Treatment_Future struct{ *capnp.Future }
 
-func (p Treatment_Future) Struct() (Treatment, error) {
-	s, err := p.Future.Struct()
-	return Treatment{s}, err
+func (f Treatment_Future) Struct() (Treatment, error) {
+	p, err := f.Future.Ptr()
+	return Treatment(p.Struct()), err
 }
-
 func (p Treatment_Future) Field() Field_Future {
 	return Field_Future{Future: p.Future.Field(1, nil)}
 }
-
 func (p Treatment_Future) WeatherStation() WeatherStation_Future {
 	return WeatherStation_Future{Future: p.Future.Field(2, nil)}
 }
-
 func (p Treatment_Future) WeatherStationTimeseries() climate.TimeSeries {
-	return climate.TimeSeries{Client: p.Future.Field(3, nil).Client()}
+	return climate.TimeSeries(p.Future.Field(3, nil).Client())
 }
 
 func (p Treatment_Future) SimulationStartDate() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(5, nil)}
 }
-
 func (p Treatment_Future) SimulationEndDate() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(6, nil)}
 }
-
 func (p Treatment_Future) Residue() Residue_Future {
 	return Residue_Future{Future: p.Future.Field(9, nil)}
 }
 
-type Cultivar struct{ capnp.Struct }
+type Cultivar capnp.Struct
 
 // Cultivar_TypeID is the unique identifier for the type Cultivar.
 const Cultivar_TypeID = 0xab7ea2bfa7965af8
 
 func NewCultivar(s *capnp.Segment) (Cultivar, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 10})
-	return Cultivar{st}, err
+	return Cultivar(st), err
 }
 
 func NewRootCultivar(s *capnp.Segment) (Cultivar, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 10})
-	return Cultivar{st}, err
+	return Cultivar(st), err
 }
 
 func ReadRootCultivar(msg *capnp.Message) (Cultivar, error) {
 	root, err := msg.Root()
-	return Cultivar{root.Struct()}, err
+	return Cultivar(root.Struct()), err
 }
 
 func (s Cultivar) String() string {
-	str, _ := text.Marshal(0xab7ea2bfa7965af8, s.Struct)
+	str, _ := text.Marshal(0xab7ea2bfa7965af8, capnp.Struct(s))
 	return str
 }
 
+func (s Cultivar) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Cultivar) DecodeFromPtr(p capnp.Ptr) Cultivar {
+	return Cultivar(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Cultivar) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Cultivar) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Cultivar) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Cultivar) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s Cultivar) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s Cultivar) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s Cultivar) Name() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasName() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s Cultivar) NameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetName(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s Cultivar) AccessionId() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasAccessionId() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Cultivar) AccessionIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetAccessionId(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s Cultivar) AccessionLocation() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasAccessionLocation() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s Cultivar) AccessionLocationBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetAccessionLocation(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s Cultivar) CropIdentifierICASA() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasCropIdentifierICASA() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s Cultivar) CropIdentifierICASABytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetCropIdentifierICASA(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s Cultivar) SeedLot() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasSeedLot() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s Cultivar) SeedLotBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetSeedLot(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s Cultivar) BreedingProgram() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasBreedingProgram() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s Cultivar) BreedingProgramBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetBreedingProgram(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s Cultivar) OriginalName() (string, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasOriginalName() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s Cultivar) OriginalNameBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetOriginalName(v string) error {
-	return s.Struct.SetText(7, v)
+	return capnp.Struct(s).SetText(7, v)
 }
 
 func (s Cultivar) ReleaseYear() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s Cultivar) SetReleaseYear(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s Cultivar) Synonym() (string, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasSynonym() bool {
-	return s.Struct.HasPtr(8)
+	return capnp.Struct(s).HasPtr(8)
 }
 
 func (s Cultivar) SynonymBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetSynonym(v string) error {
-	return s.Struct.SetText(8, v)
+	return capnp.Struct(s).SetText(8, v)
 }
 
 func (s Cultivar) Notes() (string, error) {
-	p, err := s.Struct.Ptr(9)
+	p, err := capnp.Struct(s).Ptr(9)
 	return p.Text(), err
 }
 
 func (s Cultivar) HasNotes() bool {
-	return s.Struct.HasPtr(9)
+	return capnp.Struct(s).HasPtr(9)
 }
 
 func (s Cultivar) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(9)
+	p, err := capnp.Struct(s).Ptr(9)
 	return p.TextBytes(), err
 }
 
 func (s Cultivar) SetNotes(v string) error {
-	return s.Struct.SetText(9, v)
+	return capnp.Struct(s).SetText(9, v)
 }
 
 // Cultivar_List is a list of Cultivar.
-type Cultivar_List struct{ capnp.List }
+type Cultivar_List = capnp.StructList[Cultivar]
 
 // NewCultivar creates a new list of Cultivar.
 func NewCultivar_List(s *capnp.Segment, sz int32) (Cultivar_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 10}, sz)
-	return Cultivar_List{l}, err
-}
-
-func (s Cultivar_List) At(i int) Cultivar { return Cultivar{s.List.Struct(i)} }
-
-func (s Cultivar_List) Set(i int, v Cultivar) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s Cultivar_List) String() string {
-	str, _ := text.MarshalList(0xab7ea2bfa7965af8, s.List)
-	return str
+	return capnp.StructList[Cultivar](l), err
 }
 
 // Cultivar_Future is a wrapper for a Cultivar promised by a client call.
 type Cultivar_Future struct{ *capnp.Future }
 
-func (p Cultivar_Future) Struct() (Cultivar, error) {
-	s, err := p.Future.Struct()
-	return Cultivar{s}, err
+func (f Cultivar_Future) Struct() (Cultivar, error) {
+	p, err := f.Future.Ptr()
+	return Cultivar(p.Struct()), err
 }
 
-type Plot struct{ capnp.Struct }
+type Plot capnp.Struct
 
 // Plot_TypeID is the unique identifier for the type Plot.
 const Plot_TypeID = 0xa7a2210fb1e289f2
 
 func NewPlot(s *capnp.Segment) (Plot, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 9})
-	return Plot{st}, err
+	return Plot(st), err
 }
 
 func NewRootPlot(s *capnp.Segment) (Plot, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 9})
-	return Plot{st}, err
+	return Plot(st), err
 }
 
 func ReadRootPlot(msg *capnp.Message) (Plot, error) {
 	root, err := msg.Root()
-	return Plot{root.Struct()}, err
+	return Plot(root.Struct()), err
 }
 
 func (s Plot) String() string {
-	str, _ := text.Marshal(0xa7a2210fb1e289f2, s.Struct)
+	str, _ := text.Marshal(0xa7a2210fb1e289f2, capnp.Struct(s))
 	return str
 }
 
+func (s Plot) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Plot) DecodeFromPtr(p capnp.Ptr) Plot {
+	return Plot(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Plot) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Plot) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Plot) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Plot) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s Plot) Id() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s Plot) HasId() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s Plot) IdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetId(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s Plot) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s Plot) HasExperimentId() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s Plot) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetExperimentId(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s Plot) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s Plot) HasTreatmentId() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s Plot) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetTreatmentId(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s Plot) CultivarId() (string, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.Text(), err
 }
 
 func (s Plot) HasCultivarId() bool {
-	return s.Struct.HasPtr(7)
+	return capnp.Struct(s).HasPtr(7)
 }
 
 func (s Plot) CultivarIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(7)
+	p, err := capnp.Struct(s).Ptr(7)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetCultivarId(v string) error {
-	return s.Struct.SetText(7, v)
+	return capnp.Struct(s).SetText(7, v)
 }
 
 func (s Plot) Cultivar() (Cultivar, error) {
-	p, err := s.Struct.Ptr(1)
-	return Cultivar{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(1)
+	return Cultivar(p.Struct()), err
 }
 
 func (s Plot) HasCultivar() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s Plot) SetCultivar(v Cultivar) error {
-	return s.Struct.SetPtr(1, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(1, capnp.Struct(v).ToPtr())
 }
 
 // NewCultivar sets the cultivar field to a newly
 // allocated Cultivar struct, preferring placement in s's segment.
 func (s Plot) NewCultivar() (Cultivar, error) {
-	ss, err := NewCultivar(s.Struct.Segment())
+	ss, err := NewCultivar(capnp.Struct(s).Segment())
 	if err != nil {
 		return Cultivar{}, err
 	}
-	err = s.Struct.SetPtr(1, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(1, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Plot) SoilId() (string, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.Text(), err
 }
 
 func (s Plot) HasSoilId() bool {
-	return s.Struct.HasPtr(8)
+	return capnp.Struct(s).HasPtr(8)
 }
 
 func (s Plot) SoilIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(8)
+	p, err := capnp.Struct(s).Ptr(8)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetSoilId(v string) error {
-	return s.Struct.SetText(8, v)
+	return capnp.Struct(s).SetText(8, v)
 }
 
 func (s Plot) Soil() (SoilMetadata, error) {
-	p, err := s.Struct.Ptr(2)
-	return SoilMetadata{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(2)
+	return SoilMetadata(p.Struct()), err
 }
 
 func (s Plot) HasSoil() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Plot) SetSoil(v SoilMetadata) error {
-	return s.Struct.SetPtr(2, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewSoil sets the soil field to a newly
 // allocated SoilMetadata struct, preferring placement in s's segment.
 func (s Plot) NewSoil() (SoilMetadata, error) {
-	ss, err := NewSoilMetadata(s.Struct.Segment())
+	ss, err := NewSoilMetadata(capnp.Struct(s).Segment())
 	if err != nil {
 		return SoilMetadata{}, err
 	}
-	err = s.Struct.SetPtr(2, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Plot) BlockNumber() int8 {
-	return int8(s.Struct.Uint8(0) ^ 255)
+	return int8(capnp.Struct(s).Uint8(0) ^ 255)
 }
 
 func (s Plot) SetBlockNumber(v int8) {
-	s.Struct.SetUint8(0, uint8(v)^255)
+	capnp.Struct(s).SetUint8(0, uint8(v)^255)
 }
 
 func (s Plot) PlotNumber() int8 {
-	return int8(s.Struct.Uint8(1) ^ 255)
+	return int8(capnp.Struct(s).Uint8(1) ^ 255)
 }
 
 func (s Plot) SetPlotNumber(v int8) {
-	s.Struct.SetUint8(1, uint8(v)^255)
+	capnp.Struct(s).SetUint8(1, uint8(v)^255)
 }
 
 func (s Plot) ReplicateNumber() int8 {
-	return int8(s.Struct.Uint8(2) ^ 255)
+	return int8(capnp.Struct(s).Uint8(2) ^ 255)
 }
 
 func (s Plot) SetReplicateNumber(v int8) {
-	s.Struct.SetUint8(2, uint8(v)^255)
+	capnp.Struct(s).SetUint8(2, uint8(v)^255)
 }
 
 func (s Plot) RowNumber() int8 {
-	return int8(s.Struct.Uint8(3) ^ 255)
+	return int8(capnp.Struct(s).Uint8(3) ^ 255)
 }
 
 func (s Plot) SetRowNumber(v int8) {
-	s.Struct.SetUint8(3, uint8(v)^255)
+	capnp.Struct(s).SetUint8(3, uint8(v)^255)
 }
 
 func (s Plot) ColumnNumber() int8 {
-	return int8(s.Struct.Uint8(4) ^ 255)
+	return int8(capnp.Struct(s).Uint8(4) ^ 255)
 }
 
 func (s Plot) SetColumnNumber(v int8) {
-	s.Struct.SetUint8(4, uint8(v)^255)
+	capnp.Struct(s).SetUint8(4, uint8(v)^255)
 }
 
 func (s Plot) HarvestMethod() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s Plot) HasHarvestMethod() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s Plot) HarvestMethodBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetHarvestMethod(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s Plot) Notes() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s Plot) HasNotes() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s Plot) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s Plot) SetNotes(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 // Plot_List is a list of Plot.
-type Plot_List struct{ capnp.List }
+type Plot_List = capnp.StructList[Plot]
 
 // NewPlot creates a new list of Plot.
 func NewPlot_List(s *capnp.Segment, sz int32) (Plot_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 9}, sz)
-	return Plot_List{l}, err
-}
-
-func (s Plot_List) At(i int) Plot { return Plot{s.List.Struct(i)} }
-
-func (s Plot_List) Set(i int, v Plot) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s Plot_List) String() string {
-	str, _ := text.MarshalList(0xa7a2210fb1e289f2, s.List)
-	return str
+	return capnp.StructList[Plot](l), err
 }
 
 // Plot_Future is a wrapper for a Plot promised by a client call.
 type Plot_Future struct{ *capnp.Future }
 
-func (p Plot_Future) Struct() (Plot, error) {
-	s, err := p.Future.Struct()
-	return Plot{s}, err
+func (f Plot_Future) Struct() (Plot, error) {
+	p, err := f.Future.Ptr()
+	return Plot(p.Struct()), err
 }
-
 func (p Plot_Future) Cultivar() Cultivar_Future {
 	return Cultivar_Future{Future: p.Future.Field(1, nil)}
 }
-
 func (p Plot_Future) Soil() SoilMetadata_Future {
 	return SoilMetadata_Future{Future: p.Future.Field(2, nil)}
 }
 
-type InitialConditionsLayer struct{ capnp.Struct }
+type InitialConditionsLayer capnp.Struct
 
 // InitialConditionsLayer_TypeID is the unique identifier for the type InitialConditionsLayer.
 const InitialConditionsLayer_TypeID = 0xd1c0bc9f5b332a6e
 
 func NewInitialConditionsLayer(s *capnp.Segment) (InitialConditionsLayer, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 56, PointerCount: 3})
-	return InitialConditionsLayer{st}, err
+	return InitialConditionsLayer(st), err
 }
 
 func NewRootInitialConditionsLayer(s *capnp.Segment) (InitialConditionsLayer, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 56, PointerCount: 3})
-	return InitialConditionsLayer{st}, err
+	return InitialConditionsLayer(st), err
 }
 
 func ReadRootInitialConditionsLayer(msg *capnp.Message) (InitialConditionsLayer, error) {
 	root, err := msg.Root()
-	return InitialConditionsLayer{root.Struct()}, err
+	return InitialConditionsLayer(root.Struct()), err
 }
 
 func (s InitialConditionsLayer) String() string {
-	str, _ := text.Marshal(0xd1c0bc9f5b332a6e, s.Struct)
+	str, _ := text.Marshal(0xd1c0bc9f5b332a6e, capnp.Struct(s))
 	return str
 }
 
+func (s InitialConditionsLayer) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (InitialConditionsLayer) DecodeFromPtr(p capnp.Ptr) InitialConditionsLayer {
+	return InitialConditionsLayer(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s InitialConditionsLayer) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s InitialConditionsLayer) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s InitialConditionsLayer) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s InitialConditionsLayer) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s InitialConditionsLayer) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s InitialConditionsLayer) HasExperimentId() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s InitialConditionsLayer) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s InitialConditionsLayer) SetExperimentId(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s InitialConditionsLayer) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s InitialConditionsLayer) HasTreatmentId() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s InitialConditionsLayer) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s InitialConditionsLayer) SetTreatmentId(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s InitialConditionsLayer) Date() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s InitialConditionsLayer) HasDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s InitialConditionsLayer) SetDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewDate sets the date field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s InitialConditionsLayer) NewDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s InitialConditionsLayer) SoilLayerTopDepthInCM() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s InitialConditionsLayer) SetSoilLayerTopDepthInCM(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s InitialConditionsLayer) SoilLayerBaseDepthInCM() int16 {
-	return int16(s.Struct.Uint16(2) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(2) ^ 65535)
 }
 
 func (s InitialConditionsLayer) SetSoilLayerBaseDepthInCM(v int16) {
-	s.Struct.SetUint16(2, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(2, uint16(v)^65535)
 }
 
 func (s InitialConditionsLayer) WaterConcentration() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetWaterConcentration(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) TotalNInKGperHA() float64 {
-	return math.Float64frombits(s.Struct.Uint64(16) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(16) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetTotalNInKGperHA(v float64) {
-	s.Struct.SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) MassNH4InKGperHA() float64 {
-	return math.Float64frombits(s.Struct.Uint64(24) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(24) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetMassNH4InKGperHA(v float64) {
-	s.Struct.SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) MassNO3InKGperHA() float64 {
-	return math.Float64frombits(s.Struct.Uint64(32) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(32) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetMassNO3InKGperHA(v float64) {
-	s.Struct.SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) ConcNH4InPPM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(40) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(40) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetConcNH4InPPM(v float64) {
-	s.Struct.SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(40, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) ConcNO3InPPM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(48) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(48) ^ 0xbff0000000000000)
 }
 
 func (s InitialConditionsLayer) SetConcNO3InPPM(v float64) {
-	s.Struct.SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(48, math.Float64bits(v)^0xbff0000000000000)
 }
 
 // InitialConditionsLayer_List is a list of InitialConditionsLayer.
-type InitialConditionsLayer_List struct{ capnp.List }
+type InitialConditionsLayer_List = capnp.StructList[InitialConditionsLayer]
 
 // NewInitialConditionsLayer creates a new list of InitialConditionsLayer.
 func NewInitialConditionsLayer_List(s *capnp.Segment, sz int32) (InitialConditionsLayer_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 56, PointerCount: 3}, sz)
-	return InitialConditionsLayer_List{l}, err
-}
-
-func (s InitialConditionsLayer_List) At(i int) InitialConditionsLayer {
-	return InitialConditionsLayer{s.List.Struct(i)}
-}
-
-func (s InitialConditionsLayer_List) Set(i int, v InitialConditionsLayer) error {
-	return s.List.SetStruct(i, v.Struct)
-}
-
-func (s InitialConditionsLayer_List) String() string {
-	str, _ := text.MarshalList(0xd1c0bc9f5b332a6e, s.List)
-	return str
+	return capnp.StructList[InitialConditionsLayer](l), err
 }
 
 // InitialConditionsLayer_Future is a wrapper for a InitialConditionsLayer promised by a client call.
 type InitialConditionsLayer_Future struct{ *capnp.Future }
 
-func (p InitialConditionsLayer_Future) Struct() (InitialConditionsLayer, error) {
-	s, err := p.Future.Struct()
-	return InitialConditionsLayer{s}, err
+func (f InitialConditionsLayer_Future) Struct() (InitialConditionsLayer, error) {
+	p, err := f.Future.Ptr()
+	return InitialConditionsLayer(p.Struct()), err
 }
-
 func (p InitialConditionsLayer_Future) Date() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-type PlantingEvent struct{ capnp.Struct }
+type PlantingEvent capnp.Struct
 
 // PlantingEvent_TypeID is the unique identifier for the type PlantingEvent.
 const PlantingEvent_TypeID = 0xf6b17c769768d8ff
 
 func NewPlantingEvent(s *capnp.Segment) (PlantingEvent, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 7})
-	return PlantingEvent{st}, err
+	return PlantingEvent(st), err
 }
 
 func NewRootPlantingEvent(s *capnp.Segment) (PlantingEvent, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 7})
-	return PlantingEvent{st}, err
+	return PlantingEvent(st), err
 }
 
 func ReadRootPlantingEvent(msg *capnp.Message) (PlantingEvent, error) {
 	root, err := msg.Root()
-	return PlantingEvent{root.Struct()}, err
+	return PlantingEvent(root.Struct()), err
 }
 
 func (s PlantingEvent) String() string {
-	str, _ := text.Marshal(0xf6b17c769768d8ff, s.Struct)
+	str, _ := text.Marshal(0xf6b17c769768d8ff, capnp.Struct(s))
 	return str
 }
 
+func (s PlantingEvent) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (PlantingEvent) DecodeFromPtr(p capnp.Ptr) PlantingEvent {
+	return PlantingEvent(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s PlantingEvent) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s PlantingEvent) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s PlantingEvent) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s PlantingEvent) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s PlantingEvent) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s PlantingEvent) HasExperimentId() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s PlantingEvent) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s PlantingEvent) SetExperimentId(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s PlantingEvent) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.Text(), err
 }
 
 func (s PlantingEvent) HasTreatmentId() bool {
-	return s.Struct.HasPtr(6)
+	return capnp.Struct(s).HasPtr(6)
 }
 
 func (s PlantingEvent) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(6)
+	p, err := capnp.Struct(s).Ptr(6)
 	return p.TextBytes(), err
 }
 
 func (s PlantingEvent) SetTreatmentId(v string) error {
-	return s.Struct.SetText(6, v)
+	return capnp.Struct(s).SetText(6, v)
 }
 
 func (s PlantingEvent) PlantingDistribution() (string, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
 func (s PlantingEvent) HasPlantingDistribution() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s PlantingEvent) PlantingDistributionBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(0)
+	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
 func (s PlantingEvent) SetPlantingDistribution(v string) error {
-	return s.Struct.SetText(0, v)
+	return capnp.Struct(s).SetText(0, v)
 }
 
 func (s PlantingEvent) RowSpacingInCM() float64 {
-	return math.Float64frombits(s.Struct.Uint64(0) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(0) ^ 0xbff0000000000000)
 }
 
 func (s PlantingEvent) SetRowSpacingInCM(v float64) {
-	s.Struct.SetUint64(0, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(0, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s PlantingEvent) RowDirectionInArcDeg() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xc0c3878000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xc0c3878000000000)
 }
 
 func (s PlantingEvent) SetRowDirectionInArcDeg(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xc0c3878000000000)
 }
 
 func (s PlantingEvent) PlantingDepthInMM() int16 {
-	return int16(s.Struct.Uint16(16) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(16) ^ 65535)
 }
 
 func (s PlantingEvent) SetPlantingDepthInMM(v int16) {
-	s.Struct.SetUint16(16, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(16, uint16(v)^65535)
 }
 
 func (s PlantingEvent) PlotLayout() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s PlantingEvent) HasPlotLayout() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s PlantingEvent) PlotLayoutBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s PlantingEvent) SetPlotLayout(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s PlantingEvent) PlantingDate() (common.Date, error) {
-	p, err := s.Struct.Ptr(2)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(2)
+	return common.Date(p.Struct()), err
 }
 
 func (s PlantingEvent) HasPlantingDate() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s PlantingEvent) SetPlantingDate(v common.Date) error {
-	return s.Struct.SetPtr(2, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewPlantingDate sets the plantingDate field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s PlantingEvent) NewPlantingDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(2, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s PlantingEvent) PlantPopulationAtPlantingInNoPerM2() int16 {
-	return int16(s.Struct.Uint16(18) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(18) ^ 65535)
 }
 
 func (s PlantingEvent) SetPlantPopulationAtPlantingInNoPerM2(v int16) {
-	s.Struct.SetUint16(18, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(18, uint16(v)^65535)
 }
 
 func (s PlantingEvent) AverageEmergenceDate() (common.Date, error) {
-	p, err := s.Struct.Ptr(3)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(3)
+	return common.Date(p.Struct()), err
 }
 
 func (s PlantingEvent) HasAverageEmergenceDate() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s PlantingEvent) SetAverageEmergenceDate(v common.Date) error {
-	return s.Struct.SetPtr(3, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(3, capnp.Struct(v).ToPtr())
 }
 
 // NewAverageEmergenceDate sets the averageEmergenceDate field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s PlantingEvent) NewAverageEmergenceDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(3, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(3, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s PlantingEvent) AveragePlantPopulationAtEmergenceInNoPerM2() int16 {
-	return int16(s.Struct.Uint16(20) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(20) ^ 65535)
 }
 
 func (s PlantingEvent) SetAveragePlantPopulationAtEmergenceInNoPerM2(v int16) {
-	s.Struct.SetUint16(20, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(20, uint16(v)^65535)
 }
 
 func (s PlantingEvent) Notes() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s PlantingEvent) HasNotes() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s PlantingEvent) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s PlantingEvent) SetNotes(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 // PlantingEvent_List is a list of PlantingEvent.
-type PlantingEvent_List struct{ capnp.List }
+type PlantingEvent_List = capnp.StructList[PlantingEvent]
 
 // NewPlantingEvent creates a new list of PlantingEvent.
 func NewPlantingEvent_List(s *capnp.Segment, sz int32) (PlantingEvent_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 24, PointerCount: 7}, sz)
-	return PlantingEvent_List{l}, err
-}
-
-func (s PlantingEvent_List) At(i int) PlantingEvent { return PlantingEvent{s.List.Struct(i)} }
-
-func (s PlantingEvent_List) Set(i int, v PlantingEvent) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s PlantingEvent_List) String() string {
-	str, _ := text.MarshalList(0xf6b17c769768d8ff, s.List)
-	return str
+	return capnp.StructList[PlantingEvent](l), err
 }
 
 // PlantingEvent_Future is a wrapper for a PlantingEvent promised by a client call.
 type PlantingEvent_Future struct{ *capnp.Future }
 
-func (p PlantingEvent_Future) Struct() (PlantingEvent, error) {
-	s, err := p.Future.Struct()
-	return PlantingEvent{s}, err
+func (f PlantingEvent_Future) Struct() (PlantingEvent, error) {
+	p, err := f.Future.Ptr()
+	return PlantingEvent(p.Struct()), err
 }
-
 func (p PlantingEvent_Future) PlantingDate() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(2, nil)}
 }
-
 func (p PlantingEvent_Future) AverageEmergenceDate() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(3, nil)}
 }
 
-type HarvestEvent struct{ capnp.Struct }
+type HarvestEvent capnp.Struct
 
 // HarvestEvent_TypeID is the unique identifier for the type HarvestEvent.
 const HarvestEvent_TypeID = 0x97eb30dbcf87911a
 
 func NewHarvestEvent(s *capnp.Segment) (HarvestEvent, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6})
-	return HarvestEvent{st}, err
+	return HarvestEvent(st), err
 }
 
 func NewRootHarvestEvent(s *capnp.Segment) (HarvestEvent, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6})
-	return HarvestEvent{st}, err
+	return HarvestEvent(st), err
 }
 
 func ReadRootHarvestEvent(msg *capnp.Message) (HarvestEvent, error) {
 	root, err := msg.Root()
-	return HarvestEvent{root.Struct()}, err
+	return HarvestEvent(root.Struct()), err
 }
 
 func (s HarvestEvent) String() string {
-	str, _ := text.Marshal(0x97eb30dbcf87911a, s.Struct)
+	str, _ := text.Marshal(0x97eb30dbcf87911a, capnp.Struct(s))
 	return str
 }
 
+func (s HarvestEvent) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (HarvestEvent) DecodeFromPtr(p capnp.Ptr) HarvestEvent {
+	return HarvestEvent(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s HarvestEvent) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s HarvestEvent) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s HarvestEvent) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s HarvestEvent) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s HarvestEvent) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s HarvestEvent) HasExperimentId() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s HarvestEvent) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s HarvestEvent) SetExperimentId(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s HarvestEvent) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s HarvestEvent) HasTreatmentId() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s HarvestEvent) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s HarvestEvent) SetTreatmentId(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s HarvestEvent) Date() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s HarvestEvent) HasDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s HarvestEvent) SetDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewDate sets the date field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s HarvestEvent) NewDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s HarvestEvent) HarvestMethod() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s HarvestEvent) HasHarvestMethod() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s HarvestEvent) HarvestMethodBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s HarvestEvent) SetHarvestMethod(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s HarvestEvent) HarvestArea() float64 {
-	return math.Float64frombits(s.Struct.Uint64(0) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(0) ^ 0xbff0000000000000)
 }
 
 func (s HarvestEvent) SetHarvestArea(v float64) {
-	s.Struct.SetUint64(0, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(0, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s HarvestEvent) Notes() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s HarvestEvent) HasNotes() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s HarvestEvent) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s HarvestEvent) SetNotes(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s HarvestEvent) Comments() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s HarvestEvent) HasComments() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s HarvestEvent) CommentsBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s HarvestEvent) SetComments(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 // HarvestEvent_List is a list of HarvestEvent.
-type HarvestEvent_List struct{ capnp.List }
+type HarvestEvent_List = capnp.StructList[HarvestEvent]
 
 // NewHarvestEvent creates a new list of HarvestEvent.
 func NewHarvestEvent_List(s *capnp.Segment, sz int32) (HarvestEvent_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6}, sz)
-	return HarvestEvent_List{l}, err
-}
-
-func (s HarvestEvent_List) At(i int) HarvestEvent { return HarvestEvent{s.List.Struct(i)} }
-
-func (s HarvestEvent_List) Set(i int, v HarvestEvent) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s HarvestEvent_List) String() string {
-	str, _ := text.MarshalList(0x97eb30dbcf87911a, s.List)
-	return str
+	return capnp.StructList[HarvestEvent](l), err
 }
 
 // HarvestEvent_Future is a wrapper for a HarvestEvent promised by a client call.
 type HarvestEvent_Future struct{ *capnp.Future }
 
-func (p HarvestEvent_Future) Struct() (HarvestEvent, error) {
-	s, err := p.Future.Struct()
-	return HarvestEvent{s}, err
+func (f HarvestEvent_Future) Struct() (HarvestEvent, error) {
+	p, err := f.Future.Ptr()
+	return HarvestEvent(p.Struct()), err
 }
-
 func (p HarvestEvent_Future) Date() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-type IrrigationEvent struct{ capnp.Struct }
+type IrrigationEvent capnp.Struct
 
 // IrrigationEvent_TypeID is the unique identifier for the type IrrigationEvent.
 const IrrigationEvent_TypeID = 0xcf2547b626594655
 
 func NewIrrigationEvent(s *capnp.Segment) (IrrigationEvent, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 5})
-	return IrrigationEvent{st}, err
+	return IrrigationEvent(st), err
 }
 
 func NewRootIrrigationEvent(s *capnp.Segment) (IrrigationEvent, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 5})
-	return IrrigationEvent{st}, err
+	return IrrigationEvent(st), err
 }
 
 func ReadRootIrrigationEvent(msg *capnp.Message) (IrrigationEvent, error) {
 	root, err := msg.Root()
-	return IrrigationEvent{root.Struct()}, err
+	return IrrigationEvent(root.Struct()), err
 }
 
 func (s IrrigationEvent) String() string {
-	str, _ := text.Marshal(0xcf2547b626594655, s.Struct)
+	str, _ := text.Marshal(0xcf2547b626594655, capnp.Struct(s))
 	return str
 }
 
+func (s IrrigationEvent) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (IrrigationEvent) DecodeFromPtr(p capnp.Ptr) IrrigationEvent {
+	return IrrigationEvent(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s IrrigationEvent) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s IrrigationEvent) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s IrrigationEvent) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s IrrigationEvent) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s IrrigationEvent) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s IrrigationEvent) HasExperimentId() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s IrrigationEvent) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s IrrigationEvent) SetExperimentId(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s IrrigationEvent) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s IrrigationEvent) HasTreatmentId() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s IrrigationEvent) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s IrrigationEvent) SetTreatmentId(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s IrrigationEvent) Date() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s IrrigationEvent) HasDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s IrrigationEvent) SetDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewDate sets the date field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s IrrigationEvent) NewDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s IrrigationEvent) Operation() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s IrrigationEvent) HasOperation() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s IrrigationEvent) OperationBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s IrrigationEvent) SetOperation(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s IrrigationEvent) ApplicationDepth() int16 {
-	return int16(s.Struct.Uint16(0) ^ 55537)
+	return int16(capnp.Struct(s).Uint16(0) ^ 55537)
 }
 
 func (s IrrigationEvent) SetApplicationDepth(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^55537)
+	capnp.Struct(s).SetUint16(0, uint16(v)^55537)
 }
 
 func (s IrrigationEvent) Amount() int16 {
-	return int16(s.Struct.Uint16(2) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(2) ^ 65535)
 }
 
 func (s IrrigationEvent) SetAmount(v int16) {
-	s.Struct.SetUint16(2, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(2, uint16(v)^65535)
 }
 
 func (s IrrigationEvent) WaterNConcentrationInPerc() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xbff0000000000000)
 }
 
 func (s IrrigationEvent) SetWaterNConcentrationInPerc(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s IrrigationEvent) Notes() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s IrrigationEvent) HasNotes() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s IrrigationEvent) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s IrrigationEvent) SetNotes(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 // IrrigationEvent_List is a list of IrrigationEvent.
-type IrrigationEvent_List struct{ capnp.List }
+type IrrigationEvent_List = capnp.StructList[IrrigationEvent]
 
 // NewIrrigationEvent creates a new list of IrrigationEvent.
 func NewIrrigationEvent_List(s *capnp.Segment, sz int32) (IrrigationEvent_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 5}, sz)
-	return IrrigationEvent_List{l}, err
-}
-
-func (s IrrigationEvent_List) At(i int) IrrigationEvent { return IrrigationEvent{s.List.Struct(i)} }
-
-func (s IrrigationEvent_List) Set(i int, v IrrigationEvent) error {
-	return s.List.SetStruct(i, v.Struct)
-}
-
-func (s IrrigationEvent_List) String() string {
-	str, _ := text.MarshalList(0xcf2547b626594655, s.List)
-	return str
+	return capnp.StructList[IrrigationEvent](l), err
 }
 
 // IrrigationEvent_Future is a wrapper for a IrrigationEvent promised by a client call.
 type IrrigationEvent_Future struct{ *capnp.Future }
 
-func (p IrrigationEvent_Future) Struct() (IrrigationEvent, error) {
-	s, err := p.Future.Struct()
-	return IrrigationEvent{s}, err
+func (f IrrigationEvent_Future) Struct() (IrrigationEvent, error) {
+	p, err := f.Future.Ptr()
+	return IrrigationEvent(p.Struct()), err
 }
-
 func (p IrrigationEvent_Future) Date() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-type FertilizerEvent struct{ capnp.Struct }
+type FertilizerEvent capnp.Struct
 
 // FertilizerEvent_TypeID is the unique identifier for the type FertilizerEvent.
 const FertilizerEvent_TypeID = 0xa5df81bae928e6da
 
 func NewFertilizerEvent(s *capnp.Segment) (FertilizerEvent, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6})
-	return FertilizerEvent{st}, err
+	return FertilizerEvent(st), err
 }
 
 func NewRootFertilizerEvent(s *capnp.Segment) (FertilizerEvent, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6})
-	return FertilizerEvent{st}, err
+	return FertilizerEvent(st), err
 }
 
 func ReadRootFertilizerEvent(msg *capnp.Message) (FertilizerEvent, error) {
 	root, err := msg.Root()
-	return FertilizerEvent{root.Struct()}, err
+	return FertilizerEvent(root.Struct()), err
 }
 
 func (s FertilizerEvent) String() string {
-	str, _ := text.Marshal(0xa5df81bae928e6da, s.Struct)
+	str, _ := text.Marshal(0xa5df81bae928e6da, capnp.Struct(s))
 	return str
 }
 
+func (s FertilizerEvent) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (FertilizerEvent) DecodeFromPtr(p capnp.Ptr) FertilizerEvent {
+	return FertilizerEvent(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s FertilizerEvent) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s FertilizerEvent) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s FertilizerEvent) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s FertilizerEvent) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s FertilizerEvent) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s FertilizerEvent) HasExperimentId() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s FertilizerEvent) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s FertilizerEvent) SetExperimentId(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s FertilizerEvent) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.Text(), err
 }
 
 func (s FertilizerEvent) HasTreatmentId() bool {
-	return s.Struct.HasPtr(5)
+	return capnp.Struct(s).HasPtr(5)
 }
 
 func (s FertilizerEvent) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(5)
+	p, err := capnp.Struct(s).Ptr(5)
 	return p.TextBytes(), err
 }
 
 func (s FertilizerEvent) SetTreatmentId(v string) error {
-	return s.Struct.SetText(5, v)
+	return capnp.Struct(s).SetText(5, v)
 }
 
 func (s FertilizerEvent) Date() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s FertilizerEvent) HasDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s FertilizerEvent) SetDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewDate sets the date field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s FertilizerEvent) NewDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s FertilizerEvent) ApplicationMethod() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s FertilizerEvent) HasApplicationMethod() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s FertilizerEvent) ApplicationMethodBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s FertilizerEvent) SetApplicationMethod(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s FertilizerEvent) ApplicationDepthInCM() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s FertilizerEvent) SetApplicationDepthInCM(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s FertilizerEvent) Material() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s FertilizerEvent) HasMaterial() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s FertilizerEvent) MaterialBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s FertilizerEvent) SetMaterial(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s FertilizerEvent) AppliedNInKGNPerHA() int16 {
-	return int16(s.Struct.Uint16(2) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(2) ^ 65535)
 }
 
 func (s FertilizerEvent) SetAppliedNInKGNPerHA(v int16) {
-	s.Struct.SetUint16(2, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(2, uint16(v)^65535)
 }
 
 func (s FertilizerEvent) AppliedNO3InKGNperHA() int16 {
-	return int16(s.Struct.Uint16(4) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(4) ^ 65535)
 }
 
 func (s FertilizerEvent) SetAppliedNO3InKGNperHA(v int16) {
-	s.Struct.SetUint16(4, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(4, uint16(v)^65535)
 }
 
 func (s FertilizerEvent) AppliedNH4InKGNperHA() int16 {
-	return int16(s.Struct.Uint16(6) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(6) ^ 65535)
 }
 
 func (s FertilizerEvent) SetAppliedNH4InKGNperHA(v int16) {
-	s.Struct.SetUint16(6, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(6, uint16(v)^65535)
 }
 
 func (s FertilizerEvent) Notes() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s FertilizerEvent) HasNotes() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s FertilizerEvent) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s FertilizerEvent) SetNotes(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 // FertilizerEvent_List is a list of FertilizerEvent.
-type FertilizerEvent_List struct{ capnp.List }
+type FertilizerEvent_List = capnp.StructList[FertilizerEvent]
 
 // NewFertilizerEvent creates a new list of FertilizerEvent.
 func NewFertilizerEvent_List(s *capnp.Segment, sz int32) (FertilizerEvent_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 6}, sz)
-	return FertilizerEvent_List{l}, err
-}
-
-func (s FertilizerEvent_List) At(i int) FertilizerEvent { return FertilizerEvent{s.List.Struct(i)} }
-
-func (s FertilizerEvent_List) Set(i int, v FertilizerEvent) error {
-	return s.List.SetStruct(i, v.Struct)
-}
-
-func (s FertilizerEvent_List) String() string {
-	str, _ := text.MarshalList(0xa5df81bae928e6da, s.List)
-	return str
+	return capnp.StructList[FertilizerEvent](l), err
 }
 
 // FertilizerEvent_Future is a wrapper for a FertilizerEvent promised by a client call.
 type FertilizerEvent_Future struct{ *capnp.Future }
 
-func (p FertilizerEvent_Future) Struct() (FertilizerEvent, error) {
-	s, err := p.Future.Struct()
-	return FertilizerEvent{s}, err
+func (f FertilizerEvent_Future) Struct() (FertilizerEvent, error) {
+	p, err := f.Future.Ptr()
+	return FertilizerEvent(p.Struct()), err
 }
-
 func (p FertilizerEvent_Future) Date() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-type Residue struct{ capnp.Struct }
+type Residue capnp.Struct
 
 // Residue_TypeID is the unique identifier for the type Residue.
 const Residue_TypeID = 0xe82432f4ef15a586
 
 func NewResidue(s *capnp.Segment) (Residue, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 4})
-	return Residue{st}, err
+	return Residue(st), err
 }
 
 func NewRootResidue(s *capnp.Segment) (Residue, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 4})
-	return Residue{st}, err
+	return Residue(st), err
 }
 
 func ReadRootResidue(msg *capnp.Message) (Residue, error) {
 	root, err := msg.Root()
-	return Residue{root.Struct()}, err
+	return Residue(root.Struct()), err
 }
 
 func (s Residue) String() string {
-	str, _ := text.Marshal(0xe82432f4ef15a586, s.Struct)
+	str, _ := text.Marshal(0xe82432f4ef15a586, capnp.Struct(s))
 	return str
 }
 
+func (s Residue) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Residue) DecodeFromPtr(p capnp.Ptr) Residue {
+	return Residue(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Residue) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Residue) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Residue) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Residue) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s Residue) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s Residue) HasExperimentId() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Residue) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s Residue) SetExperimentId(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 func (s Residue) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s Residue) HasTreatmentId() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s Residue) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s Residue) SetTreatmentId(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s Residue) InitialMeasureDate() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s Residue) HasInitialMeasureDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s Residue) SetInitialMeasureDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewInitialMeasureDate sets the initialMeasureDate field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s Residue) NewInitialMeasureDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s Residue) IncorporationDepth() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s Residue) SetIncorporationDepth(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s Residue) PercentIncorporated() float64 {
-	return math.Float64frombits(s.Struct.Uint64(8) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(8) ^ 0xbff0000000000000)
 }
 
 func (s Residue) SetPercentIncorporated(v float64) {
-	s.Struct.SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(8, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s Residue) PrevCropCode() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s Residue) HasPrevCropCode() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s Residue) PrevCropCodeBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s Residue) SetPrevCropCode(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s Residue) AboveGroundWeight() float64 {
-	return math.Float64frombits(s.Struct.Uint64(16) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(16) ^ 0xbff0000000000000)
 }
 
 func (s Residue) SetAboveGroundWeight(v float64) {
-	s.Struct.SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(16, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s Residue) AboveGroundNConcentrationInPerc() float64 {
-	return math.Float64frombits(s.Struct.Uint64(24) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(24) ^ 0xbff0000000000000)
 }
 
 func (s Residue) SetAboveGroundNConcentrationInPerc(v float64) {
-	s.Struct.SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(24, math.Float64bits(v)^0xbff0000000000000)
 }
 
 func (s Residue) RootWeightPreviousCrop() float64 {
-	return math.Float64frombits(s.Struct.Uint64(32) ^ 0xbff0000000000000)
+	return math.Float64frombits(capnp.Struct(s).Uint64(32) ^ 0xbff0000000000000)
 }
 
 func (s Residue) SetRootWeightPreviousCrop(v float64) {
-	s.Struct.SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
+	capnp.Struct(s).SetUint64(32, math.Float64bits(v)^0xbff0000000000000)
 }
 
 // Residue_List is a list of Residue.
-type Residue_List struct{ capnp.List }
+type Residue_List = capnp.StructList[Residue]
 
 // NewResidue creates a new list of Residue.
 func NewResidue_List(s *capnp.Segment, sz int32) (Residue_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 40, PointerCount: 4}, sz)
-	return Residue_List{l}, err
-}
-
-func (s Residue_List) At(i int) Residue { return Residue{s.List.Struct(i)} }
-
-func (s Residue_List) Set(i int, v Residue) error { return s.List.SetStruct(i, v.Struct) }
-
-func (s Residue_List) String() string {
-	str, _ := text.MarshalList(0xe82432f4ef15a586, s.List)
-	return str
+	return capnp.StructList[Residue](l), err
 }
 
 // Residue_Future is a wrapper for a Residue promised by a client call.
 type Residue_Future struct{ *capnp.Future }
 
-func (p Residue_Future) Struct() (Residue, error) {
-	s, err := p.Future.Struct()
-	return Residue{s}, err
+func (f Residue_Future) Struct() (Residue, error) {
+	p, err := f.Future.Ptr()
+	return Residue(p.Struct()), err
 }
-
 func (p Residue_Future) InitialMeasureDate() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-type EnvironmentModification struct{ capnp.Struct }
+type EnvironmentModification capnp.Struct
 
 // EnvironmentModification_TypeID is the unique identifier for the type EnvironmentModification.
 const EnvironmentModification_TypeID = 0xb52867725b843050
 
 func NewEnvironmentModification(s *capnp.Segment) (EnvironmentModification, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5})
-	return EnvironmentModification{st}, err
+	return EnvironmentModification(st), err
 }
 
 func NewRootEnvironmentModification(s *capnp.Segment) (EnvironmentModification, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5})
-	return EnvironmentModification{st}, err
+	return EnvironmentModification(st), err
 }
 
 func ReadRootEnvironmentModification(msg *capnp.Message) (EnvironmentModification, error) {
 	root, err := msg.Root()
-	return EnvironmentModification{root.Struct()}, err
+	return EnvironmentModification(root.Struct()), err
 }
 
 func (s EnvironmentModification) String() string {
-	str, _ := text.Marshal(0xb52867725b843050, s.Struct)
+	str, _ := text.Marshal(0xb52867725b843050, capnp.Struct(s))
 	return str
 }
 
+func (s EnvironmentModification) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (EnvironmentModification) DecodeFromPtr(p capnp.Ptr) EnvironmentModification {
+	return EnvironmentModification(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s EnvironmentModification) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s EnvironmentModification) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s EnvironmentModification) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s EnvironmentModification) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
 func (s EnvironmentModification) ExperimentId() (string, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.Text(), err
 }
 
 func (s EnvironmentModification) HasExperimentId() bool {
-	return s.Struct.HasPtr(3)
+	return capnp.Struct(s).HasPtr(3)
 }
 
 func (s EnvironmentModification) ExperimentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(3)
+	p, err := capnp.Struct(s).Ptr(3)
 	return p.TextBytes(), err
 }
 
 func (s EnvironmentModification) SetExperimentId(v string) error {
-	return s.Struct.SetText(3, v)
+	return capnp.Struct(s).SetText(3, v)
 }
 
 func (s EnvironmentModification) TreatmentId() (string, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.Text(), err
 }
 
 func (s EnvironmentModification) HasTreatmentId() bool {
-	return s.Struct.HasPtr(4)
+	return capnp.Struct(s).HasPtr(4)
 }
 
 func (s EnvironmentModification) TreatmentIdBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(4)
+	p, err := capnp.Struct(s).Ptr(4)
 	return p.TextBytes(), err
 }
 
 func (s EnvironmentModification) SetTreatmentId(v string) error {
-	return s.Struct.SetText(4, v)
+	return capnp.Struct(s).SetText(4, v)
 }
 
 func (s EnvironmentModification) Date() (common.Date, error) {
-	p, err := s.Struct.Ptr(0)
-	return common.Date{Struct: p.Struct()}, err
+	p, err := capnp.Struct(s).Ptr(0)
+	return common.Date(p.Struct()), err
 }
 
 func (s EnvironmentModification) HasDate() bool {
-	return s.Struct.HasPtr(0)
+	return capnp.Struct(s).HasPtr(0)
 }
 
 func (s EnvironmentModification) SetDate(v common.Date) error {
-	return s.Struct.SetPtr(0, v.Struct.ToPtr())
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
 }
 
 // NewDate sets the date field to a newly
 // allocated common.Date struct, preferring placement in s's segment.
 func (s EnvironmentModification) NewDate() (common.Date, error) {
-	ss, err := common.NewDate(s.Struct.Segment())
+	ss, err := common.NewDate(capnp.Struct(s).Segment())
 	if err != nil {
 		return common.Date{}, err
 	}
-	err = s.Struct.SetPtr(0, ss.Struct.ToPtr())
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
 func (s EnvironmentModification) CodeCO2() (string, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.Text(), err
 }
 
 func (s EnvironmentModification) HasCodeCO2() bool {
-	return s.Struct.HasPtr(1)
+	return capnp.Struct(s).HasPtr(1)
 }
 
 func (s EnvironmentModification) CodeCO2Bytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(1)
+	p, err := capnp.Struct(s).Ptr(1)
 	return p.TextBytes(), err
 }
 
 func (s EnvironmentModification) SetCodeCO2(v string) error {
-	return s.Struct.SetText(1, v)
+	return capnp.Struct(s).SetText(1, v)
 }
 
 func (s EnvironmentModification) ValueCO2() int16 {
-	return int16(s.Struct.Uint16(0) ^ 65535)
+	return int16(capnp.Struct(s).Uint16(0) ^ 65535)
 }
 
 func (s EnvironmentModification) SetValueCO2(v int16) {
-	s.Struct.SetUint16(0, uint16(v)^65535)
+	capnp.Struct(s).SetUint16(0, uint16(v)^65535)
 }
 
 func (s EnvironmentModification) Notes() (string, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.Text(), err
 }
 
 func (s EnvironmentModification) HasNotes() bool {
-	return s.Struct.HasPtr(2)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s EnvironmentModification) NotesBytes() ([]byte, error) {
-	p, err := s.Struct.Ptr(2)
+	p, err := capnp.Struct(s).Ptr(2)
 	return p.TextBytes(), err
 }
 
 func (s EnvironmentModification) SetNotes(v string) error {
-	return s.Struct.SetText(2, v)
+	return capnp.Struct(s).SetText(2, v)
 }
 
 // EnvironmentModification_List is a list of EnvironmentModification.
-type EnvironmentModification_List struct{ capnp.List }
+type EnvironmentModification_List = capnp.StructList[EnvironmentModification]
 
 // NewEnvironmentModification creates a new list of EnvironmentModification.
 func NewEnvironmentModification_List(s *capnp.Segment, sz int32) (EnvironmentModification_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 5}, sz)
-	return EnvironmentModification_List{l}, err
-}
-
-func (s EnvironmentModification_List) At(i int) EnvironmentModification {
-	return EnvironmentModification{s.List.Struct(i)}
-}
-
-func (s EnvironmentModification_List) Set(i int, v EnvironmentModification) error {
-	return s.List.SetStruct(i, v.Struct)
-}
-
-func (s EnvironmentModification_List) String() string {
-	str, _ := text.MarshalList(0xb52867725b843050, s.List)
-	return str
+	return capnp.StructList[EnvironmentModification](l), err
 }
 
 // EnvironmentModification_Future is a wrapper for a EnvironmentModification promised by a client call.
 type EnvironmentModification_Future struct{ *capnp.Future }
 
-func (p EnvironmentModification_Future) Struct() (EnvironmentModification, error) {
-	s, err := p.Future.Struct()
-	return EnvironmentModification{s}, err
+func (f EnvironmentModification_Future) Struct() (EnvironmentModification, error) {
+	p, err := f.Future.Ptr()
+	return EnvironmentModification(p.Struct()), err
 }
-
 func (p EnvironmentModification_Future) Date() common.Date_Future {
 	return common.Date_Future{Future: p.Future.Field(0, nil)}
 }
 
-const schema_e14a1fcaee034d63 = "x\xda\xacZ}\x8c\\\xd5u?\xe7\xdd\x99\x9d\xd9/" +
-	"\xcf\x8c\xdfs\xe2/X\x8cp\xb1-Cm\xaf\xd3\x12" +
-	"\x04Z/\xb3k<\xb0\xb3\xbb\xe3Y\x0bp\x8c\xe0\xed" +
-	"\xcc\xdd\xd9G\xde\xdc7y\xef\xcd\xda\x8bp\x0d\xad\x93" +
-	"\x00\x02\x15R\xb7@\x04\x8a\xb1@@\xebHP\xe1\xca" +
-	"DF\x98\x14T@\xa0@\x84\x15\x8b\x82\x02\x08\"H" +
-	"C\x0b\x8844\x82Lu\xee{\xf3>\xc6\xbb\xa9\xd4" +
-	"\xf0\xdf\xec\xef\x9e{\xdf\xdd{\xcf\xf9\x9d\xdf9\xefm" +
-	"z0\xb3M\xd9\x9c\xfc\xe5*\x80\xf2\x08&\xbbZC" +
-	"\xbf{\x7fF\xb5\xfe\xe6{PZ\x86\xdd\xadJ\x91\xfd" +
-	"\xe7K\x03W\xbc\x03\xc9t\x0a`\xf0T\xffRT\xdf" +
-	"\xef\xa7\x9f\xef\xf4\xffy\x02\xb0\xb5\xf2\xee\xef\xff\xec\xdf" +
-	"7\xfd\xc7=d\x8e\x11\xf3.\xb2yx\xe9RT\x8f" +
-	"-\xa5\x9fO,\xfd[\x04l\xfd\xa2v\xe0\x88\xbd{" +
-	"\xfe\x81N\xf3,\xd9\x14\xb5\xdd\xa8\xea\x1a\xfd\xbcV\xfb" +
-	"\x1d\x03l\xbd\xf1\xabu\x1f\xfe\xe4\x96_>\xbc\xe0\xea" +
-	"\xef/\xdf\x80\xeao\x97\xd3\xcfO\x96\xff\xa5\x02\xd8\xfa" +
-	"\xf4\xb6w\x9f\xc8\xac9\xf2H\xa7yw\x0a@\xd5W" +
-	"\xfd\\\xad\xaf\"kc\xd5\xd7i\xf1\xcfw\xff\xc3#" +
-	"\xcf\x1c\xf9\xab\x7f\xea\xb4\xee!\xeb\xa7\xcf\xfeT}\xf1" +
-	"l\xb2~\xfel\x8b\xd6\x9e\xdct\xf0[vm\xdd\xb1" +
-	"N\xeb\xa4\xdc\xee\x9a\x1bP\xfd\xce\x1a\xfaY_s\x15" +
-	"\xfd\xa3\xc7\xd3\xd5\x12\xfb\xc5\x91g\x16<\xc6\xe7\xcf=" +
-	"\x17\xd5S\xe7\xd2\xcf\xd7\xce}\x86\xf6\xf2\xfe+?8" +
-	"\xc7y\xfa\xeag\xc9<\x191O\xd1^\xd6\x9c\xff\x86" +
-	"z\xc1\xf9d\xbd\xfe\xfcGh/\xbb\xb6_\xf3g\xff" +
-	"r\xf9\xda\x9f\x91\xb5\xd2\xb9\x97\xdc\x86\x0d\xa8\xae\xd9@" +
-	"?\xcf\xda\xf0o\xb4\x17\xb1a\xf0[?:q\xf25" +
-	"2OE\xcc\x19\xd9\xe0\xc6iT\x97m\x9437\xca" +
-	"\xff\xf4{\x0f/\xfb\xaf\xcf\xb6\x9c\xf7A\xe7^\x12\xb4" +
-	"\x97\xe7/\xfc\xb5\xfa\xda\x85d\xfd\xca\x85-Z\xbcu" +
-	"z\xf6\x9e\xb9\x9b\x9e\xf8o\xb2f\x1d;\x1f\xec\xdf\xbc" +
-	"\x12\xd5\xb36\xd3\xcf\x15\x9b\xe5\xd6\xbb\x9e\xbe\xf1\x92\xbf" +
-	"\xb8Emu\x1e#\xdd\xba\xbav\xeb\xef\xd5\xcd[\xc9" +
-	"\xfa\x82\xad\xd7uA\x0bZ\xf0nk\xc6\xe0f\xf5:" +
-	"\xbe\x8f5\xae\xab\xea\xae~aEo\x88\xc6\xc5e\xcb" +
-	"0\x8b\xdc\xd5\xab\xba\x8b\xfa$bi\x8c%\x00\x12\x08" +
-	"\xa0&\x95\x95\x00;\x15\x86\xe5>E\xc1\x1c\xa2\x86\x04" +
-	"w+\x1b\x00\xca\x09\xc2\xb3\x84+\x8a\x86\x0a\x80\xda\xaf" +
-	"\\\x0cPN\x13\xae)\x0a\"\xd3\x90!\xaa9e'" +
-	"@9K\xf0j2O\xa0\x86\x09Du\x85\xf2\x03\x80" +
-	"\xf2j\xc2\xd7\x11\x9eT4L\"\xaak\x95\x1f\x02\x94" +
-	"\xd7\x11\xbe\x95\xf0.\xd4\xb0\x0bQ\xdd,\xf1\xad\x84o" +
-	"#<\xa5h\x98BT/U\xfe\x1a\xa0|\x09\xe1;" +
-	"\x08O3\x0d\xd3\x88\xea\xa8\xf2)@y\x8c\xf0\xab\x09" +
-	"\xefNh\xd8\x8d\xa8\xeeR\xde\x05(\xef!|\x96\xf0" +
-	"\x9e\xa4\x86=\x88*Wv\x03\x94\xab\x847\x08\xef\xed" +
-	"\xd2\xb0\x17Q\xad+/\x01\x94]\xc2o&\xbc/\xa5" +
-	"a\x1f\xa2\xba_\xf9G\x80\xf2\xcd\x84\xdfAx\x7fZ" +
-	"\xc3~D\xf56\xe5\x08@\xf9\x0e\xc2\xef%|\x09\xd3" +
-	"p\x09\x80\xfa\xf7r\x9d\xfb\x09\x7f\x94\xf0LB\xc3\x0c" +
-	"\x80\xfa\xb02\x0dP~\x88\xf0\xc7\x09\xcf&5\xcc\x02" +
-	"\xa8?Vn\x04(\x1f%\xfc8\xe1\xb9.\x0ds\x00" +
-	"\xea1e\x0b@\xf9q\xc2O\x10\xbe4\xa5\xe1R\x00" +
-	"\xf5)\xe52\x80\xf2\x93\x84\x9fT\x14dF\x15\xfb@" +
-	"\xc1>\xc0\x8c\xd0\xeb\xbc\xfd\xc7\x90c5\xedJ\xf0g" +
-	"\xab\xca\x1b\xeelA\xe4\x01\x8b\xc8@\xe9g\xad\x16`" +
-	"\xcb\x9av\\}\xda\xe48\xe2\x0f\xc7F\xe5\x9c\x89\x99" +
-	")\xb4\x1a\x8ee\x98\x05\xc1\xf2\xb1a[7\x84^\xe3" +
-	"\xb8Sw\xf9$\xb7G\x98>\x8f\xbd\xa0`\xef\xc9\x8f" +
-	"\x9f\x01h\xd9Ma\xcd\xcc\xe4\x9bh\xf3q\xab\x9c/" +
-	"Ct\x90\x16\x1c\x9e\xd3\x0d\xc5\xa4\xe7_\xa5\xbb\xdc\xce" +
-	"[\xc2\xe5b\xc0-\x88|1f\xda\xb4g\xf4\x0a/" +
-	"+\xae%x\xde\x9a\xe3\xf6\xb0\xb3\xdd\xd6+n\xca\xb0" +
-	"\xc4\x19k\x9a\xd3\x1cX\xd5\xea\xc4G\xe7\xf4\x86b\xd9" +
-	"\xbakXb\xcc\xa8\x1bnA\x14\x8b\x10\xdbR\xdd\x10" +
-	"\xdc\xd6M\x03o\x94V\xdb\xf5L\xc5\xb5\xec\xce\x85\xb6" +
-	"s\xdbE\xc34\xdc\xf9\x09\xb1=e\xb9g<)o" +
-	"\xea\x8e\xe2\x183FE.S\x9ew\\^\x07\x08n" +
-	"\x82l\xa6\xf8>\x17RM;\xbc\x9f\x8a\xa9;4\x09" +
-	"\x86\xbci\xed\x81\x01a\xb9\xdci\xffu\xa0a[3" +
-	"\x86\xc91\xd7Z\x7f\xff\xf0\xdf=\xfc\xd3Z\x0b\x001" +
-	"\x07\xb8H\xd8\xef\xd0\xed9\xee\xb8\xa3s\\\xa0Ka" +
-	"\xbf\x9a%P\xa1\xb0\xcf\x1d\xdb\x00Pz\x9ca\xe9\x84" +
-	"\x829\xe6\x05}\xee)\x1b\xa0t\x9ca\xe99\x051" +
-	"\xa1\xa1\x82\x98{v\x1a\xa0t\x92a\xe9e?|\x19" +
-	"@\xee\xc5-\x00\xa5\xe7\x18\x96^\xa5\xd8e\x1a&\x00" +
-	"r\xaf\\\x01Pz\x99a\xe9\xb4\x82\xd9\x84\x86I\x80" +
-	"\xdc\xa9\x1b\x00J\xaf3,\xbdM\xdc\x92\xd4\xb0\x0b " +
-	"\xf7\x16-\xf9&\xc3\xd2\x07\x0af\xaa\xba\xcb1\xdb\xba" +
-	"3w.;\xfa\x87_\xddC\xffP\x16\xb05\xebm" +
-	"\xbd\x08\x03\xdc\x9d\xb5\x02/o\xe3\xc3\x90\xb2\xb9\x1e9" +
-	"\xfc\xf8I\xb5*V\xbd\xce\x85\xeb@\xe4\xe8\xf9\xbe\x06" +
-	"\xb7\x8d:\x87\x8cp\x0b\xe1\x8a\xae\xcdu\xb7\xce\x05\xa4" +
-	"\xa2h\xfb@\x13\xb1\x03\x1d\xf5\x97\x10\xee\x08w*\xb6" +
-	"\xd1p\x0df\x09:\xd9\x1d\x01\xa1~\x88+\x01\xca\xef" +
-	"!\xc3\xf2\xc7\x18a\xd4\x8f\x90B\xf7\x03\xc2?\xc3\x08" +
-	"\xa3~\x82\xc4\xb4\xbf!\xfcs\xc2\x19\x93g\xac\xfe\x16" +
-	"\xdf\x00(\x7fAxZRjB\x1e\xb3\x9aT\xec\x18" +
-	"3'\x93\xf2\xa8\xd5~\xe5\xf6\x18\x05wu\xc9\xd3V" +
-	"WHJ:\x87\xf0\x8d\x92RS\x1aR\xfaX\xaf\\" +
-	"\x11\xa3\xe0tZ\xc34\x80\xbaY\xe2\x9b\x08\xbfDR" +
-	"j\xb7\x86\xdd\x00\xea7%\x15\x86\x14\xdc\xd3\xa3a\x0f" +
-	"\x80:\xaa\xfc>F\xc1\xbd\xbd\x1a\xf6\x02\xa8\xbb$\xb5" +
-	"M\x11~\xbd\xa4\xd4>\x0d\xfb\x00\xd4k%\x1eRs" +
-	"\x7f\xbf\x86\xfd\x00*\x97x@\xcd\xb8D\xc3%\x92\x99" +
-	"o\x00(\x9b\x04\xef\x93\x8c\x8a\x1af\x10\xd5\xa6\xdc\xce" +
-	">\xc2\x0fJF]\xe21\xea-\x929o\"\xfcV" +
-	"\xc9\xa8\x19\x8fQ\xbf+\x99\xff \xe1\x87\xe3\xccy\xc0" +
-	"i\x1a./,\xcc\xa4-\x9b;\\\xb7+\xb3JA" +
-	"\xcc\xd8\xba\xe3\xda\xcd\x8a\xdb\xb4\xf9\xb8\xce\"F\x86p" +
-	"\\\xc3m\xba0\xc0\xc7\x17\x9a\x8c\xbb\x84\xe1\xd2\xc8\x02" +
-	"\xee\xa8\x08W7\xb7\xeb\x15\xc9*\x1d6\x8e\xe1r\x0f" +
-	"\x8acS\xf3\x8d\x18V\xd7\x0dA\xbe\x89\x9es\xb6\xc9" +
-	"k\xb1G\xb9\x96\x9d\xb7\xea\xd3\x86\x18\x92l\xe3\x9c\x19" +
-	"\"C\xc2\xa5gD\x1e@\\\xbf\xc0@\xc5\xb6\x1a\x0d" +
-	"C\xd4`\xc8\xa3\xba`\xa0a\xea\xc2\xa5\x81\xcc5\\" +
-	"\xb7#\x89\xc3\x8f\xe0\x09lp\x8f\x90;\x0c:\"9" +
-	"\x08O\xe6:\xb8\x04p\x92!fCa\x04H\xe0\"" +
-	"\xfcGlm\x98\xc6\x8d\xdc\x1e\xcd\xccq!)p]" +
-	"\x9b\x02\xd5n\x19x\x09\x0a\xb0,\x86,\xa8\xf6#i" +
-	"\x96,\xe1\xab1 Bu\x05\x92\xc3\xad&x\x1d\x86" +
-	"\\\xa8\xaeE\x8a\x97\xf3\x08\xdf\x84\xbe\x94!\xe9s\x01" +
-	"\x92\x94\xd9D\xf8%\xe8K\x19\x92>\xdf\x94\xeb\\B" +
-	"\xf8\x0e\xf4\xa5\x0cI\x9fQ\x89\xef |\x8a\xf0n\xe6" +
-	"\xc5i\x09\xc9\xa1\xc7\x08\xbf\x1a=f\xa50\xdd\x85\x14" +
-	"\x17S\x04_\x8f>\xb9R\x98^\x8b\xa44\xf6\x10>" +
-	"\x8b\x8b\xf3\xab\xdeh\x98\x94\xa3\xd0\xb0D\x91(\x16C" +
-	"\xee\x8b\x8eIi\x90\x91I9\xbc\xc2:%lC7" +
-	"\xa3.('\xf1\xea8\x16\xc4\x95\x97\x8fOr\x9b\xed" +
-	"\x18\x8eL\x09\x86'\x06\xa5A#\xc3\xed\x85\x0dvl" +
-	"]\xd0\xa0\xc3-\xfe_d\xae\xc4\xbcc\xd2\xb4\xbc\xac" +
-	"xQ\xc0\xdd\xf3\x92\xbb]:\xbc\x9b\xd1\x97\xb1\x84\xef" +
-	"\x97w|\x13\xe1\xb7\xca;\xf6\xb9\xfb\xbb\xd2\x85n&" +
-	"\xfc\x0er\x92\x94\xa7\x86o\x93wp+\xc1\x87\xe4\x15" +
-	"\xfb.q7\x12\x07\xddE\xf8\xfd\xf2\x8a}\x97\xb8\x0f" +
-	"I\xdd\xdeK\xf8C\x84\xf7\xf8.\xf1 \x92\xaa>L" +
-	"\xf8Q\xc2{\x13\x9e\x1a~L\xde\xfd\xa3\x84?Ix" +
-	"\x1f\xf3|\xe2\x09\xa4\xd4\xf08\xe1'\x08\xefOx>" +
-	"\xf1\x94t\xa1'\x09?\xd9\xf6\x15\xa2\xee\xa7\xe5:'" +
-	"\x08\x7fA\xa6\xa4.\x8f\xba\x9f\x97\xfb\x7f\x8e\xf0We" +
-	"d\xa4<\xea~E\xee\xffe\xc2O\xcb\x10H{\xd4" +
-	"}\x0a\xa9(x\x95\xf071\xc6\xad\xadJ\xd3t\x8d" +
-	"9\xdd&W\xc9\x86E\xa4\xe7\x85\x19RC\x98\x0d\xab" +
-	"h\xdf9\xa7M\xab\xf2\xed\xf1f\x1dR\xd3\xdcF\x05" +
-	"\x94\xa4\xd2\x92\x94b\xb9\xe3\xcd\xfa4\xb0(js\xdf" +
-	"[9\x8dq\x1b\"C\xd6^\x89\x01F\xec+\x96\xd9" +
-	"\xac\x8b\xf1&d\xea\xb1\xd5\x17Q\x1c\x7f\x8a\xdf\x05\xff" +
-	"<\x0b\xc1!)\xa6\xff/\xdf\xcc7\xcd\x019\x95\xfc" +
-	"sc\xe0\x9fk\xa5\x7f\x9eC\x07\xbd1\xaa-\xd6K" +
-	"?\x0c9\xa8\xad-.\x90\x17\xb9\x91\xf0\x8b\xa2\xda\xe2" +
-	"\x1b\x92\xe2.\"|\x04#\xdab\x18\x8f\xc8\xce\x06\xc3" +
-	"\xf2$F\xb4EQj\x97\x90\x9b\xda\xda\xa2$\x1dw" +
-	"\x92\xf0=\x18\xd1\x16\xd7H\xc7\xba\x9a\xf0*\xc5E\xda" +
-	"\xab\xd6t\xb9\x9d\xeb\x096\xa5\xff\xa7=\xff4\xe4\xf2" +
-	"U\xc2\x1b\xd2\xff\xbb=\xff\xacK\xbf\x9d%\xdc\xc5\xc5" +
-	"\xab\x9d\x96^\xa9p\xc71,H\x89\xc8\xc9\xb6Q\x14" +
-	"c\x96\x94\xd5(bi\xabP%Yl\xcc\x18\xdc." +
-	"\xe4S\xc3\xe5\xe1P\x10p^\x1d\xb3\xdc\xc0z\xda\xe6" +
-	"\xbcj\x88\x1aN\xdaV\xcd\xd6\xeb!\xebY\xb6Q3" +
-	"\x84nB\xa6#\xef\x9b\\w\xf85\x90\x8a\xa5\xb6\x03" +
-	"\xce\xbc\xb0\xc4|}\x11\xdfZDs\x8a9\xc3\xb6\x04" +
-	"\xe5\xf5\xa2U\x95\x95E\x86\xd2&y\xc6\xf2@\xcf\xdf" +
-	"Gz\xfe\x10\xc3\xd2\xe1\x88\x9e\x7f\xe02\x80\xd2\xbd\x0c" +
-	"K\x0f\x85z\xfeAR\xe9\x87\x19\x96\x8eF\xf4\xfcc" +
-	"\xa4\xe7\x1fbXz\\\xc1\xac/\xe7\x7fL\xd2\xfd(" +
-	"\xc3\xd2qr4_\xcf\x1f#\xe9\xfe$\xc3\xd2\xc9E" +
-	"S\xcb\x81\x8aU\xe5\xf9\x89-\xc1\xbf5\xa7\x9bM\x02" +
-	"\x88\x02\xbeR:\x8f'\xfb\xab\xb8\xee\xcer\xbb\xec\xea" +
-	"\xb24\xa4\xe3\x19\x09\x02\xe7\x15\x198/\x90'\xbd\x1e" +
-	"\x0d\x9c\xd7d\xe0\x84\x8c\xd6\x0e\x9cS\x92I_'\xfc" +
-	"\xedh\xe0\xbc%\xedO\x13\xfe^4p\xde\x91\x1e\xfc" +
-	"&\xe1\x1fD\x03\xe7}\xbc=&\xfa\xdb\x81\xf3\x89\xc4" +
-	"?C\x86;\x15/o\x10\xaf\x7fIh\xd8\x8b\xa1\xb4" +
-	"Aa\xd3-\x9b(}\x84/W\xfc\xb4\xd1\x8d\xa8." +
-	"\x93\x92V#\xfc\x1c\xc5O\x1b=\x88\xeaY\xb29\x11" +
-	"*~J\x1b\xbd\x88\x83\xeb\x95\x1e\x8cuW\xfa\x92^" +
-	"\x97\xe3R9a\x1b\xe1cR\x92wy]\x8e\x82\x94" +
-	"\xf6\x93\x84\xef\x91]\x8e\x94\xd4\xe4\x83\xd7x\x0b\x85m" +
-	"\x94L\xda\x13\xe5u\xd9v\x09\xdb(\xd9\x94'\xca\xf7" +
-	"KQ\x1e\x88\xf5E\x03y\x11\x1d\x9d!\xcd\x1bDg" +
-	"\xc5j\x0a\xd7\x9e\x0f&\x99\x96_4o\x11\xd51>" +
-	"\xc7\xcd\x88*\x09\xc6\x06\xed3\xc7tzV\x95cA" +
-	"\x8c\xf0\xca\x08\xaf\xb5\x1b\x02\x1f\xdf\xfc\xfd\x7f=\x09\xd0" +
-	"2-Q#\x0b\xe4\xbe\x05\xd6\xe2\x06\xdc\xe4s\xb4<" +
-	"0Q\x8c\x8f\xccs\xdd6\xe7\x87\xe7\xb06\xc5\xeb\x8d" +
-	"\x82\x18I\xf1Z>n\xa2\xd7\x1b&\xad\xce\xf8\xc4L" +
-	"\xd1\x12\xee,\xd9Ks\x87\x1eW\xcbwn\xc7\xe5\xf5" +
-	"F\x99\x0b\x07-{\x077j\xb3n\xaa b\xad\x12" +
-	"\x9b\xcf\xc8\x01\xc5\xf5c\xa1\xc8u\xa7i\xf3\xfa\x10\x17" +
-	"\xee\"\xb6\xcc\xbd\xca\x10U\xa7\xc1y\xb5m\xed\x19\xc7" +
-	"\xbb#\xba\x10M\xdd\xccO([\xf2\x96\xa8p\xe1z" +
-	"\xd2\xbd R\x93\x93\xc5\xc5\xcb\xf0\x85\x93\xdbv\x833" +
-	"\xb3J\x01\xba)\x08\xd0a\x19\xa0\xa1*n\x07\xe8\xa8" +
-	"\x0c\xb8m\x84\x8f\x11\x7f)\x9e\x18/\xc8\xf8\x09D\xb1" +
-	"d<R^\xbbdb\x0b\x12O.\xa1x\xcaK\x97" +
-	"\x09)\xcc<I\xe6)/C\xaec\x12\xbe\xaf-\xec" +
-	"(>\x9b\xd2>\x14\x82)_y\xed\xc7_S\x15I" +
-	"\xf8]m\xf1N\xca\xebN\x19\xff\xa1\xe2\xeb\xf6\x95W" +
-	"\xa7\xe2\xeb\xf1\x95\xd7}\x92_B\xc5\xd7\xeb+\xaf\x07" +
-	"e\xc6\xbb\x9f\xf0G\xffX\xc6\xfb\x0a}7#\x0a\x9d" +
-	"\xde\xeb\x98V\x83\x8f\xf0\x1a\xda\\N\xaf\xc5\x9d\xa1\xdd" +
-	"\xfa\x83L\xac\x14\xac\x1a\x8e\xab\x8b\x0aW\xa6\xac\x08\x17" +
-	"S\x81W\x10WF\x9d\xe4\x8c\x08v\x9a\xd3y\x82\x80" +
-	"\xc5\xc12\xe10\x103^\xc4\xc3\xe2\xb9\xa0`\xdbF" +
-	"M>;,\xfc\xce\x09r\xe5k\x1b\xc2FU\x90+" +
-	"O\xed\x0c;U\xed\\\xf9\xd6\xed\x00\xa5\xb7\x19\x96~" +
-	"C.\xe3\xb9X\xee\xc3\x8b\x01J\xef1,}\x1c\x16" +
-	"{\xb9\x8f~\x0eP\xfa\x8c\xe1\xce\xa0\xd2\x03\xc8}I" +
-	"Y\xf5s\x86\xe5\x04zi\x95<\x0b\xc9\xb3v\xd2\x05" +
-	"\xf7\xa1\x9fXS\xb2\x18%i\x94&\\\xfb#e\x9b" +
-	"\xe5\x17\xcd\x10\xd12g\x94k\xed<\xfb\xc9i\xc0!" +
-	"\xbdN'\x1b)\xb4\xf6R\xf16\x9e\xb7\x94X\x1cO" +
-	"r\x1b+\x8b\x07\xf2W\xd0;+\x08\xc35t3o" +
-	"\x89\xaa!\xbb\x0eczj\x9e\xb7\x05\xae_\x93\xaf\x95" +
-	"\xe1\x1e\x08\\d\x1a\"\xa2\xba\x1e\xff9\xa6c\xa9." +
-	"#\x1a\xf8\x06\xfe$\xa6c\xfd;R\x87e\xed\x1d\xea" +
-	"\xd8.\x9f\x06\x8aR\xaf\x86\xb4\x91\xf2i`\x97\xa4\x81" +
-	"\x906\xd2\x09\xaf\x00\xd3%\x1e\x0a\xd3\xee\xa4G\x03u" +
-	"I\x0f!m\xf4ty\x99\xba\x836\xb2\xe8\xb1\xc0~" +
-	"\x09\x87\xe5#\xb1X\x8f,\x1f\xa7\xa3l\xb2\xd8\xa5S" +
-	"\xc50\xa6\xcfs\xb4\xa7\xac\x06\xdd\xf0\xc0lGA\x1e" +
-	"Z\\\xa6;|\x847\x86\xdcN\x93\xbd~\x93\x1d\xdb" +
-	"\xb7\xce\xe2\xeds\xd7rus\xbc \xf0\xca\xcb\x1bT" +
-	"y\xc7\x9b\xe3\xba\xe3\x8c\xef\xd8Z@\xd1\x1e=sx" +
-	"bp\xb1\xe1\x8a%*4\x1b2\"\x9e-\xbc\x91\x89" +
-	"\xc1\x05F\xbe\x82\xfa~'w2F\xb5\xc9\xc9\xc3\xce" +
-	"\x0b\x82\xff\xa3\x1f\x02\x94>fX\xfa\"p\xaf\xdc\xff" +
-	"\x10\xf6\x05\xc3r:\xea\\IY\x0c\x05!\xe99\x17" +
-	"\x80\x9a\x93\xb7\x19\xf4\x87\x02\xe7Z!sO\xd8 \xf2" +
-	"\x9dkp-*\x18\xf3\xde\xb6wuxoV\xf1\xa8" +
-	"`X\xae\x1f\xa4\xbc\x1c\xfa9\xa6 \xbd%(\xc2Z" +
-	"\x86\x17PE\xf4\xf2\xf6\x88\xce\x16\xf4\x1eCT,\xbb" +
-	"a\xd9(#}\x847\x98;\x1b\xf1\x8b\x06\xb7\xc9#" +
-	"\x0a\xe8\x9b\xe9)\x97W\xa37\xd1\xb0\xf9\\\xde\xb6\x1a" +
-	"\x90\xc9[\xd5H\xcd5m\xcd\xf1\xcbm\x0b\x9b\xa2z" +
-	"\x15)\x09tc\x82\xc1\x1ffMQ\x1d\xef\xd0\x0c\x93" +
-	"\xdc\xae\xc4\x1c\xc4\xb6,\x97\xd6\xc0Yw\xd2\xe6s\x86" +
-	"5\xd4t\xe8\x91\x7f\xb2C\xb0\x8e\x86\x8f\xd7\x92\x1c\x9d" +
-	"\xe3\xcc\xcb\x09\x9b\x02\xe2\x19\x96\xdd\xb7\x801\xda\xc4S" +
-	"\xc4\x1bc\x84\xd1\xf6\x8d]\xd2<$\x8cd\xda#\x1e" +
-	"]\xfa@H\x182?\xc8Jvw\x8c0\xfc\x14q" +
-	"\x86\xceHwK\xd7\x18\xdc\x8f+1.(\xfcn\xe0" +
-	"\xdd\xf2\xc1\x87\x08?\x8c~\x17>\x8d8\xf8\x00\xee\xa6" +
-	"\x09Gi\xe0x\xbbWD\xdcsL*\x8a\xa0'\x94" +
-	"\xf5\x05\xc8S\xf2\xc1\xc7\x09~N:\x99/@\x9e\x95" +
-	"Nv\x92\xf0\x97\xc9\xc9\xdam\\\x1c1\x1c\xd76\xa6" +
-	"\x9b\x99\xe8\xfb\xa9\x96m\xed-7\xf4\x8a\x01C\xa2\xd6" +
-	"\xf9\xe6\xce\xb6\xf6\x8e\x186\xaf\xa0w\xeb\xc3v\x86\x84" +
-	"J\\i\x84\xcb{\xaf \x8b\xb1W\x90\x0d\xd3r\xc7" +
-	"\xf4y\x0bX\xd3]\xa0\xb1<\xb20]J\x83I\xab" +
-	"\xc1\x9a\xa6t\xb8a\xb7}\xf1\x051nMr\x9b\x15" +
-	"\xb7D\x1b\x8fs\xdc\xd6k|\x14\xeb\xdc\xaeqQ\xe1" +
-	"\x8b\xad\xeb\x1bN&\xfc\xf5\x83\xe5G\xdb3\x17Z\xff" +
-	"\xab\xef[N\xd9|H\x1aK\x17v\x03\x09}\x16#" +
-	"\x09\xbd\x9c1,\x9f\xc7\"\xfd\xec5\x8c<`5\xe1" +
-	"\xeb\x98_\xf4S\x8d\xbb\x96\x91o\x9fG\xf8&\xe6\xf3" +
-	"\x15\xf1\xdb\x05\xec%\xaa\x12\x09\xdf\xc6|\xba\"\x1f\xbe" +
-	"\x94Qn\xbe\x88\xf0\x11\xe6'C\xf2\xe1a&\x9bF" +
+const schema_e14a1fcaee034d63 = "x\xda\xacZ}\x8c\\\xd5u?\xe7\xdd\xd9\x9d\xd9/" +
+	"\xcf\x8c\xdfs\xf0\x17,F\xb8\xd8\x96\xa1\xb6\xd7i\x09" +
+	"\x02\xad\x97\x995\x1e\xd8\xd9\xdd\xf1\xac\x058F\xf0v" +
+	"\xe6\xee\xec#o\xee\x9b\xbc\xf7f\xedE\xb8\x86\xd6I" +
+	"\x00\x81\x0a\xa9[ \x02\xc5P\x10\xd0:\x12T\xb82" +
+	"\x91\x11&\x05\x15\x10(\x10a\xc5\xa2\xa0\x00\x82\x08\xd2" +
+	"\xd0\x02\"\x0d\x8d S\x9d\xfb\xde\xbc\x8f\xf1n*%" +
+	"\xfc7\xfb\xbb\xe7\xdew\xf7\xdes~\xe7w\xce{\x9b" +
+	"\xfe1\xbd-\xb1y\xe0\x17\xab@)\xe7\xb1\xab\xbb5" +
+	"\xfc\xdb\xf7gT\xebo\xbe\x0b\xa5e\xd8\xd3\xaa\x14\xd9" +
+	"\x7f\xbd4x\xf9;\xd0\x95J\x02\x0c\x9d\x1cX\x8a\xea" +
+	"\xfb\x03\xf4\xf3\x9d\x81?O\x00\xb6V\xde\xf5\xbd\x9f\xfe" +
+	"\xc7\xa6\xff\xbc\x9b\xcc1b\xdeM6\x0f/]\x8a\xea" +
+	"\xd1\xa5\xf4\xf3\x89\xa5\x7f\x8b\x80\xad\x9f\xd7\x0e<h\xef" +
+	"\x9e\xbf\xbf\xd3<C6Em7\xaa\xbaF?\xaf\xd1" +
+	"~\xcb\x00[o\xfcr\xdd\x87?\xbe\xf9\x17\x0f/\xb8" +
+	"\xfa\xfb\xcb7\xa0\xfa\x9b\xe5\xf4\xf3\x93\xe5\x7f\xa9\x00\xb6" +
+	">\xbd\xf5\xdd'\xd2k\x1e|\xa4\xd3\xbc'\x09\xa0\xea" +
+	"\xab~\xa6\xd6W\x91\xb5\xb1\xea\x0cZ\xfc\xf3\xdd\xff\xf0" +
+	"\xc83\x0f\xfe\xd5?wZ\xf7\x92\xf5\xd3g}\xaa\xbe" +
+	"x\x16Y?\x7f\x96EkOn:\xf8M\xbb\xb6\xee" +
+	"h\xa7u\x97\xdc\xee\x9a\xebQ\xfd\xf6\x1a\xfaY_s" +
+	"%\xfd\xa3\xc7R\xd5\x12\xfb\xf9\x83\xcf,x\x8c\xcf\x9f" +
+	"s\x0e\xaa'\xcf\xa1\x9f\xaf\x9d\xf3\x0c\xed\xe5\xfdW\xbe" +
+	"\x7f\xb6\xf3\xf4U\xcf\x92yW\xc4<I{Ys\xde" +
+	"\x1b\xea\xf9\xe7\x91\xf5\xfa\xf3\x1e\xa1\xbd\xec\xda~\xf5\x9f" +
+	"\xfd\xebek\x7fJ\xd6J\xe7^\xb2\x1b6\xa0\xbaf" +
+	"\x03\xfd<s\xc3\xbf\xd3^\xc4\x86\xa1o\xfe\xf0\xf8\x89" +
+	"\xd7\xc8<\x191gd\x83\x1b\xa7Q]\xb6Q\xce\xdc" +
+	"(\xff\xd3\xef>\xbc\xec\xbf?\xdbr\xee\x07\x9d{I" +
+	"\xd0^\x9e\xbf\xe0W\xeak\x17\x90\xf5+\x17\xb4h\xf1" +
+	"\xd6\xa9\xd9\xbb\xe7n|\xe2\x7f\xc8\x9au\xec|h`" +
+	"\xf3JT\xcf\xdcL?Wl\x96[\xef~\xfa\x86\x8b" +
+	"\xff\xe2f\xb5\xd5y\x8ct\xeb\xea\xda\xad\xbfS7o" +
+	"%\xeb\xf3\xb7^\xdb\x0d-h\xc1\xbb\xad\x19\x83\x9b\xd5" +
+	"k\xf9>\xd6\xb8\xb6\xaa\xbb\xfa\x05\x15\xbd!\x1a\x17\x95" +
+	"-\xc3,rW\xaf\xea.\xea\x93\x88\xa51\x96\x00H" +
+	" \x80\xda\xa5\xac\x04\xd8\xa90,\xf7+\x0af\x115" +
+	"$\xb8G\xd9\x00PN\x10\x9e!\\Q4T\x00\xd4" +
+	"\x01\xe5\"\x80r\x8apMQ\x10\x99\x86\x0cQ\xcd*" +
+	";\x01\xca\x19\x82W\x93y\x025L \xaa+\x94\xef" +
+	"\x03\x94W\x13\xbe\x8e\xf0.E\xc3.Du\xad\xf2\x03" +
+	"\x80\xf2:\xc2\xb7\x12\xde\x8d\x1av#\xaa\x9b%\xbe\x95" +
+	"\xf0m\x84'\x15\x0d\x93\x88\xea%\xca_\x03\x94/&" +
+	"|\x07\xe1)\xa6a\x0aQ\x1dU>\x05(\x8f\x11~" +
+	"\x15\xe1=\x09\x0d{\x10\xd5]\xca\xbb\x00\xe5=\x84\xcf" +
+	"\x12\xde\xdb\xa5a/\xa2\xca\x95\xdd\x00\xe5*\xe1\x0d\xc2" +
+	"\xfb\xba5\xecCT\xeb\xcaK\x00e\x97\xf0\x9b\x08\xef" +
+	"Oj\xd8\x8f\xa8\xeeW\xfe\x09\xa0|\x13\xe1\xb7\x13>" +
+	"\x90\xd2p\x00Q\xbdUy\x10\xa0|;\xe1\xf7\x10\xbe" +
+	"\x84i\xb8\x04@\xfd{\xb9\xce}\x84?Jx:\xa1" +
+	"a\x1a@}X\x99\x06(?D\xf8\xe3\x84g\xba4" +
+	"\xcc\x00\xa8?Rn\x00(\x1f!\xfc\x18\xe1\xd9n\x0d" +
+	"\xb3\x00\xeaQe\x0b@\xf9q\xc2\x8f\x13\xbe4\xa9\xe1" +
+	"R\x00\xf5)\xe5R\x80\xf2\x93\x84\x9fP\x14dF\x15" +
+	"\xfbA\xc1~\xc0\xb4\xd0\xeb\xbc\xfd\xc7\xb0c5\xedJ" +
+	"\xf0g\xab\xca\x1b\xeelA\xe4\x00\x8b\xc8@\x19`\xad" +
+	"\x16`\xcb\x9av\\}\xda\xe4\x98\xf7\x87c\xa3r\xce" +
+	"\xc4\xcc\x14Z\x0d\xc72\xcc\x82`\xb9\xd8\xb0\xad\x1bB" +
+	"\xafq\xdc\xa9\xbb|\x92\xdby\xa6\xcfc\x1f(\xd8w" +
+	"\xe2\xe3g\x00ZvSX33\xb9&\xda|\xdc*" +
+	"\xe7\xca\x10\x1d\xa4\x05G\xe6tC1\xe9\xf9W\xea." +
+	"\xb7s\x96p\xb9\x18t\x0b\"W\x8c\x996\xed\x19\xbd" +
+	"\xc2\xcb\x8ak\x09\x9e\xb3\xe6\xb8=\xe2l\xb7\xf5\x8a\x9b" +
+	"4,q\xda\x9a\xe64\x07V\xb5:\xf1\xd19\xbd\xa1" +
+	"X\xb6\xee\x1a\x96\x183\xea\x86[\x10\xc5\"\xc4\xb6T" +
+	"7\x04\xb7u\xd3\xc0\x1b\xa4\xd5v=]q-\xbbs" +
+	"\xa1\xed\xdcv\xd10\x0dw~BlOZ\xeeiO" +
+	"\xca\x99\xba\xa38\xc6\x8cQ\x91\xcb\x94\xe7\x1d\x97\xd7\x01" +
+	"\x82\x9b \x9b)\xbe\xcf\x85d\xd3\x0e\xef\xa7b\xea\x0e" +
+	"M\x82aoZ{`PX.w\xda\x7f\x1dh\xd8" +
+	"\xd6\x8car\xcc\xb6\xd6\xdf7\xf2w\x0f\xff\xa4\xd6\x02" +
+	"@\xcc\x02.\x12\xf6;t{\x8e;\xee\xe8\x1c\x17\xe8" +
+	"R\xd8\xaff\x09T(\xec\xb3G7\x00\x94\x1egX" +
+	":\xae`\x96yA\x9f}\xca\x06(\x1dcXzN" +
+	"ALh\xa8 f\x9f\x9d\x06(\x9d`Xz\xd9\x0f" +
+	"_\x06\x90}q\x0b@\xe99\x86\xa5W)v\x99\x86" +
+	"\x09\x80\xec+\x97\x03\x94^fX:\xa5`&\xa1a" +
+	"\x17@\xf6\xe4\xf5\x00\xa5\xd7\x19\x96\xde&n\xe9\xd2\xb0" +
+	"\x1b \xfb\x16-\xf9&\xc3\xd2\x07\x0a\xa6\xab\xba\xcb1" +
+	"\xd3\xba#{\x0e;\xf2\xfb_\xdeM\xffP\x06\xb05" +
+	"\xebm\xbd\x08\x83\xdc\x9d\xb5\x02/o\xe3#\x90\xb4\xb9" +
+	"\x1e9\xfc\xf8I\xb5*V\xbd\xce\x85\xeb@\xe4\xe8\xf9" +
+	"\xbe\x06\xb7\x8d:\x87\xb4p\x0b\xe1\x8a\xae\xcdu\xb7\xce" +
+	"\x05$\xa3h\xfb@\x13\xb1\x03\x1d\xf5\x97\x10n\x9e;" +
+	"\x15\xdbh\xb8\x06\xb3\x04\x9d\xec\x8e\x80P?\xc4\x95\x00" +
+	"\xe5\xf7\x90a\xf9c\x8c0\xeaGH\xa1\xfb\x01\xe1\x9f" +
+	"a\x84Q?Ab\xda_\x13\xfe9\xe1\x8c\xc93V" +
+	"\x7f\x83o\x00\x94\xbf <%)5!\x8fY\xedR" +
+	"\xec\x183wu\xc9\xa3V\x07\x94\xdbb\x14\xdc\xdd-" +
+	"O[]!)\xe9l\xc27JJMjH\xe9c" +
+	"\xbdry\x8c\x82S)\x0dS\x00\xeaf\x89o\"\xfc" +
+	"bI\xa9=\x1a\xf6\x00\xa8\xdf\x90T\x18Rpo\xaf" +
+	"\x86\xbd\x00\xea\xa8\xf2\xbb\x18\x05\xf7\xf5i\xd8\x07\xa0\xee" +
+	"\x92\xd46E\xf8u\x92R\xfb5\xec\x07P\xaf\x91x" +
+	"H\xcd\x03\x03\x1a\x0e\x00\xa8\\\xe2\x015\xe3\x12\x0d\x97" +
+	"Hf\xbe\x1e\xa0l\x12\xbcO2*j\x98FT\x9b" +
+	"r;\xfb\x08?(\x19u\x89\xc7\xa87K\xe6\xbc\x91" +
+	"\xf0[$\xa3\xa6=F\xfd\x8ed\xfe\x83\x84\x1f\x8e3" +
+	"\xe7\x01\xa7i\xb8\xbc\xb00\x93\xb6l\xeep\xdd\xae\xcc" +
+	"*\x051c\xeb\x8ek7+n\xd3\xe6\xe3:\x8b\x18" +
+	"\x19\xc2q\x0d\xb7\xe9\xc2 \x1f_h2\xee\x12\x86K" +
+	"#\x0b\xb8\xa3\"\\\xdd\xdc\xaeW$\xabt\xd88\x86" +
+	"\xcb=(\x8eM\xcd7bX]7\x04\xf9&z\xce" +
+	"\xd9&\xaf\xc5\x1e\xe5Zv\xce\xaaO\x1bbX\xb2\x8d" +
+	"sz\x88\x0c\x0b\x97\x9e\x11y\x00q\xfd\x02\x03\x15\xdb" +
+	"j4\x0cQ\x83a\x8f\xea\x82\x81\x86\xa9\x0b\x97\x06\xd2" +
+	"Ws\xdd\x8e$\x0e?\x82'\xb0\xc1=B\xee0\xe8" +
+	"\x88\xe4 <\x99\xeb\xe0\x12\xc0I\x86\x98\x09\x85\x11 " +
+	"\x81\x8b\xf0\x1f\xb1\xb5a\x1a7p{4=\xc7\x85\xa4" +
+	"\xc0um\x0aT{d\xe0%(\xc02\x18\xb2\xa0:" +
+	"\x80\xa4Y2\x84\xaf\xc6\x80\x08\xd5\x15H\x0e\xb7\x9a\xe0" +
+	"u\x18r\xa1\xba\x16)^\xce%|\x13\xfaR\x86\xa4" +
+	"\xcf\xf9HRf\x13\xe1\x17\xa3/eH\xfa|C\xae" +
+	"s1\xe1;\xd0\x972$}F%\xbe\x83\xf0)\xc2" +
+	"{\x98\x17\xa7%$\x87\x1e#\xfc*\xf4\x98\x95\xc2t" +
+	"\x17R\\L\x11|\x1d\xfa\xe4Jaz\x0d\x92\xd2\xd8" +
+	"C\xf8,.\xce\xafz\xa3aR\x8eB\xc3\x12E\xa2" +
+	"X\x0c\xb9/:&\xa5AZ&\xe5\xf0\x0a\xeb\x94\xb0" +
+	"\x0d\xdd\x8c\xba\xa0\x9c\xc4\xab\xe3X\x10W\\6>\xc9" +
+	"m\xb6c$2%\x18\x9e\x18\x92\x06\x8d4\xb7\x176" +
+	"\xd8\xb1uA\x83\x0e\xb7\xf8\xa3\xc8\\\x89y\xc7\xa4i" +
+	"yY\xf1\xc2\x80\xbb\xe7%w\xbbtx7\xa1/c" +
+	"\x09\xdf/\xef\xf8F\xc2o\x91w\xecs\xf7w\xa4\x0b" +
+	"\xddD\xf8\xed\xe4$IO\x0d\xdf*\xef\xe0\x16\x82\x0f" +
+	"\xc9+\xf6]\xe2.$\x0e\xba\x93\xf0\xfb\xe4\x15\xfb." +
+	"q/\x92\xba\xbd\x87\xf0\x87\x08\xef\xf5]\xe2\x01$U" +
+	"}\x98\xf0#\x84\xf7%<5\xfc\x98\xbc\xfbG\x09\x7f" +
+	"\x92\xf0~\xe6\xf9\xc4\x13H\xa9\xe1q\xc2\x8f\x13>\x90" +
+	"\xf0|\xe2)\xe9BO\x12~\xa2\xed+D\xddO\xcb" +
+	"u\x8e\x13\xfe\x82LI\xdd\x1eu?/\xf7\xff\x1c\xe1" +
+	"\xaf\xca\xc8Hz\xd4\xfd\x8a\xdc\xff\xcb\x84\x9f\x92!\x90" +
+	"\xf2\xa8\xfb$RQ\xf0*\xe1ob\x8c[[\x95\xa6" +
+	"\xe9\x1as\xbaM\xae\x92\x09\x8bH\xcf\x0b\xd3\xa4\x860" +
+	"\x13V\xd1\xbesN\x9bV\xe5[\xe3\xcd:$\xa7\xb9" +
+	"\x8d\x0a(]JKR\x8a\xe5\x8e7\xeb\xd3\xc0\xa2\xa8" +
+	"\xcd}o\xe54\xc6m\x88\x0cY{%\x06\x18\xb1\xaf" +
+	"Xf\xb3.\xc6\x9b\x90\xae\xc7V_Dq\xfc)~" +
+	"\x17\xfc\xf3,\x04\x87\xa5\x98\xfe\xff|3\xd74\x07\xe5" +
+	"T\xf2\xcf\x8d\x81\x7f\xae\x95\xfey6\x1d\xf4\xc6\xa8\xb6" +
+	"X/\xfd0\xe4\xa0\xb6\xb68_^\xe4F\xc2/\x8c" +
+	"j\x8b\xafK\x8a\xbb\x90\xf0<F\xb4\xc5\x08RY\x93" +
+	"'|\x12#\xda\xa2(\xb5K\xc8MmmQ\x92\x8e" +
+	";I\xf8\x1e\x8ch\x8b\xab\xa5c]Ex\x95\xe2\"" +
+	"\xe5Uk\xba\xdc\xceu\x04\x9b\xd2\xffS\x9e\x7f\x1ar" +
+	"\xf9*\xe1\x0d\xe9\xff=\x9e\x7f\xd6\xa5\xdf\xce\x12\xee\xe2" +
+	"\xe2\xd5NK\xafT\xb8\xe3\x18\x16$E\xe4d\xdb(" +
+	"\x8a1K\xcaj\x14\xb1\xb4U\xa8\x92,6f\x0cn" +
+	"\x17r\xc9\x91\xf2H(\x088\xaf\x8eYn`=m" +
+	"s^5D\x0d'm\xabf\xeb\xf5\x90\xf5,\xdb\xa8" +
+	"\x19B7!\xdd\x91\xf7M\xae;\xfcjH\xc6R\xdb" +
+	"\x01g^Xb\xbe\xbe\x88o-\xa29\xc5\x9ca[" +
+	"\x82\xf2z\xd1\xaa\xca\xca\"Mi\x93<cy\xa0\xe7" +
+	"\xef%=\x7f\x88a\xe9pD\xcf\xdf\x7f)@\xe9\x1e" +
+	"\x86\xa5\x87B=\xff\x00\xa9\xf4\xc3\x0cKG\"z\xfe" +
+	"1\xd2\xf3\x0f1,=\xae`\xc6\x97\xf3?\"\xe9~" +
+	"\x84a\xe9\x189\x9a\xaf\xe7\x8f\x92t\x7f\x92a\xe9\xc4" +
+	"\xa2\xa9\xe5@\xc5\xaa\xf2\xdc\xc4\x96\xe0\xdf\x9a\xd3\xcd&" +
+	"\x01D\x01_)\x9d\xc7\x93\xfd\x95\\wg\xb9]v" +
+	"uY\x1a\xd2\xf1\xe4\x83\xc0yE\x06\xce\x0b\xe4I\xaf" +
+	"G\x03\xe75\x198!\xa3\xb5\x03\xe7\xa4d\xd2\xd7\x09" +
+	"\x7f;\x1a8oI\xfbS\x84\xbf\x17\x0d\x9cw\xa4\x07" +
+	"\xbfI\xf8\x07\xd1\xc0y\x1fo\x8b\x89\xfev\xe0|\"" +
+	"\xf1\xcf\x90\xe1N\xc5\xcb\x1b\xc4\xeb_\x12\x1a\xf6b(" +
+	"mP\xd8\xf4\xc8&J?\xe1\xcb\x15?m\xf4 \xaa" +
+	"\xcb\xa4\xa4\xd5\x08?[\xf1\xd3F/\xa2z\xa6lN" +
+	"\x84\x8a\x9f\xd2F\x1f\xe2\xd0z\xa5\x17c\xdd\x95\xfe." +
+	"\xaf\xcbq\x89\x9c\xb0\x8d\xf01)\xc9\xbb\xbd.GA" +
+	"J\xfbI\xc2\xf7\xc8.GRj\xf2\xa1\xab\xbd\x85\xc2" +
+	"6J:\xe5\x89\xf2\xbal\xbb\x84m\x94L\xd2\x13\xe5" +
+	"\xfb\xa5(\x0f\xc4\xfa\xa2\x81\xbc\x88\x8eN\x93\xe6\x0d\xa2" +
+	"\xb3b5\x85k\xcf\x07\x93L\xcb/\x9a\xb7\x88\xea\x18" +
+	"\x9f\xe3fD\x95\x04cC\xf6\xe9c:=\xab\xca\xb1" +
+	" \xf2\xbc\x92\xe7\xb5vC\xe0\xe3\x9b\xbe\xf7o'\x00" +
+	"Z\xa6%jd\x81\xdc\xb7\xc0Z\xdc\x80\x9b|\x8e\x96" +
+	"\x07&\x8a\xf1\x91y\xae\xdb\xe6\xfc\xc8\x1c\xd6\xa6x\xbd" +
+	"Q\x10\xf9$\xaf\xe5\xe2&z\xbda\xd2\xea\x8cO\xcc" +
+	"\x14-\xe1\xce\x92\xbd4w\xe8q\xb5\\\xe7v\\^" +
+	"o\x94\xb9p\xd0\xb2wp\xa36\xeb&\x0b\"\xd6*" +
+	"\xb1\xf9\x8c\x1cP\\?\x16\x8a\\w\x9a6\xaf\x0fs" +
+	"\xe1.b\xcb\xdc+\x0dQu\x1a\x9cW\xdb\xd6\x9eq" +
+	"\xbc;\xa2\x0b\xd1\xd4\xcd\xdc\x84\xb2%g\x89\x0a\x17\xae" +
+	"'\xdd\x0b\"99Y\\\xbc\x0c_8\xb9m78" +
+	"3\xab\x14\xa0\x9b\x82\x00\x1d\x91\x01\x1a\xaa\xe2v\x80\x8e" +
+	"\xca\x80\xdbF\xf8\x18\xf1\x97\xe2\x89\xf1\x82\x8c\x9f@\x14" +
+	"K\xc6#\xe5\xb5K&\xb6 \xf1d\x13\x8a\xa7\xbct" +
+	"\x99\x90\xc2\xcc\xd3\xc5<\xe5e\xc8uL\xc2\xf7\xb5\x85" +
+	"\x1d\xc5gS\xda\x87B0\xe9+\xaf\xfd\xf8+\xaa\"" +
+	"\x09\xbf\xb3-\xdeIy\xdd!\xe3?T|=\xbe\xf2" +
+	"\xeaT|\xbd\xbe\xf2\xbaW\xf2K\xa8\xf8\xfa|\xe5\xf5" +
+	"\x80\xccx\xf7\x11\xfe\xe8\x1f\xcax_\xa1\xef\xa6E\xa1" +
+	"\xd3{\x1d\xd3j\xf0<\xaf\xa1\xcd\xe5\xf4Z\xdc\x19\xda" +
+	"\xad?H\xc7J\xc1\xaa\xe1\xb8\xba\xa8pe\xca\x8ap" +
+	"1\x15x\x05qE\xd4IN\x8b`\xa79\x9d#\x08" +
+	"X\x1c,\x13\x0e\x831\xe3E<,\x9e\x0b\x0a\xb6m" +
+	"\xd4\xe4\xb3\xc3\xc2\xef\xec W\xbe\xb6!lT\x05\xb9" +
+	"\xf2\xe4\xce\xb0S\xd5\xce\x95o\xdd\x06Pz\x9ba\xe9" +
+	"\xd7\xe42\x9e\x8be?\xbc\x08\xa0\xf4\x1e\xc3\xd2\xc7a" +
+	"\xb1\x97\xfd\xe8g\x00\xa5\xcf\x18\xee\x0c*=\x80\xec\x97" +
+	"\x94U?gXN\xa0\x97V\xc9\xb3\x90<k']" +
+	"p?\xfa\x895)\x8bQ\x92F)\xc2\xb5?P\xb6" +
+	"Y~\xd1\x0c\x11-sZ\xb9\xd6\xce\xb3\x9f\x9c\x02\x1c" +
+	"\xd6\xebt\xb2\x91Bk/\x15o\xe39K\x89\xc5\xf1" +
+	"$\xb7\xb1\xb2x \x7f\x05\xbd\xb3\x820\\C7s" +
+	"\x96\xa8\x1a\xb2\xeb0\xa6'\xe7y[\xe0\xfa5\xf9Z" +
+	"\x19\xee\x81\xc0E\xa6!\"\xaa\xeb\xf1_b:\x96\xea" +
+	"2\xa2\x81\xaf\xe3\x8fc:\xd6\xbf#uD\xd6\xde\xa1" +
+	"\x8e\xed\xf6i\xa0(\xf5jH\x1bI\x9f\x06vI\x1a" +
+	"\x08i#\x95\xf0\x0a0]\xe2\xa10\xed\xe9\xf2h\xa0" +
+	".\xe9!\xa4\x8d\xden/Sw\xd0F\x06=\x16\xd8" +
+	"/\xe1\xb0|$\x16\xeb\x95\xe5\xe3t\x94M\x16\xbbt" +
+	"\xaa\x18\xc6\xf4y\x8e\xf6\x94\xd5\xa0\x1b\x1e\x9c\xed(\xc8" +
+	"C\x8bKu\x87\xe7yc\xd8\xed4\xd9\xeb7\xd9\xb1" +
+	"}\xeb,\xde>w-W7\xc7\x0b\x02\xaf\xb8\xacA" +
+	"\x95w\xbc9\xae;\xce\xf8\x8e\xad\x05\x14\xed\xd1\xd3\x87" +
+	"'\x86\x16\x1b\xaeX\xa2B\xb3!-\xe2\xd9\xc2\x1b\x99" +
+	"\x18Z`\xe4+\xa8\xefwr'mT\x9b\x9c<\xec" +
+	"\xdc \xf8?\xfa\x01@\xe9c\x86\xa5/\x02\xf7\xca\xfe" +
+	"/a_0,\xa7\xa2\xce\xd5%\x8b\xa1 $=\xe7" +
+	"\x02P\xb3\xf26\x83\xfeP\xe0\\+d\xee\x09\x1bD" +
+	"\xbes\x0d\xadE\x05c\xde\xdb\xf6\xae\x0e\xef\xcd(\x1e" +
+	"\x15\x8c\xc8\xf5\x83\x94\x97E?\xc7\x14\xa4\xb7\x04EX" +
+	"\xcb\xf0\x02\xaa\x88^\xde\xce\xeblA\xef1D\xc5\xb2" +
+	"\x1b\x96\x8d2\xd2\xf3\xbc\xc1\xdc\xd9\x88_4\xb8M\x1e" +
+	"Q@\xdfLO\xba\xbc\x1a\xbd\x89\x86\xcd\xe7r\xb6\xd5" +
+	"\x80t\xce\xaaFj\xaeik\x8e_f[\xd8\x14\xd5" +
+	"+II\xa0\x1b\x13\x0c\xfe0k\x8a\xeax\x87f\x98" +
+	"\xe4v%\xe6 \xb6e\xb9\xb4\x06\xce\xba\x936\x9f3" +
+	"\xac\xe1\xa6C\x8f\xfc\x93\x1d\x82u4|\xbc\x96\xe4\xe8" +
+	"\x1cg^N\xd8\x14\x10\xcf\x88\xec\xbe\x05\x8c\xd1&\x9e" +
+	"\"\xde\x10#\x8c\xb6o\xec\x92\xe6!at\xa5<\xe2" +
+	"\xd1\xa5\x0f\x84\x84!\xf3\x83\xacdw\xc7\x08\xc3O\x11" +
+	"\xa7\xe9\x8cT\x8ft\x8d\xa1\xfd\xb8\x12\xe3\x82\xc2\xef\x06" +
+	"\xde%\x1f|\x88\xf0\xc3\xe8w\xe1S\x88C\xf7\xe3n" +
+	"\x9ap\x84\x06\x8e\xb5{E\xc4=G\xa5\xa2\x08zB" +
+	"\x19_\x80<%\x1f|\x8c\xe0\xe7\xa4\x93\xf9\x02\xe4Y" +
+	"\xe9d'\x08\x7f\x99\x9c\xac\xdd\xc6\xc5\xbc\xe1\xb8\xb61" +
+	"\xddLG\xdfO\xb5lko\xb9\xa1W\x0c\x18\x16\xb5" +
+	"\xce7w\xb6\xb57o\xd8\xbc\x82\xde\xad\x8f\xd8i\x12" +
+	"*q\xa5\x11.\xef\xbd\x82,\xc6^A6L\xcb\x1d" +
+	"\xd3\xe7-`Mw\x81\xc6r~a\xba\x94\x06\x93V" +
+	"\x835M\xe9p#n\xfb\xe2\x0bb\xdc\x9a\xe46+" +
+	"n\x896\x1e\xe7\xb8\xad\xd7\xf8(\xd6\xb9]\xe3\xa2\xc2" +
+	"\x17[\xd77\x9cL\xf8\xeb\x07\xcb\x8f\xb6g.\xb4\xfe" +
+	"W\xdf\xb7\x9c\xb2\xf9\xb04\x96.\xec\x06\x12\xfaLF" +
+	"\x12z9cX>\x97E\xfa\xd9k\x18y\xc0j\xc2" +
+	"\xd71\xbf\xe8\xa7\x1aw-#\xdf>\x97\xf0M\xcc\xe7" +
+	"+\xe2\xb7\xf3\xd9KT%\x12\xbe\x8d\xf9tE>|" +
+	"\x09\xa3\xdc|!\xe1y\xe6'C\xf2\xe1\x11&\x9bF" +
 	"\x84O2?\x19\x92\xd2)2\x8a\x85I\xc2\xf70\x05" +
-	"\xb1\xd7\xef\x0dIx\x0f\xc1\xb3d\xde\x87\x1e\xbdq\x89" +
-	"\xcf\x12\xee\x12\xde\x8f^\x95\xfb\x1dF9\xbbA\xf8M" +
-	"\x84/Q\xbc*w^\xe2\xfb\x08?Hx\x86y\xaf" +
-	"\xf2o\x91\xeb\x1c$\xfc.\xc2\xb3\x09Y\xe4\x0e\xde\xc9" +
-	"$\x0d\x1f\xa2\x81\xc34\x90KzU\xee\x03\x8ch\xf8" +
-	"0\xe1G\x09_\xda\xe5\xbdyz\x8cQ\xa8\x1d%\xfc" +
-	"8\xe1j\xca+r\x8f\xb17\x00\xca'\x08\x7f\x81p" +
-	"\xcd/r\x9f\x97\xe7|\x92\xf0\x97\x09_\x96\xf6\xde<" +
-	"\xbd(\xf1\xe7\x08\x7f\x9b\xf0\xafu{\xef\xf2\xdfbT" +
-	"3\x9c&\xfc=\xc2\xbf\xde\xa3\xa1\x0a\xa0\xbe\xc3~\x0a" +
-	"P~\x8f1\xdc\x99P0\xb7\xbcWC\x0d@\xfdR" +
-	"^\xd7\x17d\xbe\x9c\xf0\x15}\x1a.\x03P\x97%\xa8" +
-	"\x94\xd0\x12t\x8d\x84\xaf\xec\xd7\xf0kt\x8d\x09\xd2." +
-	"\x9b\x08\x1f#|\xd5\x12\x0d\xbfNiD\xe2c\x84\xcf" +
-	"\x12\xbe:\xa3\xe1r:\xff\x04]\xbbI\xf8\xad\x84c" +
-	"V\xc3\x15$R\x12\xc4\x14\x07\x09\xbf\x8bp%\xa7Q" +
-	"\xad\xa6\xde\x99\x90%\x0f\xe1\x87\x08O,\xd5p\x151" +
-	"\x94\\\xff\x10\xe1\x87\x09\xefR5\\\x0d\xa0>\x90 " +
-	"\x0dw\x98\xf0\xa3\x89Xi3 \xfd\x1c\xb3\xe1w=" +
-	"~\xc4\xed\xf5\xcb\x08\x18\xf2\x0a\x09\xcc\x86_\x0au\x98" +
-	"(\x9e\xc5\x94Q\xe7\x0e\xb7\x0d\xee\x00`\xae\xf5A]" +
-	"\xfca\xdb\x8f\xe6\x1e\xf1_\x93\xc7k(\xc7\xa8\xcb\x10" +
-	"FK\x94]\xddvGR\x8b\xc8\xaf\xd0nTTG" +
-	"t\x17\x17L\xb3~\xc9\x81\x96\x18\x96\xaf2\xb0\x8a\x08" +
-	"\x0a\"\xc5\xb1\xff\x1e\x0a\xb9}\xc6Xd\x9e\xd7\xa0\x08" +
-	";\xd2\x91i\x9dC!o\xea.\xa7A4\xc3A\xee" +
-	"w\x0c\x19\x17\xaen\xb6\x9b\x86\x9e\xe6\xeeX\xc7\xd7\x10" +
-	"yl\xab\xf2!\xcfd\xa1'q\xe1\x18\xee\xfcX&" +
-	">.d\xd3}bF\xb9\xcc\xb4*\xdfv&\xec\x9d" +
-	"~?\x9eq'\xb0\x8a\x93\xe0\x00\xf1z\xe4e^\xf0" +
-	"!\x9a\xf72\xef\x80\xcd\x1d\xd2m\x98\x0d?\xae\x0a\xb4" +
-	"\x8c\xb7]%RD\xccs\xdb\x81p\xb1\xe0\xf3-\xff" +
-	"\xcd`\x90.\x86F\xa9\x12\x8c<6\xf8\x16\xcb\xb7\xf4" +
-	"_\x00\x8c\xc2@\x87a\xf0\xd5\x9eo\x18\xb92oM" +
-	"\x88<?\xf8\xda\xac\xfdf2\xbc\xc43\x8d\x83/\xf6" +
-	"|\xe3\xf6\xcd)\x91f\xaf\xfc7\xa3\x93\x82o\xeb\xda" +
-	"\x93\x16L)\x07dPE\x92I;R\xd0\x8b\x94B" +
-	"5\xd2\x0a\xeb\x18\x1b\xd1\x07\\\xdd\xe1A\xce\xfd\xdf\x00" +
-	"\x00\x00\xff\xff\x10\x0aD\xd8"
+	"\xb1\xcf\xef\x0dIx\x0f\xc1\xb3d\xde\x8f\x1e\xbdq\x89" +
+	"\xcf\x12\xee\x12>\x80^\x95\xfbmF9\xbbA\xf8\x8d" +
+	"\x84/Q\xbc*w^\xe2\xfb\x08?Hx\x9ay\xaf" +
+	"\xf2o\x96\xeb\x1c$\xfcN\xc23\x09Y\xe4\x0e\xdd\xc1" +
+	"$\x0d\x1f\xa2\x81\xc34\x90\xed\xf2\xaa\xdc\xfb\x19\xd1\xf0" +
+	"a\xc2\x8f\x10\xbe\xb4\xdb{\xf3\xf4\x18\xa3P;B\xf8" +
+	"1\xc2\xd5\xa4W\xe4\x1eeo\x00\x94\x8f\x13\xfe\x02\xe1" +
+	"\x9a_\xe4>/\xcf\xf9\x04\xe1/\x13\xbe,\xe5\xbdy" +
+	"zQ\xe2\xcf\x11\xfe6\xe1_\xeb\xf1\xde\xe5\xbf\xc5\xa8" +
+	"f8E\xf8{\x84\x9f\xd1\xab\xa1\x0a\xa0\xbe\xc3~\x02" +
+	"P~\x8f1\xdc\x99P0\xbb\xbcOC\x0d@\xfdR" +
+	"^\xd7\x17d\xbe\x9c\xf0\x15\xfd\x1a.\x03P\x97%\xa8" +
+	"\x94\xd0\x12t\x8d\x84\xaf\x1c\xd0\xf0kt\x8d\x09\xd2." +
+	"\x9b\x08\x1f#|\xd5\x12\x0d\xcf\xa04\"\xf11\xc2g" +
+	"\x09_\x9d\xd6p9\x9d\x7f\x82\xae\xdd$\xfc\x16\xc21" +
+	"\xa3\xe1\x0a\x12)\x09b\x8a\x83\x84\xdfI\xb8\x92\xd5\xa8" +
+	"VS\xefH\xc8\x92\x87\xf0C\x84'\x96j\xb8\x8a\x18" +
+	"J\xae\x7f\x88\xf0\xc3\x84w\xab\x1a\xae\x06P\xefO\x90" +
+	"\x86;L\xf8\x91D\xac\xb4\x19\x94~\x8e\x99\xf0\xbb\x1e" +
+	"?\xe2\xf6\xfae\x04\x0c{\x85\x04f\xc2/\x85:L" +
+	"\x14\xcfb\xca\xa8s\x87\xdb\x06w\x000\xdb\xfa\xa0." +
+	"~\xbf\xed\x87s\x8f\xf8\xaf\xc9\xe35\x94c\xd4e\x08" +
+	"\xa3%\xca\xaen\xbb\xf9\xe4\"\xf2+\xb4\x1b\x15\xd5\xbc" +
+	"\xee\xe2\x82i\xd6/9\xd0\x12#\xf2U\x06V\x11A" +
+	"A\xa48\xf6\xdfC!\xb7O\x1b\x8b\xcc\xf3\x1a\x14a" +
+	"G:2\xads(\xe4M\xdd\xe54\x88f8\xc8\xfd" +
+	"\x8e!\xe3\xc2\xd5\xcdv\xd3\xd0\xd3\xdc\x1d\xeb\xf8\x1a\"" +
+	"\x87mU>\xec\x99,\xf4$.\x1c\xc3\x9d\x1fK\xc7" +
+	"\xc7\x85l\xbaO\xcc(\x97\x9aV\xe5[\xce\x84\xbd\xd3" +
+	"\xef\xc73\xee\x04Vq\x12\x1c$^\x8f\xbc\xcc\x0b>" +
+	"D\xf3^\xe6\x1d\xb0\xb9C\xba\x0d3\xe1\xc7U\x81\x96" +
+	"\xf1\xb6\xabD\x8a\x88yn;\x10.\x16|\xbe\xe5\xbf" +
+	"\x19\x0c\xd2\xc5\xf0(U\x82\x91\xc7\x06\xdfb\xf9\x96\xfe" +
+	"\x0b\x80Q\x18\xec0\x0c\xbe\xda\xf3\x0d#W\xe6\xad\x09" +
+	"\x91\xe7\x07_\x9b\xb5\xdfL\x86\x97x\xbaq\xf0\xc5\x9e" +
+	"o\xdc\xbe9%\xd2\xec\x95\xffftR\xf0m]{" +
+	"\xd2\x82)\xe5\x80\x0c\xaaH2iG\x0az\x91R\xa8" +
+	"FZa\x1dcy}\xd0\xd5\x1d\x1e\xe4\xdc\xff\x0b\x00" +
+	"\x00\xff\xffM\\D\xe6"
 
-func init() {
-	schemas.Register(schema_e14a1fcaee034d63,
-		0x86836f1366e5f73f,
-		0x97eb30dbcf87911a,
-		0x9d795a72a27f67d7,
-		0xa5df81bae928e6da,
-		0xa7a2210fb1e289f2,
-		0xab7ea2bfa7965af8,
-		0xb52867725b843050,
-		0xbfa2d703516408b8,
-		0xc158bd732092cde5,
-		0xcf2547b626594655,
-		0xd1c0bc9f5b332a6e,
-		0xe82432f4ef15a586,
-		0xf6b17c769768d8ff,
-		0xff1381363c7abd06)
+func RegisterSchema(reg *schemas.Registry) {
+	reg.Register(&schemas.Schema{
+		String: schema_e14a1fcaee034d63,
+		Nodes: []uint64{
+			0x86836f1366e5f73f,
+			0x97eb30dbcf87911a,
+			0x9d795a72a27f67d7,
+			0xa5df81bae928e6da,
+			0xa7a2210fb1e289f2,
+			0xab7ea2bfa7965af8,
+			0xb52867725b843050,
+			0xbfa2d703516408b8,
+			0xc158bd732092cde5,
+			0xcf2547b626594655,
+			0xd1c0bc9f5b332a6e,
+			0xe82432f4ef15a586,
+			0xf6b17c769768d8ff,
+			0xff1381363c7abd06,
+		},
+		Compressed: true,
+	})
 }
