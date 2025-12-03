@@ -17,3 +17,9 @@ packages = [
   { include = "zalfmas_capnp_schemas" },
   { include = "zalfmas_capnp_schemas_with_stubs" },
 ]
+
+[tool.ruff]
+target-version = "py313"
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
