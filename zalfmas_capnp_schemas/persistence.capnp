@@ -204,3 +204,12 @@ interface Gateway(Capability) extends(Identifiable, Restorer) {
     # interval in seconds to call the heartbeat capability
   }
 }
+
+interface GatewayRegistrable {
+  # interface to register at some Gateway
+  # makes sense as long as we don't have Level 3 support
+
+  sturdyRefAtGateway @0 (gatewaySR :SturdyRef, gatewayId: Text) -> (selfAtGatewaySR :SturdyRef);
+  # let containing vat connect to gateway via given sturdy ref and
+  # return sturdy ref of self at
+}

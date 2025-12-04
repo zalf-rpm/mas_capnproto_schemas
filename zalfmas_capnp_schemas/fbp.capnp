@@ -9,6 +9,7 @@ $Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/fbp"
 
 using Persistent = import "persistence.capnp".Persistent;
 using SturdyRef = import "persistence.capnp".SturdyRef;
+using GatewayRegistrable = import "persistence.capnp".GatewayRegistrable;
 using Common = import "common.capnp";
 using Stoppable = import "service.capnp".Stoppable;
 
@@ -211,4 +212,48 @@ struct Component {
     runFactory    @4 :RunnableFactory; # if non null, interface to runtime instances of this component
 
     defaultConfig @5 :Text; # default configuration for component
+}
+
+struct ConfigEntry {
+    name @0 :Text;
+    val  @1 :Common.Value;
+}
+
+interface Process extends(Common.Identifiable, GatewayRegistrable) {
+    # bootstrap interface of a running process = instantiated component
+
+    struct StartupInfo {
+        # startup information about the process
+        # likely to be sent on a channel / writer after startup is finished
+
+        cap         @0 :Process;
+        # capability to started process
+
+        gatewaySRs  @1 :List(Common.Pair(Text, Text));
+        # sturdy references via gateways to the process (GatewayId -> Process SR @ Gateway)
+      }
+
+    inPorts @0 () -> (ports :List(Component.Port));
+    # input ports available on the process
+
+    connectInPort @1 (name :Text, sturdyRef :Text) -> (connected :Bool);
+    # connect named input port via given sturdyRef
+
+    outPorts @2 () -> (ports :List(Component.Port));
+    # output ports available on the process
+
+    connectOutPort @3 (name :Text, sturdyRef :Text) -> (connected :Bool);
+    # connect named output port via given sturdyRef
+
+    configEntries @4 () -> (config :List(ConfigEntry));
+    # configuration data for this process
+
+    setConfigEntry @7 ConfigEntry;
+    # set configuration value
+
+    start @5 ();
+    # start process
+
+    stop @6 ();
+    # stop process
 }
