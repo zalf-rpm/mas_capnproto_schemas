@@ -1,37 +1,74 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Model.Weberest
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa1a4ad9d143eaa6fUL), Proxy(typeof(DWLABImport_Proxy)), Skeleton(typeof(DWLABImport_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa1a4ad9d143eaa6fUL),
+        Proxy(typeof(DWLABImport_Proxy)),
+        Skeleton(typeof(DWLABImport_Skeleton))
+    ]
     public interface IDWLABImport : IDisposable
     {
-        Task<(string, bool, bool)> ImportData(string id, IReadOnlyList<byte> dwla, IReadOnlyList<byte> dwlb, CancellationToken cancellationToken_ = default);
+        Task<(string, bool, bool)> ImportData(
+            string id,
+            IReadOnlyList<byte> dwla,
+            IReadOnlyList<byte> dwlb,
+            CancellationToken cancellationToken_ = default
+        );
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa1a4ad9d143eaa6fUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa1a4ad9d143eaa6fUL)
+    ]
     public class DWLABImport_Proxy : Proxy, IDWLABImport
     {
-        public async Task<(string, bool, bool)> ImportData(string id, IReadOnlyList<byte> dwla, IReadOnlyList<byte> dwlb, CancellationToken cancellationToken_ = default)
+        public async Task<(string, bool, bool)> ImportData(
+            string id,
+            IReadOnlyList<byte> dwla,
+            IReadOnlyList<byte> dwlb,
+            CancellationToken cancellationToken_ = default
+        )
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData.WRITER>();
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData.WRITER>();
             var arg_ = new Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData()
-            {Id = id, Dwla = dwla, Dwlb = dwlb};
-            arg_?.serialize(in_);
-            using (var d_ = await Call(11647625426448067183UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData>(d_);
+                Id = id,
+                Dwla = dwla,
+                Dwlb = dwlb,
+            };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    11647625426448067183UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ =
+                    CapnpSerializable.Create<Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData>(
+                        d_
+                    );
                 return (r_.Id, r_.SuccessA, r_.SuccessB);
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa1a4ad9d143eaa6fUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa1a4ad9d143eaa6fUL)
+    ]
     public class DWLABImport_Skeleton : Skeleton<IDWLABImport>
     {
         public DWLABImport_Skeleton()
@@ -40,19 +77,33 @@ namespace Mas.Schema.Model.Weberest
         }
 
         public override ulong InterfaceId => 11647625426448067183UL;
-        Task<AnswerOrCounterquestion> ImportData(DeserializerState d_, CancellationToken cancellationToken_)
+
+        Task<AnswerOrCounterquestion> ImportData(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
         {
             using (d_)
             {
-                var in_ = CapnpSerializable.Create<Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData>(d_);
-                return Impatient.MaybeTailCall(Impl.ImportData(in_.Id, in_.Dwla, in_.Dwlb, cancellationToken_), (id, successA, successB) =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData.WRITER>();
-                    var r_ = new Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData{Id = id, SuccessA = successA, SuccessB = successB};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                var in_ =
+                    CapnpSerializable.Create<Mas.Schema.Model.Weberest.DWLABImport.Params_ImportData>(
+                        d_
+                    );
+                return Impatient.MaybeTailCall(
+                    Impl.ImportData(in_.Id, in_.Dwla, in_.Dwlb, cancellationToken_),
+                    (id, successA, successB) =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData.WRITER>();
+                        var r_ = new Mas.Schema.Model.Weberest.DWLABImport.Result_ImportData
+                        {
+                            Id = id,
+                            SuccessA = successA,
+                            SuccessB = successB,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -60,10 +111,14 @@ namespace Mas.Schema.Model.Weberest
 
     public static class DWLABImport
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xeb03972caa23c7d2UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xeb03972caa23c7d2UL)
+        ]
         public class Params_ImportData : ICapnpSerializable
         {
             public const UInt64 typeId = 0xeb03972caa23c7d2UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -85,39 +140,29 @@ namespace Mas.Schema.Model.Weberest
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string Id
-            {
-                get;
-                set;
-            }
+            public string Id { get; set; }
 
-            public IReadOnlyList<byte> Dwla
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<byte> Dwla { get; set; }
 
-            public IReadOnlyList<byte> Dwlb
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<byte> Dwlb { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string Id => ctx.ReadText(0, null);
                 public IReadOnlyList<byte> Dwla => ctx.ReadList(1).CastByte();
                 public IReadOnlyList<byte> Dwlb => ctx.ReadList(2).CastByte();
@@ -150,10 +195,14 @@ namespace Mas.Schema.Model.Weberest
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb9bc568c49fcca07UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb9bc568c49fcca07UL)
+        ]
         public class Result_ImportData : ICapnpSerializable
         {
             public const UInt64 typeId = 0xb9bc568c49fcca07UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -175,39 +224,29 @@ namespace Mas.Schema.Model.Weberest
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string Id
-            {
-                get;
-                set;
-            }
+            public string Id { get; set; }
 
-            public bool SuccessA
-            {
-                get;
-                set;
-            }
+            public bool SuccessA { get; set; }
 
-            public bool SuccessB
-            {
-                get;
-                set;
-            }
+            public bool SuccessB { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string Id => ctx.ReadText(0, null);
                 public bool SuccessA => ctx.ReadDataBool(0UL, false);
                 public bool SuccessB => ctx.ReadDataBool(1UL, false);

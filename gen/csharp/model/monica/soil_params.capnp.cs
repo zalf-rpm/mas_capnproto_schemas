@@ -1,21 +1,27 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Soil
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfc682227304e2281UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xfc682227304e2281UL)
+    ]
     public class SoilCharacteristicData : ICapnpSerializable
     {
         public const UInt64 typeId = 0xfc682227304e2281UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            List = reader.List?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Soil.SoilCharacteristicData.Data>(_));
+            List = reader.List?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Soil.SoilCharacteristicData.Data>(_)
+            );
             applyDefaults();
         }
 
@@ -29,28 +35,27 @@ namespace Mas.Schema.Soil
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicData.Data> List
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicData.Data> List { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicData.Data.READER> List => ctx.ReadList(0).Cast(Mas.Schema.Soil.SoilCharacteristicData.Data.READER.create);
+
+            public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicData.Data.READER> List =>
+                ctx.ReadList(0).Cast(Mas.Schema.Soil.SoilCharacteristicData.Data.READER.create);
             public bool HasList => ctx.IsStructFieldNonNull(0);
         }
 
@@ -63,15 +68,22 @@ namespace Mas.Schema.Soil
 
             public ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicData.Data.WRITER> List
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicData.Data.WRITER>>(0);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicData.Data.WRITER>
+                    >(0);
                 set => Link(0, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xeafaab57e025db63UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xeafaab57e025db63UL)
+        ]
         public class Data : ICapnpSerializable
         {
             public const UInt64 typeId = 0xeafaab57e025db63UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -97,51 +109,33 @@ namespace Mas.Schema.Soil
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string SoilType
-            {
-                get;
-                set;
-            }
+            public string SoilType { get; set; }
 
-            public short SoilRawDensity
-            {
-                get;
-                set;
-            }
+            public short SoilRawDensity { get; set; }
 
-            public byte AirCapacity
-            {
-                get;
-                set;
-            }
+            public byte AirCapacity { get; set; }
 
-            public byte FieldCapacity
-            {
-                get;
-                set;
-            }
+            public byte FieldCapacity { get; set; }
 
-            public byte NFieldCapacity
-            {
-                get;
-                set;
-            }
+            public byte NFieldCapacity { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string SoilType => ctx.ReadText(0, null);
                 public short SoilRawDensity => ctx.ReadDataShort(0UL, (short)0);
                 public byte AirCapacity => ctx.ReadDataByte(16UL, (byte)0);
@@ -189,14 +183,20 @@ namespace Mas.Schema.Soil
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe4eb0a9bb0e5bb53UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xe4eb0a9bb0e5bb53UL)
+    ]
     public class SoilCharacteristicModifier : ICapnpSerializable
     {
         public const UInt64 typeId = 0xe4eb0a9bb0e5bb53UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            List = reader.List?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Soil.SoilCharacteristicModifier.Data>(_));
+            List = reader.List?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Soil.SoilCharacteristicModifier.Data>(_)
+            );
             applyDefaults();
         }
 
@@ -210,28 +210,27 @@ namespace Mas.Schema.Soil
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicModifier.Data> List
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicModifier.Data> List { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicModifier.Data.READER> List => ctx.ReadList(0).Cast(Mas.Schema.Soil.SoilCharacteristicModifier.Data.READER.create);
+
+            public IReadOnlyList<Mas.Schema.Soil.SoilCharacteristicModifier.Data.READER> List =>
+                ctx.ReadList(0).Cast(Mas.Schema.Soil.SoilCharacteristicModifier.Data.READER.create);
             public bool HasList => ctx.IsStructFieldNonNull(0);
         }
 
@@ -244,15 +243,22 @@ namespace Mas.Schema.Soil
 
             public ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicModifier.Data.WRITER> List
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicModifier.Data.WRITER>>(0);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Soil.SoilCharacteristicModifier.Data.WRITER>
+                    >(0);
                 set => Link(0, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa968a46ccde8b1b4UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa968a46ccde8b1b4UL)
+        ]
         public class Data : ICapnpSerializable
         {
             public const UInt64 typeId = 0xa968a46ccde8b1b4UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -278,51 +284,33 @@ namespace Mas.Schema.Soil
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string SoilType
-            {
-                get;
-                set;
-            }
+            public string SoilType { get; set; }
 
-            public float OrganicMatter
-            {
-                get;
-                set;
-            }
+            public float OrganicMatter { get; set; }
 
-            public sbyte AirCapacity
-            {
-                get;
-                set;
-            }
+            public sbyte AirCapacity { get; set; }
 
-            public sbyte FieldCapacity
-            {
-                get;
-                set;
-            }
+            public sbyte FieldCapacity { get; set; }
 
-            public sbyte NFieldCapacity
-            {
-                get;
-                set;
-            }
+            public sbyte NFieldCapacity { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string SoilType => ctx.ReadText(0, null);
                 public float OrganicMatter => ctx.ReadDataFloat(0UL, 0F);
                 public sbyte AirCapacity => ctx.ReadDataSByte(32UL, (sbyte)0);
@@ -370,14 +358,20 @@ namespace Mas.Schema.Soil
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9b169bc96bb3d24bUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x9b169bc96bb3d24bUL)
+    ]
     public class CapillaryRiseRate : ICapnpSerializable
     {
         public const UInt64 typeId = 0x9b169bc96bb3d24bUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            List = reader.List?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Soil.CapillaryRiseRate.Data>(_));
+            List = reader.List?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Soil.CapillaryRiseRate.Data>(_)
+            );
             applyDefaults();
         }
 
@@ -391,28 +385,27 @@ namespace Mas.Schema.Soil
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public IReadOnlyList<Mas.Schema.Soil.CapillaryRiseRate.Data> List
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Soil.CapillaryRiseRate.Data> List { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public IReadOnlyList<Mas.Schema.Soil.CapillaryRiseRate.Data.READER> List => ctx.ReadList(0).Cast(Mas.Schema.Soil.CapillaryRiseRate.Data.READER.create);
+
+            public IReadOnlyList<Mas.Schema.Soil.CapillaryRiseRate.Data.READER> List =>
+                ctx.ReadList(0).Cast(Mas.Schema.Soil.CapillaryRiseRate.Data.READER.create);
             public bool HasList => ctx.IsStructFieldNonNull(0);
         }
 
@@ -425,15 +418,22 @@ namespace Mas.Schema.Soil
 
             public ListOfStructsSerializer<Mas.Schema.Soil.CapillaryRiseRate.Data.WRITER> List
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.CapillaryRiseRate.Data.WRITER>>(0);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Soil.CapillaryRiseRate.Data.WRITER>
+                    >(0);
                 set => Link(0, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb78a89c58fad885dUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb78a89c58fad885dUL)
+        ]
         public class Data : ICapnpSerializable
         {
             public const UInt64 typeId = 0xb78a89c58fad885dUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -455,39 +455,29 @@ namespace Mas.Schema.Soil
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string SoilType
-            {
-                get;
-                set;
-            }
+            public string SoilType { get; set; }
 
-            public byte Distance
-            {
-                get;
-                set;
-            }
+            public byte Distance { get; set; }
 
-            public float Rate
-            {
-                get;
-                set;
-            }
+            public float Rate { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string SoilType => ctx.ReadText(0, null);
                 public byte Distance => ctx.ReadDataByte(0UL, (byte)0);
                 public float Rate => ctx.ReadDataFloat(32UL, 0F);

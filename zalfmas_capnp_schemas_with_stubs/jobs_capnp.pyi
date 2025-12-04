@@ -152,7 +152,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def nextJob(
             self,
             _context: _ServiceInterfaceModule.Server.NextjobCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _JobStructModule.Builder
             | _ServiceInterfaceModule.Server.NextjobResultTuple

@@ -678,7 +678,7 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def data(
             self,
             _context: _ProfileInterfaceModule.Server.DataCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_ProfileInterfaceModule.Server.DataResultTuple | None]: ...
         def data_context(
             self, context: _ProfileInterfaceModule.Server.DataCallContext
@@ -686,7 +686,7 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         def geoLocation(
             self,
             _context: _ProfileInterfaceModule.Server.GeolocationCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ProfileInterfaceModule.Server.GeolocationResultTuple | None
         ]: ...
@@ -762,7 +762,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
                 maxCount: int,
                 _context: _ServiceInterfaceModule._StreamInterfaceModule.Server.NextprofilesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[_ProfileInterfaceModule]
                 | _ServiceInterfaceModule._StreamInterfaceModule.Server.NextprofilesResultTuple
@@ -993,7 +993,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             optional: PropertyNameEnumListReader,
             onlyRawData: bool,
             _context: _ServiceInterfaceModule.Server.CheckavailableparametersCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ServiceInterfaceModule.Server.CheckavailableparametersResultTuple | None
         ]: ...
@@ -1005,7 +1005,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             onlyRawData: bool,
             _context: _ServiceInterfaceModule.Server.GetallavailableparametersCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ServiceInterfaceModule.Server.GetallavailableparametersResultTuple | None
         ]: ...
@@ -1018,7 +1018,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             coord: LatLonCoordReader,
             query: QueryReader,
             _context: _ServiceInterfaceModule.Server.ClosestprofilesatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_ProfileInterfaceModule]
             | _ServiceInterfaceModule.Server.ClosestprofilesatResultTuple
@@ -1033,7 +1033,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             optional: PropertyNameEnumListReader,
             onlyRawData: bool,
             _context: _ServiceInterfaceModule.Server.StreamallprofilesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _ServiceInterfaceModule._StreamInterfaceModule.Server
             | _ServiceInterfaceModule.Server.StreamallprofilesResultTuple

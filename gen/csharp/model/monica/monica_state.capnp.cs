@@ -1,17 +1,21 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Model.Monica
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd8af9210839bc071UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd8af9210839bc071UL)
+    ]
     public class MaybeBool : ICapnpSerializable
     {
         public const UInt64 typeId = 0xd8af9210839bc071UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -29,27 +33,25 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public bool Value
-        {
-            get;
-            set;
-        }
+        public bool Value { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public bool Value => ctx.ReadDataBool(0UL, false);
         }
 
@@ -68,14 +70,20 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd599d06dc405571aUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd599d06dc405571aUL)
+    ]
     public class RuntimeState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xd599d06dc405571aUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            ModelState = CapnpSerializable.Create<Mas.Schema.Model.Monica.MonicaModelState>(reader.ModelState);
+            ModelState = CapnpSerializable.Create<Mas.Schema.Model.Monica.MonicaModelState>(
+                reader.ModelState
+            );
             applyDefaults();
         }
 
@@ -89,28 +97,27 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Model.Monica.MonicaModelState ModelState
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.MonicaModelState ModelState { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public Mas.Schema.Model.Monica.MonicaModelState.READER ModelState => ctx.ReadStruct(0, Mas.Schema.Model.Monica.MonicaModelState.READER.create);
+
+            public Mas.Schema.Model.Monica.MonicaModelState.READER ModelState =>
+                ctx.ReadStruct(0, Mas.Schema.Model.Monica.MonicaModelState.READER.create);
             public bool HasModelState => ctx.IsStructFieldNonNull(0);
         }
 
@@ -129,24 +136,43 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8b008567c93f7c7dUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x8b008567c93f7c7dUL)
+    ]
     public class CropState : ICapnpSerializable
     {
         public const UInt64 typeId = 0x8b008567c93f7c7dUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            AutomaticHarvestParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.AutomaticHarvestParameters>(reader.AutomaticHarvestParams);
+            AutomaticHarvestParams =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.AutomaticHarvestParameters>(
+                    reader.AutomaticHarvestParams
+                );
             SpeciesName = reader.SpeciesName;
             CultivarName = reader.CultivarName;
             SeedDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.SeedDate);
             HarvestDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.HarvestDate);
-            IsWinterCrop = CapnpSerializable.Create<Mas.Schema.Model.Monica.MaybeBool>(reader.IsWinterCrop);
-            IsPerennialCrop = CapnpSerializable.Create<Mas.Schema.Model.Monica.MaybeBool>(reader.IsPerennialCrop);
-            CuttingDates = reader.CuttingDates?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Common.Date>(_));
-            CropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(reader.CropParams);
-            PerennialCropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(reader.PerennialCropParams);
-            ResidueParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropResidueParameters>(reader.ResidueParams);
+            IsWinterCrop = CapnpSerializable.Create<Mas.Schema.Model.Monica.MaybeBool>(
+                reader.IsWinterCrop
+            );
+            IsPerennialCrop = CapnpSerializable.Create<Mas.Schema.Model.Monica.MaybeBool>(
+                reader.IsPerennialCrop
+            );
+            CuttingDates = reader.CuttingDates?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Common.Date>(_)
+            );
+            CropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(
+                reader.CropParams
+            );
+            PerennialCropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(
+                reader.PerennialCropParams
+            );
+            ResidueParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropResidueParameters>(
+                reader.ResidueParams
+            );
             CrossCropAdaptionFactor = reader.CrossCropAdaptionFactor;
             AutomaticHarvest = reader.AutomaticHarvest;
             applyDefaults();
@@ -174,119 +200,76 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Model.Monica.AutomaticHarvestParameters AutomaticHarvestParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.AutomaticHarvestParameters AutomaticHarvestParams { get; set; }
 
-        public string SpeciesName
-        {
-            get;
-            set;
-        }
+        public string SpeciesName { get; set; }
 
-        public string CultivarName
-        {
-            get;
-            set;
-        }
+        public string CultivarName { get; set; }
 
-        public Mas.Schema.Common.Date SeedDate
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date SeedDate { get; set; }
 
-        public Mas.Schema.Common.Date HarvestDate
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date HarvestDate { get; set; }
 
-        public Mas.Schema.Model.Monica.MaybeBool IsWinterCrop
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.MaybeBool IsWinterCrop { get; set; }
 
-        public Mas.Schema.Model.Monica.MaybeBool IsPerennialCrop
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.MaybeBool IsPerennialCrop { get; set; }
 
-        public IReadOnlyList<Mas.Schema.Common.Date> CuttingDates
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Common.Date> CuttingDates { get; set; }
 
-        public Mas.Schema.Model.Monica.CropParameters CropParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropParameters CropParams { get; set; }
 
-        public Mas.Schema.Model.Monica.CropParameters PerennialCropParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropParameters PerennialCropParams { get; set; }
 
-        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams { get; set; }
 
-        public double CrossCropAdaptionFactor
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public bool AutomaticHarvest
-        {
-            get;
-            set;
-        }
+        public double CrossCropAdaptionFactor { get; set; } = 1;
+        public bool AutomaticHarvest { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public Mas.Schema.Model.Monica.AutomaticHarvestParameters.READER AutomaticHarvestParams => ctx.ReadStruct(0, Mas.Schema.Model.Monica.AutomaticHarvestParameters.READER.create);
+
+            public Mas.Schema.Model.Monica.AutomaticHarvestParameters.READER AutomaticHarvestParams =>
+                ctx.ReadStruct(0, Mas.Schema.Model.Monica.AutomaticHarvestParameters.READER.create);
             public bool HasAutomaticHarvestParams => ctx.IsStructFieldNonNull(0);
             public string SpeciesName => ctx.ReadText(1, null);
             public string CultivarName => ctx.ReadText(2, null);
-            public Mas.Schema.Common.Date.READER SeedDate => ctx.ReadStruct(3, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER SeedDate =>
+                ctx.ReadStruct(3, Mas.Schema.Common.Date.READER.create);
             public bool HasSeedDate => ctx.IsStructFieldNonNull(3);
-            public Mas.Schema.Common.Date.READER HarvestDate => ctx.ReadStruct(4, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER HarvestDate =>
+                ctx.ReadStruct(4, Mas.Schema.Common.Date.READER.create);
             public bool HasHarvestDate => ctx.IsStructFieldNonNull(4);
-            public Mas.Schema.Model.Monica.MaybeBool.READER IsWinterCrop => ctx.ReadStruct(5, Mas.Schema.Model.Monica.MaybeBool.READER.create);
+            public Mas.Schema.Model.Monica.MaybeBool.READER IsWinterCrop =>
+                ctx.ReadStruct(5, Mas.Schema.Model.Monica.MaybeBool.READER.create);
             public bool HasIsWinterCrop => ctx.IsStructFieldNonNull(5);
-            public Mas.Schema.Model.Monica.MaybeBool.READER IsPerennialCrop => ctx.ReadStruct(6, Mas.Schema.Model.Monica.MaybeBool.READER.create);
+            public Mas.Schema.Model.Monica.MaybeBool.READER IsPerennialCrop =>
+                ctx.ReadStruct(6, Mas.Schema.Model.Monica.MaybeBool.READER.create);
             public bool HasIsPerennialCrop => ctx.IsStructFieldNonNull(6);
-            public IReadOnlyList<Mas.Schema.Common.Date.READER> CuttingDates => ctx.ReadList(7).Cast(Mas.Schema.Common.Date.READER.create);
+            public IReadOnlyList<Mas.Schema.Common.Date.READER> CuttingDates =>
+                ctx.ReadList(7).Cast(Mas.Schema.Common.Date.READER.create);
             public bool HasCuttingDates => ctx.IsStructFieldNonNull(7);
-            public Mas.Schema.Model.Monica.CropParameters.READER CropParams => ctx.ReadStruct(8, Mas.Schema.Model.Monica.CropParameters.READER.create);
+            public Mas.Schema.Model.Monica.CropParameters.READER CropParams =>
+                ctx.ReadStruct(8, Mas.Schema.Model.Monica.CropParameters.READER.create);
             public bool HasCropParams => ctx.IsStructFieldNonNull(8);
-            public Mas.Schema.Model.Monica.CropParameters.READER PerennialCropParams => ctx.ReadStruct(9, Mas.Schema.Model.Monica.CropParameters.READER.create);
+            public Mas.Schema.Model.Monica.CropParameters.READER PerennialCropParams =>
+                ctx.ReadStruct(9, Mas.Schema.Model.Monica.CropParameters.READER.create);
             public bool HasPerennialCropParams => ctx.IsStructFieldNonNull(9);
-            public Mas.Schema.Model.Monica.CropResidueParameters.READER ResidueParams => ctx.ReadStruct(10, Mas.Schema.Model.Monica.CropResidueParameters.READER.create);
+            public Mas.Schema.Model.Monica.CropResidueParameters.READER ResidueParams =>
+                ctx.ReadStruct(10, Mas.Schema.Model.Monica.CropResidueParameters.READER.create);
             public bool HasResidueParams => ctx.IsStructFieldNonNull(10);
             public double CrossCropAdaptionFactor => ctx.ReadDataDouble(0UL, 1);
             public bool AutomaticHarvest => ctx.ReadDataBool(64UL, false);
@@ -379,10 +362,14 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe3512e62df901c18UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xe3512e62df901c18UL)
+    ]
     public class AOMProperties : ICapnpSerializable
     {
         public const UInt64 typeId = 0xe3512e62df901c18UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -440,154 +427,59 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double AomSlow
-        {
-            get;
-            set;
-        }
+        public double AomSlow { get; set; }
 
-        public double AomFast
-        {
-            get;
-            set;
-        }
+        public double AomFast { get; set; }
 
-        public double AomSlowDecRatetoSMBSlow
-        {
-            get;
-            set;
-        }
+        public double AomSlowDecRatetoSMBSlow { get; set; }
 
-        public double AomSlowDecRatetoSMBFast
-        {
-            get;
-            set;
-        }
+        public double AomSlowDecRatetoSMBFast { get; set; }
 
-        public double AomFastDecRatetoSMBSlow
-        {
-            get;
-            set;
-        }
+        public double AomFastDecRatetoSMBSlow { get; set; }
 
-        public double AomFastDecRatetoSMBFast
-        {
-            get;
-            set;
-        }
+        public double AomFastDecRatetoSMBFast { get; set; }
 
-        public double AomSlowDecCoeff
-        {
-            get;
-            set;
-        }
+        public double AomSlowDecCoeff { get; set; }
 
-        public double AomFastDecCoeff
-        {
-            get;
-            set;
-        }
+        public double AomFastDecCoeff { get; set; }
 
-        public double AomSlowDecCoeffStandard
-        {
-            get;
-            set;
-        }
+        public double AomSlowDecCoeffStandard { get; set; } = 1;
+        public double AomFastDecCoeffStandard { get; set; } = 1;
+        public double PartAOMSlowtoSMBSlow { get; set; }
 
-        = 1;
-        public double AomFastDecCoeffStandard
-        {
-            get;
-            set;
-        }
+        public double PartAOMSlowtoSMBFast { get; set; }
 
-        = 1;
-        public double PartAOMSlowtoSMBSlow
-        {
-            get;
-            set;
-        }
+        public double CnRatioAOMSlow { get; set; } = 1;
+        public double CnRatioAOMFast { get; set; } = 1;
+        public ushort DaysAfterApplication { get; set; } = 0;
+        public double AomDryMatterContent { get; set; }
 
-        public double PartAOMSlowtoSMBFast
-        {
-            get;
-            set;
-        }
+        public double AomNH4Content { get; set; }
 
-        public double CnRatioAOMSlow
-        {
-            get;
-            set;
-        }
+        public double AomSlowDelta { get; set; }
 
-        = 1;
-        public double CnRatioAOMFast
-        {
-            get;
-            set;
-        }
+        public double AomFastDelta { get; set; }
 
-        = 1;
-        public ushort DaysAfterApplication
-        {
-            get;
-            set;
-        }
+        public bool Incorporation { get; set; } = false;
+        public bool NoVolatilization { get; set; } = true;
 
-        = 0;
-        public double AomDryMatterContent
-        {
-            get;
-            set;
-        }
-
-        public double AomNH4Content
-        {
-            get;
-            set;
-        }
-
-        public double AomSlowDelta
-        {
-            get;
-            set;
-        }
-
-        public double AomFastDelta
-        {
-            get;
-            set;
-        }
-
-        public bool Incorporation
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public bool NoVolatilization
-        {
-            get;
-            set;
-        }
-
-        = true;
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double AomSlow => ctx.ReadDataDouble(0UL, 0);
             public double AomFast => ctx.ReadDataDouble(64UL, 0);
             public double AomSlowDecRatetoSMBSlow => ctx.ReadDataDouble(128UL, 0);
@@ -746,10 +638,14 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xef3e4198d3e35596UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xef3e4198d3e35596UL)
+    ]
     public class SoilColumnState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xef3e4198d3e35596UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -763,12 +659,23 @@ namespace Mas.Schema.Model.Monica
             PsMaxMineralisationDepth = reader.PsMaxMineralisationDepth;
             VsNumberOfOrganicLayers = reader.VsNumberOfOrganicLayers;
             VfTopDressing = reader.VfTopDressing;
-            VfTopDressingPartition = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(reader.VfTopDressingPartition);
+            VfTopDressingPartition =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(
+                    reader.VfTopDressingPartition
+                );
             VfTopDressingDelay = reader.VfTopDressingDelay;
-            CropModule = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleState>(reader.CropModule);
-            DelayedNMinApplications = reader.DelayedNMinApplications?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams>(_));
+            CropModule = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleState>(
+                reader.CropModule
+            );
+            DelayedNMinApplications = reader.DelayedNMinApplications?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams>(
+                    _
+                )
+            );
             PmCriticalMoistureDepth = reader.PmCriticalMoistureDepth;
-            Layers = reader.Layers?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(_));
+            Layers = reader.Layers?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(_)
+            );
             applyDefaults();
         }
 
@@ -787,7 +694,10 @@ namespace Mas.Schema.Model.Monica
             VfTopDressingPartition?.serialize(writer.VfTopDressingPartition);
             writer.VfTopDressingDelay = VfTopDressingDelay;
             CropModule?.serialize(writer.CropModule);
-            writer.DelayedNMinApplications.Init(DelayedNMinApplications, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.DelayedNMinApplications.Init(
+                DelayedNMinApplications,
+                (_s1, _v1) => _v1?.serialize(_s1)
+            );
             writer.PmCriticalMoistureDepth = PmCriticalMoistureDepth;
             writer.Layers.Init(Layers, (_s1, _v1) => _v1?.serialize(_s1));
         }
@@ -797,118 +707,54 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double VsSurfaceWaterStorage
-        {
-            get;
-            set;
-        }
+        public double VsSurfaceWaterStorage { get; set; }
 
-        public double VsInterceptionStorage
-        {
-            get;
-            set;
-        }
+        public double VsInterceptionStorage { get; set; }
 
-        public ushort VmGroundwaterTable
-        {
-            get;
-            set;
-        }
+        public ushort VmGroundwaterTable { get; set; }
 
-        public double VsFluxAtLowerBoundary
-        {
-            get;
-            set;
-        }
+        public double VsFluxAtLowerBoundary { get; set; }
 
-        public double VqCropNUptake
-        {
-            get;
-            set;
-        }
+        public double VqCropNUptake { get; set; }
 
-        public double VtSoilSurfaceTemperature
-        {
-            get;
-            set;
-        }
+        public double VtSoilSurfaceTemperature { get; set; }
 
-        public double VmSnowDepth
-        {
-            get;
-            set;
-        }
+        public double VmSnowDepth { get; set; }
 
-        public double PsMaxMineralisationDepth
-        {
-            get;
-            set;
-        }
+        public double PsMaxMineralisationDepth { get; set; } = 0.4;
+        public double VsNumberOfOrganicLayers { get; set; }
 
-        = 0.4;
-        public double VsNumberOfOrganicLayers
-        {
-            get;
-            set;
-        }
+        public double VfTopDressing { get; set; }
 
-        public double VfTopDressing
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters VfTopDressingPartition { get; set; }
 
-        public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters VfTopDressingPartition
-        {
-            get;
-            set;
-        }
+        public ushort VfTopDressingDelay { get; set; }
 
-        public ushort VfTopDressingDelay
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropModuleState CropModule { get; set; }
 
-        public Mas.Schema.Model.Monica.CropModuleState CropModule
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams> DelayedNMinApplications { get; set; }
 
-        public IReadOnlyList<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams> DelayedNMinApplications
-        {
-            get;
-            set;
-        }
+        public double PmCriticalMoistureDepth { get; set; }
 
-        public double PmCriticalMoistureDepth
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.SoilLayerState> Layers
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Model.Monica.SoilLayerState> Layers { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double VsSurfaceWaterStorage => ctx.ReadDataDouble(0UL, 0);
             public double VsInterceptionStorage => ctx.ReadDataDouble(64UL, 0);
             public ushort VmGroundwaterTable => ctx.ReadDataUShort(128UL, (ushort)0);
@@ -919,15 +765,31 @@ namespace Mas.Schema.Model.Monica
             public double PsMaxMineralisationDepth => ctx.ReadDataDouble(448UL, 0.4);
             public double VsNumberOfOrganicLayers => ctx.ReadDataDouble(512UL, 0);
             public double VfTopDressing => ctx.ReadDataDouble(576UL, 0);
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER VfTopDressingPartition => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create);
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER VfTopDressingPartition =>
+                ctx.ReadStruct(
+                    0,
+                    Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create
+                );
             public bool HasVfTopDressingPartition => ctx.IsStructFieldNonNull(0);
             public ushort VfTopDressingDelay => ctx.ReadDataUShort(144UL, (ushort)0);
-            public Mas.Schema.Model.Monica.CropModuleState.READER CropModule => ctx.ReadStruct(1, Mas.Schema.Model.Monica.CropModuleState.READER.create);
+            public Mas.Schema.Model.Monica.CropModuleState.READER CropModule =>
+                ctx.ReadStruct(1, Mas.Schema.Model.Monica.CropModuleState.READER.create);
             public bool HasCropModule => ctx.IsStructFieldNonNull(1);
-            public IReadOnlyList<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.READER> DelayedNMinApplications => ctx.ReadList(2).Cast(Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.READER> DelayedNMinApplications =>
+                ctx.ReadList(2)
+                    .Cast(
+                        Mas.Schema
+                            .Model
+                            .Monica
+                            .SoilColumnState
+                            .DelayedNMinApplicationParams
+                            .READER
+                            .create
+                    );
             public bool HasDelayedNMinApplications => ctx.IsStructFieldNonNull(2);
             public double PmCriticalMoistureDepth => ctx.ReadDataDouble(640UL, 0);
-            public IReadOnlyList<Mas.Schema.Model.Monica.SoilLayerState.READER> Layers => ctx.ReadList(3).Cast(Mas.Schema.Model.Monica.SoilLayerState.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.SoilLayerState.READER> Layers =>
+                ctx.ReadList(3).Cast(Mas.Schema.Model.Monica.SoilLayerState.READER.create);
             public bool HasLayers => ctx.IsStructFieldNonNull(3);
         }
 
@@ -1000,7 +862,10 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER VfTopDressingPartition
             {
-                get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
+                get =>
+                    BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(
+                        0
+                    );
                 set => Link(0, value);
             }
 
@@ -1018,7 +883,10 @@ namespace Mas.Schema.Model.Monica
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.WRITER> DelayedNMinApplications
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.WRITER>>(2);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilColumnState.DelayedNMinApplicationParams.WRITER>
+                    >(2);
                 set => Link(2, value);
             }
 
@@ -1030,19 +898,29 @@ namespace Mas.Schema.Model.Monica
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilLayerState.WRITER> Layers
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilLayerState.WRITER>>(3);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.SoilLayerState.WRITER>
+                    >(3);
                 set => Link(3, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd1edcf54f4edf638UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd1edcf54f4edf638UL)
+        ]
         public class DelayedNMinApplicationParams : ICapnpSerializable
         {
             public const UInt64 typeId = 0xd1edcf54f4edf638UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Fp = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(reader.Fp);
+                Fp =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(
+                        reader.Fp
+                    );
                 SamplingDepth = reader.SamplingDepth;
                 CropNTarget = reader.CropNTarget;
                 CropNTarget30 = reader.CropNTarget30;
@@ -1068,64 +946,42 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Fp
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Fp { get; set; }
 
-            public double SamplingDepth
-            {
-                get;
-                set;
-            }
+            public double SamplingDepth { get; set; }
 
-            public double CropNTarget
-            {
-                get;
-                set;
-            }
+            public double CropNTarget { get; set; }
 
-            public double CropNTarget30
-            {
-                get;
-                set;
-            }
+            public double CropNTarget30 { get; set; }
 
-            public double FertiliserMinApplication
-            {
-                get;
-                set;
-            }
+            public double FertiliserMinApplication { get; set; }
 
-            public double FertiliserMaxApplication
-            {
-                get;
-                set;
-            }
+            public double FertiliserMaxApplication { get; set; }
 
-            public double TopDressingDelay
-            {
-                get;
-                set;
-            }
+            public double TopDressingDelay { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Fp => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create);
+
+                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Fp =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create
+                    );
                 public bool HasFp => ctx.IsStructFieldNonNull(0);
                 public double SamplingDepth => ctx.ReadDataDouble(0UL, 0);
                 public double CropNTarget => ctx.ReadDataDouble(64UL, 0);
@@ -1144,7 +1000,10 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Fp
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
 
@@ -1187,16 +1046,22 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdd1e0c7c94dc4211UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xdd1e0c7c94dc4211UL)
+    ]
     public class SoilLayerState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xdd1e0c7c94dc4211UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             LayerThickness = reader.LayerThickness;
             SoilWaterFlux = reader.SoilWaterFlux;
-            VoAOMPool = reader.VoAOMPool?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.AOMProperties>(_));
+            VoAOMPool = reader.VoAOMPool?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.AOMProperties>(_)
+            );
             SomSlow = reader.SomSlow;
             SomFast = reader.SomFast;
             SmbSlow = reader.SmbSlow;
@@ -1236,120 +1101,51 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double LayerThickness
-        {
-            get;
-            set;
-        }
+        public double LayerThickness { get; set; } = 0.1;
+        public double SoilWaterFlux { get; set; }
 
-        = 0.1;
-        public double SoilWaterFlux
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Model.Monica.AOMProperties> VoAOMPool { get; set; }
 
-        public IReadOnlyList<Mas.Schema.Model.Monica.AOMProperties> VoAOMPool
-        {
-            get;
-            set;
-        }
+        public double SomSlow { get; set; }
 
-        public double SomSlow
-        {
-            get;
-            set;
-        }
+        public double SomFast { get; set; }
 
-        public double SomFast
-        {
-            get;
-            set;
-        }
+        public double SmbSlow { get; set; }
 
-        public double SmbSlow
-        {
-            get;
-            set;
-        }
+        public double SmbFast { get; set; }
 
-        public double SmbFast
-        {
-            get;
-            set;
-        }
+        public double SoilCarbamid { get; set; }
 
-        public double SoilCarbamid
-        {
-            get;
-            set;
-        }
+        public double SoilNH4 { get; set; } = 0.0001;
+        public double SoilNO2 { get; set; } = 0.001;
+        public double SoilNO3 { get; set; } = 0.0001;
+        public bool SoilFrozen { get; set; } = false;
+        public Mas.Schema.Model.Monica.SoilParameters Sps { get; set; }
 
-        public double SoilNH4
-        {
-            get;
-            set;
-        }
-
-        = 0.0001;
-        public double SoilNO2
-        {
-            get;
-            set;
-        }
-
-        = 0.001;
-        public double SoilNO3
-        {
-            get;
-            set;
-        }
-
-        = 0.0001;
-        public bool SoilFrozen
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public Mas.Schema.Model.Monica.SoilParameters Sps
-        {
-            get;
-            set;
-        }
-
-        public double SoilMoistureM3
-        {
-            get;
-            set;
-        }
-
-        = 0.25;
-        public double SoilTemperature
-        {
-            get;
-            set;
-        }
+        public double SoilMoistureM3 { get; set; } = 0.25;
+        public double SoilTemperature { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double LayerThickness => ctx.ReadDataDouble(0UL, 0.1);
             public double SoilWaterFlux => ctx.ReadDataDouble(64UL, 0);
-            public IReadOnlyList<Mas.Schema.Model.Monica.AOMProperties.READER> VoAOMPool => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.AOMProperties.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.AOMProperties.READER> VoAOMPool =>
+                ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.AOMProperties.READER.create);
             public bool HasVoAOMPool => ctx.IsStructFieldNonNull(0);
             public double SomSlow => ctx.ReadDataDouble(128UL, 0);
             public double SomFast => ctx.ReadDataDouble(192UL, 0);
@@ -1360,7 +1156,8 @@ namespace Mas.Schema.Model.Monica
             public double SoilNO2 => ctx.ReadDataDouble(512UL, 0.001);
             public double SoilNO3 => ctx.ReadDataDouble(576UL, 0.0001);
             public bool SoilFrozen => ctx.ReadDataBool(640UL, false);
-            public Mas.Schema.Model.Monica.SoilParameters.READER Sps => ctx.ReadStruct(1, Mas.Schema.Model.Monica.SoilParameters.READER.create);
+            public Mas.Schema.Model.Monica.SoilParameters.READER Sps =>
+                ctx.ReadStruct(1, Mas.Schema.Model.Monica.SoilParameters.READER.create);
             public bool HasSps => ctx.IsStructFieldNonNull(1);
             public double SoilMoistureM3 => ctx.ReadDataDouble(704UL, 0.25);
             public double SoilTemperature => ctx.ReadDataDouble(768UL, 0);
@@ -1387,7 +1184,10 @@ namespace Mas.Schema.Model.Monica
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.AOMProperties.WRITER> VoAOMPool
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.AOMProperties.WRITER>>(0);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.AOMProperties.WRITER>
+                    >(0);
                 set => Link(0, value);
             }
 
@@ -1465,29 +1265,59 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xab56969492d293b3UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xab56969492d293b3UL)
+    ]
     public class MonicaModelState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xab56969492d293b3UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            SitePs = CapnpSerializable.Create<Mas.Schema.Model.Monica.SiteParameters>(reader.SitePs);
+            SitePs = CapnpSerializable.Create<Mas.Schema.Model.Monica.SiteParameters>(
+                reader.SitePs
+            );
             CultivationMethodCount = reader.CultivationMethodCount;
-            EnvPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.EnvironmentParameters>(reader.EnvPs);
-            CropPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleParameters>(reader.CropPs);
+            EnvPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.EnvironmentParameters>(
+                reader.EnvPs
+            );
+            CropPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleParameters>(
+                reader.CropPs
+            );
             VsGroundwaterDepth = reader.VsGroundwaterDepth;
             VwAtmosphericO3Concentration = reader.VwAtmosphericO3Concentration;
             VwAtmosphericCO2Concentration = reader.VwAtmosphericCO2Concentration;
-            SimPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.SimulationParameters>(reader.SimPs);
-            GroundwaterInformation = CapnpSerializable.Create<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation>(reader.GroundwaterInformation);
-            SoilColumn = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilColumnState>(reader.SoilColumn);
-            SoilTemperature = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTemperatureModuleState>(reader.SoilTemperature);
-            SoilMoisture = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilMoistureModuleState>(reader.SoilMoisture);
-            SoilOrganic = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilOrganicModuleState>(reader.SoilOrganic);
-            SoilTransport = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTransportModuleState>(reader.SoilTransport);
+            SimPs = CapnpSerializable.Create<Mas.Schema.Model.Monica.SimulationParameters>(
+                reader.SimPs
+            );
+            GroundwaterInformation =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation>(
+                    reader.GroundwaterInformation
+                );
+            SoilColumn = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilColumnState>(
+                reader.SoilColumn
+            );
+            SoilTemperature =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTemperatureModuleState>(
+                    reader.SoilTemperature
+                );
+            SoilMoisture =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilMoistureModuleState>(
+                    reader.SoilMoisture
+                );
+            SoilOrganic = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilOrganicModuleState>(
+                reader.SoilOrganic
+            );
+            SoilTransport =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTransportModuleState>(
+                    reader.SoilTransport
+                );
             AccuOxygenStress = reader.AccuOxygenStress;
-            CurrentCropModule = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleState>(reader.CurrentCropModule);
+            CurrentCropModule = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropModuleState>(
+                reader.CurrentCropModule
+            );
             SumFertiliser = reader.SumFertiliser;
             SumOrgFertiliser = reader.SumOrgFertiliser;
             DailySumFertiliser = reader.DailySumFertiliser;
@@ -1498,8 +1328,14 @@ namespace Mas.Schema.Model.Monica
             DailySumIrrigationWater = reader.DailySumIrrigationWater;
             OptCarbonExportedResidues = reader.OptCarbonExportedResidues;
             OptCarbonReturnedResidues = reader.OptCarbonReturnedResidues;
-            CurrentStepDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.CurrentStepDate);
-            ClimateData = reader.ClimateData?.ToReadOnlyList(_2 => _2?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue>(_)));
+            CurrentStepDate = CapnpSerializable.Create<Mas.Schema.Common.Date>(
+                reader.CurrentStepDate
+            );
+            ClimateData = reader.ClimateData?.ToReadOnlyList(_2 =>
+                _2?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue>(_)
+                )
+            );
             CurrentEvents = reader.CurrentEvents;
             PreviousDaysEvents = reader.PreviousDaysEvents;
             ClearCropUponNextDay = reader.ClearCropUponNextDay;
@@ -1539,7 +1375,10 @@ namespace Mas.Schema.Model.Monica
             writer.OptCarbonExportedResidues = OptCarbonExportedResidues;
             writer.OptCarbonReturnedResidues = OptCarbonReturnedResidues;
             CurrentStepDate?.serialize(writer.CurrentStepDate);
-            writer.ClimateData.Init(ClimateData, (_s2, _v2) => _s2.Init(_v2, (_s1, _v1) => _v1?.serialize(_s1)));
+            writer.ClimateData.Init(
+                ClimateData,
+                (_s2, _v2) => _s2.Init(_v2, (_s1, _v1) => _v1?.serialize(_s1))
+            );
             writer.CurrentEvents.Init(CurrentEvents);
             writer.PreviousDaysEvents.Init(PreviousDaysEvents);
             writer.ClearCropUponNextDay = ClearCropUponNextDay;
@@ -1554,257 +1393,135 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Model.Monica.SiteParameters SitePs
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SiteParameters SitePs { get; set; }
 
-        public ushort CultivationMethodCount
-        {
-            get;
-            set;
-        }
+        public ushort CultivationMethodCount { get; set; }
 
-        public Mas.Schema.Model.Monica.EnvironmentParameters EnvPs
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.EnvironmentParameters EnvPs { get; set; }
 
-        public Mas.Schema.Model.Monica.CropModuleParameters CropPs
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropModuleParameters CropPs { get; set; }
 
-        public double VsGroundwaterDepth
-        {
-            get;
-            set;
-        }
+        public double VsGroundwaterDepth { get; set; }
 
-        public double VwAtmosphericO3Concentration
-        {
-            get;
-            set;
-        }
+        public double VwAtmosphericO3Concentration { get; set; }
 
-        public double VwAtmosphericCO2Concentration
-        {
-            get;
-            set;
-        }
+        public double VwAtmosphericCO2Concentration { get; set; }
 
-        public Mas.Schema.Model.Monica.SimulationParameters SimPs
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SimulationParameters SimPs { get; set; }
 
-        public Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation GroundwaterInformation
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation GroundwaterInformation { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilColumnState SoilColumn
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilColumnState SoilColumn { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilTemperatureModuleState SoilTemperature
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilTemperatureModuleState SoilTemperature { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilMoistureModuleState SoilMoisture
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilMoistureModuleState SoilMoisture { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilOrganicModuleState SoilOrganic
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilOrganicModuleState SoilOrganic { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilTransportModuleState SoilTransport
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilTransportModuleState SoilTransport { get; set; }
 
-        public double AccuOxygenStress
-        {
-            get;
-            set;
-        }
+        public double AccuOxygenStress { get; set; }
 
-        public Mas.Schema.Model.Monica.CropModuleState CurrentCropModule
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.CropModuleState CurrentCropModule { get; set; }
 
-        public double SumFertiliser
-        {
-            get;
-            set;
-        }
+        public double SumFertiliser { get; set; }
 
-        public double SumOrgFertiliser
-        {
-            get;
-            set;
-        }
+        public double SumOrgFertiliser { get; set; }
 
-        public double DailySumFertiliser
-        {
-            get;
-            set;
-        }
+        public double DailySumFertiliser { get; set; }
 
-        public double DailySumOrgFertiliser
-        {
-            get;
-            set;
-        }
+        public double DailySumOrgFertiliser { get; set; }
 
-        public double DailySumOrganicFertilizerDM
-        {
-            get;
-            set;
-        }
+        public double DailySumOrganicFertilizerDM { get; set; }
 
-        public double SumOrganicFertilizerDM
-        {
-            get;
-            set;
-        }
+        public double SumOrganicFertilizerDM { get; set; }
 
-        public double HumusBalanceCarryOver
-        {
-            get;
-            set;
-        }
+        public double HumusBalanceCarryOver { get; set; }
 
-        public double DailySumIrrigationWater
-        {
-            get;
-            set;
-        }
+        public double DailySumIrrigationWater { get; set; }
 
-        public double OptCarbonExportedResidues
-        {
-            get;
-            set;
-        }
+        public double OptCarbonExportedResidues { get; set; }
 
-        public double OptCarbonReturnedResidues
-        {
-            get;
-            set;
-        }
+        public double OptCarbonReturnedResidues { get; set; }
 
-        public Mas.Schema.Common.Date CurrentStepDate
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date CurrentStepDate { get; set; }
 
-        public IReadOnlyList<IReadOnlyList<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue>> ClimateData
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<
+            IReadOnlyList<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue>
+        > ClimateData { get; set; }
 
-        public IReadOnlyList<string> CurrentEvents
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<string> CurrentEvents { get; set; }
 
-        public IReadOnlyList<string> PreviousDaysEvents
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<string> PreviousDaysEvents { get; set; }
 
-        public bool ClearCropUponNextDay
-        {
-            get;
-            set;
-        }
+        public bool ClearCropUponNextDay { get; set; }
 
-        public ushort DaysWithCrop
-        {
-            get;
-            set;
-        }
+        public ushort DaysWithCrop { get; set; }
 
-        public double AccuNStress
-        {
-            get;
-            set;
-        }
+        public double AccuNStress { get; set; }
 
-        public double AccuWaterStress
-        {
-            get;
-            set;
-        }
+        public double AccuWaterStress { get; set; }
 
-        public double AccuHeatStress
-        {
-            get;
-            set;
-        }
+        public double AccuHeatStress { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public Mas.Schema.Model.Monica.SiteParameters.READER SitePs => ctx.ReadStruct(0, Mas.Schema.Model.Monica.SiteParameters.READER.create);
+
+            public Mas.Schema.Model.Monica.SiteParameters.READER SitePs =>
+                ctx.ReadStruct(0, Mas.Schema.Model.Monica.SiteParameters.READER.create);
             public bool HasSitePs => ctx.IsStructFieldNonNull(0);
             public ushort CultivationMethodCount => ctx.ReadDataUShort(0UL, (ushort)0);
-            public Mas.Schema.Model.Monica.EnvironmentParameters.READER EnvPs => ctx.ReadStruct(1, Mas.Schema.Model.Monica.EnvironmentParameters.READER.create);
+            public Mas.Schema.Model.Monica.EnvironmentParameters.READER EnvPs =>
+                ctx.ReadStruct(1, Mas.Schema.Model.Monica.EnvironmentParameters.READER.create);
             public bool HasEnvPs => ctx.IsStructFieldNonNull(1);
-            public Mas.Schema.Model.Monica.CropModuleParameters.READER CropPs => ctx.ReadStruct(2, Mas.Schema.Model.Monica.CropModuleParameters.READER.create);
+            public Mas.Schema.Model.Monica.CropModuleParameters.READER CropPs =>
+                ctx.ReadStruct(2, Mas.Schema.Model.Monica.CropModuleParameters.READER.create);
             public bool HasCropPs => ctx.IsStructFieldNonNull(2);
             public double VsGroundwaterDepth => ctx.ReadDataDouble(64UL, 0);
             public double VwAtmosphericO3Concentration => ctx.ReadDataDouble(128UL, 0);
             public double VwAtmosphericCO2Concentration => ctx.ReadDataDouble(192UL, 0);
-            public Mas.Schema.Model.Monica.SimulationParameters.READER SimPs => ctx.ReadStruct(3, Mas.Schema.Model.Monica.SimulationParameters.READER.create);
+            public Mas.Schema.Model.Monica.SimulationParameters.READER SimPs =>
+                ctx.ReadStruct(3, Mas.Schema.Model.Monica.SimulationParameters.READER.create);
             public bool HasSimPs => ctx.IsStructFieldNonNull(3);
-            public Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.READER GroundwaterInformation => ctx.ReadStruct(4, Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.READER.create);
+            public Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.READER GroundwaterInformation =>
+                ctx.ReadStruct(
+                    4,
+                    Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.READER.create
+                );
             public bool HasGroundwaterInformation => ctx.IsStructFieldNonNull(4);
-            public Mas.Schema.Model.Monica.SoilColumnState.READER SoilColumn => ctx.ReadStruct(5, Mas.Schema.Model.Monica.SoilColumnState.READER.create);
+            public Mas.Schema.Model.Monica.SoilColumnState.READER SoilColumn =>
+                ctx.ReadStruct(5, Mas.Schema.Model.Monica.SoilColumnState.READER.create);
             public bool HasSoilColumn => ctx.IsStructFieldNonNull(5);
-            public Mas.Schema.Model.Monica.SoilTemperatureModuleState.READER SoilTemperature => ctx.ReadStruct(6, Mas.Schema.Model.Monica.SoilTemperatureModuleState.READER.create);
+            public Mas.Schema.Model.Monica.SoilTemperatureModuleState.READER SoilTemperature =>
+                ctx.ReadStruct(6, Mas.Schema.Model.Monica.SoilTemperatureModuleState.READER.create);
             public bool HasSoilTemperature => ctx.IsStructFieldNonNull(6);
-            public Mas.Schema.Model.Monica.SoilMoistureModuleState.READER SoilMoisture => ctx.ReadStruct(7, Mas.Schema.Model.Monica.SoilMoistureModuleState.READER.create);
+            public Mas.Schema.Model.Monica.SoilMoistureModuleState.READER SoilMoisture =>
+                ctx.ReadStruct(7, Mas.Schema.Model.Monica.SoilMoistureModuleState.READER.create);
             public bool HasSoilMoisture => ctx.IsStructFieldNonNull(7);
-            public Mas.Schema.Model.Monica.SoilOrganicModuleState.READER SoilOrganic => ctx.ReadStruct(8, Mas.Schema.Model.Monica.SoilOrganicModuleState.READER.create);
+            public Mas.Schema.Model.Monica.SoilOrganicModuleState.READER SoilOrganic =>
+                ctx.ReadStruct(8, Mas.Schema.Model.Monica.SoilOrganicModuleState.READER.create);
             public bool HasSoilOrganic => ctx.IsStructFieldNonNull(8);
-            public Mas.Schema.Model.Monica.SoilTransportModuleState.READER SoilTransport => ctx.ReadStruct(9, Mas.Schema.Model.Monica.SoilTransportModuleState.READER.create);
+            public Mas.Schema.Model.Monica.SoilTransportModuleState.READER SoilTransport =>
+                ctx.ReadStruct(9, Mas.Schema.Model.Monica.SoilTransportModuleState.READER.create);
             public bool HasSoilTransport => ctx.IsStructFieldNonNull(9);
             public double AccuOxygenStress => ctx.ReadDataDouble(256UL, 0);
-            public Mas.Schema.Model.Monica.CropModuleState.READER CurrentCropModule => ctx.ReadStruct(10, Mas.Schema.Model.Monica.CropModuleState.READER.create);
+            public Mas.Schema.Model.Monica.CropModuleState.READER CurrentCropModule =>
+                ctx.ReadStruct(10, Mas.Schema.Model.Monica.CropModuleState.READER.create);
             public bool HasCurrentCropModule => ctx.IsStructFieldNonNull(10);
             public double SumFertiliser => ctx.ReadDataDouble(320UL, 0);
             public double SumOrgFertiliser => ctx.ReadDataDouble(384UL, 0);
@@ -1816,9 +1533,17 @@ namespace Mas.Schema.Model.Monica
             public double DailySumIrrigationWater => ctx.ReadDataDouble(768UL, 0);
             public double OptCarbonExportedResidues => ctx.ReadDataDouble(832UL, 0);
             public double OptCarbonReturnedResidues => ctx.ReadDataDouble(896UL, 0);
-            public Mas.Schema.Common.Date.READER CurrentStepDate => ctx.ReadStruct(11, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER CurrentStepDate =>
+                ctx.ReadStruct(11, Mas.Schema.Common.Date.READER.create);
             public bool HasCurrentStepDate => ctx.IsStructFieldNonNull(11);
-            public IReadOnlyList<IReadOnlyList<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.READER>> ClimateData => ctx.ReadList(12).Cast(_0 => _0.RequireList().Cast(Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.READER.create));
+            public IReadOnlyList<
+                IReadOnlyList<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.READER>
+            > ClimateData =>
+                ctx.ReadList(12)
+                    .Cast(_0 =>
+                        _0.RequireList()
+                            .Cast(Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.READER.create)
+                    );
             public bool HasClimateData => ctx.IsStructFieldNonNull(12);
             public IReadOnlyList<string> CurrentEvents => ctx.ReadList(13).CastText2();
             public bool HasCurrentEvents => ctx.IsStructFieldNonNull(13);
@@ -1888,7 +1613,10 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.WRITER GroundwaterInformation
             {
-                get => BuildPointer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.WRITER>(4);
+                get =>
+                    BuildPointer<Mas.Schema.Model.Monica.MeasuredGroundwaterTableInformation.WRITER>(
+                        4
+                    );
                 set => Link(4, value);
             }
 
@@ -2000,9 +1728,16 @@ namespace Mas.Schema.Model.Monica
                 set => Link(11, value);
             }
 
-            public ListOfPointersSerializer<ListOfStructsSerializer<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.WRITER>> ClimateData
+            public ListOfPointersSerializer<
+                ListOfStructsSerializer<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.WRITER>
+            > ClimateData
             {
-                get => BuildPointer<ListOfPointersSerializer<ListOfStructsSerializer<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.WRITER>>>(12);
+                get =>
+                    BuildPointer<
+                        ListOfPointersSerializer<
+                            ListOfStructsSerializer<Mas.Schema.Model.Monica.MonicaModelState.ACDToValue.WRITER>
+                        >
+                    >(12);
                 set => Link(12, value);
             }
 
@@ -2049,10 +1784,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x98e203c76f83d365UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x98e203c76f83d365UL)
+        ]
         public class ACDToValue : ICapnpSerializable
         {
             public const UInt64 typeId = 0x98e203c76f83d365UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -2072,33 +1811,27 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public ushort Acd
-            {
-                get;
-                set;
-            }
+            public ushort Acd { get; set; }
 
-            public double Value
-            {
-                get;
-                set;
-            }
+            public double Value { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public ushort Acd => ctx.ReadDataUShort(0UL, (ushort)0);
                 public double Value => ctx.ReadDataDouble(64UL, 0);
             }
@@ -2125,10 +1858,14 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x811d54ac7debc21eUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x811d54ac7debc21eUL)
+    ]
     public class CropModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0x811d54ac7debc21eUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -2180,7 +1917,8 @@ namespace Mas.Schema.Model.Monica
             Declination = reader.Declination;
             PcDefaultRadiationUseEfficiency = reader.PcDefaultRadiationUseEfficiency;
             VmDepthGroundwaterTable = reader.VmDepthGroundwaterTable;
-            PcDevelopmentAccelerationByNitrogenStress = reader.PcDevelopmentAccelerationByNitrogenStress;
+            PcDevelopmentAccelerationByNitrogenStress =
+                reader.PcDevelopmentAccelerationByNitrogenStress;
             DevelopmentalStage = reader.DevelopmentalStage;
             NoOfCropSteps = reader.NoOfCropSteps;
             DroughtImpactOnFertility = reader.DroughtImpactOnFertility;
@@ -2259,9 +1997,15 @@ namespace Mas.Schema.Model.Monica
             OrganGreenBiomass = reader.OrganGreenBiomass;
             OrganGrowthIncrement = reader.OrganGrowthIncrement;
             PcOrganGrowthRespiration = reader.PcOrganGrowthRespiration;
-            PcOrganIdsForPrimaryYield = reader.PcOrganIdsForPrimaryYield?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_));
-            PcOrganIdsForSecondaryYield = reader.PcOrganIdsForSecondaryYield?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_));
-            PcOrganIdsForCutting = reader.PcOrganIdsForCutting?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_));
+            PcOrganIdsForPrimaryYield = reader.PcOrganIdsForPrimaryYield?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_)
+            );
+            PcOrganIdsForSecondaryYield = reader.PcOrganIdsForSecondaryYield?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_)
+            );
+            PcOrganIdsForCutting = reader.PcOrganIdsForCutting?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.YieldComponent>(_)
+            );
             PcOrganMaintenanceRespiration = reader.PcOrganMaintenanceRespiration;
             OrganSenescenceIncrement = reader.OrganSenescenceIncrement;
             PcOrganSenescenceRate = reader.PcOrganSenescenceRate;
@@ -2356,13 +2100,28 @@ namespace Mas.Schema.Model.Monica
             Index240 = reader.Index240;
             Full24 = reader.Full24;
             Full240 = reader.Full240;
-            GuentherEmissions = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.Emissions>(reader.GuentherEmissions);
-            JjvEmissions = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.Emissions>(reader.JjvEmissions);
-            VocSpecies = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.SpeciesData>(reader.VocSpecies);
-            CropPhotosynthesisResults = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.CPData>(reader.CropPhotosynthesisResults);
-            SpeciesParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SpeciesParameters>(reader.SpeciesParams);
-            CultivarParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CultivarParameters>(reader.CultivarParams);
-            ResidueParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropResidueParameters>(reader.ResidueParams);
+            GuentherEmissions = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.Emissions>(
+                reader.GuentherEmissions
+            );
+            JjvEmissions = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.Emissions>(
+                reader.JjvEmissions
+            );
+            VocSpecies = CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.SpeciesData>(
+                reader.VocSpecies
+            );
+            CropPhotosynthesisResults =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.Voc.CPData>(
+                    reader.CropPhotosynthesisResults
+                );
+            SpeciesParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SpeciesParameters>(
+                reader.SpeciesParams
+            );
+            CultivarParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CultivarParameters>(
+                reader.CultivarParams
+            );
+            ResidueParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropResidueParameters>(
+                reader.ResidueParams
+            );
             IsWinterCrop = reader.IsWinterCrop;
             StemElongationEventFired = reader.StemElongationEventFired;
             Lt50m = reader.Lt50m;
@@ -2382,7 +2141,10 @@ namespace Mas.Schema.Model.Monica
             writer.AbovegroundBiomassOld = AbovegroundBiomassOld;
             writer.PcAbovegroundOrgan.Init(PcAbovegroundOrgan);
             writer.ActualTranspiration = ActualTranspiration;
-            writer.PcAssimilatePartitioningCoeff.Init(PcAssimilatePartitioningCoeff, (_s2, _v2) => _s2.Init(_v2));
+            writer.PcAssimilatePartitioningCoeff.Init(
+                PcAssimilatePartitioningCoeff,
+                (_s2, _v2) => _s2.Init(_v2)
+            );
             writer.PcAssimilateReallocation = PcAssimilateReallocation;
             writer.Assimilates = Assimilates;
             writer.AssimilationRate = AssimilationRate;
@@ -2419,7 +2181,8 @@ namespace Mas.Schema.Model.Monica
             writer.Declination = Declination;
             writer.PcDefaultRadiationUseEfficiency = PcDefaultRadiationUseEfficiency;
             writer.VmDepthGroundwaterTable = VmDepthGroundwaterTable;
-            writer.PcDevelopmentAccelerationByNitrogenStress = PcDevelopmentAccelerationByNitrogenStress;
+            writer.PcDevelopmentAccelerationByNitrogenStress =
+                PcDevelopmentAccelerationByNitrogenStress;
             writer.DevelopmentalStage = DevelopmentalStage;
             writer.NoOfCropSteps = NoOfCropSteps;
             writer.DroughtImpactOnFertility = DroughtImpactOnFertility;
@@ -2498,9 +2261,18 @@ namespace Mas.Schema.Model.Monica
             writer.OrganGreenBiomass.Init(OrganGreenBiomass);
             writer.OrganGrowthIncrement.Init(OrganGrowthIncrement);
             writer.PcOrganGrowthRespiration.Init(PcOrganGrowthRespiration);
-            writer.PcOrganIdsForPrimaryYield.Init(PcOrganIdsForPrimaryYield, (_s1, _v1) => _v1?.serialize(_s1));
-            writer.PcOrganIdsForSecondaryYield.Init(PcOrganIdsForSecondaryYield, (_s1, _v1) => _v1?.serialize(_s1));
-            writer.PcOrganIdsForCutting.Init(PcOrganIdsForCutting, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.PcOrganIdsForPrimaryYield.Init(
+                PcOrganIdsForPrimaryYield,
+                (_s1, _v1) => _v1?.serialize(_s1)
+            );
+            writer.PcOrganIdsForSecondaryYield.Init(
+                PcOrganIdsForSecondaryYield,
+                (_s1, _v1) => _v1?.serialize(_s1)
+            );
+            writer.PcOrganIdsForCutting.Init(
+                PcOrganIdsForCutting,
+                (_s1, _v1) => _v1?.serialize(_s1)
+            );
             writer.PcOrganMaintenanceRespiration.Init(PcOrganMaintenanceRespiration);
             writer.OrganSenescenceIncrement.Init(OrganSenescenceIncrement);
             writer.PcOrganSenescenceRate.Init(PcOrganSenescenceRate, (_s2, _v2) => _s2.Init(_v2));
@@ -2612,1449 +2384,468 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
-
-        public bool FrostKillOn
-        {
-            get;
-            set;
-        }
-
-        public double Ktko
-        {
-            get;
-            set;
-        }
-
-        public double Ktkc
-        {
-            get;
-            set;
-        }
-
-        public bool AssimilatePartCoeffsReduced
-        {
-            get;
-            set;
-        }
-
-        public double O3WStomatalClosure
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double O3SumUptake
-        {
-            get;
-            set;
-        }
-
-        public double VsLatitude
-        {
-            get;
-            set;
-        }
-
-        public double AbovegroundBiomass
-        {
-            get;
-            set;
-        }
-
-        public double AbovegroundBiomassOld
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<bool> PcAbovegroundOrgan
-        {
-            get;
-            set;
-        }
-
-        public double ActualTranspiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<IReadOnlyList<double>> PcAssimilatePartitioningCoeff
-        {
-            get;
-            set;
-        }
-
-        public double PcAssimilateReallocation
-        {
-            get;
-            set;
-        }
-
-        public double Assimilates
-        {
-            get;
-            set;
-        }
-
-        public double AssimilationRate
-        {
-            get;
-            set;
-        }
-
-        public double AstronomicDayLenght
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcBaseDaylength
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcBaseTemperature
-        {
-            get;
-            set;
-        }
-
-        public double PcBeginSensitivePhaseHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double BelowgroundBiomass
-        {
-            get;
-            set;
-        }
-
-        public double BelowgroundBiomassOld
-        {
-            get;
-            set;
-        }
-
-        public long PcCarboxylationPathway
-        {
-            get;
-            set;
-        }
-
-        public double ClearDayRadiation
-        {
-            get;
-            set;
-        }
-
-        public byte PcCo2Method
-        {
-            get;
-            set;
-        }
-
-        = 3;
-        public double CriticalNConcentration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcCriticalOxygenContent
-        {
-            get;
-            set;
-        }
-
-        public double PcCriticalTemperatureHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double CropDiameter
-        {
-            get;
-            set;
-        }
-
-        public double CropFrostRedux
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double CropHeatRedux
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double CropHeight
-        {
-            get;
-            set;
-        }
-
-        public double PcCropHeightP1
-        {
-            get;
-            set;
-        }
-
-        public double PcCropHeightP2
-        {
-            get;
-            set;
-        }
-
-        public string PcCropName
-        {
-            get;
-            set;
-        }
-
-        public double CropNDemand
-        {
-            get;
-            set;
-        }
-
-        public double CropNRedux
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double PcCropSpecificMaxRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CropWaterUptake
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CurrentTemperatureSum
-        {
-            get;
-            set;
-        }
-
-        public double CurrentTotalTemperatureSum
-        {
-            get;
-            set;
-        }
-
-        public double CurrentTotalTemperatureSumRoot
-        {
-            get;
-            set;
-        }
-
-        public ushort PcCuttingDelayDays
-        {
-            get;
-            set;
-        }
-
-        public double DaylengthFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcDaylengthRequirement
-        {
-            get;
-            set;
-        }
-
-        public ushort DaysAfterBeginFlowering
-        {
-            get;
-            set;
-        }
-
-        public double Declination
-        {
-            get;
-            set;
-        }
-
-        public double PcDefaultRadiationUseEfficiency
-        {
-            get;
-            set;
-        }
-
-        public ushort VmDepthGroundwaterTable
-        {
-            get;
-            set;
-        }
-
-        public ulong PcDevelopmentAccelerationByNitrogenStress
-        {
-            get;
-            set;
-        }
-
-        public ushort DevelopmentalStage
-        {
-            get;
-            set;
-        }
-
-        public ushort NoOfCropSteps
-        {
-            get;
-            set;
-        }
-
-        public double DroughtImpactOnFertility
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double PcDroughtImpactOnFertilityFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcDroughtStressThreshold
-        {
-            get;
-            set;
-        }
-
-        public bool PcEmergenceFloodingControlOn
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public bool PcEmergenceMoistureControlOn
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public double PcEndSensitivePhaseHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double EffectiveDayLength
-        {
-            get;
-            set;
-        }
-
-        public bool ErrorStatus
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public string ErrorMessage
-        {
-            get;
-            set;
-        }
-
-        public double EvaporatedFromIntercept
-        {
-            get;
-            set;
-        }
-
-        public double ExtraterrestrialRadiation
-        {
-            get;
-            set;
-        }
-
-        public double PcFieldConditionModifier
-        {
-            get;
-            set;
-        }
-
-        public ushort FinalDevelopmentalStage
-        {
-            get;
-            set;
-        }
-
-        public double FixedN
-        {
-            get;
-            set;
-        }
-
-        public double PcFrostDehardening
-        {
-            get;
-            set;
-        }
-
-        public double PcFrostHardening
-        {
-            get;
-            set;
-        }
-
-        public double GlobalRadiation
-        {
-            get;
-            set;
-        }
-
-        public double GreenAreaIndex
-        {
-            get;
-            set;
-        }
-
-        public double GrossAssimilates
-        {
-            get;
-            set;
-        }
-
-        public double GrossPhotosynthesis
-        {
-            get;
-            set;
-        }
-
-        public double GrossPhotosynthesisMol
-        {
-            get;
-            set;
-        }
-
-        public double GrossPhotosynthesisReferenceMol
-        {
-            get;
-            set;
-        }
-
-        public double GrossPrimaryProduction
-        {
-            get;
-            set;
-        }
-
-        public bool GrowthCycleEnded
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public double GrowthRespirationAS
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public double PcHeatSumIrrigationStart
-        {
-            get;
-            set;
-        }
-
-        public double PcHeatSumIrrigationEnd
-        {
-            get;
-            set;
-        }
-
-        public double VsHeightNN
-        {
-            get;
-            set;
-        }
-
-        public double PcInitialKcFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcInitialOrganBiomass
-        {
-            get;
-            set;
-        }
-
-        public double PcInitialRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double InterceptionStorage
-        {
-            get;
-            set;
-        }
-
-        public double KcFactor
-        {
-            get;
-            set;
-        }
-
-        = 0.6;
-        public double LeafAreaIndex
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> SunlitLeafAreaIndex
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> ShadedLeafAreaIndex
-        {
-            get;
-            set;
-        }
-
-        public double PcLowTemperatureExposure
-        {
-            get;
-            set;
-        }
-
-        public double PcLimitingTemperatureHeatStress
-        {
-            get;
-            set;
-        }
-
-        public double Lt50
-        {
-            get;
-            set;
-        }
-
-        = -3;
-        public double PcLt50cultivar
-        {
-            get;
-            set;
-        }
-
-        public double PcLuxuryNCoeff
-        {
-            get;
-            set;
-        }
-
-        public double MaintenanceRespirationAS
-        {
-            get;
-            set;
-        }
-
-        public double PcMaxAssimilationRate
-        {
-            get;
-            set;
-        }
-
-        public double PcMaxCropDiameter
-        {
-            get;
-            set;
-        }
-
-        public double PcMaxCropHeight
-        {
-            get;
-            set;
-        }
-
-        public double MaxNUptake
-        {
-            get;
-            set;
-        }
-
-        public double PcMaxNUptakeParam
-        {
-            get;
-            set;
-        }
-
-        public double PcMaxRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double PcMinimumNConcentration
-        {
-            get;
-            set;
-        }
-
-        public double PcMinimumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double PcOptimumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double PcMaximumTemperatureForAssimilation
-        {
-            get;
-            set;
-        }
-
-        public double PcMinimumTemperatureRootGrowth
-        {
-            get;
-            set;
-        }
-
-        public double NetMaintenanceRespiration
-        {
-            get;
-            set;
-        }
-
-        public double NetPhotosynthesis
-        {
-            get;
-            set;
-        }
-
-        public double NetPrecipitation
-        {
-            get;
-            set;
-        }
-
-        public double NetPrimaryProduction
-        {
-            get;
-            set;
-        }
-
-        public double PcNConcentrationAbovegroundBiomass
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationAbovegroundBiomass
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationAbovegroundBiomassOld
-        {
-            get;
-            set;
-        }
-
-        public double PcNConcentrationB0
-        {
-            get;
-            set;
-        }
-
-        public double NContentDeficit
-        {
-            get;
-            set;
-        }
-
-        public double PcNConcentrationPN
-        {
-            get;
-            set;
-        }
-
-        public double PcNConcentrationRoot
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationRoot
-        {
-            get;
-            set;
-        }
-
-        public double NConcentrationRootOld
-        {
-            get;
-            set;
-        }
-
-        public bool PcNitrogenResponseOn
-        {
-            get;
-            set;
-        }
-
-        public double PcNumberOfDevelopmentalStages
-        {
-            get;
-            set;
-        }
-
-        public double PcNumberOfOrgans
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> NUptakeFromLayer
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcOptimumTemperature
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganBiomass
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganDeadBiomass
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganGreenBiomass
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganGrowthIncrement
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcOrganGrowthRespiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForPrimaryYield
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForSecondaryYield
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForCutting
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcOrganMaintenanceRespiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> OrganSenescenceIncrement
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<IReadOnlyList<double>> PcOrganSenescenceRate
-        {
-            get;
-            set;
-        }
-
-        public double OvercastDayRadiation
-        {
-            get;
-            set;
-        }
-
-        public double OxygenDeficit
-        {
-            get;
-            set;
-        }
-
-        public double PcPartBiologicalNFixation
-        {
-            get;
-            set;
-        }
-
-        public bool PcPerennial
-        {
-            get;
-            set;
-        }
-
-        public double PhotoperiodicDaylength
-        {
-            get;
-            set;
-        }
-
-        public double PhotActRadiationMean
-        {
-            get;
-            set;
-        }
-
-        public double PcPlantDensity
-        {
-            get;
-            set;
-        }
-
-        public double PotentialTranspiration
-        {
-            get;
-            set;
-        }
-
-        public double ReferenceEvapotranspiration
-        {
-            get;
-            set;
-        }
-
-        public double RelativeTotalDevelopment
-        {
-            get;
-            set;
-        }
-
-        public double RemainingEvapotranspiration
-        {
-            get;
-            set;
-        }
-
-        public double ReserveAssimilatePool
-        {
-            get;
-            set;
-        }
-
-        public double PcResidueNRatio
-        {
-            get;
-            set;
-        }
-
-        public double PcRespiratoryStress
-        {
-            get;
-            set;
-        }
-
-        public double RootBiomass
-        {
-            get;
-            set;
-        }
-
-        public double RootBiomassOld
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> RootDensity
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> RootDiameter
-        {
-            get;
-            set;
-        }
-
-        public double PcRootDistributionParam
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> RootEffectivity
-        {
-            get;
-            set;
-        }
-
-        public double PcRootFormFactor
-        {
-            get;
-            set;
-        }
-
-        public double PcRootGrowthLag
-        {
-            get;
-            set;
-        }
-
-        public ushort RootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double RootingDepthM
-        {
-            get;
-            set;
-        }
-
-        public ushort RootingZone
-        {
-            get;
-            set;
-        }
-
-        public double PcRootPenetrationRate
-        {
-            get;
-            set;
-        }
-
-        public double VmSaturationDeficit
-        {
-            get;
-            set;
-        }
-
-        public double SoilCoverage
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> VsSoilMineralNContent
-        {
-            get;
-            set;
-        }
-
-        public double SoilSpecificMaxRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double VsSoilSpecificMaxRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcSpecificLeafArea
-        {
-            get;
-            set;
-        }
-
-        public double PcSpecificRootLength
-        {
-            get;
-            set;
-        }
-
-        public ushort PcStageAfterCut
-        {
-            get;
-            set;
-        }
-
-        public double PcStageAtMaxDiameter
-        {
-            get;
-            set;
-        }
-
-        public double PcStageAtMaxHeight
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcStageMaxRootNConcentration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcStageKcFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcStageTemperatureSum
-        {
-            get;
-            set;
-        }
-
-        public double StomataResistance
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<bool> PcStorageOrgan
-        {
-            get;
-            set;
-        }
-
-        public ushort StorageOrgan
-        {
-            get;
-            set;
-        }
-
-        = 4;
-        public double TargetNConcentration
-        {
-            get;
-            set;
-        }
-
-        public double TimeStep
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public ulong TimeUnderAnoxia
-        {
-            get;
-            set;
-        }
-
-        public double VsTortuosity
-        {
-            get;
-            set;
-        }
-
-        public double TotalBiomass
-        {
-            get;
-            set;
-        }
-
-        public double TotalBiomassNContent
-        {
-            get;
-            set;
-        }
-
-        public double TotalCropHeatImpact
-        {
-            get;
-            set;
-        }
-
-        public double TotalNInput
-        {
-            get;
-            set;
-        }
-
-        public double TotalNUptake
-        {
-            get;
-            set;
-        }
-
-        public double TotalRespired
-        {
-            get;
-            set;
-        }
-
-        public double Respiration
-        {
-            get;
-            set;
-        }
-
-        public double SumTotalNUptake
-        {
-            get;
-            set;
-        }
-
-        public double TotalRootLength
-        {
-            get;
-            set;
-        }
-
-        public double TotalTemperatureSum
-        {
-            get;
-            set;
-        }
-
-        public double TemperatureSumToFlowering
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Transpiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> TranspirationRedux
-        {
-            get;
-            set;
-        }
-
-        public double TranspirationDeficit
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double VernalisationDays
-        {
-            get;
-            set;
-        }
-
-        public double VernalisationFactor
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PcVernalisationRequirement
-        {
-            get;
-            set;
-        }
-
-        public bool PcWaterDeficitResponseOn
-        {
-            get;
-            set;
-        }
-
-        public double O3Senescence
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double O3LongTermDamage
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public double O3ShortTermDamage
-        {
-            get;
-            set;
-        }
-
-        = 1;
-        public bool DyingOut
-        {
-            get;
-            set;
-        }
-
-        public double AccumulatedETa
-        {
-            get;
-            set;
-        }
-
-        public double AccumulatedTranspiration
-        {
-            get;
-            set;
-        }
-
-        public double AccumulatedPrimaryCropYield
-        {
-            get;
-            set;
-        }
-
-        public double SumExportedCutBiomass
-        {
-            get;
-            set;
-        }
-
-        public double ExportedCutBiomass
-        {
-            get;
-            set;
-        }
-
-        public double SumResidueCutBiomass
-        {
-            get;
-            set;
-        }
-
-        public double ResidueCutBiomass
-        {
-            get;
-            set;
-        }
-
-        public ushort CuttingDelayDays
-        {
-            get;
-            set;
-        }
-
-        public double VsMaxEffectiveRootingDepth
-        {
-            get;
-            set;
-        }
-
-        public double VsImpenetrableLayerDept
-        {
-            get;
-            set;
-        }
-
-        public short AnthesisDay
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public short MaturityDay
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public bool MaturityReached
-        {
-            get;
-            set;
-        }
-
-        public ushort StepSize24
-        {
-            get;
-            set;
-        }
-
-        = 24;
-        public ushort StepSize240
-        {
-            get;
-            set;
-        }
-
-        = 240;
-        public IReadOnlyList<double> Rad24
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Rad240
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Tfol24
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Tfol240
-        {
-            get;
-            set;
-        }
-
-        public ushort Index24
-        {
-            get;
-            set;
-        }
-
-        public ushort Index240
-        {
-            get;
-            set;
-        }
-
-        public bool Full24
-        {
-            get;
-            set;
-        }
-
-        public bool Full240
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.Voc.Emissions GuentherEmissions
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.Voc.Emissions JjvEmissions
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.Voc.SpeciesData VocSpecies
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.Voc.CPData CropPhotosynthesisResults
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.SpeciesParameters SpeciesParams
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.CultivarParameters CultivarParams
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams
-        {
-            get;
-            set;
-        }
-
-        public bool IsWinterCrop
-        {
-            get;
-            set;
-        }
-
-        public bool StemElongationEventFired
-        {
-            get;
-            set;
-        }
-
-        public double Lt50m
-        {
-            get;
-            set;
-        }
-
-        = -3;
+        public void applyDefaults() { }
+
+        public bool FrostKillOn { get; set; }
+
+        public double Ktko { get; set; }
+
+        public double Ktkc { get; set; }
+
+        public bool AssimilatePartCoeffsReduced { get; set; }
+
+        public double O3WStomatalClosure { get; set; } = 1;
+        public double O3SumUptake { get; set; }
+
+        public double VsLatitude { get; set; }
+
+        public double AbovegroundBiomass { get; set; }
+
+        public double AbovegroundBiomassOld { get; set; }
+
+        public IReadOnlyList<bool> PcAbovegroundOrgan { get; set; }
+
+        public double ActualTranspiration { get; set; }
+
+        public IReadOnlyList<IReadOnlyList<double>> PcAssimilatePartitioningCoeff { get; set; }
+
+        public double PcAssimilateReallocation { get; set; }
+
+        public double Assimilates { get; set; }
+
+        public double AssimilationRate { get; set; }
+
+        public double AstronomicDayLenght { get; set; }
+
+        public IReadOnlyList<double> PcBaseDaylength { get; set; }
+
+        public IReadOnlyList<double> PcBaseTemperature { get; set; }
+
+        public double PcBeginSensitivePhaseHeatStress { get; set; }
+
+        public double BelowgroundBiomass { get; set; }
+
+        public double BelowgroundBiomassOld { get; set; }
+
+        public long PcCarboxylationPathway { get; set; }
+
+        public double ClearDayRadiation { get; set; }
+
+        public byte PcCo2Method { get; set; } = 3;
+        public double CriticalNConcentration { get; set; }
+
+        public IReadOnlyList<double> PcCriticalOxygenContent { get; set; }
+
+        public double PcCriticalTemperatureHeatStress { get; set; }
+
+        public double CropDiameter { get; set; }
+
+        public double CropFrostRedux { get; set; } = 1;
+        public double CropHeatRedux { get; set; } = 1;
+        public double CropHeight { get; set; }
+
+        public double PcCropHeightP1 { get; set; }
+
+        public double PcCropHeightP2 { get; set; }
+
+        public string PcCropName { get; set; }
+
+        public double CropNDemand { get; set; }
+
+        public double CropNRedux { get; set; } = 1;
+        public double PcCropSpecificMaxRootingDepth { get; set; }
+
+        public IReadOnlyList<double> CropWaterUptake { get; set; }
+
+        public IReadOnlyList<double> CurrentTemperatureSum { get; set; }
+
+        public double CurrentTotalTemperatureSum { get; set; }
+
+        public double CurrentTotalTemperatureSumRoot { get; set; }
+
+        public ushort PcCuttingDelayDays { get; set; }
+
+        public double DaylengthFactor { get; set; }
+
+        public IReadOnlyList<double> PcDaylengthRequirement { get; set; }
+
+        public ushort DaysAfterBeginFlowering { get; set; }
+
+        public double Declination { get; set; }
+
+        public double PcDefaultRadiationUseEfficiency { get; set; }
+
+        public ushort VmDepthGroundwaterTable { get; set; }
+
+        public ulong PcDevelopmentAccelerationByNitrogenStress { get; set; }
+
+        public ushort DevelopmentalStage { get; set; }
+
+        public ushort NoOfCropSteps { get; set; }
+
+        public double DroughtImpactOnFertility { get; set; } = 1;
+        public double PcDroughtImpactOnFertilityFactor { get; set; }
+
+        public IReadOnlyList<double> PcDroughtStressThreshold { get; set; }
+
+        public bool PcEmergenceFloodingControlOn { get; set; } = false;
+        public bool PcEmergenceMoistureControlOn { get; set; } = false;
+        public double PcEndSensitivePhaseHeatStress { get; set; }
+
+        public double EffectiveDayLength { get; set; }
+
+        public bool ErrorStatus { get; set; } = false;
+        public string ErrorMessage { get; set; }
+
+        public double EvaporatedFromIntercept { get; set; }
+
+        public double ExtraterrestrialRadiation { get; set; }
+
+        public double PcFieldConditionModifier { get; set; }
+
+        public ushort FinalDevelopmentalStage { get; set; }
+
+        public double FixedN { get; set; }
+
+        public double PcFrostDehardening { get; set; }
+
+        public double PcFrostHardening { get; set; }
+
+        public double GlobalRadiation { get; set; }
+
+        public double GreenAreaIndex { get; set; }
+
+        public double GrossAssimilates { get; set; }
+
+        public double GrossPhotosynthesis { get; set; }
+
+        public double GrossPhotosynthesisMol { get; set; }
+
+        public double GrossPhotosynthesisReferenceMol { get; set; }
+
+        public double GrossPrimaryProduction { get; set; }
+
+        public bool GrowthCycleEnded { get; set; } = false;
+        public double GrowthRespirationAS { get; set; } = 0;
+        public double PcHeatSumIrrigationStart { get; set; }
+
+        public double PcHeatSumIrrigationEnd { get; set; }
+
+        public double VsHeightNN { get; set; }
+
+        public double PcInitialKcFactor { get; set; }
+
+        public IReadOnlyList<double> PcInitialOrganBiomass { get; set; }
+
+        public double PcInitialRootingDepth { get; set; }
+
+        public double InterceptionStorage { get; set; }
+
+        public double KcFactor { get; set; } = 0.6;
+        public double LeafAreaIndex { get; set; }
+
+        public IReadOnlyList<double> SunlitLeafAreaIndex { get; set; }
+
+        public IReadOnlyList<double> ShadedLeafAreaIndex { get; set; }
+
+        public double PcLowTemperatureExposure { get; set; }
+
+        public double PcLimitingTemperatureHeatStress { get; set; }
+
+        public double Lt50 { get; set; } = -3;
+        public double PcLt50cultivar { get; set; }
+
+        public double PcLuxuryNCoeff { get; set; }
+
+        public double MaintenanceRespirationAS { get; set; }
+
+        public double PcMaxAssimilationRate { get; set; }
+
+        public double PcMaxCropDiameter { get; set; }
+
+        public double PcMaxCropHeight { get; set; }
+
+        public double MaxNUptake { get; set; }
+
+        public double PcMaxNUptakeParam { get; set; }
+
+        public double PcMaxRootingDepth { get; set; }
+
+        public double PcMinimumNConcentration { get; set; }
+
+        public double PcMinimumTemperatureForAssimilation { get; set; }
+
+        public double PcOptimumTemperatureForAssimilation { get; set; }
+
+        public double PcMaximumTemperatureForAssimilation { get; set; }
+
+        public double PcMinimumTemperatureRootGrowth { get; set; }
+
+        public double NetMaintenanceRespiration { get; set; }
+
+        public double NetPhotosynthesis { get; set; }
+
+        public double NetPrecipitation { get; set; }
+
+        public double NetPrimaryProduction { get; set; }
+
+        public double PcNConcentrationAbovegroundBiomass { get; set; }
+
+        public double NConcentrationAbovegroundBiomass { get; set; }
+
+        public double NConcentrationAbovegroundBiomassOld { get; set; }
+
+        public double PcNConcentrationB0 { get; set; }
+
+        public double NContentDeficit { get; set; }
+
+        public double PcNConcentrationPN { get; set; }
+
+        public double PcNConcentrationRoot { get; set; }
+
+        public double NConcentrationRoot { get; set; }
+
+        public double NConcentrationRootOld { get; set; }
+
+        public bool PcNitrogenResponseOn { get; set; }
+
+        public double PcNumberOfDevelopmentalStages { get; set; }
+
+        public double PcNumberOfOrgans { get; set; }
+
+        public IReadOnlyList<double> NUptakeFromLayer { get; set; }
+
+        public IReadOnlyList<double> PcOptimumTemperature { get; set; }
+
+        public IReadOnlyList<double> OrganBiomass { get; set; }
+
+        public IReadOnlyList<double> OrganDeadBiomass { get; set; }
+
+        public IReadOnlyList<double> OrganGreenBiomass { get; set; }
+
+        public IReadOnlyList<double> OrganGrowthIncrement { get; set; }
+
+        public IReadOnlyList<double> PcOrganGrowthRespiration { get; set; }
+
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForPrimaryYield { get; set; }
+
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForSecondaryYield { get; set; }
+
+        public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent> PcOrganIdsForCutting { get; set; }
+
+        public IReadOnlyList<double> PcOrganMaintenanceRespiration { get; set; }
+
+        public IReadOnlyList<double> OrganSenescenceIncrement { get; set; }
+
+        public IReadOnlyList<IReadOnlyList<double>> PcOrganSenescenceRate { get; set; }
+
+        public double OvercastDayRadiation { get; set; }
+
+        public double OxygenDeficit { get; set; }
+
+        public double PcPartBiologicalNFixation { get; set; }
+
+        public bool PcPerennial { get; set; }
+
+        public double PhotoperiodicDaylength { get; set; }
+
+        public double PhotActRadiationMean { get; set; }
+
+        public double PcPlantDensity { get; set; }
+
+        public double PotentialTranspiration { get; set; }
+
+        public double ReferenceEvapotranspiration { get; set; }
+
+        public double RelativeTotalDevelopment { get; set; }
+
+        public double RemainingEvapotranspiration { get; set; }
+
+        public double ReserveAssimilatePool { get; set; }
+
+        public double PcResidueNRatio { get; set; }
+
+        public double PcRespiratoryStress { get; set; }
+
+        public double RootBiomass { get; set; }
+
+        public double RootBiomassOld { get; set; }
+
+        public IReadOnlyList<double> RootDensity { get; set; }
+
+        public IReadOnlyList<double> RootDiameter { get; set; }
+
+        public double PcRootDistributionParam { get; set; }
+
+        public IReadOnlyList<double> RootEffectivity { get; set; }
+
+        public double PcRootFormFactor { get; set; }
+
+        public double PcRootGrowthLag { get; set; }
+
+        public ushort RootingDepth { get; set; }
+
+        public double RootingDepthM { get; set; }
+
+        public ushort RootingZone { get; set; }
+
+        public double PcRootPenetrationRate { get; set; }
+
+        public double VmSaturationDeficit { get; set; }
+
+        public double SoilCoverage { get; set; }
+
+        public IReadOnlyList<double> VsSoilMineralNContent { get; set; }
+
+        public double SoilSpecificMaxRootingDepth { get; set; }
+
+        public double VsSoilSpecificMaxRootingDepth { get; set; }
+
+        public IReadOnlyList<double> PcSpecificLeafArea { get; set; }
+
+        public double PcSpecificRootLength { get; set; }
+
+        public ushort PcStageAfterCut { get; set; }
+
+        public double PcStageAtMaxDiameter { get; set; }
+
+        public double PcStageAtMaxHeight { get; set; }
+
+        public IReadOnlyList<double> PcStageMaxRootNConcentration { get; set; }
+
+        public IReadOnlyList<double> PcStageKcFactor { get; set; }
+
+        public IReadOnlyList<double> PcStageTemperatureSum { get; set; }
+
+        public double StomataResistance { get; set; }
+
+        public IReadOnlyList<bool> PcStorageOrgan { get; set; }
+
+        public ushort StorageOrgan { get; set; } = 4;
+        public double TargetNConcentration { get; set; }
+
+        public double TimeStep { get; set; } = 1;
+        public ulong TimeUnderAnoxia { get; set; }
+
+        public double VsTortuosity { get; set; }
+
+        public double TotalBiomass { get; set; }
+
+        public double TotalBiomassNContent { get; set; }
+
+        public double TotalCropHeatImpact { get; set; }
+
+        public double TotalNInput { get; set; }
+
+        public double TotalNUptake { get; set; }
+
+        public double TotalRespired { get; set; }
+
+        public double Respiration { get; set; }
+
+        public double SumTotalNUptake { get; set; }
+
+        public double TotalRootLength { get; set; }
+
+        public double TotalTemperatureSum { get; set; }
+
+        public double TemperatureSumToFlowering { get; set; }
+
+        public IReadOnlyList<double> Transpiration { get; set; }
+
+        public IReadOnlyList<double> TranspirationRedux { get; set; }
+
+        public double TranspirationDeficit { get; set; } = 1;
+        public double VernalisationDays { get; set; }
+
+        public double VernalisationFactor { get; set; }
+
+        public IReadOnlyList<double> PcVernalisationRequirement { get; set; }
+
+        public bool PcWaterDeficitResponseOn { get; set; }
+
+        public double O3Senescence { get; set; } = 1;
+        public double O3LongTermDamage { get; set; } = 1;
+        public double O3ShortTermDamage { get; set; } = 1;
+        public bool DyingOut { get; set; }
+
+        public double AccumulatedETa { get; set; }
+
+        public double AccumulatedTranspiration { get; set; }
+
+        public double AccumulatedPrimaryCropYield { get; set; }
+
+        public double SumExportedCutBiomass { get; set; }
+
+        public double ExportedCutBiomass { get; set; }
+
+        public double SumResidueCutBiomass { get; set; }
+
+        public double ResidueCutBiomass { get; set; }
+
+        public ushort CuttingDelayDays { get; set; }
+
+        public double VsMaxEffectiveRootingDepth { get; set; }
+
+        public double VsImpenetrableLayerDept { get; set; }
+
+        public short AnthesisDay { get; set; } = -1;
+        public short MaturityDay { get; set; } = -1;
+        public bool MaturityReached { get; set; }
+
+        public ushort StepSize24 { get; set; } = 24;
+        public ushort StepSize240 { get; set; } = 240;
+        public IReadOnlyList<double> Rad24 { get; set; }
+
+        public IReadOnlyList<double> Rad240 { get; set; }
+
+        public IReadOnlyList<double> Tfol24 { get; set; }
+
+        public IReadOnlyList<double> Tfol240 { get; set; }
+
+        public ushort Index24 { get; set; }
+
+        public ushort Index240 { get; set; }
+
+        public bool Full24 { get; set; }
+
+        public bool Full240 { get; set; }
+
+        public Mas.Schema.Model.Monica.Voc.Emissions GuentherEmissions { get; set; }
+
+        public Mas.Schema.Model.Monica.Voc.Emissions JjvEmissions { get; set; }
+
+        public Mas.Schema.Model.Monica.Voc.SpeciesData VocSpecies { get; set; }
+
+        public Mas.Schema.Model.Monica.Voc.CPData CropPhotosynthesisResults { get; set; }
+
+        public Mas.Schema.Model.Monica.SpeciesParameters SpeciesParams { get; set; }
+
+        public Mas.Schema.Model.Monica.CultivarParameters CultivarParams { get; set; }
+
+        public Mas.Schema.Model.Monica.CropResidueParameters ResidueParams { get; set; }
+
+        public bool IsWinterCrop { get; set; }
+
+        public bool StemElongationEventFired { get; set; }
+
+        public double Lt50m { get; set; } = -3;
+
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public bool FrostKillOn => ctx.ReadDataBool(0UL, false);
             public double Ktko => ctx.ReadDataDouble(64UL, 0);
             public double Ktkc => ctx.ReadDataDouble(128UL, 0);
@@ -4067,7 +2858,8 @@ namespace Mas.Schema.Model.Monica
             public IReadOnlyList<bool> PcAbovegroundOrgan => ctx.ReadList(0).CastBool();
             public bool HasPcAbovegroundOrgan => ctx.IsStructFieldNonNull(0);
             public double ActualTranspiration => ctx.ReadDataDouble(512UL, 0);
-            public IReadOnlyList<IReadOnlyList<double>> PcAssimilatePartitioningCoeff => ctx.ReadList(1).Cast(_0 => _0.RequireList().CastDouble());
+            public IReadOnlyList<IReadOnlyList<double>> PcAssimilatePartitioningCoeff =>
+                ctx.ReadList(1).Cast(_0 => _0.RequireList().CastDouble());
             public bool HasPcAssimilatePartitioningCoeff => ctx.IsStructFieldNonNull(1);
             public double PcAssimilateReallocation => ctx.ReadDataDouble(576UL, 0);
             public double Assimilates => ctx.ReadDataDouble(640UL, 0);
@@ -4111,7 +2903,8 @@ namespace Mas.Schema.Model.Monica
             public double Declination => ctx.ReadDataDouble(2048UL, 0);
             public double PcDefaultRadiationUseEfficiency => ctx.ReadDataDouble(2112UL, 0);
             public ushort VmDepthGroundwaterTable => ctx.ReadDataUShort(48UL, (ushort)0);
-            public ulong PcDevelopmentAccelerationByNitrogenStress => ctx.ReadDataULong(2176UL, 0UL);
+            public ulong PcDevelopmentAccelerationByNitrogenStress =>
+                ctx.ReadDataULong(2176UL, 0UL);
             public ushort DevelopmentalStage => ctx.ReadDataUShort(2240UL, (ushort)0);
             public ushort NoOfCropSteps => ctx.ReadDataUShort(2256UL, (ushort)0);
             public double DroughtImpactOnFertility => ctx.ReadDataDouble(2304UL, 1);
@@ -4201,17 +2994,22 @@ namespace Mas.Schema.Model.Monica
             public bool HasOrganGrowthIncrement => ctx.IsStructFieldNonNull(19);
             public IReadOnlyList<double> PcOrganGrowthRespiration => ctx.ReadList(20).CastDouble();
             public bool HasPcOrganGrowthRespiration => ctx.IsStructFieldNonNull(20);
-            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForPrimaryYield => ctx.ReadList(21).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForPrimaryYield =>
+                ctx.ReadList(21).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
             public bool HasPcOrganIdsForPrimaryYield => ctx.IsStructFieldNonNull(21);
-            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForSecondaryYield => ctx.ReadList(22).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForSecondaryYield =>
+                ctx.ReadList(22).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
             public bool HasPcOrganIdsForSecondaryYield => ctx.IsStructFieldNonNull(22);
-            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForCutting => ctx.ReadList(23).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Monica.YieldComponent.READER> PcOrganIdsForCutting =>
+                ctx.ReadList(23).Cast(Mas.Schema.Model.Monica.YieldComponent.READER.create);
             public bool HasPcOrganIdsForCutting => ctx.IsStructFieldNonNull(23);
-            public IReadOnlyList<double> PcOrganMaintenanceRespiration => ctx.ReadList(24).CastDouble();
+            public IReadOnlyList<double> PcOrganMaintenanceRespiration =>
+                ctx.ReadList(24).CastDouble();
             public bool HasPcOrganMaintenanceRespiration => ctx.IsStructFieldNonNull(24);
             public IReadOnlyList<double> OrganSenescenceIncrement => ctx.ReadList(25).CastDouble();
             public bool HasOrganSenescenceIncrement => ctx.IsStructFieldNonNull(25);
-            public IReadOnlyList<IReadOnlyList<double>> PcOrganSenescenceRate => ctx.ReadList(26).Cast(_0 => _0.RequireList().CastDouble());
+            public IReadOnlyList<IReadOnlyList<double>> PcOrganSenescenceRate =>
+                ctx.ReadList(26).Cast(_0 => _0.RequireList().CastDouble());
             public bool HasPcOrganSenescenceRate => ctx.IsStructFieldNonNull(26);
             public double OvercastDayRadiation => ctx.ReadDataDouble(6016UL, 0);
             public double OxygenDeficit => ctx.ReadDataDouble(6080UL, 0);
@@ -4254,7 +3052,8 @@ namespace Mas.Schema.Model.Monica
             public ushort PcStageAfterCut => ctx.ReadDataUShort(7248UL, (ushort)0);
             public double PcStageAtMaxDiameter => ctx.ReadDataDouble(7680UL, 0);
             public double PcStageAtMaxHeight => ctx.ReadDataDouble(7744UL, 0);
-            public IReadOnlyList<double> PcStageMaxRootNConcentration => ctx.ReadList(32).CastDouble();
+            public IReadOnlyList<double> PcStageMaxRootNConcentration =>
+                ctx.ReadList(32).CastDouble();
             public bool HasPcStageMaxRootNConcentration => ctx.IsStructFieldNonNull(32);
             public IReadOnlyList<double> PcStageKcFactor => ctx.ReadList(33).CastDouble();
             public bool HasPcStageKcFactor => ctx.IsStructFieldNonNull(33);
@@ -4286,7 +3085,8 @@ namespace Mas.Schema.Model.Monica
             public double TranspirationDeficit => ctx.ReadDataDouble(8832UL, 1);
             public double VernalisationDays => ctx.ReadDataDouble(8896UL, 0);
             public double VernalisationFactor => ctx.ReadDataDouble(8960UL, 0);
-            public IReadOnlyList<double> PcVernalisationRequirement => ctx.ReadList(38).CastDouble();
+            public IReadOnlyList<double> PcVernalisationRequirement =>
+                ctx.ReadList(38).CastDouble();
             public bool HasPcVernalisationRequirement => ctx.IsStructFieldNonNull(38);
             public bool PcWaterDeficitResponseOn => ctx.ReadDataBool(7280UL, false);
             public double O3Senescence => ctx.ReadDataDouble(9024UL, 1);
@@ -4320,19 +3120,26 @@ namespace Mas.Schema.Model.Monica
             public ushort Index240 => ctx.ReadDataUShort(9888UL, (ushort)0);
             public bool Full24 => ctx.ReadDataBool(7283UL, false);
             public bool Full240 => ctx.ReadDataBool(7284UL, false);
-            public Mas.Schema.Model.Monica.Voc.Emissions.READER GuentherEmissions => ctx.ReadStruct(43, Mas.Schema.Model.Monica.Voc.Emissions.READER.create);
+            public Mas.Schema.Model.Monica.Voc.Emissions.READER GuentherEmissions =>
+                ctx.ReadStruct(43, Mas.Schema.Model.Monica.Voc.Emissions.READER.create);
             public bool HasGuentherEmissions => ctx.IsStructFieldNonNull(43);
-            public Mas.Schema.Model.Monica.Voc.Emissions.READER JjvEmissions => ctx.ReadStruct(44, Mas.Schema.Model.Monica.Voc.Emissions.READER.create);
+            public Mas.Schema.Model.Monica.Voc.Emissions.READER JjvEmissions =>
+                ctx.ReadStruct(44, Mas.Schema.Model.Monica.Voc.Emissions.READER.create);
             public bool HasJjvEmissions => ctx.IsStructFieldNonNull(44);
-            public Mas.Schema.Model.Monica.Voc.SpeciesData.READER VocSpecies => ctx.ReadStruct(45, Mas.Schema.Model.Monica.Voc.SpeciesData.READER.create);
+            public Mas.Schema.Model.Monica.Voc.SpeciesData.READER VocSpecies =>
+                ctx.ReadStruct(45, Mas.Schema.Model.Monica.Voc.SpeciesData.READER.create);
             public bool HasVocSpecies => ctx.IsStructFieldNonNull(45);
-            public Mas.Schema.Model.Monica.Voc.CPData.READER CropPhotosynthesisResults => ctx.ReadStruct(46, Mas.Schema.Model.Monica.Voc.CPData.READER.create);
+            public Mas.Schema.Model.Monica.Voc.CPData.READER CropPhotosynthesisResults =>
+                ctx.ReadStruct(46, Mas.Schema.Model.Monica.Voc.CPData.READER.create);
             public bool HasCropPhotosynthesisResults => ctx.IsStructFieldNonNull(46);
-            public Mas.Schema.Model.Monica.SpeciesParameters.READER SpeciesParams => ctx.ReadStruct(47, Mas.Schema.Model.Monica.SpeciesParameters.READER.create);
+            public Mas.Schema.Model.Monica.SpeciesParameters.READER SpeciesParams =>
+                ctx.ReadStruct(47, Mas.Schema.Model.Monica.SpeciesParameters.READER.create);
             public bool HasSpeciesParams => ctx.IsStructFieldNonNull(47);
-            public Mas.Schema.Model.Monica.CultivarParameters.READER CultivarParams => ctx.ReadStruct(48, Mas.Schema.Model.Monica.CultivarParameters.READER.create);
+            public Mas.Schema.Model.Monica.CultivarParameters.READER CultivarParams =>
+                ctx.ReadStruct(48, Mas.Schema.Model.Monica.CultivarParameters.READER.create);
             public bool HasCultivarParams => ctx.IsStructFieldNonNull(48);
-            public Mas.Schema.Model.Monica.CropResidueParameters.READER ResidueParams => ctx.ReadStruct(49, Mas.Schema.Model.Monica.CropResidueParameters.READER.create);
+            public Mas.Schema.Model.Monica.CropResidueParameters.READER ResidueParams =>
+                ctx.ReadStruct(49, Mas.Schema.Model.Monica.CropResidueParameters.READER.create);
             public bool HasResidueParams => ctx.IsStructFieldNonNull(49);
             public bool IsWinterCrop => ctx.ReadDataBool(7285UL, false);
             public bool StemElongationEventFired => ctx.ReadDataBool(7286UL, false);
@@ -4412,9 +3219,12 @@ namespace Mas.Schema.Model.Monica
                 set => this.WriteData(512UL, value, 0);
             }
 
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> PcAssimilatePartitioningCoeff
+            public ListOfPointersSerializer<
+                ListOfPrimitivesSerializer<double>
+            > PcAssimilatePartitioningCoeff
             {
-                get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(1);
+                get =>
+                    BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(1);
                 set => Link(1, value);
             }
 
@@ -5110,19 +3920,28 @@ namespace Mas.Schema.Model.Monica
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> PcOrganIdsForPrimaryYield
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(21);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>
+                    >(21);
                 set => Link(21, value);
             }
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> PcOrganIdsForSecondaryYield
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(22);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>
+                    >(22);
                 set => Link(22, value);
             }
 
             public ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER> PcOrganIdsForCutting
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>>(23);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Monica.YieldComponent.WRITER>
+                    >(23);
                 set => Link(23, value);
             }
 
@@ -5138,9 +3957,12 @@ namespace Mas.Schema.Model.Monica
                 set => Link(25, value);
             }
 
-            public ListOfPointersSerializer<ListOfPrimitivesSerializer<double>> PcOrganSenescenceRate
+            public ListOfPointersSerializer<
+                ListOfPrimitivesSerializer<double>
+            > PcOrganSenescenceRate
             {
-                get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(26);
+                get =>
+                    BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<double>>>(26);
                 set => Link(26, value);
             }
 
@@ -5752,10 +4574,14 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa4da01d10b3b6acdUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa4da01d10b3b6acdUL)
+    ]
     public class SnowModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xa4da01d10b3b6acdUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -5811,141 +4637,63 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double SnowRetentionCapacityMax
-        {
-            get;
-            set;
-        }
+        public double SnowRetentionCapacityMax { get; set; }
 
-        public double SnowDensity
-        {
-            get;
-            set;
-        }
+        public double SnowDensity { get; set; }
 
-        public double SnowDepth
-        {
-            get;
-            set;
-        }
+        public double SnowDepth { get; set; }
 
-        public double FrozenWaterInSnow
-        {
-            get;
-            set;
-        }
+        public double FrozenWaterInSnow { get; set; }
 
-        public double LiquidWaterInSnow
-        {
-            get;
-            set;
-        }
+        public double LiquidWaterInSnow { get; set; }
 
-        public double WaterToInfiltrate
-        {
-            get;
-            set;
-        }
+        public double WaterToInfiltrate { get; set; }
 
-        public double MaxSnowDepth
-        {
-            get;
-            set;
-        }
+        public double MaxSnowDepth { get; set; }
 
-        public double AccumulatedSnowDepth
-        {
-            get;
-            set;
-        }
+        public double AccumulatedSnowDepth { get; set; }
 
-        public double SnowmeltTemperature
-        {
-            get;
-            set;
-        }
+        public double SnowmeltTemperature { get; set; }
 
-        public double SnowAccumulationThresholdTemperature
-        {
-            get;
-            set;
-        }
+        public double SnowAccumulationThresholdTemperature { get; set; }
 
-        public double TemperatureLimitForLiquidWater
-        {
-            get;
-            set;
-        }
+        public double TemperatureLimitForLiquidWater { get; set; }
 
-        public double CorrectionRain
-        {
-            get;
-            set;
-        }
+        public double CorrectionRain { get; set; }
 
-        public double CorrectionSnow
-        {
-            get;
-            set;
-        }
+        public double CorrectionSnow { get; set; }
 
-        public double RefreezeTemperature
-        {
-            get;
-            set;
-        }
+        public double RefreezeTemperature { get; set; }
 
-        public double RefreezeP1
-        {
-            get;
-            set;
-        }
+        public double RefreezeP1 { get; set; }
 
-        public double RefreezeP2
-        {
-            get;
-            set;
-        }
+        public double RefreezeP2 { get; set; }
 
-        public double NewSnowDensityMin
-        {
-            get;
-            set;
-        }
+        public double NewSnowDensityMin { get; set; }
 
-        public double SnowMaxAdditionalDensity
-        {
-            get;
-            set;
-        }
+        public double SnowMaxAdditionalDensity { get; set; }
 
-        public double SnowPacking
-        {
-            get;
-            set;
-        }
+        public double SnowPacking { get; set; }
 
-        public double SnowRetentionCapacityMin
-        {
-            get;
-            set;
-        }
+        public double SnowRetentionCapacityMin { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double SnowRetentionCapacityMax => ctx.ReadDataDouble(0UL, 0);
             public double SnowDensity => ctx.ReadDataDouble(64UL, 0);
             public double SnowDepth => ctx.ReadDataDouble(128UL, 0);
@@ -6097,10 +4845,14 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb4f16ea3144d85a6UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb4f16ea3144d85a6UL)
+    ]
     public class FrostModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xb4f16ea3144d85a6UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -6136,81 +4888,43 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double PmHydraulicConductivityRedux
-        {
-            get;
-            set;
-        }
+        public double PmHydraulicConductivityRedux { get; set; }
 
-        public double FrostDepth
-        {
-            get;
-            set;
-        }
+        public double FrostDepth { get; set; }
 
-        public double AccumulatedFrostDepth
-        {
-            get;
-            set;
-        }
+        public double AccumulatedFrostDepth { get; set; }
 
-        public double NegativeDegreeDays
-        {
-            get;
-            set;
-        }
+        public double NegativeDegreeDays { get; set; }
 
-        public double ThawDepth
-        {
-            get;
-            set;
-        }
+        public double ThawDepth { get; set; }
 
-        public ushort FrostDays
-        {
-            get;
-            set;
-        }
+        public ushort FrostDays { get; set; }
 
-        public IReadOnlyList<double> LambdaRedux
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> LambdaRedux { get; set; }
 
-        public double TemperatureUnderSnow
-        {
-            get;
-            set;
-        }
+        public double TemperatureUnderSnow { get; set; }
 
-        public double HydraulicConductivityRedux
-        {
-            get;
-            set;
-        }
+        public double HydraulicConductivityRedux { get; set; }
 
-        public double PtTimeStep
-        {
-            get;
-            set;
-        }
+        public double PtTimeStep { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double PmHydraulicConductivityRedux => ctx.ReadDataDouble(0UL, 0);
             public double FrostDepth => ctx.ReadDataDouble(64UL, 0);
             public double AccumulatedFrostDepth => ctx.ReadDataDouble(128UL, 0);
@@ -6293,17 +5007,28 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcd05962719bf7ec8UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xcd05962719bf7ec8UL)
+    ]
     public class SoilMoistureModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xcd05962719bf7ec8UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            FrostComponent = CapnpSerializable.Create<Mas.Schema.Model.Monica.FrostModuleState>(reader.FrostComponent);
-            SnowComponent = CapnpSerializable.Create<Mas.Schema.Model.Monica.SnowModuleState>(reader.SnowComponent);
+            FrostComponent = CapnpSerializable.Create<Mas.Schema.Model.Monica.FrostModuleState>(
+                reader.FrostComponent
+            );
+            SnowComponent = CapnpSerializable.Create<Mas.Schema.Model.Monica.SnowModuleState>(
+                reader.SnowComponent
+            );
             XSACriticalSoilMoisture = reader.XSACriticalSoilMoisture;
-            ModuleParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilMoistureModuleParameters>(reader.ModuleParams);
+            ModuleParams =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilMoistureModuleParameters>(
+                    reader.ModuleParams
+                );
             VwWindSpeedHeight = reader.VwWindSpeedHeight;
             VwWindSpeed = reader.VwWindSpeed;
             NumberOfLayers = reader.NumberOfLayers;
@@ -6442,419 +5167,163 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
-
-        public Mas.Schema.Model.Monica.FrostModuleState FrostComponent
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.SnowModuleState SnowComponent
-        {
-            get;
-            set;
-        }
-
-        public double XSACriticalSoilMoisture
-        {
-            get;
-            set;
-        }
-
-        public Mas.Schema.Model.Monica.SoilMoistureModuleParameters ModuleParams
-        {
-            get;
-            set;
-        }
-
-        public double VwWindSpeedHeight
-        {
-            get;
-            set;
-        }
-
-        public double VwWindSpeed
-        {
-            get;
-            set;
-        }
-
-        public ushort NumberOfLayers
-        {
-            get;
-            set;
-        }
-
-        public ushort VsNumberOfLayers
-        {
-            get;
-            set;
-        }
-
-        public double ActualEvaporation
-        {
-            get;
-            set;
-        }
-
-        public double ActualEvapotranspiration
-        {
-            get;
-            set;
-        }
-
-        public double ActualTranspiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> AvailableWater
-        {
-            get;
-            set;
-        }
-
-        public double CapillaryRise
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CapillaryRiseRate
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CapillaryWater
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> CapillaryWater70
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Evaporation
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Evapotranspiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> FieldCapacity
-        {
-            get;
-            set;
-        }
-
-        public double FluxAtLowerBoundary
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> GravitationalWater
-        {
-            get;
-            set;
-        }
-
-        public double GrossPrecipitation
-        {
-            get;
-            set;
-        }
-
-        public double GroundwaterAdded
-        {
-            get;
-            set;
-        }
-
-        public double GroundwaterDischarge
-        {
-            get;
-            set;
-        }
-
-        public ushort GroundwaterTable
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> HeatConductivity
-        {
-            get;
-            set;
-        }
-
-        public double HydraulicConductivityRedux
-        {
-            get;
-            set;
-        }
-
-        public double Infiltration
-        {
-            get;
-            set;
-        }
-
-        public double Interception
-        {
-            get;
-            set;
-        }
-
-        public double VcKcFactor
-        {
-            get;
-            set;
-        }
-
-        = 0.6;
-        public IReadOnlyList<double> Lambda
-        {
-            get;
-            set;
-        }
-
-        public double LambdaReduced
-        {
-            get;
-            set;
-        }
-
-        public double VsLatitude
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> LayerThickness
-        {
-            get;
-            set;
-        }
-
-        public double PmLayerThickness
-        {
-            get;
-            set;
-        }
-
-        public double PmLeachingDepth
-        {
-            get;
-            set;
-        }
-
-        public ushort PmLeachingDepthLayer
-        {
-            get;
-            set;
-        }
-
-        public double VwMaxAirTemperature
-        {
-            get;
-            set;
-        }
-
-        public double PmMaxPercolationRate
-        {
-            get;
-            set;
-        }
-
-        public double VwMeanAirTemperature
-        {
-            get;
-            set;
-        }
-
-        public double VwMinAirTemperature
-        {
-            get;
-            set;
-        }
-
-        public double VcNetPrecipitation
-        {
-            get;
-            set;
-        }
-
-        public double VwNetRadiation
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PermanentWiltingPoint
-        {
-            get;
-            set;
-        }
-
-        public double VcPercentageSoilCoverage
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PercolationRate
-        {
-            get;
-            set;
-        }
-
-        public double VwPrecipitation
-        {
-            get;
-            set;
-        }
-
-        public double ReferenceEvapotranspiration
-        {
-            get;
-            set;
-        }
-
-        = 6;
-        public double RelativeHumidity
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> ResidualEvapotranspiration
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> SaturatedHydraulicConductivity
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> SoilMoisture
-        {
-            get;
-            set;
-        }
-
-        public double SoilMoisturecrit
-        {
-            get;
-            set;
-        }
-
-        public double SoilMoistureDeficit
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> SoilPoreVolume
-        {
-            get;
-            set;
-        }
-
-        public double VcStomataResistance
-        {
-            get;
-            set;
-        }
-
-        public double SurfaceRoughness
-        {
-            get;
-            set;
-        }
-
-        public double SurfaceRunOff
-        {
-            get;
-            set;
-        }
-
-        public double SumSurfaceRunOff
-        {
-            get;
-            set;
-        }
-
-        public double SurfaceWaterStorage
-        {
-            get;
-            set;
-        }
-
-        public double PtTimeStep
-        {
-            get;
-            set;
-        }
-
-        public double TotalWaterRemoval
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> Transpiration
-        {
-            get;
-            set;
-        }
-
-        public double TranspirationDeficit
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> WaterFlux
-        {
-            get;
-            set;
-        }
+        public void applyDefaults() { }
+
+        public Mas.Schema.Model.Monica.FrostModuleState FrostComponent { get; set; }
+
+        public Mas.Schema.Model.Monica.SnowModuleState SnowComponent { get; set; }
+
+        public double XSACriticalSoilMoisture { get; set; }
+
+        public Mas.Schema.Model.Monica.SoilMoistureModuleParameters ModuleParams { get; set; }
+
+        public double VwWindSpeedHeight { get; set; }
+
+        public double VwWindSpeed { get; set; }
+
+        public ushort NumberOfLayers { get; set; }
+
+        public ushort VsNumberOfLayers { get; set; }
+
+        public double ActualEvaporation { get; set; }
+
+        public double ActualEvapotranspiration { get; set; }
+
+        public double ActualTranspiration { get; set; }
+
+        public IReadOnlyList<double> AvailableWater { get; set; }
+
+        public double CapillaryRise { get; set; }
+
+        public IReadOnlyList<double> CapillaryRiseRate { get; set; }
+
+        public IReadOnlyList<double> CapillaryWater { get; set; }
+
+        public IReadOnlyList<double> CapillaryWater70 { get; set; }
+
+        public IReadOnlyList<double> Evaporation { get; set; }
+
+        public IReadOnlyList<double> Evapotranspiration { get; set; }
+
+        public IReadOnlyList<double> FieldCapacity { get; set; }
+
+        public double FluxAtLowerBoundary { get; set; }
+
+        public IReadOnlyList<double> GravitationalWater { get; set; }
+
+        public double GrossPrecipitation { get; set; }
+
+        public double GroundwaterAdded { get; set; }
+
+        public double GroundwaterDischarge { get; set; }
+
+        public ushort GroundwaterTable { get; set; }
+
+        public IReadOnlyList<double> HeatConductivity { get; set; }
+
+        public double HydraulicConductivityRedux { get; set; }
+
+        public double Infiltration { get; set; }
+
+        public double Interception { get; set; }
+
+        public double VcKcFactor { get; set; } = 0.6;
+        public IReadOnlyList<double> Lambda { get; set; }
+
+        public double LambdaReduced { get; set; }
+
+        public double VsLatitude { get; set; }
+
+        public IReadOnlyList<double> LayerThickness { get; set; }
+
+        public double PmLayerThickness { get; set; }
+
+        public double PmLeachingDepth { get; set; }
+
+        public ushort PmLeachingDepthLayer { get; set; }
+
+        public double VwMaxAirTemperature { get; set; }
+
+        public double PmMaxPercolationRate { get; set; }
+
+        public double VwMeanAirTemperature { get; set; }
+
+        public double VwMinAirTemperature { get; set; }
+
+        public double VcNetPrecipitation { get; set; }
+
+        public double VwNetRadiation { get; set; }
+
+        public IReadOnlyList<double> PermanentWiltingPoint { get; set; }
+
+        public double VcPercentageSoilCoverage { get; set; }
+
+        public IReadOnlyList<double> PercolationRate { get; set; }
+
+        public double VwPrecipitation { get; set; }
+
+        public double ReferenceEvapotranspiration { get; set; } = 6;
+        public double RelativeHumidity { get; set; }
+
+        public IReadOnlyList<double> ResidualEvapotranspiration { get; set; }
+
+        public IReadOnlyList<double> SaturatedHydraulicConductivity { get; set; }
+
+        public IReadOnlyList<double> SoilMoisture { get; set; }
+
+        public double SoilMoisturecrit { get; set; }
+
+        public double SoilMoistureDeficit { get; set; }
+
+        public IReadOnlyList<double> SoilPoreVolume { get; set; }
+
+        public double VcStomataResistance { get; set; }
+
+        public double SurfaceRoughness { get; set; }
+
+        public double SurfaceRunOff { get; set; }
+
+        public double SumSurfaceRunOff { get; set; }
+
+        public double SurfaceWaterStorage { get; set; }
+
+        public double PtTimeStep { get; set; }
+
+        public double TotalWaterRemoval { get; set; }
+
+        public IReadOnlyList<double> Transpiration { get; set; }
+
+        public double TranspirationDeficit { get; set; }
+
+        public IReadOnlyList<double> WaterFlux { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public Mas.Schema.Model.Monica.FrostModuleState.READER FrostComponent => ctx.ReadStruct(0, Mas.Schema.Model.Monica.FrostModuleState.READER.create);
+
+            public Mas.Schema.Model.Monica.FrostModuleState.READER FrostComponent =>
+                ctx.ReadStruct(0, Mas.Schema.Model.Monica.FrostModuleState.READER.create);
             public bool HasFrostComponent => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Model.Monica.SnowModuleState.READER SnowComponent => ctx.ReadStruct(1, Mas.Schema.Model.Monica.SnowModuleState.READER.create);
+            public Mas.Schema.Model.Monica.SnowModuleState.READER SnowComponent =>
+                ctx.ReadStruct(1, Mas.Schema.Model.Monica.SnowModuleState.READER.create);
             public bool HasSnowComponent => ctx.IsStructFieldNonNull(1);
             public double XSACriticalSoilMoisture => ctx.ReadDataDouble(0UL, 0);
-            public Mas.Schema.Model.Monica.SoilMoistureModuleParameters.READER ModuleParams => ctx.ReadStruct(2, Mas.Schema.Model.Monica.SoilMoistureModuleParameters.READER.create);
+            public Mas.Schema.Model.Monica.SoilMoistureModuleParameters.READER ModuleParams =>
+                ctx.ReadStruct(
+                    2,
+                    Mas.Schema.Model.Monica.SoilMoistureModuleParameters.READER.create
+                );
             public bool HasModuleParams => ctx.IsStructFieldNonNull(2);
             public double VwWindSpeedHeight => ctx.ReadDataDouble(64UL, 0);
             public double VwWindSpeed => ctx.ReadDataDouble(128UL, 0);
@@ -6914,9 +5383,11 @@ namespace Mas.Schema.Model.Monica
             public double VwPrecipitation => ctx.ReadDataDouble(1728UL, 0);
             public double ReferenceEvapotranspiration => ctx.ReadDataDouble(1792UL, 6);
             public double RelativeHumidity => ctx.ReadDataDouble(1856UL, 0);
-            public IReadOnlyList<double> ResidualEvapotranspiration => ctx.ReadList(16).CastDouble();
+            public IReadOnlyList<double> ResidualEvapotranspiration =>
+                ctx.ReadList(16).CastDouble();
             public bool HasResidualEvapotranspiration => ctx.IsStructFieldNonNull(16);
-            public IReadOnlyList<double> SaturatedHydraulicConductivity => ctx.ReadList(17).CastDouble();
+            public IReadOnlyList<double> SaturatedHydraulicConductivity =>
+                ctx.ReadList(17).CastDouble();
             public bool HasSaturatedHydraulicConductivity => ctx.IsStructFieldNonNull(17);
             public IReadOnlyList<double> SoilMoisture => ctx.ReadList(18).CastDouble();
             public bool HasSoilMoisture => ctx.IsStructFieldNonNull(18);
@@ -7337,16 +5808,23 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd594e64f6b5f461dUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd594e64f6b5f461dUL)
+    ]
     public class SoilOrganicModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xd594e64f6b5f461dUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             Incorporation = reader.Incorporation;
             TotalDenitrification = reader.TotalDenitrification;
-            ModuleParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilOrganicModuleParameters>(reader.ModuleParams);
+            ModuleParams =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilOrganicModuleParameters>(
+                    reader.ModuleParams
+                );
             VsNumberOfLayers = reader.VsNumberOfLayers;
             VsNumberOfOrganicLayers = reader.VsNumberOfOrganicLayers;
             AddedOrganicMatter = reader.AddedOrganicMatter;
@@ -7438,270 +5916,112 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public bool Incorporation
-        {
-            get;
-            set;
-        }
+        public bool Incorporation { get; set; }
 
-        public double TotalDenitrification
-        {
-            get;
-            set;
-        }
+        public double TotalDenitrification { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilOrganicModuleParameters ModuleParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilOrganicModuleParameters ModuleParams { get; set; }
 
-        public ushort VsNumberOfLayers
-        {
-            get;
-            set;
-        }
+        public ushort VsNumberOfLayers { get; set; }
 
-        public ushort VsNumberOfOrganicLayers
-        {
-            get;
-            set;
-        }
+        public ushort VsNumberOfOrganicLayers { get; set; }
 
-        public bool AddedOrganicMatter
-        {
-            get;
-            set;
-        }
+        public bool AddedOrganicMatter { get; set; }
 
-        public double IrrigationAmount
-        {
-            get;
-            set;
-        }
+        public double IrrigationAmount { get; set; }
 
-        public IReadOnlyList<double> ActAmmoniaOxidationRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> ActAmmoniaOxidationRate { get; set; }
 
-        public IReadOnlyList<double> ActNitrificationRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> ActNitrificationRate { get; set; }
 
-        public IReadOnlyList<double> ActDenitrificationRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> ActDenitrificationRate { get; set; }
 
-        public IReadOnlyList<double> AomFastDeltaSum
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomFastDeltaSum { get; set; }
 
-        public IReadOnlyList<double> AomFastInput
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomFastInput { get; set; }
 
-        public IReadOnlyList<double> AomFastSum
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomFastSum { get; set; }
 
-        public IReadOnlyList<double> AomSlowDeltaSum
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomSlowDeltaSum { get; set; }
 
-        public IReadOnlyList<double> AomSlowInput
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomSlowInput { get; set; }
 
-        public IReadOnlyList<double> AomSlowSum
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> AomSlowSum { get; set; }
 
-        public IReadOnlyList<double> CBalance
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> CBalance { get; set; }
 
-        public double DecomposerRespiration
-        {
-            get;
-            set;
-        }
+        public double DecomposerRespiration { get; set; }
 
-        public string ErrorMessage
-        {
-            get;
-            set;
-        }
+        public string ErrorMessage { get; set; }
 
-        public IReadOnlyList<double> InertSoilOrganicC
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> InertSoilOrganicC { get; set; }
 
-        public double N2oProduced
-        {
-            get;
-            set;
-        }
+        public double N2oProduced { get; set; }
 
-        public double N2oProducedNit
-        {
-            get;
-            set;
-        }
+        public double N2oProducedNit { get; set; }
 
-        public double N2oProducedDenit
-        {
-            get;
-            set;
-        }
+        public double N2oProducedDenit { get; set; }
 
-        public double NetEcosystemExchange
-        {
-            get;
-            set;
-        }
+        public double NetEcosystemExchange { get; set; }
 
-        public double NetEcosystemProduction
-        {
-            get;
-            set;
-        }
+        public double NetEcosystemProduction { get; set; }
 
-        public double NetNMineralisation
-        {
-            get;
-            set;
-        }
+        public double NetNMineralisation { get; set; }
 
-        public IReadOnlyList<double> NetNMineralisationRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> NetNMineralisationRate { get; set; }
 
-        public double TotalNH3Volatilised
-        {
-            get;
-            set;
-        }
+        public double TotalNH3Volatilised { get; set; }
 
-        public double Nh3Volatilised
-        {
-            get;
-            set;
-        }
+        public double Nh3Volatilised { get; set; }
 
-        public IReadOnlyList<double> SmbCO2EvolutionRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SmbCO2EvolutionRate { get; set; }
 
-        public IReadOnlyList<double> SmbFastDelta
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SmbFastDelta { get; set; }
 
-        public IReadOnlyList<double> SmbSlowDelta
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SmbSlowDelta { get; set; }
 
-        public IReadOnlyList<double> VsSoilMineralNContent
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VsSoilMineralNContent { get; set; }
 
-        public IReadOnlyList<double> SoilOrganicC
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SoilOrganicC { get; set; }
 
-        public IReadOnlyList<double> SomFastDelta
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SomFastDelta { get; set; }
 
-        public IReadOnlyList<double> SomFastInput
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SomFastInput { get; set; }
 
-        public IReadOnlyList<double> SomSlowDelta
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SomSlowDelta { get; set; }
 
-        public double SumDenitrification
-        {
-            get;
-            set;
-        }
+        public double SumDenitrification { get; set; }
 
-        public double SumNetNMineralisation
-        {
-            get;
-            set;
-        }
+        public double SumNetNMineralisation { get; set; }
 
-        public double SumN2OProduced
-        {
-            get;
-            set;
-        }
+        public double SumN2OProduced { get; set; }
 
-        public double SumNH3Volatilised
-        {
-            get;
-            set;
-        }
+        public double SumNH3Volatilised { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public bool Incorporation => ctx.ReadDataBool(0UL, false);
             public double TotalDenitrification => ctx.ReadDataDouble(64UL, 0);
-            public Mas.Schema.Model.Monica.SoilOrganicModuleParameters.READER ModuleParams => ctx.ReadStruct(0, Mas.Schema.Model.Monica.SoilOrganicModuleParameters.READER.create);
+            public Mas.Schema.Model.Monica.SoilOrganicModuleParameters.READER ModuleParams =>
+                ctx.ReadStruct(
+                    0,
+                    Mas.Schema.Model.Monica.SoilOrganicModuleParameters.READER.create
+                );
             public bool HasModuleParams => ctx.IsStructFieldNonNull(0);
             public ushort VsNumberOfLayers => ctx.ReadDataUShort(16UL, (ushort)0);
             public ushort VsNumberOfOrganicLayers => ctx.ReadDataUShort(32UL, (ushort)0);
@@ -8018,18 +6338,31 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbd3e199eb9b03758UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbd3e199eb9b03758UL)
+    ]
     public class SoilTemperatureModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xbd3e199eb9b03758UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             SoilSurfaceTemperature = reader.SoilSurfaceTemperature;
-            ModuleParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTemperatureModuleParameters>(reader.ModuleParams);
+            ModuleParams =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTemperatureModuleParameters>(
+                    reader.ModuleParams
+                );
             DampingFactor = reader.DampingFactor;
-            SoilColumnVtGroundLayer = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(reader.SoilColumnVtGroundLayer);
-            SoilColumnVtBottomLayer = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(reader.SoilColumnVtBottomLayer);
+            SoilColumnVtGroundLayer =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(
+                    reader.SoilColumnVtGroundLayer
+                );
+            SoilColumnVtBottomLayer =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilLayerState>(
+                    reader.SoilColumnVtBottomLayer
+                );
             NumberOfLayers = reader.NumberOfLayers;
             VsNumberOfLayers = reader.VsNumberOfLayers;
             VsSoilMoistureConst = reader.VsSoilMoistureConst;
@@ -8075,143 +6408,73 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double SoilSurfaceTemperature
-        {
-            get;
-            set;
-        }
+        public double SoilSurfaceTemperature { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilTemperatureModuleParameters ModuleParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilTemperatureModuleParameters ModuleParams { get; set; }
 
-        public double DampingFactor
-        {
-            get;
-            set;
-        }
+        public double DampingFactor { get; set; } = 0.8;
+        public Mas.Schema.Model.Monica.SoilLayerState SoilColumnVtGroundLayer { get; set; }
 
-        = 0.8;
-        public Mas.Schema.Model.Monica.SoilLayerState SoilColumnVtGroundLayer
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilLayerState SoilColumnVtBottomLayer { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilLayerState SoilColumnVtBottomLayer
-        {
-            get;
-            set;
-        }
+        public ushort NumberOfLayers { get; set; }
 
-        public ushort NumberOfLayers
-        {
-            get;
-            set;
-        }
+        public ushort VsNumberOfLayers { get; set; }
 
-        public ushort VsNumberOfLayers
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VsSoilMoistureConst { get; set; }
 
-        public IReadOnlyList<double> VsSoilMoistureConst
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SoilTemperature { get; set; }
 
-        public IReadOnlyList<double> SoilTemperature
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> V { get; set; }
 
-        public IReadOnlyList<double> V
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VolumeMatrix { get; set; }
 
-        public IReadOnlyList<double> VolumeMatrix
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VolumeMatrixOld { get; set; }
 
-        public IReadOnlyList<double> VolumeMatrixOld
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> B { get; set; }
 
-        public IReadOnlyList<double> B
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> MatrixPrimaryDiagonal { get; set; }
 
-        public IReadOnlyList<double> MatrixPrimaryDiagonal
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> MatrixSecundaryDiagonal { get; set; }
 
-        public IReadOnlyList<double> MatrixSecundaryDiagonal
-        {
-            get;
-            set;
-        }
+        public double HeatFlow { get; set; }
 
-        public double HeatFlow
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> HeatConductivity { get; set; }
 
-        public IReadOnlyList<double> HeatConductivity
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> HeatConductivityMean { get; set; }
 
-        public IReadOnlyList<double> HeatConductivityMean
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> HeatCapacity
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> HeatCapacity { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double SoilSurfaceTemperature => ctx.ReadDataDouble(0UL, 0);
-            public Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.READER ModuleParams => ctx.ReadStruct(0, Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.READER.create);
+            public Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.READER ModuleParams =>
+                ctx.ReadStruct(
+                    0,
+                    Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.READER.create
+                );
             public bool HasModuleParams => ctx.IsStructFieldNonNull(0);
             public double DampingFactor => ctx.ReadDataDouble(64UL, 0.8);
-            public Mas.Schema.Model.Monica.SoilLayerState.READER SoilColumnVtGroundLayer => ctx.ReadStruct(1, Mas.Schema.Model.Monica.SoilLayerState.READER.create);
+            public Mas.Schema.Model.Monica.SoilLayerState.READER SoilColumnVtGroundLayer =>
+                ctx.ReadStruct(1, Mas.Schema.Model.Monica.SoilLayerState.READER.create);
             public bool HasSoilColumnVtGroundLayer => ctx.IsStructFieldNonNull(1);
-            public Mas.Schema.Model.Monica.SoilLayerState.READER SoilColumnVtBottomLayer => ctx.ReadStruct(2, Mas.Schema.Model.Monica.SoilLayerState.READER.create);
+            public Mas.Schema.Model.Monica.SoilLayerState.READER SoilColumnVtBottomLayer =>
+                ctx.ReadStruct(2, Mas.Schema.Model.Monica.SoilLayerState.READER.create);
             public bool HasSoilColumnVtBottomLayer => ctx.IsStructFieldNonNull(2);
             public ushort NumberOfLayers => ctx.ReadDataUShort(128UL, (ushort)0);
             public ushort VsNumberOfLayers => ctx.ReadDataUShort(144UL, (ushort)0);
@@ -8255,7 +6518,8 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.WRITER ModuleParams
             {
-                get => BuildPointer<Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.WRITER>(0);
+                get =>
+                    BuildPointer<Mas.Schema.Model.Monica.SoilTemperatureModuleParameters.WRITER>(0);
                 set => Link(0, value);
             }
 
@@ -8363,15 +6627,22 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb1760f65e652e737UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb1760f65e652e737UL)
+    ]
     public class SoilTransportModuleState : ICapnpSerializable
     {
         public const UInt64 typeId = 0xb1760f65e652e737UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             PcMinimumAvailableN = reader.PcMinimumAvailableN;
-            ModuleParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTransportModuleParameters>(reader.ModuleParams);
+            ModuleParams =
+                CapnpSerializable.Create<Mas.Schema.Model.Monica.SoilTransportModuleParameters>(
+                    reader.ModuleParams
+                );
             Convection = reader.Convection;
             CropNUptake = reader.CropNUptake;
             DiffusionCoeff = reader.DiffusionCoeff;
@@ -8418,132 +6689,64 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double PcMinimumAvailableN
-        {
-            get;
-            set;
-        }
+        public double PcMinimumAvailableN { get; set; }
 
-        public Mas.Schema.Model.Monica.SoilTransportModuleParameters ModuleParams
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.SoilTransportModuleParameters ModuleParams { get; set; }
 
-        public IReadOnlyList<double> Convection
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> Convection { get; set; }
 
-        public double CropNUptake
-        {
-            get;
-            set;
-        }
+        public double CropNUptake { get; set; }
 
-        public IReadOnlyList<double> DiffusionCoeff
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> DiffusionCoeff { get; set; }
 
-        public IReadOnlyList<double> Dispersion
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> Dispersion { get; set; }
 
-        public IReadOnlyList<double> DispersionCoeff
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> DispersionCoeff { get; set; }
 
-        public double VsLeachingDepth
-        {
-            get;
-            set;
-        }
+        public double VsLeachingDepth { get; set; }
 
-        public double LeachingAtBoundary
-        {
-            get;
-            set;
-        }
+        public double LeachingAtBoundary { get; set; }
 
-        public double VsNDeposition
-        {
-            get;
-            set;
-        }
+        public double VsNDeposition { get; set; }
 
-        public IReadOnlyList<double> VcNUptakeFromLayer
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VcNUptakeFromLayer { get; set; }
 
-        public IReadOnlyList<double> PoreWaterVelocity
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> PoreWaterVelocity { get; set; }
 
-        public IReadOnlyList<double> VsSoilMineralNContent
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> VsSoilMineralNContent { get; set; }
 
-        public IReadOnlyList<double> SoilNO3
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SoilNO3 { get; set; }
 
-        public IReadOnlyList<double> SoilNO3aq
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> SoilNO3aq { get; set; }
 
-        public double TimeStep
-        {
-            get;
-            set;
-        }
+        public double TimeStep { get; set; } = 1;
+        public IReadOnlyList<double> TotalDispersion { get; set; }
 
-        = 1;
-        public IReadOnlyList<double> TotalDispersion
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<double> PercolationRate
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<double> PercolationRate { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double PcMinimumAvailableN => ctx.ReadDataDouble(0UL, 0);
-            public Mas.Schema.Model.Monica.SoilTransportModuleParameters.READER ModuleParams => ctx.ReadStruct(0, Mas.Schema.Model.Monica.SoilTransportModuleParameters.READER.create);
+            public Mas.Schema.Model.Monica.SoilTransportModuleParameters.READER ModuleParams =>
+                ctx.ReadStruct(
+                    0,
+                    Mas.Schema.Model.Monica.SoilTransportModuleParameters.READER.create
+                );
             public bool HasModuleParams => ctx.IsStructFieldNonNull(0);
             public IReadOnlyList<double> Convection => ctx.ReadList(1).CastDouble();
             public bool HasConvection => ctx.IsStructFieldNonNull(1);
@@ -8589,7 +6792,8 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.SoilTransportModuleParameters.WRITER ModuleParams
             {
-                get => BuildPointer<Mas.Schema.Model.Monica.SoilTransportModuleParameters.WRITER>(0);
+                get =>
+                    BuildPointer<Mas.Schema.Model.Monica.SoilTransportModuleParameters.WRITER>(0);
                 set => Link(0, value);
             }
 
@@ -8691,16 +6895,20 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf03d8fd1bbe75519UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xf03d8fd1bbe75519UL)
+    ]
     public class ICData : ICapnpSerializable
     {
         public const UInt64 typeId = 0xf03d8fd1bbe75519UL;
+
         public enum WHICH : ushort
         {
             NoCrop = 0,
             Height = 1,
             Lait = 2,
-            undefined = 65535
+            undefined = 65535,
         }
 
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -8767,13 +6975,11 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
         public double? Height
         {
-            get => _which == WHICH.Height ? (double? )_content : null;
+            get => _which == WHICH.Height ? (double?)_content : null;
             set
             {
                 _which = WHICH.Height;
@@ -8783,7 +6989,7 @@ namespace Mas.Schema.Model.Monica
 
         public double? Lait
         {
-            get => _which == WHICH.Lait ? (double? )_content : null;
+            get => _which == WHICH.Lait ? (double?)_content : null;
             set
             {
                 _which = WHICH.Lait;
@@ -8794,14 +7000,18 @@ namespace Mas.Schema.Model.Monica
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public WHICH which => (WHICH)ctx.ReadDataUShort(0U, (ushort)0);
             public double Height => which == WHICH.Height ? ctx.ReadDataDouble(64UL, 0) : default;
             public double Lait => which == WHICH.Lait ? ctx.ReadDataDouble(64UL, 0) : default;

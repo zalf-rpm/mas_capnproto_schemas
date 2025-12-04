@@ -1,7 +1,7 @@
 ############################
 # Stage 1: build capnproto #
 ############################
-FROM ubuntu:24.04 AS capnp-builder
+FROM debian:13 AS capnp-builder
 
 ARG CAPNP_VERSION=1.2.0
 ARG JOBS=6
@@ -23,24 +23,42 @@ RUN curl -fsSLO https://capnproto.org/${CAPNP_SRC}.tar.gz && \
     make install && \
     go install ${CAPNPC_GO_PKG}@${CAPNPC_GO_VERSION}
 
+# Install Dotnet SDK and build capnpc-csharp
+RUN curl -fsSLO https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    rm packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y dotnet-sdk-10.0
+
+RUN git clone -b net9.0 https://github.com/zalf-rpm/capnproto-dotnetcore.git && \
+    cd capnproto-dotnetcore && \
+    dotnet publish -c Release capnpc-csharp/capnpc-csharp.csproj --framework net10.0 -o /out/capnpc-csharp
+
 #############################
 # Stage 2: runtime (minimal) #
 #############################
-FROM ubuntu:24.04 AS capnp-runtime
+FROM debian:13 AS capnp-runtime
 ARG CAPNP_VERSION=1.2.0
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /workspace
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 ca-certificates libstdc++6 && \
+    python3 ca-certificates libstdc++6 curl && \
+    curl -fsSLO https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    rm packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y dotnet-runtime-10.0 && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy capnp installation from builder
 COPY --from=capnp-builder /usr/local/ /usr/local/
+COPY --from=capnp-builder /out/capnpc-csharp /opt/capnpc-csharp
+RUN ln -s /opt/capnpc-csharp/capnpc-csharp /usr/local/bin/capnpc-csharp
 RUN ldconfig
 
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
 # Override languages via: docker run ... capnp-gen --lang c++ go
 # capnpc-go plugin installed in /usr/local/bin (already in default PATH)
 ENTRYPOINT ["python3", "capnp_compile.py"]
-CMD ["--lang", "c++", "go"]
+CMD ["--lang", "c++", "go", "csharp"]

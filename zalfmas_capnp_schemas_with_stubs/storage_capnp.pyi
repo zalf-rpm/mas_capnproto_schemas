@@ -544,7 +544,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 def getKey(
                     self,
                     _context: _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.GetkeyCallContext,
-                    **kwargs: dict[str, Any],
+                    **kwargs: Any,
                 ) -> Awaitable[
                     str
                     | _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.GetkeyResultTuple
@@ -557,7 +557,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 def getValue(
                     self,
                     _context: _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.GetvalueCallContext,
-                    **kwargs: dict[str, Any],
+                    **kwargs: Any,
                 ) -> Awaitable[
                     _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.GetvalueResultTuple
                     | None
@@ -570,7 +570,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                     value: ValueReader,
                     _context: _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.SetvalueCallContext,
-                    **kwargs: dict[str, Any],
+                    **kwargs: Any,
                 ) -> Awaitable[
                     bool
                     | _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server.SetvalueResultTuple
@@ -953,7 +953,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def export(
                 self,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.ExportCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 str
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.ExportResultTuple
@@ -966,7 +966,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def downloadEntries(
                 self,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.DownloadentriesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[PairBuilder | PairReader]
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.DownloadentriesResultTuple
@@ -979,7 +979,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def listEntries(
                 self,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.ListentriesCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 Sequence[KeyAndEntryBuilder | KeyAndEntryReader]
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.ListentriesResultTuple
@@ -993,7 +993,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
                 key: str,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.GetentryCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule.Server
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.GetentryResultTuple
@@ -1007,7 +1007,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
                 key: str,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.RemoveentryCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.RemoveentryResultTuple
@@ -1020,7 +1020,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def clear(
                 self,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.ClearCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _StoreInterfaceModule._ContainerInterfaceModule.Server.ClearResultTuple
@@ -1036,7 +1036,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 value: ValueReader,
                 replaceExisting: bool,
                 _context: _StoreInterfaceModule._ContainerInterfaceModule.Server.AddentryCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 _StoreInterfaceModule._ContainerInterfaceModule.Server.AddentryResultTuple
                 | None
@@ -1507,7 +1507,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             name: str,
             description: str,
             _context: _StoreInterfaceModule.Server.NewcontainerCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _StoreInterfaceModule._ContainerInterfaceModule.Server
             | _StoreInterfaceModule.Server.NewcontainerResultTuple
@@ -1520,7 +1520,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             self,
             id: str,
             _context: _StoreInterfaceModule.Server.ContainerwithidCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _StoreInterfaceModule._ContainerInterfaceModule.Server
             | _StoreInterfaceModule.Server.ContainerwithidResultTuple
@@ -1532,7 +1532,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
         def listContainers(
             self,
             _context: _StoreInterfaceModule.Server.ListcontainersCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[InfoAndContainerBuilder | InfoAndContainerReader]
             | _StoreInterfaceModule.Server.ListcontainersResultTuple
@@ -1545,7 +1545,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             self,
             id: str,
             _context: _StoreInterfaceModule.Server.RemovecontainerCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             bool | _StoreInterfaceModule.Server.RemovecontainerResultTuple | None
         ]: ...
@@ -1556,7 +1556,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             self,
             json: str,
             _context: _StoreInterfaceModule.Server.ImportcontainerCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _StoreInterfaceModule._ContainerInterfaceModule.Server
             | _StoreInterfaceModule.Server.ImportcontainerResultTuple

@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/gen/">
+    <Project Path="gen/csharp/zalfmas_capnpschemas.csproj" />
+  </Folder>
+</Solution>

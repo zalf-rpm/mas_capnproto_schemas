@@ -29,6 +29,9 @@ Channel.Reader.Server.ReadifmsgResultTuple = NamedTuple(
 Channel.Writer.Server.WriteifspaceResultTuple = NamedTuple(
     "WriteifspaceResultTuple", [("success", object)]
 )
+Component.RunnableFactory.Server.CreateResultTuple = NamedTuple(
+    "CreateResultTuple", [("r", object)]
+)
 Component.Runnable.Server.StartResultTuple = NamedTuple(
     "StartResultTuple", [("success", object)]
 )

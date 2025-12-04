@@ -120,7 +120,7 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def parameters(
             self,
             _context: _CropInterfaceModule.Server.ParametersCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _CropInterfaceModule.Server.ParametersResultTuple | None
         ]: ...
@@ -130,7 +130,7 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def cultivar(
             self,
             _context: _CropInterfaceModule.Server.CultivarCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _IdInformationStructModule.Builder
             | _CropInterfaceModule.Server.CultivarResultTuple
@@ -142,7 +142,7 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         def species(
             self,
             _context: _CropInterfaceModule.Server.SpeciesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _IdInformationStructModule.Builder
             | _CropInterfaceModule.Server.SpeciesResultTuple

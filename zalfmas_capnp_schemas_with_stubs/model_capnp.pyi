@@ -458,7 +458,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
             self,
             timeSeries: TimeSeriesClient,
             _context: _ClimateInstanceInterfaceModule.Server.RunCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _XYResultStructModule.Builder
             | _ClimateInstanceInterfaceModule.Server.RunResultTuple
@@ -471,7 +471,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
             self,
             dataset: TimeSeriesClientListReader,
             _context: _ClimateInstanceInterfaceModule.Server.RunsetCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _XYPlusResultStructModule.Builder
             | _ClimateInstanceInterfaceModule.Server.RunsetResultTuple
@@ -718,7 +718,7 @@ class _EnvInstanceInterfaceModule(
             self,
             env: EnvReader,
             _context: _EnvInstanceInterfaceModule.Server.RunCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _EnvInstanceInterfaceModule.Server.RunResultTuple | None
         ]: ...
@@ -778,7 +778,7 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             def unregister(
                 self,
                 _context: _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule.Server.UnregisterCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule.Server.UnregisterResultTuple
@@ -853,7 +853,7 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             self,
             instance: EnvInstanceClient,
             _context: _EnvInstanceProxyInterfaceModule.Server.RegisterenvinstanceCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule.Server
             | _EnvInstanceProxyInterfaceModule.Server.RegisterenvinstanceResultTuple
@@ -989,7 +989,7 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
         def modelInfo(
             self,
             _context: _InstanceFactoryInterfaceModule.Server.ModelinfoCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _InstanceFactoryInterfaceModule.Server.ModelinfoResultTuple | None
         ]: ...
@@ -999,7 +999,7 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
         def newInstance(
             self,
             _context: _InstanceFactoryInterfaceModule.Server.NewinstanceCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _IdentifiableInterfaceModule.Server
             | _InstanceFactoryInterfaceModule.Server.NewinstanceResultTuple
@@ -1012,7 +1012,7 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
             self,
             numberOfInstances: int,
             _context: _InstanceFactoryInterfaceModule.Server.NewinstancesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_IdentifiableInterfaceModule]
             | _InstanceFactoryInterfaceModule.Server.NewinstancesResultTuple

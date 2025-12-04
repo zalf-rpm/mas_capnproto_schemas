@@ -1,17 +1,21 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Common
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd4cb7ecbfe03dad3UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd4cb7ecbfe03dad3UL)
+    ]
     public class IdInformation : ICapnpSerializable
     {
         public const UInt64 typeId = 0xd4cb7ecbfe03dad3UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -33,39 +37,29 @@ namespace Mas.Schema.Common
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public string Id
-        {
-            get;
-            set;
-        }
+        public string Id { get; set; }
 
-        public string Name
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
 
-        public string Description
-        {
-            get;
-            set;
-        }
+        public string Description { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public string Id => ctx.ReadText(0, null);
             public string Name => ctx.ReadText(1, null);
             public string Description => ctx.ReadText(2, null);
@@ -98,22 +92,40 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2afd1cb599c48d5UL), Proxy(typeof(Identifiable_Proxy)), Skeleton(typeof(Identifiable_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb2afd1cb599c48d5UL),
+        Proxy(typeof(Identifiable_Proxy)),
+        Skeleton(typeof(Identifiable_Skeleton))
+    ]
     public interface IIdentifiable : IDisposable
     {
         Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2afd1cb599c48d5UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb2afd1cb599c48d5UL)
+    ]
     public class Identifiable_Proxy : Proxy, IIdentifiable
     {
-        public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+        public async Task<Mas.Schema.Common.IdInformation> Info(
+            CancellationToken cancellationToken_ = default
+        )
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
             arg_?.serialize(in_);
-            using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    12875740530987518165UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
                 return r_;
@@ -121,7 +133,10 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2afd1cb599c48d5UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb2afd1cb599c48d5UL)
+    ]
     public class Identifiable_Skeleton : Skeleton<IIdentifiable>
     {
         public Identifiable_Skeleton()
@@ -130,17 +145,23 @@ namespace Mas.Schema.Common
         }
 
         public override ulong InterfaceId => 12875740530987518165UL;
-        Task<AnswerOrCounterquestion> Info(DeserializerState d_, CancellationToken cancellationToken_)
+
+        Task<AnswerOrCounterquestion> Info(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
         {
             using (d_)
             {
-                return Impatient.MaybeTailCall(Impl.Info(cancellationToken_), r_ =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                return Impatient.MaybeTailCall(
+                    Impl.Info(cancellationToken_),
+                    r_ =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Common.IdInformation.WRITER>();
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -148,39 +169,42 @@ namespace Mas.Schema.Common
 
     public static class Identifiable
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9d8aa1cf1e49deb1UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9d8aa1cf1e49deb1UL)
+        ]
         public class Params_Info : ICapnpSerializable
         {
             public const UInt64 typeId = 0x9d8aa1cf1e49deb1UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 applyDefaults();
             }
 
-            public void serialize(WRITER writer)
-            {
-            }
+            public void serialize(WRITER writer) { }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
             {
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             }
 
@@ -194,15 +218,21 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xed6c098b67cad454UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xed6c098b67cad454UL)
+    ]
     public class StructuredText : ICapnpSerializable
     {
         public const UInt64 typeId = 0xed6c098b67cad454UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             Value = reader.Value;
-            Structure = CapnpSerializable.Create<Mas.Schema.Common.StructuredText.structure>(reader.Structure);
+            Structure = CapnpSerializable.Create<Mas.Schema.Common.StructuredText.structure>(
+                reader.Structure
+            );
             TheType = reader.TheType;
             applyDefaults();
         }
@@ -219,43 +249,34 @@ namespace Mas.Schema.Common
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public string Value
-        {
-            get;
-            set;
-        }
+        public string Value { get; set; }
 
-        public Mas.Schema.Common.StructuredText.structure Structure
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.StructuredText.structure Structure { get; set; }
 
-        public Mas.Schema.Common.StructuredText.Type TheType
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.StructuredText.Type TheType { get; set; } =
+            Mas.Schema.Common.StructuredText.Type.unstructured;
 
-        = Mas.Schema.Common.StructuredText.Type.unstructured;
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public string Value => ctx.ReadText(0, null);
             public structure.READER Structure => new structure.READER(ctx);
-            public Mas.Schema.Common.StructuredText.Type TheType => (Mas.Schema.Common.StructuredText.Type)ctx.ReadDataUShort(16UL, (ushort)0);
+            public Mas.Schema.Common.StructuredText.Type TheType =>
+                (Mas.Schema.Common.StructuredText.Type)ctx.ReadDataUShort(16UL, (ushort)0);
         }
 
         public class WRITER : SerializerState
@@ -283,17 +304,21 @@ namespace Mas.Schema.Common
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe8cbf552b1c262ccUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xe8cbf552b1c262ccUL)
+        ]
         public class structure : ICapnpSerializable
         {
             public const UInt64 typeId = 0xe8cbf552b1c262ccUL;
+
             public enum WHICH : ushort
             {
                 None = 0,
                 Json = 1,
                 Xml = 2,
                 Toml = 3,
-                undefined = 65535
+                undefined = 65535,
             }
 
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -362,29 +387,29 @@ namespace Mas.Schema.Common
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public WHICH which => (WHICH)ctx.ReadDataUShort(0U, (ushort)0);
             }
 
             public class WRITER : SerializerState
             {
-                public WRITER()
-                {
-                }
+                public WRITER() { }
 
                 public WHICH which
                 {
@@ -394,21 +419,28 @@ namespace Mas.Schema.Common
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x9eebc43e17b5974fUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9eebc43e17b5974fUL)
+        ]
         public enum Type : ushort
         {
             unstructured,
             json,
             xml,
             toml,
-            sturdyRef
+            sturdyRef,
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe17592335373b246UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xe17592335373b246UL)
+    ]
     public class Value : ICapnpSerializable
     {
         public const UInt64 typeId = 0xe17592335373b246UL;
+
         public enum WHICH : ushort
         {
             F64 = 0,
@@ -441,7 +473,7 @@ namespace Mas.Schema.Common
             Ld = 27,
             Lcap = 28,
             Lpair = 29,
-            undefined = 65535
+            undefined = 65535,
         }
 
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -537,7 +569,9 @@ namespace Mas.Schema.Common
                     Lcap = reader.Lcap;
                     break;
                 case WHICH.Lpair:
-                    Lpair = reader.Lpair?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Common.Pair<object, object>>(_));
+                    Lpair = reader.Lpair?.ToReadOnlyList(_ =>
+                        CapnpSerializable.Create<Mas.Schema.Common.Pair<object, object>>(_)
+                    );
                     break;
             }
 
@@ -753,13 +787,11 @@ namespace Mas.Schema.Common
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
         public double? F64
         {
-            get => _which == WHICH.F64 ? (double? )_content : null;
+            get => _which == WHICH.F64 ? (double?)_content : null;
             set
             {
                 _which = WHICH.F64;
@@ -769,7 +801,7 @@ namespace Mas.Schema.Common
 
         public float? F32
         {
-            get => _which == WHICH.F32 ? (float? )_content : null;
+            get => _which == WHICH.F32 ? (float?)_content : null;
             set
             {
                 _which = WHICH.F32;
@@ -779,7 +811,7 @@ namespace Mas.Schema.Common
 
         public long? I64
         {
-            get => _which == WHICH.I64 ? (long? )_content : null;
+            get => _which == WHICH.I64 ? (long?)_content : null;
             set
             {
                 _which = WHICH.I64;
@@ -789,7 +821,7 @@ namespace Mas.Schema.Common
 
         public int? I32
         {
-            get => _which == WHICH.I32 ? (int? )_content : null;
+            get => _which == WHICH.I32 ? (int?)_content : null;
             set
             {
                 _which = WHICH.I32;
@@ -799,7 +831,7 @@ namespace Mas.Schema.Common
 
         public short? I16
         {
-            get => _which == WHICH.I16 ? (short? )_content : null;
+            get => _which == WHICH.I16 ? (short?)_content : null;
             set
             {
                 _which = WHICH.I16;
@@ -809,7 +841,7 @@ namespace Mas.Schema.Common
 
         public sbyte? I8
         {
-            get => _which == WHICH.I8 ? (sbyte? )_content : null;
+            get => _which == WHICH.I8 ? (sbyte?)_content : null;
             set
             {
                 _which = WHICH.I8;
@@ -819,7 +851,7 @@ namespace Mas.Schema.Common
 
         public ulong? Ui64
         {
-            get => _which == WHICH.Ui64 ? (ulong? )_content : null;
+            get => _which == WHICH.Ui64 ? (ulong?)_content : null;
             set
             {
                 _which = WHICH.Ui64;
@@ -829,7 +861,7 @@ namespace Mas.Schema.Common
 
         public uint? Ui32
         {
-            get => _which == WHICH.Ui32 ? (uint? )_content : null;
+            get => _which == WHICH.Ui32 ? (uint?)_content : null;
             set
             {
                 _which = WHICH.Ui32;
@@ -839,7 +871,7 @@ namespace Mas.Schema.Common
 
         public ushort? Ui16
         {
-            get => _which == WHICH.Ui16 ? (ushort? )_content : null;
+            get => _which == WHICH.Ui16 ? (ushort?)_content : null;
             set
             {
                 _which = WHICH.Ui16;
@@ -849,7 +881,7 @@ namespace Mas.Schema.Common
 
         public byte? Ui8
         {
-            get => _which == WHICH.Ui8 ? (byte? )_content : null;
+            get => _which == WHICH.Ui8 ? (byte?)_content : null;
             set
             {
                 _which = WHICH.Ui8;
@@ -859,7 +891,7 @@ namespace Mas.Schema.Common
 
         public bool? B
         {
-            get => _which == WHICH.B ? (bool? )_content : null;
+            get => _which == WHICH.B ? (bool?)_content : null;
             set
             {
                 _which = WHICH.B;
@@ -1049,7 +1081,10 @@ namespace Mas.Schema.Common
 
         public IReadOnlyList<Mas.Schema.Common.Pair<object, object>> Lpair
         {
-            get => _which == WHICH.Lpair ? (IReadOnlyList<Mas.Schema.Common.Pair<object, object>>)_content : null;
+            get =>
+                _which == WHICH.Lpair
+                    ? (IReadOnlyList<Mas.Schema.Common.Pair<object, object>>)_content
+                    : null;
             set
             {
                 _which = WHICH.Lpair;
@@ -1060,14 +1095,18 @@ namespace Mas.Schema.Common
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public WHICH which => (WHICH)ctx.ReadDataUShort(64U, (ushort)0);
             public double F64 => which == WHICH.F64 ? ctx.ReadDataDouble(0UL, 0) : default;
             public float F32 => which == WHICH.F32 ? ctx.ReadDataFloat(0UL, 0F) : default;
@@ -1077,42 +1116,60 @@ namespace Mas.Schema.Common
             public sbyte I8 => which == WHICH.I8 ? ctx.ReadDataSByte(0UL, (sbyte)0) : default;
             public ulong Ui64 => which == WHICH.Ui64 ? ctx.ReadDataULong(0UL, 0UL) : default;
             public uint Ui32 => which == WHICH.Ui32 ? ctx.ReadDataUInt(0UL, 0U) : default;
-            public ushort Ui16 => which == WHICH.Ui16 ? ctx.ReadDataUShort(0UL, (ushort)0) : default;
+            public ushort Ui16 =>
+                which == WHICH.Ui16 ? ctx.ReadDataUShort(0UL, (ushort)0) : default;
             public byte Ui8 => which == WHICH.Ui8 ? ctx.ReadDataByte(0UL, (byte)0) : default;
             public bool B => which == WHICH.B ? ctx.ReadDataBool(0UL, false) : default;
             public string T => which == WHICH.T ? ctx.ReadText(0, null) : default;
             public IReadOnlyList<byte> D => which == WHICH.D ? ctx.ReadList(0).CastByte() : default;
             public DeserializerState P => which == WHICH.P ? ctx.StructReadPointer(0) : default;
             public BareProxy Cap => which == WHICH.Cap ? ctx.ReadCap(0) : default;
-            public IReadOnlyList<double> Lf64 => which == WHICH.Lf64 ? ctx.ReadList(0).CastDouble() : default;
+            public IReadOnlyList<double> Lf64 =>
+                which == WHICH.Lf64 ? ctx.ReadList(0).CastDouble() : default;
             public bool HasLf64 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<float> Lf32 => which == WHICH.Lf32 ? ctx.ReadList(0).CastFloat() : default;
+            public IReadOnlyList<float> Lf32 =>
+                which == WHICH.Lf32 ? ctx.ReadList(0).CastFloat() : default;
             public bool HasLf32 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<long> Li64 => which == WHICH.Li64 ? ctx.ReadList(0).CastLong() : default;
+            public IReadOnlyList<long> Li64 =>
+                which == WHICH.Li64 ? ctx.ReadList(0).CastLong() : default;
             public bool HasLi64 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<int> Li32 => which == WHICH.Li32 ? ctx.ReadList(0).CastInt() : default;
+            public IReadOnlyList<int> Li32 =>
+                which == WHICH.Li32 ? ctx.ReadList(0).CastInt() : default;
             public bool HasLi32 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<short> Li16 => which == WHICH.Li16 ? ctx.ReadList(0).CastShort() : default;
+            public IReadOnlyList<short> Li16 =>
+                which == WHICH.Li16 ? ctx.ReadList(0).CastShort() : default;
             public bool HasLi16 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<sbyte> Li8 => which == WHICH.Li8 ? ctx.ReadList(0).CastSByte() : default;
+            public IReadOnlyList<sbyte> Li8 =>
+                which == WHICH.Li8 ? ctx.ReadList(0).CastSByte() : default;
             public bool HasLi8 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<ulong> Lui64 => which == WHICH.Lui64 ? ctx.ReadList(0).CastULong() : default;
+            public IReadOnlyList<ulong> Lui64 =>
+                which == WHICH.Lui64 ? ctx.ReadList(0).CastULong() : default;
             public bool HasLui64 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<uint> Lui32 => which == WHICH.Lui32 ? ctx.ReadList(0).CastUInt() : default;
+            public IReadOnlyList<uint> Lui32 =>
+                which == WHICH.Lui32 ? ctx.ReadList(0).CastUInt() : default;
             public bool HasLui32 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<ushort> Lui16 => which == WHICH.Lui16 ? ctx.ReadList(0).CastUShort() : default;
+            public IReadOnlyList<ushort> Lui16 =>
+                which == WHICH.Lui16 ? ctx.ReadList(0).CastUShort() : default;
             public bool HasLui16 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<byte> Lui8 => which == WHICH.Lui8 ? ctx.ReadList(0).CastByte() : default;
+            public IReadOnlyList<byte> Lui8 =>
+                which == WHICH.Lui8 ? ctx.ReadList(0).CastByte() : default;
             public bool HasLui8 => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<bool> Lb => which == WHICH.Lb ? ctx.ReadList(0).CastBool() : default;
+            public IReadOnlyList<bool> Lb =>
+                which == WHICH.Lb ? ctx.ReadList(0).CastBool() : default;
             public bool HasLb => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<string> Lt => which == WHICH.Lt ? ctx.ReadList(0).CastText2() : default;
+            public IReadOnlyList<string> Lt =>
+                which == WHICH.Lt ? ctx.ReadList(0).CastText2() : default;
             public bool HasLt => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<IReadOnlyList<byte>> Ld => which == WHICH.Ld ? ctx.ReadList(0).CastData() : default;
+            public IReadOnlyList<IReadOnlyList<byte>> Ld =>
+                which == WHICH.Ld ? ctx.ReadList(0).CastData() : default;
             public bool HasLd => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<BareProxy> Lcap => which == WHICH.Lcap ? ctx.ReadCapList<BareProxy>(0) : default;
+            public IReadOnlyList<BareProxy> Lcap =>
+                which == WHICH.Lcap ? ctx.ReadCapList<BareProxy>(0) : default;
             public bool HasLcap => ctx.IsStructFieldNonNull(0);
-            public IReadOnlyList<Mas.Schema.Common.Pair<object, object>.READER> Lpair => which == WHICH.Lpair ? ctx.ReadList(0).Cast(Mas.Schema.Common.Pair<object, object>.READER.create) : default;
+            public IReadOnlyList<Mas.Schema.Common.Pair<object, object>.READER> Lpair =>
+                which == WHICH.Lpair
+                    ? ctx.ReadList(0).Cast(Mas.Schema.Common.Pair<object, object>.READER.create)
+                    : default;
             public bool HasLpair => ctx.IsStructFieldNonNull(0);
         }
 
@@ -1203,7 +1260,8 @@ namespace Mas.Schema.Common
 
             public ListOfPrimitivesSerializer<byte> D
             {
-                get => which == WHICH.D ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
+                get =>
+                    which == WHICH.D ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
                 set => Link(0, value);
             }
 
@@ -1221,61 +1279,91 @@ namespace Mas.Schema.Common
 
             public ListOfPrimitivesSerializer<double> Lf64
             {
-                get => which == WHICH.Lf64 ? BuildPointer<ListOfPrimitivesSerializer<double>>(0) : default;
+                get =>
+                    which == WHICH.Lf64
+                        ? BuildPointer<ListOfPrimitivesSerializer<double>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<float> Lf32
             {
-                get => which == WHICH.Lf32 ? BuildPointer<ListOfPrimitivesSerializer<float>>(0) : default;
+                get =>
+                    which == WHICH.Lf32
+                        ? BuildPointer<ListOfPrimitivesSerializer<float>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<long> Li64
             {
-                get => which == WHICH.Li64 ? BuildPointer<ListOfPrimitivesSerializer<long>>(0) : default;
+                get =>
+                    which == WHICH.Li64
+                        ? BuildPointer<ListOfPrimitivesSerializer<long>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<int> Li32
             {
-                get => which == WHICH.Li32 ? BuildPointer<ListOfPrimitivesSerializer<int>>(0) : default;
+                get =>
+                    which == WHICH.Li32
+                        ? BuildPointer<ListOfPrimitivesSerializer<int>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<short> Li16
             {
-                get => which == WHICH.Li16 ? BuildPointer<ListOfPrimitivesSerializer<short>>(0) : default;
+                get =>
+                    which == WHICH.Li16
+                        ? BuildPointer<ListOfPrimitivesSerializer<short>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<sbyte> Li8
             {
-                get => which == WHICH.Li8 ? BuildPointer<ListOfPrimitivesSerializer<sbyte>>(0) : default;
+                get =>
+                    which == WHICH.Li8
+                        ? BuildPointer<ListOfPrimitivesSerializer<sbyte>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<ulong> Lui64
             {
-                get => which == WHICH.Lui64 ? BuildPointer<ListOfPrimitivesSerializer<ulong>>(0) : default;
+                get =>
+                    which == WHICH.Lui64
+                        ? BuildPointer<ListOfPrimitivesSerializer<ulong>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<uint> Lui32
             {
-                get => which == WHICH.Lui32 ? BuildPointer<ListOfPrimitivesSerializer<uint>>(0) : default;
+                get =>
+                    which == WHICH.Lui32
+                        ? BuildPointer<ListOfPrimitivesSerializer<uint>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<ushort> Lui16
             {
-                get => which == WHICH.Lui16 ? BuildPointer<ListOfPrimitivesSerializer<ushort>>(0) : default;
+                get =>
+                    which == WHICH.Lui16
+                        ? BuildPointer<ListOfPrimitivesSerializer<ushort>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfPrimitivesSerializer<byte> Lui8
             {
-                get => which == WHICH.Lui8 ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0) : default;
+                get =>
+                    which == WHICH.Lui8
+                        ? BuildPointer<ListOfPrimitivesSerializer<byte>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
@@ -1293,28 +1381,47 @@ namespace Mas.Schema.Common
 
             public ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>> Ld
             {
-                get => which == WHICH.Ld ? BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>>>(0) : default;
+                get =>
+                    which == WHICH.Ld
+                        ? BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<byte>>>(
+                            0
+                        )
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfCapsSerializer<BareProxy> Lcap
             {
-                get => which == WHICH.Lcap ? BuildPointer<ListOfCapsSerializer<BareProxy>>(0) : default;
+                get =>
+                    which == WHICH.Lcap
+                        ? BuildPointer<ListOfCapsSerializer<BareProxy>>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER> Lpair
             {
-                get => which == WHICH.Lpair ? BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER>>(0) : default;
+                get =>
+                    which == WHICH.Lpair
+                        ? BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER>
+                        >(0)
+                        : default;
                 set => Link(0, value);
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb9d4864725174733UL)]
-    public class Pair<TF, TS> : ICapnpSerializable where TF : class where TS : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb9d4864725174733UL)
+    ]
+    public class Pair<TF, TS> : ICapnpSerializable
+        where TF : class
+        where TS : class
     {
         public const UInt64 typeId = 0xb9d4864725174733UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -1334,33 +1441,27 @@ namespace Mas.Schema.Common
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public TF Fst
-        {
-            get;
-            set;
-        }
+        public TF Fst { get; set; }
 
-        public TS Snd
-        {
-            get;
-            set;
-        }
+        public TS Snd { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public DeserializerState Fst => ctx.StructReadPointer(0);
             public DeserializerState Snd => ctx.StructReadPointer(1);
         }
@@ -1386,36 +1487,58 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc83045ccbb0b6ac5UL), Proxy(typeof(Holder_Proxy<>)), Skeleton(typeof(Holder_Skeleton<>))]
-    public interface IHolder<TT> : IDisposable where TT : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc83045ccbb0b6ac5UL),
+        Proxy(typeof(Holder_Proxy<>)),
+        Skeleton(typeof(Holder_Skeleton<>))
+    ]
+    public interface IHolder<TT> : IDisposable
+        where TT : class
     {
         Task<TT> Value(CancellationToken cancellationToken_ = default);
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc83045ccbb0b6ac5UL)]
-    public class Holder_Proxy<TT> : Proxy, IHolder<TT> where TT : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc83045ccbb0b6ac5UL)
+    ]
+    public class Holder_Proxy<TT> : Proxy, IHolder<TT>
+        where TT : class
     {
         public Task<TT> Value(CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Params_Value.WRITER>();
-            var arg_ = new Mas.Schema.Common.Holder<TT>.Params_Value()
-            {};
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Params_Value.WRITER>();
+            var arg_ = new Mas.Schema.Common.Holder<TT>.Params_Value() { };
             arg_?.serialize(in_);
-            return Impatient.MakePipelineAware(Call(14425106352081431237UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
-            {
-                using (d_)
+            return Impatient.MakePipelineAware(
+                Call(
+                    14425106352081431237UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ),
+                d_ =>
                 {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.Holder<TT>.Result_Value>(d_);
-                    return (r_.Value);
+                    using (d_)
+                    {
+                        var r_ =
+                            CapnpSerializable.Create<Mas.Schema.Common.Holder<TT>.Result_Value>(d_);
+                        return (r_.Value);
+                    }
                 }
-            }
-
             );
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc83045ccbb0b6ac5UL)]
-    public class Holder_Skeleton<TT> : Skeleton<IHolder<TT>> where TT : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc83045ccbb0b6ac5UL)
+    ]
+    public class Holder_Skeleton<TT> : Skeleton<IHolder<TT>>
+        where TT : class
     {
         public Holder_Skeleton()
         {
@@ -1423,18 +1546,24 @@ namespace Mas.Schema.Common
         }
 
         public override ulong InterfaceId => 14425106352081431237UL;
-        Task<AnswerOrCounterquestion> Value(DeserializerState d_, CancellationToken cancellationToken_)
+
+        Task<AnswerOrCounterquestion> Value(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
         {
             using (d_)
             {
-                return Impatient.MaybeTailCall(Impl.Value(cancellationToken_), value =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Result_Value.WRITER>();
-                    var r_ = new Mas.Schema.Common.Holder<TT>.Result_Value{Value = value};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                return Impatient.MaybeTailCall(
+                    Impl.Value(cancellationToken_),
+                    value =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Result_Value.WRITER>();
+                        var r_ = new Mas.Schema.Common.Holder<TT>.Result_Value { Value = value };
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -1443,39 +1572,42 @@ namespace Mas.Schema.Common
     public static class Holder<TT>
         where TT : class
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x966d054acf5f578dUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x966d054acf5f578dUL)
+        ]
         public class Params_Value : ICapnpSerializable
         {
             public const UInt64 typeId = 0x966d054acf5f578dUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 applyDefaults();
             }
 
-            public void serialize(WRITER writer)
-            {
-            }
+            public void serialize(WRITER writer) { }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
             {
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
             }
 
@@ -1488,10 +1620,14 @@ namespace Mas.Schema.Common
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa18bd34aee32cc89UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa18bd34aee32cc89UL)
+        ]
         public class Result_Value : ICapnpSerializable
         {
             public const UInt64 typeId = 0xa18bd34aee32cc89UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -1509,27 +1645,25 @@ namespace Mas.Schema.Common
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public TT Value
-            {
-                get;
-                set;
-            }
+            public TT Value { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public DeserializerState Value => ctx.StructReadPointer(0);
             }
 
@@ -1549,39 +1683,67 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xee543d7c305d56f6UL), Proxy(typeof(IdentifiableHolder_Proxy<>)), Skeleton(typeof(IdentifiableHolder_Skeleton<>))]
-    public interface IIdentifiableHolder<TT> : Mas.Schema.Common.IIdentifiable, Mas.Schema.Common.IHolder<TT> where TT : class
-    {
-    }
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xee543d7c305d56f6UL),
+        Proxy(typeof(IdentifiableHolder_Proxy<>)),
+        Skeleton(typeof(IdentifiableHolder_Skeleton<>))
+    ]
+    public interface IIdentifiableHolder<TT>
+        : Mas.Schema.Common.IIdentifiable,
+            Mas.Schema.Common.IHolder<TT>
+        where TT : class { }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xee543d7c305d56f6UL)]
-    public class IdentifiableHolder_Proxy<TT> : Proxy, IIdentifiableHolder<TT> where TT : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xee543d7c305d56f6UL)
+    ]
+    public class IdentifiableHolder_Proxy<TT> : Proxy, IIdentifiableHolder<TT>
+        where TT : class
     {
         public Task<TT> Value(CancellationToken cancellationToken_ = default)
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Params_Value.WRITER>();
-            var arg_ = new Mas.Schema.Common.Holder<TT>.Params_Value()
-            {};
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Holder<TT>.Params_Value.WRITER>();
+            var arg_ = new Mas.Schema.Common.Holder<TT>.Params_Value() { };
             arg_?.serialize(in_);
-            return Impatient.MakePipelineAware(Call(14425106352081431237UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_), d_ =>
-            {
-                using (d_)
+            return Impatient.MakePipelineAware(
+                Call(
+                    14425106352081431237UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ),
+                d_ =>
                 {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.Holder<TT>.Result_Value>(d_);
-                    return (r_.Value);
+                    using (d_)
+                    {
+                        var r_ =
+                            CapnpSerializable.Create<Mas.Schema.Common.Holder<TT>.Result_Value>(d_);
+                        return (r_.Value);
+                    }
                 }
-            }
-
             );
         }
 
-        public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+        public async Task<Mas.Schema.Common.IdInformation> Info(
+            CancellationToken cancellationToken_ = default
+        )
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
             arg_?.serialize(in_);
-            using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    12875740530987518165UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
                 return r_;
@@ -1589,8 +1751,12 @@ namespace Mas.Schema.Common
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xee543d7c305d56f6UL)]
-    public class IdentifiableHolder_Skeleton<TT> : Skeleton<IIdentifiableHolder<TT>> where TT : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xee543d7c305d56f6UL)
+    ]
+    public class IdentifiableHolder_Skeleton<TT> : Skeleton<IIdentifiableHolder<TT>>
+        where TT : class
     {
         public IdentifiableHolder_Skeleton()
         {

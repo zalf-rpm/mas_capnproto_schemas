@@ -62,7 +62,7 @@ class _ServiceInterfaceModule(_InterfaceModule):
         def nextConfig(
             self,
             _context: _ServiceInterfaceModule.Server.NextconfigCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_ServiceInterfaceModule.Server.NextconfigResultTuple | None]: ...
         def nextConfig_context(
             self, context: _ServiceInterfaceModule.Server.NextconfigCallContext

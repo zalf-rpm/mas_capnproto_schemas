@@ -9,6 +9,7 @@ from collections.abc import (
     Sequence,
 )
 from contextlib import AbstractContextManager, asynccontextmanager
+from ssl import SSLContext
 from typing import IO, Any, Literal, overload
 
 from .._internal import CapnpModule as _CapnpModule
@@ -186,7 +187,7 @@ class _StructModule:
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        **kwargs: dict[str, Any],
+        **kwargs: Any,
     ) -> _DynamicStructBuilder:
         """Create a new in-memory message builder for this struct type.
 
@@ -529,6 +530,10 @@ class _DynamicObjectReader:
     def as_interface(
         self, schema: crop_capnp._ServiceInterfaceModule
     ) -> crop_capnp.ServiceClient: ...
+    @overload
+    def as_interface(
+        self, schema: fbp_capnp._ComponentStructModule._RunnableFactoryInterfaceModule
+    ) -> fbp_capnp.RunnableFactoryClient: ...
     @overload
     def as_interface(
         self, schema: fbp_capnp._ComponentStructModule._RunnableInterfaceModule
@@ -1633,6 +1638,10 @@ class _CapabilityClient:
     ) -> crop_capnp.ServiceClient: ...
     @overload
     def cast_as(
+        self, schema: fbp_capnp._ComponentStructModule._RunnableFactoryInterfaceModule
+    ) -> fbp_capnp.RunnableFactoryClient: ...
+    @overload
+    def cast_as(
         self, schema: fbp_capnp._ComponentStructModule._RunnableInterfaceModule
     ) -> fbp_capnp.RunnableClient: ...
     @overload
@@ -2441,7 +2450,11 @@ class AsyncIoStream:
 
     @staticmethod
     async def create_connection(
-        host: str | None = None, port: int | None = None, **kwargs: dict[str, Any]
+        host: str | None = None,
+        port: int | None = None,
+        ssl: SSLContext | None = None,
+        ssl_handshake_timeout: int | None = None,
+        **kwargs: Any,
     ) -> AsyncIoStream:
         """Create an async TCP connection.
 
@@ -2457,7 +2470,7 @@ class AsyncIoStream:
 
     @staticmethod
     async def create_unix_connection(
-        path: str | None = None, **kwargs: dict[str, Any]
+        path: str | None = None, **kwargs: Any
     ) -> AsyncIoStream:
         """Create an async Unix domain socket connection.
 
@@ -2475,7 +2488,7 @@ class AsyncIoStream:
         callback: Callable[[AsyncIoStream], Awaitable[None]],
         host: str | None = None,
         port: int | None = None,
-        **kwargs: dict[str, Any],
+        **kwargs: Any,
     ) -> _Server:
         """Create an async TCP server.
 
@@ -2494,7 +2507,7 @@ class AsyncIoStream:
     async def create_unix_server(
         callback: Callable[[AsyncIoStream], Awaitable[None]],
         path: str | None = None,
-        **kwargs: dict[str, Any],
+        **kwargs: Any,
     ) -> _Server:
         """Create an async Unix domain socket server.
 

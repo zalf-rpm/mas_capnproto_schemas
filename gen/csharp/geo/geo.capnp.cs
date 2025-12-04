@@ -1,54 +1,60 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Geo
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe529b4deb322ece8UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xe529b4deb322ece8UL)
+    ]
     public enum CoordType : ushort
     {
         gk,
         utm,
-        latlon
+        latlon,
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb79427a74eb97fc0UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb79427a74eb97fc0UL)
+    ]
     public class EPSG : ICapnpSerializable
     {
         public const UInt64 typeId = 0xb79427a74eb97fc0UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             applyDefaults();
         }
 
-        public void serialize(WRITER writer)
-        {
-        }
+        public void serialize(WRITER writer) { }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
         {
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
         }
 
@@ -61,10 +67,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xeb1acd255e40f049UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xeb1acd255e40f049UL)
+    ]
     public class UTMCoord : ICapnpSerializable
     {
         public const UInt64 typeId = 0xeb1acd255e40f049UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -88,45 +98,31 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public byte Zone
-        {
-            get;
-            set;
-        }
+        public byte Zone { get; set; }
 
-        public string LatitudeBand
-        {
-            get;
-            set;
-        }
+        public string LatitudeBand { get; set; }
 
-        public double R
-        {
-            get;
-            set;
-        }
+        public double R { get; set; }
 
-        public double H
-        {
-            get;
-            set;
-        }
+        public double H { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public byte Zone => ctx.ReadDataByte(0UL, (byte)0);
             public string LatitudeBand => ctx.ReadText(0, null);
             public double R => ctx.ReadDataDouble(64UL, 0);
@@ -166,10 +162,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xecf1fc3039cc8ffbUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xecf1fc3039cc8ffbUL)
+    ]
     public class LatLonCoord : ICapnpSerializable
     {
         public const UInt64 typeId = 0xecf1fc3039cc8ffbUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -189,33 +189,27 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double Lat
-        {
-            get;
-            set;
-        }
+        public double Lat { get; set; }
 
-        public double Lon
-        {
-            get;
-            set;
-        }
+        public double Lon { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double Lat => ctx.ReadDataDouble(0UL, 0);
             public double Lon => ctx.ReadDataDouble(64UL, 0);
         }
@@ -241,10 +235,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x97ff7d61786091aeUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x97ff7d61786091aeUL)
+    ]
     public class GKCoord : ICapnpSerializable
     {
         public const UInt64 typeId = 0x97ff7d61786091aeUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -266,39 +264,29 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public byte MeridianNo
-        {
-            get;
-            set;
-        }
+        public byte MeridianNo { get; set; }
 
-        public double R
-        {
-            get;
-            set;
-        }
+        public double R { get; set; }
 
-        public double H
-        {
-            get;
-            set;
-        }
+        public double H { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public byte MeridianNo => ctx.ReadDataByte(0UL, (byte)0);
             public double R => ctx.ReadDataDouble(64UL, 0);
             public double H => ctx.ReadDataDouble(128UL, 0);
@@ -331,10 +319,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc88fb91c1e6986e2UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xc88fb91c1e6986e2UL)
+    ]
     public class Point2D : ICapnpSerializable
     {
         public const UInt64 typeId = 0xc88fb91c1e6986e2UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -354,33 +346,27 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public double X
-        {
-            get;
-            set;
-        }
+        public double X { get; set; }
 
-        public double Y
-        {
-            get;
-            set;
-        }
+        public double Y { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public double X => ctx.ReadDataDouble(0UL, 0);
             public double Y => ctx.ReadDataDouble(64UL, 0);
         }
@@ -406,10 +392,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb0c6993e13e314adUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb0c6993e13e314adUL)
+    ]
     public class RowCol : ICapnpSerializable
     {
         public const UInt64 typeId = 0xb0c6993e13e314adUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -429,33 +419,27 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public ulong Row
-        {
-            get;
-            set;
-        }
+        public ulong Row { get; set; }
 
-        public ulong Col
-        {
-            get;
-            set;
-        }
+        public ulong Col { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public ulong Row => ctx.ReadDataULong(0UL, 0UL);
             public ulong Col => ctx.ReadDataULong(64UL, 0UL);
         }
@@ -481,10 +465,14 @@ namespace Mas.Schema.Geo
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb8f6a6192a7359f8UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb8f6a6192a7359f8UL)
+    ]
     public class Coord : ICapnpSerializable
     {
         public const UInt64 typeId = 0xb8f6a6192a7359f8UL;
+
         public enum WHICH : ushort
         {
             Gk = 0,
@@ -492,7 +480,7 @@ namespace Mas.Schema.Geo
             Utm = 2,
             P2D = 3,
             Rowcol = 4,
-            undefined = 65535
+            undefined = 65535,
         }
 
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -579,9 +567,7 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
         public Mas.Schema.Geo.GKCoord Gk
         {
@@ -636,24 +622,43 @@ namespace Mas.Schema.Geo
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public WHICH which => (WHICH)ctx.ReadDataUShort(0U, (ushort)0);
-            public Mas.Schema.Geo.GKCoord.READER Gk => which == WHICH.Gk ? ctx.ReadStruct(0, Mas.Schema.Geo.GKCoord.READER.create) : default;
+            public Mas.Schema.Geo.GKCoord.READER Gk =>
+                which == WHICH.Gk
+                    ? ctx.ReadStruct(0, Mas.Schema.Geo.GKCoord.READER.create)
+                    : default;
             public bool HasGk => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Geo.LatLonCoord.READER Latlon => which == WHICH.Latlon ? ctx.ReadStruct(0, Mas.Schema.Geo.LatLonCoord.READER.create) : default;
+            public Mas.Schema.Geo.LatLonCoord.READER Latlon =>
+                which == WHICH.Latlon
+                    ? ctx.ReadStruct(0, Mas.Schema.Geo.LatLonCoord.READER.create)
+                    : default;
             public bool HasLatlon => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Geo.UTMCoord.READER Utm => which == WHICH.Utm ? ctx.ReadStruct(0, Mas.Schema.Geo.UTMCoord.READER.create) : default;
+            public Mas.Schema.Geo.UTMCoord.READER Utm =>
+                which == WHICH.Utm
+                    ? ctx.ReadStruct(0, Mas.Schema.Geo.UTMCoord.READER.create)
+                    : default;
             public bool HasUtm => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Geo.Point2D.READER P2D => which == WHICH.P2D ? ctx.ReadStruct(0, Mas.Schema.Geo.Point2D.READER.create) : default;
+            public Mas.Schema.Geo.Point2D.READER P2D =>
+                which == WHICH.P2D
+                    ? ctx.ReadStruct(0, Mas.Schema.Geo.Point2D.READER.create)
+                    : default;
             public bool HasP2D => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Geo.RowCol.READER Rowcol => which == WHICH.Rowcol ? ctx.ReadStruct(0, Mas.Schema.Geo.RowCol.READER.create) : default;
+            public Mas.Schema.Geo.RowCol.READER Rowcol =>
+                which == WHICH.Rowcol
+                    ? ctx.ReadStruct(0, Mas.Schema.Geo.RowCol.READER.create)
+                    : default;
             public bool HasRowcol => ctx.IsStructFieldNonNull(0);
         }
 
@@ -678,34 +683,45 @@ namespace Mas.Schema.Geo
 
             public Mas.Schema.Geo.LatLonCoord.WRITER Latlon
             {
-                get => which == WHICH.Latlon ? BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0) : default;
+                get =>
+                    which == WHICH.Latlon
+                        ? BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0)
+                        : default;
                 set => Link(0, value);
             }
 
             public Mas.Schema.Geo.UTMCoord.WRITER Utm
             {
-                get => which == WHICH.Utm ? BuildPointer<Mas.Schema.Geo.UTMCoord.WRITER>(0) : default;
+                get =>
+                    which == WHICH.Utm ? BuildPointer<Mas.Schema.Geo.UTMCoord.WRITER>(0) : default;
                 set => Link(0, value);
             }
 
             public Mas.Schema.Geo.Point2D.WRITER P2D
             {
-                get => which == WHICH.P2D ? BuildPointer<Mas.Schema.Geo.Point2D.WRITER>(0) : default;
+                get =>
+                    which == WHICH.P2D ? BuildPointer<Mas.Schema.Geo.Point2D.WRITER>(0) : default;
                 set => Link(0, value);
             }
 
             public Mas.Schema.Geo.RowCol.WRITER Rowcol
             {
-                get => which == WHICH.Rowcol ? BuildPointer<Mas.Schema.Geo.RowCol.WRITER>(0) : default;
+                get =>
+                    which == WHICH.Rowcol ? BuildPointer<Mas.Schema.Geo.RowCol.WRITER>(0) : default;
                 set => Link(0, value);
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb952dbe83866da4aUL)]
-    public class RectBounds<TCoordinateType> : ICapnpSerializable where TCoordinateType : class
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb952dbe83866da4aUL)
+    ]
+    public class RectBounds<TCoordinateType> : ICapnpSerializable
+        where TCoordinateType : class
     {
         public const UInt64 typeId = 0xb952dbe83866da4aUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -725,33 +741,27 @@ namespace Mas.Schema.Geo
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public TCoordinateType Tl
-        {
-            get;
-            set;
-        }
+        public TCoordinateType Tl { get; set; }
 
-        public TCoordinateType Br
-        {
-            get;
-            set;
-        }
+        public TCoordinateType Br { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public DeserializerState Tl => ctx.StructReadPointer(0);
             public DeserializerState Br => ctx.StructReadPointer(1);
         }

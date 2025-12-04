@@ -129,7 +129,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         def heartbeat(
             self,
             _context: _AdminInterfaceModule.Server.HeartbeatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def heartbeat_context(
             self, context: _AdminInterfaceModule.Server.HeartbeatCallContext
@@ -138,15 +138,13 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             self,
             seconds: int,
             _context: _AdminInterfaceModule.Server.SettimeoutCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def setTimeout_context(
             self, context: _AdminInterfaceModule.Server.SettimeoutCallContext
         ) -> Awaitable[None]: ...
         def stop(
-            self,
-            _context: _AdminInterfaceModule.Server.StopCallContext,
-            **kwargs: dict[str, Any],
+            self, _context: _AdminInterfaceModule.Server.StopCallContext, **kwargs: Any
         ) -> Awaitable[None]: ...
         def stop_context(
             self, context: _AdminInterfaceModule.Server.StopCallContext
@@ -154,7 +152,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         def identities(
             self,
             _context: _AdminInterfaceModule.Server.IdentitiesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[IdInformationBuilder | IdInformationReader]
             | _AdminInterfaceModule.Server.IdentitiesResultTuple
@@ -168,7 +166,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             oldId: str,
             newInfo: IdInformationReader,
             _context: _AdminInterfaceModule.Server.UpdateidentityCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[None]: ...
         def updateIdentity_context(
             self, context: _AdminInterfaceModule.Server.UpdateidentityCallContext
@@ -276,7 +274,7 @@ class _SimpleFactoryInterfaceModule(_IdentifiableInterfaceModule):
         def create(
             self,
             _context: _SimpleFactoryInterfaceModule.Server.CreateCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_IdentifiableInterfaceModule]
             | _SimpleFactoryInterfaceModule.Server.CreateResultTuple
@@ -596,7 +594,7 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
             interfaceNameToRegistrySR: PairListReader,
             msgPayload: AnyPointer,
             _context: _FactoryInterfaceModule.Server.CreateCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_FactoryInterfaceModule.Server.CreateResultTuple | None]: ...
         def create_context(
             self, context: _FactoryInterfaceModule.Server.CreateCallContext
@@ -604,7 +602,7 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
         def serviceInterfaceNames(
             self,
             _context: _FactoryInterfaceModule.Server.ServiceinterfacenamesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[str]
             | _FactoryInterfaceModule.Server.ServiceinterfacenamesResultTuple
@@ -723,7 +721,7 @@ class _StoppableInterfaceModule(_InterfaceModule):
         def stop(
             self,
             _context: _StoppableInterfaceModule.Server.StopCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             bool | _StoppableInterfaceModule.Server.StopResultTuple | None
         ]: ...

@@ -161,7 +161,7 @@ class _IdentifiableInterfaceModule(_InterfaceModule):
         def info(
             self,
             _context: _IdentifiableInterfaceModule.Server.InfoCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_IdentifiableInterfaceModule.Server.InfoResultTuple | None]: ...
         def info_context(
             self, context: _IdentifiableInterfaceModule.Server.InfoCallContext
@@ -1235,7 +1235,7 @@ class _HolderInterfaceModule(_InterfaceModule):
         def value(
             self,
             _context: _HolderInterfaceModule.Server.ValueCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _HolderInterfaceModule.Server.ValueResultTuple | None
         ]: ...

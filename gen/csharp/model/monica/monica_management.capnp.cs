@@ -1,22 +1,28 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Model.Monica
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa1f99f32eea02590UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa1f99f32eea02590UL)
+    ]
     public class ILRDates : ICapnpSerializable
     {
         public const UInt64 typeId = 0xa1f99f32eea02590UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             Sowing = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Sowing);
-            EarliestSowing = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.EarliestSowing);
+            EarliestSowing = CapnpSerializable.Create<Mas.Schema.Common.Date>(
+                reader.EarliestSowing
+            );
             LatestSowing = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.LatestSowing);
             Harvest = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.Harvest);
             LatestHarvest = CapnpSerializable.Create<Mas.Schema.Common.Date>(reader.LatestHarvest);
@@ -37,60 +43,47 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Common.Date Sowing
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date Sowing { get; set; }
 
-        public Mas.Schema.Common.Date EarliestSowing
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date EarliestSowing { get; set; }
 
-        public Mas.Schema.Common.Date LatestSowing
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date LatestSowing { get; set; }
 
-        public Mas.Schema.Common.Date Harvest
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date Harvest { get; set; }
 
-        public Mas.Schema.Common.Date LatestHarvest
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.Date LatestHarvest { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public Mas.Schema.Common.Date.READER Sowing => ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
+
+            public Mas.Schema.Common.Date.READER Sowing =>
+                ctx.ReadStruct(0, Mas.Schema.Common.Date.READER.create);
             public bool HasSowing => ctx.IsStructFieldNonNull(0);
-            public Mas.Schema.Common.Date.READER EarliestSowing => ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER EarliestSowing =>
+                ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
             public bool HasEarliestSowing => ctx.IsStructFieldNonNull(1);
-            public Mas.Schema.Common.Date.READER LatestSowing => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER LatestSowing =>
+                ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
             public bool HasLatestSowing => ctx.IsStructFieldNonNull(2);
-            public Mas.Schema.Common.Date.READER Harvest => ctx.ReadStruct(3, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER Harvest =>
+                ctx.ReadStruct(3, Mas.Schema.Common.Date.READER.create);
             public bool HasHarvest => ctx.IsStructFieldNonNull(3);
-            public Mas.Schema.Common.Date.READER LatestHarvest => ctx.ReadStruct(4, Mas.Schema.Common.Date.READER.create);
+            public Mas.Schema.Common.Date.READER LatestHarvest =>
+                ctx.ReadStruct(4, Mas.Schema.Common.Date.READER.create);
             public bool HasLatestHarvest => ctx.IsStructFieldNonNull(4);
         }
 
@@ -133,7 +126,10 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd0290daf8de9f2b0UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xd0290daf8de9f2b0UL)
+    ]
     public enum EventType : ushort
     {
         sowing,
@@ -147,10 +143,13 @@ namespace Mas.Schema.Model.Monica
         nDemandFertilization,
         cutting,
         setValue,
-        saveState
+        saveState,
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb33447204cdf022cUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xb33447204cdf022cUL)
+    ]
     public enum PlantOrgan : ushort
     {
         root,
@@ -158,19 +157,23 @@ namespace Mas.Schema.Model.Monica
         shoot,
         fruit,
         strukt,
-        sugar
+        sugar,
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcf672ab379467704UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xcf672ab379467704UL)
+    ]
     public class Event : ICapnpSerializable
     {
         public const UInt64 typeId = 0xcf672ab379467704UL;
+
         public enum WHICH : ushort
         {
             At = 0,
             Between = 1,
             After = 2,
-            undefined = 65535
+            undefined = 65535,
         }
 
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -182,10 +185,14 @@ namespace Mas.Schema.Model.Monica
                     At = CapnpSerializable.Create<Mas.Schema.Model.Monica.Event.at>(reader.At);
                     break;
                 case WHICH.Between:
-                    Between = CapnpSerializable.Create<Mas.Schema.Model.Monica.Event.between>(reader.Between);
+                    Between = CapnpSerializable.Create<Mas.Schema.Model.Monica.Event.between>(
+                        reader.Between
+                    );
                     break;
                 case WHICH.After:
-                    After = CapnpSerializable.Create<Mas.Schema.Model.Monica.Event.after>(reader.After);
+                    After = CapnpSerializable.Create<Mas.Schema.Model.Monica.Event.after>(
+                        reader.After
+                    );
                     break;
             }
 
@@ -248,21 +255,11 @@ namespace Mas.Schema.Model.Monica
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public Mas.Schema.Model.Monica.Event.ExternalType TheType
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Model.Monica.Event.ExternalType TheType { get; set; }
 
-        public Mas.Schema.Common.IdInformation Info
-        {
-            get;
-            set;
-        }
+        public Mas.Schema.Common.IdInformation Info { get; set; }
 
         public Mas.Schema.Model.Monica.Event.at At
         {
@@ -294,35 +291,34 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        public object Params
-        {
-            get;
-            set;
-        }
+        public object Params { get; set; }
 
-        public bool RunAtStartOfDay
-        {
-            get;
-            set;
-        }
+        public bool RunAtStartOfDay { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public WHICH which => (WHICH)ctx.ReadDataUShort(16U, (ushort)0);
-            public Mas.Schema.Model.Monica.Event.ExternalType TheType => (Mas.Schema.Model.Monica.Event.ExternalType)ctx.ReadDataUShort(0UL, (ushort)0);
-            public Mas.Schema.Common.IdInformation.READER Info => ctx.ReadStruct(0, Mas.Schema.Common.IdInformation.READER.create);
+            public Mas.Schema.Model.Monica.Event.ExternalType TheType =>
+                (Mas.Schema.Model.Monica.Event.ExternalType)ctx.ReadDataUShort(0UL, (ushort)0);
+            public Mas.Schema.Common.IdInformation.READER Info =>
+                ctx.ReadStruct(0, Mas.Schema.Common.IdInformation.READER.create);
             public bool HasInfo => ctx.IsStructFieldNonNull(0);
             public at.READER At => which == WHICH.At ? new at.READER(ctx) : default;
-            public between.READER Between => which == WHICH.Between ? new between.READER(ctx) : default;
+            public between.READER Between =>
+                which == WHICH.Between ? new between.READER(ctx) : default;
             public after.READER After => which == WHICH.After ? new after.READER(ctx) : default;
             public DeserializerState Params => ctx.StructReadPointer(3);
             public bool RunAtStartOfDay => ctx.ReadDataBool(48UL, false);
@@ -343,7 +339,8 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.Event.ExternalType TheType
             {
-                get => (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
+                get =>
+                    (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
 
@@ -381,10 +378,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdb4674cbf3154bfaUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xdb4674cbf3154bfaUL)
+        ]
         public class at : ICapnpSerializable
         {
             public const UInt64 typeId = 0xdb4674cbf3154bfaUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -402,36 +403,33 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Common.Date Date
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Date { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Common.Date.READER Date => ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
+
+                public Mas.Schema.Common.Date.READER Date =>
+                    ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
                 public bool HasDate => ctx.IsStructFieldNonNull(1);
             }
 
             public class WRITER : SerializerState
             {
-                public WRITER()
-                {
-                }
+                public WRITER() { }
 
                 public Mas.Schema.Common.Date.WRITER Date
                 {
@@ -441,10 +439,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc8479e0f1798b1fcUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc8479e0f1798b1fcUL)
+        ]
         public class between : ICapnpSerializable
         {
             public const UInt64 typeId = 0xc8479e0f1798b1fcUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -464,44 +466,38 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Common.Date Earliest
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Earliest { get; set; }
 
-            public Mas.Schema.Common.Date Latest
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Common.Date Latest { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Common.Date.READER Earliest => ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
+
+                public Mas.Schema.Common.Date.READER Earliest =>
+                    ctx.ReadStruct(1, Mas.Schema.Common.Date.READER.create);
                 public bool HasEarliest => ctx.IsStructFieldNonNull(1);
-                public Mas.Schema.Common.Date.READER Latest => ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
+                public Mas.Schema.Common.Date.READER Latest =>
+                    ctx.ReadStruct(2, Mas.Schema.Common.Date.READER.create);
                 public bool HasLatest => ctx.IsStructFieldNonNull(2);
             }
 
             public class WRITER : SerializerState
             {
-                public WRITER()
-                {
-                }
+                public WRITER() { }
 
                 public Mas.Schema.Common.Date.WRITER Earliest
                 {
@@ -517,10 +513,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbeb6ab7b0e6b585eUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xbeb6ab7b0e6b585eUL)
+        ]
         public class after : ICapnpSerializable
         {
             public const UInt64 typeId = 0xbeb6ab7b0e6b585eUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -540,43 +540,36 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Model.Monica.Event.Type Event
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Event.Type Event { get; set; }
 
-            public ushort Days
-            {
-                get;
-                set;
-            }
+            public ushort Days { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Model.Monica.Event.Type.READER Event => ctx.ReadStruct(1, Mas.Schema.Model.Monica.Event.Type.READER.create);
+
+                public Mas.Schema.Model.Monica.Event.Type.READER Event =>
+                    ctx.ReadStruct(1, Mas.Schema.Model.Monica.Event.Type.READER.create);
                 public bool HasEvent => ctx.IsStructFieldNonNull(1);
                 public ushort Days => ctx.ReadDataUShort(32UL, (ushort)0);
             }
 
             public class WRITER : SerializerState
             {
-                public WRITER()
-                {
-                }
+                public WRITER() { }
 
                 public Mas.Schema.Model.Monica.Event.Type.WRITER Event
                 {
@@ -592,7 +585,10 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe5484dc513ee11e0UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xe5484dc513ee11e0UL)
+        ]
         public enum ExternalType : ushort
         {
             sowing,
@@ -607,27 +603,34 @@ namespace Mas.Schema.Model.Monica
             cutting,
             setValue,
             saveState,
-            weather
+            weather,
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb2bf3a5557791bc1UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb2bf3a5557791bc1UL)
+        ]
         public enum PhenoStage : ushort
         {
             emergence,
             flowering,
             anthesis,
-            maturity
+            maturity,
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb91010c363e568a4UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb91010c363e568a4UL)
+        ]
         public class Type : ICapnpSerializable
         {
             public const UInt64 typeId = 0xb91010c363e568a4UL;
+
             public enum WHICH : ushort
             {
                 External = 0,
                 Internal = 1,
-                undefined = 65535
+                undefined = 65535,
             }
 
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
@@ -687,13 +690,14 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
             public Mas.Schema.Model.Monica.Event.ExternalType? External
             {
-                get => _which == WHICH.External ? (Mas.Schema.Model.Monica.Event.ExternalType? )_content : null;
+                get =>
+                    _which == WHICH.External
+                        ? (Mas.Schema.Model.Monica.Event.ExternalType?)_content
+                        : null;
                 set
                 {
                     _which = WHICH.External;
@@ -703,7 +707,10 @@ namespace Mas.Schema.Model.Monica
 
             public Mas.Schema.Model.Monica.Event.PhenoStage? Internal
             {
-                get => _which == WHICH.Internal ? (Mas.Schema.Model.Monica.Event.PhenoStage? )_content : null;
+                get =>
+                    _which == WHICH.Internal
+                        ? (Mas.Schema.Model.Monica.Event.PhenoStage?)_content
+                        : null;
                 set
                 {
                     _which = WHICH.Internal;
@@ -714,17 +721,29 @@ namespace Mas.Schema.Model.Monica
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public WHICH which => (WHICH)ctx.ReadDataUShort(16U, (ushort)0);
-                public Mas.Schema.Model.Monica.Event.ExternalType External => which == WHICH.External ? (Mas.Schema.Model.Monica.Event.ExternalType)ctx.ReadDataUShort(0UL, (ushort)0) : default;
-                public Mas.Schema.Model.Monica.Event.PhenoStage Internal => which == WHICH.Internal ? (Mas.Schema.Model.Monica.Event.PhenoStage)ctx.ReadDataUShort(0UL, (ushort)0) : default;
+                public Mas.Schema.Model.Monica.Event.ExternalType External =>
+                    which == WHICH.External
+                        ? (Mas.Schema.Model.Monica.Event.ExternalType)
+                            ctx.ReadDataUShort(0UL, (ushort)0)
+                        : default;
+                public Mas.Schema.Model.Monica.Event.PhenoStage Internal =>
+                    which == WHICH.Internal
+                        ? (Mas.Schema.Model.Monica.Event.PhenoStage)
+                            ctx.ReadDataUShort(0UL, (ushort)0)
+                        : default;
             }
 
             public class WRITER : SerializerState
@@ -742,52 +761,63 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Event.ExternalType External
                 {
-                    get => which == WHICH.External ? (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0) : default;
+                    get =>
+                        which == WHICH.External
+                            ? (Mas.Schema.Model.Monica.Event.ExternalType)
+                                this.ReadDataUShort(0UL, (ushort)0)
+                            : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
 
                 public Mas.Schema.Model.Monica.Event.PhenoStage Internal
                 {
-                    get => which == WHICH.Internal ? (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(0UL, (ushort)0) : default;
+                    get =>
+                        which == WHICH.Internal
+                            ? (Mas.Schema.Model.Monica.Event.PhenoStage)
+                                this.ReadDataUShort(0UL, (ushort)0)
+                            : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
             }
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcb20e21466098705UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xcb20e21466098705UL)
+    ]
     public class Params : ICapnpSerializable
     {
         public const UInt64 typeId = 0xcb20e21466098705UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             applyDefaults();
         }
 
-        public void serialize(WRITER writer)
-        {
-        }
+        public void serialize(WRITER writer) { }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
         {
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
         }
 
@@ -799,14 +829,20 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa332cfe9735a304cUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa332cfe9735a304cUL)
+        ]
         public class DailyWeather : ICapnpSerializable
         {
             public const UInt64 typeId = 0xa332cfe9735a304cUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Data = reader.Data?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.DailyWeather.KV>(_));
+                Data = reader.Data?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.DailyWeather.KV>(_)
+                );
                 applyDefaults();
             }
 
@@ -820,28 +856,28 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV> Data
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV> Data { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER> Data => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER.create);
+
+                public IReadOnlyList<Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER> Data =>
+                    ctx.ReadList(0)
+                        .Cast(Mas.Schema.Model.Monica.Params.DailyWeather.KV.READER.create);
                 public bool HasData => ctx.IsStructFieldNonNull(0);
             }
 
@@ -854,15 +890,22 @@ namespace Mas.Schema.Model.Monica
 
                 public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER> Data
                 {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER>>(0);
+                    get =>
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.DailyWeather.KV.WRITER>
+                        >(0);
                     set => Link(0, value);
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa63c8017ca26718bUL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xa63c8017ca26718bUL)
+            ]
             public class KV : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xa63c8017ca26718bUL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -882,34 +925,30 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public Mas.Schema.Climate.Element Key
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Climate.Element Key { get; set; }
 
-                public double Value
-                {
-                    get;
-                    set;
-                }
+                public double Value { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                    public Mas.Schema.Climate.Element Key => (Mas.Schema.Climate.Element)ctx.ReadDataUShort(0UL, (ushort)0);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Climate.Element Key =>
+                        (Mas.Schema.Climate.Element)ctx.ReadDataUShort(0UL, (ushort)0);
                     public double Value => ctx.ReadDataDouble(64UL, 0);
                 }
 
@@ -935,10 +974,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc6880d1c13ec14dcUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc6880d1c13ec14dcUL)
+        ]
         public class Sowing : ICapnpSerializable
         {
             public const UInt64 typeId = 0xc6880d1c13ec14dcUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -960,40 +1003,28 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public string Cultivar
-            {
-                get;
-                set;
-            }
+            public string Cultivar { get; set; }
 
-            public ushort PlantDensity
-            {
-                get;
-                set;
-            }
-
-            = 0;
-            public Mas.Schema.Crop.ICrop Crop
-            {
-                get;
-                set;
-            }
+            public ushort PlantDensity { get; set; } = 0;
+            public Mas.Schema.Crop.ICrop Crop { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public string Cultivar => ctx.ReadText(0, null);
                 public ushort PlantDensity => ctx.ReadDataUShort(0UL, (ushort)0);
                 public Mas.Schema.Crop.ICrop Crop => ctx.ReadCap<Mas.Schema.Crop.ICrop>(1);
@@ -1026,10 +1057,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd1bfc1c9617d9453UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd1bfc1c9617d9453UL)
+        ]
         public class AutomaticSowing : ICapnpSerializable
         {
             public const UInt64 typeId = 0xd1bfc1c9617d9453UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -1041,8 +1076,13 @@ namespace Mas.Schema.Model.Monica
                 MaxCurrentDayPrecipSum = reader.MaxCurrentDayPrecipSum;
                 TempSumAboveBaseTemp = reader.TempSumAboveBaseTemp;
                 BaseTemp = reader.BaseTemp;
-                TheAvgSoilTemp = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp>(reader.TheAvgSoilTemp);
-                Sowing = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Sowing>(reader.Sowing);
+                TheAvgSoilTemp =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp>(
+                        reader.TheAvgSoilTemp
+                    );
+                Sowing = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Sowing>(
+                    reader.Sowing
+                );
                 applyDefaults();
             }
 
@@ -1065,83 +1105,41 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double MinTempThreshold
-            {
-                get;
-                set;
-            }
+            public double MinTempThreshold { get; set; }
 
-            public ushort DaysInTempWindow
-            {
-                get;
-                set;
-            }
+            public ushort DaysInTempWindow { get; set; }
 
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
+            public double MinPercentASW { get; set; } = 0;
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
 
-            = 0;
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
+            public double MaxCurrentDayPrecipSum { get; set; }
 
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
+            public double TempSumAboveBaseTemp { get; set; }
 
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
+            public double BaseTemp { get; set; }
 
-            public double TempSumAboveBaseTemp
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp { get; set; }
 
-            public double BaseTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Params.Sowing Sowing
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.Sowing Sowing { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double MinTempThreshold => ctx.ReadDataDouble(0UL, 0);
                 public ushort DaysInTempWindow => ctx.ReadDataUShort(64UL, (ushort)0);
                 public double MinPercentASW => ctx.ReadDataDouble(128UL, 0);
@@ -1150,9 +1148,14 @@ namespace Mas.Schema.Model.Monica
                 public double MaxCurrentDayPrecipSum => ctx.ReadDataDouble(320UL, 0);
                 public double TempSumAboveBaseTemp => ctx.ReadDataDouble(384UL, 0);
                 public double BaseTemp => ctx.ReadDataDouble(448UL, 0);
-                public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.READER TheAvgSoilTemp => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.READER.create);
+                public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.READER TheAvgSoilTemp =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.READER.create
+                    );
                 public bool HasTheAvgSoilTemp => ctx.IsStructFieldNonNull(0);
-                public Mas.Schema.Model.Monica.Params.Sowing.READER Sowing => ctx.ReadStruct(1, Mas.Schema.Model.Monica.Params.Sowing.READER.create);
+                public Mas.Schema.Model.Monica.Params.Sowing.READER Sowing =>
+                    ctx.ReadStruct(1, Mas.Schema.Model.Monica.Params.Sowing.READER.create);
                 public bool HasSowing => ctx.IsStructFieldNonNull(1);
             }
 
@@ -1213,7 +1216,10 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
 
@@ -1224,10 +1230,14 @@ namespace Mas.Schema.Model.Monica
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x846f567433b186d1UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x846f567433b186d1UL)
+            ]
             public class AvgSoilTemp : ICapnpSerializable
             {
                 public const UInt64 typeId = 0x846f567433b186d1UL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -1249,40 +1259,29 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public double SoilDepthForAveraging
-                {
-                    get;
-                    set;
-                }
+                public double SoilDepthForAveraging { get; set; } = 0.3;
+                public ushort DaysInSoilTempWindow { get; set; }
 
-                = 0.3;
-                public ushort DaysInSoilTempWindow
-                {
-                    get;
-                    set;
-                }
-
-                public double SowingIfAboveAvgSoilTemp
-                {
-                    get;
-                    set;
-                }
+                public double SowingIfAboveAvgSoilTemp { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
                     public double SoilDepthForAveraging => ctx.ReadDataDouble(0UL, 0.3);
                     public ushort DaysInSoilTempWindow => ctx.ReadDataUShort(64UL, (ushort)0);
                     public double SowingIfAboveAvgSoilTemp => ctx.ReadDataDouble(128UL, 0);
@@ -1316,15 +1315,22 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8feb941d70f2a468UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x8feb941d70f2a468UL)
+        ]
         public class Harvest : ICapnpSerializable
         {
             public const UInt64 typeId = 0x8feb941d70f2a468UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 Exported = reader.Exported;
-                OptCarbMgmtData = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData>(reader.OptCarbMgmtData);
+                OptCarbMgmtData =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData>(
+                        reader.OptCarbMgmtData
+                    );
                 applyDefaults();
             }
 
@@ -1339,36 +1345,32 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public bool Exported
-            {
-                get;
-                set;
-            }
-
-            = true;
-            public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData
-            {
-                get;
-                set;
-            }
+            public bool Exported { get; set; } = true;
+            public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData OptCarbMgmtData { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public bool Exported => ctx.ReadDataBool(0UL, true);
-                public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.READER OptCarbMgmtData => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.READER.create);
+                public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.READER OptCarbMgmtData =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.READER.create
+                    );
                 public bool HasOptCarbMgmtData => ctx.IsStructFieldNonNull(0);
             }
 
@@ -1387,22 +1389,32 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa9a9bc941e963701UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xa9a9bc941e963701UL)
+            ]
             public enum CropUsage : ushort
             {
                 greenManure,
-                biomassProduction
+                biomassProduction,
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xaf49ab9bbe76e375UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xaf49ab9bbe76e375UL)
+            ]
             public class OptCarbonMgmtData : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xaf49ab9bbe76e375UL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -1430,66 +1442,37 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public bool OptCarbonConservation
-                {
-                    get;
-                    set;
-                }
+                public bool OptCarbonConservation { get; set; } = false;
+                public double CropImpactOnHumusBalance { get; set; } = 0;
+                public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage { get; set; } =
+                    Mas.Schema.Model.Monica.Params.Harvest.CropUsage.biomassProduction;
+                public double ResidueHeq { get; set; } = 0;
+                public double OrganicFertilizerHeq { get; set; } = 0;
+                public double MaxResidueRecoverFraction { get; set; } = 0;
 
-                = false;
-                public double CropImpactOnHumusBalance
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Model.Monica.Params.Harvest.CropUsage.biomassProduction;
-                public double ResidueHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double OrganicFertilizerHeq
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
-                public double MaxResidueRecoverFraction
-                {
-                    get;
-                    set;
-                }
-
-                = 0;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
                     public bool OptCarbonConservation => ctx.ReadDataBool(0UL, false);
                     public double CropImpactOnHumusBalance => ctx.ReadDataDouble(64UL, 0);
-                    public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage => (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)ctx.ReadDataUShort(16UL, (ushort)1);
+                    public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage =>
+                        (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)
+                            ctx.ReadDataUShort(16UL, (ushort)1);
                     public double ResidueHeq => ctx.ReadDataDouble(128UL, 0);
                     public double OrganicFertilizerHeq => ctx.ReadDataDouble(192UL, 0);
                     public double MaxResidueRecoverFraction => ctx.ReadDataDouble(256UL, 0);
@@ -1516,7 +1499,9 @@ namespace Mas.Schema.Model.Monica
 
                     public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage
                     {
-                        get => (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)this.ReadDataUShort(16UL, (ushort)1);
+                        get =>
+                            (Mas.Schema.Model.Monica.Params.Harvest.CropUsage)
+                                this.ReadDataUShort(16UL, (ushort)1);
                         set => this.WriteData(16UL, (ushort)value, (ushort)1);
                     }
 
@@ -1541,10 +1526,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf805d22fabb80702UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf805d22fabb80702UL)
+        ]
         public class AutomaticHarvest : ICapnpSerializable
         {
             public const UInt64 typeId = 0xf805d22fabb80702UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -1553,7 +1542,9 @@ namespace Mas.Schema.Model.Monica
                 Max3dayPrecipSum = reader.Max3dayPrecipSum;
                 MaxCurrentDayPrecipSum = reader.MaxCurrentDayPrecipSum;
                 HarvestTime = reader.HarvestTime;
-                Harvest = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Harvest>(reader.Harvest);
+                Harvest = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Harvest>(
+                    reader.Harvest
+                );
                 applyDefaults();
             }
 
@@ -1572,65 +1563,42 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double MinPercentASW
-            {
-                get;
-                set;
-            }
+            public double MinPercentASW { get; set; }
 
-            public double MaxPercentASW
-            {
-                get;
-                set;
-            }
+            public double MaxPercentASW { get; set; } = 100;
+            public double Max3dayPrecipSum { get; set; }
 
-            = 100;
-            public double Max3dayPrecipSum
-            {
-                get;
-                set;
-            }
+            public double MaxCurrentDayPrecipSum { get; set; }
 
-            public double MaxCurrentDayPrecipSum
-            {
-                get;
-                set;
-            }
-
-            public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime
-            {
-                get;
-                set;
-            }
-
-            = Mas.Schema.Model.Monica.Event.PhenoStage.maturity;
-            public Mas.Schema.Model.Monica.Params.Harvest Harvest
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime { get; set; } =
+                Mas.Schema.Model.Monica.Event.PhenoStage.maturity;
+            public Mas.Schema.Model.Monica.Params.Harvest Harvest { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double MinPercentASW => ctx.ReadDataDouble(0UL, 0);
                 public double MaxPercentASW => ctx.ReadDataDouble(64UL, 100);
                 public double Max3dayPrecipSum => ctx.ReadDataDouble(128UL, 0);
                 public double MaxCurrentDayPrecipSum => ctx.ReadDataDouble(192UL, 0);
-                public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime => (Mas.Schema.Model.Monica.Event.PhenoStage)ctx.ReadDataUShort(256UL, (ushort)3);
-                public Mas.Schema.Model.Monica.Params.Harvest.READER Harvest => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.Harvest.READER.create);
+                public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime =>
+                    (Mas.Schema.Model.Monica.Event.PhenoStage)ctx.ReadDataUShort(256UL, (ushort)3);
+                public Mas.Schema.Model.Monica.Params.Harvest.READER Harvest =>
+                    ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.Harvest.READER.create);
                 public bool HasHarvest => ctx.IsStructFieldNonNull(0);
             }
 
@@ -1667,7 +1635,9 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime
                 {
-                    get => (Mas.Schema.Model.Monica.Event.PhenoStage)this.ReadDataUShort(256UL, (ushort)3);
+                    get =>
+                        (Mas.Schema.Model.Monica.Event.PhenoStage)
+                            this.ReadDataUShort(256UL, (ushort)3);
                     set => this.WriteData(256UL, (ushort)value, (ushort)3);
                 }
 
@@ -1679,14 +1649,20 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8460dac6abff7ed9UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x8460dac6abff7ed9UL)
+        ]
         public class Cutting : ICapnpSerializable
         {
             public const UInt64 typeId = 0x8460dac6abff7ed9UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                CuttingSpec = reader.CuttingSpec?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Cutting.Spec>(_));
+                CuttingSpec = reader.CuttingSpec?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Cutting.Spec>(_)
+                );
                 CutMaxAssimilationRatePercentage = reader.CutMaxAssimilationRatePercentage;
                 applyDefaults();
             }
@@ -1702,35 +1678,29 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec> CuttingSpec
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec> CuttingSpec { get; set; }
 
-            public double CutMaxAssimilationRatePercentage
-            {
-                get;
-                set;
-            }
+            public double CutMaxAssimilationRatePercentage { get; set; } = 100;
 
-            = 100;
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec.READER> CuttingSpec => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.Cutting.Spec.READER.create);
+
+                public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec.READER> CuttingSpec =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Params.Cutting.Spec.READER.create);
                 public bool HasCuttingSpec => ctx.IsStructFieldNonNull(0);
                 public double CutMaxAssimilationRatePercentage => ctx.ReadDataDouble(0UL, 100);
             }
@@ -1744,7 +1714,10 @@ namespace Mas.Schema.Model.Monica
 
                 public ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER> CuttingSpec
                 {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER>>(0);
+                    get =>
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Model.Monica.Params.Cutting.Spec.WRITER>
+                        >(0);
                     set => Link(0, value);
                 }
 
@@ -1755,25 +1728,35 @@ namespace Mas.Schema.Model.Monica
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xe444f780b29541a7UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xe444f780b29541a7UL)
+            ]
             public enum CL : ushort
             {
                 cut,
-                left
+                left,
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x94d32947f136655eUL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x94d32947f136655eUL)
+            ]
             public enum Unit : ushort
             {
                 percentage,
                 biomass,
-                lai
+                lai,
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfae5dcfccbb93a23UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xfae5dcfccbb93a23UL)
+            ]
             public class Spec : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xfae5dcfccbb93a23UL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -1799,58 +1782,43 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public Mas.Schema.Model.Monica.PlantOrgan Organ
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Model.Monica.PlantOrgan Organ { get; set; }
 
-                public double Value
-                {
-                    get;
-                    set;
-                }
+                public double Value { get; set; }
 
-                public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit { get; set; } =
+                    Mas.Schema.Model.Monica.Params.Cutting.Unit.percentage;
+                public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft { get; set; } =
+                    Mas.Schema.Model.Monica.Params.Cutting.CL.cut;
+                public double ExportPercentage { get; set; } = 100;
 
-                = Mas.Schema.Model.Monica.Params.Cutting.Unit.percentage;
-                public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft
-                {
-                    get;
-                    set;
-                }
-
-                = Mas.Schema.Model.Monica.Params.Cutting.CL.cut;
-                public double ExportPercentage
-                {
-                    get;
-                    set;
-                }
-
-                = 100;
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                    public Mas.Schema.Model.Monica.PlantOrgan Organ => (Mas.Schema.Model.Monica.PlantOrgan)ctx.ReadDataUShort(0UL, (ushort)0);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Model.Monica.PlantOrgan Organ =>
+                        (Mas.Schema.Model.Monica.PlantOrgan)ctx.ReadDataUShort(0UL, (ushort)0);
                     public double Value => ctx.ReadDataDouble(64UL, 0);
-                    public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit => (Mas.Schema.Model.Monica.Params.Cutting.Unit)ctx.ReadDataUShort(16UL, (ushort)0);
-                    public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft => (Mas.Schema.Model.Monica.Params.Cutting.CL)ctx.ReadDataUShort(32UL, (ushort)0);
+                    public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit =>
+                        (Mas.Schema.Model.Monica.Params.Cutting.Unit)
+                            ctx.ReadDataUShort(16UL, (ushort)0);
+                    public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft =>
+                        (Mas.Schema.Model.Monica.Params.Cutting.CL)
+                            ctx.ReadDataUShort(32UL, (ushort)0);
                     public double ExportPercentage => ctx.ReadDataDouble(128UL, 100);
                 }
 
@@ -1863,7 +1831,8 @@ namespace Mas.Schema.Model.Monica
 
                     public Mas.Schema.Model.Monica.PlantOrgan Organ
                     {
-                        get => (Mas.Schema.Model.Monica.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
+                        get =>
+                            (Mas.Schema.Model.Monica.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
                         set => this.WriteData(0UL, (ushort)value, (ushort)0);
                     }
 
@@ -1875,13 +1844,17 @@ namespace Mas.Schema.Model.Monica
 
                     public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit
                     {
-                        get => (Mas.Schema.Model.Monica.Params.Cutting.Unit)this.ReadDataUShort(16UL, (ushort)0);
+                        get =>
+                            (Mas.Schema.Model.Monica.Params.Cutting.Unit)
+                                this.ReadDataUShort(16UL, (ushort)0);
                         set => this.WriteData(16UL, (ushort)value, (ushort)0);
                     }
 
                     public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft
                     {
-                        get => (Mas.Schema.Model.Monica.Params.Cutting.CL)this.ReadDataUShort(32UL, (ushort)0);
+                        get =>
+                            (Mas.Schema.Model.Monica.Params.Cutting.CL)
+                                this.ReadDataUShort(32UL, (ushort)0);
                         set => this.WriteData(32UL, (ushort)value, (ushort)0);
                     }
 
@@ -1894,14 +1867,21 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa363d226e178debdUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa363d226e178debdUL)
+        ]
         public class MineralFertilization : ICapnpSerializable
         {
             public const UInt64 typeId = 0xa363d226e178debdUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Partition = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(reader.Partition);
+                Partition =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(
+                        reader.Partition
+                    );
                 Amount = reader.Amount;
                 applyDefaults();
             }
@@ -1917,34 +1897,32 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
 
-            public double Amount
-            {
-                get;
-                set;
-            }
+            public double Amount { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Partition => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create);
+
+                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Partition =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create
+                    );
                 public bool HasPartition => ctx.IsStructFieldNonNull(0);
                 public double Amount => ctx.ReadDataDouble(0UL, 0);
             }
@@ -1958,7 +1936,10 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
 
@@ -1969,10 +1950,14 @@ namespace Mas.Schema.Model.Monica
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc75b5ef2e9b05c2dUL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xc75b5ef2e9b05c2dUL)
+            ]
             public class Parameters : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xc75b5ef2e9b05c2dUL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -1998,51 +1983,34 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public string Id
-                {
-                    get;
-                    set;
-                }
+                public string Id { get; set; }
 
-                public string Name
-                {
-                    get;
-                    set;
-                }
+                public string Name { get; set; }
 
-                public double Carbamid
-                {
-                    get;
-                    set;
-                }
+                public double Carbamid { get; set; }
 
-                public double Nh4
-                {
-                    get;
-                    set;
-                }
+                public double Nh4 { get; set; }
 
-                public double No3
-                {
-                    get;
-                    set;
-                }
+                public double No3 { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
                     public string Id => ctx.ReadText(0, null);
                     public string Name => ctx.ReadText(1, null);
                     public double Carbamid => ctx.ReadDataDouble(0UL, 0);
@@ -2090,15 +2058,22 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xc7c14e92e0cd461cUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc7c14e92e0cd461cUL)
+        ]
         public class NDemandFertilization : ICapnpSerializable
         {
             public const UInt64 typeId = 0xc7c14e92e0cd461cUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 NDemand = reader.NDemand;
-                Partition = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(reader.Partition);
+                Partition =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters>(
+                        reader.Partition
+                    );
                 Depth = reader.Depth;
                 Stage = reader.Stage;
                 applyDefaults();
@@ -2117,48 +2092,37 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double NDemand
-            {
-                get;
-                set;
-            }
+            public double NDemand { get; set; }
 
-            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
 
-            public double Depth
-            {
-                get;
-                set;
-            }
+            public double Depth { get; set; }
 
-            public byte Stage
-            {
-                get;
-                set;
-            }
+            public byte Stage { get; set; } = 1;
 
-            = 1;
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double NDemand => ctx.ReadDataDouble(0UL, 0);
-                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Partition => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create);
+                public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER Partition =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.READER.create
+                    );
                 public bool HasPartition => ctx.IsStructFieldNonNull(0);
                 public double Depth => ctx.ReadDataDouble(64UL, 0);
                 public byte Stage => ctx.ReadDataByte(128UL, (byte)1);
@@ -2179,7 +2143,10 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
 
@@ -2197,14 +2164,21 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xb492838c7fed50b0UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb492838c7fed50b0UL)
+        ]
         public class OrganicFertilization : ICapnpSerializable
         {
             public const UInt64 typeId = 0xb492838c7fed50b0UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Params = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters>(reader.Params);
+                Params =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters>(
+                        reader.Params
+                    );
                 Amount = reader.Amount;
                 Incorporation = reader.Incorporation;
                 applyDefaults();
@@ -2222,41 +2196,34 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters Params
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters Params { get; set; }
 
-            public double Amount
-            {
-                get;
-                set;
-            }
+            public double Amount { get; set; }
 
-            public bool Incorporation
-            {
-                get;
-                set;
-            }
+            public bool Incorporation { get; set; } = false;
 
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.READER Params => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.READER.create);
+
+                public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.READER Params =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.READER.create
+                    );
                 public bool HasParams => ctx.IsStructFieldNonNull(0);
                 public double Amount => ctx.ReadDataDouble(0UL, 0);
                 public bool Incorporation => ctx.ReadDataBool(64UL, false);
@@ -2271,7 +2238,10 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER Params
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
 
@@ -2288,10 +2258,14 @@ namespace Mas.Schema.Model.Monica
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x95cdc661a6600137UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x95cdc661a6600137UL)
+            ]
             public class OrganicMatterParameters : ICapnpSerializable
             {
                 public const UInt64 typeId = 0x95cdc661a6600137UL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -2333,99 +2307,50 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public double AomDryMatterContent
-                {
-                    get;
-                    set;
-                }
+                public double AomDryMatterContent { get; set; }
 
-                public double AomNH4Content
-                {
-                    get;
-                    set;
-                }
+                public double AomNH4Content { get; set; }
 
-                public double AomNO3Content
-                {
-                    get;
-                    set;
-                }
+                public double AomNO3Content { get; set; }
 
-                public double AomCarbamidContent
-                {
-                    get;
-                    set;
-                }
+                public double AomCarbamidContent { get; set; }
 
-                public double AomSlowDecCoeffStandard
-                {
-                    get;
-                    set;
-                }
+                public double AomSlowDecCoeffStandard { get; set; }
 
-                public double AomFastDecCoeffStandard
-                {
-                    get;
-                    set;
-                }
+                public double AomFastDecCoeffStandard { get; set; }
 
-                public double PartAOMToAOMSlow
-                {
-                    get;
-                    set;
-                }
+                public double PartAOMToAOMSlow { get; set; }
 
-                public double PartAOMToAOMFast
-                {
-                    get;
-                    set;
-                }
+                public double PartAOMToAOMFast { get; set; }
 
-                public double CnRatioAOMSlow
-                {
-                    get;
-                    set;
-                }
+                public double CnRatioAOMSlow { get; set; }
 
-                public double CnRatioAOMFast
-                {
-                    get;
-                    set;
-                }
+                public double CnRatioAOMFast { get; set; }
 
-                public double PartAOMSlowToSMBSlow
-                {
-                    get;
-                    set;
-                }
+                public double PartAOMSlowToSMBSlow { get; set; }
 
-                public double PartAOMSlowToSMBFast
-                {
-                    get;
-                    set;
-                }
+                public double PartAOMSlowToSMBFast { get; set; }
 
-                public double NConcentration
-                {
-                    get;
-                    set;
-                }
+                public double NConcentration { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
                     public double AomDryMatterContent => ctx.ReadDataDouble(0UL, 0);
                     public double AomNH4Content => ctx.ReadDataDouble(64UL, 0);
                     public double AomNO3Content => ctx.ReadDataDouble(128UL, 0);
@@ -2528,14 +2453,21 @@ namespace Mas.Schema.Model.Monica
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xba0c11cf818d29fdUL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xba0c11cf818d29fdUL)
+            ]
             public class Parameters : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xba0c11cf818d29fdUL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
-                    Params = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters>(reader.Params);
+                    Params =
+                        CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters>(
+                            reader.Params
+                        );
                     Id = reader.Id;
                     Name = reader.Name;
                     applyDefaults();
@@ -2553,40 +2485,42 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params
-                {
-                    get;
-                    set;
-                }
+                public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params { get; set; }
 
-                public string Id
-                {
-                    get;
-                    set;
-                }
+                public string Id { get; set; }
 
-                public string Name
-                {
-                    get;
-                    set;
-                }
+                public string Name { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                    public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.READER Params => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.READER.create);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.READER Params =>
+                        ctx.ReadStruct(
+                            0,
+                            Mas.Schema
+                                .Model
+                                .Monica
+                                .Params
+                                .OrganicFertilization
+                                .OrganicMatterParameters
+                                .READER
+                                .create
+                        );
                     public bool HasParams => ctx.IsStructFieldNonNull(0);
                     public string Id => ctx.ReadText(1, null);
                     public string Name => ctx.ReadText(2, null);
@@ -2601,7 +2535,10 @@ namespace Mas.Schema.Model.Monica
 
                     public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER Params
                     {
-                        get => BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(0);
+                        get =>
+                            BuildPointer<Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters.WRITER>(
+                                0
+                            );
                         set => Link(0, value);
                     }
 
@@ -2620,10 +2557,14 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xaa49811a4e3e2c59UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xaa49811a4e3e2c59UL)
+        ]
         public class Tillage : ICapnpSerializable
         {
             public const UInt64 typeId = 0xaa49811a4e3e2c59UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -2641,28 +2582,25 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double Depth
-            {
-                get;
-                set;
-            }
+            public double Depth { get; set; } = 0.3;
 
-            = 0.3;
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double Depth => ctx.ReadDataDouble(0UL, 0.3);
             }
 
@@ -2681,15 +2619,22 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xd90939a58e404ff8UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd90939a58e404ff8UL)
+        ]
         public class Irrigation : ICapnpSerializable
         {
             public const UInt64 typeId = 0xd90939a58e404ff8UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
                 Amount = reader.Amount;
-                Params = CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Irrigation.Parameters>(reader.Params);
+                Params =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Params.Irrigation.Parameters>(
+                        reader.Params
+                    );
                 applyDefaults();
             }
 
@@ -2704,35 +2649,33 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public double Amount
-            {
-                get;
-                set;
-            }
+            public double Amount { get; set; }
 
-            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public double Amount => ctx.ReadDataDouble(0UL, 0);
-                public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.READER Params => ctx.ReadStruct(0, Mas.Schema.Model.Monica.Params.Irrigation.Parameters.READER.create);
+                public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.READER Params =>
+                    ctx.ReadStruct(
+                        0,
+                        Mas.Schema.Model.Monica.Params.Irrigation.Parameters.READER.create
+                    );
                 public bool HasParams => ctx.IsStructFieldNonNull(0);
             }
 
@@ -2751,15 +2694,22 @@ namespace Mas.Schema.Model.Monica
 
                 public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params
                 {
-                    get => BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(0);
+                    get =>
+                        BuildPointer<Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER>(
+                            0
+                        );
                     set => Link(0, value);
                 }
             }
 
-            [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xaec9e089e87f1599UL)]
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xaec9e089e87f1599UL)
+            ]
             public class Parameters : ICapnpSerializable
             {
                 public const UInt64 typeId = 0xaec9e089e87f1599UL;
+
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
@@ -2779,33 +2729,28 @@ namespace Mas.Schema.Model.Monica
                     serialize(arg_.Rewrap<WRITER>());
                 }
 
-                public void applyDefaults()
-                {
-                }
+                public void applyDefaults() { }
 
-                public double NitrateConcentration
-                {
-                    get;
-                    set;
-                }
+                public double NitrateConcentration { get; set; }
 
-                public double SulfateConcentration
-                {
-                    get;
-                    set;
-                }
+                public double SulfateConcentration { get; set; }
 
                 public struct READER
                 {
                     readonly DeserializerState ctx;
+
                     public READER(DeserializerState ctx)
                     {
                         this.ctx = ctx;
                     }
 
                     public static READER create(DeserializerState ctx) => new READER(ctx);
+
                     public static implicit operator DeserializerState(READER reader) => reader.ctx;
-                    public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
                     public double NitrateConcentration => ctx.ReadDataDouble(0UL, 0);
                     public double SulfateConcentration => ctx.ReadDataDouble(64UL, 0);
                 }
@@ -2832,21 +2777,27 @@ namespace Mas.Schema.Model.Monica
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xdd84803fc87ac648UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xdd84803fc87ac648UL)
+        ]
         public class SaveState : ICapnpSerializable
         {
             public const UInt64 typeId = 0xdd84803fc87ac648UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                NoOfPreviousDaysSerializedClimateData = reader.NoOfPreviousDaysSerializedClimateData;
+                NoOfPreviousDaysSerializedClimateData =
+                    reader.NoOfPreviousDaysSerializedClimateData;
                 AsJson = reader.AsJson;
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
-                writer.NoOfPreviousDaysSerializedClimateData = NoOfPreviousDaysSerializedClimateData;
+                writer.NoOfPreviousDaysSerializedClimateData =
+                    NoOfPreviousDaysSerializedClimateData;
                 writer.AsJson = AsJson;
             }
 
@@ -2855,34 +2806,27 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public ulong NoOfPreviousDaysSerializedClimateData
-            {
-                get;
-                set;
-            }
+            public ulong NoOfPreviousDaysSerializedClimateData { get; set; }
 
-            public bool AsJson
-            {
-                get;
-                set;
-            }
+            public bool AsJson { get; set; } = false;
 
-            = false;
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public ulong NoOfPreviousDaysSerializedClimateData => ctx.ReadDataULong(0UL, 0UL);
                 public bool AsJson => ctx.ReadDataBool(64UL, false);
             }
@@ -2909,33 +2853,68 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbfda1920aff38c07UL), Proxy(typeof(Service_Proxy)), Skeleton(typeof(Service_Skeleton))]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbfda1920aff38c07UL),
+        Proxy(typeof(Service_Proxy)),
+        Skeleton(typeof(Service_Skeleton))
+    ]
     public interface IService : Mas.Schema.Common.IIdentifiable
     {
-        Task<IReadOnlyList<Mas.Schema.Model.Monica.Event>> ManagementAt(Mas.Schema.Geo.LatLonCoord arg_, CancellationToken cancellationToken_ = default);
+        Task<IReadOnlyList<Mas.Schema.Model.Monica.Event>> ManagementAt(
+            Mas.Schema.Geo.LatLonCoord arg_,
+            CancellationToken cancellationToken_ = default
+        );
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbfda1920aff38c07UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbfda1920aff38c07UL)
+    ]
     public class Service_Proxy : Proxy, IService
     {
-        public async Task<IReadOnlyList<Mas.Schema.Model.Monica.Event>> ManagementAt(Mas.Schema.Geo.LatLonCoord arg_, CancellationToken cancellationToken_ = default)
+        public async Task<IReadOnlyList<Mas.Schema.Model.Monica.Event>> ManagementAt(
+            Mas.Schema.Geo.LatLonCoord arg_,
+            CancellationToken cancellationToken_ = default
+        )
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Geo.LatLonCoord.WRITER>();
             arg_?.serialize(in_);
-            using (var d_ = await Call(13824389634348780551UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    13824389634348780551UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
-                var r_ = CapnpSerializable.Create<Mas.Schema.Model.Monica.Service.Result_ManagementAt>(d_);
+                var r_ =
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Service.Result_ManagementAt>(
+                        d_
+                    );
                 return (r_.Mgmt);
             }
         }
 
-        public async Task<Mas.Schema.Common.IdInformation> Info(CancellationToken cancellationToken_ = default)
+        public async Task<Mas.Schema.Common.IdInformation> Info(
+            CancellationToken cancellationToken_ = default
+        )
         {
-            var in_ = SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info()
-            {};
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
             arg_?.serialize(in_);
-            using (var d_ = await Call(12875740530987518165UL, 0, in_.Rewrap<DynamicSerializerState>(), false, cancellationToken_).WhenReturned)
+            using (
+                var d_ = await Call(
+                    12875740530987518165UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
                 return r_;
@@ -2943,7 +2922,10 @@ namespace Mas.Schema.Model.Monica
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xbfda1920aff38c07UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbfda1920aff38c07UL)
+    ]
     public class Service_Skeleton : Skeleton<IService>
     {
         public Service_Skeleton()
@@ -2952,18 +2934,30 @@ namespace Mas.Schema.Model.Monica
         }
 
         public override ulong InterfaceId => 13824389634348780551UL;
-        Task<AnswerOrCounterquestion> ManagementAt(DeserializerState d_, CancellationToken cancellationToken_)
+
+        Task<AnswerOrCounterquestion> ManagementAt(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
         {
             using (d_)
             {
-                return Impatient.MaybeTailCall(Impl.ManagementAt(CapnpSerializable.Create<Mas.Schema.Geo.LatLonCoord>(d_), cancellationToken_), mgmt =>
-                {
-                    var s_ = SerializerState.CreateForRpc<Mas.Schema.Model.Monica.Service.Result_ManagementAt.WRITER>();
-                    var r_ = new Mas.Schema.Model.Monica.Service.Result_ManagementAt{Mgmt = mgmt};
-                    r_.serialize(s_);
-                    return s_;
-                }
-
+                return Impatient.MaybeTailCall(
+                    Impl.ManagementAt(
+                        CapnpSerializable.Create<Mas.Schema.Geo.LatLonCoord>(d_),
+                        cancellationToken_
+                    ),
+                    mgmt =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Model.Monica.Service.Result_ManagementAt.WRITER>();
+                        var r_ = new Mas.Schema.Model.Monica.Service.Result_ManagementAt
+                        {
+                            Mgmt = mgmt,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
                 );
             }
         }
@@ -2971,14 +2965,20 @@ namespace Mas.Schema.Model.Monica
 
     public static class Service
     {
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xf32d7a3fdc567bdbUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf32d7a3fdc567bdbUL)
+        ]
         public class Result_ManagementAt : ICapnpSerializable
         {
             public const UInt64 typeId = 0xf32d7a3fdc567bdbUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Mgmt = reader.Mgmt?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Monica.Event>(_));
+                Mgmt = reader.Mgmt?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Model.Monica.Event>(_)
+                );
                 applyDefaults();
             }
 
@@ -2992,28 +2992,27 @@ namespace Mas.Schema.Model.Monica
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public IReadOnlyList<Mas.Schema.Model.Monica.Event> Mgmt
-            {
-                get;
-                set;
-            }
+            public IReadOnlyList<Mas.Schema.Model.Monica.Event> Mgmt { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public IReadOnlyList<Mas.Schema.Model.Monica.Event.READER> Mgmt => ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Event.READER.create);
+
+                public IReadOnlyList<Mas.Schema.Model.Monica.Event.READER> Mgmt =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Model.Monica.Event.READER.create);
                 public bool HasMgmt => ctx.IsStructFieldNonNull(0);
             }
 
@@ -3026,7 +3025,10 @@ namespace Mas.Schema.Model.Monica
 
                 public ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER> Mgmt
                 {
-                    get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER>>(0);
+                    get =>
+                        BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Monica.Event.WRITER>>(
+                            0
+                        );
                     set => Link(0, value);
                 }
             }

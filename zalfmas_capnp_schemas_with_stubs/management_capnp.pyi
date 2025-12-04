@@ -678,7 +678,7 @@ class _FertilizerInterfaceModule(
         def nutrients(
             self,
             _context: _FertilizerInterfaceModule.Server.NutrientsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[NutrientBuilder | NutrientReader]
             | _FertilizerInterfaceModule.Server.NutrientsResultTuple
@@ -690,7 +690,7 @@ class _FertilizerInterfaceModule(
         def parameters(
             self,
             _context: _FertilizerInterfaceModule.Server.ParametersCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             AnyPointer | _FertilizerInterfaceModule.Server.ParametersResultTuple | None
         ]: ...
@@ -2324,7 +2324,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
             lat: float,
             lon: float,
             _context: _ServiceInterfaceModule.Server.ManagementatCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[EventBuilder | EventReader]
             | _ServiceInterfaceModule.Server.ManagementatResultTuple

@@ -1,14 +1,17 @@
-using Capnp;
-using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Capnp;
+using Capnp.Rpc;
 
 namespace Mas.Schema.Model.Yieldstat
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xcfe218c48d227e0dUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xcfe218c48d227e0dUL)
+    ]
     public enum ResultId : ushort
     {
         primaryYield,
@@ -16,13 +19,17 @@ namespace Mas.Schema.Model.Yieldstat
         carbonInAboveGroundBiomass,
         sumFertilizer,
         sumIrrigation,
-        primaryYieldCU
+        primaryYieldCU,
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa47f8d65869200afUL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xa47f8d65869200afUL)
+    ]
     public class RestInput : ICapnpSerializable
     {
         public const UInt64 typeId = 0xa47f8d65869200afUL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
@@ -64,112 +71,37 @@ namespace Mas.Schema.Model.Yieldstat
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public bool UseDevTrend
-        {
-            get;
-            set;
-        }
+        public bool UseDevTrend { get; set; } = false;
+        public bool UseCO2Increase { get; set; } = true;
+        public double Dgm { get; set; } = 0;
+        public byte Hft { get; set; } = 0;
+        public byte Nft { get; set; } = 0;
+        public byte Sft { get; set; } = 0;
+        public byte Slope { get; set; } = 0;
+        public byte Steino { get; set; } = 0;
+        public byte Az { get; set; } = 0;
+        public byte Klz { get; set; } = 0;
+        public byte Stt { get; set; } = 0;
+        public sbyte GermanFederalStates { get; set; } = -1;
+        public bool GetDryYearWaterNeed { get; set; } = false;
 
-        = false;
-        public bool UseCO2Increase
-        {
-            get;
-            set;
-        }
-
-        = true;
-        public double Dgm
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Hft
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Nft
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Sft
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Slope
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Steino
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Az
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Klz
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public byte Stt
-        {
-            get;
-            set;
-        }
-
-        = 0;
-        public sbyte GermanFederalStates
-        {
-            get;
-            set;
-        }
-
-        = -1;
-        public bool GetDryYearWaterNeed
-        {
-            get;
-            set;
-        }
-
-        = false;
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public bool UseDevTrend => ctx.ReadDataBool(0UL, false);
             public bool UseCO2Increase => ctx.ReadDataBool(1UL, true);
             public double Dgm => ctx.ReadDataDouble(64UL, 0);
@@ -272,16 +204,22 @@ namespace Mas.Schema.Model.Yieldstat
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8db55634a0e7d054UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x8db55634a0e7d054UL)
+    ]
     public class Result : ICapnpSerializable
     {
         public const UInt64 typeId = 0x8db55634a0e7d054UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             Cultivar = reader.Cultivar;
             IsNoData = reader.IsNoData;
-            Values = reader.Values?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Yieldstat.Result.ResultToValue>(_));
+            Values = reader.Values?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Yieldstat.Result.ResultToValue>(_)
+            );
             applyDefaults();
         }
 
@@ -297,43 +235,32 @@ namespace Mas.Schema.Model.Yieldstat
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public string Cultivar
-        {
-            get;
-            set;
-        }
+        public string Cultivar { get; set; }
 
-        public bool IsNoData
-        {
-            get;
-            set;
-        }
-
-        = false;
-        public IReadOnlyList<Mas.Schema.Model.Yieldstat.Result.ResultToValue> Values
-        {
-            get;
-            set;
-        }
+        public bool IsNoData { get; set; } = false;
+        public IReadOnlyList<Mas.Schema.Model.Yieldstat.Result.ResultToValue> Values { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public string Cultivar => ctx.ReadText(0, null);
             public bool IsNoData => ctx.ReadDataBool(0UL, false);
-            public IReadOnlyList<Mas.Schema.Model.Yieldstat.Result.ResultToValue.READER> Values => ctx.ReadList(1).Cast(Mas.Schema.Model.Yieldstat.Result.ResultToValue.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Yieldstat.Result.ResultToValue.READER> Values =>
+                ctx.ReadList(1).Cast(Mas.Schema.Model.Yieldstat.Result.ResultToValue.READER.create);
             public bool HasValues => ctx.IsStructFieldNonNull(1);
         }
 
@@ -358,15 +285,22 @@ namespace Mas.Schema.Model.Yieldstat
 
             public ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Result.ResultToValue.WRITER> Values
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Result.ResultToValue.WRITER>>(1);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Result.ResultToValue.WRITER>
+                    >(1);
                 set => Link(1, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8d365bd4f0136fc0UL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x8d365bd4f0136fc0UL)
+        ]
         public class ResultToValue : ICapnpSerializable
         {
             public const UInt64 typeId = 0x8d365bd4f0136fc0UL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -386,34 +320,29 @@ namespace Mas.Schema.Model.Yieldstat
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public Mas.Schema.Model.Yieldstat.ResultId Id
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Yieldstat.ResultId Id { get; set; }
 
-            public double Value
-            {
-                get;
-                set;
-            }
+            public double Value { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-                public Mas.Schema.Model.Yieldstat.ResultId Id => (Mas.Schema.Model.Yieldstat.ResultId)ctx.ReadDataUShort(0UL, (ushort)0);
+
+                public Mas.Schema.Model.Yieldstat.ResultId Id =>
+                    (Mas.Schema.Model.Yieldstat.ResultId)ctx.ReadDataUShort(0UL, (ushort)0);
                 public double Value => ctx.ReadDataDouble(64UL, 0);
             }
 
@@ -439,17 +368,23 @@ namespace Mas.Schema.Model.Yieldstat
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x932a681f81b4be19UL)]
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0x932a681f81b4be19UL)
+    ]
     public class Output : ICapnpSerializable
     {
         public const UInt64 typeId = 0x932a681f81b4be19UL;
+
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
             Id = reader.Id;
             RunFailed = reader.RunFailed;
             Reason = reader.Reason;
-            Results = reader.Results?.ToReadOnlyList(_ => CapnpSerializable.Create<Mas.Schema.Model.Yieldstat.Output.YearToResult>(_));
+            Results = reader.Results?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Model.Yieldstat.Output.YearToResult>(_)
+            );
             applyDefaults();
         }
 
@@ -466,50 +401,35 @@ namespace Mas.Schema.Model.Yieldstat
             serialize(arg_.Rewrap<WRITER>());
         }
 
-        public void applyDefaults()
-        {
-        }
+        public void applyDefaults() { }
 
-        public string Id
-        {
-            get;
-            set;
-        }
+        public string Id { get; set; }
 
-        public bool RunFailed
-        {
-            get;
-            set;
-        }
+        public bool RunFailed { get; set; } = false;
+        public string Reason { get; set; }
 
-        = false;
-        public string Reason
-        {
-            get;
-            set;
-        }
-
-        public IReadOnlyList<Mas.Schema.Model.Yieldstat.Output.YearToResult> Results
-        {
-            get;
-            set;
-        }
+        public IReadOnlyList<Mas.Schema.Model.Yieldstat.Output.YearToResult> Results { get; set; }
 
         public struct READER
         {
             readonly DeserializerState ctx;
+
             public READER(DeserializerState ctx)
             {
                 this.ctx = ctx;
             }
 
             public static READER create(DeserializerState ctx) => new READER(ctx);
+
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
             public string Id => ctx.ReadText(0, null);
             public bool RunFailed => ctx.ReadDataBool(0UL, false);
             public string Reason => ctx.ReadText(1, null);
-            public IReadOnlyList<Mas.Schema.Model.Yieldstat.Output.YearToResult.READER> Results => ctx.ReadList(2).Cast(Mas.Schema.Model.Yieldstat.Output.YearToResult.READER.create);
+            public IReadOnlyList<Mas.Schema.Model.Yieldstat.Output.YearToResult.READER> Results =>
+                ctx.ReadList(2).Cast(Mas.Schema.Model.Yieldstat.Output.YearToResult.READER.create);
             public bool HasResults => ctx.IsStructFieldNonNull(2);
         }
 
@@ -540,15 +460,22 @@ namespace Mas.Schema.Model.Yieldstat
 
             public ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Output.YearToResult.WRITER> Results
             {
-                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Output.YearToResult.WRITER>>(2);
+                get =>
+                    BuildPointer<
+                        ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Output.YearToResult.WRITER>
+                    >(2);
                 set => Link(2, value);
             }
         }
 
-        [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xa008c533888c3a5eUL)]
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa008c533888c3a5eUL)
+        ]
         public class YearToResult : ICapnpSerializable
         {
             public const UInt64 typeId = 0xa008c533888c3a5eUL;
+
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
@@ -568,35 +495,30 @@ namespace Mas.Schema.Model.Yieldstat
                 serialize(arg_.Rewrap<WRITER>());
             }
 
-            public void applyDefaults()
-            {
-            }
+            public void applyDefaults() { }
 
-            public short Year
-            {
-                get;
-                set;
-            }
+            public short Year { get; set; }
 
-            public Mas.Schema.Model.Yieldstat.Result Result
-            {
-                get;
-                set;
-            }
+            public Mas.Schema.Model.Yieldstat.Result Result { get; set; }
 
             public struct READER
             {
                 readonly DeserializerState ctx;
+
                 public READER(DeserializerState ctx)
                 {
                     this.ctx = ctx;
                 }
 
                 public static READER create(DeserializerState ctx) => new READER(ctx);
+
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
                 public short Year => ctx.ReadDataShort(0UL, (short)0);
-                public Mas.Schema.Model.Yieldstat.Result.READER Result => ctx.ReadStruct(0, Mas.Schema.Model.Yieldstat.Result.READER.create);
+                public Mas.Schema.Model.Yieldstat.Result.READER Result =>
+                    ctx.ReadStruct(0, Mas.Schema.Model.Yieldstat.Result.READER.create);
                 public bool HasResult => ctx.IsStructFieldNonNull(0);
             }
 

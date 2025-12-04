@@ -198,7 +198,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             category: IdInformationReader,
             upsert: bool,
             _context: _AdminInterfaceModule.Server.AddcategoryCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             bool | _AdminInterfaceModule.Server.AddcategoryResultTuple | None
         ]: ...
@@ -210,7 +210,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             categoryId: str,
             moveObjectsToCategoryId: str,
             _context: _AdminInterfaceModule.Server.RemovecategoryCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_IdentifiableInterfaceModule]
             | _AdminInterfaceModule.Server.RemovecategoryResultTuple
@@ -224,7 +224,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             objectIds: TextListReader,
             toCatId: str,
             _context: _AdminInterfaceModule.Server.MoveobjectsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[str] | _AdminInterfaceModule.Server.MoveobjectsResultTuple | None
         ]: ...
@@ -235,7 +235,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             self,
             objectIds: TextListReader,
             _context: _AdminInterfaceModule.Server.RemoveobjectsCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[_IdentifiableInterfaceModule]
             | _AdminInterfaceModule.Server.RemoveobjectsResultTuple
@@ -247,7 +247,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         def registry(
             self,
             _context: _AdminInterfaceModule.Server.RegistryCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _RegistryInterfaceModule.Server
             | _AdminInterfaceModule.Server.RegistryResultTuple
@@ -560,7 +560,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
         def supportedCategories(
             self,
             _context: _RegistryInterfaceModule.Server.SupportedcategoriesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[IdInformationBuilder | IdInformationReader]
             | _RegistryInterfaceModule.Server.SupportedcategoriesResultTuple
@@ -574,7 +574,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             self,
             categoryId: str,
             _context: _RegistryInterfaceModule.Server.CategoryinfoCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             _RegistryInterfaceModule.Server.CategoryinfoResultTuple | None
         ]: ...
@@ -585,7 +585,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             self,
             categoryId: str,
             _context: _RegistryInterfaceModule.Server.EntriesCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[
             Sequence[EntryBuilder | EntryReader]
             | _RegistryInterfaceModule.Server.EntriesResultTuple
@@ -921,7 +921,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             def unregister(
                 self,
                 _context: _RegistrarInterfaceModule._UnregisterInterfaceModule.Server.UnregisterCallContext,
-                **kwargs: dict[str, Any],
+                **kwargs: Any,
             ) -> Awaitable[
                 bool
                 | _RegistrarInterfaceModule._UnregisterInterfaceModule.Server.UnregisterResultTuple
@@ -1018,7 +1018,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             categoryId: str,
             xDomain: CrossDomainRestoreReader,
             _context: _RegistrarInterfaceModule.Server.RegisterCallContext,
-            **kwargs: dict[str, Any],
+            **kwargs: Any,
         ) -> Awaitable[_RegistrarInterfaceModule.Server.RegisterResultTuple | None]: ...
         def register_context(
             self, context: _RegistrarInterfaceModule.Server.RegisterCallContext

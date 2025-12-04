@@ -182,7 +182,7 @@ interface HostPortResolver extends(Identifiable, Restorer) {
   # resolve an id (either base64 encoded VatId or plain text alias) to a host and port
 }
 
-interface Gateway(Capability) extends(Identifiable, Restorer) {
+interface Gateway extends(Identifiable, Restorer) {
   # interface to "register" caps at a gateway so they can be reached from
   # the gateways outer side and be saved to the gateways restorer
 
