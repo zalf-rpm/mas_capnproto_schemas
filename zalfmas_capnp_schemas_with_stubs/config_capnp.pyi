@@ -1,19 +1,21 @@
 """This is an automatically generated stub for `config.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable
+from typing import Any, NamedTuple, Protocol, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _InterfaceModule,
 )
-from collections.abc import Awaitable
-from typing import override, Protocol, Any, NamedTuple
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (

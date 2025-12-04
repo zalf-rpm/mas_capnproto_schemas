@@ -1,8 +1,9 @@
 """This is an automatically generated stub for `registry.capnp`."""
 
 import os
-import capnp
 from typing import NamedTuple
+
+import capnp
 
 capnp.remove_import_hook()
 here = os.path.dirname(os.path.abspath(__file__))

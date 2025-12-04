@@ -1,24 +1,32 @@
 """This is an automatically generated stub for `service.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable, Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _InterfaceModule,
     _StructModule,
 )
-from .common_capnp import _IdentifiableInterfaceModule, IdentifiableClient
-from .common_capnp import IdInformationReader, IdInformationBuilder
-from .common_capnp import PairReader, PairBuilder
-from contextlib import AbstractContextManager
-from collections.abc import Iterator, Sequence, Awaitable, Callable
-from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
+
+from .common_capnp import (
+    IdentifiableClient,
+    IdInformationBuilder,
+    IdInformationReader,
+    PairBuilder,
+    PairReader,
+    _IdentifiableInterfaceModule,
+)
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (

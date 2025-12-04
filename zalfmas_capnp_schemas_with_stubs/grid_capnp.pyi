@@ -1,22 +1,25 @@
 """This is an automatically generated stub for `grid.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable, Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _InterfaceModule,
     _StructModule,
 )
+
 from .common_capnp import _IdentifiableInterfaceModule
+from .geo_capnp import LatLonCoordBuilder, LatLonCoordReader
 from .persistence_capnp import _PersistentInterfaceModule
-from contextlib import AbstractContextManager
-from .geo_capnp import LatLonCoordReader, LatLonCoordBuilder
-from collections.abc import Iterator, Sequence, Awaitable, Callable
-from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
 
 class _AggregationEnumModule:
     none: int

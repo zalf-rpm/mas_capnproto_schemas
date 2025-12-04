@@ -1,25 +1,31 @@
 """This is an automatically generated stub for `monica_management.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable, Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
     _DynamicObjectBuilder,
     _DynamicObjectReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _StructModule,
 )
-from ...date_capnp import DateReader, DateBuilder
-from contextlib import AbstractContextManager
-from ...common_capnp import IdInformationReader, IdInformationBuilder
+
 from ...climate_capnp import ElementEnum
+from ...common_capnp import (
+    IdInformationBuilder,
+    IdInformationReader,
+    _IdentifiableInterfaceModule,
+)
 from ...crop_capnp import _CropInterfaceModule
-from ...common_capnp import _IdentifiableInterfaceModule
-from collections.abc import Iterator, Sequence, Awaitable, Callable
-from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
+from ...date_capnp import DateBuilder, DateReader
 
 # Type alias for AnyPointer parameters (accepts all Cap'n Proto pointer types)
 type AnyPointer = (

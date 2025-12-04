@@ -1,19 +1,22 @@
 """This is an automatically generated stub for `monica_params.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
 from capnp.lib.capnp import (
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _StructModule,
 )
-from contextlib import AbstractContextManager
-from .monica_management_capnp import _ParamsStructModule
+
 from ...climate_capnp import RCPEnum
-from ...date_capnp import DateReader, DateBuilder
-from collections.abc import Iterator, Sequence, Callable
-from typing import Literal, overload, override, Any, IO
+from ...date_capnp import DateBuilder, DateReader
+from .monica_management_capnp import _ParamsStructModule
 
 class _Float64List:
     class Reader(_DynamicListReader):

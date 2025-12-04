@@ -1,59 +1,56 @@
 """This is an automatically generated stub for `monica_state.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
 from capnp.lib.capnp import (
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _StructModule,
 )
-from contextlib import AbstractContextManager
-from .monica_params_capnp import SiteParametersReader, SiteParametersBuilder
-from .monica_params_capnp import (
-    EnvironmentParametersReader,
-    EnvironmentParametersBuilder,
-)
-from .monica_params_capnp import CropModuleParametersReader, CropModuleParametersBuilder
-from .monica_params_capnp import SimulationParametersReader, SimulationParametersBuilder
-from .monica_params_capnp import (
-    MeasuredGroundwaterTableInformationReader,
-    MeasuredGroundwaterTableInformationBuilder,
-)
+
+from ...date_capnp import DateBuilder, DateReader
 from .monica_management_capnp import _ParamsStructModule
-from .monica_params_capnp import YieldComponentReader, YieldComponentBuilder
-from .monica_params_capnp import _VocStructModule
-from .monica_params_capnp import SpeciesParametersReader, SpeciesParametersBuilder
-from .monica_params_capnp import CultivarParametersReader, CultivarParametersBuilder
 from .monica_params_capnp import (
-    CropResidueParametersReader,
-    CropResidueParametersBuilder,
-)
-from .monica_params_capnp import SoilParametersReader, SoilParametersBuilder
-from .monica_params_capnp import (
-    SoilTemperatureModuleParametersReader,
-    SoilTemperatureModuleParametersBuilder,
-)
-from .monica_params_capnp import (
-    SoilMoistureModuleParametersReader,
-    SoilMoistureModuleParametersBuilder,
-)
-from .monica_params_capnp import (
-    SoilOrganicModuleParametersReader,
-    SoilOrganicModuleParametersBuilder,
-)
-from .monica_params_capnp import (
-    SoilTransportModuleParametersReader,
-    SoilTransportModuleParametersBuilder,
-)
-from ...date_capnp import DateReader, DateBuilder
-from .monica_params_capnp import (
-    AutomaticHarvestParametersReader,
     AutomaticHarvestParametersBuilder,
+    AutomaticHarvestParametersReader,
+    CropModuleParametersBuilder,
+    CropModuleParametersReader,
+    CropParametersBuilder,
+    CropParametersReader,
+    CropResidueParametersBuilder,
+    CropResidueParametersReader,
+    CultivarParametersBuilder,
+    CultivarParametersReader,
+    EnvironmentParametersBuilder,
+    EnvironmentParametersReader,
+    MeasuredGroundwaterTableInformationBuilder,
+    MeasuredGroundwaterTableInformationReader,
+    SimulationParametersBuilder,
+    SimulationParametersReader,
+    SiteParametersBuilder,
+    SiteParametersReader,
+    SoilMoistureModuleParametersBuilder,
+    SoilMoistureModuleParametersReader,
+    SoilOrganicModuleParametersBuilder,
+    SoilOrganicModuleParametersReader,
+    SoilParametersBuilder,
+    SoilParametersReader,
+    SoilTemperatureModuleParametersBuilder,
+    SoilTemperatureModuleParametersReader,
+    SoilTransportModuleParametersBuilder,
+    SoilTransportModuleParametersReader,
+    SpeciesParametersBuilder,
+    SpeciesParametersReader,
+    YieldComponentBuilder,
+    YieldComponentReader,
+    _VocStructModule,
 )
-from .monica_params_capnp import CropParametersReader, CropParametersBuilder
-from collections.abc import Iterator, Sequence, Callable
-from typing import Literal, overload, override, Any, IO
 
 class _MaybeBoolStructModule(_StructModule):
     class Reader(_DynamicStructReader):

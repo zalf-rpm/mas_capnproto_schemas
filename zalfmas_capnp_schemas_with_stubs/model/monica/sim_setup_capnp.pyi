@@ -1,10 +1,12 @@
 """This is an automatically generated stub for `sim_setup.capnp`."""
 
 from __future__ import annotations
-from capnp.lib.capnp import _DynamicStructBuilder, _DynamicStructReader, _StructModule
-from contextlib import AbstractContextManager
+
 from collections.abc import Callable
-from typing import Literal, overload, override, Any, IO
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
+from capnp.lib.capnp import _DynamicStructBuilder, _DynamicStructReader, _StructModule
 
 class _SetupStructModule(_StructModule):
     class Reader(_DynamicStructReader):

@@ -1,6 +1,7 @@
 """This is an automatically generated stub for `field_exp_data.capnp`."""
 
 import os
+
 import capnp
 
 capnp.remove_import_hook()

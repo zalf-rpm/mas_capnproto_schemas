@@ -6,7 +6,6 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional, Dict, List
 
 
 @dataclass
@@ -29,9 +28,9 @@ class PathsConfig:
 class CompilerConfig:
     """Configuration for the Cap'n Proto compiler."""
 
-    schemas: Dict[str, SchemaConfig]
+    schemas: dict[str, SchemaConfig]
     paths: PathsConfig
-    presets: Dict[str, List[str]]
+    presets: dict[str, list[str]]
 
 
 def load_config(config_path: Path) -> CompilerConfig:
@@ -113,7 +112,7 @@ def compile_schema(
         print(f"Error compiling {schema_path}: {e}")
 
 
-def find_executable_path(name: str) -> Optional[str]:
+def find_executable_path(name: str) -> str | None:
     """Find the full path of an executable.
 
     Args:
