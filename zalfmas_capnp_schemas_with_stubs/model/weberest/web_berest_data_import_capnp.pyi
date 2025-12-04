@@ -1,14 +1,16 @@
 """This is an automatically generated stub for `web-berest-data-import.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable
+from typing import Any, NamedTuple, Protocol, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _InterfaceModule,
 )
-from collections.abc import Awaitable
-from typing import override, Protocol, Any, NamedTuple
 
 class _DWLABImportInterfaceModule(_InterfaceModule):
     class ImportdataRequest(Protocol):

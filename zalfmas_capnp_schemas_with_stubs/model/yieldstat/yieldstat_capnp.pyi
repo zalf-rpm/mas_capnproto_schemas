@@ -1,16 +1,18 @@
 """This is an automatically generated stub for `yieldstat.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Callable, Iterator
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
 from capnp.lib.capnp import (
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _StructModule,
 )
-from contextlib import AbstractContextManager
-from collections.abc import Iterator, Callable
-from typing import Literal, overload, override, Any, IO
 
 class _ResultIdEnumModule:
     primaryYield: int

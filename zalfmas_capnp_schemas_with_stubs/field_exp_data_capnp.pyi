@@ -1,19 +1,22 @@
 """This is an automatically generated stub for `field_exp_data.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Callable, Iterator
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
 from capnp.lib.capnp import (
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _StructModule,
 )
-from contextlib import AbstractContextManager
-from .soil_capnp import _ProfileInterfaceModule
+
 from .climate_capnp import _TimeSeriesInterfaceModule
-from .date_capnp import DateReader, DateBuilder
-from collections.abc import Iterator, Callable
-from typing import Literal, overload, override, Any, IO
+from .date_capnp import DateBuilder, DateReader
+from .soil_capnp import _ProfileInterfaceModule
 
 class _WeatherStationStructModule(_StructModule):
     class Reader(_DynamicStructReader):

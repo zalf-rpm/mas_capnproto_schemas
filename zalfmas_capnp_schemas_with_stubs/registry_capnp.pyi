@@ -1,24 +1,35 @@
 """This is an automatically generated stub for `registry.capnp`."""
 
 from __future__ import annotations
+
+from collections.abc import Awaitable, Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, NamedTuple, Protocol, overload, override
+
 from capnp.lib.capnp import (
     _DynamicCapabilityClient,
     _DynamicCapabilityServer,
-    _DynamicStructBuilder,
-    _DynamicStructReader,
     _DynamicListBuilder,
     _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
     _InterfaceModule,
     _StructModule,
 )
-from .common_capnp import _IdentifiableInterfaceModule, IdentifiableClient
-from .common_capnp import IdInformationReader, IdInformationBuilder
-from contextlib import AbstractContextManager
-from .persistence_capnp import VatIdReader, VatIdBuilder
-from .persistence_capnp import _RestorerInterfaceModule
-from .persistence_capnp import SturdyRefReader, SturdyRefBuilder
-from collections.abc import Iterator, Sequence, Awaitable, Callable
-from typing import Literal, overload, override, Protocol, Any, IO, NamedTuple
+
+from .common_capnp import (
+    IdentifiableClient,
+    IdInformationBuilder,
+    IdInformationReader,
+    _IdentifiableInterfaceModule,
+)
+from .persistence_capnp import (
+    SturdyRefBuilder,
+    SturdyRefReader,
+    VatIdBuilder,
+    VatIdReader,
+    _RestorerInterfaceModule,
+)
 
 class _AdminInterfaceModule(_IdentifiableInterfaceModule):
     class AddcategoryRequest(Protocol):
