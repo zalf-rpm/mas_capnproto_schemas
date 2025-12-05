@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.45](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.44...v0.1.45) (2025-12-05)
+
+
+### Features
+
+* udpate dockerfile and workflow to incorporate the fixed csharp compiler ([4938c37](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/4938c37c3454629f3e2cf7e9f623e40aa8de411e))
+
+
+### Bug Fixes
+
+* change kwargs type to any and ass ssl context ([174539e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/174539ea9699df5014a8118034bea705e4d900b8))
+* generic param for Capability must have slipped through some testing ([00bc048](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/00bc048d90b64ea254fad7d7b8dfee121cb78631))
+
 ## [0.1.44](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.43...v0.1.44) (2025-11-25)
 
 
