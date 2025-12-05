@@ -161,30 +161,12 @@ struct PortInfos {
 }
 
 struct Component {
-    interface Runnable extends(Common.Identifiable) {
-      # interface to run remote FBP component
-
-      start @0 (portInfosReaderSr :Text, name :Text) -> (success :Bool);
-      # start component with a sturdy ref to a reader of PortInfos
-      # the component will use the port infos to connect to the channels
-      # and given an optional nam
-
-      stop  @1 () -> (success :Bool);
-      # stop the component
-    }
-
-    interface RunnableFactory extends(Common.Identifiable) {
-      # interface to create Runnable instances
-
-      create @0 () -> (r :Runnable);
-      # create a new Runnable instance
-    }
-
     enum ComponentType {
         standard    @0; # standard FBP component
         iip         @1; # initial information packet
         subflow     @2; # represents a subflow
         view        @3; # is a view component
+        process     @4; # is a standard FBP component, but based on Process interface
     }
 
     struct Port {
@@ -209,51 +191,56 @@ struct Component {
     inPorts       @2 :List(Port); # the components allowed input ports
     outPorts      @3 :List(Port); # the components allowed input ports
 
-    runFactory    @4 :RunnableFactory; # if non null, interface to runtime instances of this component
+    defaultConfig @4 :Text; # default configuration for component
 
-    defaultConfig @5 :Text; # default configuration for component
+    factory :union {
+      none        @5 :Void;                       # no factory available
+      runnable    @6 :Common.Factory(Runnable);   # factory for simple Runnable processes
+      process     @7 :Common.Factory(Process);    # factory for Process based components
+    }
 }
 
-struct ConfigEntry {
-    name @0 :Text;
-    val  @1 :Common.Value;
+interface Runnable extends(Common.Identifiable) {
+  # interface to run remote FBP component
+
+  start @0 (portInfosReaderSr :Text, name :Text) -> (success :Bool);
+  # start component with a sturdy ref to a reader of PortInfos
+  # the component will use the port infos to connect to the channels
+  # and given an optional nam
+
+  stop  @1 () -> (success :Bool);
+  # stop the component
 }
 
 interface Process extends(Common.Identifiable, GatewayRegistrable) {
-    # bootstrap interface of a running process = instantiated component
+  # bootstrap interface of a running process = instantiated component
 
-    struct StartupInfo {
-        # startup information about the process
-        # likely to be sent on a channel / writer after startup is finished
+  inPorts @0 () -> (ports :List(Component.Port));
+  # input ports available on the process
 
-        cap         @0 :Process;
-        # capability to started process
+  connectInPort @1 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool);
+  # connect named input port via given sturdyRef
 
-        gatewaySRs  @1 :List(Common.Pair(Text, Text));
-        # sturdy references via gateways to the process (GatewayId -> Process SR @ Gateway)
-      }
+  outPorts @2 () -> (ports :List(Component.Port));
+  # output ports available on the process
 
-    inPorts @0 () -> (ports :List(Component.Port));
-    # input ports available on the process
+  connectOutPort @3 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool);
+  # connect named output port via given sturdyRef
 
-    connectInPort @1 (name :Text, sturdyRef :Text) -> (connected :Bool);
-    # connect named input port via given sturdyRef
+  struct ConfigEntry {
+    name @0 :Text;
+    val  @1 :Common.Value;
+  }
 
-    outPorts @2 () -> (ports :List(Component.Port));
-    # output ports available on the process
+  configEntries @4 () -> (config :List(ConfigEntry));
+  # configuration data for this process
 
-    connectOutPort @3 (name :Text, sturdyRef :Text) -> (connected :Bool);
-    # connect named output port via given sturdyRef
+  setConfigEntry @7 ConfigEntry;
+  # set configuration value
 
-    configEntries @4 () -> (config :List(ConfigEntry));
-    # configuration data for this process
+  start @5 ();
+  # start process
 
-    setConfigEntry @7 ConfigEntry;
-    # set configuration value
-
-    start @5 ();
-    # start process
-
-    stop @6 ();
-    # stop process
+  stop @6 ();
+  # stop process
 }
