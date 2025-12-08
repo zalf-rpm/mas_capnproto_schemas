@@ -42,9 +42,7 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Fbp.IP.KV> Attributes { get; set; }
-
         public object Content { get; set; }
-
         public Mas.Schema.Fbp.IP.Type TheType { get; set; } = Mas.Schema.Fbp.IP.Type.standard;
 
         public struct READER
@@ -82,13 +80,11 @@ namespace Mas.Schema.Fbp
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.IP.KV.WRITER>>(0);
                 set => Link(0, value);
             }
-
             public DynamicSerializerState Content
             {
                 get => BuildPointer<DynamicSerializerState>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Fbp.IP.Type TheType
             {
                 get => (Mas.Schema.Fbp.IP.Type)this.ReadDataUShort(0UL, (ushort)0);
@@ -128,9 +124,7 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Key { get; set; }
-
             public string Desc { get; set; }
-
             public object Value { get; set; }
 
             public struct READER
@@ -165,13 +159,11 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Desc
                 {
                     get => this.ReadText(1, null);
                     set => this.WriteText(1, value, null);
                 }
-
                 public DynamicSerializerState Value
                 {
                     get => BuildPointer<DynamicSerializerState>(2);
@@ -257,8 +249,8 @@ namespace Mas.Schema.Fbp
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x9c62c32b2ff2b1e8UL),
-        Proxy(typeof(Channel_Proxy<>)),
-        Skeleton(typeof(Channel_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Fbp.Channel_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Fbp.Channel_Skeleton<>))
     ]
     public interface IChannel<TV>
         : Mas.Schema.Common.IIdentifiable,
@@ -767,7 +759,6 @@ namespace Mas.Schema.Fbp
                     get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
-
                 public DynamicSerializerState Value
                 {
                     get => which == WHICH.Value ? BuildPointer<DynamicSerializerState>(0) : default;
@@ -818,19 +809,12 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public ulong BufferSize { get; set; }
-
             public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics { get; set; }
-
             public string ChannelSR { get; set; }
-
             public IReadOnlyList<string> ReaderSRs { get; set; }
-
             public IReadOnlyList<string> WriterSRs { get; set; }
-
             public Mas.Schema.Fbp.IChannel<TV> Channel { get; set; }
-
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IReader> Readers { get; set; }
-
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers { get; set; }
 
             public struct READER
@@ -878,7 +862,6 @@ namespace Mas.Schema.Fbp
                     get => this.ReadDataULong(0UL, 0UL);
                     set => this.WriteData(0UL, value, 0UL);
                 }
-
                 public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics
                 {
                     get =>
@@ -886,38 +869,32 @@ namespace Mas.Schema.Fbp
                             this.ReadDataUShort(64UL, (ushort)0);
                     set => this.WriteData(64UL, (ushort)value, (ushort)0);
                 }
-
                 public string ChannelSR
                 {
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ListOfTextSerializer ReaderSRs
                 {
                     get => BuildPointer<ListOfTextSerializer>(1);
                     set => Link(1, value);
                 }
-
                 public ListOfTextSerializer WriterSRs
                 {
                     get => BuildPointer<ListOfTextSerializer>(2);
                     set => Link(2, value);
                 }
-
                 public Mas.Schema.Fbp.IChannel<TV> Channel
                 {
                     get => ReadCap<Mas.Schema.Fbp.IChannel<TV>>(3);
                     set => LinkObject(3, value);
                 }
-
                 public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader> Readers
                 {
                     get =>
                         BuildPointer<ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IReader>>(4);
                     set => Link(4, value);
                 }
-
                 public ListOfCapsSerializer<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers
                 {
                     get =>
@@ -930,8 +907,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0x8bc69192f3bc97ccUL),
-            Proxy(typeof(Channel<>.Reader_Proxy)),
-            Skeleton(typeof(Channel<>.Reader_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Channel<>.Reader_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Reader_Skeleton))
         ]
         public interface IReader
             : Mas.Schema.Common.IIdentifiable,
@@ -1348,8 +1325,8 @@ namespace Mas.Schema.Fbp
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xf7fec613b4a8c79fUL),
-            Proxy(typeof(Channel<>.Writer_Proxy)),
-            Skeleton(typeof(Channel<>.Writer_Skeleton))
+            Proxy(typeof(Mas.Schema.Fbp.Channel<>.Writer_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Writer_Skeleton))
         ]
         public interface IWriter
             : Mas.Schema.Common.IIdentifiable,
@@ -2189,7 +2166,6 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public Mas.Schema.Fbp.Channel<TV>.IReader R { get; set; }
-
             public Mas.Schema.Fbp.Channel<TV>.IWriter W { get; set; }
 
             public struct READER
@@ -2225,7 +2201,6 @@ namespace Mas.Schema.Fbp
                     get => ReadCap<Mas.Schema.Fbp.Channel<TV>.IReader>(0);
                     set => LinkObject(0, value);
                 }
-
                 public Mas.Schema.Fbp.Channel<TV>.IWriter W
                 {
                     get => ReadCap<Mas.Schema.Fbp.Channel<TV>.IWriter>(1);
@@ -2461,8 +2436,8 @@ namespace Mas.Schema.Fbp
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xd0cd6d829b810229UL),
-        Proxy(typeof(StartChannelsService_Proxy)),
-        Skeleton(typeof(StartChannelsService_Skeleton))
+        Proxy(typeof(Mas.Schema.Fbp.StartChannelsService_Proxy)),
+        Skeleton(typeof(Mas.Schema.Fbp.StartChannelsService_Skeleton))
     ]
     public interface IStartChannelsService : Mas.Schema.Common.IIdentifiable
     {
@@ -2622,14 +2597,11 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Name { get; set; }
-
             public ushort NoOfChannels { get; set; } = 1;
             public ushort NoOfReaders { get; set; } = 1;
             public ushort NoOfWriters { get; set; } = 1;
             public IReadOnlyList<string> ReaderSrts { get; set; }
-
             public IReadOnlyList<string> WriterSrts { get; set; }
-
             public ushort BufferSize { get; set; } = 1;
 
             public struct READER
@@ -2670,37 +2642,31 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ushort NoOfChannels
                 {
                     get => this.ReadDataUShort(0UL, (ushort)1);
                     set => this.WriteData(0UL, value, (ushort)1);
                 }
-
                 public ushort NoOfReaders
                 {
                     get => this.ReadDataUShort(16UL, (ushort)1);
                     set => this.WriteData(16UL, value, (ushort)1);
                 }
-
                 public ushort NoOfWriters
                 {
                     get => this.ReadDataUShort(32UL, (ushort)1);
                     set => this.WriteData(32UL, value, (ushort)1);
                 }
-
                 public ListOfTextSerializer ReaderSrts
                 {
                     get => BuildPointer<ListOfTextSerializer>(1);
                     set => Link(1, value);
                 }
-
                 public ListOfTextSerializer WriterSrts
                 {
                     get => BuildPointer<ListOfTextSerializer>(2);
                     set => Link(2, value);
                 }
-
                 public ushort BufferSize
                 {
                     get => this.ReadDataUShort(48UL, (ushort)1);
@@ -2741,7 +2707,6 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public IReadOnlyList<Mas.Schema.Fbp.Channel<object>.StartupInfo> StartupInfos { get; set; }
-
             public Mas.Schema.Service.IStoppable Stop { get; set; }
 
             public struct READER
@@ -2781,7 +2746,6 @@ namespace Mas.Schema.Fbp
                         >(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Service.IStoppable Stop
                 {
                     get => ReadCap<Mas.Schema.Service.IStoppable>(1);
@@ -2825,7 +2789,6 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Fbp.PortInfos.NameAndSR> InPorts { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.PortInfos.NameAndSR> OutPorts { get; set; }
 
         public struct READER
@@ -2866,7 +2829,6 @@ namespace Mas.Schema.Fbp
                     >(0);
                 set => Link(0, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.PortInfos.NameAndSR.WRITER> OutPorts
             {
                 get =>
@@ -3011,19 +2973,16 @@ namespace Mas.Schema.Fbp
                     get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
-
                 public string Name
                 {
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Sr
                 {
                     get => which == WHICH.Sr ? this.ReadText(1, null) : default;
                     set => this.WriteText(1, value, null);
                 }
-
                 public ListOfTextSerializer Srs
                 {
                     get => which == WHICH.Srs ? BuildPointer<ListOfTextSerializer>(1) : default;
@@ -3052,8 +3011,8 @@ namespace Mas.Schema.Fbp
             OutPorts = reader.OutPorts?.ToReadOnlyList(_ =>
                 CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_)
             );
-            RunFactory = reader.RunFactory;
             DefaultConfig = reader.DefaultConfig;
+            Factory = CapnpSerializable.Create<Mas.Schema.Fbp.Component.factory>(reader.Factory);
             applyDefaults();
         }
 
@@ -3063,8 +3022,8 @@ namespace Mas.Schema.Fbp
             writer.Type = Type;
             writer.InPorts.Init(InPorts, (_s1, _v1) => _v1?.serialize(_s1));
             writer.OutPorts.Init(OutPorts, (_s1, _v1) => _v1?.serialize(_s1));
-            writer.RunFactory = RunFactory;
             writer.DefaultConfig = DefaultConfig;
+            Factory?.serialize(writer.Factory);
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -3075,16 +3034,11 @@ namespace Mas.Schema.Fbp
         public void applyDefaults() { }
 
         public Mas.Schema.Common.IdInformation Info { get; set; }
-
         public Mas.Schema.Fbp.Component.ComponentType Type { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> InPorts { get; set; }
-
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> OutPorts { get; set; }
-
-        public Mas.Schema.Fbp.Component.IRunnableFactory RunFactory { get; set; }
-
         public string DefaultConfig { get; set; }
+        public Mas.Schema.Fbp.Component.factory Factory { get; set; }
 
         public struct READER
         {
@@ -3112,9 +3066,8 @@ namespace Mas.Schema.Fbp
             public IReadOnlyList<Mas.Schema.Fbp.Component.Port.READER> OutPorts =>
                 ctx.ReadList(2).Cast(Mas.Schema.Fbp.Component.Port.READER.create);
             public bool HasOutPorts => ctx.IsStructFieldNonNull(2);
-            public Mas.Schema.Fbp.Component.IRunnableFactory RunFactory =>
-                ctx.ReadCap<Mas.Schema.Fbp.Component.IRunnableFactory>(3);
-            public string DefaultConfig => ctx.ReadText(4, null);
+            public string DefaultConfig => ctx.ReadText(3, null);
+            public factory.READER Factory => new factory.READER(ctx);
         }
 
         public class WRITER : SerializerState
@@ -3129,681 +3082,192 @@ namespace Mas.Schema.Fbp
                 get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                 set => Link(0, value);
             }
-
             public Mas.Schema.Fbp.Component.ComponentType Type
             {
                 get => (Mas.Schema.Fbp.Component.ComponentType)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> InPorts
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(1);
                 set => Link(1, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> OutPorts
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(2);
                 set => Link(2, value);
             }
-
-            public Mas.Schema.Fbp.Component.IRunnableFactory RunFactory
-            {
-                get => ReadCap<Mas.Schema.Fbp.Component.IRunnableFactory>(3);
-                set => LinkObject(3, value);
-            }
-
             public string DefaultConfig
             {
-                get => this.ReadText(4, null);
-                set => this.WriteText(4, value, null);
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+            public factory.WRITER Factory
+            {
+                get => Rewrap<factory.WRITER>();
             }
         }
 
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0xcb17668f2d39c70fUL),
-            Proxy(typeof(Runnable_Proxy)),
-            Skeleton(typeof(Runnable_Skeleton))
+            TypeId(0xe1a4104633d629d4UL)
         ]
-        public interface IRunnable : Mas.Schema.Common.IIdentifiable
+        public class factory : ICapnpSerializable
         {
-            Task<bool> Start(
-                string portInfosReaderSr,
-                string name,
-                CancellationToken cancellationToken_ = default
-            );
-            Task<bool> Stop(CancellationToken cancellationToken_ = default);
-        }
+            public const UInt64 typeId = 0xe1a4104633d629d4UL;
 
-        [
-            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0xcb17668f2d39c70fUL)
-        ]
-        public class Runnable_Proxy : Proxy, IRunnable
-        {
-            public async Task<bool> Start(
-                string portInfosReaderSr,
-                string name,
-                CancellationToken cancellationToken_ = default
-            )
+            public enum WHICH : ushort
             {
-                var in_ =
-                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Params_Start.WRITER>();
-                var arg_ = new Mas.Schema.Fbp.Component.Runnable.Params_Start()
-                {
-                    PortInfosReaderSr = portInfosReaderSr,
-                    Name = name,
-                };
-                arg_?.serialize(in_);
-                using (
-                    var d_ = await Call(
-                        14634278279288833807UL,
-                        0,
-                        in_.Rewrap<DynamicSerializerState>(),
-                        false,
-                        cancellationToken_
-                    ).WhenReturned
-                )
-                {
-                    var r_ =
-                        CapnpSerializable.Create<Mas.Schema.Fbp.Component.Runnable.Result_Start>(
-                            d_
-                        );
-                    return (r_.Success);
-                }
+                None = 0,
+                Runnable = 1,
+                Process = 2,
+                undefined = 65535,
             }
 
-            public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
-                var in_ =
-                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Params_Stop.WRITER>();
-                var arg_ = new Mas.Schema.Fbp.Component.Runnable.Params_Stop() { };
-                arg_?.serialize(in_);
-                using (
-                    var d_ = await Call(
-                        14634278279288833807UL,
-                        1,
-                        in_.Rewrap<DynamicSerializerState>(),
-                        false,
-                        cancellationToken_
-                    ).WhenReturned
-                )
+                var reader = READER.create(arg_);
+                switch (reader.which)
                 {
-                    var r_ =
-                        CapnpSerializable.Create<Mas.Schema.Fbp.Component.Runnable.Result_Stop>(d_);
-                    return (r_.Success);
+                    case WHICH.None:
+                        which = reader.which;
+                        break;
+                    case WHICH.Runnable:
+                        Runnable = reader.Runnable;
+                        break;
+                    case WHICH.Process:
+                        Process = reader.Process;
+                        break;
                 }
+
+                applyDefaults();
             }
 
-            public async Task<Mas.Schema.Common.IdInformation> Info(
-                CancellationToken cancellationToken_ = default
-            )
+            private WHICH _which = WHICH.undefined;
+            private object _content;
+            public WHICH which
             {
-                var in_ =
-                    SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-                var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
-                arg_?.serialize(in_);
-                using (
-                    var d_ = await Call(
-                        12875740530987518165UL,
-                        0,
-                        in_.Rewrap<DynamicSerializerState>(),
-                        false,
-                        cancellationToken_
-                    ).WhenReturned
-                )
+                get => _which;
+                set
                 {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
-                    return r_;
-                }
-            }
-        }
-
-        [
-            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0xcb17668f2d39c70fUL)
-        ]
-        public class Runnable_Skeleton : Skeleton<IRunnable>
-        {
-            public Runnable_Skeleton()
-            {
-                SetMethodTable(Start, Stop);
-            }
-
-            public override ulong InterfaceId => 14634278279288833807UL;
-
-            Task<AnswerOrCounterquestion> Start(
-                DeserializerState d_,
-                CancellationToken cancellationToken_
-            )
-            {
-                using (d_)
-                {
-                    var in_ =
-                        CapnpSerializable.Create<Mas.Schema.Fbp.Component.Runnable.Params_Start>(
-                            d_
-                        );
-                    return Impatient.MaybeTailCall(
-                        Impl.Start(in_.PortInfosReaderSr, in_.Name, cancellationToken_),
-                        success =>
-                        {
-                            var s_ =
-                                SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Result_Start.WRITER>();
-                            var r_ = new Mas.Schema.Fbp.Component.Runnable.Result_Start
-                            {
-                                Success = success,
-                            };
-                            r_.serialize(s_);
-                            return s_;
-                        }
-                    );
-                }
-            }
-
-            Task<AnswerOrCounterquestion> Stop(
-                DeserializerState d_,
-                CancellationToken cancellationToken_
-            )
-            {
-                using (d_)
-                {
-                    return Impatient.MaybeTailCall(
-                        Impl.Stop(cancellationToken_),
-                        success =>
-                        {
-                            var s_ =
-                                SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.Runnable.Result_Stop.WRITER>();
-                            var r_ = new Mas.Schema.Fbp.Component.Runnable.Result_Stop
-                            {
-                                Success = success,
-                            };
-                            r_.serialize(s_);
-                            return s_;
-                        }
-                    );
-                }
-            }
-        }
-
-        public static class Runnable
-        {
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0xdeb75f08b2540532UL)
-            ]
-            public class Params_Start : ICapnpSerializable
-            {
-                public const UInt64 typeId = 0xdeb75f08b2540532UL;
-
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
-                {
-                    var reader = READER.create(arg_);
-                    PortInfosReaderSr = reader.PortInfosReaderSr;
-                    Name = reader.Name;
-                    applyDefaults();
-                }
-
-                public void serialize(WRITER writer)
-                {
-                    writer.PortInfosReaderSr = PortInfosReaderSr;
-                    writer.Name = Name;
-                }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
-                {
-                    serialize(arg_.Rewrap<WRITER>());
-                }
-
-                public void applyDefaults() { }
-
-                public string PortInfosReaderSr { get; set; }
-
-                public string Name { get; set; }
-
-                public struct READER
-                {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
+                    if (value == _which)
+                        return;
+                    _which = value;
+                    switch (value)
                     {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-
-                    public string PortInfosReaderSr => ctx.ReadText(0, null);
-                    public string Name => ctx.ReadText(1, null);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(0, 2);
-                    }
-
-                    public string PortInfosReaderSr
-                    {
-                        get => this.ReadText(0, null);
-                        set => this.WriteText(0, value, null);
-                    }
-
-                    public string Name
-                    {
-                        get => this.ReadText(1, null);
-                        set => this.WriteText(1, value, null);
+                        case WHICH.None:
+                            break;
+                        case WHICH.Runnable:
+                            _content = null;
+                            break;
+                        case WHICH.Process:
+                            _content = null;
+                            break;
                     }
                 }
             }
 
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0xbb18da359652a59cUL)
-            ]
-            public class Result_Start : ICapnpSerializable
+            public void serialize(WRITER writer)
             {
-                public const UInt64 typeId = 0xbb18da359652a59cUL;
-
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                writer.which = which;
+                switch (which)
                 {
-                    var reader = READER.create(arg_);
-                    Success = reader.Success;
-                    applyDefaults();
-                }
-
-                public void serialize(WRITER writer)
-                {
-                    writer.Success = Success;
-                }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
-                {
-                    serialize(arg_.Rewrap<WRITER>());
-                }
-
-                public void applyDefaults() { }
-
-                public bool Success { get; set; }
-
-                public struct READER
-                {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
-                    {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-
-                    public bool Success => ctx.ReadDataBool(0UL, false);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(1, 0);
-                    }
-
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
+                    case WHICH.None:
+                        break;
+                    case WHICH.Runnable:
+                        writer.Runnable = Runnable;
+                        break;
+                    case WHICH.Process:
+                        writer.Process = Process;
+                        break;
                 }
             }
 
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0xe6ba083a247c91eeUL)
-            ]
-            public class Params_Stop : ICapnpSerializable
+            void ICapnpSerializable.Serialize(SerializerState arg_)
             {
-                public const UInt64 typeId = 0xe6ba083a247c91eeUL;
+                serialize(arg_.Rewrap<WRITER>());
+            }
 
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            public void applyDefaults() { }
+
+            public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable> Runnable
+            {
+                get =>
+                    _which == WHICH.Runnable
+                        ? (Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable>)_content
+                        : null;
+                set
                 {
-                    var reader = READER.create(arg_);
-                    applyDefaults();
-                }
-
-                public void serialize(WRITER writer) { }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
-                {
-                    serialize(arg_.Rewrap<WRITER>());
-                }
-
-                public void applyDefaults() { }
-
-                public struct READER
-                {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
-                    {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(0, 0);
-                    }
+                    _which = WHICH.Runnable;
+                    _content = value;
                 }
             }
 
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0xcbf00f9ba87ee17eUL)
-            ]
-            public class Result_Stop : ICapnpSerializable
+            public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess> Process
             {
-                public const UInt64 typeId = 0xcbf00f9ba87ee17eUL;
-
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                get =>
+                    _which == WHICH.Process
+                        ? (Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess>)_content
+                        : null;
+                set
                 {
-                    var reader = READER.create(arg_);
-                    Success = reader.Success;
-                    applyDefaults();
-                }
-
-                public void serialize(WRITER writer)
-                {
-                    writer.Success = Success;
-                }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
-                {
-                    serialize(arg_.Rewrap<WRITER>());
-                }
-
-                public void applyDefaults() { }
-
-                public bool Success { get; set; }
-
-                public struct READER
-                {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
-                    {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-
-                    public bool Success => ctx.ReadDataBool(0UL, false);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(1, 0);
-                    }
-
-                    public bool Success
-                    {
-                        get => this.ReadDataBool(0UL, false);
-                        set => this.WriteData(0UL, value, false);
-                    }
-                }
-            }
-        }
-
-        [
-            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0x98d0eca7dc936df4UL),
-            Proxy(typeof(RunnableFactory_Proxy)),
-            Skeleton(typeof(RunnableFactory_Skeleton))
-        ]
-        public interface IRunnableFactory : Mas.Schema.Common.IIdentifiable
-        {
-            Task<Mas.Schema.Fbp.Component.IRunnable> Create(
-                CancellationToken cancellationToken_ = default
-            );
-        }
-
-        [
-            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0x98d0eca7dc936df4UL)
-        ]
-        public class RunnableFactory_Proxy : Proxy, IRunnableFactory
-        {
-            public Task<Mas.Schema.Fbp.Component.IRunnable> Create(
-                CancellationToken cancellationToken_ = default
-            )
-            {
-                var in_ =
-                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.RunnableFactory.Params_Create.WRITER>();
-                var arg_ = new Mas.Schema.Fbp.Component.RunnableFactory.Params_Create() { };
-                arg_?.serialize(in_);
-                return Impatient.MakePipelineAware(
-                    Call(
-                        11011561294625205748UL,
-                        0,
-                        in_.Rewrap<DynamicSerializerState>(),
-                        false,
-                        cancellationToken_
-                    ),
-                    d_ =>
-                    {
-                        using (d_)
-                        {
-                            var r_ =
-                                CapnpSerializable.Create<Mas.Schema.Fbp.Component.RunnableFactory.Result_Create>(
-                                    d_
-                                );
-                            return (r_.R);
-                        }
-                    }
-                );
-            }
-
-            public async Task<Mas.Schema.Common.IdInformation> Info(
-                CancellationToken cancellationToken_ = default
-            )
-            {
-                var in_ =
-                    SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
-                var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
-                arg_?.serialize(in_);
-                using (
-                    var d_ = await Call(
-                        12875740530987518165UL,
-                        0,
-                        in_.Rewrap<DynamicSerializerState>(),
-                        false,
-                        cancellationToken_
-                    ).WhenReturned
-                )
-                {
-                    var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
-                    return r_;
-                }
-            }
-        }
-
-        [
-            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0x98d0eca7dc936df4UL)
-        ]
-        public class RunnableFactory_Skeleton : Skeleton<IRunnableFactory>
-        {
-            public RunnableFactory_Skeleton()
-            {
-                SetMethodTable(Create);
-            }
-
-            public override ulong InterfaceId => 11011561294625205748UL;
-
-            Task<AnswerOrCounterquestion> Create(
-                DeserializerState d_,
-                CancellationToken cancellationToken_
-            )
-            {
-                using (d_)
-                {
-                    return Impatient.MaybeTailCall(
-                        Impl.Create(cancellationToken_),
-                        r =>
-                        {
-                            var s_ =
-                                SerializerState.CreateForRpc<Mas.Schema.Fbp.Component.RunnableFactory.Result_Create.WRITER>();
-                            var r_ = new Mas.Schema.Fbp.Component.RunnableFactory.Result_Create
-                            {
-                                R = r,
-                            };
-                            r_.serialize(s_);
-                            return s_;
-                        }
-                    );
-                }
-            }
-        }
-
-        public static class RunnableFactory
-        {
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0x9bb7ec038ee4ef67UL)
-            ]
-            public class Params_Create : ICapnpSerializable
-            {
-                public const UInt64 typeId = 0x9bb7ec038ee4ef67UL;
-
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
-                {
-                    var reader = READER.create(arg_);
-                    applyDefaults();
-                }
-
-                public void serialize(WRITER writer) { }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
-                {
-                    serialize(arg_.Rewrap<WRITER>());
-                }
-
-                public void applyDefaults() { }
-
-                public struct READER
-                {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
-                    {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(0, 0);
-                    }
+                    _which = WHICH.Process;
+                    _content = value;
                 }
             }
 
-            [
-                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-                TypeId(0xc0e544a477a86e15UL)
-            ]
-            public class Result_Create : ICapnpSerializable
+            public struct READER
             {
-                public const UInt64 typeId = 0xc0e544a477a86e15UL;
+                readonly DeserializerState ctx;
 
-                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                public READER(DeserializerState ctx)
                 {
-                    var reader = READER.create(arg_);
-                    R = reader.R;
-                    applyDefaults();
+                    this.ctx = ctx;
                 }
 
-                public void serialize(WRITER writer)
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public WHICH which => (WHICH)ctx.ReadDataUShort(16U, (ushort)0);
+                public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable> Runnable =>
+                    which == WHICH.Runnable
+                        ? ctx.ReadCap<Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable>>(4)
+                        : default;
+                public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess> Process =>
+                    which == WHICH.Process
+                        ? ctx.ReadCap<Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess>>(4)
+                        : default;
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER() { }
+
+                public WHICH which
                 {
-                    writer.R = R;
+                    get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
+                    set => this.WriteData(16U, (ushort)value, (ushort)0);
                 }
-
-                void ICapnpSerializable.Serialize(SerializerState arg_)
+                public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable> Runnable
                 {
-                    serialize(arg_.Rewrap<WRITER>());
+                    get =>
+                        which == WHICH.Runnable
+                            ? ReadCap<Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IRunnable>>(4)
+                            : default;
+                    set => LinkObject(4, value);
                 }
-
-                public void applyDefaults() { }
-
-                public Mas.Schema.Fbp.Component.IRunnable R { get; set; }
-
-                public struct READER
+                public Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess> Process
                 {
-                    readonly DeserializerState ctx;
-
-                    public READER(DeserializerState ctx)
-                    {
-                        this.ctx = ctx;
-                    }
-
-                    public static READER create(DeserializerState ctx) => new READER(ctx);
-
-                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
-
-                    public static implicit operator READER(DeserializerState ctx) =>
-                        new READER(ctx);
-
-                    public Mas.Schema.Fbp.Component.IRunnable R =>
-                        ctx.ReadCap<Mas.Schema.Fbp.Component.IRunnable>(0);
-                }
-
-                public class WRITER : SerializerState
-                {
-                    public WRITER()
-                    {
-                        this.SetStruct(0, 1);
-                    }
-
-                    public Mas.Schema.Fbp.Component.IRunnable R
-                    {
-                        get => ReadCap<Mas.Schema.Fbp.Component.IRunnable>(0);
-                        set => LinkObject(0, value);
-                    }
+                    get =>
+                        which == WHICH.Process
+                            ? ReadCap<Mas.Schema.Common.IFactory<Mas.Schema.Fbp.IProcess>>(4)
+                            : default;
+                    set => LinkObject(4, value);
                 }
             }
         }
@@ -3818,6 +3282,7 @@ namespace Mas.Schema.Fbp
             iip,
             subflow,
             view,
+            process,
         }
 
         [
@@ -3852,9 +3317,7 @@ namespace Mas.Schema.Fbp
             public void applyDefaults() { }
 
             public string Name { get; set; }
-
             public string TheContentType { get; set; }
-
             public Mas.Schema.Fbp.Component.Port.PortType Type { get; set; } =
                 Mas.Schema.Fbp.Component.Port.PortType.standard;
 
@@ -3891,13 +3354,11 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string TheContentType
                 {
                     get => this.ReadText(1, null);
                     set => this.WriteText(1, value, null);
                 }
-
                 public Mas.Schema.Fbp.Component.Port.PortType Type
                 {
                     get =>
@@ -3922,6 +3383,1814 @@ namespace Mas.Schema.Fbp
             public enum ContentType : ushort
             {
                 structuredText,
+            }
+        }
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbde616d300754ff0UL),
+        Proxy(typeof(Mas.Schema.Fbp.Runnable_Proxy)),
+        Skeleton(typeof(Mas.Schema.Fbp.Runnable_Skeleton))
+    ]
+    public interface IRunnable : Mas.Schema.Common.IIdentifiable
+    {
+        Task<bool> Start(
+            string portInfosReaderSr,
+            string name,
+            CancellationToken cancellationToken_ = default
+        );
+        Task<bool> Stop(CancellationToken cancellationToken_ = default);
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbde616d300754ff0UL)
+    ]
+    public class Runnable_Proxy : Proxy, IRunnable
+    {
+        public async Task<bool> Start(
+            string portInfosReaderSr,
+            string name,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Runnable.Params_Start.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Runnable.Params_Start()
+            {
+                PortInfosReaderSr = portInfosReaderSr,
+                Name = name,
+            };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13683649613313429488UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Runnable.Result_Start>(d_);
+                return (r_.Success);
+            }
+        }
+
+        public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Runnable.Params_Stop.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Runnable.Params_Stop() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13683649613313429488UL,
+                    1,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Runnable.Result_Stop>(d_);
+                return (r_.Success);
+            }
+        }
+
+        public async Task<Mas.Schema.Common.IdInformation> Info(
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    12875740530987518165UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                return r_;
+            }
+        }
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbde616d300754ff0UL)
+    ]
+    public class Runnable_Skeleton : Skeleton<IRunnable>
+    {
+        public Runnable_Skeleton()
+        {
+            SetMethodTable(Start, Stop);
+        }
+
+        public override ulong InterfaceId => 13683649613313429488UL;
+
+        Task<AnswerOrCounterquestion> Start(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Runnable.Params_Start>(d_);
+                return Impatient.MaybeTailCall(
+                    Impl.Start(in_.PortInfosReaderSr, in_.Name, cancellationToken_),
+                    success =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Runnable.Result_Start.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Runnable.Result_Start { Success = success };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> Stop(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                return Impatient.MaybeTailCall(
+                    Impl.Stop(cancellationToken_),
+                    success =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Runnable.Result_Stop.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Runnable.Result_Stop { Success = success };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+    }
+
+    public static class Runnable
+    {
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9e5b8ec57b93780cUL)
+        ]
+        public class Params_Start : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x9e5b8ec57b93780cUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                PortInfosReaderSr = reader.PortInfosReaderSr;
+                Name = reader.Name;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.PortInfosReaderSr = PortInfosReaderSr;
+                writer.Name = Name;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public string PortInfosReaderSr { get; set; }
+            public string Name { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public string PortInfosReaderSr => ctx.ReadText(0, null);
+                public string Name => ctx.ReadText(1, null);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 2);
+                }
+
+                public string PortInfosReaderSr
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+                public string Name
+                {
+                    get => this.ReadText(1, null);
+                    set => this.WriteText(1, value, null);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf34a8f368330a36dUL)
+        ]
+        public class Result_Start : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xf34a8f368330a36dUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Success = reader.Success;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Success = Success;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public bool Success { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Success => ctx.ReadDataBool(0UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Success
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa593e62c492f42f1UL)
+        ]
+        public class Params_Stop : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa593e62c492f42f1UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xdfe8d20013a383bfUL)
+        ]
+        public class Result_Stop : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xdfe8d20013a383bfUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Success = reader.Success;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Success = Success;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public bool Success { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Success => ctx.ReadDataBool(0UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Success
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
+                }
+            }
+        }
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbbad56943a039783UL),
+        Proxy(typeof(Mas.Schema.Fbp.Process_Proxy)),
+        Skeleton(typeof(Mas.Schema.Fbp.Process_Skeleton))
+    ]
+    public interface IProcess
+        : Mas.Schema.Common.IIdentifiable,
+            Mas.Schema.Persistence.IGatewayRegistrable
+    {
+        Task<IReadOnlyList<Mas.Schema.Fbp.Component.Port>> InPorts(
+            CancellationToken cancellationToken_ = default
+        );
+        Task<bool> ConnectInPort(
+            string name,
+            Mas.Schema.Persistence.SturdyRef sturdyRef,
+            CancellationToken cancellationToken_ = default
+        );
+        Task<IReadOnlyList<Mas.Schema.Fbp.Component.Port>> OutPorts(
+            CancellationToken cancellationToken_ = default
+        );
+        Task<bool> ConnectOutPort(
+            string name,
+            Mas.Schema.Persistence.SturdyRef sturdyRef,
+            CancellationToken cancellationToken_ = default
+        );
+        Task<IReadOnlyList<Mas.Schema.Fbp.Process.ConfigEntry>> ConfigEntries(
+            CancellationToken cancellationToken_ = default
+        );
+        Task Start(CancellationToken cancellationToken_ = default);
+        Task Stop(CancellationToken cancellationToken_ = default);
+        Task SetConfigEntry(
+            Mas.Schema.Fbp.Process.ConfigEntry arg_,
+            CancellationToken cancellationToken_ = default
+        );
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbbad56943a039783UL)
+    ]
+    public class Process_Proxy : Proxy, IProcess
+    {
+        public async Task<IReadOnlyList<Mas.Schema.Fbp.Component.Port>> InPorts(
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_InPorts.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_InPorts() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_InPorts>(d_);
+                return (r_.Ports);
+            }
+        }
+
+        public async Task<bool> ConnectInPort(
+            string name,
+            Mas.Schema.Persistence.SturdyRef sturdyRef,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_ConnectInPort.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_ConnectInPort()
+            {
+                Name = name,
+                SturdyRef = sturdyRef,
+            };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    1,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_ConnectInPort>(d_);
+                return (r_.Connected);
+            }
+        }
+
+        public async Task<IReadOnlyList<Mas.Schema.Fbp.Component.Port>> OutPorts(
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_OutPorts.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_OutPorts() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    2,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_OutPorts>(d_);
+                return (r_.Ports);
+            }
+        }
+
+        public async Task<bool> ConnectOutPort(
+            string name,
+            Mas.Schema.Persistence.SturdyRef sturdyRef,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_ConnectOutPort.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_ConnectOutPort()
+            {
+                Name = name,
+                SturdyRef = sturdyRef,
+            };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    3,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_ConnectOutPort>(d_);
+                return (r_.Connected);
+            }
+        }
+
+        public async Task<IReadOnlyList<Mas.Schema.Fbp.Process.ConfigEntry>> ConfigEntries(
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_ConfigEntries.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_ConfigEntries() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    4,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_ConfigEntries>(d_);
+                return (r_.Config);
+            }
+        }
+
+        public async Task Start(CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_Start.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_Start() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    5,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_Start>(d_);
+                return;
+            }
+        }
+
+        public async Task Stop(CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_Stop.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_Stop() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    6,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_Stop>(d_);
+                return;
+            }
+        }
+
+        public async Task SetConfigEntry(
+            Mas.Schema.Fbp.Process.ConfigEntry arg_,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.ConfigEntry.WRITER>();
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    7,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_SetConfigEntry>(d_);
+                return;
+            }
+        }
+
+        public async Task<Mas.Schema.Persistence.SturdyRef> SturdyRefAtGateway(
+            Mas.Schema.Persistence.SturdyRef gatewaySR,
+            string gatewayId,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Persistence.GatewayRegistrable.Params_SturdyRefAtGateway.WRITER>();
+            var arg_ = new Mas.Schema.Persistence.GatewayRegistrable.Params_SturdyRefAtGateway()
+            {
+                GatewaySR = gatewaySR,
+                GatewayId = gatewayId,
+            };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    9390887237001371789UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ =
+                    CapnpSerializable.Create<Mas.Schema.Persistence.GatewayRegistrable.Result_SturdyRefAtGateway>(
+                        d_
+                    );
+                return (r_.SelfAtGatewaySR);
+            }
+        }
+
+        public async Task<Mas.Schema.Common.IdInformation> Info(
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Common.Identifiable.Params_Info.WRITER>();
+            var arg_ = new Mas.Schema.Common.Identifiable.Params_Info() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    12875740530987518165UL,
+                    0,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Common.IdInformation>(d_);
+                return r_;
+            }
+        }
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xbbad56943a039783UL)
+    ]
+    public class Process_Skeleton : Skeleton<IProcess>
+    {
+        public Process_Skeleton()
+        {
+            SetMethodTable(
+                InPorts,
+                ConnectInPort,
+                OutPorts,
+                ConnectOutPort,
+                ConfigEntries,
+                Start,
+                Stop,
+                SetConfigEntry
+            );
+        }
+
+        public override ulong InterfaceId => 13523560450691929987UL;
+
+        Task<AnswerOrCounterquestion> InPorts(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                return Impatient.MaybeTailCall(
+                    Impl.InPorts(cancellationToken_),
+                    ports =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_InPorts.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_InPorts { Ports = ports };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> ConnectInPort(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Params_ConnectInPort>(d_);
+                return Impatient.MaybeTailCall(
+                    Impl.ConnectInPort(in_.Name, in_.SturdyRef, cancellationToken_),
+                    connected =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_ConnectInPort.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_ConnectInPort
+                        {
+                            Connected = connected,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> OutPorts(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                return Impatient.MaybeTailCall(
+                    Impl.OutPorts(cancellationToken_),
+                    ports =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_OutPorts.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_OutPorts { Ports = ports };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> ConnectOutPort(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Params_ConnectOutPort>(
+                    d_
+                );
+                return Impatient.MaybeTailCall(
+                    Impl.ConnectOutPort(in_.Name, in_.SturdyRef, cancellationToken_),
+                    connected =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_ConnectOutPort.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_ConnectOutPort
+                        {
+                            Connected = connected,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> ConfigEntries(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                return Impatient.MaybeTailCall(
+                    Impl.ConfigEntries(cancellationToken_),
+                    config =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_ConfigEntries.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_ConfigEntries
+                        {
+                            Config = config,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        async Task<AnswerOrCounterquestion> Start(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                await Impl.Start(cancellationToken_);
+                var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Start.WRITER>();
+                return s_;
+            }
+        }
+
+        async Task<AnswerOrCounterquestion> Stop(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                await Impl.Stop(cancellationToken_);
+                var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Stop.WRITER>();
+                return s_;
+            }
+        }
+
+        async Task<AnswerOrCounterquestion> SetConfigEntry(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                await Impl.SetConfigEntry(
+                    CapnpSerializable.Create<Mas.Schema.Fbp.Process.ConfigEntry>(d_),
+                    cancellationToken_
+                );
+                var s_ =
+                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_SetConfigEntry.WRITER>();
+                return s_;
+            }
+        }
+    }
+
+    public static class Process
+    {
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa8d0bdfb4ddda7b3UL)
+        ]
+        public class ConfigEntry : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa8d0bdfb4ddda7b3UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Name = reader.Name;
+                Val = CapnpSerializable.Create<Mas.Schema.Common.Value>(reader.Val);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Name = Name;
+                Val?.serialize(writer.Val);
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public string Name { get; set; }
+            public Mas.Schema.Common.Value Val { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public string Name => ctx.ReadText(0, null);
+                public Mas.Schema.Common.Value.READER Val =>
+                    ctx.ReadStruct(1, Mas.Schema.Common.Value.READER.create);
+                public bool HasVal => ctx.IsStructFieldNonNull(1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 2);
+                }
+
+                public string Name
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+                public Mas.Schema.Common.Value.WRITER Val
+                {
+                    get => BuildPointer<Mas.Schema.Common.Value.WRITER>(1);
+                    set => Link(1, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf7ecea5ecff7797eUL)
+        ]
+        public class Params_InPorts : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xf7ecea5ecff7797eUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xcd9154730a050d21UL)
+        ]
+        public class Result_InPorts : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xcd9154730a050d21UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Ports = reader.Ports?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_)
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Ports.Init(Ports, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Component.Port> Ports { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public IReadOnlyList<Mas.Schema.Fbp.Component.Port.READER> Ports =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Fbp.Component.Port.READER.create);
+                public bool HasPorts => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> Ports
+                {
+                    get =>
+                        BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(
+                            0
+                        );
+                    set => Link(0, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xdc3bf3d87cee74a3UL)
+        ]
+        public class Params_ConnectInPort : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xdc3bf3d87cee74a3UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Name = reader.Name;
+                SturdyRef = CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(
+                    reader.SturdyRef
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Name = Name;
+                SturdyRef?.serialize(writer.SturdyRef);
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public string Name { get; set; }
+            public Mas.Schema.Persistence.SturdyRef SturdyRef { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public string Name => ctx.ReadText(0, null);
+                public Mas.Schema.Persistence.SturdyRef.READER SturdyRef =>
+                    ctx.ReadStruct(1, Mas.Schema.Persistence.SturdyRef.READER.create);
+                public bool HasSturdyRef => ctx.IsStructFieldNonNull(1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 2);
+                }
+
+                public string Name
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef
+                {
+                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1);
+                    set => Link(1, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9f2e15f17d6894cdUL)
+        ]
+        public class Result_ConnectInPort : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x9f2e15f17d6894cdUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Connected = reader.Connected;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Connected = Connected;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public bool Connected { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Connected => ctx.ReadDataBool(0UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Connected
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc87493b1428b0a52UL)
+        ]
+        public class Params_OutPorts : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xc87493b1428b0a52UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa394c49bfa79bd73UL)
+        ]
+        public class Result_OutPorts : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa394c49bfa79bd73UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Ports = reader.Ports?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_)
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Ports.Init(Ports, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Component.Port> Ports { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public IReadOnlyList<Mas.Schema.Fbp.Component.Port.READER> Ports =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Fbp.Component.Port.READER.create);
+                public bool HasPorts => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER> Ports
+                {
+                    get =>
+                        BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(
+                            0
+                        );
+                    set => Link(0, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xe0c0057317bd32c6UL)
+        ]
+        public class Params_ConnectOutPort : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xe0c0057317bd32c6UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Name = reader.Name;
+                SturdyRef = CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(
+                    reader.SturdyRef
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Name = Name;
+                SturdyRef?.serialize(writer.SturdyRef);
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public string Name { get; set; }
+            public Mas.Schema.Persistence.SturdyRef SturdyRef { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public string Name => ctx.ReadText(0, null);
+                public Mas.Schema.Persistence.SturdyRef.READER SturdyRef =>
+                    ctx.ReadStruct(1, Mas.Schema.Persistence.SturdyRef.READER.create);
+                public bool HasSturdyRef => ctx.IsStructFieldNonNull(1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 2);
+                }
+
+                public string Name
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+                public Mas.Schema.Persistence.SturdyRef.WRITER SturdyRef
+                {
+                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1);
+                    set => Link(1, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb364ef5d2a7d582dUL)
+        ]
+        public class Result_ConnectOutPort : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xb364ef5d2a7d582dUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Connected = reader.Connected;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Connected = Connected;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public bool Connected { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Connected => ctx.ReadDataBool(0UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Connected
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x91d109cdc059cd88UL)
+        ]
+        public class Params_ConfigEntries : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x91d109cdc059cd88UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xe6f5ed0f7285c794UL)
+        ]
+        public class Result_ConfigEntries : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xe6f5ed0f7285c794UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Config = reader.Config?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Fbp.Process.ConfigEntry>(_)
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Config.Init(Config, (_s1, _v1) => _v1?.serialize(_s1));
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public IReadOnlyList<Mas.Schema.Fbp.Process.ConfigEntry> Config { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public IReadOnlyList<Mas.Schema.Fbp.Process.ConfigEntry.READER> Config =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Fbp.Process.ConfigEntry.READER.create);
+                public bool HasConfig => ctx.IsStructFieldNonNull(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public ListOfStructsSerializer<Mas.Schema.Fbp.Process.ConfigEntry.WRITER> Config
+                {
+                    get =>
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Fbp.Process.ConfigEntry.WRITER>
+                        >(0);
+                    set => Link(0, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd1de57bb71794fecUL)
+        ]
+        public class Params_Start : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xd1de57bb71794fecUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xf563b2171ed5b332UL)
+        ]
+        public class Result_Start : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xf563b2171ed5b332UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd35bbb909ba0c554UL)
+        ]
+        public class Params_Stop : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xd35bbb909ba0c554UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xee5188311583039dUL)
+        ]
+        public class Result_Stop : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xee5188311583039dUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc8608732b07a57ddUL)
+        ]
+        public class Result_SetConfigEntry : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xc8608732b07a57ddUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
             }
         }
     }

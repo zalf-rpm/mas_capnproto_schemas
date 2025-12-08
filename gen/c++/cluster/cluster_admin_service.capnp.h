@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -2743,7 +2743,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename ValueHolder<T2>::ValueParams::Reader asValueHolderGeneric() {
+  typename ValueHolder<T2>::ValueParams::Reader asValueHolderGeneric() const {
     return typename ValueHolder<T2>::ValueParams::Reader(_reader);
   }
 
@@ -2827,7 +2827,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename ValueHolder<T2>::ValueResults::Reader asValueHolderGeneric() {
+  typename ValueHolder<T2>::ValueResults::Reader asValueHolderGeneric() const {
     return typename ValueHolder<T2>::ValueResults::Reader(_reader);
   }
 
@@ -2923,7 +2923,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename ValueHolder<T2>::ReleaseParams::Reader asValueHolderGeneric() {
+  typename ValueHolder<T2>::ReleaseParams::Reader asValueHolderGeneric() const {
     return typename ValueHolder<T2>::ReleaseParams::Reader(_reader);
   }
 
@@ -3007,7 +3007,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename ValueHolder<T2>::ReleaseResults::Reader asValueHolderGeneric() {
+  typename ValueHolder<T2>::ReleaseResults::Reader asValueHolderGeneric() const {
     return typename ValueHolder<T2>::ReleaseResults::Reader(_reader);
   }
 
@@ -5509,12 +5509,12 @@ inline bool Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder:
 inline  ::capnp::Text::Reader Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Reader::getRegistrationToken() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_bea41d4487c101c4 + 57);
+        ::capnp::schemas::bp_bea41d4487c101c4 + 58);
 }
 inline  ::capnp::Text::Builder Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder::getRegistrationToken() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_bea41d4487c101c4 + 57);
+        ::capnp::schemas::bp_bea41d4487c101c4 + 58);
 }
 inline void Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder::setRegistrationToken( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(

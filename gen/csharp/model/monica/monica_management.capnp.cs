@@ -46,13 +46,9 @@ namespace Mas.Schema.Model.Monica
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Sowing { get; set; }
-
         public Mas.Schema.Common.Date EarliestSowing { get; set; }
-
         public Mas.Schema.Common.Date LatestSowing { get; set; }
-
         public Mas.Schema.Common.Date Harvest { get; set; }
-
         public Mas.Schema.Common.Date LatestHarvest { get; set; }
 
         public struct READER
@@ -99,25 +95,21 @@ namespace Mas.Schema.Model.Monica
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public Mas.Schema.Common.Date.WRITER EarliestSowing
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Common.Date.WRITER LatestSowing
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
                 set => Link(2, value);
             }
-
             public Mas.Schema.Common.Date.WRITER Harvest
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
                 set => Link(3, value);
             }
-
             public Mas.Schema.Common.Date.WRITER LatestHarvest
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(4);
@@ -258,7 +250,6 @@ namespace Mas.Schema.Model.Monica
         public void applyDefaults() { }
 
         public Mas.Schema.Model.Monica.Event.ExternalType TheType { get; set; }
-
         public Mas.Schema.Common.IdInformation Info { get; set; }
 
         public Mas.Schema.Model.Monica.Event.at At
@@ -292,7 +283,6 @@ namespace Mas.Schema.Model.Monica
         }
 
         public object Params { get; set; }
-
         public bool RunAtStartOfDay { get; set; }
 
         public struct READER
@@ -336,41 +326,34 @@ namespace Mas.Schema.Model.Monica
                 get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                 set => this.WriteData(16U, (ushort)value, (ushort)0);
             }
-
             public Mas.Schema.Model.Monica.Event.ExternalType TheType
             {
                 get =>
                     (Mas.Schema.Model.Monica.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
-
             public Mas.Schema.Common.IdInformation.WRITER Info
             {
                 get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                 set => Link(0, value);
             }
-
             public at.WRITER At
             {
                 get => which == WHICH.At ? Rewrap<at.WRITER>() : default;
             }
-
             public between.WRITER Between
             {
                 get => which == WHICH.Between ? Rewrap<between.WRITER>() : default;
             }
-
             public after.WRITER After
             {
                 get => which == WHICH.After ? Rewrap<after.WRITER>() : default;
             }
-
             public DynamicSerializerState Params
             {
                 get => BuildPointer<DynamicSerializerState>(3);
                 set => Link(3, value);
             }
-
             public bool RunAtStartOfDay
             {
                 get => this.ReadDataBool(48UL, false);
@@ -469,7 +452,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public Mas.Schema.Common.Date Earliest { get; set; }
-
             public Mas.Schema.Common.Date Latest { get; set; }
 
             public struct READER
@@ -504,7 +486,6 @@ namespace Mas.Schema.Model.Monica
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
                     set => Link(1, value);
                 }
-
                 public Mas.Schema.Common.Date.WRITER Latest
                 {
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
@@ -543,7 +524,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public Mas.Schema.Model.Monica.Event.Type Event { get; set; }
-
             public ushort Days { get; set; }
 
             public struct READER
@@ -576,7 +556,6 @@ namespace Mas.Schema.Model.Monica
                     get => BuildPointer<Mas.Schema.Model.Monica.Event.Type.WRITER>(1);
                     set => Link(1, value);
                 }
-
                 public ushort Days
                 {
                     get => this.ReadDataUShort(32UL, (ushort)0);
@@ -758,7 +737,6 @@ namespace Mas.Schema.Model.Monica
                     get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                     set => this.WriteData(16U, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Model.Monica.Event.ExternalType External
                 {
                     get =>
@@ -768,7 +746,6 @@ namespace Mas.Schema.Model.Monica
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Model.Monica.Event.PhenoStage Internal
                 {
                     get =>
@@ -928,7 +905,6 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public Mas.Schema.Climate.Element Key { get; set; }
-
                 public double Value { get; set; }
 
                 public struct READER
@@ -964,7 +940,6 @@ namespace Mas.Schema.Model.Monica
                         get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0);
                         set => this.WriteData(0UL, (ushort)value, (ushort)0);
                     }
-
                     public double Value
                     {
                         get => this.ReadDataDouble(64UL, 0);
@@ -1006,7 +981,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public string Cultivar { get; set; }
-
             public ushort PlantDensity { get; set; } = 0;
             public Mas.Schema.Crop.ICrop Crop { get; set; }
 
@@ -1042,13 +1016,11 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ushort PlantDensity
                 {
                     get => this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, value, (ushort)0);
                 }
-
                 public Mas.Schema.Crop.ICrop Crop
                 {
                     get => ReadCap<Mas.Schema.Crop.ICrop>(1);
@@ -1108,21 +1080,14 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public double MinTempThreshold { get; set; }
-
             public ushort DaysInTempWindow { get; set; }
-
             public double MinPercentASW { get; set; } = 0;
             public double MaxPercentASW { get; set; } = 100;
             public double Max3dayPrecipSum { get; set; }
-
             public double MaxCurrentDayPrecipSum { get; set; }
-
             public double TempSumAboveBaseTemp { get; set; }
-
             public double BaseTemp { get; set; }
-
             public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp { get; set; }
-
             public Mas.Schema.Model.Monica.Params.Sowing Sowing { get; set; }
 
             public struct READER
@@ -1171,49 +1136,41 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public ushort DaysInTempWindow
                 {
                     get => this.ReadDataUShort(64UL, (ushort)0);
                     set => this.WriteData(64UL, value, (ushort)0);
                 }
-
                 public double MinPercentASW
                 {
                     get => this.ReadDataDouble(128UL, 0);
                     set => this.WriteData(128UL, value, 0);
                 }
-
                 public double MaxPercentASW
                 {
                     get => this.ReadDataDouble(192UL, 100);
                     set => this.WriteData(192UL, value, 100);
                 }
-
                 public double Max3dayPrecipSum
                 {
                     get => this.ReadDataDouble(256UL, 0);
                     set => this.WriteData(256UL, value, 0);
                 }
-
                 public double MaxCurrentDayPrecipSum
                 {
                     get => this.ReadDataDouble(320UL, 0);
                     set => this.WriteData(320UL, value, 0);
                 }
-
                 public double TempSumAboveBaseTemp
                 {
                     get => this.ReadDataDouble(384UL, 0);
                     set => this.WriteData(384UL, value, 0);
                 }
-
                 public double BaseTemp
                 {
                     get => this.ReadDataDouble(448UL, 0);
                     set => this.WriteData(448UL, value, 0);
                 }
-
                 public Mas.Schema.Model.Monica.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp
                 {
                     get =>
@@ -1222,7 +1179,6 @@ namespace Mas.Schema.Model.Monica
                         );
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Model.Monica.Params.Sowing.WRITER Sowing
                 {
                     get => BuildPointer<Mas.Schema.Model.Monica.Params.Sowing.WRITER>(1);
@@ -1263,7 +1219,6 @@ namespace Mas.Schema.Model.Monica
 
                 public double SoilDepthForAveraging { get; set; } = 0.3;
                 public ushort DaysInSoilTempWindow { get; set; }
-
                 public double SowingIfAboveAvgSoilTemp { get; set; }
 
                 public struct READER
@@ -1299,13 +1254,11 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadDataDouble(0UL, 0.3);
                         set => this.WriteData(0UL, value, 0.3);
                     }
-
                     public ushort DaysInSoilTempWindow
                     {
                         get => this.ReadDataUShort(64UL, (ushort)0);
                         set => this.WriteData(64UL, value, (ushort)0);
                     }
-
                     public double SowingIfAboveAvgSoilTemp
                     {
                         get => this.ReadDataDouble(128UL, 0);
@@ -1386,7 +1339,6 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataBool(0UL, true);
                     set => this.WriteData(0UL, value, true);
                 }
-
                 public Mas.Schema.Model.Monica.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData
                 {
                     get =>
@@ -1490,13 +1442,11 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadDataBool(0UL, false);
                         set => this.WriteData(0UL, value, false);
                     }
-
                     public double CropImpactOnHumusBalance
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public Mas.Schema.Model.Monica.Params.Harvest.CropUsage CropUsage
                     {
                         get =>
@@ -1504,19 +1454,16 @@ namespace Mas.Schema.Model.Monica
                                 this.ReadDataUShort(16UL, (ushort)1);
                         set => this.WriteData(16UL, (ushort)value, (ushort)1);
                     }
-
                     public double ResidueHeq
                     {
                         get => this.ReadDataDouble(128UL, 0);
                         set => this.WriteData(128UL, value, 0);
                     }
-
                     public double OrganicFertilizerHeq
                     {
                         get => this.ReadDataDouble(192UL, 0);
                         set => this.WriteData(192UL, value, 0);
                     }
-
                     public double MaxResidueRecoverFraction
                     {
                         get => this.ReadDataDouble(256UL, 0);
@@ -1566,12 +1513,9 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public double MinPercentASW { get; set; }
-
             public double MaxPercentASW { get; set; } = 100;
             public double Max3dayPrecipSum { get; set; }
-
             public double MaxCurrentDayPrecipSum { get; set; }
-
             public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime { get; set; } =
                 Mas.Schema.Model.Monica.Event.PhenoStage.maturity;
             public Mas.Schema.Model.Monica.Params.Harvest Harvest { get; set; }
@@ -1614,25 +1558,21 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public double MaxPercentASW
                 {
                     get => this.ReadDataDouble(64UL, 100);
                     set => this.WriteData(64UL, value, 100);
                 }
-
                 public double Max3dayPrecipSum
                 {
                     get => this.ReadDataDouble(128UL, 0);
                     set => this.WriteData(128UL, value, 0);
                 }
-
                 public double MaxCurrentDayPrecipSum
                 {
                     get => this.ReadDataDouble(192UL, 0);
                     set => this.WriteData(192UL, value, 0);
                 }
-
                 public Mas.Schema.Model.Monica.Event.PhenoStage HarvestTime
                 {
                     get =>
@@ -1640,7 +1580,6 @@ namespace Mas.Schema.Model.Monica
                             this.ReadDataUShort(256UL, (ushort)3);
                     set => this.WriteData(256UL, (ushort)value, (ushort)3);
                 }
-
                 public Mas.Schema.Model.Monica.Params.Harvest.WRITER Harvest
                 {
                     get => BuildPointer<Mas.Schema.Model.Monica.Params.Harvest.WRITER>(0);
@@ -1681,7 +1620,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public IReadOnlyList<Mas.Schema.Model.Monica.Params.Cutting.Spec> CuttingSpec { get; set; }
-
             public double CutMaxAssimilationRatePercentage { get; set; } = 100;
 
             public struct READER
@@ -1720,7 +1658,6 @@ namespace Mas.Schema.Model.Monica
                         >(0);
                     set => Link(0, value);
                 }
-
                 public double CutMaxAssimilationRatePercentage
                 {
                     get => this.ReadDataDouble(0UL, 100);
@@ -1785,9 +1722,7 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public Mas.Schema.Model.Monica.PlantOrgan Organ { get; set; }
-
                 public double Value { get; set; }
-
                 public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit { get; set; } =
                     Mas.Schema.Model.Monica.Params.Cutting.Unit.percentage;
                 public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft { get; set; } =
@@ -1835,13 +1770,11 @@ namespace Mas.Schema.Model.Monica
                             (Mas.Schema.Model.Monica.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
                         set => this.WriteData(0UL, (ushort)value, (ushort)0);
                     }
-
                     public double Value
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public Mas.Schema.Model.Monica.Params.Cutting.Unit Unit
                     {
                         get =>
@@ -1849,7 +1782,6 @@ namespace Mas.Schema.Model.Monica
                                 this.ReadDataUShort(16UL, (ushort)0);
                         set => this.WriteData(16UL, (ushort)value, (ushort)0);
                     }
-
                     public Mas.Schema.Model.Monica.Params.Cutting.CL CutOrLeft
                     {
                         get =>
@@ -1857,7 +1789,6 @@ namespace Mas.Schema.Model.Monica
                                 this.ReadDataUShort(32UL, (ushort)0);
                         set => this.WriteData(32UL, (ushort)value, (ushort)0);
                     }
-
                     public double ExportPercentage
                     {
                         get => this.ReadDataDouble(128UL, 100);
@@ -1900,7 +1831,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
-
             public double Amount { get; set; }
 
             public struct READER
@@ -1942,7 +1872,6 @@ namespace Mas.Schema.Model.Monica
                         );
                     set => Link(0, value);
                 }
-
                 public double Amount
                 {
                     get => this.ReadDataDouble(0UL, 0);
@@ -1986,13 +1915,9 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public string Id { get; set; }
-
                 public string Name { get; set; }
-
                 public double Carbamid { get; set; }
-
                 public double Nh4 { get; set; }
-
                 public double No3 { get; set; }
 
                 public struct READER
@@ -2030,25 +1955,21 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
                     }
-
                     public string Name
                     {
                         get => this.ReadText(1, null);
                         set => this.WriteText(1, value, null);
                     }
-
                     public double Carbamid
                     {
                         get => this.ReadDataDouble(0UL, 0);
                         set => this.WriteData(0UL, value, 0);
                     }
-
                     public double Nh4
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public double No3
                     {
                         get => this.ReadDataDouble(128UL, 0);
@@ -2095,11 +2016,8 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public double NDemand { get; set; }
-
             public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters Partition { get; set; }
-
             public double Depth { get; set; }
-
             public byte Stage { get; set; } = 1;
 
             public struct READER
@@ -2140,7 +2058,6 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public Mas.Schema.Model.Monica.Params.MineralFertilization.Parameters.WRITER Partition
                 {
                     get =>
@@ -2149,13 +2066,11 @@ namespace Mas.Schema.Model.Monica
                         );
                     set => Link(0, value);
                 }
-
                 public double Depth
                 {
                     get => this.ReadDataDouble(64UL, 0);
                     set => this.WriteData(64UL, value, 0);
                 }
-
                 public byte Stage
                 {
                     get => this.ReadDataByte(128UL, (byte)1);
@@ -2199,9 +2114,7 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public Mas.Schema.Model.Monica.Params.OrganicFertilization.Parameters Params { get; set; }
-
             public double Amount { get; set; }
-
             public bool Incorporation { get; set; } = false;
 
             public struct READER
@@ -2244,13 +2157,11 @@ namespace Mas.Schema.Model.Monica
                         );
                     set => Link(0, value);
                 }
-
                 public double Amount
                 {
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public bool Incorporation
                 {
                     get => this.ReadDataBool(64UL, false);
@@ -2310,29 +2221,17 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public double AomDryMatterContent { get; set; }
-
                 public double AomNH4Content { get; set; }
-
                 public double AomNO3Content { get; set; }
-
                 public double AomCarbamidContent { get; set; }
-
                 public double AomSlowDecCoeffStandard { get; set; }
-
                 public double AomFastDecCoeffStandard { get; set; }
-
                 public double PartAOMToAOMSlow { get; set; }
-
                 public double PartAOMToAOMFast { get; set; }
-
                 public double CnRatioAOMSlow { get; set; }
-
                 public double CnRatioAOMFast { get; set; }
-
                 public double PartAOMSlowToSMBSlow { get; set; }
-
                 public double PartAOMSlowToSMBFast { get; set; }
-
                 public double NConcentration { get; set; }
 
                 public struct READER
@@ -2378,73 +2277,61 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadDataDouble(0UL, 0);
                         set => this.WriteData(0UL, value, 0);
                     }
-
                     public double AomNH4Content
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public double AomNO3Content
                     {
                         get => this.ReadDataDouble(128UL, 0);
                         set => this.WriteData(128UL, value, 0);
                     }
-
                     public double AomCarbamidContent
                     {
                         get => this.ReadDataDouble(192UL, 0);
                         set => this.WriteData(192UL, value, 0);
                     }
-
                     public double AomSlowDecCoeffStandard
                     {
                         get => this.ReadDataDouble(256UL, 0);
                         set => this.WriteData(256UL, value, 0);
                     }
-
                     public double AomFastDecCoeffStandard
                     {
                         get => this.ReadDataDouble(320UL, 0);
                         set => this.WriteData(320UL, value, 0);
                     }
-
                     public double PartAOMToAOMSlow
                     {
                         get => this.ReadDataDouble(384UL, 0);
                         set => this.WriteData(384UL, value, 0);
                     }
-
                     public double PartAOMToAOMFast
                     {
                         get => this.ReadDataDouble(448UL, 0);
                         set => this.WriteData(448UL, value, 0);
                     }
-
                     public double CnRatioAOMSlow
                     {
                         get => this.ReadDataDouble(512UL, 0);
                         set => this.WriteData(512UL, value, 0);
                     }
-
                     public double CnRatioAOMFast
                     {
                         get => this.ReadDataDouble(576UL, 0);
                         set => this.WriteData(576UL, value, 0);
                     }
-
                     public double PartAOMSlowToSMBSlow
                     {
                         get => this.ReadDataDouble(640UL, 0);
                         set => this.WriteData(640UL, value, 0);
                     }
-
                     public double PartAOMSlowToSMBFast
                     {
                         get => this.ReadDataDouble(704UL, 0);
                         set => this.WriteData(704UL, value, 0);
                     }
-
                     public double NConcentration
                     {
                         get => this.ReadDataDouble(768UL, 0);
@@ -2488,9 +2375,7 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public Mas.Schema.Model.Monica.Params.OrganicFertilization.OrganicMatterParameters Params { get; set; }
-
                 public string Id { get; set; }
-
                 public string Name { get; set; }
 
                 public struct READER
@@ -2541,13 +2426,11 @@ namespace Mas.Schema.Model.Monica
                             );
                         set => Link(0, value);
                     }
-
                     public string Id
                     {
                         get => this.ReadText(1, null);
                         set => this.WriteText(1, value, null);
                     }
-
                     public string Name
                     {
                         get => this.ReadText(2, null);
@@ -2652,7 +2535,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public double Amount { get; set; }
-
             public Mas.Schema.Model.Monica.Params.Irrigation.Parameters Params { get; set; }
 
             public struct READER
@@ -2691,7 +2573,6 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public Mas.Schema.Model.Monica.Params.Irrigation.Parameters.WRITER Params
                 {
                     get =>
@@ -2732,7 +2613,6 @@ namespace Mas.Schema.Model.Monica
                 public void applyDefaults() { }
 
                 public double NitrateConcentration { get; set; }
-
                 public double SulfateConcentration { get; set; }
 
                 public struct READER
@@ -2767,7 +2647,6 @@ namespace Mas.Schema.Model.Monica
                         get => this.ReadDataDouble(0UL, 0);
                         set => this.WriteData(0UL, value, 0);
                     }
-
                     public double SulfateConcentration
                     {
                         get => this.ReadDataDouble(64UL, 0);
@@ -2809,7 +2688,6 @@ namespace Mas.Schema.Model.Monica
             public void applyDefaults() { }
 
             public ulong NoOfPreviousDaysSerializedClimateData { get; set; }
-
             public bool AsJson { get; set; } = false;
 
             public struct READER
@@ -2843,7 +2721,6 @@ namespace Mas.Schema.Model.Monica
                     get => this.ReadDataULong(0UL, 0UL);
                     set => this.WriteData(0UL, value, 0UL);
                 }
-
                 public bool AsJson
                 {
                     get => this.ReadDataBool(64UL, false);
@@ -2856,8 +2733,8 @@ namespace Mas.Schema.Model.Monica
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xbfda1920aff38c07UL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Model.Monica.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Model.Monica.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Common.IIdentifiable
     {

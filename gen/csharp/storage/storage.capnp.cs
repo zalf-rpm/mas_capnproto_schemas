@@ -11,8 +11,8 @@ namespace Mas.Schema.Storage
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xe69f958aa2386f06UL),
-        Proxy(typeof(Store_Proxy)),
-        Skeleton(typeof(Store_Skeleton))
+        Proxy(typeof(Mas.Schema.Storage.Store_Proxy)),
+        Skeleton(typeof(Mas.Schema.Storage.Store_Skeleton))
     ]
     public interface IStore : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -25,7 +25,7 @@ namespace Mas.Schema.Storage
             string id,
             CancellationToken cancellationToken_ = default
         );
-        Task<IReadOnlyList<Mas.Schema.Storage.Store.IContainer>> ListContainers(
+        Task<IReadOnlyList<Mas.Schema.Storage.Store.InfoAndContainer>> ListContainers(
             CancellationToken cancellationToken_ = default
         );
         Task<bool> RemoveContainer(string id, CancellationToken cancellationToken_ = default);
@@ -108,7 +108,7 @@ namespace Mas.Schema.Storage
             );
         }
 
-        public Task<IReadOnlyList<Mas.Schema.Storage.Store.IContainer>> ListContainers(
+        public Task<IReadOnlyList<Mas.Schema.Storage.Store.InfoAndContainer>> ListContainers(
             CancellationToken cancellationToken_ = default
         )
         {
@@ -401,8 +401,8 @@ namespace Mas.Schema.Storage
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0x878131f45567ae62UL),
-            Proxy(typeof(Container_Proxy)),
-            Skeleton(typeof(Container_Skeleton))
+            Proxy(typeof(Mas.Schema.Storage.Store.Container_Proxy)),
+            Skeleton(typeof(Mas.Schema.Storage.Store.Container_Skeleton))
         ]
         public interface IContainer
             : Mas.Schema.Common.IIdentifiable,
@@ -415,7 +415,7 @@ namespace Mas.Schema.Storage
                     Mas.Schema.Storage.Store.Container.Entry.Value
                 >>
             > DownloadEntries(CancellationToken cancellationToken_ = default);
-            Task<IReadOnlyList<Mas.Schema.Storage.Store.Container.IEntry>> ListEntries(
+            Task<IReadOnlyList<Mas.Schema.Storage.Store.Container.KeyAndEntry>> ListEntries(
                 CancellationToken cancellationToken_ = default
             );
             Task<Mas.Schema.Storage.Store.Container.IEntry> GetEntry(
@@ -491,7 +491,7 @@ namespace Mas.Schema.Storage
                 }
             }
 
-            public Task<IReadOnlyList<Mas.Schema.Storage.Store.Container.IEntry>> ListEntries(
+            public Task<IReadOnlyList<Mas.Schema.Storage.Store.Container.KeyAndEntry>> ListEntries(
                 CancellationToken cancellationToken_ = default
             )
             {
@@ -900,8 +900,8 @@ namespace Mas.Schema.Storage
             [
                 System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
                 TypeId(0xfa1a243e7bf478c0UL),
-                Proxy(typeof(Entry_Proxy)),
-                Skeleton(typeof(Entry_Skeleton))
+                Proxy(typeof(Mas.Schema.Storage.Store.Container.Entry_Proxy)),
+                Skeleton(typeof(Mas.Schema.Storage.Store.Container.Entry_Skeleton))
             ]
             public interface IEntry : IDisposable
             {
@@ -1816,14 +1816,12 @@ namespace Mas.Schema.Storage
                             get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                             set => this.WriteData(16U, (ushort)value, (ushort)0);
                         }
-
                         public bool BoolValue
                         {
                             get =>
                                 which == WHICH.BoolValue ? this.ReadDataBool(0UL, false) : default;
                             set => this.WriteData(0UL, value, false);
                         }
-
                         public ListOfBitsSerializer BoolListValue
                         {
                             get =>
@@ -1832,7 +1830,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public sbyte Int8Value
                         {
                             get =>
@@ -1841,7 +1838,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(0UL, value, (sbyte)0);
                         }
-
                         public ListOfPrimitivesSerializer<sbyte> Int8ListValue
                         {
                             get =>
@@ -1850,7 +1846,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public short Int16Value
                         {
                             get =>
@@ -1859,7 +1854,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(0UL, value, (short)0);
                         }
-
                         public ListOfPrimitivesSerializer<short> Int16ListValue
                         {
                             get =>
@@ -1868,13 +1862,11 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public int Int32Value
                         {
                             get => which == WHICH.Int32Value ? this.ReadDataInt(32UL, 0) : default;
                             set => this.WriteData(32UL, value, 0);
                         }
-
                         public ListOfPrimitivesSerializer<int> Int32ListValue
                         {
                             get =>
@@ -1883,14 +1875,12 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public long Int64Value
                         {
                             get =>
                                 which == WHICH.Int64Value ? this.ReadDataLong(64UL, 0L) : default;
                             set => this.WriteData(64UL, value, 0L);
                         }
-
                         public ListOfPrimitivesSerializer<long> Int64ListValue
                         {
                             get =>
@@ -1899,7 +1889,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public byte Uint8Value
                         {
                             get =>
@@ -1908,7 +1897,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(0UL, value, (byte)0);
                         }
-
                         public ListOfPrimitivesSerializer<byte> Uint8ListValue
                         {
                             get =>
@@ -1917,7 +1905,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public ushort Uint16Value
                         {
                             get =>
@@ -1926,7 +1913,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(0UL, value, (ushort)0);
                         }
-
                         public ListOfPrimitivesSerializer<ushort> Uint16ListValue
                         {
                             get =>
@@ -1935,14 +1921,12 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public uint Uint32Value
                         {
                             get =>
                                 which == WHICH.Uint32Value ? this.ReadDataUInt(32UL, 0U) : default;
                             set => this.WriteData(32UL, value, 0U);
                         }
-
                         public ListOfPrimitivesSerializer<uint> Uint32ListValue
                         {
                             get =>
@@ -1951,7 +1935,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public ulong Uint64Value
                         {
                             get =>
@@ -1960,7 +1943,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(64UL, value, 0UL);
                         }
-
                         public ListOfPrimitivesSerializer<ulong> Uint64ListValue
                         {
                             get =>
@@ -1969,7 +1951,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public float Float32Value
                         {
                             get =>
@@ -1978,7 +1959,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(32UL, value, 0F);
                         }
-
                         public ListOfPrimitivesSerializer<float> Float32ListValue
                         {
                             get =>
@@ -1987,7 +1967,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public double Float64Value
                         {
                             get =>
@@ -1996,7 +1975,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => this.WriteData(64UL, value, 0);
                         }
-
                         public ListOfPrimitivesSerializer<double> Float64ListValue
                         {
                             get =>
@@ -2005,13 +1983,11 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public string TextValue
                         {
                             get => which == WHICH.TextValue ? this.ReadText(0, null) : default;
                             set => this.WriteText(0, value, null);
                         }
-
                         public ListOfTextSerializer TextListValue
                         {
                             get =>
@@ -2020,7 +1996,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public ListOfPrimitivesSerializer<byte> DataValue
                         {
                             get =>
@@ -2029,7 +2004,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public ListOfPointersSerializer<
                             ListOfPrimitivesSerializer<byte>
                         > DataListValue
@@ -2042,7 +2016,6 @@ namespace Mas.Schema.Storage
                                     : default;
                             set => Link(0, value);
                         }
-
                         public DynamicSerializerState AnyValue
                         {
                             get =>
@@ -2251,7 +2224,6 @@ namespace Mas.Schema.Storage
                     public void applyDefaults() { }
 
                     public Mas.Schema.Storage.Store.Container.Entry.Value Value { get; set; }
-
                     public bool IsUnset { get; set; }
 
                     public struct READER
@@ -2295,7 +2267,6 @@ namespace Mas.Schema.Storage
                                 );
                             set => Link(0, value);
                         }
-
                         public bool IsUnset
                         {
                             get => this.ReadDataBool(0UL, false);
@@ -2440,6 +2411,79 @@ namespace Mas.Schema.Storage
                             get => this.ReadDataBool(0UL, false);
                             set => this.WriteData(0UL, value, false);
                         }
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xefe759a6f2ffc230UL)
+            ]
+            public class KeyAndEntry : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xefe759a6f2ffc230UL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Key = reader.Key;
+                    Entry = reader.Entry;
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.Key = Key;
+                    writer.Entry = Entry;
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public string Key { get; set; }
+                public Mas.Schema.Storage.Store.Container.IEntry Entry { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public string Key => ctx.ReadText(0, null);
+                    public Mas.Schema.Storage.Store.Container.IEntry Entry =>
+                        ctx.ReadCap<Mas.Schema.Storage.Store.Container.IEntry>(1);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 2);
+                    }
+
+                    public string Key
+                    {
+                        get => this.ReadText(0, null);
+                        set => this.WriteText(0, value, null);
+                    }
+                    public Mas.Schema.Storage.Store.Container.IEntry Entry
+                    {
+                        get => ReadCap<Mas.Schema.Storage.Store.Container.IEntry>(1);
+                        set => LinkObject(1, value);
                     }
                 }
             }
@@ -2757,13 +2801,15 @@ namespace Mas.Schema.Storage
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {
                     var reader = READER.create(arg_);
-                    Entries = reader.Entries;
+                    Entries = reader.Entries?.ToReadOnlyList(_ =>
+                        CapnpSerializable.Create<Mas.Schema.Storage.Store.Container.KeyAndEntry>(_)
+                    );
                     applyDefaults();
                 }
 
                 public void serialize(WRITER writer)
                 {
-                    writer.Entries.Init(Entries);
+                    writer.Entries.Init(Entries, (_s1, _v1) => _v1?.serialize(_s1));
                 }
 
                 void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2773,7 +2819,7 @@ namespace Mas.Schema.Storage
 
                 public void applyDefaults() { }
 
-                public IReadOnlyList<Mas.Schema.Storage.Store.Container.IEntry> Entries { get; set; }
+                public IReadOnlyList<Mas.Schema.Storage.Store.Container.KeyAndEntry> Entries { get; set; }
 
                 public struct READER
                 {
@@ -2791,8 +2837,9 @@ namespace Mas.Schema.Storage
                     public static implicit operator READER(DeserializerState ctx) =>
                         new READER(ctx);
 
-                    public IReadOnlyList<Mas.Schema.Storage.Store.Container.IEntry> Entries =>
-                        ctx.ReadCapList<Mas.Schema.Storage.Store.Container.IEntry>(0);
+                    public IReadOnlyList<Mas.Schema.Storage.Store.Container.KeyAndEntry.READER> Entries =>
+                        ctx.ReadList(0)
+                            .Cast(Mas.Schema.Storage.Store.Container.KeyAndEntry.READER.create);
                     public bool HasEntries => ctx.IsStructFieldNonNull(0);
                 }
 
@@ -2803,11 +2850,11 @@ namespace Mas.Schema.Storage
                         this.SetStruct(0, 1);
                     }
 
-                    public ListOfCapsSerializer<Mas.Schema.Storage.Store.Container.IEntry> Entries
+                    public ListOfStructsSerializer<Mas.Schema.Storage.Store.Container.KeyAndEntry.WRITER> Entries
                     {
                         get =>
                             BuildPointer<
-                                ListOfCapsSerializer<Mas.Schema.Storage.Store.Container.IEntry>
+                                ListOfStructsSerializer<Mas.Schema.Storage.Store.Container.KeyAndEntry.WRITER>
                             >(0);
                         set => Link(0, value);
                     }
@@ -3214,9 +3261,7 @@ namespace Mas.Schema.Storage
                 public void applyDefaults() { }
 
                 public string Key { get; set; }
-
                 public Mas.Schema.Storage.Store.Container.Entry.Value Value { get; set; }
-
                 public bool ReplaceExisting { get; set; } = false;
 
                 public struct READER
@@ -3257,14 +3302,12 @@ namespace Mas.Schema.Storage
                         get => this.ReadText(0, null);
                         set => this.WriteText(0, value, null);
                     }
-
                     public Mas.Schema.Storage.Store.Container.Entry.Value.WRITER Value
                     {
                         get =>
                             BuildPointer<Mas.Schema.Storage.Store.Container.Entry.Value.WRITER>(1);
                         set => Link(1, value);
                     }
-
                     public bool ReplaceExisting
                     {
                         get => this.ReadDataBool(0UL, false);
@@ -3303,7 +3346,6 @@ namespace Mas.Schema.Storage
                 public void applyDefaults() { }
 
                 public Mas.Schema.Storage.Store.Container.IEntry Entry { get; set; }
-
                 public bool Success { get; set; }
 
                 public struct READER
@@ -3339,12 +3381,92 @@ namespace Mas.Schema.Storage
                         get => ReadCap<Mas.Schema.Storage.Store.Container.IEntry>(0);
                         set => LinkObject(0, value);
                     }
-
                     public bool Success
                     {
                         get => this.ReadDataBool(0UL, false);
                         set => this.WriteData(0UL, value, false);
                     }
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xeaec227ef03ec200UL)
+        ]
+        public class InfoAndContainer : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xeaec227ef03ec200UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Id = reader.Id;
+                Name = reader.Name;
+                Container = reader.Container;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Id = Id;
+                writer.Name = Name;
+                writer.Container = Container;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public Mas.Schema.Storage.Store.IContainer Container { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public string Id => ctx.ReadText(0, null);
+                public string Name => ctx.ReadText(1, null);
+                public Mas.Schema.Storage.Store.IContainer Container =>
+                    ctx.ReadCap<Mas.Schema.Storage.Store.IContainer>(2);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 3);
+                }
+
+                public string Id
+                {
+                    get => this.ReadText(0, null);
+                    set => this.WriteText(0, value, null);
+                }
+                public string Name
+                {
+                    get => this.ReadText(1, null);
+                    set => this.WriteText(1, value, null);
+                }
+                public Mas.Schema.Storage.Store.IContainer Container
+                {
+                    get => ReadCap<Mas.Schema.Storage.Store.IContainer>(2);
+                    set => LinkObject(2, value);
                 }
             }
         }
@@ -3386,12 +3508,10 @@ namespace Mas.Schema.Storage
             public void applyDefaults() { }
 
             public Mas.Schema.Common.IdInformation Info { get; set; }
-
             public IReadOnlyList<Mas.Schema.Common.Pair<
                 string,
                 Mas.Schema.Storage.Store.Container.Entry.Value
             >> Entries { get; set; }
-
             public IReadOnlyList<bool> IsAnyValue { get; set; }
 
             public struct READER
@@ -3441,7 +3561,6 @@ namespace Mas.Schema.Storage
                     get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public ListOfStructsSerializer<Mas.Schema.Common.Pair<
                     string,
                     Mas.Schema.Storage.Store.Container.Entry.Value
@@ -3456,7 +3575,6 @@ namespace Mas.Schema.Storage
                         >(1);
                     set => Link(1, value);
                 }
-
                 public ListOfBitsSerializer IsAnyValue
                 {
                     get => BuildPointer<ListOfBitsSerializer>(2);
@@ -3495,7 +3613,6 @@ namespace Mas.Schema.Storage
             public void applyDefaults() { }
 
             public string Name { get; set; }
-
             public string Description { get; set; }
 
             public struct READER
@@ -3529,7 +3646,6 @@ namespace Mas.Schema.Storage
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string Description
                 {
                     get => this.ReadText(1, null);
@@ -3785,13 +3901,15 @@ namespace Mas.Schema.Storage
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                Containers = reader.Containers;
+                Containers = reader.Containers?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Storage.Store.InfoAndContainer>(_)
+                );
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
-                writer.Containers.Init(Containers);
+                writer.Containers.Init(Containers, (_s1, _v1) => _v1?.serialize(_s1));
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -3801,7 +3919,7 @@ namespace Mas.Schema.Storage
 
             public void applyDefaults() { }
 
-            public IReadOnlyList<Mas.Schema.Storage.Store.IContainer> Containers { get; set; }
+            public IReadOnlyList<Mas.Schema.Storage.Store.InfoAndContainer> Containers { get; set; }
 
             public struct READER
             {
@@ -3818,8 +3936,8 @@ namespace Mas.Schema.Storage
 
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
 
-                public IReadOnlyList<Mas.Schema.Storage.Store.IContainer> Containers =>
-                    ctx.ReadCapList<Mas.Schema.Storage.Store.IContainer>(0);
+                public IReadOnlyList<Mas.Schema.Storage.Store.InfoAndContainer.READER> Containers =>
+                    ctx.ReadList(0).Cast(Mas.Schema.Storage.Store.InfoAndContainer.READER.create);
                 public bool HasContainers => ctx.IsStructFieldNonNull(0);
             }
 
@@ -3830,10 +3948,12 @@ namespace Mas.Schema.Storage
                     this.SetStruct(0, 1);
                 }
 
-                public ListOfCapsSerializer<Mas.Schema.Storage.Store.IContainer> Containers
+                public ListOfStructsSerializer<Mas.Schema.Storage.Store.InfoAndContainer.WRITER> Containers
                 {
                     get =>
-                        BuildPointer<ListOfCapsSerializer<Mas.Schema.Storage.Store.IContainer>>(0);
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Storage.Store.InfoAndContainer.WRITER>
+                        >(0);
                     set => Link(0, value);
                 }
             }

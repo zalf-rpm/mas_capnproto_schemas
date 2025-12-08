@@ -80,9 +80,7 @@ namespace Mas.Schema.Soil
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Soil.Layer.Property> Properties { get; set; }
-
         public float Size { get; set; }
-
         public string Description { get; set; }
 
         public struct READER
@@ -120,13 +118,11 @@ namespace Mas.Schema.Soil
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.Property.WRITER>>(0);
                 set => Link(0, value);
             }
-
             public float Size
             {
                 get => this.ReadDataFloat(0UL, 0F);
                 set => this.WriteData(0UL, value, 0F);
             }
-
             public string Description
             {
                 get => this.ReadText(1, null);
@@ -298,25 +294,21 @@ namespace Mas.Schema.Soil
                     get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                     set => this.WriteData(16U, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Soil.PropertyName Name
                 {
                     get => (Mas.Schema.Soil.PropertyName)this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public float F32Value
                 {
                     get => which == WHICH.F32Value ? this.ReadDataFloat(32UL, 0F) : default;
                     set => this.WriteData(32UL, value, 0F);
                 }
-
                 public bool BValue
                 {
                     get => which == WHICH.BValue ? this.ReadDataBool(32UL, false) : default;
                     set => this.WriteData(32UL, value, false);
                 }
-
                 public string Type
                 {
                     get => which == WHICH.Type ? this.ReadText(0, null) : default;
@@ -358,9 +350,7 @@ namespace Mas.Schema.Soil
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
-
         public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
-
         public bool OnlyRawData { get; set; } = true;
 
         public struct READER
@@ -399,13 +389,11 @@ namespace Mas.Schema.Soil
                 get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
             {
                 get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(1);
                 set => Link(1, value);
             }
-
             public bool OnlyRawData
             {
                 get => this.ReadDataBool(0UL, true);
@@ -445,9 +433,7 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public bool Failed { get; set; }
-
             public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
-
             public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
 
             public struct READER
@@ -486,14 +472,12 @@ namespace Mas.Schema.Soil
                     get => this.ReadDataBool(0UL, false);
                     set => this.WriteData(0UL, value, false);
                 }
-
                 public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Mandatory
                 {
                     get =>
                         BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
                     set => Link(0, value);
                 }
-
                 public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
                 {
                     get =>
@@ -536,7 +520,6 @@ namespace Mas.Schema.Soil
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Soil.Layer> Layers { get; set; }
-
         public float PercentageOfArea { get; set; } = 100F;
 
         public struct READER
@@ -572,7 +555,6 @@ namespace Mas.Schema.Soil
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Soil.Layer.WRITER>>(0);
                 set => Link(0, value);
             }
-
             public float PercentageOfArea
             {
                 get => this.ReadDataFloat(0UL, 100F);
@@ -584,8 +566,8 @@ namespace Mas.Schema.Soil
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xff67c2a593419c29UL),
-        Proxy(typeof(Profile_Proxy)),
-        Skeleton(typeof(Profile_Skeleton))
+        Proxy(typeof(Mas.Schema.Soil.Profile_Proxy)),
+        Skeleton(typeof(Mas.Schema.Soil.Profile_Skeleton))
     ]
     public interface IProfile : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -849,8 +831,8 @@ namespace Mas.Schema.Soil
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xa09aa71427dc64e1UL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Soil.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Soil.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -1180,8 +1162,8 @@ namespace Mas.Schema.Soil
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xf4f8ab568ffbc939UL),
-            Proxy(typeof(Stream_Proxy)),
-            Skeleton(typeof(Stream_Skeleton))
+            Proxy(typeof(Mas.Schema.Soil.Service.Stream_Proxy)),
+            Skeleton(typeof(Mas.Schema.Soil.Service.Stream_Skeleton))
         ]
         public interface IStream : IDisposable
         {
@@ -1497,7 +1479,6 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public IReadOnlyList<Mas.Schema.Soil.PropertyName> Mandatory { get; set; }
-
             public IReadOnlyList<Mas.Schema.Soil.PropertyName> Optional { get; set; }
 
             public struct READER
@@ -1536,7 +1517,6 @@ namespace Mas.Schema.Soil
                         BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName>>(0);
                     set => Link(0, value);
                 }
-
                 public ListOfPrimitivesSerializer<Mas.Schema.Soil.PropertyName> Optional
                 {
                     get =>
@@ -1576,7 +1556,6 @@ namespace Mas.Schema.Soil
             public void applyDefaults() { }
 
             public Mas.Schema.Geo.LatLonCoord Coord { get; set; }
-
             public Mas.Schema.Soil.Query Query { get; set; }
 
             public struct READER
@@ -1614,7 +1593,6 @@ namespace Mas.Schema.Soil
                     get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Soil.Query.WRITER Query
                 {
                     get => BuildPointer<Mas.Schema.Soil.Query.WRITER>(1);
