@@ -65,19 +65,19 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
     closeSemantics  @1 :CloseSemantics;
     # semantics of closing the channel
 
-    channelSR       @2 :Text;
+    channelSR       @2 :SturdyRef;
     # sturdy reference to the channel
 
     channel         @5 :Channel(V);
     # capability to started channel
 
-    readerSRs       @3 :List(Text);
+    readerSRs       @3 :List(SturdyRef);
     # sturdy references to the readers
 
     readers         @6 :List(Reader);
     # list of caps to the created Readers
 
-    writerSRs       @4 :List(Text);
+    writerSRs       @4 :List(SturdyRef);
     # sturdy references to the writers
 
     writers         @7 :List(Writer);
