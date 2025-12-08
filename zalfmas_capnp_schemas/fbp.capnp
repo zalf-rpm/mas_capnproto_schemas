@@ -194,14 +194,20 @@ struct Component {
     defaultConfig @4 :Text; # default configuration for component
 
     factory :union {
-      none        @5 :Void;                       # no factory available
-      runnable    @6 :Common.Factory(Runnable);   # factory for simple Runnable processes
-      process     @7 :Common.Factory(Process);    # factory for Process based components
+      none        @5 :Void;               # no factory available
+      runnable    @6 :Runnable.Factory;   # factory for simple Runnable processes
+      process     @7 :Process.Factory;    # factory for Process based components
     }
 }
 
 interface Runnable extends(Common.Identifiable) {
   # interface to run remote FBP component
+
+  interface Factory extends(Common.Identifiable) {
+    # minimal interface to produce a Runnable instance
+
+    create @0 () -> (out :Runnable);
+  }
 
   start @0 (portInfosReaderSr :Text, name :Text) -> (success :Bool);
   # start component with a sturdy ref to a reader of PortInfos
@@ -214,6 +220,12 @@ interface Runnable extends(Common.Identifiable) {
 
 interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # bootstrap interface of a running process = instantiated component
+
+  interface Factory extends(Common.Identifiable) {
+    # minimal interface to produce a Process instance
+
+    create @0 () -> (out :Process);
+  }
 
   inPorts @0 () -> (ports :List(Component.Port));
   # input ports available on the process
