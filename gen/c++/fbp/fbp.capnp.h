@@ -93,11 +93,17 @@ enum class ContentType_f30610cf0ed94a2f: uint16_t {
 CAPNP_DECLARE_ENUM(ContentType, f30610cf0ed94a2f);
 CAPNP_DECLARE_SCHEMA(e1a4104633d629d4);
 CAPNP_DECLARE_SCHEMA(bde616d300754ff0);
+CAPNP_DECLARE_SCHEMA(f5694db406aa9975);
+CAPNP_DECLARE_SCHEMA(ef35cb55860e1c65);
+CAPNP_DECLARE_SCHEMA(8e483f7d2668e153);
 CAPNP_DECLARE_SCHEMA(9e5b8ec57b93780c);
 CAPNP_DECLARE_SCHEMA(f34a8f368330a36d);
 CAPNP_DECLARE_SCHEMA(a593e62c492f42f1);
 CAPNP_DECLARE_SCHEMA(dfe8d20013a383bf);
 CAPNP_DECLARE_SCHEMA(bbad56943a039783);
+CAPNP_DECLARE_SCHEMA(b01652ab8f1ac0d3);
+CAPNP_DECLARE_SCHEMA(d97b10297d574590);
+CAPNP_DECLARE_SCHEMA(8c00219c9e2715f2);
 CAPNP_DECLARE_SCHEMA(a8d0bdfb4ddda7b3);
 CAPNP_DECLARE_SCHEMA(f7ecea5ecff7797e);
 CAPNP_DECLARE_SCHEMA(cd9154730a050d21);
@@ -839,6 +845,7 @@ struct Runnable {
   class Server;
 #endif  // !CAPNP_LITE
 
+  struct Factory;
   struct StartParams;
   struct StartResults;
   struct StopParams;
@@ -850,6 +857,55 @@ struct Runnable {
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
   };
   #endif  // !CAPNP_LITE
+};
+
+struct Runnable::Factory {
+  Factory() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct CreateParams;
+  struct CreateResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(f5694db406aa9975)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Runnable::Factory::CreateParams {
+  CreateParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(ef35cb55860e1c65, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Runnable::Factory::CreateResults {
+  CreateResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8e483f7d2668e153, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
 };
 
 struct Runnable::StartParams {
@@ -920,6 +976,7 @@ struct Process {
   class Server;
 #endif  // !CAPNP_LITE
 
+  struct Factory;
   struct ConfigEntry;
   struct InPortsParams;
   struct InPortsResults;
@@ -943,6 +1000,55 @@ struct Process {
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
   };
   #endif  // !CAPNP_LITE
+};
+
+struct Process::Factory {
+  Factory() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct CreateParams;
+  struct CreateResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(b01652ab8f1ac0d3)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Process::Factory::CreateParams {
+  CreateParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d97b10297d574590, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::Factory::CreateResults {
+  CreateResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8c00219c9e2715f2, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
 };
 
 struct Process::ConfigEntry {
@@ -4455,13 +4561,13 @@ public:
   inline bool isRunnable() const;
   inline bool hasRunnable() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client getRunnable() const;
+  inline  ::mas::schema::fbp::Runnable::Factory::Client getRunnable() const;
 #endif  // !CAPNP_LITE
 
   inline bool isProcess() const;
   inline bool hasProcess() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client getProcess() const;
+  inline  ::mas::schema::fbp::Process::Factory::Client getProcess() const;
 #endif  // !CAPNP_LITE
 
 private:
@@ -4500,21 +4606,21 @@ public:
   inline bool isRunnable();
   inline bool hasRunnable();
 #if !CAPNP_LITE
-  inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client getRunnable();
-  inline void setRunnable( ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client&& value);
-  inline void setRunnable( ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client& value);
-  inline void adoptRunnable(::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>&& value);
-  inline ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>> disownRunnable();
+  inline  ::mas::schema::fbp::Runnable::Factory::Client getRunnable();
+  inline void setRunnable( ::mas::schema::fbp::Runnable::Factory::Client&& value);
+  inline void setRunnable( ::mas::schema::fbp::Runnable::Factory::Client& value);
+  inline void adoptRunnable(::capnp::Orphan< ::mas::schema::fbp::Runnable::Factory>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Runnable::Factory> disownRunnable();
 #endif  // !CAPNP_LITE
 
   inline bool isProcess();
   inline bool hasProcess();
 #if !CAPNP_LITE
-  inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client getProcess();
-  inline void setProcess( ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client&& value);
-  inline void setProcess( ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client& value);
-  inline void adoptProcess(::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>&& value);
-  inline ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>> disownProcess();
+  inline  ::mas::schema::fbp::Process::Factory::Client getProcess();
+  inline void setProcess( ::mas::schema::fbp::Process::Factory::Client&& value);
+  inline void setProcess( ::mas::schema::fbp::Process::Factory::Client& value);
+  inline void adoptProcess(::capnp::Orphan< ::mas::schema::fbp::Process::Factory>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::Factory> disownProcess();
 #endif  // !CAPNP_LITE
 
 private:
@@ -4601,6 +4707,218 @@ protected:
   ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
       uint16_t methodId,
       ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class Runnable::Factory::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
+public:
+  typedef Factory Calls;
+  typedef Factory Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Runnable::Factory::CreateParams,  ::mas::schema::fbp::Runnable::Factory::CreateResults> createRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Runnable::Factory::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
+public:
+  typedef Factory Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Runnable::Factory::CreateParams CreateParams;
+  typedef  ::mas::schema::fbp::Runnable::Factory::CreateResults CreateResults;
+  typedef ::capnp::CallContext<CreateParams, CreateResults> CreateContext;
+  virtual ::kj::Promise<void> create(CreateContext context);
+
+  inline  ::mas::schema::fbp::Runnable::Factory::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Runnable::Factory>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Runnable::Factory::CreateParams::Reader {
+public:
+  typedef CreateParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Runnable::Factory::CreateParams::Builder {
+public:
+  typedef CreateParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Runnable::Factory::CreateParams::Pipeline {
+public:
+  typedef CreateParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Runnable::Factory::CreateResults::Reader {
+public:
+  typedef CreateResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOut() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Runnable::Client getOut() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Runnable::Factory::CreateResults::Builder {
+public:
+  typedef CreateResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOut();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Runnable::Client getOut();
+  inline void setOut( ::mas::schema::fbp::Runnable::Client&& value);
+  inline void setOut( ::mas::schema::fbp::Runnable::Client& value);
+  inline void adoptOut(::capnp::Orphan< ::mas::schema::fbp::Runnable>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Runnable> disownOut();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Runnable::Factory::CreateResults::Pipeline {
+public:
+  typedef CreateResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Runnable::Client getOut();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
 };
 #endif  // !CAPNP_LITE
 
@@ -5013,6 +5331,218 @@ protected:
   ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
       uint16_t methodId,
       ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class Process::Factory::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
+public:
+  typedef Factory Calls;
+  typedef Factory Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Process::Factory::CreateParams,  ::mas::schema::fbp::Process::Factory::CreateResults> createRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Process::Factory::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
+public:
+  typedef Factory Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Process::Factory::CreateParams CreateParams;
+  typedef  ::mas::schema::fbp::Process::Factory::CreateResults CreateResults;
+  typedef ::capnp::CallContext<CreateParams, CreateResults> CreateContext;
+  virtual ::kj::Promise<void> create(CreateContext context);
+
+  inline  ::mas::schema::fbp::Process::Factory::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Process::Factory>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Process::Factory::CreateParams::Reader {
+public:
+  typedef CreateParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::Factory::CreateParams::Builder {
+public:
+  typedef CreateParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::Factory::CreateParams::Pipeline {
+public:
+  typedef CreateParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::Factory::CreateResults::Reader {
+public:
+  typedef CreateResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOut() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Client getOut() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::Factory::CreateResults::Builder {
+public:
+  typedef CreateResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOut();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Client getOut();
+  inline void setOut( ::mas::schema::fbp::Process::Client&& value);
+  inline void setOut( ::mas::schema::fbp::Process::Client& value);
+  inline void adoptOut(::capnp::Orphan< ::mas::schema::fbp::Process>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process> disownOut();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::Factory::CreateResults::Pipeline {
+public:
+  typedef CreateResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Process::Client getOut();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
 };
 #endif  // !CAPNP_LITE
 
@@ -9115,41 +9645,41 @@ inline bool Component::Factory::Builder::hasRunnable() {
       ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client Component::Factory::Reader::getRunnable() const {
+inline  ::mas::schema::fbp::Runnable::Factory::Client Component::Factory::Reader::getRunnable() const {
   KJ_IREQUIRE((which() == Component::Factory::RUNNABLE),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::get(_reader.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::get(_reader.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client Component::Factory::Builder::getRunnable() {
+inline  ::mas::schema::fbp::Runnable::Factory::Client Component::Factory::Builder::getRunnable() {
   KJ_IREQUIRE((which() == Component::Factory::RUNNABLE),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::get(_builder.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::get(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline void Component::Factory::Builder::setRunnable( ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client&& cap) {
+inline void Component::Factory::Builder::setRunnable( ::mas::schema::fbp::Runnable::Factory::Client&& cap) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::RUNNABLE);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::set(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::set(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Component::Factory::Builder::setRunnable( ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>::Client& cap) {
+inline void Component::Factory::Builder::setRunnable( ::mas::schema::fbp::Runnable::Factory::Client& cap) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::RUNNABLE);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::set(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::set(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), cap);
 }
 inline void Component::Factory::Builder::adoptRunnable(
-    ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>&& value) {
+    ::capnp::Orphan< ::mas::schema::fbp::Runnable::Factory>&& value) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::RUNNABLE);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::adopt(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::adopt(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>> Component::Factory::Builder::disownRunnable() {
+inline ::capnp::Orphan< ::mas::schema::fbp::Runnable::Factory> Component::Factory::Builder::disownRunnable() {
   KJ_IREQUIRE((which() == Component::Factory::RUNNABLE),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Runnable>>::disown(_builder.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::Factory>::disown(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
@@ -9171,41 +9701,41 @@ inline bool Component::Factory::Builder::hasProcess() {
       ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client Component::Factory::Reader::getProcess() const {
+inline  ::mas::schema::fbp::Process::Factory::Client Component::Factory::Reader::getProcess() const {
   KJ_IREQUIRE((which() == Component::Factory::PROCESS),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::get(_reader.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::get(_reader.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client Component::Factory::Builder::getProcess() {
+inline  ::mas::schema::fbp::Process::Factory::Client Component::Factory::Builder::getProcess() {
   KJ_IREQUIRE((which() == Component::Factory::PROCESS),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::get(_builder.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::get(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline void Component::Factory::Builder::setProcess( ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client&& cap) {
+inline void Component::Factory::Builder::setProcess( ::mas::schema::fbp::Process::Factory::Client&& cap) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::PROCESS);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::set(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::set(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Component::Factory::Builder::setProcess( ::mas::schema::common::Factory< ::mas::schema::fbp::Process>::Client& cap) {
+inline void Component::Factory::Builder::setProcess( ::mas::schema::fbp::Process::Factory::Client& cap) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::PROCESS);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::set(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::set(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), cap);
 }
 inline void Component::Factory::Builder::adoptProcess(
-    ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>&& value) {
+    ::capnp::Orphan< ::mas::schema::fbp::Process::Factory>&& value) {
   _builder.setDataField<Component::Factory::Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, Component::Factory::PROCESS);
-  ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::adopt(_builder.getPointerField(
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::adopt(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>> Component::Factory::Builder::disownProcess() {
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::Factory> Component::Factory::Builder::disownProcess() {
   KJ_IREQUIRE((which() == Component::Factory::PROCESS),
               "Must check which() before get()ing a union member.");
-  return ::capnp::_::PointerHelpers< ::mas::schema::common::Factory< ::mas::schema::fbp::Process>>::disown(_builder.getPointerField(
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Factory>::disown(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
@@ -9234,6 +9764,69 @@ inline  ::mas::schema::fbp::Runnable::Client& Runnable::Client::operator=(Client
 }
 
 #endif  // !CAPNP_LITE
+#if !CAPNP_LITE
+inline Runnable::Factory::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Runnable::Factory::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Runnable::Factory::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Runnable::Factory::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Runnable::Factory::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Runnable::Factory::Client& Runnable::Factory::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Runnable::Factory::Client& Runnable::Factory::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Runnable::Factory::CreateResults::Reader::hasOut() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Runnable::Factory::CreateResults::Builder::hasOut() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Runnable::Client Runnable::Factory::CreateResults::Reader::getOut() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Runnable::Client Runnable::Factory::CreateResults::Builder::getOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Runnable::Client Runnable::Factory::CreateResults::Pipeline::getOut() {
+  return  ::mas::schema::fbp::Runnable::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Runnable::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Runnable::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Runnable::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Runnable::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Runnable::Factory::CreateResults::Builder::adoptOut(
+    ::capnp::Orphan< ::mas::schema::fbp::Runnable>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Runnable> Runnable::Factory::CreateResults::Builder::disownOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
 inline bool Runnable::StartParams::Reader::hasPortInfosReaderSr() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -9354,6 +9947,69 @@ inline  ::mas::schema::fbp::Process::Client& Process::Client::operator=(Client&&
 }
 
 #endif  // !CAPNP_LITE
+#if !CAPNP_LITE
+inline Process::Factory::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Process::Factory::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Process::Factory::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Process::Factory::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Process::Factory::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Process::Factory::Client& Process::Factory::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Process::Factory::Client& Process::Factory::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Process::Factory::CreateResults::Reader::hasOut() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::Factory::CreateResults::Builder::hasOut() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Reader::getOut() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Builder::getOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Pipeline::getOut() {
+  return  ::mas::schema::fbp::Process::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Process::Factory::CreateResults::Builder::adoptOut(
+    ::capnp::Orphan< ::mas::schema::fbp::Process>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process> Process::Factory::CreateResults::Builder::disownOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
 inline bool Process::ConfigEntry::Reader::hasName() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
