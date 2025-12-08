@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -36,6 +36,12 @@ enum class Type_9eebc43e17b5974f: uint16_t {
 CAPNP_DECLARE_ENUM(Type, 9eebc43e17b5974f);
 CAPNP_DECLARE_SCHEMA(e8cbf552b1c262cc);
 CAPNP_DECLARE_SCHEMA(e17592335373b246);
+CAPNP_DECLARE_SCHEMA(a869f50b8c586ed9);
+CAPNP_DECLARE_SCHEMA(fd058bbd1f9508cd);
+CAPNP_DECLARE_SCHEMA(d010f77f1bdf0522);
+CAPNP_DECLARE_SCHEMA(9771e5b5c6a27b68);
+CAPNP_DECLARE_SCHEMA(9b38b2f4ce5b565d);
+CAPNP_DECLARE_SCHEMA(8417f479600047f0);
 CAPNP_DECLARE_SCHEMA(b9d4864725174733);
 CAPNP_DECLARE_SCHEMA(c83045ccbb0b6ac5);
 CAPNP_DECLARE_SCHEMA(966d054acf5f578d);
@@ -179,6 +185,130 @@ struct Value {
     CAPNP_DECLARE_STRUCT_HEADER(e17592335373b246, 2, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename Output = ::capnp::AnyPointer>
+struct Factory {
+  Factory() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct CreateParams;
+  struct CreateResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(a869f50b8c586ed9)
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Output>::brand(); }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+template <typename Output>
+struct Factory<Output>::CreateParams {
+  CreateParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(fd058bbd1f9508cd, 0, 0)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Output>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename Output>
+struct Factory<Output>::CreateResults {
+  CreateResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d010f77f1bdf0522, 0, 1)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Output>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename Input = ::capnp::AnyPointer, typename Output = ::capnp::AnyPointer>
+struct IOFactory {
+  IOFactory() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct ProduceParams;
+  struct ProduceResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(9771e5b5c6a27b68)
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Input, Output>::brand(); }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+template <typename Input, typename Output>
+struct IOFactory<Input, Output>::ProduceParams {
+  ProduceParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(9b38b2f4ce5b565d, 0, 1)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Input, Output>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename Input, typename Output>
+struct IOFactory<Input, Output>::ProduceResults {
+  ProduceResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8417f479600047f0, 0, 1)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, Input, Output>::brand(); }
     #endif  // !CAPNP_LITE
   };
 };
@@ -1101,6 +1231,502 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+template <typename Output>
+class Factory<Output>::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
+public:
+  typedef Factory Calls;
+  typedef Factory Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  template <typename Output2 = ::capnp::AnyPointer>
+  typename Factory<Output2>::Client asGeneric() {
+    return castAs<Factory<Output2>>();
+  }
+
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::Factory<Output>::CreateParams, typename  ::mas::schema::common::Factory<Output>::CreateResults>) createRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+template <typename Output>
+class Factory<Output>::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
+public:
+  typedef Factory Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef typename  ::mas::schema::common::Factory<Output>::CreateParams CreateParams;
+  typedef typename  ::mas::schema::common::Factory<Output>::CreateResults CreateResults;
+  typedef ::capnp::CallContext<CreateParams, CreateResults> CreateContext;
+  virtual ::kj::Promise<void> create(CreateContext context);
+
+  inline typename  ::mas::schema::common::Factory<Output>::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::common::Factory<Output>>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+template <typename Output>
+class Factory<Output>::CreateParams::Reader {
+public:
+  typedef CreateParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename Output2 = ::capnp::AnyPointer>
+  typename Factory<Output2>::CreateParams::Reader asFactoryGeneric() const {
+    return typename Factory<Output2>::CreateParams::Reader(_reader);
+  }
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename Output>
+class Factory<Output>::CreateParams::Builder {
+public:
+  typedef CreateParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename Output2 = ::capnp::AnyPointer>
+  typename Factory<Output2>::CreateParams::Builder asFactoryGeneric() {
+    return typename Factory<Output2>::CreateParams::Builder(_builder);
+  }
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename Output>
+class Factory<Output>::CreateParams::Pipeline {
+public:
+  typedef CreateParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+template <typename Output>
+class Factory<Output>::CreateResults::Reader {
+public:
+  typedef CreateResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename Output2 = ::capnp::AnyPointer>
+  typename Factory<Output2>::CreateResults::Reader asFactoryGeneric() const {
+    return typename Factory<Output2>::CreateResults::Reader(_reader);
+  }
+
+  inline bool hasOut() const;
+  inline  ::capnp::ReaderFor<Output> getOut() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename Output>
+class Factory<Output>::CreateResults::Builder {
+public:
+  typedef CreateResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename Output2 = ::capnp::AnyPointer>
+  typename Factory<Output2>::CreateResults::Builder asFactoryGeneric() {
+    return typename Factory<Output2>::CreateResults::Builder(_builder);
+  }
+
+  inline bool hasOut();
+  inline  ::capnp::BuilderFor<Output> getOut();
+  inline void setOut( ::capnp::ReaderFor<Output> value);
+  inline  ::capnp::BuilderFor<Output> initOut();
+  inline  ::capnp::BuilderFor<Output> initOut(unsigned int size);
+  inline void adoptOut(::capnp::Orphan<Output>&& value);
+  inline ::capnp::Orphan<Output> disownOut();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename Output>
+class Factory<Output>::CreateResults::Pipeline {
+public:
+  typedef CreateResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::capnp::PipelineFor<Output> getOut();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::Client
+    : public virtual ::capnp::Capability::Client,
+      public virtual  ::mas::schema::common::Identifiable::Client {
+public:
+  typedef IOFactory Calls;
+  typedef IOFactory Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  template <typename Input2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
+  typename IOFactory<Input2, Output2>::Client asGeneric() {
+    return castAs<IOFactory<Input2, Output2>>();
+  }
+
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams, typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults>) produceRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::Server
+    : public virtual ::capnp::Capability::Server,
+      public virtual  ::mas::schema::common::Identifiable::Server {
+public:
+  typedef IOFactory Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams ProduceParams;
+  typedef typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults ProduceResults;
+  typedef ::capnp::CallContext<ProduceParams, ProduceResults> ProduceContext;
+  virtual ::kj::Promise<void> produce(ProduceContext context);
+
+  inline typename  ::mas::schema::common::IOFactory<Input, Output>::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::common::IOFactory<Input, Output>>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceParams::Reader {
+public:
+  typedef ProduceParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename Input2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
+  typename IOFactory<Input2, Output2>::ProduceParams::Reader asIOFactoryGeneric() const {
+    return typename IOFactory<Input2, Output2>::ProduceParams::Reader(_reader);
+  }
+
+  inline bool hasIn() const;
+  inline  ::capnp::ReaderFor<Input> getIn() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceParams::Builder {
+public:
+  typedef ProduceParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename Input2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
+  typename IOFactory<Input2, Output2>::ProduceParams::Builder asIOFactoryGeneric() {
+    return typename IOFactory<Input2, Output2>::ProduceParams::Builder(_builder);
+  }
+
+  inline bool hasIn();
+  inline  ::capnp::BuilderFor<Input> getIn();
+  inline void setIn( ::capnp::ReaderFor<Input> value);
+  inline  ::capnp::BuilderFor<Input> initIn();
+  inline  ::capnp::BuilderFor<Input> initIn(unsigned int size);
+  inline void adoptIn(::capnp::Orphan<Input>&& value);
+  inline ::capnp::Orphan<Input> disownIn();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceParams::Pipeline {
+public:
+  typedef ProduceParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::capnp::PipelineFor<Input> getIn();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceResults::Reader {
+public:
+  typedef ProduceResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename Input2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
+  typename IOFactory<Input2, Output2>::ProduceResults::Reader asIOFactoryGeneric() const {
+    return typename IOFactory<Input2, Output2>::ProduceResults::Reader(_reader);
+  }
+
+  inline bool hasOut() const;
+  inline  ::capnp::ReaderFor<Output> getOut() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceResults::Builder {
+public:
+  typedef ProduceResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename Input2 = ::capnp::AnyPointer, typename Output2 = ::capnp::AnyPointer>
+  typename IOFactory<Input2, Output2>::ProduceResults::Builder asIOFactoryGeneric() {
+    return typename IOFactory<Input2, Output2>::ProduceResults::Builder(_builder);
+  }
+
+  inline bool hasOut();
+  inline  ::capnp::BuilderFor<Output> getOut();
+  inline void setOut( ::capnp::ReaderFor<Output> value);
+  inline  ::capnp::BuilderFor<Output> initOut();
+  inline  ::capnp::BuilderFor<Output> initOut(unsigned int size);
+  inline void adoptOut(::capnp::Orphan<Output>&& value);
+  inline ::capnp::Orphan<Output> disownOut();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+class IOFactory<Input, Output>::ProduceResults::Pipeline {
+public:
+  typedef ProduceResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::capnp::PipelineFor<Output> getOut();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 template <typename F, typename S>
 class Pair<F, S>::Reader {
 public:
@@ -1120,7 +1746,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename F2 = ::capnp::AnyPointer, typename S2 = ::capnp::AnyPointer>
-  typename Pair<F2, S2>::Reader asGeneric() {
+  typename Pair<F2, S2>::Reader asGeneric() const {
     return typename Pair<F2, S2>::Reader(_reader);
   }
 
@@ -1288,7 +1914,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename Holder<T2>::ValueParams::Reader asHolderGeneric() {
+  typename Holder<T2>::ValueParams::Reader asHolderGeneric() const {
     return typename Holder<T2>::ValueParams::Reader(_reader);
   }
 
@@ -1372,7 +1998,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename T2 = ::capnp::AnyPointer>
-  typename Holder<T2>::ValueResults::Reader asHolderGeneric() {
+  typename Holder<T2>::ValueResults::Reader asHolderGeneric() const {
     return typename Holder<T2>::ValueResults::Reader(_reader);
   }
 
@@ -3196,6 +3822,496 @@ inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Pair< ::capnp::Any
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
+
+#if !CAPNP_LITE
+template <typename Output>
+inline Factory<Output>::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+template <typename Output>
+inline Factory<Output>::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename Output>
+template <typename _t, typename>
+inline Factory<Output>::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename Output>
+template <typename _t, typename>
+inline Factory<Output>::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+template <typename Output>
+inline Factory<Output>::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+template <typename Output>
+inline typename  ::mas::schema::common::Factory<Output>::Client& Factory<Output>::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+template <typename Output>
+inline typename  ::mas::schema::common::Factory<Output>::Client& Factory<Output>::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+// Factory<Output>::CreateParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+constexpr uint16_t Factory<Output>::CreateParams::_capnpPrivate::dataWordSize;
+template <typename Output>
+constexpr uint16_t Factory<Output>::CreateParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+constexpr ::capnp::Kind Factory<Output>::CreateParams::_capnpPrivate::kind;
+template <typename Output>
+constexpr ::capnp::_::RawSchema const* Factory<Output>::CreateParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Scope Factory<Output>::CreateParams::_capnpPrivate::brandScopes[] = {
+  { 0xa869f50b8c586ed9, brandBindings + 0, 1, false},
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Binding Factory<Output>::CreateParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema Factory<Output>::CreateParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_fd058bbd1f9508cd, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename Output>
+inline bool Factory<Output>::CreateResults::Reader::hasOut() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Output>
+inline bool Factory<Output>::CreateResults::Builder::hasOut() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Output>
+inline  ::capnp::ReaderFor<Output> Factory<Output>::CreateResults::Reader::getOut() const {
+  return ::capnp::_::PointerHelpers<Output>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Output>
+inline  ::capnp::BuilderFor<Output> Factory<Output>::CreateResults::Builder::getOut() {
+  return ::capnp::_::PointerHelpers<Output>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+template <typename Output>
+inline  ::capnp::PipelineFor<Output> Factory<Output>::CreateResults::Pipeline::getOut() {
+  return  ::capnp::PipelineFor<Output>(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename Output>
+inline void Factory<Output>::CreateResults::Builder::setOut( ::capnp::ReaderFor<Output> value) {
+  ::capnp::_::PointerHelpers<Output>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+template <typename Output>
+inline  ::capnp::BuilderFor<Output> Factory<Output>::CreateResults::Builder::initOut() {
+  return ::capnp::_::PointerHelpers<Output>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Output>
+inline  ::capnp::BuilderFor<Output> Factory<Output>::CreateResults::Builder::initOut(unsigned int size) {
+  return ::capnp::_::PointerHelpers<Output>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+template <typename Output>
+inline void Factory<Output>::CreateResults::Builder::adoptOut(
+    ::capnp::Orphan<Output>&& value) {
+  ::capnp::_::PointerHelpers<Output>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename Output>
+inline ::capnp::Orphan<Output> Factory<Output>::CreateResults::Builder::disownOut() {
+  return ::capnp::_::PointerHelpers<Output>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+// Factory<Output>::CreateResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+constexpr uint16_t Factory<Output>::CreateResults::_capnpPrivate::dataWordSize;
+template <typename Output>
+constexpr uint16_t Factory<Output>::CreateResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+constexpr ::capnp::Kind Factory<Output>::CreateResults::_capnpPrivate::kind;
+template <typename Output>
+constexpr ::capnp::_::RawSchema const* Factory<Output>::CreateResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Scope Factory<Output>::CreateResults::_capnpPrivate::brandScopes[] = {
+  { 0xa869f50b8c586ed9, brandBindings + 0, 1, false},
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Binding Factory<Output>::CreateResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema Factory<Output>::CreateResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_d010f77f1bdf0522, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename Output>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::Factory<Output>::CreateParams, typename  ::mas::schema::common::Factory<Output>::CreateResults>)
+Factory<Output>::Client::createRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::common::Factory<Output>::CreateParams, typename  ::mas::schema::common::Factory<Output>::CreateResults>(
+      0xa869f50b8c586ed9ull, 0, sizeHint, {false});
+}
+template <typename Output>
+::kj::Promise<void> Factory<Output>::Server::create(CreateContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "common.capnp:Factory", "create",
+      0xa869f50b8c586ed9ull, 0);
+}
+template <typename Output>
+::capnp::Capability::Server::DispatchCallResult Factory<Output>::Server::dispatchCall(
+    uint64_t interfaceId, uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (interfaceId) {
+    case 0xa869f50b8c586ed9ull:
+      return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    default:
+      return internalUnimplemented("common.capnp:Factory", interfaceId);
+  }
+}
+template <typename Output>
+::capnp::Capability::Server::DispatchCallResult Factory<Output>::Server::dispatchCallInternal(
+    uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (methodId) {
+    case 0:
+      return {
+        create(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::common::Factory<Output>::CreateParams, typename  ::mas::schema::common::Factory<Output>::CreateResults>(context)),
+        false,
+        false
+      };
+    default:
+      (void)context;
+      return ::capnp::Capability::Server::internalUnimplemented(
+          "common.capnp:Factory",
+          0xa869f50b8c586ed9ull, methodId);
+  }
+}
+#endif  // !CAPNP_LITE
+
+// Factory<Output>
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+constexpr ::capnp::Kind Factory<Output>::_capnpPrivate::kind;
+template <typename Output>
+constexpr ::capnp::_::RawSchema const* Factory<Output>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Scope Factory<Output>::_capnpPrivate::brandScopes[] = {
+  { 0xa869f50b8c586ed9, brandBindings + 0, 1, false},
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Binding Factory<Output>::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema::Dependency Factory<Output>::_capnpPrivate::brandDependencies[] = {
+  { 33554432,  ::mas::schema::common::Factory<Output>::CreateParams::_capnpPrivate::brand() },
+  { 50331648,  ::mas::schema::common::Factory<Output>::CreateResults::_capnpPrivate::brand() },
+};
+template <typename Output>
+const ::capnp::_::RawBrandedSchema Factory<Output>::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_a869f50b8c586ed9, brandScopes, brandDependencies,
+  1, 2, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+inline IOFactory<Input, Output>::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+template <typename Input, typename Output>
+inline IOFactory<Input, Output>::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename Input, typename Output>
+template <typename _t, typename>
+inline IOFactory<Input, Output>::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename Input, typename Output>
+template <typename _t, typename>
+inline IOFactory<Input, Output>::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+template <typename Input, typename Output>
+inline IOFactory<Input, Output>::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+template <typename Input, typename Output>
+inline typename  ::mas::schema::common::IOFactory<Input, Output>::Client& IOFactory<Input, Output>::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+template <typename Input, typename Output>
+inline typename  ::mas::schema::common::IOFactory<Input, Output>::Client& IOFactory<Input, Output>::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+template <typename Input, typename Output>
+inline bool IOFactory<Input, Output>::ProduceParams::Reader::hasIn() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Input, typename Output>
+inline bool IOFactory<Input, Output>::ProduceParams::Builder::hasIn() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Input, typename Output>
+inline  ::capnp::ReaderFor<Input> IOFactory<Input, Output>::ProduceParams::Reader::getIn() const {
+  return ::capnp::_::PointerHelpers<Input>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Input> IOFactory<Input, Output>::ProduceParams::Builder::getIn() {
+  return ::capnp::_::PointerHelpers<Input>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+inline  ::capnp::PipelineFor<Input> IOFactory<Input, Output>::ProduceParams::Pipeline::getIn() {
+  return  ::capnp::PipelineFor<Input>(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename Input, typename Output>
+inline void IOFactory<Input, Output>::ProduceParams::Builder::setIn( ::capnp::ReaderFor<Input> value) {
+  ::capnp::_::PointerHelpers<Input>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Input> IOFactory<Input, Output>::ProduceParams::Builder::initIn() {
+  return ::capnp::_::PointerHelpers<Input>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Input> IOFactory<Input, Output>::ProduceParams::Builder::initIn(unsigned int size) {
+  return ::capnp::_::PointerHelpers<Input>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+template <typename Input, typename Output>
+inline void IOFactory<Input, Output>::ProduceParams::Builder::adoptIn(
+    ::capnp::Orphan<Input>&& value) {
+  ::capnp::_::PointerHelpers<Input>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename Input, typename Output>
+inline ::capnp::Orphan<Input> IOFactory<Input, Output>::ProduceParams::Builder::disownIn() {
+  return ::capnp::_::PointerHelpers<Input>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+// IOFactory<Input, Output>::ProduceParams
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+constexpr uint16_t IOFactory<Input, Output>::ProduceParams::_capnpPrivate::dataWordSize;
+template <typename Input, typename Output>
+constexpr uint16_t IOFactory<Input, Output>::ProduceParams::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+constexpr ::capnp::Kind IOFactory<Input, Output>::ProduceParams::_capnpPrivate::kind;
+template <typename Input, typename Output>
+constexpr ::capnp::_::RawSchema const* IOFactory<Input, Output>::ProduceParams::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Scope IOFactory<Input, Output>::ProduceParams::_capnpPrivate::brandScopes[] = {
+  { 0x9771e5b5c6a27b68, brandBindings + 0, 2, false},
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Binding IOFactory<Input, Output>::ProduceParams::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Input>(),
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema IOFactory<Input, Output>::ProduceParams::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_9b38b2f4ce5b565d, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+template <typename Input, typename Output>
+inline bool IOFactory<Input, Output>::ProduceResults::Reader::hasOut() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Input, typename Output>
+inline bool IOFactory<Input, Output>::ProduceResults::Builder::hasOut() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename Input, typename Output>
+inline  ::capnp::ReaderFor<Output> IOFactory<Input, Output>::ProduceResults::Reader::getOut() const {
+  return ::capnp::_::PointerHelpers<Output>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Output> IOFactory<Input, Output>::ProduceResults::Builder::getOut() {
+  return ::capnp::_::PointerHelpers<Output>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+inline  ::capnp::PipelineFor<Output> IOFactory<Input, Output>::ProduceResults::Pipeline::getOut() {
+  return  ::capnp::PipelineFor<Output>(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename Input, typename Output>
+inline void IOFactory<Input, Output>::ProduceResults::Builder::setOut( ::capnp::ReaderFor<Output> value) {
+  ::capnp::_::PointerHelpers<Output>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Output> IOFactory<Input, Output>::ProduceResults::Builder::initOut() {
+  return ::capnp::_::PointerHelpers<Output>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename Input, typename Output>
+inline  ::capnp::BuilderFor<Output> IOFactory<Input, Output>::ProduceResults::Builder::initOut(unsigned int size) {
+  return ::capnp::_::PointerHelpers<Output>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+template <typename Input, typename Output>
+inline void IOFactory<Input, Output>::ProduceResults::Builder::adoptOut(
+    ::capnp::Orphan<Output>&& value) {
+  ::capnp::_::PointerHelpers<Output>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename Input, typename Output>
+inline ::capnp::Orphan<Output> IOFactory<Input, Output>::ProduceResults::Builder::disownOut() {
+  return ::capnp::_::PointerHelpers<Output>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+// IOFactory<Input, Output>::ProduceResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+constexpr uint16_t IOFactory<Input, Output>::ProduceResults::_capnpPrivate::dataWordSize;
+template <typename Input, typename Output>
+constexpr uint16_t IOFactory<Input, Output>::ProduceResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+constexpr ::capnp::Kind IOFactory<Input, Output>::ProduceResults::_capnpPrivate::kind;
+template <typename Input, typename Output>
+constexpr ::capnp::_::RawSchema const* IOFactory<Input, Output>::ProduceResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Scope IOFactory<Input, Output>::ProduceResults::_capnpPrivate::brandScopes[] = {
+  { 0x9771e5b5c6a27b68, brandBindings + 0, 2, false},
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Binding IOFactory<Input, Output>::ProduceResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Input>(),
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema IOFactory<Input, Output>::ProduceResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_8417f479600047f0, brandScopes, nullptr,
+  1, 0, nullptr
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+template <typename Input, typename Output>
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams, typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults>)
+IOFactory<Input, Output>::Client::produceRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
+  return newCall<typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams, typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults>(
+      0x9771e5b5c6a27b68ull, 0, sizeHint, {false});
+}
+template <typename Input, typename Output>
+::kj::Promise<void> IOFactory<Input, Output>::Server::produce(ProduceContext) {
+  return ::capnp::Capability::Server::internalUnimplemented(
+      "common.capnp:IOFactory", "produce",
+      0x9771e5b5c6a27b68ull, 0);
+}
+template <typename Input, typename Output>
+::capnp::Capability::Server::DispatchCallResult IOFactory<Input, Output>::Server::dispatchCall(
+    uint64_t interfaceId, uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (interfaceId) {
+    case 0x9771e5b5c6a27b68ull:
+      return dispatchCallInternal(methodId, context);
+    case 0xb2afd1cb599c48d5ull:
+      return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
+    default:
+      return internalUnimplemented("common.capnp:IOFactory", interfaceId);
+  }
+}
+template <typename Input, typename Output>
+::capnp::Capability::Server::DispatchCallResult IOFactory<Input, Output>::Server::dispatchCallInternal(
+    uint16_t methodId,
+    ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
+  switch (methodId) {
+    case 0:
+      return {
+        produce(::capnp::Capability::Server::internalGetTypedContext<
+            typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams, typename  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults>(context)),
+        false,
+        false
+      };
+    default:
+      (void)context;
+      return ::capnp::Capability::Server::internalUnimplemented(
+          "common.capnp:IOFactory",
+          0x9771e5b5c6a27b68ull, methodId);
+  }
+}
+#endif  // !CAPNP_LITE
+
+// IOFactory<Input, Output>
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+constexpr ::capnp::Kind IOFactory<Input, Output>::_capnpPrivate::kind;
+template <typename Input, typename Output>
+constexpr ::capnp::_::RawSchema const* IOFactory<Input, Output>::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Scope IOFactory<Input, Output>::_capnpPrivate::brandScopes[] = {
+  { 0x9771e5b5c6a27b68, brandBindings + 0, 2, false},
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Binding IOFactory<Input, Output>::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<Input>(),
+  ::capnp::_::brandBindingFor<Output>(),
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema::Dependency IOFactory<Input, Output>::_capnpPrivate::brandDependencies[] = {
+  { 33554432,  ::mas::schema::common::IOFactory<Input, Output>::ProduceParams::_capnpPrivate::brand() },
+  { 50331648,  ::mas::schema::common::IOFactory<Input, Output>::ProduceResults::_capnpPrivate::brand() },
+};
+template <typename Input, typename Output>
+const ::capnp::_::RawBrandedSchema IOFactory<Input, Output>::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_9771e5b5c6a27b68, brandScopes, brandDependencies,
+  1, 2, nullptr
+};
+#endif  // !CAPNP_LITE
 
 template <typename F, typename S>
 inline bool Pair<F, S>::Reader::hasFst() const {

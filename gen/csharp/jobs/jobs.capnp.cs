@@ -39,7 +39,6 @@ namespace Mas.Schema.Jobs
         public void applyDefaults() { }
 
         public TPayload Data { get; set; }
-
         public bool NoFurtherJobs { get; set; } = false;
 
         public struct READER
@@ -73,7 +72,6 @@ namespace Mas.Schema.Jobs
                 get => BuildPointer<DynamicSerializerState>(0);
                 set => Link(0, value);
             }
-
             public bool NoFurtherJobs
             {
                 get => this.ReadDataBool(0UL, false);
@@ -85,8 +83,8 @@ namespace Mas.Schema.Jobs
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xb8745454d013cbf0UL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Jobs.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Jobs.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {

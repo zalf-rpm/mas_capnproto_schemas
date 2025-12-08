@@ -129,73 +129,61 @@ namespace Mas.Schema.Model.Yieldstat
                 get => this.ReadDataBool(0UL, false);
                 set => this.WriteData(0UL, value, false);
             }
-
             public bool UseCO2Increase
             {
                 get => this.ReadDataBool(1UL, true);
                 set => this.WriteData(1UL, value, true);
             }
-
             public double Dgm
             {
                 get => this.ReadDataDouble(64UL, 0);
                 set => this.WriteData(64UL, value, 0);
             }
-
             public byte Hft
             {
                 get => this.ReadDataByte(8UL, (byte)0);
                 set => this.WriteData(8UL, value, (byte)0);
             }
-
             public byte Nft
             {
                 get => this.ReadDataByte(16UL, (byte)0);
                 set => this.WriteData(16UL, value, (byte)0);
             }
-
             public byte Sft
             {
                 get => this.ReadDataByte(24UL, (byte)0);
                 set => this.WriteData(24UL, value, (byte)0);
             }
-
             public byte Slope
             {
                 get => this.ReadDataByte(32UL, (byte)0);
                 set => this.WriteData(32UL, value, (byte)0);
             }
-
             public byte Steino
             {
                 get => this.ReadDataByte(40UL, (byte)0);
                 set => this.WriteData(40UL, value, (byte)0);
             }
-
             public byte Az
             {
                 get => this.ReadDataByte(48UL, (byte)0);
                 set => this.WriteData(48UL, value, (byte)0);
             }
-
             public byte Klz
             {
                 get => this.ReadDataByte(56UL, (byte)0);
                 set => this.WriteData(56UL, value, (byte)0);
             }
-
             public byte Stt
             {
                 get => this.ReadDataByte(128UL, (byte)0);
                 set => this.WriteData(128UL, value, (byte)0);
             }
-
             public sbyte GermanFederalStates
             {
                 get => this.ReadDataSByte(136UL, (sbyte)-1);
                 set => this.WriteData(136UL, value, (sbyte)-1);
             }
-
             public bool GetDryYearWaterNeed
             {
                 get => this.ReadDataBool(2UL, false);
@@ -238,7 +226,6 @@ namespace Mas.Schema.Model.Yieldstat
         public void applyDefaults() { }
 
         public string Cultivar { get; set; }
-
         public bool IsNoData { get; set; } = false;
         public IReadOnlyList<Mas.Schema.Model.Yieldstat.Result.ResultToValue> Values { get; set; }
 
@@ -276,13 +263,11 @@ namespace Mas.Schema.Model.Yieldstat
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public bool IsNoData
             {
                 get => this.ReadDataBool(0UL, false);
                 set => this.WriteData(0UL, value, false);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Result.ResultToValue.WRITER> Values
             {
                 get =>
@@ -323,7 +308,6 @@ namespace Mas.Schema.Model.Yieldstat
             public void applyDefaults() { }
 
             public Mas.Schema.Model.Yieldstat.ResultId Id { get; set; }
-
             public double Value { get; set; }
 
             public struct READER
@@ -358,7 +342,6 @@ namespace Mas.Schema.Model.Yieldstat
                     get => (Mas.Schema.Model.Yieldstat.ResultId)this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public double Value
                 {
                     get => this.ReadDataDouble(64UL, 0);
@@ -404,10 +387,8 @@ namespace Mas.Schema.Model.Yieldstat
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public bool RunFailed { get; set; } = false;
         public string Reason { get; set; }
-
         public IReadOnlyList<Mas.Schema.Model.Yieldstat.Output.YearToResult> Results { get; set; }
 
         public struct READER
@@ -445,19 +426,16 @@ namespace Mas.Schema.Model.Yieldstat
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public bool RunFailed
             {
                 get => this.ReadDataBool(0UL, false);
                 set => this.WriteData(0UL, value, false);
             }
-
             public string Reason
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Model.Yieldstat.Output.YearToResult.WRITER> Results
             {
                 get =>
@@ -498,7 +476,6 @@ namespace Mas.Schema.Model.Yieldstat
             public void applyDefaults() { }
 
             public short Year { get; set; }
-
             public Mas.Schema.Model.Yieldstat.Result Result { get; set; }
 
             public struct READER
@@ -534,7 +511,6 @@ namespace Mas.Schema.Model.Yieldstat
                     get => this.ReadDataShort(0UL, (short)0);
                     set => this.WriteData(0UL, value, (short)0);
                 }
-
                 public Mas.Schema.Model.Yieldstat.Result.WRITER Result
                 {
                     get => BuildPointer<Mas.Schema.Model.Yieldstat.Result.WRITER>(0);

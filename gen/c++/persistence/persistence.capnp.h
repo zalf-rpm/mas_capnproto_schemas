@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -50,6 +50,9 @@ CAPNP_DECLARE_SCHEMA(fc185f518d220b8c);
 CAPNP_DECLARE_SCHEMA(8f9c2c0a602f27ed);
 CAPNP_DECLARE_SCHEMA(a232c65d79e97faa);
 CAPNP_DECLARE_SCHEMA(c78c1529af44abab);
+CAPNP_DECLARE_SCHEMA(8253222fdf37608d);
+CAPNP_DECLARE_SCHEMA(b64c5d78d2b79d44);
+CAPNP_DECLARE_SCHEMA(f7b8b0867aeef0b6);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -513,6 +516,55 @@ struct Gateway::RegisterParams {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(c78c1529af44abab, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct GatewayRegistrable {
+  GatewayRegistrable() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct SturdyRefAtGatewayParams;
+  struct SturdyRefAtGatewayResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(8253222fdf37608d)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct GatewayRegistrable::SturdyRefAtGatewayParams {
+  SturdyRefAtGatewayParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(b64c5d78d2b79d44, 0, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct GatewayRegistrable::SturdyRefAtGatewayResults {
+  SturdyRefAtGatewayResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(f7b8b0867aeef0b6, 0, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2733,6 +2785,233 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+class GatewayRegistrable::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef GatewayRegistrable Calls;
+  typedef GatewayRegistrable Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::persistence::GatewayRegistrable::SturdyRefAtGatewayParams,  ::mas::schema::persistence::GatewayRegistrable::SturdyRefAtGatewayResults> sturdyRefAtGatewayRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class GatewayRegistrable::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef GatewayRegistrable Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::persistence::GatewayRegistrable::SturdyRefAtGatewayParams SturdyRefAtGatewayParams;
+  typedef  ::mas::schema::persistence::GatewayRegistrable::SturdyRefAtGatewayResults SturdyRefAtGatewayResults;
+  typedef ::capnp::CallContext<SturdyRefAtGatewayParams, SturdyRefAtGatewayResults> SturdyRefAtGatewayContext;
+  virtual ::kj::Promise<void> sturdyRefAtGateway(SturdyRefAtGatewayContext context);
+
+  inline  ::mas::schema::persistence::GatewayRegistrable::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::persistence::GatewayRegistrable>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class GatewayRegistrable::SturdyRefAtGatewayParams::Reader {
+public:
+  typedef SturdyRefAtGatewayParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasGatewaySR() const;
+  inline  ::mas::schema::persistence::SturdyRef::Reader getGatewaySR() const;
+
+  inline bool hasGatewayId() const;
+  inline  ::capnp::Text::Reader getGatewayId() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class GatewayRegistrable::SturdyRefAtGatewayParams::Builder {
+public:
+  typedef SturdyRefAtGatewayParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasGatewaySR();
+  inline  ::mas::schema::persistence::SturdyRef::Builder getGatewaySR();
+  inline void setGatewaySR( ::mas::schema::persistence::SturdyRef::Reader value);
+  inline  ::mas::schema::persistence::SturdyRef::Builder initGatewaySR();
+  inline void adoptGatewaySR(::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value);
+  inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> disownGatewaySR();
+
+  inline bool hasGatewayId();
+  inline  ::capnp::Text::Builder getGatewayId();
+  inline void setGatewayId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initGatewayId(unsigned int size);
+  inline void adoptGatewayId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownGatewayId();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class GatewayRegistrable::SturdyRefAtGatewayParams::Pipeline {
+public:
+  typedef SturdyRefAtGatewayParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::persistence::SturdyRef::Pipeline getGatewaySR();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class GatewayRegistrable::SturdyRefAtGatewayResults::Reader {
+public:
+  typedef SturdyRefAtGatewayResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSelfAtGatewaySR() const;
+  inline  ::mas::schema::persistence::SturdyRef::Reader getSelfAtGatewaySR() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class GatewayRegistrable::SturdyRefAtGatewayResults::Builder {
+public:
+  typedef SturdyRefAtGatewayResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSelfAtGatewaySR();
+  inline  ::mas::schema::persistence::SturdyRef::Builder getSelfAtGatewaySR();
+  inline void setSelfAtGatewaySR( ::mas::schema::persistence::SturdyRef::Reader value);
+  inline  ::mas::schema::persistence::SturdyRef::Builder initSelfAtGatewaySR();
+  inline void adoptSelfAtGatewaySR(::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value);
+  inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> disownSelfAtGatewaySR();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class GatewayRegistrable::SturdyRefAtGatewayResults::Pipeline {
+public:
+  typedef SturdyRefAtGatewayResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::persistence::SturdyRef::Pipeline getSelfAtGatewaySR();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 // =======================================================================================
 
 inline  ::uint64_t VatId::Reader::getPublicKey0() const {
@@ -4057,6 +4336,142 @@ inline ::capnp::Orphan< ::capnp::Capability> Gateway::RegisterParams::Builder::d
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+inline GatewayRegistrable::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline GatewayRegistrable::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline GatewayRegistrable::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline GatewayRegistrable::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline GatewayRegistrable::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::persistence::GatewayRegistrable::Client& GatewayRegistrable::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::persistence::GatewayRegistrable::Client& GatewayRegistrable::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool GatewayRegistrable::SturdyRefAtGatewayParams::Reader::hasGatewaySR() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool GatewayRegistrable::SturdyRefAtGatewayParams::Builder::hasGatewaySR() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::persistence::SturdyRef::Reader GatewayRegistrable::SturdyRefAtGatewayParams::Reader::getGatewaySR() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::persistence::SturdyRef::Builder GatewayRegistrable::SturdyRefAtGatewayParams::Builder::getGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::persistence::SturdyRef::Pipeline GatewayRegistrable::SturdyRefAtGatewayParams::Pipeline::getGatewaySR() {
+  return  ::mas::schema::persistence::SturdyRef::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void GatewayRegistrable::SturdyRefAtGatewayParams::Builder::setGatewaySR( ::mas::schema::persistence::SturdyRef::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::persistence::SturdyRef::Builder GatewayRegistrable::SturdyRefAtGatewayParams::Builder::initGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void GatewayRegistrable::SturdyRefAtGatewayParams::Builder::adoptGatewaySR(
+    ::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> GatewayRegistrable::SturdyRefAtGatewayParams::Builder::disownGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool GatewayRegistrable::SturdyRefAtGatewayParams::Reader::hasGatewayId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool GatewayRegistrable::SturdyRefAtGatewayParams::Builder::hasGatewayId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader GatewayRegistrable::SturdyRefAtGatewayParams::Reader::getGatewayId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder GatewayRegistrable::SturdyRefAtGatewayParams::Builder::getGatewayId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void GatewayRegistrable::SturdyRefAtGatewayParams::Builder::setGatewayId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder GatewayRegistrable::SturdyRefAtGatewayParams::Builder::initGatewayId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void GatewayRegistrable::SturdyRefAtGatewayParams::Builder::adoptGatewayId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> GatewayRegistrable::SturdyRefAtGatewayParams::Builder::disownGatewayId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool GatewayRegistrable::SturdyRefAtGatewayResults::Reader::hasSelfAtGatewaySR() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool GatewayRegistrable::SturdyRefAtGatewayResults::Builder::hasSelfAtGatewaySR() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::persistence::SturdyRef::Reader GatewayRegistrable::SturdyRefAtGatewayResults::Reader::getSelfAtGatewaySR() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::persistence::SturdyRef::Builder GatewayRegistrable::SturdyRefAtGatewayResults::Builder::getSelfAtGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::persistence::SturdyRef::Pipeline GatewayRegistrable::SturdyRefAtGatewayResults::Pipeline::getSelfAtGatewaySR() {
+  return  ::mas::schema::persistence::SturdyRef::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void GatewayRegistrable::SturdyRefAtGatewayResults::Builder::setSelfAtGatewaySR( ::mas::schema::persistence::SturdyRef::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::persistence::SturdyRef::Builder GatewayRegistrable::SturdyRefAtGatewayResults::Builder::initSelfAtGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void GatewayRegistrable::SturdyRefAtGatewayResults::Builder::adoptSelfAtGatewaySR(
+    ::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> GatewayRegistrable::SturdyRefAtGatewayResults::Builder::disownSelfAtGatewaySR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
 
 }  // namespace
 }  // namespace

@@ -11,8 +11,8 @@ namespace Mas.Schema.Service
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xfec1f88b198df649UL),
-        Proxy(typeof(Admin_Proxy)),
-        Skeleton(typeof(Admin_Skeleton))
+        Proxy(typeof(Mas.Schema.Service.Admin_Proxy)),
+        Skeleton(typeof(Mas.Schema.Service.Admin_Skeleton))
     ]
     public interface IAdmin : Mas.Schema.Common.IIdentifiable
     {
@@ -721,7 +721,6 @@ namespace Mas.Schema.Service
             public void applyDefaults() { }
 
             public string OldId { get; set; }
-
             public Mas.Schema.Common.IdInformation NewInfo { get; set; }
 
             public struct READER
@@ -757,7 +756,6 @@ namespace Mas.Schema.Service
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public Mas.Schema.Common.IdInformation.WRITER NewInfo
                 {
                     get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(1);
@@ -818,8 +816,8 @@ namespace Mas.Schema.Service
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xaba5829222c213cbUL),
-        Proxy(typeof(SimpleFactory_Proxy)),
-        Skeleton(typeof(SimpleFactory_Skeleton))
+        Proxy(typeof(Mas.Schema.Service.SimpleFactory_Proxy)),
+        Skeleton(typeof(Mas.Schema.Service.SimpleFactory_Skeleton))
     ]
     public interface ISimpleFactory : Mas.Schema.Common.IIdentifiable
     {
@@ -1041,8 +1039,8 @@ namespace Mas.Schema.Service
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x8ab0ecb99c269c7fUL),
-        Proxy(typeof(Factory_Proxy<>)),
-        Skeleton(typeof(Factory_Skeleton<>))
+        Proxy(typeof(Mas.Schema.Service.Factory_Proxy<>)),
+        Skeleton(typeof(Mas.Schema.Service.Factory_Skeleton<>))
     ]
     public interface IFactory<TPayload> : Mas.Schema.Common.IIdentifiable
         where TPayload : class
@@ -1252,7 +1250,6 @@ namespace Mas.Schema.Service
                 string,
                 string
             >> InterfaceNameToRegistrySR { get; set; }
-
             public TPayload MsgPayload { get; set; }
 
             public struct READER
@@ -1292,7 +1289,6 @@ namespace Mas.Schema.Service
                     get => this.ReadDataULong(0UL, 3600UL);
                     set => this.WriteData(0UL, value, 3600UL);
                 }
-
                 public ListOfStructsSerializer<Mas.Schema.Common.Pair<
                     string,
                     string
@@ -1304,7 +1300,6 @@ namespace Mas.Schema.Service
                         >(0);
                     set => Link(0, value);
                 }
-
                 public DynamicSerializerState MsgPayload
                 {
                     get => BuildPointer<DynamicSerializerState>(1);
@@ -1345,9 +1340,7 @@ namespace Mas.Schema.Service
             public void applyDefaults() { }
 
             public BareProxy AdminCap { get; set; }
-
             public IReadOnlyList<Mas.Schema.Common.IIdentifiable> ServiceCaps { get; set; }
-
             public string Error { get; set; }
 
             public struct READER
@@ -1384,13 +1377,11 @@ namespace Mas.Schema.Service
                     get => ReadCap<BareProxy>(0);
                     set => LinkObject(0, value);
                 }
-
                 public ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable> ServiceCaps
                 {
                     get => BuildPointer<ListOfCapsSerializer<Mas.Schema.Common.IIdentifiable>>(1);
                     set => Link(1, value);
                 }
-
                 public string Error
                 {
                     get => this.ReadText(2, null);
@@ -1514,8 +1505,8 @@ namespace Mas.Schema.Service
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xcd5f6458232e9276UL),
-        Proxy(typeof(Stoppable_Proxy)),
-        Skeleton(typeof(Stoppable_Skeleton))
+        Proxy(typeof(Mas.Schema.Service.Stoppable_Proxy)),
+        Skeleton(typeof(Mas.Schema.Service.Stoppable_Skeleton))
     ]
     public interface IStoppable : IDisposable
     {

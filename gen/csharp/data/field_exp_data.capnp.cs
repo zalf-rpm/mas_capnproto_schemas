@@ -68,19 +68,12 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public string InstituteName { get; set; }
-
         public string Site { get; set; }
-
         public string Country { get; set; }
-
         public string Location2ndLevel { get; set; }
-
         public string Location3rdLevel { get; set; }
-
         public double LatitudeInDecDeg { get; set; } = -9999;
         public double LongitudeInDecDeg { get; set; } = -9999;
         public double ElevationM { get; set; } = -9999;
@@ -138,97 +131,81 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string InstituteName
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string Site
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string Country
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string Location2ndLevel
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string Location3rdLevel
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
             }
-
             public double LatitudeInDecDeg
             {
                 get => this.ReadDataDouble(0UL, -9999);
                 set => this.WriteData(0UL, value, -9999);
             }
-
             public double LongitudeInDecDeg
             {
                 get => this.ReadDataDouble(64UL, -9999);
                 set => this.WriteData(64UL, value, -9999);
             }
-
             public double ElevationM
             {
                 get => this.ReadDataDouble(128UL, -9999);
                 set => this.WriteData(128UL, value, -9999);
             }
-
             public double YearlyAvgTempInDegC
             {
                 get => this.ReadDataDouble(192UL, -9999);
                 set => this.WriteData(192UL, value, -9999);
             }
-
             public double AmplitudeOfMonthlyAvgTempsInDegC
             {
                 get => this.ReadDataDouble(256UL, -9999);
                 set => this.WriteData(256UL, value, -9999);
             }
-
             public double TempSensorHeightInM
             {
                 get => this.ReadDataDouble(320UL, -1);
                 set => this.WriteData(320UL, value, -1);
             }
-
             public double RefHeightWeatherMeasurementInM
             {
                 get => this.ReadDataDouble(384UL, -1);
                 set => this.WriteData(384UL, value, -1);
             }
-
             public double RefHeightWindspeedMeasurementInM
             {
                 get => this.ReadDataDouble(448UL, -1);
                 set => this.WriteData(448UL, value, -1);
             }
-
             public double AnnualCO2ConcentrationInPPM
             {
                 get => this.ReadDataDouble(512UL, -1);
                 set => this.WriteData(512UL, value, -1);
             }
-
             public string Notes
             {
                 get => this.ReadText(7, null);
@@ -301,11 +278,8 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public string Source { get; set; }
-
         public short DepthInCM { get; set; } = -1;
         public short ObstableDepthInCM { get; set; } = -1;
         public short DepthOfTopsoilInCM { get; set; } = -1;
@@ -318,13 +292,9 @@ namespace Mas.Schema.Data
         public double MineralizationFactor { get; set; } = -1;
         public double SoilFertilityOnFoto { get; set; } = -1;
         public string SoilClassificationSystem { get; set; }
-
         public string SoilTexture { get; set; }
-
         public string Classification { get; set; }
-
         public string Notes { get; set; }
-
         public Mas.Schema.Soil.IProfile Profile { get; set; }
 
         public struct READER
@@ -375,109 +345,91 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string Source
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public short DepthInCM
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public short ObstableDepthInCM
             {
                 get => this.ReadDataShort(16UL, (short)-1);
                 set => this.WriteData(16UL, value, (short)-1);
             }
-
             public short DepthOfTopsoilInCM
             {
                 get => this.ReadDataShort(32UL, (short)-1);
                 set => this.WriteData(32UL, value, (short)-1);
             }
-
             public double DrainageRatePerDay
             {
                 get => this.ReadDataDouble(64UL, -1);
                 set => this.WriteData(64UL, value, -1);
             }
-
             public double RunoffCureNoSCS
             {
                 get => this.ReadDataDouble(128UL, -1);
                 set => this.WriteData(128UL, value, -1);
             }
-
             public double SoilAvailableWaterContentInCM
             {
                 get => this.ReadDataDouble(192UL, -1);
                 set => this.WriteData(192UL, value, -1);
             }
-
             public double SurfaceStoneCoverAsFraction
             {
                 get => this.ReadDataDouble(256UL, -1);
                 set => this.WriteData(256UL, value, -1);
             }
-
             public double SoilAlbedo
             {
                 get => this.ReadDataDouble(320UL, -1);
                 set => this.WriteData(320UL, value, -1);
             }
-
             public double SoilEvaporationLimitInMM
             {
                 get => this.ReadDataDouble(384UL, -1);
                 set => this.WriteData(384UL, value, -1);
             }
-
             public double MineralizationFactor
             {
                 get => this.ReadDataDouble(448UL, -1);
                 set => this.WriteData(448UL, value, -1);
             }
-
             public double SoilFertilityOnFoto
             {
                 get => this.ReadDataDouble(512UL, -1);
                 set => this.WriteData(512UL, value, -1);
             }
-
             public string SoilClassificationSystem
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string SoilTexture
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string Classification
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string Notes
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
             }
-
             public Mas.Schema.Soil.IProfile Profile
             {
                 get => ReadCap<Mas.Schema.Soil.IProfile>(7);
@@ -536,22 +488,16 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public double LatitudeInDecDeg { get; set; } = -9999;
         public double LongitudeInDecDeg { get; set; } = -9999;
         public double ElevationInM { get; set; } = -9999;
         public double SlopeDegreeInDeg { get; set; } = -1;
         public string DrainageType { get; set; }
-
         public double DistanceToWeatherStationInKM { get; set; } = -1;
         public string Country { get; set; }
-
         public string SubCountry { get; set; }
-
         public string SubSubCountry { get; set; }
-
         public string Notes { get; set; }
 
         public struct READER
@@ -595,67 +541,56 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public double LatitudeInDecDeg
             {
                 get => this.ReadDataDouble(0UL, -9999);
                 set => this.WriteData(0UL, value, -9999);
             }
-
             public double LongitudeInDecDeg
             {
                 get => this.ReadDataDouble(64UL, -9999);
                 set => this.WriteData(64UL, value, -9999);
             }
-
             public double ElevationInM
             {
                 get => this.ReadDataDouble(128UL, -9999);
                 set => this.WriteData(128UL, value, -9999);
             }
-
             public double SlopeDegreeInDeg
             {
                 get => this.ReadDataDouble(192UL, -1);
                 set => this.WriteData(192UL, value, -1);
             }
-
             public string DrainageType
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public double DistanceToWeatherStationInKM
             {
                 get => this.ReadDataDouble(256UL, -1);
                 set => this.WriteData(256UL, value, -1);
             }
-
             public string Country
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string SubCountry
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string SubSubCountry
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string Notes
             {
                 get => this.ReadText(6, null);
@@ -728,37 +663,22 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string SuiteId { get; set; }
-
         public string Name { get; set; }
-
         public string ResearchInfrastructureName { get; set; }
-
         public string InstituteName { get; set; }
-
         public string ResearchUnitName { get; set; }
-
         public string ExperimentalFacilityName { get; set; }
-
         public string SiteName { get; set; }
-
         public string SiteType { get; set; }
-
         public string MainExperimentFactor { get; set; }
-
         public string ExperimentalFactorCombinations { get; set; }
-
         public string ExperimentType { get; set; }
-
         public string ManagementType { get; set; }
-
         public string CroppingSystem { get; set; }
-
         public short PlantingYear { get; set; } = -1;
         public short HarvestOperationYear { get; set; } = -1;
         public string Notes { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.Treatment> Treatments { get; set; }
 
         public struct READER
@@ -810,103 +730,86 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string SuiteId
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string ResearchInfrastructureName
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string InstituteName
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string ResearchUnitName
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string ExperimentalFacilityName
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
             }
-
             public string SiteName
             {
                 get => this.ReadText(7, null);
                 set => this.WriteText(7, value, null);
             }
-
             public string SiteType
             {
                 get => this.ReadText(8, null);
                 set => this.WriteText(8, value, null);
             }
-
             public string MainExperimentFactor
             {
                 get => this.ReadText(9, null);
                 set => this.WriteText(9, value, null);
             }
-
             public string ExperimentalFactorCombinations
             {
                 get => this.ReadText(10, null);
                 set => this.WriteText(10, value, null);
             }
-
             public string ExperimentType
             {
                 get => this.ReadText(11, null);
                 set => this.WriteText(11, value, null);
             }
-
             public string ManagementType
             {
                 get => this.ReadText(12, null);
                 set => this.WriteText(12, value, null);
             }
-
             public string CroppingSystem
             {
                 get => this.ReadText(13, null);
                 set => this.WriteText(13, value, null);
             }
-
             public short PlantingYear
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public short HarvestOperationYear
             {
                 get => this.ReadDataShort(16UL, (short)-1);
                 set => this.WriteData(16UL, value, (short)-1);
             }
-
             public string Notes
             {
                 get => this.ReadText(14, null);
                 set => this.WriteText(14, value, null);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.Treatment.WRITER> Treatments
             {
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.Treatment.WRITER>>(15);
@@ -1025,23 +928,14 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public Mas.Schema.Data.Field Field { get; set; }
-
         public Mas.Schema.Data.WeatherStation WeatherStation { get; set; }
-
         public Mas.Schema.Climate.ITimeSeries WeatherStationTimeseries { get; set; }
-
         public string Name { get; set; }
-
         public Mas.Schema.Common.Date SimulationStartDate { get; set; }
-
         public Mas.Schema.Common.Date SimulationEndDate { get; set; }
-
         public bool IrrigationApplied { get; set; }
-
         public bool FertilizerApplied { get; set; }
-
         public sbyte IrrigationLevel { get; set; } = -1;
         public sbyte FertilizerLevel { get; set; } = -1;
         public sbyte PlantingDateLevel { get; set; } = -1;
@@ -1050,29 +944,17 @@ namespace Mas.Schema.Data
         public sbyte PlantingDensityLevel { get; set; } = -1;
         public sbyte NumberOfBlocksOrReplicates { get; set; } = -1;
         public string Notes { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.Plot> Plots { get; set; }
-
         public Mas.Schema.Data.Residue Residue { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.InitialConditionsLayer> InitialConditionsLayers { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.PlantingEvent> PlantingEvents { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.HarvestEvent> HarvestEvents { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.IrrigationEvent> IrrigationEvents { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.FertilizerEvent> FertilizerEvents { get; set; }
-
         public IReadOnlyList<Mas.Schema.Data.EnvironmentModification> EnvironmentModifications { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string FieldId { get; set; }
-
         public string WeatherStationId { get; set; }
-
         public string WeatherStationDataset { get; set; }
 
         public struct READER
@@ -1158,115 +1040,96 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public Mas.Schema.Data.Field.WRITER Field
             {
                 get => BuildPointer<Mas.Schema.Data.Field.WRITER>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Data.WeatherStation.WRITER WeatherStation
             {
                 get => BuildPointer<Mas.Schema.Data.WeatherStation.WRITER>(2);
                 set => Link(2, value);
             }
-
             public Mas.Schema.Climate.ITimeSeries WeatherStationTimeseries
             {
                 get => ReadCap<Mas.Schema.Climate.ITimeSeries>(3);
                 set => LinkObject(3, value);
             }
-
             public string Name
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public Mas.Schema.Common.Date.WRITER SimulationStartDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(5);
                 set => Link(5, value);
             }
-
             public Mas.Schema.Common.Date.WRITER SimulationEndDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(6);
                 set => Link(6, value);
             }
-
             public bool IrrigationApplied
             {
                 get => this.ReadDataBool(0UL, false);
                 set => this.WriteData(0UL, value, false);
             }
-
             public bool FertilizerApplied
             {
                 get => this.ReadDataBool(1UL, false);
                 set => this.WriteData(1UL, value, false);
             }
-
             public sbyte IrrigationLevel
             {
                 get => this.ReadDataSByte(8UL, (sbyte)-1);
                 set => this.WriteData(8UL, value, (sbyte)-1);
             }
-
             public sbyte FertilizerLevel
             {
                 get => this.ReadDataSByte(16UL, (sbyte)-1);
                 set => this.WriteData(16UL, value, (sbyte)-1);
             }
-
             public sbyte PlantingDateLevel
             {
                 get => this.ReadDataSByte(24UL, (sbyte)-1);
                 set => this.WriteData(24UL, value, (sbyte)-1);
             }
-
             public sbyte EnvironmentalModificationsLevel
             {
                 get => this.ReadDataSByte(32UL, (sbyte)-1);
                 set => this.WriteData(32UL, value, (sbyte)-1);
             }
-
             public sbyte InitialConditionsLevel
             {
                 get => this.ReadDataSByte(40UL, (sbyte)-1);
                 set => this.WriteData(40UL, value, (sbyte)-1);
             }
-
             public sbyte PlantingDensityLevel
             {
                 get => this.ReadDataSByte(48UL, (sbyte)-1);
                 set => this.WriteData(48UL, value, (sbyte)-1);
             }
-
             public sbyte NumberOfBlocksOrReplicates
             {
                 get => this.ReadDataSByte(56UL, (sbyte)-1);
                 set => this.WriteData(56UL, value, (sbyte)-1);
             }
-
             public string Notes
             {
                 get => this.ReadText(7, null);
                 set => this.WriteText(7, value, null);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.Plot.WRITER> Plots
             {
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.Plot.WRITER>>(8);
                 set => Link(8, value);
             }
-
             public Mas.Schema.Data.Residue.WRITER Residue
             {
                 get => BuildPointer<Mas.Schema.Data.Residue.WRITER>(9);
                 set => Link(9, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.InitialConditionsLayer.WRITER> InitialConditionsLayers
             {
                 get =>
@@ -1275,21 +1138,18 @@ namespace Mas.Schema.Data
                     >(10);
                 set => Link(10, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.PlantingEvent.WRITER> PlantingEvents
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.PlantingEvent.WRITER>>(11);
                 set => Link(11, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.HarvestEvent.WRITER> HarvestEvents
             {
                 get =>
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Data.HarvestEvent.WRITER>>(12);
                 set => Link(12, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.IrrigationEvent.WRITER> IrrigationEvents
             {
                 get =>
@@ -1298,7 +1158,6 @@ namespace Mas.Schema.Data
                     );
                 set => Link(13, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.FertilizerEvent.WRITER> FertilizerEvents
             {
                 get =>
@@ -1307,7 +1166,6 @@ namespace Mas.Schema.Data
                     );
                 set => Link(14, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Data.EnvironmentModification.WRITER> EnvironmentModifications
             {
                 get =>
@@ -1316,25 +1174,21 @@ namespace Mas.Schema.Data
                     >(15);
                 set => Link(15, value);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(16, null);
                 set => this.WriteText(16, value, null);
             }
-
             public string FieldId
             {
                 get => this.ReadText(17, null);
                 set => this.WriteText(17, value, null);
             }
-
             public string WeatherStationId
             {
                 get => this.ReadText(18, null);
                 set => this.WriteText(18, value, null);
             }
-
             public string WeatherStationDataset
             {
                 get => this.ReadText(19, null);
@@ -1391,24 +1245,15 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public string AccessionId { get; set; }
-
         public string AccessionLocation { get; set; }
-
         public string CropIdentifierICASA { get; set; }
-
         public string SeedLot { get; set; }
-
         public string BreedingProgram { get; set; }
-
         public string OriginalName { get; set; }
-
         public short ReleaseYear { get; set; } = -1;
         public string Synonym { get; set; }
-
         public string Notes { get; set; }
 
         public struct READER
@@ -1451,61 +1296,51 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public string Name
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string AccessionId
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string AccessionLocation
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string CropIdentifierICASA
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string SeedLot
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string BreedingProgram
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
             }
-
             public string OriginalName
             {
                 get => this.ReadText(7, null);
                 set => this.WriteText(7, value, null);
             }
-
             public short ReleaseYear
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public string Synonym
             {
                 get => this.ReadText(8, null);
                 set => this.WriteText(8, value, null);
             }
-
             public string Notes
             {
                 get => this.ReadText(9, null);
@@ -1568,26 +1403,18 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string Id { get; set; }
-
         public Mas.Schema.Data.Cultivar Cultivar { get; set; }
-
         public Mas.Schema.Data.SoilMetadata Soil { get; set; }
-
         public sbyte BlockNumber { get; set; } = -1;
         public sbyte PlotNumber { get; set; } = -1;
         public sbyte ReplicateNumber { get; set; } = -1;
         public sbyte RowNumber { get; set; } = -1;
         public sbyte ColumnNumber { get; set; } = -1;
         public string HarvestMethod { get; set; }
-
         public string Notes { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
-
         public string CultivarId { get; set; }
-
         public string SoilId { get; set; }
 
         public struct READER
@@ -1637,79 +1464,66 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public Mas.Schema.Data.Cultivar.WRITER Cultivar
             {
                 get => BuildPointer<Mas.Schema.Data.Cultivar.WRITER>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Data.SoilMetadata.WRITER Soil
             {
                 get => BuildPointer<Mas.Schema.Data.SoilMetadata.WRITER>(2);
                 set => Link(2, value);
             }
-
             public sbyte BlockNumber
             {
                 get => this.ReadDataSByte(0UL, (sbyte)-1);
                 set => this.WriteData(0UL, value, (sbyte)-1);
             }
-
             public sbyte PlotNumber
             {
                 get => this.ReadDataSByte(8UL, (sbyte)-1);
                 set => this.WriteData(8UL, value, (sbyte)-1);
             }
-
             public sbyte ReplicateNumber
             {
                 get => this.ReadDataSByte(16UL, (sbyte)-1);
                 set => this.WriteData(16UL, value, (sbyte)-1);
             }
-
             public sbyte RowNumber
             {
                 get => this.ReadDataSByte(24UL, (sbyte)-1);
                 set => this.WriteData(24UL, value, (sbyte)-1);
             }
-
             public sbyte ColumnNumber
             {
                 get => this.ReadDataSByte(32UL, (sbyte)-1);
                 set => this.WriteData(32UL, value, (sbyte)-1);
             }
-
             public string HarvestMethod
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string Notes
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(6, null);
                 set => this.WriteText(6, value, null);
             }
-
             public string CultivarId
             {
                 get => this.ReadText(7, null);
                 set => this.WriteText(7, value, null);
             }
-
             public string SoilId
             {
                 get => this.ReadText(8, null);
@@ -1766,7 +1580,6 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Date { get; set; }
-
         public short SoilLayerTopDepthInCM { get; set; } = -1;
         public short SoilLayerBaseDepthInCM { get; set; } = -1;
         public double WaterConcentration { get; set; } = -1;
@@ -1776,7 +1589,6 @@ namespace Mas.Schema.Data
         public double ConcNH4InPPM { get; set; } = -1;
         public double ConcNO3InPPM { get; set; } = -1;
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -1821,61 +1633,51 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public short SoilLayerTopDepthInCM
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public short SoilLayerBaseDepthInCM
             {
                 get => this.ReadDataShort(16UL, (short)-1);
                 set => this.WriteData(16UL, value, (short)-1);
             }
-
             public double WaterConcentration
             {
                 get => this.ReadDataDouble(64UL, -1);
                 set => this.WriteData(64UL, value, -1);
             }
-
             public double TotalNInKGperHA
             {
                 get => this.ReadDataDouble(128UL, -1);
                 set => this.WriteData(128UL, value, -1);
             }
-
             public double MassNH4InKGperHA
             {
                 get => this.ReadDataDouble(192UL, -1);
                 set => this.WriteData(192UL, value, -1);
             }
-
             public double MassNO3InKGperHA
             {
                 get => this.ReadDataDouble(256UL, -1);
                 set => this.WriteData(256UL, value, -1);
             }
-
             public double ConcNH4InPPM
             {
                 get => this.ReadDataDouble(320UL, -1);
                 set => this.WriteData(320UL, value, -1);
             }
-
             public double ConcNO3InPPM
             {
                 get => this.ReadDataDouble(384UL, -1);
                 set => this.WriteData(384UL, value, -1);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(2, null);
@@ -1938,22 +1740,16 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public string PlantingDistribution { get; set; }
-
         public double RowSpacingInCM { get; set; } = -1;
         public double RowDirectionInArcDeg { get; set; } = -9999;
         public short PlantingDepthInMM { get; set; } = -1;
         public string PlotLayout { get; set; }
-
         public Mas.Schema.Common.Date PlantingDate { get; set; }
-
         public short PlantPopulationAtPlantingInNoPerM2 { get; set; } = -1;
         public Mas.Schema.Common.Date AverageEmergenceDate { get; set; }
-
         public short AveragePlantPopulationAtEmergenceInNoPerM2 { get; set; } = -1;
         public string Notes { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2002,67 +1798,56 @@ namespace Mas.Schema.Data
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
-
             public double RowSpacingInCM
             {
                 get => this.ReadDataDouble(0UL, -1);
                 set => this.WriteData(0UL, value, -1);
             }
-
             public double RowDirectionInArcDeg
             {
                 get => this.ReadDataDouble(64UL, -9999);
                 set => this.WriteData(64UL, value, -9999);
             }
-
             public short PlantingDepthInMM
             {
                 get => this.ReadDataShort(128UL, (short)-1);
                 set => this.WriteData(128UL, value, (short)-1);
             }
-
             public string PlotLayout
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public Mas.Schema.Common.Date.WRITER PlantingDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
                 set => Link(2, value);
             }
-
             public short PlantPopulationAtPlantingInNoPerM2
             {
                 get => this.ReadDataShort(144UL, (short)-1);
                 set => this.WriteData(144UL, value, (short)-1);
             }
-
             public Mas.Schema.Common.Date.WRITER AverageEmergenceDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
                 set => Link(3, value);
             }
-
             public short AveragePlantPopulationAtEmergenceInNoPerM2
             {
                 get => this.ReadDataShort(160UL, (short)-1);
                 set => this.WriteData(160UL, value, (short)-1);
             }
-
             public string Notes
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(5, null);
                 set => this.WriteText(5, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(6, null);
@@ -2111,16 +1896,11 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Date { get; set; }
-
         public string HarvestMethod { get; set; }
-
         public double HarvestArea { get; set; } = -1;
         public string Notes { get; set; }
-
         public string Comments { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2161,37 +1941,31 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public string HarvestMethod
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public double HarvestArea
             {
                 get => this.ReadDataDouble(0UL, -1);
                 set => this.WriteData(0UL, value, -1);
             }
-
             public string Notes
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string Comments
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(5, null);
@@ -2242,16 +2016,12 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Date { get; set; }
-
         public string Operation { get; set; }
-
         public short ApplicationDepth { get; set; } = -9999;
         public short Amount { get; set; } = -1;
         public double WaterNConcentrationInPerc { get; set; } = -1;
         public string Notes { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2293,43 +2063,36 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public string Operation
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public short ApplicationDepth
             {
                 get => this.ReadDataShort(0UL, (short)-9999);
                 set => this.WriteData(0UL, value, (short)-9999);
             }
-
             public short Amount
             {
                 get => this.ReadDataShort(16UL, (short)-1);
                 set => this.WriteData(16UL, value, (short)-1);
             }
-
             public double WaterNConcentrationInPerc
             {
                 get => this.ReadDataDouble(64UL, -1);
                 set => this.WriteData(64UL, value, -1);
             }
-
             public string Notes
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(4, null);
@@ -2384,19 +2147,14 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Date { get; set; }
-
         public string ApplicationMethod { get; set; }
-
         public short ApplicationDepthInCM { get; set; } = -1;
         public string Material { get; set; }
-
         public short AppliedNInKGNPerHA { get; set; } = -1;
         public short AppliedNO3InKGNperHA { get; set; } = -1;
         public short AppliedNH4InKGNperHA { get; set; } = -1;
         public string Notes { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2440,55 +2198,46 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public string ApplicationMethod
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public short ApplicationDepthInCM
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public string Material
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public short AppliedNInKGNPerHA
             {
                 get => this.ReadDataShort(16UL, (short)-1);
                 set => this.WriteData(16UL, value, (short)-1);
             }
-
             public short AppliedNO3InKGNperHA
             {
                 get => this.ReadDataShort(32UL, (short)-1);
                 set => this.WriteData(32UL, value, (short)-1);
             }
-
             public short AppliedNH4InKGNperHA
             {
                 get => this.ReadDataShort(48UL, (short)-1);
                 set => this.WriteData(48UL, value, (short)-1);
             }
-
             public string Notes
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(4, null);
                 set => this.WriteText(4, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(5, null);
@@ -2543,16 +2292,13 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date InitialMeasureDate { get; set; }
-
         public short IncorporationDepth { get; set; } = -1;
         public double PercentIncorporated { get; set; } = -1;
         public string PrevCropCode { get; set; }
-
         public double AboveGroundWeight { get; set; } = -1;
         public double AboveGroundNConcentrationInPerc { get; set; } = -1;
         public double RootWeightPreviousCrop { get; set; } = -1;
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2595,49 +2341,41 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public short IncorporationDepth
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public double PercentIncorporated
             {
                 get => this.ReadDataDouble(64UL, -1);
                 set => this.WriteData(64UL, value, -1);
             }
-
             public string PrevCropCode
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public double AboveGroundWeight
             {
                 get => this.ReadDataDouble(128UL, -1);
                 set => this.WriteData(128UL, value, -1);
             }
-
             public double AboveGroundNConcentrationInPerc
             {
                 get => this.ReadDataDouble(192UL, -1);
                 set => this.WriteData(192UL, value, -1);
             }
-
             public double RootWeightPreviousCrop
             {
                 get => this.ReadDataDouble(256UL, -1);
                 set => this.WriteData(256UL, value, -1);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(3, null);
@@ -2684,14 +2422,10 @@ namespace Mas.Schema.Data
         public void applyDefaults() { }
 
         public Mas.Schema.Common.Date Date { get; set; }
-
         public string CodeCO2 { get; set; }
-
         public short ValueCO2 { get; set; } = -1;
         public string Notes { get; set; }
-
         public string ExperimentId { get; set; }
-
         public string TreatmentId { get; set; }
 
         public struct READER
@@ -2731,31 +2465,26 @@ namespace Mas.Schema.Data
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                 set => Link(0, value);
             }
-
             public string CodeCO2
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
-
             public short ValueCO2
             {
                 get => this.ReadDataShort(0UL, (short)-1);
                 set => this.WriteData(0UL, value, (short)-1);
             }
-
             public string Notes
             {
                 get => this.ReadText(2, null);
                 set => this.WriteText(2, value, null);
             }
-
             public string ExperimentId
             {
                 get => this.ReadText(3, null);
                 set => this.WriteText(3, value, null);
             }
-
             public string TreatmentId
             {
                 get => this.ReadText(4, null);

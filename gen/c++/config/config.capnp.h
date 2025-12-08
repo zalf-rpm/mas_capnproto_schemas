@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000002
+#elif CAPNP_VERSION != 1002000
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -175,7 +175,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename C2 = ::capnp::AnyPointer>
-  typename Service<C2>::NextConfigParams::Reader asServiceGeneric() {
+  typename Service<C2>::NextConfigParams::Reader asServiceGeneric() const {
     return typename Service<C2>::NextConfigParams::Reader(_reader);
   }
 
@@ -259,7 +259,7 @@ public:
 #endif  // !CAPNP_LITE
 
   template <typename C2 = ::capnp::AnyPointer>
-  typename Service<C2>::NextConfigResults::Reader asServiceGeneric() {
+  typename Service<C2>::NextConfigResults::Reader asServiceGeneric() const {
     return typename Service<C2>::NextConfigResults::Reader(_reader);
   }
 
