@@ -105,11 +105,8 @@ namespace Mas.Schema.Climate
         public void applyDefaults() { }
 
         public ushort R { get; set; }
-
         public ushort I { get; set; }
-
         public ushort P { get; set; }
-
         public ushort F { get; set; }
 
         public struct READER
@@ -145,19 +142,16 @@ namespace Mas.Schema.Climate
                 get => this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, value, (ushort)0);
             }
-
             public ushort I
             {
                 get => this.ReadDataUShort(16UL, (ushort)0);
                 set => this.WriteData(16UL, value, (ushort)0);
             }
-
             public ushort P
             {
                 get => this.ReadDataUShort(32UL, (ushort)0);
                 set => this.WriteData(32UL, value, (ushort)0);
             }
-
             public ushort F
             {
                 get => this.ReadDataUShort(48UL, (ushort)0);
@@ -198,7 +192,6 @@ namespace Mas.Schema.Climate
         public void applyDefaults() { }
 
         public IReadOnlyList<Mas.Schema.Climate.Metadata.Entry> Entries { get; set; }
-
         public Mas.Schema.Climate.Metadata.IInformation Info { get; set; }
 
         public struct READER
@@ -238,7 +231,6 @@ namespace Mas.Schema.Climate
                     );
                 set => Link(0, value);
             }
-
             public Mas.Schema.Climate.Metadata.IInformation Info
             {
                 get => ReadCap<Mas.Schema.Climate.Metadata.IInformation>(1);
@@ -249,8 +241,8 @@ namespace Mas.Schema.Climate
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xab06444b30722e01UL),
-            Proxy(typeof(Supported_Proxy)),
-            Skeleton(typeof(Supported_Skeleton))
+            Proxy(typeof(Mas.Schema.Climate.Metadata.Supported_Proxy)),
+            Skeleton(typeof(Mas.Schema.Climate.Metadata.Supported_Skeleton))
         ]
         public interface ISupported : IDisposable
         {
@@ -841,31 +833,26 @@ namespace Mas.Schema.Climate
                     get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
                     set => this.WriteData(0U, (ushort)value, (ushort)0);
                 }
-
                 public string Text
                 {
                     get => which == WHICH.Text ? this.ReadText(0, null) : default;
                     set => this.WriteText(0, value, null);
                 }
-
                 public double Float
                 {
                     get => which == WHICH.Float ? this.ReadDataDouble(64UL, 0) : default;
                     set => this.WriteData(64UL, value, 0);
                 }
-
                 public long Int
                 {
                     get => which == WHICH.Int ? this.ReadDataLong(64UL, 0L) : default;
                     set => this.WriteData(64UL, value, 0L);
                 }
-
                 public bool Bool
                 {
                     get => which == WHICH.Bool ? this.ReadDataBool(64UL, false) : default;
                     set => this.WriteData(64UL, value, false);
                 }
-
                 public Mas.Schema.Common.Date.WRITER Date
                 {
                     get =>
@@ -1214,7 +1201,6 @@ namespace Mas.Schema.Climate
                     get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                     set => this.WriteData(16U, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Climate.GCM Gcm
                 {
                     get =>
@@ -1223,7 +1209,6 @@ namespace Mas.Schema.Climate
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Climate.RCM Rcm
                 {
                     get =>
@@ -1232,7 +1217,6 @@ namespace Mas.Schema.Climate
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Climate.RCP Rcp
                 {
                     get =>
@@ -1241,7 +1225,6 @@ namespace Mas.Schema.Climate
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Climate.SSP Ssp
                 {
                     get =>
@@ -1250,7 +1233,6 @@ namespace Mas.Schema.Climate
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Climate.EnsembleMember.WRITER EnsMem
                 {
                     get =>
@@ -1259,13 +1241,11 @@ namespace Mas.Schema.Climate
                             : default;
                     set => Link(0, value);
                 }
-
                 public string Version
                 {
                     get => which == WHICH.Version ? this.ReadText(0, null) : default;
                     set => this.WriteText(0, value, null);
                 }
-
                 public Mas.Schema.Common.Date.WRITER Start
                 {
                     get =>
@@ -1274,7 +1254,6 @@ namespace Mas.Schema.Climate
                             : default;
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Common.Date.WRITER End
                 {
                     get =>
@@ -1283,13 +1262,11 @@ namespace Mas.Schema.Climate
                             : default;
                     set => Link(0, value);
                 }
-
                 public float Co2
                 {
                     get => which == WHICH.Co2 ? this.ReadDataFloat(32UL, 0F) : default;
                     set => this.WriteData(32UL, value, 0F);
                 }
-
                 public string Description
                 {
                     get => which == WHICH.Description ? this.ReadText(0, null) : default;
@@ -1301,8 +1278,8 @@ namespace Mas.Schema.Climate
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xc781edeab8160cb7UL),
-            Proxy(typeof(Information_Proxy)),
-            Skeleton(typeof(Information_Skeleton))
+            Proxy(typeof(Mas.Schema.Climate.Metadata.Information_Proxy)),
+            Skeleton(typeof(Mas.Schema.Climate.Metadata.Information_Skeleton))
         ]
         public interface IInformation : IDisposable
         {
@@ -1661,8 +1638,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xf635fdd1f05960f0UL),
-        Proxy(typeof(Dataset_Proxy)),
-        Skeleton(typeof(Dataset_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.Dataset_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.Dataset_Skeleton))
     ]
     public interface IDataset : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -2041,8 +2018,8 @@ namespace Mas.Schema.Climate
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xd61ba043f14fe175UL),
-            Proxy(typeof(GetLocationsCallback_Proxy)),
-            Skeleton(typeof(GetLocationsCallback_Skeleton))
+            Proxy(typeof(Mas.Schema.Climate.Dataset.GetLocationsCallback_Proxy)),
+            Skeleton(typeof(Mas.Schema.Climate.Dataset.GetLocationsCallback_Skeleton))
         ]
         public interface IGetLocationsCallback : IDisposable
         {
@@ -2846,7 +2823,6 @@ namespace Mas.Schema.Climate
         public void applyDefaults() { }
 
         public Mas.Schema.Climate.Metadata Meta { get; set; }
-
         public Mas.Schema.Climate.IDataset Data { get; set; }
 
         public struct READER
@@ -2882,7 +2858,6 @@ namespace Mas.Schema.Climate
                 get => BuildPointer<Mas.Schema.Climate.Metadata.WRITER>(0);
                 set => Link(0, value);
             }
-
             public Mas.Schema.Climate.IDataset Data
             {
                 get => ReadCap<Mas.Schema.Climate.IDataset>(1);
@@ -2915,6 +2890,7 @@ namespace Mas.Schema.Climate
         specificHumidity,
         snowfallFlux,
         surfaceDownwellingLongwaveRadiation,
+        potET,
     }
 
     [
@@ -2955,13 +2931,9 @@ namespace Mas.Schema.Climate
         public void applyDefaults() { }
 
         public Mas.Schema.Common.IdInformation Id { get; set; }
-
         public float HeightNN { get; set; }
-
         public Mas.Schema.Geo.LatLonCoord Latlon { get; set; }
-
         public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
-
         public IReadOnlyList<Mas.Schema.Climate.Location.KV> CustomData { get; set; }
 
         public struct READER
@@ -3005,25 +2977,21 @@ namespace Mas.Schema.Climate
                 get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                 set => Link(0, value);
             }
-
             public float HeightNN
             {
                 get => this.ReadDataFloat(0UL, 0F);
                 set => this.WriteData(0UL, value, 0F);
             }
-
             public Mas.Schema.Geo.LatLonCoord.WRITER Latlon
             {
                 get => BuildPointer<Mas.Schema.Geo.LatLonCoord.WRITER>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Climate.ITimeSeries TimeSeries
             {
                 get => ReadCap<Mas.Schema.Climate.ITimeSeries>(2);
                 set => LinkObject(2, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Climate.Location.KV.WRITER> CustomData
             {
                 get =>
@@ -3062,7 +3030,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public string Key { get; set; }
-
             public object Value { get; set; }
 
             public struct READER
@@ -3096,7 +3063,6 @@ namespace Mas.Schema.Climate
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public DynamicSerializerState Value
                 {
                     get => BuildPointer<DynamicSerializerState>(1);
@@ -3109,8 +3075,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xa7769f40fe6e6de8UL),
-        Proxy(typeof(TimeSeries_Proxy)),
-        Skeleton(typeof(TimeSeries_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.TimeSeries_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.TimeSeries_Skeleton))
     ]
     public interface ITimeSeries
         : Mas.Schema.Common.IIdentifiable,
@@ -3871,7 +3837,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public Mas.Schema.Common.Date StartDate { get; set; }
-
             public Mas.Schema.Common.Date EndDate { get; set; }
 
             public struct READER
@@ -3909,7 +3874,6 @@ namespace Mas.Schema.Climate
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Common.Date.WRITER EndDate
                 {
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
@@ -4290,7 +4254,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public Mas.Schema.Common.Date Start { get; set; }
-
             public Mas.Schema.Common.Date End { get; set; }
 
             public struct READER
@@ -4328,7 +4291,6 @@ namespace Mas.Schema.Climate
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Common.Date.WRITER End
                 {
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
@@ -4662,15 +4624,10 @@ namespace Mas.Schema.Climate
         public void applyDefaults() { }
 
         public IReadOnlyList<IReadOnlyList<float>> Data { get; set; }
-
         public bool IsTransposed { get; set; }
-
         public IReadOnlyList<Mas.Schema.Climate.Element> Header { get; set; }
-
         public Mas.Schema.Common.Date StartDate { get; set; }
-
         public Mas.Schema.Common.Date EndDate { get; set; }
-
         public Mas.Schema.Climate.TimeSeries.Resolution Resolution { get; set; } =
             Mas.Schema.Climate.TimeSeries.Resolution.daily;
 
@@ -4718,31 +4675,26 @@ namespace Mas.Schema.Climate
                 get => BuildPointer<ListOfPointersSerializer<ListOfPrimitivesSerializer<float>>>(0);
                 set => Link(0, value);
             }
-
             public bool IsTransposed
             {
                 get => this.ReadDataBool(0UL, false);
                 set => this.WriteData(0UL, value, false);
             }
-
             public ListOfPrimitivesSerializer<Mas.Schema.Climate.Element> Header
             {
                 get => BuildPointer<ListOfPrimitivesSerializer<Mas.Schema.Climate.Element>>(1);
                 set => Link(1, value);
             }
-
             public Mas.Schema.Common.Date.WRITER StartDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
                 set => Link(2, value);
             }
-
             public Mas.Schema.Common.Date.WRITER EndDate
             {
                 get => BuildPointer<Mas.Schema.Common.Date.WRITER>(3);
                 set => Link(3, value);
             }
-
             public Mas.Schema.Climate.TimeSeries.Resolution Resolution
             {
                 get =>
@@ -4755,8 +4707,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xfe7d08d4352b0c5fUL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Common.IIdentifiable, Mas.Schema.Persistence.IPersistent
     {
@@ -5203,8 +5155,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xa418c26cc59929d9UL),
-        Proxy(typeof(CSVTimeSeriesFactory_Proxy)),
-        Skeleton(typeof(CSVTimeSeriesFactory_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.CSVTimeSeriesFactory_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.CSVTimeSeriesFactory_Skeleton))
     ]
     public interface ICSVTimeSeriesFactory : Mas.Schema.Common.IIdentifiable
     {
@@ -5365,9 +5317,7 @@ namespace Mas.Schema.Climate
             }
 
             public string Sep { get; set; }
-
             public IReadOnlyList<Mas.Schema.Common.Pair<string, string>> HeaderMap { get; set; }
-
             public short SkipLinesToHeader { get; set; } = 0;
             public short SkipLinesFromHeaderToData { get; set; } = 1;
 
@@ -5406,7 +5356,6 @@ namespace Mas.Schema.Climate
                     get => this.ReadText(0, ",");
                     set => this.WriteText(0, value, ",");
                 }
-
                 public ListOfStructsSerializer<Mas.Schema.Common.Pair<
                     string,
                     string
@@ -5418,13 +5367,11 @@ namespace Mas.Schema.Climate
                         >(1);
                     set => Link(1, value);
                 }
-
                 public short SkipLinesToHeader
                 {
                     get => this.ReadDataShort(0UL, (short)0);
                     set => this.WriteData(0UL, value, (short)0);
                 }
-
                 public short SkipLinesFromHeaderToData
                 {
                     get => this.ReadDataShort(16UL, (short)1);
@@ -5466,7 +5413,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public string CsvData { get; set; }
-
             public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig Config { get; set; }
 
             public struct READER
@@ -5505,7 +5451,6 @@ namespace Mas.Schema.Climate
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public Mas.Schema.Climate.CSVTimeSeriesFactory.CSVConfig.WRITER Config
                 {
                     get =>
@@ -5545,7 +5490,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public Mas.Schema.Climate.ITimeSeries Timeseries { get; set; }
-
             public string Error { get; set; }
 
             public struct READER
@@ -5580,7 +5524,6 @@ namespace Mas.Schema.Climate
                     get => ReadCap<Mas.Schema.Climate.ITimeSeries>(0);
                     set => LinkObject(0, value);
                 }
-
                 public string Error
                 {
                     get => this.ReadText(1, null);
@@ -5593,8 +5536,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xe1f480ef979784b2UL),
-        Proxy(typeof(AlterTimeSeriesWrapper_Proxy)),
-        Skeleton(typeof(AlterTimeSeriesWrapper_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.AlterTimeSeriesWrapper_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.AlterTimeSeriesWrapper_Skeleton))
     ]
     public interface IAlterTimeSeriesWrapper : Mas.Schema.Climate.ITimeSeries
     {
@@ -6233,9 +6176,7 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public Mas.Schema.Climate.Element Element { get; set; }
-
             public float Value { get; set; }
-
             public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type { get; set; }
 
             public struct READER
@@ -6273,13 +6214,11 @@ namespace Mas.Schema.Climate
                     get => (Mas.Schema.Climate.Element)this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public float Value
                 {
                     get => this.ReadDataFloat(32UL, 0F);
                     set => this.WriteData(32UL, value, 0F);
                 }
-
                 public Mas.Schema.Climate.AlterTimeSeriesWrapper.AlterType Type
                 {
                     get =>
@@ -6561,7 +6500,6 @@ namespace Mas.Schema.Climate
             public void applyDefaults() { }
 
             public Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered Desc { get; set; }
-
             public bool AsNewTimeSeries { get; set; } = false;
 
             public struct READER
@@ -6601,7 +6539,6 @@ namespace Mas.Schema.Climate
                         BuildPointer<Mas.Schema.Climate.AlterTimeSeriesWrapper.Altered.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public bool AsNewTimeSeries
                 {
                     get => this.ReadDataBool(0UL, false);
@@ -6899,8 +6836,8 @@ namespace Mas.Schema.Climate
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xc5f12df0a2a52744UL),
-        Proxy(typeof(AlterTimeSeriesWrapperFactory_Proxy)),
-        Skeleton(typeof(AlterTimeSeriesWrapperFactory_Skeleton))
+        Proxy(typeof(Mas.Schema.Climate.AlterTimeSeriesWrapperFactory_Proxy)),
+        Skeleton(typeof(Mas.Schema.Climate.AlterTimeSeriesWrapperFactory_Skeleton))
     ]
     public interface IAlterTimeSeriesWrapperFactory : Mas.Schema.Common.IIdentifiable
     {

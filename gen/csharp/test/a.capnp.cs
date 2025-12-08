@@ -11,8 +11,8 @@ namespace Mas.Rpc.Test
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xba9eff6fb3abc84fUL),
-        Proxy(typeof(A_Proxy)),
-        Skeleton(typeof(A_Skeleton))
+        Proxy(typeof(Mas.Rpc.Test.A_Proxy)),
+        Skeleton(typeof(Mas.Rpc.Test.A_Skeleton))
     ]
     public interface IA : IDisposable
     {

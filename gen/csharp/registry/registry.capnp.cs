@@ -11,8 +11,8 @@ namespace Mas.Schema.Registry
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xf503f3237666574eUL),
-        Proxy(typeof(Admin_Proxy)),
-        Skeleton(typeof(Admin_Skeleton))
+        Proxy(typeof(Mas.Schema.Registry.Admin_Proxy)),
+        Skeleton(typeof(Mas.Schema.Registry.Admin_Skeleton))
     ]
     public interface IAdmin : Mas.Schema.Common.IIdentifiable
     {
@@ -410,7 +410,6 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public Mas.Schema.Common.IdInformation Category { get; set; }
-
             public bool Upsert { get; set; } = false;
 
             public struct READER
@@ -446,7 +445,6 @@ namespace Mas.Schema.Registry
                     get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public bool Upsert
                 {
                     get => this.ReadDataBool(0UL, false);
@@ -547,7 +545,6 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public string CategoryId { get; set; }
-
             public string MoveObjectsToCategoryId { get; set; }
 
             public struct READER
@@ -581,7 +578,6 @@ namespace Mas.Schema.Registry
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public string MoveObjectsToCategoryId
                 {
                     get => this.ReadText(1, null);
@@ -684,7 +680,6 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public IReadOnlyList<string> ObjectIds { get; set; }
-
             public string ToCatId { get; set; }
 
             public struct READER
@@ -719,7 +714,6 @@ namespace Mas.Schema.Registry
                     get => BuildPointer<ListOfTextSerializer>(0);
                     set => Link(0, value);
                 }
-
                 public string ToCatId
                 {
                     get => this.ReadText(1, null);
@@ -1033,8 +1027,8 @@ namespace Mas.Schema.Registry
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xca7b4bd1600633b8UL),
-        Proxy(typeof(Registry_Proxy)),
-        Skeleton(typeof(Registry_Skeleton))
+        Proxy(typeof(Mas.Schema.Registry.Registry_Proxy)),
+        Skeleton(typeof(Mas.Schema.Registry.Registry_Skeleton))
     ]
     public interface IRegistry : Mas.Schema.Common.IIdentifiable
     {
@@ -1289,11 +1283,8 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public string CategoryId { get; set; }
-
             public Mas.Schema.Common.IIdentifiable Ref { get; set; }
-
             public string Name { get; set; }
-
             public string Id { get; set; }
 
             public struct READER
@@ -1330,19 +1321,16 @@ namespace Mas.Schema.Registry
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public Mas.Schema.Common.IIdentifiable Ref
                 {
                     get => ReadCap<Mas.Schema.Common.IIdentifiable>(1);
                     set => LinkObject(1, value);
                 }
-
                 public string Name
                 {
                     get => this.ReadText(2, null);
                     set => this.WriteText(2, value, null);
                 }
-
                 public string Id
                 {
                     get => this.ReadText(3, null);
@@ -1665,8 +1653,8 @@ namespace Mas.Schema.Registry
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xabaef93c36f2d1eaUL),
-        Proxy(typeof(Registrar_Proxy)),
-        Skeleton(typeof(Registrar_Skeleton))
+        Proxy(typeof(Mas.Schema.Registry.Registrar_Proxy)),
+        Skeleton(typeof(Mas.Schema.Registry.Registrar_Skeleton))
     ]
     public interface IRegistrar : Mas.Schema.Common.IIdentifiable
     {
@@ -1816,7 +1804,6 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public Mas.Schema.Persistence.VatId VatId { get; set; }
-
             public Mas.Schema.Persistence.IRestorer Restorer { get; set; }
 
             public struct READER
@@ -1853,7 +1840,6 @@ namespace Mas.Schema.Registry
                     get => BuildPointer<Mas.Schema.Persistence.VatId.WRITER>(0);
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Persistence.IRestorer Restorer
                 {
                     get => ReadCap<Mas.Schema.Persistence.IRestorer>(1);
@@ -1899,11 +1885,8 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public Mas.Schema.Common.IIdentifiable Cap { get; set; }
-
             public string RegName { get; set; }
-
             public string CategoryId { get; set; }
-
             public Mas.Schema.Registry.Registrar.CrossDomainRestore XDomain { get; set; }
 
             public struct READER
@@ -1945,19 +1928,16 @@ namespace Mas.Schema.Registry
                     get => ReadCap<Mas.Schema.Common.IIdentifiable>(0);
                     set => LinkObject(0, value);
                 }
-
                 public string RegName
                 {
                     get => this.ReadText(1, null);
                     set => this.WriteText(1, value, null);
                 }
-
                 public string CategoryId
                 {
                     get => this.ReadText(2, null);
                     set => this.WriteText(2, value, null);
                 }
-
                 public Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER XDomain
                 {
                     get => BuildPointer<Mas.Schema.Registry.Registrar.CrossDomainRestore.WRITER>(3);
@@ -1969,8 +1949,8 @@ namespace Mas.Schema.Registry
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xc7597e4462528489UL),
-            Proxy(typeof(Unregister_Proxy)),
-            Skeleton(typeof(Unregister_Skeleton))
+            Proxy(typeof(Mas.Schema.Registry.Registrar.Unregister_Proxy)),
+            Skeleton(typeof(Mas.Schema.Registry.Registrar.Unregister_Skeleton))
         ]
         public interface IUnregister : IDisposable
         {
@@ -2193,7 +2173,6 @@ namespace Mas.Schema.Registry
             public void applyDefaults() { }
 
             public Mas.Schema.Registry.Registrar.IUnregister Unreg { get; set; }
-
             public Mas.Schema.Persistence.SturdyRef ReregSR { get; set; }
 
             public struct READER
@@ -2230,7 +2209,6 @@ namespace Mas.Schema.Registry
                     get => ReadCap<Mas.Schema.Registry.Registrar.IUnregister>(0);
                     set => LinkObject(0, value);
                 }
-
                 public Mas.Schema.Persistence.SturdyRef.WRITER ReregSR
                 {
                     get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1);

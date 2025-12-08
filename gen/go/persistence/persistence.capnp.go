@@ -2288,7 +2288,7 @@ func (c HostPortResolver_Registrar) Register(ctx context.Context, params func(Ho
 		},
 	}
 	if params != nil {
-		s.ArgsSize = capnp.ObjectSize{DataSize: 8, PointerCount: 3}
+		s.ArgsSize = capnp.ObjectSize{DataSize: 8, PointerCount: 4}
 		s.PlaceArgs = func(s capnp.Struct) error { return params(HostPortResolver_Registrar_RegisterParams(s)) }
 	}
 
@@ -2439,12 +2439,12 @@ type HostPortResolver_Registrar_RegisterParams capnp.Struct
 const HostPortResolver_Registrar_RegisterParams_TypeID = 0xbf018f62ff460d0f
 
 func NewHostPortResolver_Registrar_RegisterParams(s *capnp.Segment) (HostPortResolver_Registrar_RegisterParams, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 4})
 	return HostPortResolver_Registrar_RegisterParams(st), err
 }
 
 func NewRootHostPortResolver_Registrar_RegisterParams(s *capnp.Segment) (HostPortResolver_Registrar_RegisterParams, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 4})
 	return HostPortResolver_Registrar_RegisterParams(st), err
 }
 
@@ -2542,12 +2542,25 @@ func (s HostPortResolver_Registrar_RegisterParams) SetAlias(v string) error {
 	return capnp.Struct(s).SetText(2, v)
 }
 
+func (s HostPortResolver_Registrar_RegisterParams) IdentityProof() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(3)
+	return []byte(p.Data()), err
+}
+
+func (s HostPortResolver_Registrar_RegisterParams) HasIdentityProof() bool {
+	return capnp.Struct(s).HasPtr(3)
+}
+
+func (s HostPortResolver_Registrar_RegisterParams) SetIdentityProof(v []byte) error {
+	return capnp.Struct(s).SetData(3, v)
+}
+
 // HostPortResolver_Registrar_RegisterParams_List is a list of HostPortResolver_Registrar_RegisterParams.
 type HostPortResolver_Registrar_RegisterParams_List = capnp.StructList[HostPortResolver_Registrar_RegisterParams]
 
 // NewHostPortResolver_Registrar_RegisterParams creates a new list of HostPortResolver_Registrar_RegisterParams.
 func NewHostPortResolver_Registrar_RegisterParams_List(s *capnp.Segment, sz int32) (HostPortResolver_Registrar_RegisterParams_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 4}, sz)
 	return capnp.StructList[HostPortResolver_Registrar_RegisterParams](l), err
 }
 
@@ -3258,137 +3271,512 @@ func (p Gateway_register_Params_Future) Cap() capnp.Client {
 	return p.Future.Field(0, nil).Client()
 }
 
-const schema_855efed3475f6b26 = "x\xda\xacX}l[\xd5\x15?\xe7=;\xcfN\xec" +
-	":77\x19[F\x94\x91\xa6\x0b\x0d\xadi\xe3\x10\xa6" +
-	"\x0a\xa9MF\xeb&[4_gC4\xa8\xd0\x97\xf8" +
-	"\xa618\xb6\xfb\xdesR#\xa6\xd0\x0d4Z\x1au" +
-	"\xd9$\xb4N\xad\x0a\xd3>DQ\xd5\xd1A\xa5j\xaa" +
-	"\x10\x15\xfb*\x9a\xb4v\xaaP\x0b\x9a\xb6N\xdb(\xa2" +
-	"\x9a\xa8&\x8du\xc0\x9b\xee{~\x1fq\x9cd \xfe" +
-	"\x89\xec\xfb\xce;\xe7\xdc\xdf\xf9\x9d\xdf9\xce\x86;\x82" +
-	"[\x02\x1b\xa3\x85(H\xecH\xb0\xce\x1c\xfe\xd3\xb7\xdb" +
-	"\xba&\xa7\x9e\x02\xd2\x84\xe6\x17\x1fy(\xf9\xc7\x8f\x1e" +
-	"|\x12\x82\x92\x02@\x8f\xd6]\xa5\xcf\xd7u\x01\xd0\xb3" +
-	"u3\x80\xe6\xf9\xde\xe7^\xb9r\xe0\xf4\x01 \xb7\"" +
-	"@@\x01H\xb4)\x03\x08\x013\x1d?\xf6\x99}\xb1" +
-	"\xe2! m\xb2\xc9_\xef{\xeb\xd9+?{\x15\x00" +
-	"\x13AEC\xfa9ExkQ\x92\x94\x8bO\xe6\xf5" +
-	"\xae;w\xd5\xaf;r\x08H\x93\xec\xc5\x04\xa4\xc3\xca" +
-	"E\xbaC\xb9\x05\x80r%I\xe7\x95.\x003{`" +
-	"\xff\xed\x81\x9d\xa7\x0e\x01kE\xd9\x8c>\xf0\xec\x9e\xba" +
-	"}\xc9\xffB\x0b*\x08@\xf7+7\x00\xe9\x9c\"\xd2" +
-	"\x1by\xbb\xb1\xf3\xaf\xf9\xf5\xdf\x07\x16G'\xbfk\xca" +
-	"\x0d\x04\xa4\x1f*\x9b\x01\xcdM\xe7\x93\x17n\x9e\xfd\xc5" +
-	"\xb1Eq\xdbBW\xe9\xda\x90HrM(I\x87\xc5" +
-	"'\xf3\x9e\xf8\xe5\xae'n;\xbd\xd8\xf8\xae\xd0\x15\xda" +
-	"\x1f\x12I\x0e\x87\x92\xb4d\x19\x1f\x9f\xbdV\xde\xf9\xeb" +
-	"\x9e\x1f\x89$\xd1\xbb\x9f\x05cbg\xa8\x1b\xe9\x94\xe5" +
-	">\x1b:\x09h\xb6<\xf6\xf8\xe5/\x1c|\xf3\xc7@" +
-	"\xe2N\x9e$\xfc\x8e\xc0\xf1X\xdb\x1fN\xdf\x9c\x9f;" +
-	"^\x1d4\x11\x0c\xb7\"m\x09\x8b\xa8\xb7\x85\x93tO" +
-	"X@s\xea\xbb\xdb\x8a\xa5\x7f\x9f\xff9\x90\xd5\xb2\xf7" +
-	"*`\"\x1b~\x18\xe97-\xeb\xfd\xe1$}9," +
-	"r\x8cE\xb7\x99c\x87\xf0\x15`\xeb\x11\xbdw\x83\xb2" +
-	"\x88\x7f4|\x15\xe9\x19aG_\x0e\xff\x03\xd0+b" +
-	"\xf5\xf5\xe7\xea\xdf\xa1\x87\xeb\xef\x06\xa0\xbf\xabO\xd2\xf7" +
-	"\xea\x85\xebMo\xdc=4\xfd\xb7\xfe_\x01\xf9<z" +
-	"\xc0\xd9\xb7\xbf\\?\x84\xf4\xba0\xa3\xd7\xeaE\x99^" +
-	"x\xe1\xde\x93k[\x0e\xfe\x06H+\x02\x04Q\x18\x0d" +
-	"7\xa4E\x99v4\x882}Y~\xb0\xe3\xb5\xe3\x7f" +
-	"\xbe\x04\xa4\xcd\x97\x87mXn\x18@\xba\xbfAx{" +
-	"\xd22\xfe\xce\xe3\xaf\xbdy\xe3\xf7\xef^\xae\xc5\xdf\x9f" +
-	"4\\\xa4/Z\xb6'\x1aD\xe45\xc3\xf15mS" +
-	"\xcf\\\x11i:\x91\xc3\x91Q\x11\xb9%\"\x9c\xd1w" +
-	"\xd7\xfd\xe0\x9f\x17\x1ex\xab*\xb2u\x8f\xbb\"CH" +
-	"\x07#\xc2\xdb\xd6\x88\xf06w\xe1\xe9K\xc6\xce\xfa\xbf" +
-	"\x00k\xc2\x80\x17Z\x94\x93>\x1f9G_\xb4lO" +
-	"D\x04\x9a\x89_\xae\x8b\x15\x9ey\xff\xef@V\xbb\x91" +
-	"\xe7\xa3\xdf\x13\x91\x9f\x8b\x8a\xc8\xef\xb7\xbc\xfd\xd3s\xdf" +
-	"\xea\xfb\x97\xaf\xb5^\x8d\x0e\x09J<\xf5\x12\x99}\xe9" +
-	"\x8e\xfe\x9b\xc0nE\xf4\xdau+*\x12@\xe2D\xb4" +
-	"\x09\xe9\xd9\xa8\x88t&*\xb2:\xf3\xf4\x7f\x12\x13\xfb" +
-	">\xb8iU\xd9\x09\xd5\xb2\xca\xea\x82\xb5\xab\x84\x85\xdb" +
-	"B\xac\x09}\xa5\x15\x0e1L\xe7W]\xa4GW\x09" +
-	"\x7f\x87W\x09\xae\x1el\xe8\x98c\x0f}\xf6\x03`\xab" +
-	"}\xfeb?\x14\xfe\xd6\xc4\x84\xbf\xd53\xbf\xddu\xfd" +
-	"\xf0\x1b\x1f\x8a\xd4\xbd\xfcl\xc3}\xb1&\xa4\xf31\xe1" +
-	"n.\xb6\x19\x1e5\x8b\\\xd3\xb3\xba\xc1\xa5\xfc8\x8f" +
-	"\x8f\xab\xc5|q\xd3\x88Q\xd22e%\xcd'X\x08" +
-	"\xfd\xee\xc2=\xde\xe5I\xb0\xa7\xfdk3y\xae\xb5\x7f" +
-	"\xbd\xf0\x08\xcf\xb3\x90\x1c\x00\x08 \x00Y\xdb\x01\xc0:" +
-	"ed\x1b$$\x88\xcd\"K\xb2~\x08\x80\xad\x93\x91" +
-	"}IBeZ5\xb0\xd1#\x0a 6\x02\x9a\xb9\xc2" +
-	"\xb8\x9aK\xf3\x09\x00\xc0F/P\xe5\xa9\x93g\xd8\xcb" +
-	"s;W5c\x8c\xabF\\\xfc\xe9L\xa9\x9a:\xa5" +
-	"\x83c\xe8\xd9\xa5\x9c\x13#\x9e\xe69\xae\xea\\\xdc\xb0" +
-	"=SN\xf3\x89\x14\"\x0b\xc8A\x00W\x03\xd0Q-" +
-	"B\x06\x08i\x07$\xeb\x95Y\xcd~\x8f\x05P2\xdf" +
-	"\x9b\xbb\xf3\x96\xa6]g\xce\x01\x0bH\xd8\xdf\x8c\x18\x01" +
-	" \x986+6#\x80i\x80-\x98B\xac\x05nR" +
-	"5\xf8\x8c\x8ae\x16@\xf4T\x8a\xe0\xa8\x99\xe6\xbb\xd3" +
-	"\\/\xe5@6\xf4JNNg\xa2cH\xc8\x10H" +
-	"$\xac\x98\x1a\xdf-\x1ck BYe\xba\xb4\xfd\xc8" +
-	"\x8e\xd7/\x9c<\x05~\xa9\x04\xa8\x95C\x7f&\xa3q" +
-	"\xbd]\x8fg\x8b}\xfe\xc2\x0d\xd4*\x9c8\xbc]F" +
-	"\xd6+\xe1l\xae0\xc3\xb5\xbe^\x0c\x83\x84a\xc0\xd9" +
-	"R\xb1\xe8\xff\xee\xc6\xaa[\x09|\x0b\xfbx\x05\xb1\xce" +
-	"4o\xd7K9\xeb\xd6N.Q\x116$#k\x96" +
-	"pV/\x8d\x8fs]G\x04\x09\x11j\xc2jsA" +
-	"\xe1\xaa\xe1U\xd4\x99\x8e\xe8\xf42!\xdd \x91\xa0\x12" +
-	"\x13|Y\xb2Bi\xae\x1b\x05M\xe6\x9aU\"OI" +
-	"Q3\xedG<\x05\xed\x16\xd7*q\x1c\x13t\xe4\x8c" +
-	"\x90\x01+\xce\xacf\xdb/\x0c%W\x93\xa1\x1c\xb7K" +
-	"\x1f\x13\x18\x88\xf4#.\x0c[\xd3\x00\xec^\x19Y\xca" +
-	"W\x92aq\xf8U\x19\xd9\xfd\x12\xa2\xd4\x8c\x12\x00\xf9" +
-	"\xc6)\x00v\xbf\x8c,#\xa1\xa9W\x10\x06\x9c\xc0F" +
-	"O\x01*\x9d4Yi\x1b@\x03\x897\x82\x01\x91\x00" +
-	"\x9a:\x1f\xd7\x05\x98hu\xd6`\xdeh\xe7\xda\xb4\x9a" +
-	"\xc3\x10H\x18\xfa\xe4%N\xa91\x81X-\x10\xb6\x17" +
-	"t#U\xd0\x8c4\xd7\x0b\xb9i\x07wo\x94bZ" +
-	"\xb4FV74\x15P\xab`\xee\xe87:r\xb8\xb0" +
-	"[\x85\xa7\xe5\xba\xf5a\xd3\x8e\xc6\x07!\x96\xe1y\xe3" +
-	"\xff\xee\xa2\xc0Rys-ne\x1934\xd5\xbe\x81" +
-	";\xde\x09>Z\xb9\x01\xd7`s\xcaO\x1d\xc7\x06\x9d" +
-	")Q\xbb\xc1\xfd\xf4\xa9[)\x03\x91@\xdc\x89\x97R" +
-	"5E\x9d\xb2X\xd5\xe8\xb2J\x1d\x03`\xbbdd9" +
-	"\x1f\xab\xb2\xdd\x00,##+z\xac\x9a\x12g\x932" +
-	"2CB\"K\xcd(\x03\x90==\x00,'#\xdb" +
-	"+\xa19\xa6\xea\xbc\xaf\xf7>\x15\x14c0\x83\x11\x90" +
-	"0\x02\x18\x9b,\xe8\x86\xfb\xa5X\xd0\x0cT@B\x05" +
-	"\xb0]\xcdeU\xddyT\xab\xfbl2\xc5\x04\x9bX" +
-	"\x04\xfd\xbb\x07\x19\xf5\xad\x03d\xcc\xb7\xe2\x92\x03\xe6\x88" +
-	":\xcd\x05\xb2 O\xe9\xd6\x17!\xa5\xa0\xe4\x0c\xddt" +
-	"8\x89\x0e)\x01*\xe8;\xbe\xd1\xf1\xeb\x0a\x84\xaeN" +
-	"Wum\xa0Z ,\xb8m9\xb0\x07\x0f\x08\x90}" +
-	"j:\xe4\x09\xa7\x0b\xf2Fq\xb8AFv\x8f\xb4\xd2" +
-	"\xc0\xd3\xb9\x9a\xe3\x99\x81\xb2\xfd\xd4\x1d\xc2U\xe30\xb0" +
-	"XL\x1c\xe6\xd8\x03\x11\x17\xa8j\x87\xa7\xaa\xca\xb8Z" +
-	"\xc4\xa6\x80\x0c\x88M\xb5\x1d\xfa\xfa\xda\x81wJ\x07[" +
-	"_k\xeb4Ws\xdb\x0a\xda2\xe9\xfa\x0a}\x9fj" +
-	"\xa4T\x03'\xabPk]a\x06\xc9\xd9\x0c6z\xab" +
-	"\x9e\xed\x7fV\xb5&\x9a\x8e\x8d\xde2\xb54Pn\xfd" +
-	"*\xf2\xdci\x8d]\xd9\xf8\xd4\x90\xb2\xfc\x19\x8b\x19\x91" +
-	"^\x89\x11\xcb\x0bw)/h9\x92\xb6\x19Q\xfd\xb4" +
-	"6\xc4\x83\x19\xa8\xea\xfd\xd1Z\xbd?\xea\xebs\xa9\xd2" +
-	"\xfc{\xc4aQF\xf6\x98h~\xd9n\xfe\xb28\xdc" +
-	"+#{BB\xb3X\x1a\xcbe\xc7\xbf\xc2A.o" +
-	"\xf0v\x00\xefpc\xad\xc3\x9eZ\x87\x89E+Dp" +
-	"\x19\x99\xab\xe8{-\x82\xb7ze\x13L\xa9\x16\x9a\xc0" +
-	"\x92\xdb\xa3[\xb3Z#\xca\x9bgb\xd9\xc5|\xa5\xae" +
-	"\x11\xd3\xb4\x0b\xdb\xed\x916\x8a\x1f\x99\x15\xd6v{\xe5" +
-	"\x8e\x19|\xaf\xa7\x88\x19\xd5P1\x0a\x12F\xe1\xe3\xea" +
-	"\xba\xdb\xdc\xee\xceT\x9b_.\xbd\xc4^\xd0+#\xdb" +
-	"\"}Z\x93\x7f\xd1\"\x89\xce\xd2\x121MD\xef\xff" +
-	"\x03dk\x07HD\x0a\xd9t\xf2\xc3a\x83$\xf8\xb4" +
-	"\xb1\xdb\xf7\xbb [\xec[0-\x16\xcc\x91\x8f\xc5\x0c" +
-	"\xb7\xa3}\xe8\xf8\x8a\xe4\x0a\x8b\xbfDK\x0e\xad\xe5\x19" +
-	"!~\x04\xa1V\xa5\x8a\xdd\x1e\x0dc\xbbK\x1e\x11\xff" +
-	"\x17\x00\x00\xff\xff\x079\x0d\xc6"
+type GatewayRegistrable capnp.Client
+
+// GatewayRegistrable_TypeID is the unique identifier for the type GatewayRegistrable.
+const GatewayRegistrable_TypeID = 0x8253222fdf37608d
+
+func (c GatewayRegistrable) SturdyRefAtGateway(ctx context.Context, params func(GatewayRegistrable_sturdyRefAtGateway_Params) error) (GatewayRegistrable_sturdyRefAtGateway_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x8253222fdf37608d,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:GatewayRegistrable",
+			MethodName:    "sturdyRefAtGateway",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 2}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(GatewayRegistrable_sturdyRefAtGateway_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return GatewayRegistrable_sturdyRefAtGateway_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c GatewayRegistrable) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c GatewayRegistrable) String() string {
+	return "GatewayRegistrable(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c GatewayRegistrable) AddRef() GatewayRegistrable {
+	return GatewayRegistrable(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c GatewayRegistrable) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c GatewayRegistrable) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c GatewayRegistrable) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (GatewayRegistrable) DecodeFromPtr(p capnp.Ptr) GatewayRegistrable {
+	return GatewayRegistrable(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c GatewayRegistrable) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c GatewayRegistrable) IsSame(other GatewayRegistrable) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c GatewayRegistrable) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c GatewayRegistrable) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A GatewayRegistrable_Server is a GatewayRegistrable with a local implementation.
+type GatewayRegistrable_Server interface {
+	SturdyRefAtGateway(context.Context, GatewayRegistrable_sturdyRefAtGateway) error
+}
+
+// GatewayRegistrable_NewServer creates a new Server from an implementation of GatewayRegistrable_Server.
+func GatewayRegistrable_NewServer(s GatewayRegistrable_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(GatewayRegistrable_Methods(nil, s), s, c)
+}
+
+// GatewayRegistrable_ServerToClient creates a new Client from an implementation of GatewayRegistrable_Server.
+// The caller is responsible for calling Release on the returned Client.
+func GatewayRegistrable_ServerToClient(s GatewayRegistrable_Server) GatewayRegistrable {
+	return GatewayRegistrable(capnp.NewClient(GatewayRegistrable_NewServer(s)))
+}
+
+// GatewayRegistrable_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func GatewayRegistrable_Methods(methods []server.Method, s GatewayRegistrable_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 1)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x8253222fdf37608d,
+			MethodID:      0,
+			InterfaceName: "persistence.capnp:GatewayRegistrable",
+			MethodName:    "sturdyRefAtGateway",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.SturdyRefAtGateway(ctx, GatewayRegistrable_sturdyRefAtGateway{call})
+		},
+	})
+
+	return methods
+}
+
+// GatewayRegistrable_sturdyRefAtGateway holds the state for a server call to GatewayRegistrable.sturdyRefAtGateway.
+// See server.Call for documentation.
+type GatewayRegistrable_sturdyRefAtGateway struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c GatewayRegistrable_sturdyRefAtGateway) Args() GatewayRegistrable_sturdyRefAtGateway_Params {
+	return GatewayRegistrable_sturdyRefAtGateway_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c GatewayRegistrable_sturdyRefAtGateway) AllocResults() (GatewayRegistrable_sturdyRefAtGateway_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return GatewayRegistrable_sturdyRefAtGateway_Results(r), err
+}
+
+// GatewayRegistrable_List is a list of GatewayRegistrable.
+type GatewayRegistrable_List = capnp.CapList[GatewayRegistrable]
+
+// NewGatewayRegistrable_List creates a new list of GatewayRegistrable.
+func NewGatewayRegistrable_List(s *capnp.Segment, sz int32) (GatewayRegistrable_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[GatewayRegistrable](l), err
+}
+
+type GatewayRegistrable_sturdyRefAtGateway_Params capnp.Struct
+
+// GatewayRegistrable_sturdyRefAtGateway_Params_TypeID is the unique identifier for the type GatewayRegistrable_sturdyRefAtGateway_Params.
+const GatewayRegistrable_sturdyRefAtGateway_Params_TypeID = 0xb64c5d78d2b79d44
+
+func NewGatewayRegistrable_sturdyRefAtGateway_Params(s *capnp.Segment) (GatewayRegistrable_sturdyRefAtGateway_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return GatewayRegistrable_sturdyRefAtGateway_Params(st), err
+}
+
+func NewRootGatewayRegistrable_sturdyRefAtGateway_Params(s *capnp.Segment) (GatewayRegistrable_sturdyRefAtGateway_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return GatewayRegistrable_sturdyRefAtGateway_Params(st), err
+}
+
+func ReadRootGatewayRegistrable_sturdyRefAtGateway_Params(msg *capnp.Message) (GatewayRegistrable_sturdyRefAtGateway_Params, error) {
+	root, err := msg.Root()
+	return GatewayRegistrable_sturdyRefAtGateway_Params(root.Struct()), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) String() string {
+	str, _ := text.Marshal(0xb64c5d78d2b79d44, capnp.Struct(s))
+	return str
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (GatewayRegistrable_sturdyRefAtGateway_Params) DecodeFromPtr(p capnp.Ptr) GatewayRegistrable_sturdyRefAtGateway_Params {
+	return GatewayRegistrable_sturdyRefAtGateway_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) GatewaySR() (SturdyRef, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return SturdyRef(p.Struct()), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) HasGatewaySR() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) SetGatewaySR(v SturdyRef) error {
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+}
+
+// NewGatewaySR sets the gatewaySR field to a newly
+// allocated SturdyRef struct, preferring placement in s's segment.
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) NewGatewaySR() (SturdyRef, error) {
+	ss, err := NewSturdyRef(capnp.Struct(s).Segment())
+	if err != nil {
+		return SturdyRef{}, err
+	}
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) GatewayId() (string, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.Text(), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) HasGatewayId() bool {
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) GatewayIdBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Params) SetGatewayId(v string) error {
+	return capnp.Struct(s).SetText(1, v)
+}
+
+// GatewayRegistrable_sturdyRefAtGateway_Params_List is a list of GatewayRegistrable_sturdyRefAtGateway_Params.
+type GatewayRegistrable_sturdyRefAtGateway_Params_List = capnp.StructList[GatewayRegistrable_sturdyRefAtGateway_Params]
+
+// NewGatewayRegistrable_sturdyRefAtGateway_Params creates a new list of GatewayRegistrable_sturdyRefAtGateway_Params.
+func NewGatewayRegistrable_sturdyRefAtGateway_Params_List(s *capnp.Segment, sz int32) (GatewayRegistrable_sturdyRefAtGateway_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return capnp.StructList[GatewayRegistrable_sturdyRefAtGateway_Params](l), err
+}
+
+// GatewayRegistrable_sturdyRefAtGateway_Params_Future is a wrapper for a GatewayRegistrable_sturdyRefAtGateway_Params promised by a client call.
+type GatewayRegistrable_sturdyRefAtGateway_Params_Future struct{ *capnp.Future }
+
+func (f GatewayRegistrable_sturdyRefAtGateway_Params_Future) Struct() (GatewayRegistrable_sturdyRefAtGateway_Params, error) {
+	p, err := f.Future.Ptr()
+	return GatewayRegistrable_sturdyRefAtGateway_Params(p.Struct()), err
+}
+func (p GatewayRegistrable_sturdyRefAtGateway_Params_Future) GatewaySR() SturdyRef_Future {
+	return SturdyRef_Future{Future: p.Future.Field(0, nil)}
+}
+
+type GatewayRegistrable_sturdyRefAtGateway_Results capnp.Struct
+
+// GatewayRegistrable_sturdyRefAtGateway_Results_TypeID is the unique identifier for the type GatewayRegistrable_sturdyRefAtGateway_Results.
+const GatewayRegistrable_sturdyRefAtGateway_Results_TypeID = 0xf7b8b0867aeef0b6
+
+func NewGatewayRegistrable_sturdyRefAtGateway_Results(s *capnp.Segment) (GatewayRegistrable_sturdyRefAtGateway_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return GatewayRegistrable_sturdyRefAtGateway_Results(st), err
+}
+
+func NewRootGatewayRegistrable_sturdyRefAtGateway_Results(s *capnp.Segment) (GatewayRegistrable_sturdyRefAtGateway_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return GatewayRegistrable_sturdyRefAtGateway_Results(st), err
+}
+
+func ReadRootGatewayRegistrable_sturdyRefAtGateway_Results(msg *capnp.Message) (GatewayRegistrable_sturdyRefAtGateway_Results, error) {
+	root, err := msg.Root()
+	return GatewayRegistrable_sturdyRefAtGateway_Results(root.Struct()), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) String() string {
+	str, _ := text.Marshal(0xf7b8b0867aeef0b6, capnp.Struct(s))
+	return str
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (GatewayRegistrable_sturdyRefAtGateway_Results) DecodeFromPtr(p capnp.Ptr) GatewayRegistrable_sturdyRefAtGateway_Results {
+	return GatewayRegistrable_sturdyRefAtGateway_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) SelfAtGatewaySR() (SturdyRef, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return SturdyRef(p.Struct()), err
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) HasSelfAtGatewaySR() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) SetSelfAtGatewaySR(v SturdyRef) error {
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+}
+
+// NewSelfAtGatewaySR sets the selfAtGatewaySR field to a newly
+// allocated SturdyRef struct, preferring placement in s's segment.
+func (s GatewayRegistrable_sturdyRefAtGateway_Results) NewSelfAtGatewaySR() (SturdyRef, error) {
+	ss, err := NewSturdyRef(capnp.Struct(s).Segment())
+	if err != nil {
+		return SturdyRef{}, err
+	}
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+// GatewayRegistrable_sturdyRefAtGateway_Results_List is a list of GatewayRegistrable_sturdyRefAtGateway_Results.
+type GatewayRegistrable_sturdyRefAtGateway_Results_List = capnp.StructList[GatewayRegistrable_sturdyRefAtGateway_Results]
+
+// NewGatewayRegistrable_sturdyRefAtGateway_Results creates a new list of GatewayRegistrable_sturdyRefAtGateway_Results.
+func NewGatewayRegistrable_sturdyRefAtGateway_Results_List(s *capnp.Segment, sz int32) (GatewayRegistrable_sturdyRefAtGateway_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[GatewayRegistrable_sturdyRefAtGateway_Results](l), err
+}
+
+// GatewayRegistrable_sturdyRefAtGateway_Results_Future is a wrapper for a GatewayRegistrable_sturdyRefAtGateway_Results promised by a client call.
+type GatewayRegistrable_sturdyRefAtGateway_Results_Future struct{ *capnp.Future }
+
+func (f GatewayRegistrable_sturdyRefAtGateway_Results_Future) Struct() (GatewayRegistrable_sturdyRefAtGateway_Results, error) {
+	p, err := f.Future.Ptr()
+	return GatewayRegistrable_sturdyRefAtGateway_Results(p.Struct()), err
+}
+func (p GatewayRegistrable_sturdyRefAtGateway_Results_Future) SelfAtGatewaySR() SturdyRef_Future {
+	return SturdyRef_Future{Future: p.Future.Field(0, nil)}
+}
+
+const schema_855efed3475f6b26 = "x\xda\xacXkl\x14\xd7\x15>g\xee\x9a\xd9]v" +
+	"\xd9\xbd\xbe\xa6Ih\xac-\xc6\x94\xe0\xc2\x8211\x0d" +
+	"\x8a\x04\xb8\xc0b7\xa8{\xd7M\x94\x109al_" +
+	"\xc3&k\xeffflcDe\xa0\xa4%\x04\x0b\xe8" +
+	"#j#*\xd2\xaa\xe9\x83\x08\x11\xd1\x88\x16U(\x02" +
+	"\x85>\x88\"\x15*\x14A\xd2\x17U\xda\x10\x85\xb6A" +
+	"EIh\x9a\xa9\xee\xcc\xce\xc3\xeb\xb5I\xaa\xfcA\xde" +
+	";g\xce\xf9\xeew\xbe\xf3\x18\x16\x1f\xabY\x19j\x8e" +
+	"\x0f\xcf\x00\x85\xff\xa4f\x9a5\xb6q\xd9\x9f\x165t" +
+	"\xee\x04ZK\xac\xcf>\xfap\xe6\xf7\x1f>\xf48\x00" +
+	"\xb6\xccV\x9b\x905\xab*\x00[\xa8fX\x97\xfc\xcb" +
+	"Z\xff\xc7\xaf\xd6\xcf\xdb\xdc\xbf\x1bh-\xfa\xd65\x8a" +
+	"\xb4Z\xa3^f\\\x9d\x07\xc0\x84:\x0ch\x9d]\xfa" +
+	"\xfd\x17/\xed9\xbe\x07\xe8\xed\x08\x10R\x01Z\xce\xa8" +
+	"m\x08!+\x97>\xf4\xa9\x1d\x89\xd2>\xa0\xf5\xc4\x12" +
+	"/\xb7\xbe\xfe\xcc\xa5\x1f\x9f\x921\x8f\xa8:\xb2Sv" +
+	"\xcc\x93j\x86\xc5\xc32\xe6\xd5y\x8b6F\x17\x1c\xdc" +
+	"W\x89\x90]W\xcf3\x0c\xdf\x02\xc0\xe2\xe1\x0c\xbb+" +
+	"<\x0f\xc0\xca\xefy\xe2\x8eP\xd7\xb1}\xc0g!\xb1" +
+	"\xe2\x0f>\xf3\xd8\xb4\x1d\x99\xff\xc0LT\x11\x805\x87" +
+	"\xaf\x01\xb2;\xc3\x12^\xe7\x9b\xc9\xc6\xbf\x0e,\xfc&" +
+	"\xf04\xba\xf8\x0e\x84\xaf! {6\xbc\x02\xd0Z~" +
+	"6s\xee\xc6\xc9\x9f\x1d\x9a\x10\xf7L\xf82;'\xa1" +
+	"\xb1W\xc2\x19v\xdd\x06yw\xfa\xe2\xbc]\xb3\x8fO" +
+	"4\xfeC\xf8\x12\xbbb\x83\xbc\x1e\xce\xb0\xfa\x884>" +
+	"<ze\xa4\xebWK~ A\xa2\x7f?\x9b\xc6\x96" +
+	"\x9aH\x13\xb2\x99\xd2\x8e\xd1\xc8Q@k\xe6\xb6\xed\x17" +
+	"?\xb3\xf7\xb5\x1f\x02M\xbb8OD\xde\x92<\x1e\xaa" +
+	"\xff\xdd\xf1\x1b\x07\xc6\x0eO\xc8\xdd\x91\xc8,d'#" +
+	"2\xeao#\x19v[TRsl\xff\xda\xd2\xe0\xbb" +
+	"g\x9f\x07:\x87\xf8\xaf\x02\xb6\xd0\xe8#\xc8\xe6F\xa5" +
+	"us4\xc3\xba\xa2\x12\xe3\xea\xef\xfd\xfc\xfc\x96\xae{" +
+	"\x8e\x03\x9d\x8bP\x86\xb6&zC\xd2\xf3@T\xf2\x97" +
+	"\x88\xaf\xb5\xba\xf7\xe1\x8b\xc0\x17\"\xfa\xcekl\x80'" +
+	"\xa3\x97\x91]\x94\x8eZ.DS\x08\xe8\xa7\xb9\x92\xa0" +
+	"\xab\xd3\xdfb\xefO_\x06\xc0\xe6\xc72\x8c\xc7d\xf0" +
+	"\xe5\xaf.\xeb\x18zc\xd5\x19\xa0\x9fF\x9fZ\x07\xc4" +
+	"]\xb1\x0ed\xeb\xa5\x19k\x8fI \xcf=\xb7\xfa\xe8" +
+	"\xfc\x99{\x7f\x0dt\x96D\x8a\xd2\xe8H,'\x91\x9e" +
+	"\x88\xc9D~\x81<\xd4\xf0\xd2\xe1?_\x00Z\x1f\xc0" +
+	"\xe1\x18^\x8c\xb5!\xbbb{{\xc36\xfe\xfa\xf6\x97" +
+	"^\xbb\xf6\xca\xdb\x17\xab)\xbc&~\x9e\xd1\xb8\xfc+" +
+	"\x1e\x97\x91\xe7\xaeO\xcf\xad\xef\x7f\xea\x92\x84\xe9F\xce" +
+	"\xc77\xc8\xc8\x83q\xe9\x8c\xbd\xbd\xe0;\xff<\xf7\xe0" +
+	"\xeb\x15\x91\xed{|;\xde\x81\xec\xa7\xb6\xb7gmo" +
+	"c\xe7\x9e\xbc`vE\xff\x02\xbc\x16C~h\xc9'" +
+	"\x8b\xcc8\xcd\xe8\x0c;\xf2\x8c\xbf\x03Z-\xbf\\\x90" +
+	"(>\xf5\xde\xdf\x80\xce\xf1\"\xbf3\xe3\x1b22&" +
+	"d\xe4\xf7f\xbe\xf9\xa3\xd3;[\xff\x1d(\xbe\xd9\x89" +
+	"\x0e)\x9a\xe3\xff\xfa\xc7\xd6\xaf=\xff\x8bw\xcb\x89\xb5" +
+	"_\x8d'\x14\x05\x90\xcd\xb6_\xdd\xfd\x02\x1d}\xe1s" +
+	"\xabn\x00\xbf\x1d\xd1\xaf\xf85\xa8*R\x03\x89Zd" +
+	"\xf7&$\x14\x9e\x90\xb0O<\xf9~K\xdf\x8e\x0fn" +
+	"\xd8:\xf0\xf8O\xd8\x85t\xca\xb6\xf0\xaa\x90\xd7b " +
+	"\xf7\xd2!F\xd8\xfc\xe4yvgR\xfakNJ\xb9" +
+	"\xef\x9d\xde0\xc6\x1f\xbe\xf5\x03\xe0s\x02\xfe\x92OK" +
+	"\x7f'\x93\xd2\xdf\x9c\xe1\xdfl\xbc\xfa\xddW\xff+\xef" +
+	"\xe6\xe3s\x0co\xa3\xb5\xc8\xe6S\xe9n.]\x01[" +
+	"\xad\x92\xd0\x8d\xbca\x0a2\xd0#\xd2=Zi\xa0\xb4" +
+	"<\xa3\x99bX\x1b\xc9\x89My\xc3\xd4\x13ZwA" +
+	"d\x11y\x88\xd4\x04t\x8f.O\x94>\x0d\x0a\x8d\xab" +
+	"\x96a\x0e\xea\xbd#9\x81}\xabL\xdb\x05\xd1FV" +
+	"b\x16\xd1\x8b\xa1\xf81:mc5'\xfax\x18\x83" +
+	"\x90#K|\x82i\xcd\x92\xd4\x97\x86\x07\x84\x9e\xfar" +
+	"\xf1Q1\xc0\xc3$\x04\x10B\x00:\xbf\x01\x807\x12" +
+	"\xe4\x8b\x15\xa4\x88u\x92\x09\xba\xb0\x03\x80/ \xc8?" +
+	"\xaf\xa0:\xa4\x99\x98\xf4\xd5\x0a\x88I@\xabP\xec\xd1" +
+	"\x0a9\xd1\x07\x00\x98\xf4\x03\x95\x9f\xba8#>\xceu" +
+	"B\xd3\xcdn\xa1\x99i\xf9OcV\xd3\xb5~\x03\\" +
+	"C\xdf.\xeb\x9e\x98\xe9\x9c(\x08\xcd\x10\xf2\x86)\xc9" +
+	"G\x9fO\x9e\xdb\xaa\xd0m\xae\x94\xb6Q\x9a\x02\xa4\x0b" +
+	"\xd5Q\xddy\x8f\x87P\xb1\xde\x19[tK\xed\xc6\x13" +
+	"\xa7\x81\x87\x14\\U\x87\x18\x03\xa0\x98\xb3\xca6\x9d\x80" +
+	"9\x80I\xc9u\x12\x88#<\x84\xe87S\x8a\x1b\xac" +
+	"\x9c\xd8\x94\x13\xc6`\x01\x88i\x941\xb9\xed\x01]C" +
+	"J;@\xa1\x11\xd5\xd2m\x01\x08\x1dd(;M\x17" +
+	"\xd6\x1d|\xe0\xe5sG\x8fA\xb0\xa3\x03T\xc3\xb0\xaa" +
+	"\xb7W\x17F\xcaH\xe7K\xad\xc1\xc4\xb5UK\x9c<" +
+	"\xbc\x83 _\xaa\xe0h\xa18,\xf4\xd6\xa5\x18\x01\x05" +
+	"#\x80\xa3\x83\xa5R\xf0\xb7\x17k\xda\xcd\xc8\xb7\xb9O" +
+	"\x97\x19k\xcc\x89\x941X\xb0o\xedb\x89\xcb\xb0a" +
+	"\x82\xbcN\xc1Qc\xb0\xa7G\x18\x06\"(\x88P\x95" +
+	"VG\x0b\xaa\xd0L?\xa3\xee\x10G\xb7\xa1P\xda\x04" +
+	"\x0a\xadQ\x13R/\x93f('\x0c\xb3\xa8\x13\xa1\xdb" +
+	")\xf2\xdb9\xea\x96\xf3Hd!ek\xad\x1c\xc75" +
+	"A\xb7\xa7R\xdaf\xc7\x19\xd5\x1d\xfb\xf1\xa1&Vs" +
+	"\xdaI}Br \xe1\xc7<\x1a\xd6\xe4\x00\xf8j\x82" +
+	"<\x1bH\xc9zyx\x0fA~\xbf\x82\xa8\xd4\xa1\x02" +
+	"@\xef=\x06\xc0\xef'\xc8{\x15\xf4\xaa\x1d\xb0\x0f\x93" +
+	"~\x97)W\xd2\xe6r\xd9\x00\x9aH\xfdM\x01\x10)" +
+	"\xa0e\x88\x1eC\x92\x89ve\xb5\x0f\x98)\xa1\x0fi" +
+	"\x05\x0c\x83\x82\xe1\xff?\xc5Y-!\x19\xabF\xc2\xba" +
+	"\xa2af\x8b\xba\x99\x13F\xb10\xe4\xf2\xeeO|\xcc" +
+	"Y\xe5v\xa7\x01\xeae\xce\xdd!\x82n\xcb\x1d_\xad" +
+	"\xd2\xd3T\xd5\xfa\x88\xe5D\x13\xed\x90\xe8\x15\x03\xe6G" +
+	"\xae\xa2\xd0d\xb8\x85\x9e\xb6Q&L]sn\xe0-" +
+	"\x19\x14\xb7\x96o tX\x91\x0dJ\xc7\xb5Aw\x12" +
+	"U/\xf0\xa0|\xa6M6\x0c\xe4,H\xbb\xa9w\xfb" +
+	"\xbc6\xd2\xe8F\x0c\x14z\xce\xafiOU\xcd\xf2p" +
+	"1A~\xb7\x82\xd6&\xe7]\xd9\xcb\xaa(\xa8\xfc\xb4" +
+	"\x1d\xb0\x17c\xa0`\xac\xba.\xaa\x13$\xf9I\xbbt" +
+	"d5]\xd5\xfam\xd1\xd7y\xf0\xbe\xd2\x0d\xc0\xb7\x11" +
+	"\xe4\xbb\x03\xf0\x1eo\x02\xe0\xdb\x09\xf2\xbd\xbe\xe8\x9f\x90" +
+	"g\xbb\x08\xf2\xfd\x0aR\xa2\xd4!\x01\xa0cK\x00\xf8" +
+	"n\x82\xfc[\x0a\xd2\x10\xa9\xc3\x10\x00=\xa0\x03\xf0\xfd" +
+	"\x04\xf9A\x05\xadn\xcd\x10\xadK\xef\xd3@5\xdb\xbd" +
+	"\x0b$6\x17\x0d\xd3\xfbQ*\xea&\xaa\xa0\xa0\x0a\x98" +
+	"\xd2\x0ay\xcd\xf0.\x9a\x97z\xc9\x9b#\x90\xca\xea\xc5" +
+	"b\x1f\xc6A\xc1x\xf5\xa6\xe4\x14FBV\x06\x8fa" +
+	"p\x99\xa3\x1b\x02\xfb\x15\xed\x0e|U\xd0=V\xa76" +
+	"$d\xce\x80\xf4\x1b\xf6\x0f9\x16@-\x98\x86\xe5\xd6" +
+	"\x17\xbai\x06(+\xc9\xf5\x8d\xae_\xaf\xd9\x19\xdaP" +
+	"E\x07\x0aU6;;7Nks\x86(\xc8\x8c\x04" +
+	"\x04\xd3QM0\x1d\x01\xc1L=\xbc\x0d\xa1\x15Do" +
+	"\xdb\x88\xf3\xd4[(*F{hbct\xab\xc0\x19" +
+	"\xee8nB4\xf8\x13B\xed\xd1JX\x1b\"\x80X" +
+	"[\xdda\xa0G\xb9\xf4\xf6\x1b\xe0\xcc\x8a\xea3Gh" +
+	"\x85\xb5E}\x0a\xb8\x81D\xdf\xa7\x99Y\xcd\xc4\xcd\x15" +
+	"\xac\xcd\xba\xc9<%\xf9^L\xfa\xbb\xb3\xe3\x7fT\xb3" +
+	"\xa7\xb3\x81I\x7f\xf9\x9c\x9c(/\x7f\xe5Q\xd3h\xaf" +
+	"\x10\xc4\xfc\xc4\x98\xb2\xfd\x99\x13\x15\x91\xbb\x99\"\xa6\x1e" +
+	"B\x83\x03R\x96\x9d9G\x11\x95O\xabS\xdc\xdek" +
+	"\x83Hz \xb4\x0d\x00|#A^\x08\x80\xc8\xcb\xc3" +
+	"\xcd\x04\xb9\xa9 U\xca\x9d\xe21yX\"\xc8\xb7\xc9" +
+	"NA\x9cN1\"\x0f\xb7\x10\xe4\xbb\x14\xb4J\x83\xdd" +
+	"\x85|\xcf\x17\x05\x90\x91\xc5\xfe>\xe3\x1f6W;\\" +
+	"R\xed\xb0e\xc2:T3EO,\xcf\xaaj\x02\x9f" +
+	"\xe5\xa7M*\xa5\xb2\xd3\x86&\xdd\x84\xbd\x9cy\xb6\xea" +
+	"\xc7\x1d\x1a\xae\x8b \x9e\x9d\x00<F\x90\xdf*\xb3+" +
+	"\x0a\xb65:s\"7U\x16I\xe5\xa7\x85\\\x0c\xe4" +
+	"W\x03\x0e\x94E\x15\xb3,GUM~\xc5\xc4\xf1C" +
+	"\xab\\2M\xbe\xd6\x12\xa6\xd8\xe2\xb7\xe9^\xcd\xd4&" +
+	"4\xe0\x8f6\x81\xbc\xce\xe2-\x9f\xd5\xc5\xedi[." +
+	"XK\x09\xf2\x95\xca'\xb5BM\xd8\xc8\xd1\xdd\xfeb" +
+	"\x96\x85\xe8\xff\x7f\x10]\xd3\x00\x0aU\xc2\x8e\x96\x83t" +
+	"8$I177\x05>\xb0\xf2\xa5\xd6q#l\xdc" +
+	"p\xfbX\xb2\xf4\xdaI\x80\x9d@\x92\xbc\xae\x16L\xd1" +
+	"\xa4\x93tjE\xc8\xafI\xd4+Zr\x93_\x03\x89" +
+	"M\x83~\x15\xfc/\x00\x00\xff\xff\xca.\xab."
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_855efed3475f6b26,
 		Nodes: []uint64{
+			0x8253222fdf37608d,
 			0x886d68271d83de4d,
 			0x8ab68adabfa134ca,
 			0x8f700f81169f2e52,
@@ -3401,6 +3789,7 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xa4db8c20d9807c15,
 			0xaa8d91fab6d01d9f,
 			0xb0caf775704690b2,
+			0xb64c5d78d2b79d44,
 			0xbf018f62ff460d0f,
 			0xc1a7daa0dc36cb65,
 			0xc541e5764a37d73a,
@@ -3412,6 +3801,7 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xe10a5d74d58bd18d,
 			0xe6f8966f0f2cbb33,
 			0xf43682c2a6e815f8,
+			0xf7b8b0867aeef0b6,
 			0xfa412bb47f11b488,
 			0xfafc816633f98bb9,
 			0xfb47810671a05b0d,

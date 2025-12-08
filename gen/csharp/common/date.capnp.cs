@@ -40,9 +40,7 @@ namespace Mas.Schema.Common
         public void applyDefaults() { }
 
         public short Year { get; set; }
-
         public byte Month { get; set; }
-
         public byte Day { get; set; }
 
         public struct READER
@@ -77,13 +75,11 @@ namespace Mas.Schema.Common
                 get => this.ReadDataShort(0UL, (short)0);
                 set => this.WriteData(0UL, value, (short)0);
             }
-
             public byte Month
             {
                 get => this.ReadDataByte(16UL, (byte)0);
                 set => this.WriteData(16UL, value, (byte)0);
             }
-
             public byte Day
             {
                 get => this.ReadDataByte(24UL, (byte)0);

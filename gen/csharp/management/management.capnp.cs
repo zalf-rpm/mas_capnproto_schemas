@@ -140,7 +140,6 @@ namespace Mas.Schema.Management
         public void applyDefaults() { }
 
         public Mas.Schema.Management.Event.ExternalType TheType { get; set; }
-
         public Mas.Schema.Common.IdInformation Info { get; set; }
 
         public Mas.Schema.Management.Event.at At
@@ -174,7 +173,6 @@ namespace Mas.Schema.Management
         }
 
         public object Params { get; set; }
-
         public bool RunAtStartOfDay { get; set; }
 
         public struct READER
@@ -218,41 +216,34 @@ namespace Mas.Schema.Management
                 get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                 set => this.WriteData(16U, (ushort)value, (ushort)0);
             }
-
             public Mas.Schema.Management.Event.ExternalType TheType
             {
                 get =>
                     (Mas.Schema.Management.Event.ExternalType)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
-
             public Mas.Schema.Common.IdInformation.WRITER Info
             {
                 get => BuildPointer<Mas.Schema.Common.IdInformation.WRITER>(0);
                 set => Link(0, value);
             }
-
             public at.WRITER At
             {
                 get => which == WHICH.At ? Rewrap<at.WRITER>() : default;
             }
-
             public between.WRITER Between
             {
                 get => which == WHICH.Between ? Rewrap<between.WRITER>() : default;
             }
-
             public after.WRITER After
             {
                 get => which == WHICH.After ? Rewrap<after.WRITER>() : default;
             }
-
             public DynamicSerializerState Params
             {
                 get => BuildPointer<DynamicSerializerState>(3);
                 set => Link(3, value);
             }
-
             public bool RunAtStartOfDay
             {
                 get => this.ReadDataBool(48UL, false);
@@ -351,7 +342,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public Mas.Schema.Common.Date Earliest { get; set; }
-
             public Mas.Schema.Common.Date Latest { get; set; }
 
             public struct READER
@@ -386,7 +376,6 @@ namespace Mas.Schema.Management
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(1);
                     set => Link(1, value);
                 }
-
                 public Mas.Schema.Common.Date.WRITER Latest
                 {
                     get => BuildPointer<Mas.Schema.Common.Date.WRITER>(2);
@@ -425,7 +414,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public Mas.Schema.Management.Event.Type Event { get; set; }
-
             public ushort Days { get; set; }
 
             public struct READER
@@ -458,7 +446,6 @@ namespace Mas.Schema.Management
                     get => BuildPointer<Mas.Schema.Management.Event.Type.WRITER>(1);
                     set => Link(1, value);
                 }
-
                 public ushort Days
                 {
                     get => this.ReadDataUShort(32UL, (ushort)0);
@@ -636,7 +623,6 @@ namespace Mas.Schema.Management
                     get => (WHICH)this.ReadDataUShort(16U, (ushort)0);
                     set => this.WriteData(16U, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Management.Event.ExternalType External
                 {
                     get =>
@@ -646,7 +632,6 @@ namespace Mas.Schema.Management
                             : default;
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
-
                 public Mas.Schema.Management.Event.PhenoStage Internal
                 {
                     get =>
@@ -739,7 +724,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public string Cultivar { get; set; }
-
             public ushort PlantDensity { get; set; } = 0;
             public Mas.Schema.Crop.ICrop Crop { get; set; }
 
@@ -775,13 +759,11 @@ namespace Mas.Schema.Management
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-
                 public ushort PlantDensity
                 {
                     get => this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, value, (ushort)0);
                 }
-
                 public Mas.Schema.Crop.ICrop Crop
                 {
                     get => ReadCap<Mas.Schema.Crop.ICrop>(1);
@@ -841,21 +823,14 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public double MinTempThreshold { get; set; }
-
             public ushort DaysInTempWindow { get; set; }
-
             public double MinPercentASW { get; set; } = 0;
             public double MaxPercentASW { get; set; } = 100;
             public double Max3dayPrecipSum { get; set; }
-
             public double MaxCurrentDayPrecipSum { get; set; }
-
             public double TempSumAboveBaseTemp { get; set; }
-
             public double BaseTemp { get; set; }
-
             public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp TheAvgSoilTemp { get; set; }
-
             public Mas.Schema.Management.Params.Sowing Sowing { get; set; }
 
             public struct READER
@@ -904,49 +879,41 @@ namespace Mas.Schema.Management
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public ushort DaysInTempWindow
                 {
                     get => this.ReadDataUShort(64UL, (ushort)0);
                     set => this.WriteData(64UL, value, (ushort)0);
                 }
-
                 public double MinPercentASW
                 {
                     get => this.ReadDataDouble(128UL, 0);
                     set => this.WriteData(128UL, value, 0);
                 }
-
                 public double MaxPercentASW
                 {
                     get => this.ReadDataDouble(192UL, 100);
                     set => this.WriteData(192UL, value, 100);
                 }
-
                 public double Max3dayPrecipSum
                 {
                     get => this.ReadDataDouble(256UL, 0);
                     set => this.WriteData(256UL, value, 0);
                 }
-
                 public double MaxCurrentDayPrecipSum
                 {
                     get => this.ReadDataDouble(320UL, 0);
                     set => this.WriteData(320UL, value, 0);
                 }
-
                 public double TempSumAboveBaseTemp
                 {
                     get => this.ReadDataDouble(384UL, 0);
                     set => this.WriteData(384UL, value, 0);
                 }
-
                 public double BaseTemp
                 {
                     get => this.ReadDataDouble(448UL, 0);
                     set => this.WriteData(448UL, value, 0);
                 }
-
                 public Mas.Schema.Management.Params.AutomaticSowing.AvgSoilTemp.WRITER TheAvgSoilTemp
                 {
                     get =>
@@ -955,7 +922,6 @@ namespace Mas.Schema.Management
                         );
                     set => Link(0, value);
                 }
-
                 public Mas.Schema.Management.Params.Sowing.WRITER Sowing
                 {
                     get => BuildPointer<Mas.Schema.Management.Params.Sowing.WRITER>(1);
@@ -996,7 +962,6 @@ namespace Mas.Schema.Management
 
                 public double SoilDepthForAveraging { get; set; } = 0.3;
                 public ushort DaysInSoilTempWindow { get; set; }
-
                 public double SowingIfAboveAvgSoilTemp { get; set; }
 
                 public struct READER
@@ -1032,13 +997,11 @@ namespace Mas.Schema.Management
                         get => this.ReadDataDouble(0UL, 0.3);
                         set => this.WriteData(0UL, value, 0.3);
                     }
-
                     public ushort DaysInSoilTempWindow
                     {
                         get => this.ReadDataUShort(64UL, (ushort)0);
                         set => this.WriteData(64UL, value, (ushort)0);
                     }
-
                     public double SowingIfAboveAvgSoilTemp
                     {
                         get => this.ReadDataDouble(128UL, 0);
@@ -1119,7 +1082,6 @@ namespace Mas.Schema.Management
                     get => this.ReadDataBool(0UL, true);
                     set => this.WriteData(0UL, value, true);
                 }
-
                 public Mas.Schema.Management.Params.Harvest.OptCarbonMgmtData.WRITER OptCarbMgmtData
                 {
                     get =>
@@ -1223,13 +1185,11 @@ namespace Mas.Schema.Management
                         get => this.ReadDataBool(0UL, false);
                         set => this.WriteData(0UL, value, false);
                     }
-
                     public double CropImpactOnHumusBalance
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public Mas.Schema.Management.Params.Harvest.CropUsage CropUsage
                     {
                         get =>
@@ -1237,19 +1197,16 @@ namespace Mas.Schema.Management
                                 this.ReadDataUShort(16UL, (ushort)1);
                         set => this.WriteData(16UL, (ushort)value, (ushort)1);
                     }
-
                     public double ResidueHeq
                     {
                         get => this.ReadDataDouble(128UL, 0);
                         set => this.WriteData(128UL, value, 0);
                     }
-
                     public double OrganicFertilizerHeq
                     {
                         get => this.ReadDataDouble(192UL, 0);
                         set => this.WriteData(192UL, value, 0);
                     }
-
                     public double MaxResidueRecoverFraction
                     {
                         get => this.ReadDataDouble(256UL, 0);
@@ -1299,12 +1256,9 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public double MinPercentASW { get; set; }
-
             public double MaxPercentASW { get; set; } = 100;
             public double Max3dayPrecipSum { get; set; }
-
             public double MaxCurrentDayPrecipSum { get; set; }
-
             public Mas.Schema.Management.Event.PhenoStage HarvestTime { get; set; } =
                 Mas.Schema.Management.Event.PhenoStage.maturity;
             public Mas.Schema.Management.Params.Harvest Harvest { get; set; }
@@ -1347,25 +1301,21 @@ namespace Mas.Schema.Management
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public double MaxPercentASW
                 {
                     get => this.ReadDataDouble(64UL, 100);
                     set => this.WriteData(64UL, value, 100);
                 }
-
                 public double Max3dayPrecipSum
                 {
                     get => this.ReadDataDouble(128UL, 0);
                     set => this.WriteData(128UL, value, 0);
                 }
-
                 public double MaxCurrentDayPrecipSum
                 {
                     get => this.ReadDataDouble(192UL, 0);
                     set => this.WriteData(192UL, value, 0);
                 }
-
                 public Mas.Schema.Management.Event.PhenoStage HarvestTime
                 {
                     get =>
@@ -1373,7 +1323,6 @@ namespace Mas.Schema.Management
                             this.ReadDataUShort(256UL, (ushort)3);
                     set => this.WriteData(256UL, (ushort)value, (ushort)3);
                 }
-
                 public Mas.Schema.Management.Params.Harvest.WRITER Harvest
                 {
                     get => BuildPointer<Mas.Schema.Management.Params.Harvest.WRITER>(0);
@@ -1414,7 +1363,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public IReadOnlyList<Mas.Schema.Management.Params.Cutting.Spec> CuttingSpec { get; set; }
-
             public double CutMaxAssimilationRatePercentage { get; set; } = 100;
 
             public struct READER
@@ -1453,7 +1401,6 @@ namespace Mas.Schema.Management
                         >(0);
                     set => Link(0, value);
                 }
-
                 public double CutMaxAssimilationRatePercentage
                 {
                     get => this.ReadDataDouble(0UL, 100);
@@ -1518,9 +1465,7 @@ namespace Mas.Schema.Management
                 public void applyDefaults() { }
 
                 public Mas.Schema.Management.PlantOrgan Organ { get; set; }
-
                 public double Value { get; set; }
-
                 public Mas.Schema.Management.Params.Cutting.Unit Unit { get; set; } =
                     Mas.Schema.Management.Params.Cutting.Unit.percentage;
                 public Mas.Schema.Management.Params.Cutting.CL CutOrLeft { get; set; } =
@@ -1568,13 +1513,11 @@ namespace Mas.Schema.Management
                             (Mas.Schema.Management.PlantOrgan)this.ReadDataUShort(0UL, (ushort)0);
                         set => this.WriteData(0UL, (ushort)value, (ushort)0);
                     }
-
                     public double Value
                     {
                         get => this.ReadDataDouble(64UL, 0);
                         set => this.WriteData(64UL, value, 0);
                     }
-
                     public Mas.Schema.Management.Params.Cutting.Unit Unit
                     {
                         get =>
@@ -1582,7 +1525,6 @@ namespace Mas.Schema.Management
                                 this.ReadDataUShort(16UL, (ushort)0);
                         set => this.WriteData(16UL, (ushort)value, (ushort)0);
                     }
-
                     public Mas.Schema.Management.Params.Cutting.CL CutOrLeft
                     {
                         get =>
@@ -1590,7 +1532,6 @@ namespace Mas.Schema.Management
                                 this.ReadDataUShort(32UL, (ushort)0);
                         set => this.WriteData(32UL, (ushort)value, (ushort)0);
                     }
-
                     public double ExportPercentage
                     {
                         get => this.ReadDataDouble(128UL, 100);
@@ -1630,7 +1571,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
-
             public double Amount { get; set; }
 
             public struct READER
@@ -1665,7 +1605,6 @@ namespace Mas.Schema.Management
                     get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
                     set => LinkObject(0, value);
                 }
-
                 public double Amount
                 {
                     get => this.ReadDataDouble(0UL, 0);
@@ -1708,11 +1647,8 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public double NDemand { get; set; }
-
             public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
-
             public double Depth { get; set; }
-
             public byte Stage { get; set; } = 1;
 
             public struct READER
@@ -1749,19 +1685,16 @@ namespace Mas.Schema.Management
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public Mas.Schema.Management.IFertilizer Fertilizer
                 {
                     get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
                     set => LinkObject(0, value);
                 }
-
                 public double Depth
                 {
                     get => this.ReadDataDouble(64UL, 0);
                     set => this.WriteData(64UL, value, 0);
                 }
-
                 public byte Stage
                 {
                     get => this.ReadDataByte(128UL, (byte)1);
@@ -1802,9 +1735,7 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public Mas.Schema.Management.IFertilizer Fertilizer { get; set; }
-
             public double Amount { get; set; }
-
             public bool Incorporation { get; set; } = false;
 
             public struct READER
@@ -1840,13 +1771,11 @@ namespace Mas.Schema.Management
                     get => ReadCap<Mas.Schema.Management.IFertilizer>(0);
                     set => LinkObject(0, value);
                 }
-
                 public double Amount
                 {
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public bool Incorporation
                 {
                     get => this.ReadDataBool(64UL, false);
@@ -1952,7 +1881,6 @@ namespace Mas.Schema.Management
             public void applyDefaults() { }
 
             public double Amount { get; set; }
-
             public IReadOnlyList<Mas.Schema.Management.Nutrient> NutrientConcentrations { get; set; }
 
             public struct READER
@@ -1988,7 +1916,6 @@ namespace Mas.Schema.Management
                     get => this.ReadDataDouble(0UL, 0);
                     set => this.WriteData(0UL, value, 0);
                 }
-
                 public ListOfStructsSerializer<Mas.Schema.Management.Nutrient.WRITER> NutrientConcentrations
                 {
                     get =>
@@ -2033,9 +1960,7 @@ namespace Mas.Schema.Management
         public void applyDefaults() { }
 
         public Mas.Schema.Management.Nutrient.Name TheNutrient { get; set; }
-
         public double Value { get; set; }
-
         public Mas.Schema.Management.Nutrient.Unit TheUnit { get; set; }
 
         public struct READER
@@ -2072,13 +1997,11 @@ namespace Mas.Schema.Management
                 get => (Mas.Schema.Management.Nutrient.Name)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
             }
-
             public double Value
             {
                 get => this.ReadDataDouble(64UL, 0);
                 set => this.WriteData(64UL, value, 0);
             }
-
             public Mas.Schema.Management.Nutrient.Unit TheUnit
             {
                 get => (Mas.Schema.Management.Nutrient.Unit)this.ReadDataUShort(16UL, (ushort)0);
@@ -2120,8 +2043,8 @@ namespace Mas.Schema.Management
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x8c4cb8d60ae5aec7UL),
-        Proxy(typeof(Fertilizer_Proxy)),
-        Skeleton(typeof(Fertilizer_Skeleton))
+        Proxy(typeof(Mas.Schema.Management.Fertilizer_Proxy)),
+        Skeleton(typeof(Mas.Schema.Management.Fertilizer_Skeleton))
     ]
     public interface IFertilizer
         : Mas.Schema.Common.IIdentifiable,
@@ -2535,8 +2458,8 @@ namespace Mas.Schema.Management
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xbbb7aeae0d097e05UL),
-        Proxy(typeof(FertilizerService_Proxy)),
-        Skeleton(typeof(FertilizerService_Skeleton))
+        Proxy(typeof(Mas.Schema.Management.FertilizerService_Proxy)),
+        Skeleton(typeof(Mas.Schema.Management.FertilizerService_Skeleton))
     ]
     public interface IFertilizerService : Mas.Schema.Registry.IRegistry { }
 
@@ -2674,8 +2597,8 @@ namespace Mas.Schema.Management
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xc876b729b7d7f6d9UL),
-        Proxy(typeof(Service_Proxy)),
-        Skeleton(typeof(Service_Skeleton))
+        Proxy(typeof(Mas.Schema.Management.Service_Proxy)),
+        Skeleton(typeof(Mas.Schema.Management.Service_Skeleton))
     ]
     public interface IService : Mas.Schema.Common.IIdentifiable
     {

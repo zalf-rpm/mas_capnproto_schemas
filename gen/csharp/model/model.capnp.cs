@@ -38,7 +38,6 @@ namespace Mas.Schema.Model
         public void applyDefaults() { }
 
         public IReadOnlyList<double> Xs { get; set; }
-
         public IReadOnlyList<double> Ys { get; set; }
 
         public struct READER
@@ -74,7 +73,6 @@ namespace Mas.Schema.Model
                 get => BuildPointer<ListOfPrimitivesSerializer<double>>(0);
                 set => Link(0, value);
             }
-
             public ListOfPrimitivesSerializer<double> Ys
             {
                 get => BuildPointer<ListOfPrimitivesSerializer<double>>(1);
@@ -148,7 +146,6 @@ namespace Mas.Schema.Model
                 get => (Mas.Schema.Model.Stat.Type)this.ReadDataUShort(0UL, (ushort)3);
                 set => this.WriteData(0UL, (ushort)value, (ushort)3);
             }
-
             public ListOfPrimitivesSerializer<double> Vs
             {
                 get => BuildPointer<ListOfPrimitivesSerializer<double>>(0);
@@ -202,7 +199,6 @@ namespace Mas.Schema.Model
         public void applyDefaults() { }
 
         public Mas.Schema.Model.XYResult Xy { get; set; }
-
         public IReadOnlyList<Mas.Schema.Model.Stat> Stats { get; set; }
 
         public struct READER
@@ -240,7 +236,6 @@ namespace Mas.Schema.Model
                 get => BuildPointer<Mas.Schema.Model.XYResult.WRITER>(0);
                 set => Link(0, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER> Stats
             {
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Model.Stat.WRITER>>(1);
@@ -252,8 +247,8 @@ namespace Mas.Schema.Model
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xdfcfeb783c4948fcUL),
-        Proxy(typeof(ClimateInstance_Proxy)),
-        Skeleton(typeof(ClimateInstance_Skeleton))
+        Proxy(typeof(Mas.Schema.Model.ClimateInstance_Proxy)),
+        Skeleton(typeof(Mas.Schema.Model.ClimateInstance_Skeleton))
     ]
     public interface IClimateInstance : Mas.Schema.Common.IIdentifiable
     {
@@ -711,11 +706,8 @@ namespace Mas.Schema.Model
         public void applyDefaults() { }
 
         public TRestInput Rest { get; set; }
-
         public Mas.Schema.Climate.ITimeSeries TimeSeries { get; set; }
-
         public Mas.Schema.Soil.IProfile SoilProfile { get; set; }
-
         public IReadOnlyList<Mas.Schema.Management.Event> MgmtEvents { get; set; }
 
         public struct READER
@@ -754,19 +746,16 @@ namespace Mas.Schema.Model
                 get => BuildPointer<DynamicSerializerState>(0);
                 set => Link(0, value);
             }
-
             public Mas.Schema.Climate.ITimeSeries TimeSeries
             {
                 get => ReadCap<Mas.Schema.Climate.ITimeSeries>(1);
                 set => LinkObject(1, value);
             }
-
             public Mas.Schema.Soil.IProfile SoilProfile
             {
                 get => ReadCap<Mas.Schema.Soil.IProfile>(2);
                 set => LinkObject(2, value);
             }
-
             public ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER> MgmtEvents
             {
                 get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Management.Event.WRITER>>(3);
@@ -778,8 +767,8 @@ namespace Mas.Schema.Model
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xa5feedafa5ec5c4aUL),
-        Proxy(typeof(EnvInstance_Proxy<,>)),
-        Skeleton(typeof(EnvInstance_Skeleton<,>))
+        Proxy(typeof(Mas.Schema.Model.EnvInstance_Proxy<,>)),
+        Skeleton(typeof(Mas.Schema.Model.EnvInstance_Skeleton<,>))
     ]
     public interface IEnvInstance<TRestInput, TOutput>
         : Mas.Schema.Common.IIdentifiable,
@@ -1089,8 +1078,8 @@ namespace Mas.Schema.Model
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x87cbebfc1164a24aUL),
-        Proxy(typeof(EnvInstanceProxy_Proxy<,>)),
-        Skeleton(typeof(EnvInstanceProxy_Skeleton<,>))
+        Proxy(typeof(Mas.Schema.Model.EnvInstanceProxy_Proxy<,>)),
+        Skeleton(typeof(Mas.Schema.Model.EnvInstanceProxy_Skeleton<,>))
     ]
     public interface IEnvInstanceProxy<TRestInput, TOutput>
         : Mas.Schema.Model.IEnvInstance<TRestInput, TOutput>
@@ -1321,8 +1310,8 @@ namespace Mas.Schema.Model
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xc727892bd5c66f88UL),
-            Proxy(typeof(EnvInstanceProxy<object, object>.Unregister_Proxy)),
-            Skeleton(typeof(EnvInstanceProxy<object, object>.Unregister_Skeleton))
+            Proxy(typeof(Mas.Schema.Model.EnvInstanceProxy<,>.Unregister_Proxy)),
+            Skeleton(typeof(Mas.Schema.Model.EnvInstanceProxy<,>.Unregister_Skeleton))
         ]
         public interface IUnregister : IDisposable
         {
@@ -1665,8 +1654,8 @@ namespace Mas.Schema.Model
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0xce552eef738a45eaUL),
-        Proxy(typeof(InstanceFactory_Proxy)),
-        Skeleton(typeof(InstanceFactory_Skeleton))
+        Proxy(typeof(Mas.Schema.Model.InstanceFactory_Proxy)),
+        Skeleton(typeof(Mas.Schema.Model.InstanceFactory_Skeleton))
     ]
     public interface IInstanceFactory : Mas.Schema.Common.IIdentifiable
     {

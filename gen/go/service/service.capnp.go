@@ -2117,32 +2117,32 @@ func (f Factory_serviceInterfaceNames_Results_Future) Struct() (Factory_serviceI
 	return Factory_serviceInterfaceNames_Results(p.Struct()), err
 }
 
-type Stopable capnp.Client
+type Stoppable capnp.Client
 
-// Stopable_TypeID is the unique identifier for the type Stopable.
-const Stopable_TypeID = 0xe9d1be2a6e9016e5
+// Stoppable_TypeID is the unique identifier for the type Stoppable.
+const Stoppable_TypeID = 0xcd5f6458232e9276
 
-func (c Stopable) Stop(ctx context.Context, params func(Stopable_stop_Params) error) (Stopable_stop_Results_Future, capnp.ReleaseFunc) {
+func (c Stoppable) Stop(ctx context.Context, params func(Stoppable_stop_Params) error) (Stoppable_stop_Results_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
 		Method: capnp.Method{
-			InterfaceID:   0xe9d1be2a6e9016e5,
+			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stopable",
+			InterfaceName: "service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 	}
 	if params != nil {
 		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(Stopable_stop_Params(s)) }
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Stoppable_stop_Params(s)) }
 	}
 
 	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return Stopable_stop_Results_Future{Future: ans.Future()}, release
+	return Stoppable_stop_Results_Future{Future: ans.Future()}, release
 
 }
 
-func (c Stopable) WaitStreaming() error {
+func (c Stoppable) WaitStreaming() error {
 	return capnp.Client(c).WaitStreaming()
 }
 
@@ -2150,14 +2150,14 @@ func (c Stopable) WaitStreaming() error {
 // purposes.  Its format should not be depended on: in particular, it
 // should not be used to compare clients.  Use IsSame to compare clients
 // for equality.
-func (c Stopable) String() string {
-	return "Stopable(" + capnp.Client(c).String() + ")"
+func (c Stoppable) String() string {
+	return "Stoppable(" + capnp.Client(c).String() + ")"
 }
 
 // AddRef creates a new Client that refers to the same capability as c.
 // If c is nil or has resolved to null, then AddRef returns nil.
-func (c Stopable) AddRef() Stopable {
-	return Stopable(capnp.Client(c).AddRef())
+func (c Stoppable) AddRef() Stoppable {
+	return Stoppable(capnp.Client(c).AddRef())
 }
 
 // Release releases a capability reference.  If this is the last
@@ -2166,28 +2166,28 @@ func (c Stopable) AddRef() Stopable {
 //
 // Release will panic if c has already been released, but not if c is
 // nil or resolved to null.
-func (c Stopable) Release() {
+func (c Stoppable) Release() {
 	capnp.Client(c).Release()
 }
 
 // Resolve blocks until the capability is fully resolved or the Context
 // expires.
-func (c Stopable) Resolve(ctx context.Context) error {
+func (c Stoppable) Resolve(ctx context.Context) error {
 	return capnp.Client(c).Resolve(ctx)
 }
 
-func (c Stopable) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (c Stoppable) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Client(c).EncodeAsPtr(seg)
 }
 
-func (Stopable) DecodeFromPtr(p capnp.Ptr) Stopable {
-	return Stopable(capnp.Client{}.DecodeFromPtr(p))
+func (Stoppable) DecodeFromPtr(p capnp.Ptr) Stoppable {
+	return Stoppable(capnp.Client{}.DecodeFromPtr(p))
 }
 
 // IsValid reports whether c is a valid reference to a capability.
 // A reference is invalid if it is nil, has resolved to null, or has
 // been released.
-func (c Stopable) IsValid() bool {
+func (c Stoppable) IsValid() bool {
 	return capnp.Client(c).IsValid()
 }
 
@@ -2195,7 +2195,7 @@ func (c Stopable) IsValid() bool {
 // same call to NewClient.  This can return false negatives if c or other
 // are not fully resolved: use Resolve if this is an issue.  If either
 // c or other are released, then IsSame panics.
-func (c Stopable) IsSame(other Stopable) bool {
+func (c Stoppable) IsSame(other Stoppable) bool {
 	return capnp.Client(c).IsSame(capnp.Client(other))
 }
 
@@ -2203,300 +2203,309 @@ func (c Stopable) IsSame(other Stopable) bool {
 // this client. This affects all future calls, but not calls already
 // waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
 // which is also the default.
-func (c Stopable) SetFlowLimiter(lim fc.FlowLimiter) {
+func (c Stoppable) SetFlowLimiter(lim fc.FlowLimiter) {
 	capnp.Client(c).SetFlowLimiter(lim)
 }
 
 // Get the current flowcontrol.FlowLimiter used to manage flow control
 // for this client.
-func (c Stopable) GetFlowLimiter() fc.FlowLimiter {
+func (c Stoppable) GetFlowLimiter() fc.FlowLimiter {
 	return capnp.Client(c).GetFlowLimiter()
 }
 
-// A Stopable_Server is a Stopable with a local implementation.
-type Stopable_Server interface {
-	Stop(context.Context, Stopable_stop) error
+// A Stoppable_Server is a Stoppable with a local implementation.
+type Stoppable_Server interface {
+	Stop(context.Context, Stoppable_stop) error
 }
 
-// Stopable_NewServer creates a new Server from an implementation of Stopable_Server.
-func Stopable_NewServer(s Stopable_Server) *server.Server {
+// Stoppable_NewServer creates a new Server from an implementation of Stoppable_Server.
+func Stoppable_NewServer(s Stoppable_Server) *server.Server {
 	c, _ := s.(server.Shutdowner)
-	return server.New(Stopable_Methods(nil, s), s, c)
+	return server.New(Stoppable_Methods(nil, s), s, c)
 }
 
-// Stopable_ServerToClient creates a new Client from an implementation of Stopable_Server.
+// Stoppable_ServerToClient creates a new Client from an implementation of Stoppable_Server.
 // The caller is responsible for calling Release on the returned Client.
-func Stopable_ServerToClient(s Stopable_Server) Stopable {
-	return Stopable(capnp.NewClient(Stopable_NewServer(s)))
+func Stoppable_ServerToClient(s Stoppable_Server) Stoppable {
+	return Stoppable(capnp.NewClient(Stoppable_NewServer(s)))
 }
 
-// Stopable_Methods appends Methods to a slice that invoke the methods on s.
+// Stoppable_Methods appends Methods to a slice that invoke the methods on s.
 // This can be used to create a more complicated Server.
-func Stopable_Methods(methods []server.Method, s Stopable_Server) []server.Method {
+func Stoppable_Methods(methods []server.Method, s Stoppable_Server) []server.Method {
 	if cap(methods) == 0 {
 		methods = make([]server.Method, 0, 1)
 	}
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xe9d1be2a6e9016e5,
+			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stopable",
+			InterfaceName: "service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.Stop(ctx, Stopable_stop{call})
+			return s.Stop(ctx, Stoppable_stop{call})
 		},
 	})
 
 	return methods
 }
 
-// Stopable_stop holds the state for a server call to Stopable.stop.
+// Stoppable_stop holds the state for a server call to Stoppable.stop.
 // See server.Call for documentation.
-type Stopable_stop struct {
+type Stoppable_stop struct {
 	*server.Call
 }
 
 // Args returns the call's arguments.
-func (c Stopable_stop) Args() Stopable_stop_Params {
-	return Stopable_stop_Params(c.Call.Args())
+func (c Stoppable_stop) Args() Stoppable_stop_Params {
+	return Stoppable_stop_Params(c.Call.Args())
 }
 
 // AllocResults allocates the results struct.
-func (c Stopable_stop) AllocResults() (Stopable_stop_Results, error) {
-	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Stopable_stop_Results(r), err
+func (c Stoppable_stop) AllocResults() (Stoppable_stop_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Stoppable_stop_Results(r), err
 }
 
-// Stopable_List is a list of Stopable.
-type Stopable_List = capnp.CapList[Stopable]
+// Stoppable_List is a list of Stoppable.
+type Stoppable_List = capnp.CapList[Stoppable]
 
-// NewStopable_List creates a new list of Stopable.
-func NewStopable_List(s *capnp.Segment, sz int32) (Stopable_List, error) {
+// NewStoppable_List creates a new list of Stoppable.
+func NewStoppable_List(s *capnp.Segment, sz int32) (Stoppable_List, error) {
 	l, err := capnp.NewPointerList(s, sz)
-	return capnp.CapList[Stopable](l), err
+	return capnp.CapList[Stoppable](l), err
 }
 
-type Stopable_stop_Params capnp.Struct
+type Stoppable_stop_Params capnp.Struct
 
-// Stopable_stop_Params_TypeID is the unique identifier for the type Stopable_stop_Params.
-const Stopable_stop_Params_TypeID = 0xd2e4f20669b7b705
+// Stoppable_stop_Params_TypeID is the unique identifier for the type Stoppable_stop_Params.
+const Stoppable_stop_Params_TypeID = 0x94af8fce16d48a92
 
-func NewStopable_stop_Params(s *capnp.Segment) (Stopable_stop_Params, error) {
+func NewStoppable_stop_Params(s *capnp.Segment) (Stoppable_stop_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Stopable_stop_Params(st), err
+	return Stoppable_stop_Params(st), err
 }
 
-func NewRootStopable_stop_Params(s *capnp.Segment) (Stopable_stop_Params, error) {
+func NewRootStoppable_stop_Params(s *capnp.Segment) (Stoppable_stop_Params, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Stopable_stop_Params(st), err
+	return Stoppable_stop_Params(st), err
 }
 
-func ReadRootStopable_stop_Params(msg *capnp.Message) (Stopable_stop_Params, error) {
+func ReadRootStoppable_stop_Params(msg *capnp.Message) (Stoppable_stop_Params, error) {
 	root, err := msg.Root()
-	return Stopable_stop_Params(root.Struct()), err
+	return Stoppable_stop_Params(root.Struct()), err
 }
 
-func (s Stopable_stop_Params) String() string {
-	str, _ := text.Marshal(0xd2e4f20669b7b705, capnp.Struct(s))
+func (s Stoppable_stop_Params) String() string {
+	str, _ := text.Marshal(0x94af8fce16d48a92, capnp.Struct(s))
 	return str
 }
 
-func (s Stopable_stop_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s Stoppable_stop_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (Stopable_stop_Params) DecodeFromPtr(p capnp.Ptr) Stopable_stop_Params {
-	return Stopable_stop_Params(capnp.Struct{}.DecodeFromPtr(p))
+func (Stoppable_stop_Params) DecodeFromPtr(p capnp.Ptr) Stoppable_stop_Params {
+	return Stoppable_stop_Params(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s Stopable_stop_Params) ToPtr() capnp.Ptr {
+func (s Stoppable_stop_Params) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s Stopable_stop_Params) IsValid() bool {
+func (s Stoppable_stop_Params) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s Stopable_stop_Params) Message() *capnp.Message {
+func (s Stoppable_stop_Params) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s Stopable_stop_Params) Segment() *capnp.Segment {
+func (s Stoppable_stop_Params) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
 
-// Stopable_stop_Params_List is a list of Stopable_stop_Params.
-type Stopable_stop_Params_List = capnp.StructList[Stopable_stop_Params]
+// Stoppable_stop_Params_List is a list of Stoppable_stop_Params.
+type Stoppable_stop_Params_List = capnp.StructList[Stoppable_stop_Params]
 
-// NewStopable_stop_Params creates a new list of Stopable_stop_Params.
-func NewStopable_stop_Params_List(s *capnp.Segment, sz int32) (Stopable_stop_Params_List, error) {
+// NewStoppable_stop_Params creates a new list of Stoppable_stop_Params.
+func NewStoppable_stop_Params_List(s *capnp.Segment, sz int32) (Stoppable_stop_Params_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[Stopable_stop_Params](l), err
+	return capnp.StructList[Stoppable_stop_Params](l), err
 }
 
-// Stopable_stop_Params_Future is a wrapper for a Stopable_stop_Params promised by a client call.
-type Stopable_stop_Params_Future struct{ *capnp.Future }
+// Stoppable_stop_Params_Future is a wrapper for a Stoppable_stop_Params promised by a client call.
+type Stoppable_stop_Params_Future struct{ *capnp.Future }
 
-func (f Stopable_stop_Params_Future) Struct() (Stopable_stop_Params, error) {
+func (f Stoppable_stop_Params_Future) Struct() (Stoppable_stop_Params, error) {
 	p, err := f.Future.Ptr()
-	return Stopable_stop_Params(p.Struct()), err
+	return Stoppable_stop_Params(p.Struct()), err
 }
 
-type Stopable_stop_Results capnp.Struct
+type Stoppable_stop_Results capnp.Struct
 
-// Stopable_stop_Results_TypeID is the unique identifier for the type Stopable_stop_Results.
-const Stopable_stop_Results_TypeID = 0x96368058e2cef1ac
+// Stoppable_stop_Results_TypeID is the unique identifier for the type Stoppable_stop_Results.
+const Stoppable_stop_Results_TypeID = 0xd2c46584c294cfd8
 
-func NewStopable_stop_Results(s *capnp.Segment) (Stopable_stop_Results, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Stopable_stop_Results(st), err
+func NewStoppable_stop_Results(s *capnp.Segment) (Stoppable_stop_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Stoppable_stop_Results(st), err
 }
 
-func NewRootStopable_stop_Results(s *capnp.Segment) (Stopable_stop_Results, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
-	return Stopable_stop_Results(st), err
+func NewRootStoppable_stop_Results(s *capnp.Segment) (Stoppable_stop_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Stoppable_stop_Results(st), err
 }
 
-func ReadRootStopable_stop_Results(msg *capnp.Message) (Stopable_stop_Results, error) {
+func ReadRootStoppable_stop_Results(msg *capnp.Message) (Stoppable_stop_Results, error) {
 	root, err := msg.Root()
-	return Stopable_stop_Results(root.Struct()), err
+	return Stoppable_stop_Results(root.Struct()), err
 }
 
-func (s Stopable_stop_Results) String() string {
-	str, _ := text.Marshal(0x96368058e2cef1ac, capnp.Struct(s))
+func (s Stoppable_stop_Results) String() string {
+	str, _ := text.Marshal(0xd2c46584c294cfd8, capnp.Struct(s))
 	return str
 }
 
-func (s Stopable_stop_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s Stoppable_stop_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (Stopable_stop_Results) DecodeFromPtr(p capnp.Ptr) Stopable_stop_Results {
-	return Stopable_stop_Results(capnp.Struct{}.DecodeFromPtr(p))
+func (Stoppable_stop_Results) DecodeFromPtr(p capnp.Ptr) Stoppable_stop_Results {
+	return Stoppable_stop_Results(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s Stopable_stop_Results) ToPtr() capnp.Ptr {
+func (s Stoppable_stop_Results) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s Stopable_stop_Results) IsValid() bool {
+func (s Stoppable_stop_Results) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s Stopable_stop_Results) Message() *capnp.Message {
+func (s Stoppable_stop_Results) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s Stopable_stop_Results) Segment() *capnp.Segment {
+func (s Stoppable_stop_Results) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-
-// Stopable_stop_Results_List is a list of Stopable_stop_Results.
-type Stopable_stop_Results_List = capnp.StructList[Stopable_stop_Results]
-
-// NewStopable_stop_Results creates a new list of Stopable_stop_Results.
-func NewStopable_stop_Results_List(s *capnp.Segment, sz int32) (Stopable_stop_Results_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
-	return capnp.StructList[Stopable_stop_Results](l), err
+func (s Stoppable_stop_Results) Success() bool {
+	return capnp.Struct(s).Bit(0)
 }
 
-// Stopable_stop_Results_Future is a wrapper for a Stopable_stop_Results promised by a client call.
-type Stopable_stop_Results_Future struct{ *capnp.Future }
+func (s Stoppable_stop_Results) SetSuccess(v bool) {
+	capnp.Struct(s).SetBit(0, v)
+}
 
-func (f Stopable_stop_Results_Future) Struct() (Stopable_stop_Results, error) {
+// Stoppable_stop_Results_List is a list of Stoppable_stop_Results.
+type Stoppable_stop_Results_List = capnp.StructList[Stoppable_stop_Results]
+
+// NewStoppable_stop_Results creates a new list of Stoppable_stop_Results.
+func NewStoppable_stop_Results_List(s *capnp.Segment, sz int32) (Stoppable_stop_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Stoppable_stop_Results](l), err
+}
+
+// Stoppable_stop_Results_Future is a wrapper for a Stoppable_stop_Results promised by a client call.
+type Stoppable_stop_Results_Future struct{ *capnp.Future }
+
+func (f Stoppable_stop_Results_Future) Struct() (Stoppable_stop_Results, error) {
 	p, err := f.Future.Ptr()
-	return Stopable_stop_Results(p.Struct()), err
+	return Stoppable_stop_Results(p.Struct()), err
 }
 
-const schema_f52adf98d2bbc6c0 = "x\xda\x94Vkl\x14U\x14>gf\xe7Q\x04\xba" +
-	"\x97ih\xa8\xc4MH\xb5\xb0\xc1\x06ZP\xd3\x88\xed" +
-	"\x96G-\x8a\xd9\xd9\xd6\x04jT\xa6\xbbS\x18\xb2\xbb" +
-	"\xb3\xecL\x85\x12\xb1\xa2 \x16C\x02&<\x03?\xc4" +
-	"4\x11\x10Q\x90\xa7Q)F\xfdQ\xc5\xf02\x11\x8a" +
-	"<\xa21&\x1a\x03\xa6F\x7f\xc0\x98;\xb3ww\xd8" +
-	"\x16\x94\x7f\x939\xf7\x9e\xf3\x9d\xef|\xe7\x9c;\xa5\x8d" +
-	"o\x08L\x1d\xf5\xe2}\xc0\xa9\xab\x05\xd1\xd9\xf3\xc0\x8f" +
-	"W&>\xf6n\x0f\x90\xf1\x08 \xa0\x04P\xbbIh" +
-	"C@\xe5\x1d\xa1\x1e\xd0\xe9\xde\xf1\xd0\x8ec\xbf}\xb8" +
-	"\x0e\xc8h\xde9\xf1\xd5'g\xb6^\x0e\x0f\x02@\x10" +
-	"\x95\xd3\xc2\x01\xe5\x07\xa1\x0a@\x19\x14\xd6*;\xc5r" +
-	"\xa5W,u\xde\xbf~\xea\xda\xfcW\x1f\xd9\x0c\xa4\x1c" +
-	"\x01\x02\xd4\xe16q\x02B\xc0\xb9\x19$\xc6\xba\xe9\x9f" +
-	"o\x07\xb5\x0c\x99i\x95XCc\xf5\x884\xd6\xa5\xc3" +
-	"\x03\x0b\x07\xccI\xefy`\\\xfbn1F\xaf\x0a\xdf" +
-	"\x0d\x1c\xaa\xeak\xdf\x0dd\xac\x073\x88\xb5\x9b\xc4]" +
-	"\xf4j\xaf{\xb5_99\xe1\xed\xd7z\xf7\x16\xc1D" +
-	"\xe5\xbcxM\xb9*J\x00\xca%\xb1I\x11\xa4r\x00" +
-	"g\xf2\xdek\xf2\xc5\xae\x17>\x02R\xc6\xe2\x0c\x8am" +
-	"4N\xf5\xe1\x97/\xb7,Yu\x8c\xc6)\xa4.\xf0" +
-	"4\xdeUq\x04*\xd7]W\xbf\x8b\xfb\x01\x9d-\x1b" +
-	"\xf7|S\xbe\xe6\xe8IP\xc7\xa2\xff4GO\xef\x94" +
-	"*P\xd9'\xd1\xd3\xbb%zz\xed\x96\xce'\xc4\x8a" +
-	"\xf0)_\xd0}\xf2\x087\xb9#G\x0c\xf1\xc6Og" +
-	"|\x8cm\x92+\xa8%\xfc\xe6\xc1\xf0\xf4E\xe7\xcfy" +
-	"i\x07\xa8\xdf\x95\xf2vj\x99v\xe3\x97\x0b\xf7\xffY" +
-	"\xf5\xbd\xcf[J\x0eSK\xdfS_W\xcc\x1dw\xd3" +
-	"oyV\xae\xa3\x96\xd7\x8f/>\xfcOv\xf5\x80g" +
-	"\x118j\x9a!\xc7(\x89\xcd\xf22@g\xf9s\x7f" +
-	"<\xfa\xed\xd9/.\xf9\xae\xf6\xca\x1c\xbd\xba`K\xeb" +
-	"\x07\x1b&\x8c\xbf\xe2\xb3\xf4\xc85\xd4\xf2\xf3\xd8\x0d\xe9" +
-	"\xf0g\xa7\x7f\x1dB\xfcR\xf9\xb8\xd2%\xd3\xfc;\xe5" +
-	"&e'\xfdr\xb6\x1e\xbc\xb8|\xcd\x8c\xc6\xc1\x1c\x02" +
-	"Wmk(8T\xd6\xcb\xb4\x8c\xcd\x7f\xad\x1f\xf7\xd6" +
-	"\xdf}\xb7\x86x\xfbT\xde\xa5|I}\xd4\xf6\xc9M" +
-	"\xa8l+\xa1u\xdc<\x7f\xd2\xfa\xf6\xa5\x8d\x8e\x1fU" +
-	"I\x0d\xc2J\xc7\xd2\xb3/\x19q\xbd:\x10\xd72\xe9" +
-	"L]\x8b\x91\xca$\xf59Z\xdc6\xb3]\xd5\xf1\xac" +
-	"\xae\xd9zeL\xb7:\x93\xbcm\xa9\x01>\x00\x10@" +
-	"\x002*\x0c\xa0\xca<\xaa\x95\x1c\x96\xc6\xb5\x8c\x85\xa3" +
-	"\x01\xa3<\"q\xce?\xb9cA\xff\xe9\xfd\x07\x00\x90" +
-	"\xfe\xccG@/\xc2\x1c-\xe4:We\xf4\x09\x83\x94" +
-	",\xf1I\xaa\xa4\xcd\x99\xe9\x86\x8ejP\x9a\xd5R\x96" +
-	"\x13\x89\xc7u\xcbjN\x03\xdfa\xaa2/\x00\xe4\xef" +
-	"\"\xbbG\xa6\xd6\x01D&c\xe4q$\xf3$\xc4\xbc" +
-	"(\x905\x05\x89\x1c\x00\x88\xcc\xc2H+\x12]\xaa\xf7" +
-	"\xd2#\x18R\x03\x9cO\x96\xb4\xe5\x86\xfd\xd9\x90O\xa6" +
-	"\x19\xd3\xb6\x9e\xed\xd0\xe2z\xe8\x19-\xa5[\xf7\xe2C" +
-	"\x0d \xfaH\x82H\x00\x096vG\xb5\xae\xa4\xa9%" +
-	"\xf2t\xf1\xb9\x82\xd8fFkO\xea\xd5\x96mf\xdc" +
-	"JHI\xdb*>\x15I\xa4\x8ct\xb5\xa5\xdb\xadF" +
-	"J7;\xed\xcahH\xa3\xbc\xf9+\xd6\x98\xabX\x19" +
-	"\x87\xdd\x96\x1e7\xd3\x09\x0bK\x80\xc3\x12_\x8d\xee\xa6" +
-	"\x82(\xf5\x88\x85\xd0\x02\xab\xa7w\x8a1\xc3\x88qy" +
-	"\xc9\x03\xf6\x03\xa9)H'\x94\xa6\xa7\x98vF\x02w" +
-	"\x9bb\xb8b4\x92\x99\xed\x8a\"\xaa\x01W\x00l\x08" +
-	"\"\x1b\xcd\x84\xd4\x01G\x04V\xd8\xa1T\x17\xe7\xe9\xd1" +
-	"\xd6\x99Ih\xb6\xde\x9c\xd0\xd3\xb6aw\xe5\xd5^\xcc" +
-	"1K\x94I\xb1\xc3\x04\xa0`F\xe63\x9b=\x17@" +
-	"\x9d\xc5\xa3\x1a\xe5\x90 \xba\xb3\x9b\xcck\x07P\x9f\xe6" +
-	"Q]\xcc!\xe1\xb82\xe4\x00\x88N9X\xc8\xa3\x9a" +
-	"\xe4\xd0\xd1(\x8a\x99Z\x06\x00pL\x80\x07\xc41\x05" +
-	"\x12f\x82t\xb7\xee\x0a\xe9\xd9\xac\x99u\x99\x1b\xe9c" +
-	"\xae\x082k\xa6\xac\xc6\xa7,\x1ffD2{E\x01" +
-	"s\x1e\xf2\x19\x00\xb5\x95G\xf5(\x85\x8c\x1e\xe4Cm" +
-	"\x00\xea\xc7<\xaa'8tlOf-P\xef\x17\x12" +
-	"\x1f\x1c\x0d\xe0\x189\x05p\xae\x04Z\xcd\x98\xbe\xc8\xb0" +
-	"\xeclW\x0b\xc6X\x1aA\xa7\xb6\xa9\xfc\xc1\xa67\xce" +
-	"\x1d\x03\xda\x11\xacQ|?\x09V\xd1\x01\x81H\x95\x82" +
-	"\xa8\x06s\xf2`\x12IY\x8b\xdc\x86\x01^K\xe0\x18" +
-	"\xffR\xa1$\x0ee\"\xd7 \xac\x87\x92\xb6\xe5S\xc3" +
-	"\xb0\xad\x96c\xeb\xde\xe4^|\xe9\xb6\xe8\x8bu-k" +
-	"\xb7\xeb\x9a]\x19\xd5\xbc\xa9\xf6_]\x1c\xab\xf7\xb0\xfe" +
-	"/\xdd\xe6\xfaS\x95\xf3z\x9cDUV\xc9\xa3:\xc5" +
-	"\xa7\xc7\x87\xe9\x1c\x98\xc8\xa3:\x8d\xc3\x90\x99L4'" +
-	"\x98z\xba\xd3\xfa2*k\x0c:g/\xf0\xb7\xfa_" +
-	"\xe9?GU\x16\xf4\xb1)\x0da\xd3\x8dj\x01;0" +
-	"|\xbe1=t{\x1e\xc8\x18\xaf\xf7(/45[" +
-	"\xf1\xc8^G\x84\x84\xdd\xa6.\xa5\xe1\x1a0\x8aw\xa8" +
-	"\xad\xe1\xf1`\xd0\xa1\x93\xa3\xedNC\xc7Hw\x98V" +
-	"A\x8b\xfed\x87YX\x91\x84\x942\xd2\x14a\x99\x8b" +
-	"\x90=(\x90\xadz\xb21\x06\x1c\xe9\xa1\x1b\x87=\xdc" +
-	"\x90\xbd-\xc8\xca6\xe0H\xa7\x84\\\xfe\xcd\x80\xec}" +
-	"C\x0c\x9a\xd9\xf3\x12\xf2\xf9\xfd\x8cl\xef\x13\x95\xdek" +
-	"\x96\xb0\xf0\x18A\xf6\x18#3V\x00G\xa6K\x0e#" +
-	"\x18\xd0vW\x93\xa7\x1b\xe0;\xed\x06\xcc\xd1\xe50Z" +
-	"\x80\xd7\xad\x06t\x98f\xa0\xdeS\xcd]f\xe4\x9d\xd8" +
-	"\xcd\xad\x96\x7f\x03\x00\x00\xff\xffw\xccf\xf6"
+const schema_f52adf98d2bbc6c0 = "x\xda\x94V]l\x14\xd5\x17?gf\xe7c\xf9\x03" +
+	"\xdd\xcb4\x14\xf8\x137\xc1ja\x83\x0d\x14\x88\xa6\x11" +
+	"\xdb-\x1f\xb5(fg\xdb\x07\xa8Q\x98\xeeNaI" +
+	"wg\x9d\x99\x05J\xc4\x06\x05\x11\x0cQ\x08\x08\x12x" +
+	"\x10Cb!\x88\x80\x10\xd0\x07i\xfd\x8a\xa9@\x80b" +
+	"\x04Z\xf9x\xf1Ec\xd4\xd4\xc8\x03\x8c\xb93{w" +
+	"\xa7\x1f \xbeM\xe6\x9es\xcf\xef\xfc\xce\xef\x9csg" +
+	"\xac\xe2k\x033\xc7,\xfb\x1fp\xeaFAt\x0e=" +
+	"\xf2\xd3\xcd\xa9O}\xb8\x05\xc8d\x04\x10P\x02\x98\xb5" +
+	"KhF@\xe5\x03\xa1\x06\xd0\xe9\xd8\xf7\xf8\xbe3\xbf" +
+	"|\xb2\x15\xc8X\xde9\xfb\xcd\xe7\x97\xf6\xdc\x88\x0c\x00" +
+	"@\x08\x95\x8b\xc2q\xe5\xaaP\x01\xa0\x0c\x08\x9b\x95\xfd" +
+	"b\x99rP,qvl\xed\x1d\x7f\xfe\x9d\xa3;\x81" +
+	"L@\x80\x00\xbd\xf0}q\x0aB\xc0\xb9\x1b\"\xa9\xad" +
+	"s\xbe\xd8\x0bj)\xb2\xa3\x0db\x15\x8d\xb5E\xa4\xb1" +
+	"\xfaO\xf5-\xef3\xa6}\xe4\x81q\xcf;\xc58u" +
+	"\x15.\xf4\x9d\xac\xe8j\xe9\x042\xde\x83\x19\xc2Y\xbb" +
+	"\xc4\x03\xd4\xf5\xa0\xeb\xda\xa3tO\xd9\xf1\xfa\xc1\xc3C" +
+	"`\xa2rE\xbc\xad\xdc\x12%\x00\xa5_\xacW\x04\xa9" +
+	"\x0c\xc0\x99~\xf8\xb6|\xbd\xfd\xe5c@JY\x9c\x01" +
+	"\xb1\x99\xc6\xa9<\xf5\xea\x8d\xc6U\x1b\xce\xd08\xc5\xd4" +
+	"\x05\x9e\xc6\xbb%\x8eB\xe5w\xf7\xaa_\xc5\xa3\x80\xce" +
+	"\xee\xed\x87\xbe/\xdbt\xba\x1b\xd4\xf1\xe8\xb7\xe6\xa8\xf5" +
+	"~i\x12*G$j\xdd)Q\xeb\xd5;*\x1f]" +
+	"\x92\\vn\x18\xc2#r\xb7rR\xa6\x86\xc7\xe4z" +
+	"\xe5*\xfdr6\xef\xce=#N\x8a\x9c\xf7!\xec\x92" +
+	"GQ\x84?^\xd8\xd9\xbdQ\xff\xea\x12\xa8\x13\x0a$" +
+	"v\xca\x11\xca\xc41\x992\x11y\xebDd\xce\x8a+" +
+	"\xbd\x1eU\x01\x8a\xe5\xa2\xbc\x97\xba\xce\xfe\xe3\xe7k\xff" +
+	"\xff\xb3\xe2\x87A\x97F\xe8I\xd7s\xdfNZ4\xf1" +
+	"\xae\xff\xa4S\xae\xa6'o|\xb6\xf2\xd4\x1dsc\x9f" +
+	"w\"p\xf4h\xbb\x1c\xa7\xe1\xf6\xcbk\x00\x9d\xb5/" +
+	"\xfe\xf6\xe4\xb9\xcb_\xf6\xfb\\\xef\xc8\x1cu]\xba\xbb" +
+	"\xe9\xe3w\xa7L\xbe\xe9;\xe9\x97\xab\xe8\xc9\x9e\x13\xd7" +
+	"\xd7n\x9a[7\x90\xbf\xd4\x15\xdd\xd74\x1e*\xe7\xdc" +
+	"\x1c\x1a\xfe\xda6\xf1\xed\xbf\xbb\xee\x0d\xe3\xea\xae|@" +
+	"\x11\x82\xd4\x1e\x83\xf5\xa8\\\x0d\xd2r\xbe\xb7d\xda\xb6" +
+	"\x96W\xea\x1c_\xa0\xef\x82U\x08\xeb\x1dK7W\xa7" +
+	"\x12ze \xa1e3\xd9\xea\xc6T:\xdb\xa6/\xd4" +
+	"\x12\xb6a\xb6W&L]\xb3\xf5\xf2\xb8n\xe5\xdax" +
+	"\xdbR\x03|\x00 \x80\x00dL\x04@\x95yT\xcb" +
+	"9,IhY\x0b\xc7\x02\xc6xD\xe2\\yv\xdf" +
+	"\xd2\x9e\x8bG\x8f\x03 \xfdY\x88\x80^\x84\x85Z\xd8" +
+	"\xbd\\\x95\xd1\xa7\x0f\x12\\\xe5SV\xb0\xd9\x99\xe7\x86" +
+	"\x8eiPbji\xcb\x89&\x12\xbae5d\x80o" +
+	"5T\x99\x17\x00\x0a\xbe\xc8\xfc\xc8\xccj\x80\xe8t\x8c" +
+	">\x8dd\xb1\x84\xc5:#\xeb\x0d\x12=\x0e\x10\x9d\x8f" +
+	"\xd1&$\xbaT\xe3\xa5G0\xac\x068\x9f:\xa9h" +
+	"F\xfcY[H\xa6\x013\xb6n\xb6j\x09=\xfc\x82" +
+	"\x96\xd6\xad\xffr\x87\x1a@\xf4\x91\x04\xd1\x00\x12\xac\xeb" +
+	"\x88i\xedm\x86\x96,\xd0\xc5\xe7\x0bb\x1b\xd9\xac\xd6" +
+	"\xd2\xa6WZ\xb6\x91-\x8fi\xa6D\xf9\x18b\x15M" +
+	"\xa6S\x99JK\xb7\x9bRi\xdd\xc8\xd9\xe5\xb1\xb0F" +
+	"y\xf3W\xac._\xb1R\x0e;,=ad\x92\x16" +
+	"\x06\x81\xc3\xa0\xafF\x0fRA\x8c\xde\x88\xc5\xd0\x02\xab" +
+	"\xa7g\xc5\x98a\xc4\xb8\xbc\xb8\xd2\x91\xda\x06K\xa7\xaa" +
+	"(\x9dp\x86Z1\xed\x8c\x06n\x90b\xb8\xa1h$" +
+	"\xc3l\x8f!\xaa\x01W\x00l\x16\"\x9b\xd0\x84T\x03" +
+	"G\x04V\xd8\xe1T\x0f\xcd\xd3\xa3-\x97Mj\xb6\xde" +
+	"\x90\xd43v\xcan/\xa8}(\xc7,Q&\xc5V" +
+	"\x03\x80\x82\x19]\xc8l\xc1\"\x00u>\x8fj\x8cC" +
+	"\x82\xe8\x8ep\xb2\xb8\x05@}\x9eGu%\x87\x84\xe3" +
+	"J\x91\x03 :\xe5`9\x8fj\x1b\x87\x8eFQ\xcc" +
+	"\xd3\xb2\x00\x80\xe3\x02< \x8e+\x920\x0f\xa4\x07u" +
+	"WX7M\xc3t\x99\x1b\xedcn\x08d\xd6L\xa6" +
+	"\xc6\xa7-\x1ffD\xb2`]\x11s\x01\xf2%\x00\xb5" +
+	"\x89G\xf54\x85\x8c\x1e\xe4\x93\xcd\x00\xea\xa7<\xaag" +
+	"9tlOf\x8dP\xe3\x17\x12\x1f\x1a\x0b\xe0\xa4\xf2" +
+	"\x0a\xe0\\\x094\x19q}E\xca\xb2\xcd\xf6F\x8c\xb3" +
+	"4B\xce\xac\xfa\xb2\xc7\xea\xdf\xec=\x03\xb4#X\xa3" +
+	"\xf8~\x12\xac\xa0\x03\x02\x91*\x05Q\x0d\xe5\xe5\xc1$" +
+	"\x92\xb6V\xb8\x0d\x03\xbc\x96\xc4q\xfe\xddBI\x1cA" +
+	"C\xac\x8d\xa0\xa8\x1f\xb6\x86\x91-\x0cB\"\xae~J" +
+	"h\xab\xd5b\x0c\xf1>}F;\xd1\x95\x89m\xf9D" +
+	"5r\xc7\xc6u\xab$7\xa4\x03\x06\xb5b\xce\xd5\x13" +
+	"\"p\x88>\xe0\x0f\xd5^\xf9\x92\x8e\x0cs\xa5\xae\x99" +
+	"v\x8b\xae\xd9\xe51\xcd\x9b\xa2\xff65\xe25^R" +
+	"\x0f\xd5'\xf9y\xa0\xca\x85\xbc\xa6QU\x97\xf3\xa8\xce" +
+	"\xf0\xe9\xff\x09\x9a\xecT\x1e\xd5\xd9\x1c\x86\x8d\xb6dC" +
+	"\x92\xa9\xb5#\xa3\xaf\xa1m\x84!\xe7\xf25\xfe^\xcf" +
+	"k=\xbdT\xd5!\x1f\x09\xd20\xda\xdd\xa8\x160\x83" +
+	"\x91\xf3\x8d\xeb\xe1\xc1y\x0cJ8\xe5e\x90\xa2\xe3)" +
+	"\x9f\xf0\xfd\xc6S*\xd3jXE\xd5\xfaa\x8e\xb0\xda" +
+	"\xa2I)\x9d\xcaP\x81\x95\xba\x02c\xaf\x09d{\x9e" +
+	"l\x8f\x03G\xb6\xd0\xdd\xc4^z\xc8\x1e\x16d}3" +
+	"p$'!Wx0 {\xe3\x90\x14\x15\xe6K\x12" +
+	"\xf2\x85M\x8e\xec\x85@T\xea\xd7 a\xf1%\x82\xec" +
+	"\xf5F\xe6\xae\x03\x8e\xcc\x91\x1cF\x0d\xa0\xed.1\xaf" +
+	"\xe2\xc0\xe7\xecZ\xcc\xab\xdda\xb4\x00\xaf[\xb5\xe8\xb0" +
+	"jC\x8dW\xef\x07L\xd3\xfb\xb1\x9b_B\xff\x04\x00" +
+	"\x00\xff\xff\x0d>q\xa7"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
@@ -2504,7 +2513,7 @@ func RegisterSchema(reg *schemas.Registry) {
 		Nodes: []uint64{
 			0x89a33828e0de1eaa,
 			0x8ab0ecb99c269c7f,
-			0x96368058e2cef1ac,
+			0x94af8fce16d48a92,
 			0x9abf358a691110fd,
 			0xa8296fdc60dcb6dd,
 			0xa962c127b5dccf05,
@@ -2512,15 +2521,15 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xb15e79db08e2ab2c,
 			0xb9816a53df7cb62e,
 			0xc2b88517ccaa9197,
+			0xcd5f6458232e9276,
 			0xce2a1a063e759787,
-			0xd2e4f20669b7b705,
+			0xd2c46584c294cfd8,
 			0xd4d567352ab3882a,
 			0xd627f31bdae7f234,
 			0xd6fd194a1ac74bc1,
 			0xdc8472f9b668ba83,
 			0xddc3d3cd37ef5b78,
 			0xe01c2290ae549759,
-			0xe9d1be2a6e9016e5,
 			0xf5423d8578dbb398,
 			0xfec1f88b198df649,
 			0xff4271628d295896,
