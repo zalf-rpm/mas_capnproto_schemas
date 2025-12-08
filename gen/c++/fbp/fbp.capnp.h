@@ -1797,13 +1797,13 @@ public:
   inline typename  ::mas::schema::fbp::Channel<V>::CloseSemantics getCloseSemantics() const;
 
   inline bool hasChannelSR() const;
-  inline  ::capnp::Text::Reader getChannelSR() const;
+  inline  ::mas::schema::persistence::SturdyRef::Reader getChannelSR() const;
 
   inline bool hasReaderSRs() const;
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getReaderSRs() const;
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader getReaderSRs() const;
 
   inline bool hasWriterSRs() const;
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getWriterSRs() const;
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader getWriterSRs() const;
 
   inline bool hasChannel() const;
 #if !CAPNP_LITE
@@ -1861,27 +1861,25 @@ public:
   inline void setCloseSemantics(typename  ::mas::schema::fbp::Channel<V>::CloseSemantics value);
 
   inline bool hasChannelSR();
-  inline  ::capnp::Text::Builder getChannelSR();
-  inline void setChannelSR( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initChannelSR(unsigned int size);
-  inline void adoptChannelSR(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownChannelSR();
+  inline  ::mas::schema::persistence::SturdyRef::Builder getChannelSR();
+  inline void setChannelSR( ::mas::schema::persistence::SturdyRef::Reader value);
+  inline  ::mas::schema::persistence::SturdyRef::Builder initChannelSR();
+  inline void adoptChannelSR(::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value);
+  inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> disownChannelSR();
 
   inline bool hasReaderSRs();
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getReaderSRs();
-  inline void setReaderSRs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
-  inline void setReaderSRs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initReaderSRs(unsigned int size);
-  inline void adoptReaderSRs(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
-  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownReaderSRs();
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder getReaderSRs();
+  inline void setReaderSRs( ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder initReaderSRs(unsigned int size);
+  inline void adoptReaderSRs(::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>> disownReaderSRs();
 
   inline bool hasWriterSRs();
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getWriterSRs();
-  inline void setWriterSRs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
-  inline void setWriterSRs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
-  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initWriterSRs(unsigned int size);
-  inline void adoptWriterSRs(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
-  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownWriterSRs();
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder getWriterSRs();
+  inline void setWriterSRs( ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder initWriterSRs(unsigned int size);
+  inline void adoptWriterSRs(::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>> disownWriterSRs();
 
   inline bool hasChannel();
 #if !CAPNP_LITE
@@ -1929,6 +1927,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::persistence::SturdyRef::Pipeline getChannelSR();
   inline typename  ::mas::schema::fbp::Channel<V>::Client getChannel();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
@@ -7221,34 +7220,40 @@ inline bool Channel<V>::StartupInfo::Builder::hasChannelSR() {
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 template <typename V>
-inline  ::capnp::Text::Reader Channel<V>::StartupInfo::Reader::getChannelSR() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::persistence::SturdyRef::Reader Channel<V>::StartupInfo::Reader::getChannelSR() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 template <typename V>
-inline  ::capnp::Text::Builder Channel<V>::StartupInfo::Builder::getChannelSR() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::persistence::SturdyRef::Builder Channel<V>::StartupInfo::Builder::getChannelSR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
+#if !CAPNP_LITE
 template <typename V>
-inline void Channel<V>::StartupInfo::Builder::setChannelSR( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+inline  ::mas::schema::persistence::SturdyRef::Pipeline Channel<V>::StartupInfo::Pipeline::getChannelSR() {
+  return  ::mas::schema::persistence::SturdyRef::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename V>
+inline void Channel<V>::StartupInfo::Builder::setChannelSR( ::mas::schema::persistence::SturdyRef::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
 template <typename V>
-inline  ::capnp::Text::Builder Channel<V>::StartupInfo::Builder::initChannelSR(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+inline  ::mas::schema::persistence::SturdyRef::Builder Channel<V>::StartupInfo::Builder::initChannelSR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 template <typename V>
 inline void Channel<V>::StartupInfo::Builder::adoptChannelSR(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::persistence::SturdyRef>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
 template <typename V>
-inline ::capnp::Orphan< ::capnp::Text> Channel<V>::StartupInfo::Builder::disownChannelSR() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::persistence::SturdyRef> Channel<V>::StartupInfo::Builder::disownChannelSR() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::persistence::SturdyRef>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
@@ -7263,39 +7268,34 @@ inline bool Channel<V>::StartupInfo::Builder::hasReaderSRs() {
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
 template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader Channel<V>::StartupInfo::Reader::getReaderSRs() const {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader Channel<V>::StartupInfo::Reader::getReaderSRs() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Channel<V>::StartupInfo::Builder::getReaderSRs() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder Channel<V>::StartupInfo::Builder::getReaderSRs() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 template <typename V>
-inline void Channel<V>::StartupInfo::Builder::setReaderSRs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+inline void Channel<V>::StartupInfo::Builder::setReaderSRs( ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
 template <typename V>
-inline void Channel<V>::StartupInfo::Builder::setReaderSRs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
-      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
-}
-template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Channel<V>::StartupInfo::Builder::initReaderSRs(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder Channel<V>::StartupInfo::Builder::initReaderSRs(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
 template <typename V>
 inline void Channel<V>::StartupInfo::Builder::adoptReaderSRs(
-    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
 template <typename V>
-inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Channel<V>::StartupInfo::Builder::disownReaderSRs() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>> Channel<V>::StartupInfo::Builder::disownReaderSRs() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
@@ -7310,39 +7310,34 @@ inline bool Channel<V>::StartupInfo::Builder::hasWriterSRs() {
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
 template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader Channel<V>::StartupInfo::Reader::getWriterSRs() const {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader Channel<V>::StartupInfo::Reader::getWriterSRs() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Channel<V>::StartupInfo::Builder::getWriterSRs() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder Channel<V>::StartupInfo::Builder::getWriterSRs() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 template <typename V>
-inline void Channel<V>::StartupInfo::Builder::setWriterSRs( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+inline void Channel<V>::StartupInfo::Builder::setWriterSRs( ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
 template <typename V>
-inline void Channel<V>::StartupInfo::Builder::setWriterSRs(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
-      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
-}
-template <typename V>
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Channel<V>::StartupInfo::Builder::initWriterSRs(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+inline  ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>::Builder Channel<V>::StartupInfo::Builder::initWriterSRs(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
 template <typename V>
 inline void Channel<V>::StartupInfo::Builder::adoptWriterSRs(
-    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
 template <typename V>
-inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Channel<V>::StartupInfo::Builder::disownWriterSRs() {
-  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>> Channel<V>::StartupInfo::Builder::disownWriterSRs() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::persistence::SturdyRef,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
