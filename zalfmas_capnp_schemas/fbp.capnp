@@ -148,8 +148,8 @@ struct PortInfos {
   struct NameAndSR {
     name        @0 :Text;
     union {
-        sr      @1 :Text;           # for single ports
-        srs     @2 :List(Text);     # for array ports
+        sr      @1 :SturdyRef;           # for single ports
+        srs     @2 :List(SturdyRef);     # for array ports
     }
   }
 
@@ -209,7 +209,7 @@ interface Runnable extends(Common.Identifiable) {
     create @0 () -> (out :Runnable);
   }
 
-  start @0 (portInfosReaderSr :Text, name :Text) -> (success :Bool);
+  start @0 (portInfosReaderSr :SturdyRef, name :Text) -> (success :Bool);
   # start component with a sturdy ref to a reader of PortInfos
   # the component will use the port infos to connect to the channels
   # and given an optional nam
@@ -253,6 +253,6 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   start @5 ();
   # start process
 
-  stop @6 ();
+  stop @6 () -> (success :Bool);
   # stop process
 }
