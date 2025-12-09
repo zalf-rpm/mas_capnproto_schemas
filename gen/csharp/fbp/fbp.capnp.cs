@@ -780,9 +780,15 @@ namespace Mas.Schema.Fbp
                 var reader = READER.create(arg_);
                 BufferSize = reader.BufferSize;
                 CloseSemantics = reader.CloseSemantics;
-                ChannelSR = reader.ChannelSR;
-                ReaderSRs = reader.ReaderSRs;
-                WriterSRs = reader.WriterSRs;
+                ChannelSR = CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(
+                    reader.ChannelSR
+                );
+                ReaderSRs = reader.ReaderSRs?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(_)
+                );
+                WriterSRs = reader.WriterSRs?.ToReadOnlyList(_ =>
+                    CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(_)
+                );
                 Channel = reader.Channel;
                 Readers = reader.Readers;
                 Writers = reader.Writers;
@@ -793,9 +799,9 @@ namespace Mas.Schema.Fbp
             {
                 writer.BufferSize = BufferSize;
                 writer.CloseSemantics = CloseSemantics;
-                writer.ChannelSR = ChannelSR;
-                writer.ReaderSRs.Init(ReaderSRs);
-                writer.WriterSRs.Init(WriterSRs);
+                ChannelSR?.serialize(writer.ChannelSR);
+                writer.ReaderSRs.Init(ReaderSRs, (_s1, _v1) => _v1?.serialize(_s1));
+                writer.WriterSRs.Init(WriterSRs, (_s1, _v1) => _v1?.serialize(_s1));
                 writer.Channel = Channel;
                 writer.Readers.Init(Readers);
                 writer.Writers.Init(Writers);
@@ -810,9 +816,9 @@ namespace Mas.Schema.Fbp
 
             public ulong BufferSize { get; set; }
             public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics { get; set; }
-            public string ChannelSR { get; set; }
-            public IReadOnlyList<string> ReaderSRs { get; set; }
-            public IReadOnlyList<string> WriterSRs { get; set; }
+            public Mas.Schema.Persistence.SturdyRef ChannelSR { get; set; }
+            public IReadOnlyList<Mas.Schema.Persistence.SturdyRef> ReaderSRs { get; set; }
+            public IReadOnlyList<Mas.Schema.Persistence.SturdyRef> WriterSRs { get; set; }
             public Mas.Schema.Fbp.IChannel<TV> Channel { get; set; }
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IReader> Readers { get; set; }
             public IReadOnlyList<Mas.Schema.Fbp.Channel<TV>.IWriter> Writers { get; set; }
@@ -835,10 +841,14 @@ namespace Mas.Schema.Fbp
                 public ulong BufferSize => ctx.ReadDataULong(0UL, 0UL);
                 public Mas.Schema.Fbp.Channel<TV>.CloseSemantics CloseSemantics =>
                     (Mas.Schema.Fbp.Channel<TV>.CloseSemantics)ctx.ReadDataUShort(64UL, (ushort)0);
-                public string ChannelSR => ctx.ReadText(0, null);
-                public IReadOnlyList<string> ReaderSRs => ctx.ReadList(1).CastText2();
+                public Mas.Schema.Persistence.SturdyRef.READER ChannelSR =>
+                    ctx.ReadStruct(0, Mas.Schema.Persistence.SturdyRef.READER.create);
+                public bool HasChannelSR => ctx.IsStructFieldNonNull(0);
+                public IReadOnlyList<Mas.Schema.Persistence.SturdyRef.READER> ReaderSRs =>
+                    ctx.ReadList(1).Cast(Mas.Schema.Persistence.SturdyRef.READER.create);
                 public bool HasReaderSRs => ctx.IsStructFieldNonNull(1);
-                public IReadOnlyList<string> WriterSRs => ctx.ReadList(2).CastText2();
+                public IReadOnlyList<Mas.Schema.Persistence.SturdyRef.READER> WriterSRs =>
+                    ctx.ReadList(2).Cast(Mas.Schema.Persistence.SturdyRef.READER.create);
                 public bool HasWriterSRs => ctx.IsStructFieldNonNull(2);
                 public Mas.Schema.Fbp.IChannel<TV> Channel =>
                     ctx.ReadCap<Mas.Schema.Fbp.IChannel<TV>>(3);
@@ -869,19 +879,25 @@ namespace Mas.Schema.Fbp
                             this.ReadDataUShort(64UL, (ushort)0);
                     set => this.WriteData(64UL, (ushort)value, (ushort)0);
                 }
-                public string ChannelSR
+                public Mas.Schema.Persistence.SturdyRef.WRITER ChannelSR
                 {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
+                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0);
+                    set => Link(0, value);
                 }
-                public ListOfTextSerializer ReaderSRs
+                public ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER> ReaderSRs
                 {
-                    get => BuildPointer<ListOfTextSerializer>(1);
+                    get =>
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER>
+                        >(1);
                     set => Link(1, value);
                 }
-                public ListOfTextSerializer WriterSRs
+                public ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER> WriterSRs
                 {
-                    get => BuildPointer<ListOfTextSerializer>(2);
+                    get =>
+                        BuildPointer<
+                            ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER>
+                        >(2);
                     set => Link(2, value);
                 }
                 public Mas.Schema.Fbp.IChannel<TV> Channel
