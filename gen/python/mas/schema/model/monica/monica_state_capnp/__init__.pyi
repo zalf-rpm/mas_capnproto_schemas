@@ -1,0 +1,6726 @@
+"""This is an automatically generated stub for `monica_state.capnp`."""
+
+from collections.abc import Callable, Iterator, Sequence
+from contextlib import AbstractContextManager
+from typing import IO, Any, Literal, overload, override
+
+from capnp.lib.capnp import (
+    _DynamicListBuilder,
+    _DynamicListReader,
+    _DynamicStructBuilder,
+    _DynamicStructReader,
+    _StructModule,
+)
+
+from mas.schema.common.date_capnp import DateBuilder, DateReader
+from mas.schema.model.monica.monica_management_capnp import _ParamsStructModule
+from mas.schema.model.monica.monica_params_capnp import (
+    AutomaticHarvestParametersBuilder,
+    AutomaticHarvestParametersReader,
+    CropModuleParametersBuilder,
+    CropModuleParametersReader,
+    CropParametersBuilder,
+    CropParametersReader,
+    CropResidueParametersBuilder,
+    CropResidueParametersReader,
+    CultivarParametersBuilder,
+    CultivarParametersReader,
+    EnvironmentParametersBuilder,
+    EnvironmentParametersReader,
+    MeasuredGroundwaterTableInformationBuilder,
+    MeasuredGroundwaterTableInformationReader,
+    SimulationParametersBuilder,
+    SimulationParametersReader,
+    SiteParametersBuilder,
+    SiteParametersReader,
+    SoilMoistureModuleParametersBuilder,
+    SoilMoistureModuleParametersReader,
+    SoilOrganicModuleParametersBuilder,
+    SoilOrganicModuleParametersReader,
+    SoilParametersBuilder,
+    SoilParametersReader,
+    SoilTemperatureModuleParametersBuilder,
+    SoilTemperatureModuleParametersReader,
+    SoilTransportModuleParametersBuilder,
+    SoilTransportModuleParametersReader,
+    SpeciesParametersBuilder,
+    SpeciesParametersReader,
+    YieldComponentBuilder,
+    YieldComponentReader,
+    _VocStructModule,
+)
+
+class _MaybeBoolStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def value(self) -> bool: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> MaybeBoolBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def value(self) -> bool: ...
+        @value.setter
+        def value(self, value: bool) -> None: ...
+        @override
+        def as_reader(self) -> MaybeBoolReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        value: bool | None = None,
+        **kwargs: Any,
+    ) -> MaybeBoolBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[MaybeBoolReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[MaybeBoolReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[MaybeBoolBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> MaybeBoolReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> MaybeBoolReader: ...
+
+MaybeBool: _MaybeBoolStructModule
+
+class _BoolList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> bool: ...
+        @override
+        def __iter__(self) -> Iterator[bool]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> bool: ...
+        @override
+        def __setitem__(self, key: int, value: bool) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[bool]: ...
+
+class _Float64List:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> float: ...
+        @override
+        def __iter__(self) -> Iterator[float]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> float: ...
+        @override
+        def __setitem__(self, key: int, value: float) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[float]: ...
+
+class _Float64ListList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> Float64ListReader: ...
+        @override
+        def __iter__(self) -> Iterator[Float64ListReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> Float64ListBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: Float64ListReader | Float64ListBuilder | Sequence[Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[Float64ListBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> Float64ListBuilder: ...
+
+class _YieldComponentList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> YieldComponentReader: ...
+        @override
+        def __iter__(self) -> Iterator[YieldComponentReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> YieldComponentBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: YieldComponentReader | YieldComponentBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[YieldComponentBuilder]: ...
+        @override
+        def init(
+            self,
+            index: int,
+            size: int | None = None,
+        ) -> YieldComponentBuilder: ...
+
+class _CropModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def frostKillOn(self) -> bool: ...
+        @property
+        def ktko(self) -> float: ...
+        @property
+        def ktkc(self) -> float: ...
+        @property
+        def assimilatePartCoeffsReduced(self) -> bool: ...
+        @property
+        def o3WStomatalClosure(self) -> float: ...
+        @property
+        def o3SumUptake(self) -> float: ...
+        @property
+        def vsLatitude(self) -> float: ...
+        @property
+        def abovegroundBiomass(self) -> float: ...
+        @property
+        def abovegroundBiomassOld(self) -> float: ...
+        @property
+        def pcAbovegroundOrgan(self) -> BoolListReader: ...
+        @property
+        def actualTranspiration(self) -> float: ...
+        @property
+        def pcAssimilatePartitioningCoeff(self) -> Float64ListListReader: ...
+        @property
+        def pcAssimilateReallocation(self) -> float: ...
+        @property
+        def assimilates(self) -> float: ...
+        @property
+        def assimilationRate(self) -> float: ...
+        @property
+        def astronomicDayLenght(self) -> float: ...
+        @property
+        def pcBaseDaylength(self) -> Float64ListReader: ...
+        @property
+        def pcBaseTemperature(self) -> Float64ListReader: ...
+        @property
+        def pcBeginSensitivePhaseHeatStress(self) -> float: ...
+        @property
+        def belowgroundBiomass(self) -> float: ...
+        @property
+        def belowgroundBiomassOld(self) -> float: ...
+        @property
+        def pcCarboxylationPathway(self) -> int: ...
+        @property
+        def clearDayRadiation(self) -> float: ...
+        @property
+        def pcCo2Method(self) -> int: ...
+        @property
+        def criticalNConcentration(self) -> float: ...
+        @property
+        def pcCriticalOxygenContent(self) -> Float64ListReader: ...
+        @property
+        def pcCriticalTemperatureHeatStress(self) -> float: ...
+        @property
+        def cropDiameter(self) -> float: ...
+        @property
+        def cropFrostRedux(self) -> float: ...
+        @property
+        def cropHeatRedux(self) -> float: ...
+        @property
+        def cropHeight(self) -> float: ...
+        @property
+        def pcCropHeightP1(self) -> float: ...
+        @property
+        def pcCropHeightP2(self) -> float: ...
+        @property
+        def pcCropName(self) -> str: ...
+        @property
+        def cropNDemand(self) -> float: ...
+        @property
+        def cropNRedux(self) -> float: ...
+        @property
+        def pcCropSpecificMaxRootingDepth(self) -> float: ...
+        @property
+        def cropWaterUptake(self) -> Float64ListReader: ...
+        @property
+        def currentTemperatureSum(self) -> Float64ListReader: ...
+        @property
+        def currentTotalTemperatureSum(self) -> float: ...
+        @property
+        def currentTotalTemperatureSumRoot(self) -> float: ...
+        @property
+        def pcCuttingDelayDays(self) -> int: ...
+        @property
+        def daylengthFactor(self) -> float: ...
+        @property
+        def pcDaylengthRequirement(self) -> Float64ListReader: ...
+        @property
+        def daysAfterBeginFlowering(self) -> int: ...
+        @property
+        def declination(self) -> float: ...
+        @property
+        def pcDefaultRadiationUseEfficiency(self) -> float: ...
+        @property
+        def vmDepthGroundwaterTable(self) -> int: ...
+        @property
+        def pcDevelopmentAccelerationByNitrogenStress(self) -> int: ...
+        @property
+        def developmentalStage(self) -> int: ...
+        @property
+        def noOfCropSteps(self) -> int: ...
+        @property
+        def droughtImpactOnFertility(self) -> float: ...
+        @property
+        def pcDroughtImpactOnFertilityFactor(self) -> float: ...
+        @property
+        def pcDroughtStressThreshold(self) -> Float64ListReader: ...
+        @property
+        def pcEmergenceFloodingControlOn(self) -> bool: ...
+        @property
+        def pcEmergenceMoistureControlOn(self) -> bool: ...
+        @property
+        def pcEndSensitivePhaseHeatStress(self) -> float: ...
+        @property
+        def effectiveDayLength(self) -> float: ...
+        @property
+        def errorStatus(self) -> bool: ...
+        @property
+        def errorMessage(self) -> str: ...
+        @property
+        def evaporatedFromIntercept(self) -> float: ...
+        @property
+        def extraterrestrialRadiation(self) -> float: ...
+        @property
+        def pcFieldConditionModifier(self) -> float: ...
+        @property
+        def finalDevelopmentalStage(self) -> int: ...
+        @property
+        def fixedN(self) -> float: ...
+        @property
+        def pcFrostDehardening(self) -> float: ...
+        @property
+        def pcFrostHardening(self) -> float: ...
+        @property
+        def globalRadiation(self) -> float: ...
+        @property
+        def greenAreaIndex(self) -> float: ...
+        @property
+        def grossAssimilates(self) -> float: ...
+        @property
+        def grossPhotosynthesis(self) -> float: ...
+        @property
+        def grossPhotosynthesisMol(self) -> float: ...
+        @property
+        def grossPhotosynthesisReferenceMol(self) -> float: ...
+        @property
+        def grossPrimaryProduction(self) -> float: ...
+        @property
+        def growthCycleEnded(self) -> bool: ...
+        @property
+        def growthRespirationAS(self) -> float: ...
+        @property
+        def pcHeatSumIrrigationStart(self) -> float: ...
+        @property
+        def pcHeatSumIrrigationEnd(self) -> float: ...
+        @property
+        def vsHeightNN(self) -> float: ...
+        @property
+        def pcInitialKcFactor(self) -> float: ...
+        @property
+        def pcInitialOrganBiomass(self) -> Float64ListReader: ...
+        @property
+        def pcInitialRootingDepth(self) -> float: ...
+        @property
+        def interceptionStorage(self) -> float: ...
+        @property
+        def kcFactor(self) -> float: ...
+        @property
+        def leafAreaIndex(self) -> float: ...
+        @property
+        def sunlitLeafAreaIndex(self) -> Float64ListReader: ...
+        @property
+        def shadedLeafAreaIndex(self) -> Float64ListReader: ...
+        @property
+        def pcLowTemperatureExposure(self) -> float: ...
+        @property
+        def pcLimitingTemperatureHeatStress(self) -> float: ...
+        @property
+        def lt50(self) -> float: ...
+        @property
+        def pcLt50cultivar(self) -> float: ...
+        @property
+        def pcLuxuryNCoeff(self) -> float: ...
+        @property
+        def maintenanceRespirationAS(self) -> float: ...
+        @property
+        def pcMaxAssimilationRate(self) -> float: ...
+        @property
+        def pcMaxCropDiameter(self) -> float: ...
+        @property
+        def pcMaxCropHeight(self) -> float: ...
+        @property
+        def maxNUptake(self) -> float: ...
+        @property
+        def pcMaxNUptakeParam(self) -> float: ...
+        @property
+        def pcMaxRootingDepth(self) -> float: ...
+        @property
+        def pcMinimumNConcentration(self) -> float: ...
+        @property
+        def pcMinimumTemperatureForAssimilation(self) -> float: ...
+        @property
+        def pcOptimumTemperatureForAssimilation(self) -> float: ...
+        @property
+        def pcMaximumTemperatureForAssimilation(self) -> float: ...
+        @property
+        def pcMinimumTemperatureRootGrowth(self) -> float: ...
+        @property
+        def netMaintenanceRespiration(self) -> float: ...
+        @property
+        def netPhotosynthesis(self) -> float: ...
+        @property
+        def netPrecipitation(self) -> float: ...
+        @property
+        def netPrimaryProduction(self) -> float: ...
+        @property
+        def pcNConcentrationAbovegroundBiomass(self) -> float: ...
+        @property
+        def nConcentrationAbovegroundBiomass(self) -> float: ...
+        @property
+        def nConcentrationAbovegroundBiomassOld(self) -> float: ...
+        @property
+        def pcNConcentrationB0(self) -> float: ...
+        @property
+        def nContentDeficit(self) -> float: ...
+        @property
+        def pcNConcentrationPN(self) -> float: ...
+        @property
+        def pcNConcentrationRoot(self) -> float: ...
+        @property
+        def nConcentrationRoot(self) -> float: ...
+        @property
+        def nConcentrationRootOld(self) -> float: ...
+        @property
+        def pcNitrogenResponseOn(self) -> bool: ...
+        @property
+        def pcNumberOfDevelopmentalStages(self) -> float: ...
+        @property
+        def pcNumberOfOrgans(self) -> float: ...
+        @property
+        def nUptakeFromLayer(self) -> Float64ListReader: ...
+        @property
+        def pcOptimumTemperature(self) -> Float64ListReader: ...
+        @property
+        def organBiomass(self) -> Float64ListReader: ...
+        @property
+        def organDeadBiomass(self) -> Float64ListReader: ...
+        @property
+        def organGreenBiomass(self) -> Float64ListReader: ...
+        @property
+        def organGrowthIncrement(self) -> Float64ListReader: ...
+        @property
+        def pcOrganGrowthRespiration(self) -> Float64ListReader: ...
+        @property
+        def pcOrganIdsForPrimaryYield(self) -> YieldComponentListReader: ...
+        @property
+        def pcOrganIdsForSecondaryYield(self) -> YieldComponentListReader: ...
+        @property
+        def pcOrganIdsForCutting(self) -> YieldComponentListReader: ...
+        @property
+        def pcOrganMaintenanceRespiration(self) -> Float64ListReader: ...
+        @property
+        def organSenescenceIncrement(self) -> Float64ListReader: ...
+        @property
+        def pcOrganSenescenceRate(self) -> Float64ListListReader: ...
+        @property
+        def overcastDayRadiation(self) -> float: ...
+        @property
+        def oxygenDeficit(self) -> float: ...
+        @property
+        def pcPartBiologicalNFixation(self) -> float: ...
+        @property
+        def pcPerennial(self) -> bool: ...
+        @property
+        def photoperiodicDaylength(self) -> float: ...
+        @property
+        def photActRadiationMean(self) -> float: ...
+        @property
+        def pcPlantDensity(self) -> float: ...
+        @property
+        def potentialTranspiration(self) -> float: ...
+        @property
+        def referenceEvapotranspiration(self) -> float: ...
+        @property
+        def relativeTotalDevelopment(self) -> float: ...
+        @property
+        def remainingEvapotranspiration(self) -> float: ...
+        @property
+        def reserveAssimilatePool(self) -> float: ...
+        @property
+        def pcResidueNRatio(self) -> float: ...
+        @property
+        def pcRespiratoryStress(self) -> float: ...
+        @property
+        def rootBiomass(self) -> float: ...
+        @property
+        def rootBiomassOld(self) -> float: ...
+        @property
+        def rootDensity(self) -> Float64ListReader: ...
+        @property
+        def rootDiameter(self) -> Float64ListReader: ...
+        @property
+        def pcRootDistributionParam(self) -> float: ...
+        @property
+        def rootEffectivity(self) -> Float64ListReader: ...
+        @property
+        def pcRootFormFactor(self) -> float: ...
+        @property
+        def pcRootGrowthLag(self) -> float: ...
+        @property
+        def rootingDepth(self) -> int: ...
+        @property
+        def rootingDepthM(self) -> float: ...
+        @property
+        def rootingZone(self) -> int: ...
+        @property
+        def pcRootPenetrationRate(self) -> float: ...
+        @property
+        def vmSaturationDeficit(self) -> float: ...
+        @property
+        def soilCoverage(self) -> float: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
+        @property
+        def soilSpecificMaxRootingDepth(self) -> float: ...
+        @property
+        def vsSoilSpecificMaxRootingDepth(self) -> float: ...
+        @property
+        def pcSpecificLeafArea(self) -> Float64ListReader: ...
+        @property
+        def pcSpecificRootLength(self) -> float: ...
+        @property
+        def pcStageAfterCut(self) -> int: ...
+        @property
+        def pcStageAtMaxDiameter(self) -> float: ...
+        @property
+        def pcStageAtMaxHeight(self) -> float: ...
+        @property
+        def pcStageMaxRootNConcentration(self) -> Float64ListReader: ...
+        @property
+        def pcStageKcFactor(self) -> Float64ListReader: ...
+        @property
+        def pcStageTemperatureSum(self) -> Float64ListReader: ...
+        @property
+        def stomataResistance(self) -> float: ...
+        @property
+        def pcStorageOrgan(self) -> BoolListReader: ...
+        @property
+        def storageOrgan(self) -> int: ...
+        @property
+        def targetNConcentration(self) -> float: ...
+        @property
+        def timeStep(self) -> float: ...
+        @property
+        def timeUnderAnoxia(self) -> int: ...
+        @property
+        def vsTortuosity(self) -> float: ...
+        @property
+        def totalBiomass(self) -> float: ...
+        @property
+        def totalBiomassNContent(self) -> float: ...
+        @property
+        def totalCropHeatImpact(self) -> float: ...
+        @property
+        def totalNInput(self) -> float: ...
+        @property
+        def totalNUptake(self) -> float: ...
+        @property
+        def totalRespired(self) -> float: ...
+        @property
+        def respiration(self) -> float: ...
+        @property
+        def sumTotalNUptake(self) -> float: ...
+        @property
+        def totalRootLength(self) -> float: ...
+        @property
+        def totalTemperatureSum(self) -> float: ...
+        @property
+        def temperatureSumToFlowering(self) -> float: ...
+        @property
+        def transpiration(self) -> Float64ListReader: ...
+        @property
+        def transpirationRedux(self) -> Float64ListReader: ...
+        @property
+        def transpirationDeficit(self) -> float: ...
+        @property
+        def vernalisationDays(self) -> float: ...
+        @property
+        def vernalisationFactor(self) -> float: ...
+        @property
+        def pcVernalisationRequirement(self) -> Float64ListReader: ...
+        @property
+        def pcWaterDeficitResponseOn(self) -> bool: ...
+        @property
+        def o3Senescence(self) -> float: ...
+        @property
+        def o3LongTermDamage(self) -> float: ...
+        @property
+        def o3ShortTermDamage(self) -> float: ...
+        @property
+        def dyingOut(self) -> bool: ...
+        @property
+        def accumulatedETa(self) -> float: ...
+        @property
+        def accumulatedTranspiration(self) -> float: ...
+        @property
+        def accumulatedPrimaryCropYield(self) -> float: ...
+        @property
+        def sumExportedCutBiomass(self) -> float: ...
+        @property
+        def exportedCutBiomass(self) -> float: ...
+        @property
+        def sumResidueCutBiomass(self) -> float: ...
+        @property
+        def residueCutBiomass(self) -> float: ...
+        @property
+        def cuttingDelayDays(self) -> int: ...
+        @property
+        def vsMaxEffectiveRootingDepth(self) -> float: ...
+        @property
+        def vsImpenetrableLayerDept(self) -> float: ...
+        @property
+        def anthesisDay(self) -> int: ...
+        @property
+        def maturityDay(self) -> int: ...
+        @property
+        def maturityReached(self) -> bool: ...
+        @property
+        def stepSize24(self) -> int: ...
+        @property
+        def stepSize240(self) -> int: ...
+        @property
+        def rad24(self) -> Float64ListReader: ...
+        @property
+        def rad240(self) -> Float64ListReader: ...
+        @property
+        def tfol24(self) -> Float64ListReader: ...
+        @property
+        def tfol240(self) -> Float64ListReader: ...
+        @property
+        def index24(self) -> int: ...
+        @property
+        def index240(self) -> int: ...
+        @property
+        def full24(self) -> bool: ...
+        @property
+        def full240(self) -> bool: ...
+        @property
+        def guentherEmissions(
+            self,
+        ) -> _VocStructModule._EmissionsStructModule.Reader: ...
+        @property
+        def jjvEmissions(self) -> _VocStructModule._EmissionsStructModule.Reader: ...
+        @property
+        def vocSpecies(self) -> _VocStructModule._SpeciesDataStructModule.Reader: ...
+        @property
+        def cropPhotosynthesisResults(
+            self,
+        ) -> _VocStructModule._CPDataStructModule.Reader: ...
+        @property
+        def speciesParams(self) -> SpeciesParametersReader: ...
+        @property
+        def cultivarParams(self) -> CultivarParametersReader: ...
+        @property
+        def residueParams(self) -> CropResidueParametersReader: ...
+        @property
+        def isWinterCrop(self) -> bool: ...
+        @property
+        def stemElongationEventFired(self) -> bool: ...
+        @property
+        def lt50m(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> CropModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def frostKillOn(self) -> bool: ...
+        @frostKillOn.setter
+        def frostKillOn(self, value: bool) -> None: ...
+        @property
+        def ktko(self) -> float: ...
+        @ktko.setter
+        def ktko(self, value: float) -> None: ...
+        @property
+        def ktkc(self) -> float: ...
+        @ktkc.setter
+        def ktkc(self, value: float) -> None: ...
+        @property
+        def assimilatePartCoeffsReduced(self) -> bool: ...
+        @assimilatePartCoeffsReduced.setter
+        def assimilatePartCoeffsReduced(self, value: bool) -> None: ...
+        @property
+        def o3WStomatalClosure(self) -> float: ...
+        @o3WStomatalClosure.setter
+        def o3WStomatalClosure(self, value: float) -> None: ...
+        @property
+        def o3SumUptake(self) -> float: ...
+        @o3SumUptake.setter
+        def o3SumUptake(self, value: float) -> None: ...
+        @property
+        def vsLatitude(self) -> float: ...
+        @vsLatitude.setter
+        def vsLatitude(self, value: float) -> None: ...
+        @property
+        def abovegroundBiomass(self) -> float: ...
+        @abovegroundBiomass.setter
+        def abovegroundBiomass(self, value: float) -> None: ...
+        @property
+        def abovegroundBiomassOld(self) -> float: ...
+        @abovegroundBiomassOld.setter
+        def abovegroundBiomassOld(self, value: float) -> None: ...
+        @property
+        def pcAbovegroundOrgan(self) -> BoolListBuilder: ...
+        @pcAbovegroundOrgan.setter
+        def pcAbovegroundOrgan(
+            self,
+            value: BoolListBuilder | BoolListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def actualTranspiration(self) -> float: ...
+        @actualTranspiration.setter
+        def actualTranspiration(self, value: float) -> None: ...
+        @property
+        def pcAssimilatePartitioningCoeff(self) -> Float64ListListBuilder: ...
+        @pcAssimilatePartitioningCoeff.setter
+        def pcAssimilatePartitioningCoeff(
+            self,
+            value: Float64ListListBuilder | Float64ListListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcAssimilateReallocation(self) -> float: ...
+        @pcAssimilateReallocation.setter
+        def pcAssimilateReallocation(self, value: float) -> None: ...
+        @property
+        def assimilates(self) -> float: ...
+        @assimilates.setter
+        def assimilates(self, value: float) -> None: ...
+        @property
+        def assimilationRate(self) -> float: ...
+        @assimilationRate.setter
+        def assimilationRate(self, value: float) -> None: ...
+        @property
+        def astronomicDayLenght(self) -> float: ...
+        @astronomicDayLenght.setter
+        def astronomicDayLenght(self, value: float) -> None: ...
+        @property
+        def pcBaseDaylength(self) -> Float64ListBuilder: ...
+        @pcBaseDaylength.setter
+        def pcBaseDaylength(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcBaseTemperature(self) -> Float64ListBuilder: ...
+        @pcBaseTemperature.setter
+        def pcBaseTemperature(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcBeginSensitivePhaseHeatStress(self) -> float: ...
+        @pcBeginSensitivePhaseHeatStress.setter
+        def pcBeginSensitivePhaseHeatStress(self, value: float) -> None: ...
+        @property
+        def belowgroundBiomass(self) -> float: ...
+        @belowgroundBiomass.setter
+        def belowgroundBiomass(self, value: float) -> None: ...
+        @property
+        def belowgroundBiomassOld(self) -> float: ...
+        @belowgroundBiomassOld.setter
+        def belowgroundBiomassOld(self, value: float) -> None: ...
+        @property
+        def pcCarboxylationPathway(self) -> int: ...
+        @pcCarboxylationPathway.setter
+        def pcCarboxylationPathway(self, value: int) -> None: ...
+        @property
+        def clearDayRadiation(self) -> float: ...
+        @clearDayRadiation.setter
+        def clearDayRadiation(self, value: float) -> None: ...
+        @property
+        def pcCo2Method(self) -> int: ...
+        @pcCo2Method.setter
+        def pcCo2Method(self, value: int) -> None: ...
+        @property
+        def criticalNConcentration(self) -> float: ...
+        @criticalNConcentration.setter
+        def criticalNConcentration(self, value: float) -> None: ...
+        @property
+        def pcCriticalOxygenContent(self) -> Float64ListBuilder: ...
+        @pcCriticalOxygenContent.setter
+        def pcCriticalOxygenContent(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcCriticalTemperatureHeatStress(self) -> float: ...
+        @pcCriticalTemperatureHeatStress.setter
+        def pcCriticalTemperatureHeatStress(self, value: float) -> None: ...
+        @property
+        def cropDiameter(self) -> float: ...
+        @cropDiameter.setter
+        def cropDiameter(self, value: float) -> None: ...
+        @property
+        def cropFrostRedux(self) -> float: ...
+        @cropFrostRedux.setter
+        def cropFrostRedux(self, value: float) -> None: ...
+        @property
+        def cropHeatRedux(self) -> float: ...
+        @cropHeatRedux.setter
+        def cropHeatRedux(self, value: float) -> None: ...
+        @property
+        def cropHeight(self) -> float: ...
+        @cropHeight.setter
+        def cropHeight(self, value: float) -> None: ...
+        @property
+        def pcCropHeightP1(self) -> float: ...
+        @pcCropHeightP1.setter
+        def pcCropHeightP1(self, value: float) -> None: ...
+        @property
+        def pcCropHeightP2(self) -> float: ...
+        @pcCropHeightP2.setter
+        def pcCropHeightP2(self, value: float) -> None: ...
+        @property
+        def pcCropName(self) -> str: ...
+        @pcCropName.setter
+        def pcCropName(self, value: str) -> None: ...
+        @property
+        def cropNDemand(self) -> float: ...
+        @cropNDemand.setter
+        def cropNDemand(self, value: float) -> None: ...
+        @property
+        def cropNRedux(self) -> float: ...
+        @cropNRedux.setter
+        def cropNRedux(self, value: float) -> None: ...
+        @property
+        def pcCropSpecificMaxRootingDepth(self) -> float: ...
+        @pcCropSpecificMaxRootingDepth.setter
+        def pcCropSpecificMaxRootingDepth(self, value: float) -> None: ...
+        @property
+        def cropWaterUptake(self) -> Float64ListBuilder: ...
+        @cropWaterUptake.setter
+        def cropWaterUptake(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def currentTemperatureSum(self) -> Float64ListBuilder: ...
+        @currentTemperatureSum.setter
+        def currentTemperatureSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def currentTotalTemperatureSum(self) -> float: ...
+        @currentTotalTemperatureSum.setter
+        def currentTotalTemperatureSum(self, value: float) -> None: ...
+        @property
+        def currentTotalTemperatureSumRoot(self) -> float: ...
+        @currentTotalTemperatureSumRoot.setter
+        def currentTotalTemperatureSumRoot(self, value: float) -> None: ...
+        @property
+        def pcCuttingDelayDays(self) -> int: ...
+        @pcCuttingDelayDays.setter
+        def pcCuttingDelayDays(self, value: int) -> None: ...
+        @property
+        def daylengthFactor(self) -> float: ...
+        @daylengthFactor.setter
+        def daylengthFactor(self, value: float) -> None: ...
+        @property
+        def pcDaylengthRequirement(self) -> Float64ListBuilder: ...
+        @pcDaylengthRequirement.setter
+        def pcDaylengthRequirement(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def daysAfterBeginFlowering(self) -> int: ...
+        @daysAfterBeginFlowering.setter
+        def daysAfterBeginFlowering(self, value: int) -> None: ...
+        @property
+        def declination(self) -> float: ...
+        @declination.setter
+        def declination(self, value: float) -> None: ...
+        @property
+        def pcDefaultRadiationUseEfficiency(self) -> float: ...
+        @pcDefaultRadiationUseEfficiency.setter
+        def pcDefaultRadiationUseEfficiency(self, value: float) -> None: ...
+        @property
+        def vmDepthGroundwaterTable(self) -> int: ...
+        @vmDepthGroundwaterTable.setter
+        def vmDepthGroundwaterTable(self, value: int) -> None: ...
+        @property
+        def pcDevelopmentAccelerationByNitrogenStress(self) -> int: ...
+        @pcDevelopmentAccelerationByNitrogenStress.setter
+        def pcDevelopmentAccelerationByNitrogenStress(self, value: int) -> None: ...
+        @property
+        def developmentalStage(self) -> int: ...
+        @developmentalStage.setter
+        def developmentalStage(self, value: int) -> None: ...
+        @property
+        def noOfCropSteps(self) -> int: ...
+        @noOfCropSteps.setter
+        def noOfCropSteps(self, value: int) -> None: ...
+        @property
+        def droughtImpactOnFertility(self) -> float: ...
+        @droughtImpactOnFertility.setter
+        def droughtImpactOnFertility(self, value: float) -> None: ...
+        @property
+        def pcDroughtImpactOnFertilityFactor(self) -> float: ...
+        @pcDroughtImpactOnFertilityFactor.setter
+        def pcDroughtImpactOnFertilityFactor(self, value: float) -> None: ...
+        @property
+        def pcDroughtStressThreshold(self) -> Float64ListBuilder: ...
+        @pcDroughtStressThreshold.setter
+        def pcDroughtStressThreshold(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcEmergenceFloodingControlOn(self) -> bool: ...
+        @pcEmergenceFloodingControlOn.setter
+        def pcEmergenceFloodingControlOn(self, value: bool) -> None: ...
+        @property
+        def pcEmergenceMoistureControlOn(self) -> bool: ...
+        @pcEmergenceMoistureControlOn.setter
+        def pcEmergenceMoistureControlOn(self, value: bool) -> None: ...
+        @property
+        def pcEndSensitivePhaseHeatStress(self) -> float: ...
+        @pcEndSensitivePhaseHeatStress.setter
+        def pcEndSensitivePhaseHeatStress(self, value: float) -> None: ...
+        @property
+        def effectiveDayLength(self) -> float: ...
+        @effectiveDayLength.setter
+        def effectiveDayLength(self, value: float) -> None: ...
+        @property
+        def errorStatus(self) -> bool: ...
+        @errorStatus.setter
+        def errorStatus(self, value: bool) -> None: ...
+        @property
+        def errorMessage(self) -> str: ...
+        @errorMessage.setter
+        def errorMessage(self, value: str) -> None: ...
+        @property
+        def evaporatedFromIntercept(self) -> float: ...
+        @evaporatedFromIntercept.setter
+        def evaporatedFromIntercept(self, value: float) -> None: ...
+        @property
+        def extraterrestrialRadiation(self) -> float: ...
+        @extraterrestrialRadiation.setter
+        def extraterrestrialRadiation(self, value: float) -> None: ...
+        @property
+        def pcFieldConditionModifier(self) -> float: ...
+        @pcFieldConditionModifier.setter
+        def pcFieldConditionModifier(self, value: float) -> None: ...
+        @property
+        def finalDevelopmentalStage(self) -> int: ...
+        @finalDevelopmentalStage.setter
+        def finalDevelopmentalStage(self, value: int) -> None: ...
+        @property
+        def fixedN(self) -> float: ...
+        @fixedN.setter
+        def fixedN(self, value: float) -> None: ...
+        @property
+        def pcFrostDehardening(self) -> float: ...
+        @pcFrostDehardening.setter
+        def pcFrostDehardening(self, value: float) -> None: ...
+        @property
+        def pcFrostHardening(self) -> float: ...
+        @pcFrostHardening.setter
+        def pcFrostHardening(self, value: float) -> None: ...
+        @property
+        def globalRadiation(self) -> float: ...
+        @globalRadiation.setter
+        def globalRadiation(self, value: float) -> None: ...
+        @property
+        def greenAreaIndex(self) -> float: ...
+        @greenAreaIndex.setter
+        def greenAreaIndex(self, value: float) -> None: ...
+        @property
+        def grossAssimilates(self) -> float: ...
+        @grossAssimilates.setter
+        def grossAssimilates(self, value: float) -> None: ...
+        @property
+        def grossPhotosynthesis(self) -> float: ...
+        @grossPhotosynthesis.setter
+        def grossPhotosynthesis(self, value: float) -> None: ...
+        @property
+        def grossPhotosynthesisMol(self) -> float: ...
+        @grossPhotosynthesisMol.setter
+        def grossPhotosynthesisMol(self, value: float) -> None: ...
+        @property
+        def grossPhotosynthesisReferenceMol(self) -> float: ...
+        @grossPhotosynthesisReferenceMol.setter
+        def grossPhotosynthesisReferenceMol(self, value: float) -> None: ...
+        @property
+        def grossPrimaryProduction(self) -> float: ...
+        @grossPrimaryProduction.setter
+        def grossPrimaryProduction(self, value: float) -> None: ...
+        @property
+        def growthCycleEnded(self) -> bool: ...
+        @growthCycleEnded.setter
+        def growthCycleEnded(self, value: bool) -> None: ...
+        @property
+        def growthRespirationAS(self) -> float: ...
+        @growthRespirationAS.setter
+        def growthRespirationAS(self, value: float) -> None: ...
+        @property
+        def pcHeatSumIrrigationStart(self) -> float: ...
+        @pcHeatSumIrrigationStart.setter
+        def pcHeatSumIrrigationStart(self, value: float) -> None: ...
+        @property
+        def pcHeatSumIrrigationEnd(self) -> float: ...
+        @pcHeatSumIrrigationEnd.setter
+        def pcHeatSumIrrigationEnd(self, value: float) -> None: ...
+        @property
+        def vsHeightNN(self) -> float: ...
+        @vsHeightNN.setter
+        def vsHeightNN(self, value: float) -> None: ...
+        @property
+        def pcInitialKcFactor(self) -> float: ...
+        @pcInitialKcFactor.setter
+        def pcInitialKcFactor(self, value: float) -> None: ...
+        @property
+        def pcInitialOrganBiomass(self) -> Float64ListBuilder: ...
+        @pcInitialOrganBiomass.setter
+        def pcInitialOrganBiomass(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcInitialRootingDepth(self) -> float: ...
+        @pcInitialRootingDepth.setter
+        def pcInitialRootingDepth(self, value: float) -> None: ...
+        @property
+        def interceptionStorage(self) -> float: ...
+        @interceptionStorage.setter
+        def interceptionStorage(self, value: float) -> None: ...
+        @property
+        def kcFactor(self) -> float: ...
+        @kcFactor.setter
+        def kcFactor(self, value: float) -> None: ...
+        @property
+        def leafAreaIndex(self) -> float: ...
+        @leafAreaIndex.setter
+        def leafAreaIndex(self, value: float) -> None: ...
+        @property
+        def sunlitLeafAreaIndex(self) -> Float64ListBuilder: ...
+        @sunlitLeafAreaIndex.setter
+        def sunlitLeafAreaIndex(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def shadedLeafAreaIndex(self) -> Float64ListBuilder: ...
+        @shadedLeafAreaIndex.setter
+        def shadedLeafAreaIndex(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcLowTemperatureExposure(self) -> float: ...
+        @pcLowTemperatureExposure.setter
+        def pcLowTemperatureExposure(self, value: float) -> None: ...
+        @property
+        def pcLimitingTemperatureHeatStress(self) -> float: ...
+        @pcLimitingTemperatureHeatStress.setter
+        def pcLimitingTemperatureHeatStress(self, value: float) -> None: ...
+        @property
+        def lt50(self) -> float: ...
+        @lt50.setter
+        def lt50(self, value: float) -> None: ...
+        @property
+        def pcLt50cultivar(self) -> float: ...
+        @pcLt50cultivar.setter
+        def pcLt50cultivar(self, value: float) -> None: ...
+        @property
+        def pcLuxuryNCoeff(self) -> float: ...
+        @pcLuxuryNCoeff.setter
+        def pcLuxuryNCoeff(self, value: float) -> None: ...
+        @property
+        def maintenanceRespirationAS(self) -> float: ...
+        @maintenanceRespirationAS.setter
+        def maintenanceRespirationAS(self, value: float) -> None: ...
+        @property
+        def pcMaxAssimilationRate(self) -> float: ...
+        @pcMaxAssimilationRate.setter
+        def pcMaxAssimilationRate(self, value: float) -> None: ...
+        @property
+        def pcMaxCropDiameter(self) -> float: ...
+        @pcMaxCropDiameter.setter
+        def pcMaxCropDiameter(self, value: float) -> None: ...
+        @property
+        def pcMaxCropHeight(self) -> float: ...
+        @pcMaxCropHeight.setter
+        def pcMaxCropHeight(self, value: float) -> None: ...
+        @property
+        def maxNUptake(self) -> float: ...
+        @maxNUptake.setter
+        def maxNUptake(self, value: float) -> None: ...
+        @property
+        def pcMaxNUptakeParam(self) -> float: ...
+        @pcMaxNUptakeParam.setter
+        def pcMaxNUptakeParam(self, value: float) -> None: ...
+        @property
+        def pcMaxRootingDepth(self) -> float: ...
+        @pcMaxRootingDepth.setter
+        def pcMaxRootingDepth(self, value: float) -> None: ...
+        @property
+        def pcMinimumNConcentration(self) -> float: ...
+        @pcMinimumNConcentration.setter
+        def pcMinimumNConcentration(self, value: float) -> None: ...
+        @property
+        def pcMinimumTemperatureForAssimilation(self) -> float: ...
+        @pcMinimumTemperatureForAssimilation.setter
+        def pcMinimumTemperatureForAssimilation(self, value: float) -> None: ...
+        @property
+        def pcOptimumTemperatureForAssimilation(self) -> float: ...
+        @pcOptimumTemperatureForAssimilation.setter
+        def pcOptimumTemperatureForAssimilation(self, value: float) -> None: ...
+        @property
+        def pcMaximumTemperatureForAssimilation(self) -> float: ...
+        @pcMaximumTemperatureForAssimilation.setter
+        def pcMaximumTemperatureForAssimilation(self, value: float) -> None: ...
+        @property
+        def pcMinimumTemperatureRootGrowth(self) -> float: ...
+        @pcMinimumTemperatureRootGrowth.setter
+        def pcMinimumTemperatureRootGrowth(self, value: float) -> None: ...
+        @property
+        def netMaintenanceRespiration(self) -> float: ...
+        @netMaintenanceRespiration.setter
+        def netMaintenanceRespiration(self, value: float) -> None: ...
+        @property
+        def netPhotosynthesis(self) -> float: ...
+        @netPhotosynthesis.setter
+        def netPhotosynthesis(self, value: float) -> None: ...
+        @property
+        def netPrecipitation(self) -> float: ...
+        @netPrecipitation.setter
+        def netPrecipitation(self, value: float) -> None: ...
+        @property
+        def netPrimaryProduction(self) -> float: ...
+        @netPrimaryProduction.setter
+        def netPrimaryProduction(self, value: float) -> None: ...
+        @property
+        def pcNConcentrationAbovegroundBiomass(self) -> float: ...
+        @pcNConcentrationAbovegroundBiomass.setter
+        def pcNConcentrationAbovegroundBiomass(self, value: float) -> None: ...
+        @property
+        def nConcentrationAbovegroundBiomass(self) -> float: ...
+        @nConcentrationAbovegroundBiomass.setter
+        def nConcentrationAbovegroundBiomass(self, value: float) -> None: ...
+        @property
+        def nConcentrationAbovegroundBiomassOld(self) -> float: ...
+        @nConcentrationAbovegroundBiomassOld.setter
+        def nConcentrationAbovegroundBiomassOld(self, value: float) -> None: ...
+        @property
+        def pcNConcentrationB0(self) -> float: ...
+        @pcNConcentrationB0.setter
+        def pcNConcentrationB0(self, value: float) -> None: ...
+        @property
+        def nContentDeficit(self) -> float: ...
+        @nContentDeficit.setter
+        def nContentDeficit(self, value: float) -> None: ...
+        @property
+        def pcNConcentrationPN(self) -> float: ...
+        @pcNConcentrationPN.setter
+        def pcNConcentrationPN(self, value: float) -> None: ...
+        @property
+        def pcNConcentrationRoot(self) -> float: ...
+        @pcNConcentrationRoot.setter
+        def pcNConcentrationRoot(self, value: float) -> None: ...
+        @property
+        def nConcentrationRoot(self) -> float: ...
+        @nConcentrationRoot.setter
+        def nConcentrationRoot(self, value: float) -> None: ...
+        @property
+        def nConcentrationRootOld(self) -> float: ...
+        @nConcentrationRootOld.setter
+        def nConcentrationRootOld(self, value: float) -> None: ...
+        @property
+        def pcNitrogenResponseOn(self) -> bool: ...
+        @pcNitrogenResponseOn.setter
+        def pcNitrogenResponseOn(self, value: bool) -> None: ...
+        @property
+        def pcNumberOfDevelopmentalStages(self) -> float: ...
+        @pcNumberOfDevelopmentalStages.setter
+        def pcNumberOfDevelopmentalStages(self, value: float) -> None: ...
+        @property
+        def pcNumberOfOrgans(self) -> float: ...
+        @pcNumberOfOrgans.setter
+        def pcNumberOfOrgans(self, value: float) -> None: ...
+        @property
+        def nUptakeFromLayer(self) -> Float64ListBuilder: ...
+        @nUptakeFromLayer.setter
+        def nUptakeFromLayer(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOptimumTemperature(self) -> Float64ListBuilder: ...
+        @pcOptimumTemperature.setter
+        def pcOptimumTemperature(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def organBiomass(self) -> Float64ListBuilder: ...
+        @organBiomass.setter
+        def organBiomass(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def organDeadBiomass(self) -> Float64ListBuilder: ...
+        @organDeadBiomass.setter
+        def organDeadBiomass(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def organGreenBiomass(self) -> Float64ListBuilder: ...
+        @organGreenBiomass.setter
+        def organGreenBiomass(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def organGrowthIncrement(self) -> Float64ListBuilder: ...
+        @organGrowthIncrement.setter
+        def organGrowthIncrement(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganGrowthRespiration(self) -> Float64ListBuilder: ...
+        @pcOrganGrowthRespiration.setter
+        def pcOrganGrowthRespiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganIdsForPrimaryYield(self) -> YieldComponentListBuilder: ...
+        @pcOrganIdsForPrimaryYield.setter
+        def pcOrganIdsForPrimaryYield(
+            self,
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganIdsForSecondaryYield(self) -> YieldComponentListBuilder: ...
+        @pcOrganIdsForSecondaryYield.setter
+        def pcOrganIdsForSecondaryYield(
+            self,
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganIdsForCutting(self) -> YieldComponentListBuilder: ...
+        @pcOrganIdsForCutting.setter
+        def pcOrganIdsForCutting(
+            self,
+            value: YieldComponentListBuilder
+            | YieldComponentListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganMaintenanceRespiration(self) -> Float64ListBuilder: ...
+        @pcOrganMaintenanceRespiration.setter
+        def pcOrganMaintenanceRespiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def organSenescenceIncrement(self) -> Float64ListBuilder: ...
+        @organSenescenceIncrement.setter
+        def organSenescenceIncrement(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcOrganSenescenceRate(self) -> Float64ListListBuilder: ...
+        @pcOrganSenescenceRate.setter
+        def pcOrganSenescenceRate(
+            self,
+            value: Float64ListListBuilder | Float64ListListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def overcastDayRadiation(self) -> float: ...
+        @overcastDayRadiation.setter
+        def overcastDayRadiation(self, value: float) -> None: ...
+        @property
+        def oxygenDeficit(self) -> float: ...
+        @oxygenDeficit.setter
+        def oxygenDeficit(self, value: float) -> None: ...
+        @property
+        def pcPartBiologicalNFixation(self) -> float: ...
+        @pcPartBiologicalNFixation.setter
+        def pcPartBiologicalNFixation(self, value: float) -> None: ...
+        @property
+        def pcPerennial(self) -> bool: ...
+        @pcPerennial.setter
+        def pcPerennial(self, value: bool) -> None: ...
+        @property
+        def photoperiodicDaylength(self) -> float: ...
+        @photoperiodicDaylength.setter
+        def photoperiodicDaylength(self, value: float) -> None: ...
+        @property
+        def photActRadiationMean(self) -> float: ...
+        @photActRadiationMean.setter
+        def photActRadiationMean(self, value: float) -> None: ...
+        @property
+        def pcPlantDensity(self) -> float: ...
+        @pcPlantDensity.setter
+        def pcPlantDensity(self, value: float) -> None: ...
+        @property
+        def potentialTranspiration(self) -> float: ...
+        @potentialTranspiration.setter
+        def potentialTranspiration(self, value: float) -> None: ...
+        @property
+        def referenceEvapotranspiration(self) -> float: ...
+        @referenceEvapotranspiration.setter
+        def referenceEvapotranspiration(self, value: float) -> None: ...
+        @property
+        def relativeTotalDevelopment(self) -> float: ...
+        @relativeTotalDevelopment.setter
+        def relativeTotalDevelopment(self, value: float) -> None: ...
+        @property
+        def remainingEvapotranspiration(self) -> float: ...
+        @remainingEvapotranspiration.setter
+        def remainingEvapotranspiration(self, value: float) -> None: ...
+        @property
+        def reserveAssimilatePool(self) -> float: ...
+        @reserveAssimilatePool.setter
+        def reserveAssimilatePool(self, value: float) -> None: ...
+        @property
+        def pcResidueNRatio(self) -> float: ...
+        @pcResidueNRatio.setter
+        def pcResidueNRatio(self, value: float) -> None: ...
+        @property
+        def pcRespiratoryStress(self) -> float: ...
+        @pcRespiratoryStress.setter
+        def pcRespiratoryStress(self, value: float) -> None: ...
+        @property
+        def rootBiomass(self) -> float: ...
+        @rootBiomass.setter
+        def rootBiomass(self, value: float) -> None: ...
+        @property
+        def rootBiomassOld(self) -> float: ...
+        @rootBiomassOld.setter
+        def rootBiomassOld(self, value: float) -> None: ...
+        @property
+        def rootDensity(self) -> Float64ListBuilder: ...
+        @rootDensity.setter
+        def rootDensity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def rootDiameter(self) -> Float64ListBuilder: ...
+        @rootDiameter.setter
+        def rootDiameter(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcRootDistributionParam(self) -> float: ...
+        @pcRootDistributionParam.setter
+        def pcRootDistributionParam(self, value: float) -> None: ...
+        @property
+        def rootEffectivity(self) -> Float64ListBuilder: ...
+        @rootEffectivity.setter
+        def rootEffectivity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcRootFormFactor(self) -> float: ...
+        @pcRootFormFactor.setter
+        def pcRootFormFactor(self, value: float) -> None: ...
+        @property
+        def pcRootGrowthLag(self) -> float: ...
+        @pcRootGrowthLag.setter
+        def pcRootGrowthLag(self, value: float) -> None: ...
+        @property
+        def rootingDepth(self) -> int: ...
+        @rootingDepth.setter
+        def rootingDepth(self, value: int) -> None: ...
+        @property
+        def rootingDepthM(self) -> float: ...
+        @rootingDepthM.setter
+        def rootingDepthM(self, value: float) -> None: ...
+        @property
+        def rootingZone(self) -> int: ...
+        @rootingZone.setter
+        def rootingZone(self, value: int) -> None: ...
+        @property
+        def pcRootPenetrationRate(self) -> float: ...
+        @pcRootPenetrationRate.setter
+        def pcRootPenetrationRate(self, value: float) -> None: ...
+        @property
+        def vmSaturationDeficit(self) -> float: ...
+        @vmSaturationDeficit.setter
+        def vmSaturationDeficit(self, value: float) -> None: ...
+        @property
+        def soilCoverage(self) -> float: ...
+        @soilCoverage.setter
+        def soilCoverage(self, value: float) -> None: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
+        @vsSoilMineralNContent.setter
+        def vsSoilMineralNContent(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilSpecificMaxRootingDepth(self) -> float: ...
+        @soilSpecificMaxRootingDepth.setter
+        def soilSpecificMaxRootingDepth(self, value: float) -> None: ...
+        @property
+        def vsSoilSpecificMaxRootingDepth(self) -> float: ...
+        @vsSoilSpecificMaxRootingDepth.setter
+        def vsSoilSpecificMaxRootingDepth(self, value: float) -> None: ...
+        @property
+        def pcSpecificLeafArea(self) -> Float64ListBuilder: ...
+        @pcSpecificLeafArea.setter
+        def pcSpecificLeafArea(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcSpecificRootLength(self) -> float: ...
+        @pcSpecificRootLength.setter
+        def pcSpecificRootLength(self, value: float) -> None: ...
+        @property
+        def pcStageAfterCut(self) -> int: ...
+        @pcStageAfterCut.setter
+        def pcStageAfterCut(self, value: int) -> None: ...
+        @property
+        def pcStageAtMaxDiameter(self) -> float: ...
+        @pcStageAtMaxDiameter.setter
+        def pcStageAtMaxDiameter(self, value: float) -> None: ...
+        @property
+        def pcStageAtMaxHeight(self) -> float: ...
+        @pcStageAtMaxHeight.setter
+        def pcStageAtMaxHeight(self, value: float) -> None: ...
+        @property
+        def pcStageMaxRootNConcentration(self) -> Float64ListBuilder: ...
+        @pcStageMaxRootNConcentration.setter
+        def pcStageMaxRootNConcentration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcStageKcFactor(self) -> Float64ListBuilder: ...
+        @pcStageKcFactor.setter
+        def pcStageKcFactor(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcStageTemperatureSum(self) -> Float64ListBuilder: ...
+        @pcStageTemperatureSum.setter
+        def pcStageTemperatureSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def stomataResistance(self) -> float: ...
+        @stomataResistance.setter
+        def stomataResistance(self, value: float) -> None: ...
+        @property
+        def pcStorageOrgan(self) -> BoolListBuilder: ...
+        @pcStorageOrgan.setter
+        def pcStorageOrgan(
+            self,
+            value: BoolListBuilder | BoolListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def storageOrgan(self) -> int: ...
+        @storageOrgan.setter
+        def storageOrgan(self, value: int) -> None: ...
+        @property
+        def targetNConcentration(self) -> float: ...
+        @targetNConcentration.setter
+        def targetNConcentration(self, value: float) -> None: ...
+        @property
+        def timeStep(self) -> float: ...
+        @timeStep.setter
+        def timeStep(self, value: float) -> None: ...
+        @property
+        def timeUnderAnoxia(self) -> int: ...
+        @timeUnderAnoxia.setter
+        def timeUnderAnoxia(self, value: int) -> None: ...
+        @property
+        def vsTortuosity(self) -> float: ...
+        @vsTortuosity.setter
+        def vsTortuosity(self, value: float) -> None: ...
+        @property
+        def totalBiomass(self) -> float: ...
+        @totalBiomass.setter
+        def totalBiomass(self, value: float) -> None: ...
+        @property
+        def totalBiomassNContent(self) -> float: ...
+        @totalBiomassNContent.setter
+        def totalBiomassNContent(self, value: float) -> None: ...
+        @property
+        def totalCropHeatImpact(self) -> float: ...
+        @totalCropHeatImpact.setter
+        def totalCropHeatImpact(self, value: float) -> None: ...
+        @property
+        def totalNInput(self) -> float: ...
+        @totalNInput.setter
+        def totalNInput(self, value: float) -> None: ...
+        @property
+        def totalNUptake(self) -> float: ...
+        @totalNUptake.setter
+        def totalNUptake(self, value: float) -> None: ...
+        @property
+        def totalRespired(self) -> float: ...
+        @totalRespired.setter
+        def totalRespired(self, value: float) -> None: ...
+        @property
+        def respiration(self) -> float: ...
+        @respiration.setter
+        def respiration(self, value: float) -> None: ...
+        @property
+        def sumTotalNUptake(self) -> float: ...
+        @sumTotalNUptake.setter
+        def sumTotalNUptake(self, value: float) -> None: ...
+        @property
+        def totalRootLength(self) -> float: ...
+        @totalRootLength.setter
+        def totalRootLength(self, value: float) -> None: ...
+        @property
+        def totalTemperatureSum(self) -> float: ...
+        @totalTemperatureSum.setter
+        def totalTemperatureSum(self, value: float) -> None: ...
+        @property
+        def temperatureSumToFlowering(self) -> float: ...
+        @temperatureSumToFlowering.setter
+        def temperatureSumToFlowering(self, value: float) -> None: ...
+        @property
+        def transpiration(self) -> Float64ListBuilder: ...
+        @transpiration.setter
+        def transpiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def transpirationRedux(self) -> Float64ListBuilder: ...
+        @transpirationRedux.setter
+        def transpirationRedux(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def transpirationDeficit(self) -> float: ...
+        @transpirationDeficit.setter
+        def transpirationDeficit(self, value: float) -> None: ...
+        @property
+        def vernalisationDays(self) -> float: ...
+        @vernalisationDays.setter
+        def vernalisationDays(self, value: float) -> None: ...
+        @property
+        def vernalisationFactor(self) -> float: ...
+        @vernalisationFactor.setter
+        def vernalisationFactor(self, value: float) -> None: ...
+        @property
+        def pcVernalisationRequirement(self) -> Float64ListBuilder: ...
+        @pcVernalisationRequirement.setter
+        def pcVernalisationRequirement(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pcWaterDeficitResponseOn(self) -> bool: ...
+        @pcWaterDeficitResponseOn.setter
+        def pcWaterDeficitResponseOn(self, value: bool) -> None: ...
+        @property
+        def o3Senescence(self) -> float: ...
+        @o3Senescence.setter
+        def o3Senescence(self, value: float) -> None: ...
+        @property
+        def o3LongTermDamage(self) -> float: ...
+        @o3LongTermDamage.setter
+        def o3LongTermDamage(self, value: float) -> None: ...
+        @property
+        def o3ShortTermDamage(self) -> float: ...
+        @o3ShortTermDamage.setter
+        def o3ShortTermDamage(self, value: float) -> None: ...
+        @property
+        def dyingOut(self) -> bool: ...
+        @dyingOut.setter
+        def dyingOut(self, value: bool) -> None: ...
+        @property
+        def accumulatedETa(self) -> float: ...
+        @accumulatedETa.setter
+        def accumulatedETa(self, value: float) -> None: ...
+        @property
+        def accumulatedTranspiration(self) -> float: ...
+        @accumulatedTranspiration.setter
+        def accumulatedTranspiration(self, value: float) -> None: ...
+        @property
+        def accumulatedPrimaryCropYield(self) -> float: ...
+        @accumulatedPrimaryCropYield.setter
+        def accumulatedPrimaryCropYield(self, value: float) -> None: ...
+        @property
+        def sumExportedCutBiomass(self) -> float: ...
+        @sumExportedCutBiomass.setter
+        def sumExportedCutBiomass(self, value: float) -> None: ...
+        @property
+        def exportedCutBiomass(self) -> float: ...
+        @exportedCutBiomass.setter
+        def exportedCutBiomass(self, value: float) -> None: ...
+        @property
+        def sumResidueCutBiomass(self) -> float: ...
+        @sumResidueCutBiomass.setter
+        def sumResidueCutBiomass(self, value: float) -> None: ...
+        @property
+        def residueCutBiomass(self) -> float: ...
+        @residueCutBiomass.setter
+        def residueCutBiomass(self, value: float) -> None: ...
+        @property
+        def cuttingDelayDays(self) -> int: ...
+        @cuttingDelayDays.setter
+        def cuttingDelayDays(self, value: int) -> None: ...
+        @property
+        def vsMaxEffectiveRootingDepth(self) -> float: ...
+        @vsMaxEffectiveRootingDepth.setter
+        def vsMaxEffectiveRootingDepth(self, value: float) -> None: ...
+        @property
+        def vsImpenetrableLayerDept(self) -> float: ...
+        @vsImpenetrableLayerDept.setter
+        def vsImpenetrableLayerDept(self, value: float) -> None: ...
+        @property
+        def anthesisDay(self) -> int: ...
+        @anthesisDay.setter
+        def anthesisDay(self, value: int) -> None: ...
+        @property
+        def maturityDay(self) -> int: ...
+        @maturityDay.setter
+        def maturityDay(self, value: int) -> None: ...
+        @property
+        def maturityReached(self) -> bool: ...
+        @maturityReached.setter
+        def maturityReached(self, value: bool) -> None: ...
+        @property
+        def stepSize24(self) -> int: ...
+        @stepSize24.setter
+        def stepSize24(self, value: int) -> None: ...
+        @property
+        def stepSize240(self) -> int: ...
+        @stepSize240.setter
+        def stepSize240(self, value: int) -> None: ...
+        @property
+        def rad24(self) -> Float64ListBuilder: ...
+        @rad24.setter
+        def rad24(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def rad240(self) -> Float64ListBuilder: ...
+        @rad240.setter
+        def rad240(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def tfol24(self) -> Float64ListBuilder: ...
+        @tfol24.setter
+        def tfol24(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def tfol240(self) -> Float64ListBuilder: ...
+        @tfol240.setter
+        def tfol240(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def index24(self) -> int: ...
+        @index24.setter
+        def index24(self, value: int) -> None: ...
+        @property
+        def index240(self) -> int: ...
+        @index240.setter
+        def index240(self, value: int) -> None: ...
+        @property
+        def full24(self) -> bool: ...
+        @full24.setter
+        def full24(self, value: bool) -> None: ...
+        @property
+        def full240(self) -> bool: ...
+        @full240.setter
+        def full240(self, value: bool) -> None: ...
+        @property
+        def guentherEmissions(
+            self,
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
+        @guentherEmissions.setter
+        def guentherEmissions(
+            self,
+            value: _VocStructModule._EmissionsStructModule.Builder
+            | _VocStructModule._EmissionsStructModule.Reader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def jjvEmissions(self) -> _VocStructModule._EmissionsStructModule.Builder: ...
+        @jjvEmissions.setter
+        def jjvEmissions(
+            self,
+            value: _VocStructModule._EmissionsStructModule.Builder
+            | _VocStructModule._EmissionsStructModule.Reader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vocSpecies(self) -> _VocStructModule._SpeciesDataStructModule.Builder: ...
+        @vocSpecies.setter
+        def vocSpecies(
+            self,
+            value: _VocStructModule._SpeciesDataStructModule.Builder
+            | _VocStructModule._SpeciesDataStructModule.Reader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cropPhotosynthesisResults(
+            self,
+        ) -> _VocStructModule._CPDataStructModule.Builder: ...
+        @cropPhotosynthesisResults.setter
+        def cropPhotosynthesisResults(
+            self,
+            value: _VocStructModule._CPDataStructModule.Builder
+            | _VocStructModule._CPDataStructModule.Reader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def speciesParams(self) -> SpeciesParametersBuilder: ...
+        @speciesParams.setter
+        def speciesParams(
+            self,
+            value: SpeciesParametersBuilder | SpeciesParametersReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cultivarParams(self) -> CultivarParametersBuilder: ...
+        @cultivarParams.setter
+        def cultivarParams(
+            self,
+            value: CultivarParametersBuilder
+            | CultivarParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def residueParams(self) -> CropResidueParametersBuilder: ...
+        @residueParams.setter
+        def residueParams(
+            self,
+            value: CropResidueParametersBuilder
+            | CropResidueParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def isWinterCrop(self) -> bool: ...
+        @isWinterCrop.setter
+        def isWinterCrop(self, value: bool) -> None: ...
+        @property
+        def stemElongationEventFired(self) -> bool: ...
+        @stemElongationEventFired.setter
+        def stemElongationEventFired(self, value: bool) -> None: ...
+        @property
+        def lt50m(self) -> float: ...
+        @lt50m.setter
+        def lt50m(self, value: float) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["guentherEmissions"],
+            size: int | None = None,
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["jjvEmissions"],
+            size: int | None = None,
+        ) -> _VocStructModule._EmissionsStructModule.Builder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vocSpecies"],
+            size: int | None = None,
+        ) -> _VocStructModule._SpeciesDataStructModule.Builder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cropPhotosynthesisResults"],
+            size: int | None = None,
+        ) -> _VocStructModule._CPDataStructModule.Builder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["speciesParams"],
+            size: int | None = None,
+        ) -> SpeciesParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cultivarParams"],
+            size: int | None = None,
+        ) -> CultivarParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["residueParams"],
+            size: int | None = None,
+        ) -> CropResidueParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcAbovegroundOrgan"],
+            size: int | None = None,
+        ) -> BoolListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcAssimilatePartitioningCoeff"],
+            size: int | None = None,
+        ) -> Float64ListListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcBaseDaylength"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcBaseTemperature"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcCriticalOxygenContent"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cropWaterUptake"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["currentTemperatureSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcDaylengthRequirement"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcDroughtStressThreshold"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcInitialOrganBiomass"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["sunlitLeafAreaIndex"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["shadedLeafAreaIndex"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["nUptakeFromLayer"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOptimumTemperature"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["organBiomass"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["organDeadBiomass"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["organGreenBiomass"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["organGrowthIncrement"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganGrowthRespiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganIdsForPrimaryYield"],
+            size: int | None = None,
+        ) -> YieldComponentListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganIdsForSecondaryYield"],
+            size: int | None = None,
+        ) -> YieldComponentListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganIdsForCutting"],
+            size: int | None = None,
+        ) -> YieldComponentListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganMaintenanceRespiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["organSenescenceIncrement"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcOrganSenescenceRate"],
+            size: int | None = None,
+        ) -> Float64ListListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["rootDensity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["rootDiameter"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["rootEffectivity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vsSoilMineralNContent"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcSpecificLeafArea"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcStageMaxRootNConcentration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcStageKcFactor"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcStageTemperatureSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcStorageOrgan"],
+            size: int | None = None,
+        ) -> BoolListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["transpiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["transpirationRedux"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["pcVernalisationRequirement"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["rad24"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["rad240"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["tfol24"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["tfol240"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> CropModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        frostKillOn: bool | None = None,
+        ktko: float | None = None,
+        ktkc: float | None = None,
+        assimilatePartCoeffsReduced: bool | None = None,
+        o3WStomatalClosure: float | None = None,
+        o3SumUptake: float | None = None,
+        vsLatitude: float | None = None,
+        abovegroundBiomass: float | None = None,
+        abovegroundBiomassOld: float | None = None,
+        pcAbovegroundOrgan: BoolListBuilder | dict[str, Any] | None = None,
+        actualTranspiration: float | None = None,
+        pcAssimilatePartitioningCoeff: Float64ListListBuilder
+        | dict[str, Any]
+        | None = None,
+        pcAssimilateReallocation: float | None = None,
+        assimilates: float | None = None,
+        assimilationRate: float | None = None,
+        astronomicDayLenght: float | None = None,
+        pcBaseDaylength: Float64ListBuilder | dict[str, Any] | None = None,
+        pcBaseTemperature: Float64ListBuilder | dict[str, Any] | None = None,
+        pcBeginSensitivePhaseHeatStress: float | None = None,
+        belowgroundBiomass: float | None = None,
+        belowgroundBiomassOld: float | None = None,
+        pcCarboxylationPathway: int | None = None,
+        clearDayRadiation: float | None = None,
+        pcCo2Method: int | None = None,
+        criticalNConcentration: float | None = None,
+        pcCriticalOxygenContent: Float64ListBuilder | dict[str, Any] | None = None,
+        pcCriticalTemperatureHeatStress: float | None = None,
+        cropDiameter: float | None = None,
+        cropFrostRedux: float | None = None,
+        cropHeatRedux: float | None = None,
+        cropHeight: float | None = None,
+        pcCropHeightP1: float | None = None,
+        pcCropHeightP2: float | None = None,
+        pcCropName: str | None = None,
+        cropNDemand: float | None = None,
+        cropNRedux: float | None = None,
+        pcCropSpecificMaxRootingDepth: float | None = None,
+        cropWaterUptake: Float64ListBuilder | dict[str, Any] | None = None,
+        currentTemperatureSum: Float64ListBuilder | dict[str, Any] | None = None,
+        currentTotalTemperatureSum: float | None = None,
+        currentTotalTemperatureSumRoot: float | None = None,
+        pcCuttingDelayDays: int | None = None,
+        daylengthFactor: float | None = None,
+        pcDaylengthRequirement: Float64ListBuilder | dict[str, Any] | None = None,
+        daysAfterBeginFlowering: int | None = None,
+        declination: float | None = None,
+        pcDefaultRadiationUseEfficiency: float | None = None,
+        vmDepthGroundwaterTable: int | None = None,
+        pcDevelopmentAccelerationByNitrogenStress: int | None = None,
+        developmentalStage: int | None = None,
+        noOfCropSteps: int | None = None,
+        droughtImpactOnFertility: float | None = None,
+        pcDroughtImpactOnFertilityFactor: float | None = None,
+        pcDroughtStressThreshold: Float64ListBuilder | dict[str, Any] | None = None,
+        pcEmergenceFloodingControlOn: bool | None = None,
+        pcEmergenceMoistureControlOn: bool | None = None,
+        pcEndSensitivePhaseHeatStress: float | None = None,
+        effectiveDayLength: float | None = None,
+        errorStatus: bool | None = None,
+        errorMessage: str | None = None,
+        evaporatedFromIntercept: float | None = None,
+        extraterrestrialRadiation: float | None = None,
+        pcFieldConditionModifier: float | None = None,
+        finalDevelopmentalStage: int | None = None,
+        fixedN: float | None = None,
+        pcFrostDehardening: float | None = None,
+        pcFrostHardening: float | None = None,
+        globalRadiation: float | None = None,
+        greenAreaIndex: float | None = None,
+        grossAssimilates: float | None = None,
+        grossPhotosynthesis: float | None = None,
+        grossPhotosynthesisMol: float | None = None,
+        grossPhotosynthesisReferenceMol: float | None = None,
+        grossPrimaryProduction: float | None = None,
+        growthCycleEnded: bool | None = None,
+        growthRespirationAS: float | None = None,
+        pcHeatSumIrrigationStart: float | None = None,
+        pcHeatSumIrrigationEnd: float | None = None,
+        vsHeightNN: float | None = None,
+        pcInitialKcFactor: float | None = None,
+        pcInitialOrganBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        pcInitialRootingDepth: float | None = None,
+        interceptionStorage: float | None = None,
+        kcFactor: float | None = None,
+        leafAreaIndex: float | None = None,
+        sunlitLeafAreaIndex: Float64ListBuilder | dict[str, Any] | None = None,
+        shadedLeafAreaIndex: Float64ListBuilder | dict[str, Any] | None = None,
+        pcLowTemperatureExposure: float | None = None,
+        pcLimitingTemperatureHeatStress: float | None = None,
+        lt50: float | None = None,
+        pcLt50cultivar: float | None = None,
+        pcLuxuryNCoeff: float | None = None,
+        maintenanceRespirationAS: float | None = None,
+        pcMaxAssimilationRate: float | None = None,
+        pcMaxCropDiameter: float | None = None,
+        pcMaxCropHeight: float | None = None,
+        maxNUptake: float | None = None,
+        pcMaxNUptakeParam: float | None = None,
+        pcMaxRootingDepth: float | None = None,
+        pcMinimumNConcentration: float | None = None,
+        pcMinimumTemperatureForAssimilation: float | None = None,
+        pcOptimumTemperatureForAssimilation: float | None = None,
+        pcMaximumTemperatureForAssimilation: float | None = None,
+        pcMinimumTemperatureRootGrowth: float | None = None,
+        netMaintenanceRespiration: float | None = None,
+        netPhotosynthesis: float | None = None,
+        netPrecipitation: float | None = None,
+        netPrimaryProduction: float | None = None,
+        pcNConcentrationAbovegroundBiomass: float | None = None,
+        nConcentrationAbovegroundBiomass: float | None = None,
+        nConcentrationAbovegroundBiomassOld: float | None = None,
+        pcNConcentrationB0: float | None = None,
+        nContentDeficit: float | None = None,
+        pcNConcentrationPN: float | None = None,
+        pcNConcentrationRoot: float | None = None,
+        nConcentrationRoot: float | None = None,
+        nConcentrationRootOld: float | None = None,
+        pcNitrogenResponseOn: bool | None = None,
+        pcNumberOfDevelopmentalStages: float | None = None,
+        pcNumberOfOrgans: float | None = None,
+        nUptakeFromLayer: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOptimumTemperature: Float64ListBuilder | dict[str, Any] | None = None,
+        organBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organDeadBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organGreenBiomass: Float64ListBuilder | dict[str, Any] | None = None,
+        organGrowthIncrement: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganGrowthRespiration: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganIdsForPrimaryYield: YieldComponentListBuilder
+        | dict[str, Any]
+        | None = None,
+        pcOrganIdsForSecondaryYield: YieldComponentListBuilder
+        | dict[str, Any]
+        | None = None,
+        pcOrganIdsForCutting: YieldComponentListBuilder | dict[str, Any] | None = None,
+        pcOrganMaintenanceRespiration: Float64ListBuilder
+        | dict[str, Any]
+        | None = None,
+        organSenescenceIncrement: Float64ListBuilder | dict[str, Any] | None = None,
+        pcOrganSenescenceRate: Float64ListListBuilder | dict[str, Any] | None = None,
+        overcastDayRadiation: float | None = None,
+        oxygenDeficit: float | None = None,
+        pcPartBiologicalNFixation: float | None = None,
+        pcPerennial: bool | None = None,
+        photoperiodicDaylength: float | None = None,
+        photActRadiationMean: float | None = None,
+        pcPlantDensity: float | None = None,
+        potentialTranspiration: float | None = None,
+        referenceEvapotranspiration: float | None = None,
+        relativeTotalDevelopment: float | None = None,
+        remainingEvapotranspiration: float | None = None,
+        reserveAssimilatePool: float | None = None,
+        pcResidueNRatio: float | None = None,
+        pcRespiratoryStress: float | None = None,
+        rootBiomass: float | None = None,
+        rootBiomassOld: float | None = None,
+        rootDensity: Float64ListBuilder | dict[str, Any] | None = None,
+        rootDiameter: Float64ListBuilder | dict[str, Any] | None = None,
+        pcRootDistributionParam: float | None = None,
+        rootEffectivity: Float64ListBuilder | dict[str, Any] | None = None,
+        pcRootFormFactor: float | None = None,
+        pcRootGrowthLag: float | None = None,
+        rootingDepth: int | None = None,
+        rootingDepthM: float | None = None,
+        rootingZone: int | None = None,
+        pcRootPenetrationRate: float | None = None,
+        vmSaturationDeficit: float | None = None,
+        soilCoverage: float | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
+        soilSpecificMaxRootingDepth: float | None = None,
+        vsSoilSpecificMaxRootingDepth: float | None = None,
+        pcSpecificLeafArea: Float64ListBuilder | dict[str, Any] | None = None,
+        pcSpecificRootLength: float | None = None,
+        pcStageAfterCut: int | None = None,
+        pcStageAtMaxDiameter: float | None = None,
+        pcStageAtMaxHeight: float | None = None,
+        pcStageMaxRootNConcentration: Float64ListBuilder | dict[str, Any] | None = None,
+        pcStageKcFactor: Float64ListBuilder | dict[str, Any] | None = None,
+        pcStageTemperatureSum: Float64ListBuilder | dict[str, Any] | None = None,
+        stomataResistance: float | None = None,
+        pcStorageOrgan: BoolListBuilder | dict[str, Any] | None = None,
+        storageOrgan: int | None = None,
+        targetNConcentration: float | None = None,
+        timeStep: float | None = None,
+        timeUnderAnoxia: int | None = None,
+        vsTortuosity: float | None = None,
+        totalBiomass: float | None = None,
+        totalBiomassNContent: float | None = None,
+        totalCropHeatImpact: float | None = None,
+        totalNInput: float | None = None,
+        totalNUptake: float | None = None,
+        totalRespired: float | None = None,
+        respiration: float | None = None,
+        sumTotalNUptake: float | None = None,
+        totalRootLength: float | None = None,
+        totalTemperatureSum: float | None = None,
+        temperatureSumToFlowering: float | None = None,
+        transpiration: Float64ListBuilder | dict[str, Any] | None = None,
+        transpirationRedux: Float64ListBuilder | dict[str, Any] | None = None,
+        transpirationDeficit: float | None = None,
+        vernalisationDays: float | None = None,
+        vernalisationFactor: float | None = None,
+        pcVernalisationRequirement: Float64ListBuilder | dict[str, Any] | None = None,
+        pcWaterDeficitResponseOn: bool | None = None,
+        o3Senescence: float | None = None,
+        o3LongTermDamage: float | None = None,
+        o3ShortTermDamage: float | None = None,
+        dyingOut: bool | None = None,
+        accumulatedETa: float | None = None,
+        accumulatedTranspiration: float | None = None,
+        accumulatedPrimaryCropYield: float | None = None,
+        sumExportedCutBiomass: float | None = None,
+        exportedCutBiomass: float | None = None,
+        sumResidueCutBiomass: float | None = None,
+        residueCutBiomass: float | None = None,
+        cuttingDelayDays: int | None = None,
+        vsMaxEffectiveRootingDepth: float | None = None,
+        vsImpenetrableLayerDept: float | None = None,
+        anthesisDay: int | None = None,
+        maturityDay: int | None = None,
+        maturityReached: bool | None = None,
+        stepSize24: int | None = None,
+        stepSize240: int | None = None,
+        rad24: Float64ListBuilder | dict[str, Any] | None = None,
+        rad240: Float64ListBuilder | dict[str, Any] | None = None,
+        tfol24: Float64ListBuilder | dict[str, Any] | None = None,
+        tfol240: Float64ListBuilder | dict[str, Any] | None = None,
+        index24: int | None = None,
+        index240: int | None = None,
+        full24: bool | None = None,
+        full240: bool | None = None,
+        guentherEmissions: _VocStructModule._EmissionsStructModule.Builder
+        | dict[str, Any]
+        | None = None,
+        jjvEmissions: _VocStructModule._EmissionsStructModule.Builder
+        | dict[str, Any]
+        | None = None,
+        vocSpecies: _VocStructModule._SpeciesDataStructModule.Builder
+        | dict[str, Any]
+        | None = None,
+        cropPhotosynthesisResults: _VocStructModule._CPDataStructModule.Builder
+        | dict[str, Any]
+        | None = None,
+        speciesParams: SpeciesParametersBuilder | dict[str, Any] | None = None,
+        cultivarParams: CultivarParametersBuilder | dict[str, Any] | None = None,
+        residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
+        isWinterCrop: bool | None = None,
+        stemElongationEventFired: bool | None = None,
+        lt50m: float | None = None,
+        **kwargs: Any,
+    ) -> CropModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[CropModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[CropModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[CropModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> CropModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> CropModuleStateReader: ...
+
+CropModuleState: _CropModuleStateStructModule
+
+class _DelayedNMinApplicationParamsList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DelayedNMinApplicationParamsReader: ...
+        @override
+        def __iter__(self) -> Iterator[DelayedNMinApplicationParamsReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DelayedNMinApplicationParamsBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: DelayedNMinApplicationParamsReader
+            | DelayedNMinApplicationParamsBuilder
+            | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[DelayedNMinApplicationParamsBuilder]: ...
+        @override
+        def init(
+            self,
+            index: int,
+            size: int | None = None,
+        ) -> DelayedNMinApplicationParamsBuilder: ...
+
+class _AOMPropertiesStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def aomSlow(self) -> float: ...
+        @property
+        def aomFast(self) -> float: ...
+        @property
+        def aomSlowDecRatetoSMBSlow(self) -> float: ...
+        @property
+        def aomSlowDecRatetoSMBFast(self) -> float: ...
+        @property
+        def aomFastDecRatetoSMBSlow(self) -> float: ...
+        @property
+        def aomFastDecRatetoSMBFast(self) -> float: ...
+        @property
+        def aomSlowDecCoeff(self) -> float: ...
+        @property
+        def aomFastDecCoeff(self) -> float: ...
+        @property
+        def aomSlowDecCoeffStandard(self) -> float: ...
+        @property
+        def aomFastDecCoeffStandard(self) -> float: ...
+        @property
+        def partAOMSlowtoSMBSlow(self) -> float: ...
+        @property
+        def partAOMSlowtoSMBFast(self) -> float: ...
+        @property
+        def cnRatioAOMSlow(self) -> float: ...
+        @property
+        def cnRatioAOMFast(self) -> float: ...
+        @property
+        def daysAfterApplication(self) -> int: ...
+        @property
+        def aomDryMatterContent(self) -> float: ...
+        @property
+        def aomNH4Content(self) -> float: ...
+        @property
+        def aomSlowDelta(self) -> float: ...
+        @property
+        def aomFastDelta(self) -> float: ...
+        @property
+        def incorporation(self) -> bool: ...
+        @property
+        def noVolatilization(self) -> bool: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> AOMPropertiesBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def aomSlow(self) -> float: ...
+        @aomSlow.setter
+        def aomSlow(self, value: float) -> None: ...
+        @property
+        def aomFast(self) -> float: ...
+        @aomFast.setter
+        def aomFast(self, value: float) -> None: ...
+        @property
+        def aomSlowDecRatetoSMBSlow(self) -> float: ...
+        @aomSlowDecRatetoSMBSlow.setter
+        def aomSlowDecRatetoSMBSlow(self, value: float) -> None: ...
+        @property
+        def aomSlowDecRatetoSMBFast(self) -> float: ...
+        @aomSlowDecRatetoSMBFast.setter
+        def aomSlowDecRatetoSMBFast(self, value: float) -> None: ...
+        @property
+        def aomFastDecRatetoSMBSlow(self) -> float: ...
+        @aomFastDecRatetoSMBSlow.setter
+        def aomFastDecRatetoSMBSlow(self, value: float) -> None: ...
+        @property
+        def aomFastDecRatetoSMBFast(self) -> float: ...
+        @aomFastDecRatetoSMBFast.setter
+        def aomFastDecRatetoSMBFast(self, value: float) -> None: ...
+        @property
+        def aomSlowDecCoeff(self) -> float: ...
+        @aomSlowDecCoeff.setter
+        def aomSlowDecCoeff(self, value: float) -> None: ...
+        @property
+        def aomFastDecCoeff(self) -> float: ...
+        @aomFastDecCoeff.setter
+        def aomFastDecCoeff(self, value: float) -> None: ...
+        @property
+        def aomSlowDecCoeffStandard(self) -> float: ...
+        @aomSlowDecCoeffStandard.setter
+        def aomSlowDecCoeffStandard(self, value: float) -> None: ...
+        @property
+        def aomFastDecCoeffStandard(self) -> float: ...
+        @aomFastDecCoeffStandard.setter
+        def aomFastDecCoeffStandard(self, value: float) -> None: ...
+        @property
+        def partAOMSlowtoSMBSlow(self) -> float: ...
+        @partAOMSlowtoSMBSlow.setter
+        def partAOMSlowtoSMBSlow(self, value: float) -> None: ...
+        @property
+        def partAOMSlowtoSMBFast(self) -> float: ...
+        @partAOMSlowtoSMBFast.setter
+        def partAOMSlowtoSMBFast(self, value: float) -> None: ...
+        @property
+        def cnRatioAOMSlow(self) -> float: ...
+        @cnRatioAOMSlow.setter
+        def cnRatioAOMSlow(self, value: float) -> None: ...
+        @property
+        def cnRatioAOMFast(self) -> float: ...
+        @cnRatioAOMFast.setter
+        def cnRatioAOMFast(self, value: float) -> None: ...
+        @property
+        def daysAfterApplication(self) -> int: ...
+        @daysAfterApplication.setter
+        def daysAfterApplication(self, value: int) -> None: ...
+        @property
+        def aomDryMatterContent(self) -> float: ...
+        @aomDryMatterContent.setter
+        def aomDryMatterContent(self, value: float) -> None: ...
+        @property
+        def aomNH4Content(self) -> float: ...
+        @aomNH4Content.setter
+        def aomNH4Content(self, value: float) -> None: ...
+        @property
+        def aomSlowDelta(self) -> float: ...
+        @aomSlowDelta.setter
+        def aomSlowDelta(self, value: float) -> None: ...
+        @property
+        def aomFastDelta(self) -> float: ...
+        @aomFastDelta.setter
+        def aomFastDelta(self, value: float) -> None: ...
+        @property
+        def incorporation(self) -> bool: ...
+        @incorporation.setter
+        def incorporation(self, value: bool) -> None: ...
+        @property
+        def noVolatilization(self) -> bool: ...
+        @noVolatilization.setter
+        def noVolatilization(self, value: bool) -> None: ...
+        @override
+        def as_reader(self) -> AOMPropertiesReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        aomSlow: float | None = None,
+        aomFast: float | None = None,
+        aomSlowDecRatetoSMBSlow: float | None = None,
+        aomSlowDecRatetoSMBFast: float | None = None,
+        aomFastDecRatetoSMBSlow: float | None = None,
+        aomFastDecRatetoSMBFast: float | None = None,
+        aomSlowDecCoeff: float | None = None,
+        aomFastDecCoeff: float | None = None,
+        aomSlowDecCoeffStandard: float | None = None,
+        aomFastDecCoeffStandard: float | None = None,
+        partAOMSlowtoSMBSlow: float | None = None,
+        partAOMSlowtoSMBFast: float | None = None,
+        cnRatioAOMSlow: float | None = None,
+        cnRatioAOMFast: float | None = None,
+        daysAfterApplication: int | None = None,
+        aomDryMatterContent: float | None = None,
+        aomNH4Content: float | None = None,
+        aomSlowDelta: float | None = None,
+        aomFastDelta: float | None = None,
+        incorporation: bool | None = None,
+        noVolatilization: bool | None = None,
+        **kwargs: Any,
+    ) -> AOMPropertiesBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[AOMPropertiesReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[AOMPropertiesReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[AOMPropertiesBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AOMPropertiesReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AOMPropertiesReader: ...
+
+AOMProperties: _AOMPropertiesStructModule
+
+class _AOMPropertiesList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> AOMPropertiesReader: ...
+        @override
+        def __iter__(self) -> Iterator[AOMPropertiesReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> AOMPropertiesBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: AOMPropertiesReader | AOMPropertiesBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[AOMPropertiesBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> AOMPropertiesBuilder: ...
+
+class _SoilLayerStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def layerThickness(self) -> float: ...
+        @property
+        def soilWaterFlux(self) -> float: ...
+        @property
+        def voAOMPool(self) -> AOMPropertiesListReader: ...
+        @property
+        def somSlow(self) -> float: ...
+        @property
+        def somFast(self) -> float: ...
+        @property
+        def smbSlow(self) -> float: ...
+        @property
+        def smbFast(self) -> float: ...
+        @property
+        def soilCarbamid(self) -> float: ...
+        @property
+        def soilNH4(self) -> float: ...
+        @property
+        def soilNO2(self) -> float: ...
+        @property
+        def soilNO3(self) -> float: ...
+        @property
+        def soilFrozen(self) -> bool: ...
+        @property
+        def sps(self) -> SoilParametersReader: ...
+        @property
+        def soilMoistureM3(self) -> float: ...
+        @property
+        def soilTemperature(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilLayerStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def layerThickness(self) -> float: ...
+        @layerThickness.setter
+        def layerThickness(self, value: float) -> None: ...
+        @property
+        def soilWaterFlux(self) -> float: ...
+        @soilWaterFlux.setter
+        def soilWaterFlux(self, value: float) -> None: ...
+        @property
+        def voAOMPool(self) -> AOMPropertiesListBuilder: ...
+        @voAOMPool.setter
+        def voAOMPool(
+            self,
+            value: AOMPropertiesListBuilder | AOMPropertiesListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def somSlow(self) -> float: ...
+        @somSlow.setter
+        def somSlow(self, value: float) -> None: ...
+        @property
+        def somFast(self) -> float: ...
+        @somFast.setter
+        def somFast(self, value: float) -> None: ...
+        @property
+        def smbSlow(self) -> float: ...
+        @smbSlow.setter
+        def smbSlow(self, value: float) -> None: ...
+        @property
+        def smbFast(self) -> float: ...
+        @smbFast.setter
+        def smbFast(self, value: float) -> None: ...
+        @property
+        def soilCarbamid(self) -> float: ...
+        @soilCarbamid.setter
+        def soilCarbamid(self, value: float) -> None: ...
+        @property
+        def soilNH4(self) -> float: ...
+        @soilNH4.setter
+        def soilNH4(self, value: float) -> None: ...
+        @property
+        def soilNO2(self) -> float: ...
+        @soilNO2.setter
+        def soilNO2(self, value: float) -> None: ...
+        @property
+        def soilNO3(self) -> float: ...
+        @soilNO3.setter
+        def soilNO3(self, value: float) -> None: ...
+        @property
+        def soilFrozen(self) -> bool: ...
+        @soilFrozen.setter
+        def soilFrozen(self, value: bool) -> None: ...
+        @property
+        def sps(self) -> SoilParametersBuilder: ...
+        @sps.setter
+        def sps(
+            self,
+            value: SoilParametersBuilder | SoilParametersReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilMoistureM3(self) -> float: ...
+        @soilMoistureM3.setter
+        def soilMoistureM3(self, value: float) -> None: ...
+        @property
+        def soilTemperature(self) -> float: ...
+        @soilTemperature.setter
+        def soilTemperature(self, value: float) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["sps"],
+            size: int | None = None,
+        ) -> SoilParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["voAOMPool"],
+            size: int | None = None,
+        ) -> AOMPropertiesListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilLayerStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        layerThickness: float | None = None,
+        soilWaterFlux: float | None = None,
+        voAOMPool: AOMPropertiesListBuilder | dict[str, Any] | None = None,
+        somSlow: float | None = None,
+        somFast: float | None = None,
+        smbSlow: float | None = None,
+        smbFast: float | None = None,
+        soilCarbamid: float | None = None,
+        soilNH4: float | None = None,
+        soilNO2: float | None = None,
+        soilNO3: float | None = None,
+        soilFrozen: bool | None = None,
+        sps: SoilParametersBuilder | dict[str, Any] | None = None,
+        soilMoistureM3: float | None = None,
+        soilTemperature: float | None = None,
+        **kwargs: Any,
+    ) -> SoilLayerStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilLayerStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilLayerStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilLayerStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilLayerStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilLayerStateReader: ...
+
+SoilLayerState: _SoilLayerStateStructModule
+
+class _SoilLayerStateList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> SoilLayerStateReader: ...
+        @override
+        def __iter__(self) -> Iterator[SoilLayerStateReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> SoilLayerStateBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: SoilLayerStateReader | SoilLayerStateBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[SoilLayerStateBuilder]: ...
+        @override
+        def init(
+            self,
+            index: int,
+            size: int | None = None,
+        ) -> SoilLayerStateBuilder: ...
+
+class _SoilColumnStateStructModule(_StructModule):
+    class _DelayedNMinApplicationParamsStructModule(_StructModule):
+        class Reader(_DynamicStructReader):
+            @property
+            def fp(
+                self,
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader: ...
+            @property
+            def samplingDepth(self) -> float: ...
+            @property
+            def cropNTarget(self) -> float: ...
+            @property
+            def cropNTarget30(self) -> float: ...
+            @property
+            def fertiliserMinApplication(self) -> float: ...
+            @property
+            def fertiliserMaxApplication(self) -> float: ...
+            @property
+            def topDressingDelay(self) -> float: ...
+            @override
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            ) -> DelayedNMinApplicationParamsBuilder: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            def fp(
+                self,
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
+            @fp.setter
+            def fp(
+                self,
+                value: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+                | _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader
+                | dict[str, Any],
+            ) -> None: ...
+            @property
+            def samplingDepth(self) -> float: ...
+            @samplingDepth.setter
+            def samplingDepth(self, value: float) -> None: ...
+            @property
+            def cropNTarget(self) -> float: ...
+            @cropNTarget.setter
+            def cropNTarget(self, value: float) -> None: ...
+            @property
+            def cropNTarget30(self) -> float: ...
+            @cropNTarget30.setter
+            def cropNTarget30(self, value: float) -> None: ...
+            @property
+            def fertiliserMinApplication(self) -> float: ...
+            @fertiliserMinApplication.setter
+            def fertiliserMinApplication(self, value: float) -> None: ...
+            @property
+            def fertiliserMaxApplication(self) -> float: ...
+            @fertiliserMaxApplication.setter
+            def fertiliserMaxApplication(self, value: float) -> None: ...
+            @property
+            def topDressingDelay(self) -> float: ...
+            @topDressingDelay.setter
+            def topDressingDelay(self, value: float) -> None: ...
+            @override
+            def init(
+                self,
+                field: Literal["fp"],
+                size: int | None = None,
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
+            @override
+            def as_reader(self) -> DelayedNMinApplicationParamsReader: ...
+
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            fp: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+            | dict[str, Any]
+            | None = None,
+            samplingDepth: float | None = None,
+            cropNTarget: float | None = None,
+            cropNTarget30: float | None = None,
+            fertiliserMinApplication: float | None = None,
+            fertiliserMaxApplication: float | None = None,
+            topDressingDelay: float | None = None,
+            **kwargs: Any,
+        ) -> DelayedNMinApplicationParamsBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[DelayedNMinApplicationParamsReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[DelayedNMinApplicationParamsReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[DelayedNMinApplicationParamsBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> DelayedNMinApplicationParamsReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> DelayedNMinApplicationParamsReader: ...
+
+    type DelayedNMinApplicationParamsReader = (
+        _DelayedNMinApplicationParamsStructModule.Reader
+    )
+    type DelayedNMinApplicationParamsBuilder = (
+        _DelayedNMinApplicationParamsStructModule.Builder
+    )
+    DelayedNMinApplicationParams: _DelayedNMinApplicationParamsStructModule
+    class Reader(_DynamicStructReader):
+        @property
+        def vsSurfaceWaterStorage(self) -> float: ...
+        @property
+        def vsInterceptionStorage(self) -> float: ...
+        @property
+        def vmGroundwaterTable(self) -> int: ...
+        @property
+        def vsFluxAtLowerBoundary(self) -> float: ...
+        @property
+        def vqCropNUptake(self) -> float: ...
+        @property
+        def vtSoilSurfaceTemperature(self) -> float: ...
+        @property
+        def vmSnowDepth(self) -> float: ...
+        @property
+        def psMaxMineralisationDepth(self) -> float: ...
+        @property
+        def vsNumberOfOrganicLayers(self) -> float: ...
+        @property
+        def vfTopDressing(self) -> float: ...
+        @property
+        def vfTopDressingPartition(
+            self,
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader: ...
+        @property
+        def vfTopDressingDelay(self) -> int: ...
+        @property
+        def cropModule(self) -> CropModuleStateReader: ...
+        @property
+        def delayedNMinApplications(self) -> DelayedNMinApplicationParamsListReader: ...
+        @property
+        def pmCriticalMoistureDepth(self) -> float: ...
+        @property
+        def layers(self) -> SoilLayerStateListReader: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilColumnStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def vsSurfaceWaterStorage(self) -> float: ...
+        @vsSurfaceWaterStorage.setter
+        def vsSurfaceWaterStorage(self, value: float) -> None: ...
+        @property
+        def vsInterceptionStorage(self) -> float: ...
+        @vsInterceptionStorage.setter
+        def vsInterceptionStorage(self, value: float) -> None: ...
+        @property
+        def vmGroundwaterTable(self) -> int: ...
+        @vmGroundwaterTable.setter
+        def vmGroundwaterTable(self, value: int) -> None: ...
+        @property
+        def vsFluxAtLowerBoundary(self) -> float: ...
+        @vsFluxAtLowerBoundary.setter
+        def vsFluxAtLowerBoundary(self, value: float) -> None: ...
+        @property
+        def vqCropNUptake(self) -> float: ...
+        @vqCropNUptake.setter
+        def vqCropNUptake(self, value: float) -> None: ...
+        @property
+        def vtSoilSurfaceTemperature(self) -> float: ...
+        @vtSoilSurfaceTemperature.setter
+        def vtSoilSurfaceTemperature(self, value: float) -> None: ...
+        @property
+        def vmSnowDepth(self) -> float: ...
+        @vmSnowDepth.setter
+        def vmSnowDepth(self, value: float) -> None: ...
+        @property
+        def psMaxMineralisationDepth(self) -> float: ...
+        @psMaxMineralisationDepth.setter
+        def psMaxMineralisationDepth(self, value: float) -> None: ...
+        @property
+        def vsNumberOfOrganicLayers(self) -> float: ...
+        @vsNumberOfOrganicLayers.setter
+        def vsNumberOfOrganicLayers(self, value: float) -> None: ...
+        @property
+        def vfTopDressing(self) -> float: ...
+        @vfTopDressing.setter
+        def vfTopDressing(self, value: float) -> None: ...
+        @property
+        def vfTopDressingPartition(
+            self,
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
+        @vfTopDressingPartition.setter
+        def vfTopDressingPartition(
+            self,
+            value: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+            | _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vfTopDressingDelay(self) -> int: ...
+        @vfTopDressingDelay.setter
+        def vfTopDressingDelay(self, value: int) -> None: ...
+        @property
+        def cropModule(self) -> CropModuleStateBuilder: ...
+        @cropModule.setter
+        def cropModule(
+            self,
+            value: CropModuleStateBuilder | CropModuleStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def delayedNMinApplications(
+            self,
+        ) -> DelayedNMinApplicationParamsListBuilder: ...
+        @delayedNMinApplications.setter
+        def delayedNMinApplications(
+            self,
+            value: DelayedNMinApplicationParamsListBuilder
+            | DelayedNMinApplicationParamsListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pmCriticalMoistureDepth(self) -> float: ...
+        @pmCriticalMoistureDepth.setter
+        def pmCriticalMoistureDepth(self, value: float) -> None: ...
+        @property
+        def layers(self) -> SoilLayerStateListBuilder: ...
+        @layers.setter
+        def layers(
+            self,
+            value: SoilLayerStateListBuilder
+            | SoilLayerStateListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["vfTopDressingPartition"],
+            size: int | None = None,
+        ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cropModule"],
+            size: int | None = None,
+        ) -> CropModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["delayedNMinApplications"],
+            size: int | None = None,
+        ) -> DelayedNMinApplicationParamsListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["layers"],
+            size: int | None = None,
+        ) -> SoilLayerStateListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilColumnStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        vsSurfaceWaterStorage: float | None = None,
+        vsInterceptionStorage: float | None = None,
+        vmGroundwaterTable: int | None = None,
+        vsFluxAtLowerBoundary: float | None = None,
+        vqCropNUptake: float | None = None,
+        vtSoilSurfaceTemperature: float | None = None,
+        vmSnowDepth: float | None = None,
+        psMaxMineralisationDepth: float | None = None,
+        vsNumberOfOrganicLayers: float | None = None,
+        vfTopDressing: float | None = None,
+        vfTopDressingPartition: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+        | dict[str, Any]
+        | None = None,
+        vfTopDressingDelay: int | None = None,
+        cropModule: CropModuleStateBuilder | dict[str, Any] | None = None,
+        delayedNMinApplications: DelayedNMinApplicationParamsListBuilder
+        | dict[str, Any]
+        | None = None,
+        pmCriticalMoistureDepth: float | None = None,
+        layers: SoilLayerStateListBuilder | dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> SoilColumnStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilColumnStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilColumnStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilColumnStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilColumnStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilColumnStateReader: ...
+
+SoilColumnState: _SoilColumnStateStructModule
+
+class _SoilTemperatureModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def soilSurfaceTemperature(self) -> float: ...
+        @property
+        def moduleParams(self) -> SoilTemperatureModuleParametersReader: ...
+        @property
+        def dampingFactor(self) -> float: ...
+        @property
+        def soilColumnVtGroundLayer(self) -> SoilLayerStateReader: ...
+        @property
+        def soilColumnVtBottomLayer(self) -> SoilLayerStateReader: ...
+        @property
+        def numberOfLayers(self) -> int: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @property
+        def vsSoilMoistureConst(self) -> Float64ListReader: ...
+        @property
+        def soilTemperature(self) -> Float64ListReader: ...
+        @property
+        def v(self) -> Float64ListReader: ...
+        @property
+        def volumeMatrix(self) -> Float64ListReader: ...
+        @property
+        def volumeMatrixOld(self) -> Float64ListReader: ...
+        @property
+        def b(self) -> Float64ListReader: ...
+        @property
+        def matrixPrimaryDiagonal(self) -> Float64ListReader: ...
+        @property
+        def matrixSecundaryDiagonal(self) -> Float64ListReader: ...
+        @property
+        def heatFlow(self) -> float: ...
+        @property
+        def heatConductivity(self) -> Float64ListReader: ...
+        @property
+        def heatConductivityMean(self) -> Float64ListReader: ...
+        @property
+        def heatCapacity(self) -> Float64ListReader: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilTemperatureModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def soilSurfaceTemperature(self) -> float: ...
+        @soilSurfaceTemperature.setter
+        def soilSurfaceTemperature(self, value: float) -> None: ...
+        @property
+        def moduleParams(self) -> SoilTemperatureModuleParametersBuilder: ...
+        @moduleParams.setter
+        def moduleParams(
+            self,
+            value: SoilTemperatureModuleParametersBuilder
+            | SoilTemperatureModuleParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def dampingFactor(self) -> float: ...
+        @dampingFactor.setter
+        def dampingFactor(self, value: float) -> None: ...
+        @property
+        def soilColumnVtGroundLayer(self) -> SoilLayerStateBuilder: ...
+        @soilColumnVtGroundLayer.setter
+        def soilColumnVtGroundLayer(
+            self,
+            value: SoilLayerStateBuilder | SoilLayerStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilColumnVtBottomLayer(self) -> SoilLayerStateBuilder: ...
+        @soilColumnVtBottomLayer.setter
+        def soilColumnVtBottomLayer(
+            self,
+            value: SoilLayerStateBuilder | SoilLayerStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def numberOfLayers(self) -> int: ...
+        @numberOfLayers.setter
+        def numberOfLayers(self, value: int) -> None: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @vsNumberOfLayers.setter
+        def vsNumberOfLayers(self, value: int) -> None: ...
+        @property
+        def vsSoilMoistureConst(self) -> Float64ListBuilder: ...
+        @vsSoilMoistureConst.setter
+        def vsSoilMoistureConst(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilTemperature(self) -> Float64ListBuilder: ...
+        @soilTemperature.setter
+        def soilTemperature(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def v(self) -> Float64ListBuilder: ...
+        @v.setter
+        def v(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def volumeMatrix(self) -> Float64ListBuilder: ...
+        @volumeMatrix.setter
+        def volumeMatrix(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def volumeMatrixOld(self) -> Float64ListBuilder: ...
+        @volumeMatrixOld.setter
+        def volumeMatrixOld(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def b(self) -> Float64ListBuilder: ...
+        @b.setter
+        def b(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def matrixPrimaryDiagonal(self) -> Float64ListBuilder: ...
+        @matrixPrimaryDiagonal.setter
+        def matrixPrimaryDiagonal(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def matrixSecundaryDiagonal(self) -> Float64ListBuilder: ...
+        @matrixSecundaryDiagonal.setter
+        def matrixSecundaryDiagonal(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def heatFlow(self) -> float: ...
+        @heatFlow.setter
+        def heatFlow(self, value: float) -> None: ...
+        @property
+        def heatConductivity(self) -> Float64ListBuilder: ...
+        @heatConductivity.setter
+        def heatConductivity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def heatConductivityMean(self) -> Float64ListBuilder: ...
+        @heatConductivityMean.setter
+        def heatConductivityMean(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def heatCapacity(self) -> Float64ListBuilder: ...
+        @heatCapacity.setter
+        def heatCapacity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["moduleParams"],
+            size: int | None = None,
+        ) -> SoilTemperatureModuleParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilColumnVtGroundLayer"],
+            size: int | None = None,
+        ) -> SoilLayerStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilColumnVtBottomLayer"],
+            size: int | None = None,
+        ) -> SoilLayerStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vsSoilMoistureConst"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilTemperature"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["v"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["volumeMatrix"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["volumeMatrixOld"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["b"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["matrixPrimaryDiagonal"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["matrixSecundaryDiagonal"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["heatConductivity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["heatConductivityMean"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["heatCapacity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilTemperatureModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        soilSurfaceTemperature: float | None = None,
+        moduleParams: SoilTemperatureModuleParametersBuilder
+        | dict[str, Any]
+        | None = None,
+        dampingFactor: float | None = None,
+        soilColumnVtGroundLayer: SoilLayerStateBuilder | dict[str, Any] | None = None,
+        soilColumnVtBottomLayer: SoilLayerStateBuilder | dict[str, Any] | None = None,
+        numberOfLayers: int | None = None,
+        vsNumberOfLayers: int | None = None,
+        vsSoilMoistureConst: Float64ListBuilder | dict[str, Any] | None = None,
+        soilTemperature: Float64ListBuilder | dict[str, Any] | None = None,
+        v: Float64ListBuilder | dict[str, Any] | None = None,
+        volumeMatrix: Float64ListBuilder | dict[str, Any] | None = None,
+        volumeMatrixOld: Float64ListBuilder | dict[str, Any] | None = None,
+        b: Float64ListBuilder | dict[str, Any] | None = None,
+        matrixPrimaryDiagonal: Float64ListBuilder | dict[str, Any] | None = None,
+        matrixSecundaryDiagonal: Float64ListBuilder | dict[str, Any] | None = None,
+        heatFlow: float | None = None,
+        heatConductivity: Float64ListBuilder | dict[str, Any] | None = None,
+        heatConductivityMean: Float64ListBuilder | dict[str, Any] | None = None,
+        heatCapacity: Float64ListBuilder | dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> SoilTemperatureModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilTemperatureModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilTemperatureModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilTemperatureModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilTemperatureModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilTemperatureModuleStateReader: ...
+
+SoilTemperatureModuleState: _SoilTemperatureModuleStateStructModule
+
+class _FrostModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def pmHydraulicConductivityRedux(self) -> float: ...
+        @property
+        def frostDepth(self) -> float: ...
+        @property
+        def accumulatedFrostDepth(self) -> float: ...
+        @property
+        def negativeDegreeDays(self) -> float: ...
+        @property
+        def thawDepth(self) -> float: ...
+        @property
+        def frostDays(self) -> int: ...
+        @property
+        def lambdaRedux(self) -> Float64ListReader: ...
+        @property
+        def temperatureUnderSnow(self) -> float: ...
+        @property
+        def hydraulicConductivityRedux(self) -> float: ...
+        @property
+        def ptTimeStep(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> FrostModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def pmHydraulicConductivityRedux(self) -> float: ...
+        @pmHydraulicConductivityRedux.setter
+        def pmHydraulicConductivityRedux(self, value: float) -> None: ...
+        @property
+        def frostDepth(self) -> float: ...
+        @frostDepth.setter
+        def frostDepth(self, value: float) -> None: ...
+        @property
+        def accumulatedFrostDepth(self) -> float: ...
+        @accumulatedFrostDepth.setter
+        def accumulatedFrostDepth(self, value: float) -> None: ...
+        @property
+        def negativeDegreeDays(self) -> float: ...
+        @negativeDegreeDays.setter
+        def negativeDegreeDays(self, value: float) -> None: ...
+        @property
+        def thawDepth(self) -> float: ...
+        @thawDepth.setter
+        def thawDepth(self, value: float) -> None: ...
+        @property
+        def frostDays(self) -> int: ...
+        @frostDays.setter
+        def frostDays(self, value: int) -> None: ...
+        @property
+        def lambdaRedux(self) -> Float64ListBuilder: ...
+        @lambdaRedux.setter
+        def lambdaRedux(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def temperatureUnderSnow(self) -> float: ...
+        @temperatureUnderSnow.setter
+        def temperatureUnderSnow(self, value: float) -> None: ...
+        @property
+        def hydraulicConductivityRedux(self) -> float: ...
+        @hydraulicConductivityRedux.setter
+        def hydraulicConductivityRedux(self, value: float) -> None: ...
+        @property
+        def ptTimeStep(self) -> float: ...
+        @ptTimeStep.setter
+        def ptTimeStep(self, value: float) -> None: ...
+        @override
+        def init(
+            self,
+            field: Literal["lambdaRedux"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @override
+        def as_reader(self) -> FrostModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        pmHydraulicConductivityRedux: float | None = None,
+        frostDepth: float | None = None,
+        accumulatedFrostDepth: float | None = None,
+        negativeDegreeDays: float | None = None,
+        thawDepth: float | None = None,
+        frostDays: int | None = None,
+        lambdaRedux: Float64ListBuilder | dict[str, Any] | None = None,
+        temperatureUnderSnow: float | None = None,
+        hydraulicConductivityRedux: float | None = None,
+        ptTimeStep: float | None = None,
+        **kwargs: Any,
+    ) -> FrostModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[FrostModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[FrostModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[FrostModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> FrostModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> FrostModuleStateReader: ...
+
+FrostModuleState: _FrostModuleStateStructModule
+
+class _SnowModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def snowRetentionCapacityMax(self) -> float: ...
+        @property
+        def snowDensity(self) -> float: ...
+        @property
+        def snowDepth(self) -> float: ...
+        @property
+        def frozenWaterInSnow(self) -> float: ...
+        @property
+        def liquidWaterInSnow(self) -> float: ...
+        @property
+        def waterToInfiltrate(self) -> float: ...
+        @property
+        def maxSnowDepth(self) -> float: ...
+        @property
+        def accumulatedSnowDepth(self) -> float: ...
+        @property
+        def snowmeltTemperature(self) -> float: ...
+        @property
+        def snowAccumulationThresholdTemperature(self) -> float: ...
+        @property
+        def temperatureLimitForLiquidWater(self) -> float: ...
+        @property
+        def correctionRain(self) -> float: ...
+        @property
+        def correctionSnow(self) -> float: ...
+        @property
+        def refreezeTemperature(self) -> float: ...
+        @property
+        def refreezeP1(self) -> float: ...
+        @property
+        def refreezeP2(self) -> float: ...
+        @property
+        def newSnowDensityMin(self) -> float: ...
+        @property
+        def snowMaxAdditionalDensity(self) -> float: ...
+        @property
+        def snowPacking(self) -> float: ...
+        @property
+        def snowRetentionCapacityMin(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SnowModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def snowRetentionCapacityMax(self) -> float: ...
+        @snowRetentionCapacityMax.setter
+        def snowRetentionCapacityMax(self, value: float) -> None: ...
+        @property
+        def snowDensity(self) -> float: ...
+        @snowDensity.setter
+        def snowDensity(self, value: float) -> None: ...
+        @property
+        def snowDepth(self) -> float: ...
+        @snowDepth.setter
+        def snowDepth(self, value: float) -> None: ...
+        @property
+        def frozenWaterInSnow(self) -> float: ...
+        @frozenWaterInSnow.setter
+        def frozenWaterInSnow(self, value: float) -> None: ...
+        @property
+        def liquidWaterInSnow(self) -> float: ...
+        @liquidWaterInSnow.setter
+        def liquidWaterInSnow(self, value: float) -> None: ...
+        @property
+        def waterToInfiltrate(self) -> float: ...
+        @waterToInfiltrate.setter
+        def waterToInfiltrate(self, value: float) -> None: ...
+        @property
+        def maxSnowDepth(self) -> float: ...
+        @maxSnowDepth.setter
+        def maxSnowDepth(self, value: float) -> None: ...
+        @property
+        def accumulatedSnowDepth(self) -> float: ...
+        @accumulatedSnowDepth.setter
+        def accumulatedSnowDepth(self, value: float) -> None: ...
+        @property
+        def snowmeltTemperature(self) -> float: ...
+        @snowmeltTemperature.setter
+        def snowmeltTemperature(self, value: float) -> None: ...
+        @property
+        def snowAccumulationThresholdTemperature(self) -> float: ...
+        @snowAccumulationThresholdTemperature.setter
+        def snowAccumulationThresholdTemperature(self, value: float) -> None: ...
+        @property
+        def temperatureLimitForLiquidWater(self) -> float: ...
+        @temperatureLimitForLiquidWater.setter
+        def temperatureLimitForLiquidWater(self, value: float) -> None: ...
+        @property
+        def correctionRain(self) -> float: ...
+        @correctionRain.setter
+        def correctionRain(self, value: float) -> None: ...
+        @property
+        def correctionSnow(self) -> float: ...
+        @correctionSnow.setter
+        def correctionSnow(self, value: float) -> None: ...
+        @property
+        def refreezeTemperature(self) -> float: ...
+        @refreezeTemperature.setter
+        def refreezeTemperature(self, value: float) -> None: ...
+        @property
+        def refreezeP1(self) -> float: ...
+        @refreezeP1.setter
+        def refreezeP1(self, value: float) -> None: ...
+        @property
+        def refreezeP2(self) -> float: ...
+        @refreezeP2.setter
+        def refreezeP2(self, value: float) -> None: ...
+        @property
+        def newSnowDensityMin(self) -> float: ...
+        @newSnowDensityMin.setter
+        def newSnowDensityMin(self, value: float) -> None: ...
+        @property
+        def snowMaxAdditionalDensity(self) -> float: ...
+        @snowMaxAdditionalDensity.setter
+        def snowMaxAdditionalDensity(self, value: float) -> None: ...
+        @property
+        def snowPacking(self) -> float: ...
+        @snowPacking.setter
+        def snowPacking(self, value: float) -> None: ...
+        @property
+        def snowRetentionCapacityMin(self) -> float: ...
+        @snowRetentionCapacityMin.setter
+        def snowRetentionCapacityMin(self, value: float) -> None: ...
+        @override
+        def as_reader(self) -> SnowModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        snowRetentionCapacityMax: float | None = None,
+        snowDensity: float | None = None,
+        snowDepth: float | None = None,
+        frozenWaterInSnow: float | None = None,
+        liquidWaterInSnow: float | None = None,
+        waterToInfiltrate: float | None = None,
+        maxSnowDepth: float | None = None,
+        accumulatedSnowDepth: float | None = None,
+        snowmeltTemperature: float | None = None,
+        snowAccumulationThresholdTemperature: float | None = None,
+        temperatureLimitForLiquidWater: float | None = None,
+        correctionRain: float | None = None,
+        correctionSnow: float | None = None,
+        refreezeTemperature: float | None = None,
+        refreezeP1: float | None = None,
+        refreezeP2: float | None = None,
+        newSnowDensityMin: float | None = None,
+        snowMaxAdditionalDensity: float | None = None,
+        snowPacking: float | None = None,
+        snowRetentionCapacityMin: float | None = None,
+        **kwargs: Any,
+    ) -> SnowModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SnowModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SnowModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SnowModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SnowModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SnowModuleStateReader: ...
+
+SnowModuleState: _SnowModuleStateStructModule
+
+class _SoilMoistureModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def frostComponent(self) -> FrostModuleStateReader: ...
+        @property
+        def snowComponent(self) -> SnowModuleStateReader: ...
+        @property
+        def xSACriticalSoilMoisture(self) -> float: ...
+        @property
+        def moduleParams(self) -> SoilMoistureModuleParametersReader: ...
+        @property
+        def vwWindSpeedHeight(self) -> float: ...
+        @property
+        def vwWindSpeed(self) -> float: ...
+        @property
+        def numberOfLayers(self) -> int: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @property
+        def actualEvaporation(self) -> float: ...
+        @property
+        def actualEvapotranspiration(self) -> float: ...
+        @property
+        def actualTranspiration(self) -> float: ...
+        @property
+        def availableWater(self) -> Float64ListReader: ...
+        @property
+        def capillaryRise(self) -> float: ...
+        @property
+        def capillaryRiseRate(self) -> Float64ListReader: ...
+        @property
+        def capillaryWater(self) -> Float64ListReader: ...
+        @property
+        def capillaryWater70(self) -> Float64ListReader: ...
+        @property
+        def evaporation(self) -> Float64ListReader: ...
+        @property
+        def evapotranspiration(self) -> Float64ListReader: ...
+        @property
+        def fieldCapacity(self) -> Float64ListReader: ...
+        @property
+        def fluxAtLowerBoundary(self) -> float: ...
+        @property
+        def gravitationalWater(self) -> Float64ListReader: ...
+        @property
+        def grossPrecipitation(self) -> float: ...
+        @property
+        def groundwaterAdded(self) -> float: ...
+        @property
+        def groundwaterDischarge(self) -> float: ...
+        @property
+        def groundwaterTable(self) -> int: ...
+        @property
+        def heatConductivity(self) -> Float64ListReader: ...
+        @property
+        def hydraulicConductivityRedux(self) -> float: ...
+        @property
+        def infiltration(self) -> float: ...
+        @property
+        def interception(self) -> float: ...
+        @property
+        def vcKcFactor(self) -> float: ...
+        @property
+        def lambda_(self) -> Float64ListReader: ...
+        @property
+        def lambdaReduced(self) -> float: ...
+        @property
+        def vsLatitude(self) -> float: ...
+        @property
+        def layerThickness(self) -> Float64ListReader: ...
+        @property
+        def pmLayerThickness(self) -> float: ...
+        @property
+        def pmLeachingDepth(self) -> float: ...
+        @property
+        def pmLeachingDepthLayer(self) -> int: ...
+        @property
+        def vwMaxAirTemperature(self) -> float: ...
+        @property
+        def pmMaxPercolationRate(self) -> float: ...
+        @property
+        def vwMeanAirTemperature(self) -> float: ...
+        @property
+        def vwMinAirTemperature(self) -> float: ...
+        @property
+        def vcNetPrecipitation(self) -> float: ...
+        @property
+        def vwNetRadiation(self) -> float: ...
+        @property
+        def permanentWiltingPoint(self) -> Float64ListReader: ...
+        @property
+        def vcPercentageSoilCoverage(self) -> float: ...
+        @property
+        def percolationRate(self) -> Float64ListReader: ...
+        @property
+        def vwPrecipitation(self) -> float: ...
+        @property
+        def referenceEvapotranspiration(self) -> float: ...
+        @property
+        def relativeHumidity(self) -> float: ...
+        @property
+        def residualEvapotranspiration(self) -> Float64ListReader: ...
+        @property
+        def saturatedHydraulicConductivity(self) -> Float64ListReader: ...
+        @property
+        def soilMoisture(self) -> Float64ListReader: ...
+        @property
+        def soilMoisturecrit(self) -> float: ...
+        @property
+        def soilMoistureDeficit(self) -> float: ...
+        @property
+        def soilPoreVolume(self) -> Float64ListReader: ...
+        @property
+        def vcStomataResistance(self) -> float: ...
+        @property
+        def surfaceRoughness(self) -> float: ...
+        @property
+        def surfaceRunOff(self) -> float: ...
+        @property
+        def sumSurfaceRunOff(self) -> float: ...
+        @property
+        def surfaceWaterStorage(self) -> float: ...
+        @property
+        def ptTimeStep(self) -> float: ...
+        @property
+        def totalWaterRemoval(self) -> float: ...
+        @property
+        def transpiration(self) -> Float64ListReader: ...
+        @property
+        def transpirationDeficit(self) -> float: ...
+        @property
+        def waterFlux(self) -> Float64ListReader: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilMoistureModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def frostComponent(self) -> FrostModuleStateBuilder: ...
+        @frostComponent.setter
+        def frostComponent(
+            self,
+            value: FrostModuleStateBuilder | FrostModuleStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def snowComponent(self) -> SnowModuleStateBuilder: ...
+        @snowComponent.setter
+        def snowComponent(
+            self,
+            value: SnowModuleStateBuilder | SnowModuleStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def xSACriticalSoilMoisture(self) -> float: ...
+        @xSACriticalSoilMoisture.setter
+        def xSACriticalSoilMoisture(self, value: float) -> None: ...
+        @property
+        def moduleParams(self) -> SoilMoistureModuleParametersBuilder: ...
+        @moduleParams.setter
+        def moduleParams(
+            self,
+            value: SoilMoistureModuleParametersBuilder
+            | SoilMoistureModuleParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vwWindSpeedHeight(self) -> float: ...
+        @vwWindSpeedHeight.setter
+        def vwWindSpeedHeight(self, value: float) -> None: ...
+        @property
+        def vwWindSpeed(self) -> float: ...
+        @vwWindSpeed.setter
+        def vwWindSpeed(self, value: float) -> None: ...
+        @property
+        def numberOfLayers(self) -> int: ...
+        @numberOfLayers.setter
+        def numberOfLayers(self, value: int) -> None: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @vsNumberOfLayers.setter
+        def vsNumberOfLayers(self, value: int) -> None: ...
+        @property
+        def actualEvaporation(self) -> float: ...
+        @actualEvaporation.setter
+        def actualEvaporation(self, value: float) -> None: ...
+        @property
+        def actualEvapotranspiration(self) -> float: ...
+        @actualEvapotranspiration.setter
+        def actualEvapotranspiration(self, value: float) -> None: ...
+        @property
+        def actualTranspiration(self) -> float: ...
+        @actualTranspiration.setter
+        def actualTranspiration(self, value: float) -> None: ...
+        @property
+        def availableWater(self) -> Float64ListBuilder: ...
+        @availableWater.setter
+        def availableWater(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def capillaryRise(self) -> float: ...
+        @capillaryRise.setter
+        def capillaryRise(self, value: float) -> None: ...
+        @property
+        def capillaryRiseRate(self) -> Float64ListBuilder: ...
+        @capillaryRiseRate.setter
+        def capillaryRiseRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def capillaryWater(self) -> Float64ListBuilder: ...
+        @capillaryWater.setter
+        def capillaryWater(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def capillaryWater70(self) -> Float64ListBuilder: ...
+        @capillaryWater70.setter
+        def capillaryWater70(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def evaporation(self) -> Float64ListBuilder: ...
+        @evaporation.setter
+        def evaporation(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def evapotranspiration(self) -> Float64ListBuilder: ...
+        @evapotranspiration.setter
+        def evapotranspiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def fieldCapacity(self) -> Float64ListBuilder: ...
+        @fieldCapacity.setter
+        def fieldCapacity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def fluxAtLowerBoundary(self) -> float: ...
+        @fluxAtLowerBoundary.setter
+        def fluxAtLowerBoundary(self, value: float) -> None: ...
+        @property
+        def gravitationalWater(self) -> Float64ListBuilder: ...
+        @gravitationalWater.setter
+        def gravitationalWater(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def grossPrecipitation(self) -> float: ...
+        @grossPrecipitation.setter
+        def grossPrecipitation(self, value: float) -> None: ...
+        @property
+        def groundwaterAdded(self) -> float: ...
+        @groundwaterAdded.setter
+        def groundwaterAdded(self, value: float) -> None: ...
+        @property
+        def groundwaterDischarge(self) -> float: ...
+        @groundwaterDischarge.setter
+        def groundwaterDischarge(self, value: float) -> None: ...
+        @property
+        def groundwaterTable(self) -> int: ...
+        @groundwaterTable.setter
+        def groundwaterTable(self, value: int) -> None: ...
+        @property
+        def heatConductivity(self) -> Float64ListBuilder: ...
+        @heatConductivity.setter
+        def heatConductivity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def hydraulicConductivityRedux(self) -> float: ...
+        @hydraulicConductivityRedux.setter
+        def hydraulicConductivityRedux(self, value: float) -> None: ...
+        @property
+        def infiltration(self) -> float: ...
+        @infiltration.setter
+        def infiltration(self, value: float) -> None: ...
+        @property
+        def interception(self) -> float: ...
+        @interception.setter
+        def interception(self, value: float) -> None: ...
+        @property
+        def vcKcFactor(self) -> float: ...
+        @vcKcFactor.setter
+        def vcKcFactor(self, value: float) -> None: ...
+        @property
+        def lambda_(self) -> Float64ListBuilder: ...
+        @lambda_.setter
+        def lambda_(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def lambdaReduced(self) -> float: ...
+        @lambdaReduced.setter
+        def lambdaReduced(self, value: float) -> None: ...
+        @property
+        def vsLatitude(self) -> float: ...
+        @vsLatitude.setter
+        def vsLatitude(self, value: float) -> None: ...
+        @property
+        def layerThickness(self) -> Float64ListBuilder: ...
+        @layerThickness.setter
+        def layerThickness(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def pmLayerThickness(self) -> float: ...
+        @pmLayerThickness.setter
+        def pmLayerThickness(self, value: float) -> None: ...
+        @property
+        def pmLeachingDepth(self) -> float: ...
+        @pmLeachingDepth.setter
+        def pmLeachingDepth(self, value: float) -> None: ...
+        @property
+        def pmLeachingDepthLayer(self) -> int: ...
+        @pmLeachingDepthLayer.setter
+        def pmLeachingDepthLayer(self, value: int) -> None: ...
+        @property
+        def vwMaxAirTemperature(self) -> float: ...
+        @vwMaxAirTemperature.setter
+        def vwMaxAirTemperature(self, value: float) -> None: ...
+        @property
+        def pmMaxPercolationRate(self) -> float: ...
+        @pmMaxPercolationRate.setter
+        def pmMaxPercolationRate(self, value: float) -> None: ...
+        @property
+        def vwMeanAirTemperature(self) -> float: ...
+        @vwMeanAirTemperature.setter
+        def vwMeanAirTemperature(self, value: float) -> None: ...
+        @property
+        def vwMinAirTemperature(self) -> float: ...
+        @vwMinAirTemperature.setter
+        def vwMinAirTemperature(self, value: float) -> None: ...
+        @property
+        def vcNetPrecipitation(self) -> float: ...
+        @vcNetPrecipitation.setter
+        def vcNetPrecipitation(self, value: float) -> None: ...
+        @property
+        def vwNetRadiation(self) -> float: ...
+        @vwNetRadiation.setter
+        def vwNetRadiation(self, value: float) -> None: ...
+        @property
+        def permanentWiltingPoint(self) -> Float64ListBuilder: ...
+        @permanentWiltingPoint.setter
+        def permanentWiltingPoint(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vcPercentageSoilCoverage(self) -> float: ...
+        @vcPercentageSoilCoverage.setter
+        def vcPercentageSoilCoverage(self, value: float) -> None: ...
+        @property
+        def percolationRate(self) -> Float64ListBuilder: ...
+        @percolationRate.setter
+        def percolationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vwPrecipitation(self) -> float: ...
+        @vwPrecipitation.setter
+        def vwPrecipitation(self, value: float) -> None: ...
+        @property
+        def referenceEvapotranspiration(self) -> float: ...
+        @referenceEvapotranspiration.setter
+        def referenceEvapotranspiration(self, value: float) -> None: ...
+        @property
+        def relativeHumidity(self) -> float: ...
+        @relativeHumidity.setter
+        def relativeHumidity(self, value: float) -> None: ...
+        @property
+        def residualEvapotranspiration(self) -> Float64ListBuilder: ...
+        @residualEvapotranspiration.setter
+        def residualEvapotranspiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def saturatedHydraulicConductivity(self) -> Float64ListBuilder: ...
+        @saturatedHydraulicConductivity.setter
+        def saturatedHydraulicConductivity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilMoisture(self) -> Float64ListBuilder: ...
+        @soilMoisture.setter
+        def soilMoisture(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilMoisturecrit(self) -> float: ...
+        @soilMoisturecrit.setter
+        def soilMoisturecrit(self, value: float) -> None: ...
+        @property
+        def soilMoistureDeficit(self) -> float: ...
+        @soilMoistureDeficit.setter
+        def soilMoistureDeficit(self, value: float) -> None: ...
+        @property
+        def soilPoreVolume(self) -> Float64ListBuilder: ...
+        @soilPoreVolume.setter
+        def soilPoreVolume(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vcStomataResistance(self) -> float: ...
+        @vcStomataResistance.setter
+        def vcStomataResistance(self, value: float) -> None: ...
+        @property
+        def surfaceRoughness(self) -> float: ...
+        @surfaceRoughness.setter
+        def surfaceRoughness(self, value: float) -> None: ...
+        @property
+        def surfaceRunOff(self) -> float: ...
+        @surfaceRunOff.setter
+        def surfaceRunOff(self, value: float) -> None: ...
+        @property
+        def sumSurfaceRunOff(self) -> float: ...
+        @sumSurfaceRunOff.setter
+        def sumSurfaceRunOff(self, value: float) -> None: ...
+        @property
+        def surfaceWaterStorage(self) -> float: ...
+        @surfaceWaterStorage.setter
+        def surfaceWaterStorage(self, value: float) -> None: ...
+        @property
+        def ptTimeStep(self) -> float: ...
+        @ptTimeStep.setter
+        def ptTimeStep(self, value: float) -> None: ...
+        @property
+        def totalWaterRemoval(self) -> float: ...
+        @totalWaterRemoval.setter
+        def totalWaterRemoval(self, value: float) -> None: ...
+        @property
+        def transpiration(self) -> Float64ListBuilder: ...
+        @transpiration.setter
+        def transpiration(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def transpirationDeficit(self) -> float: ...
+        @transpirationDeficit.setter
+        def transpirationDeficit(self, value: float) -> None: ...
+        @property
+        def waterFlux(self) -> Float64ListBuilder: ...
+        @waterFlux.setter
+        def waterFlux(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["frostComponent"],
+            size: int | None = None,
+        ) -> FrostModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["snowComponent"],
+            size: int | None = None,
+        ) -> SnowModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["moduleParams"],
+            size: int | None = None,
+        ) -> SoilMoistureModuleParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["availableWater"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["capillaryRiseRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["capillaryWater"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["capillaryWater70"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["evaporation"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["evapotranspiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["fieldCapacity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["gravitationalWater"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["heatConductivity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["lambda_"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["layerThickness"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["permanentWiltingPoint"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["percolationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["residualEvapotranspiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["saturatedHydraulicConductivity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilMoisture"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilPoreVolume"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["transpiration"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["waterFlux"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilMoistureModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        frostComponent: FrostModuleStateBuilder | dict[str, Any] | None = None,
+        snowComponent: SnowModuleStateBuilder | dict[str, Any] | None = None,
+        xSACriticalSoilMoisture: float | None = None,
+        moduleParams: SoilMoistureModuleParametersBuilder
+        | dict[str, Any]
+        | None = None,
+        vwWindSpeedHeight: float | None = None,
+        vwWindSpeed: float | None = None,
+        numberOfLayers: int | None = None,
+        vsNumberOfLayers: int | None = None,
+        actualEvaporation: float | None = None,
+        actualEvapotranspiration: float | None = None,
+        actualTranspiration: float | None = None,
+        availableWater: Float64ListBuilder | dict[str, Any] | None = None,
+        capillaryRise: float | None = None,
+        capillaryRiseRate: Float64ListBuilder | dict[str, Any] | None = None,
+        capillaryWater: Float64ListBuilder | dict[str, Any] | None = None,
+        capillaryWater70: Float64ListBuilder | dict[str, Any] | None = None,
+        evaporation: Float64ListBuilder | dict[str, Any] | None = None,
+        evapotranspiration: Float64ListBuilder | dict[str, Any] | None = None,
+        fieldCapacity: Float64ListBuilder | dict[str, Any] | None = None,
+        fluxAtLowerBoundary: float | None = None,
+        gravitationalWater: Float64ListBuilder | dict[str, Any] | None = None,
+        grossPrecipitation: float | None = None,
+        groundwaterAdded: float | None = None,
+        groundwaterDischarge: float | None = None,
+        groundwaterTable: int | None = None,
+        heatConductivity: Float64ListBuilder | dict[str, Any] | None = None,
+        hydraulicConductivityRedux: float | None = None,
+        infiltration: float | None = None,
+        interception: float | None = None,
+        vcKcFactor: float | None = None,
+        lambda_: Float64ListBuilder | dict[str, Any] | None = None,
+        lambdaReduced: float | None = None,
+        vsLatitude: float | None = None,
+        layerThickness: Float64ListBuilder | dict[str, Any] | None = None,
+        pmLayerThickness: float | None = None,
+        pmLeachingDepth: float | None = None,
+        pmLeachingDepthLayer: int | None = None,
+        vwMaxAirTemperature: float | None = None,
+        pmMaxPercolationRate: float | None = None,
+        vwMeanAirTemperature: float | None = None,
+        vwMinAirTemperature: float | None = None,
+        vcNetPrecipitation: float | None = None,
+        vwNetRadiation: float | None = None,
+        permanentWiltingPoint: Float64ListBuilder | dict[str, Any] | None = None,
+        vcPercentageSoilCoverage: float | None = None,
+        percolationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        vwPrecipitation: float | None = None,
+        referenceEvapotranspiration: float | None = None,
+        relativeHumidity: float | None = None,
+        residualEvapotranspiration: Float64ListBuilder | dict[str, Any] | None = None,
+        saturatedHydraulicConductivity: Float64ListBuilder
+        | dict[str, Any]
+        | None = None,
+        soilMoisture: Float64ListBuilder | dict[str, Any] | None = None,
+        soilMoisturecrit: float | None = None,
+        soilMoistureDeficit: float | None = None,
+        soilPoreVolume: Float64ListBuilder | dict[str, Any] | None = None,
+        vcStomataResistance: float | None = None,
+        surfaceRoughness: float | None = None,
+        surfaceRunOff: float | None = None,
+        sumSurfaceRunOff: float | None = None,
+        surfaceWaterStorage: float | None = None,
+        ptTimeStep: float | None = None,
+        totalWaterRemoval: float | None = None,
+        transpiration: Float64ListBuilder | dict[str, Any] | None = None,
+        transpirationDeficit: float | None = None,
+        waterFlux: Float64ListBuilder | dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> SoilMoistureModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilMoistureModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilMoistureModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilMoistureModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilMoistureModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilMoistureModuleStateReader: ...
+
+SoilMoistureModuleState: _SoilMoistureModuleStateStructModule
+
+class _SoilOrganicModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def incorporation(self) -> bool: ...
+        @property
+        def totalDenitrification(self) -> float: ...
+        @property
+        def moduleParams(self) -> SoilOrganicModuleParametersReader: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @property
+        def vsNumberOfOrganicLayers(self) -> int: ...
+        @property
+        def addedOrganicMatter(self) -> bool: ...
+        @property
+        def irrigationAmount(self) -> float: ...
+        @property
+        def actAmmoniaOxidationRate(self) -> Float64ListReader: ...
+        @property
+        def actNitrificationRate(self) -> Float64ListReader: ...
+        @property
+        def actDenitrificationRate(self) -> Float64ListReader: ...
+        @property
+        def aomFastDeltaSum(self) -> Float64ListReader: ...
+        @property
+        def aomFastInput(self) -> Float64ListReader: ...
+        @property
+        def aomFastSum(self) -> Float64ListReader: ...
+        @property
+        def aomSlowDeltaSum(self) -> Float64ListReader: ...
+        @property
+        def aomSlowInput(self) -> Float64ListReader: ...
+        @property
+        def aomSlowSum(self) -> Float64ListReader: ...
+        @property
+        def cBalance(self) -> Float64ListReader: ...
+        @property
+        def decomposerRespiration(self) -> float: ...
+        @property
+        def errorMessage(self) -> str: ...
+        @property
+        def inertSoilOrganicC(self) -> Float64ListReader: ...
+        @property
+        def n2oProduced(self) -> float: ...
+        @property
+        def n2oProducedNit(self) -> float: ...
+        @property
+        def n2oProducedDenit(self) -> float: ...
+        @property
+        def netEcosystemExchange(self) -> float: ...
+        @property
+        def netEcosystemProduction(self) -> float: ...
+        @property
+        def netNMineralisation(self) -> float: ...
+        @property
+        def netNMineralisationRate(self) -> Float64ListReader: ...
+        @property
+        def totalNH3Volatilised(self) -> float: ...
+        @property
+        def nh3Volatilised(self) -> float: ...
+        @property
+        def smbCO2EvolutionRate(self) -> Float64ListReader: ...
+        @property
+        def smbFastDelta(self) -> Float64ListReader: ...
+        @property
+        def smbSlowDelta(self) -> Float64ListReader: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
+        @property
+        def soilOrganicC(self) -> Float64ListReader: ...
+        @property
+        def somFastDelta(self) -> Float64ListReader: ...
+        @property
+        def somFastInput(self) -> Float64ListReader: ...
+        @property
+        def somSlowDelta(self) -> Float64ListReader: ...
+        @property
+        def sumDenitrification(self) -> float: ...
+        @property
+        def sumNetNMineralisation(self) -> float: ...
+        @property
+        def sumN2OProduced(self) -> float: ...
+        @property
+        def sumNH3Volatilised(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilOrganicModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def incorporation(self) -> bool: ...
+        @incorporation.setter
+        def incorporation(self, value: bool) -> None: ...
+        @property
+        def totalDenitrification(self) -> float: ...
+        @totalDenitrification.setter
+        def totalDenitrification(self, value: float) -> None: ...
+        @property
+        def moduleParams(self) -> SoilOrganicModuleParametersBuilder: ...
+        @moduleParams.setter
+        def moduleParams(
+            self,
+            value: SoilOrganicModuleParametersBuilder
+            | SoilOrganicModuleParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vsNumberOfLayers(self) -> int: ...
+        @vsNumberOfLayers.setter
+        def vsNumberOfLayers(self, value: int) -> None: ...
+        @property
+        def vsNumberOfOrganicLayers(self) -> int: ...
+        @vsNumberOfOrganicLayers.setter
+        def vsNumberOfOrganicLayers(self, value: int) -> None: ...
+        @property
+        def addedOrganicMatter(self) -> bool: ...
+        @addedOrganicMatter.setter
+        def addedOrganicMatter(self, value: bool) -> None: ...
+        @property
+        def irrigationAmount(self) -> float: ...
+        @irrigationAmount.setter
+        def irrigationAmount(self, value: float) -> None: ...
+        @property
+        def actAmmoniaOxidationRate(self) -> Float64ListBuilder: ...
+        @actAmmoniaOxidationRate.setter
+        def actAmmoniaOxidationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def actNitrificationRate(self) -> Float64ListBuilder: ...
+        @actNitrificationRate.setter
+        def actNitrificationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def actDenitrificationRate(self) -> Float64ListBuilder: ...
+        @actDenitrificationRate.setter
+        def actDenitrificationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomFastDeltaSum(self) -> Float64ListBuilder: ...
+        @aomFastDeltaSum.setter
+        def aomFastDeltaSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomFastInput(self) -> Float64ListBuilder: ...
+        @aomFastInput.setter
+        def aomFastInput(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomFastSum(self) -> Float64ListBuilder: ...
+        @aomFastSum.setter
+        def aomFastSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomSlowDeltaSum(self) -> Float64ListBuilder: ...
+        @aomSlowDeltaSum.setter
+        def aomSlowDeltaSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomSlowInput(self) -> Float64ListBuilder: ...
+        @aomSlowInput.setter
+        def aomSlowInput(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def aomSlowSum(self) -> Float64ListBuilder: ...
+        @aomSlowSum.setter
+        def aomSlowSum(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cBalance(self) -> Float64ListBuilder: ...
+        @cBalance.setter
+        def cBalance(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def decomposerRespiration(self) -> float: ...
+        @decomposerRespiration.setter
+        def decomposerRespiration(self, value: float) -> None: ...
+        @property
+        def errorMessage(self) -> str: ...
+        @errorMessage.setter
+        def errorMessage(self, value: str) -> None: ...
+        @property
+        def inertSoilOrganicC(self) -> Float64ListBuilder: ...
+        @inertSoilOrganicC.setter
+        def inertSoilOrganicC(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def n2oProduced(self) -> float: ...
+        @n2oProduced.setter
+        def n2oProduced(self, value: float) -> None: ...
+        @property
+        def n2oProducedNit(self) -> float: ...
+        @n2oProducedNit.setter
+        def n2oProducedNit(self, value: float) -> None: ...
+        @property
+        def n2oProducedDenit(self) -> float: ...
+        @n2oProducedDenit.setter
+        def n2oProducedDenit(self, value: float) -> None: ...
+        @property
+        def netEcosystemExchange(self) -> float: ...
+        @netEcosystemExchange.setter
+        def netEcosystemExchange(self, value: float) -> None: ...
+        @property
+        def netEcosystemProduction(self) -> float: ...
+        @netEcosystemProduction.setter
+        def netEcosystemProduction(self, value: float) -> None: ...
+        @property
+        def netNMineralisation(self) -> float: ...
+        @netNMineralisation.setter
+        def netNMineralisation(self, value: float) -> None: ...
+        @property
+        def netNMineralisationRate(self) -> Float64ListBuilder: ...
+        @netNMineralisationRate.setter
+        def netNMineralisationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def totalNH3Volatilised(self) -> float: ...
+        @totalNH3Volatilised.setter
+        def totalNH3Volatilised(self, value: float) -> None: ...
+        @property
+        def nh3Volatilised(self) -> float: ...
+        @nh3Volatilised.setter
+        def nh3Volatilised(self, value: float) -> None: ...
+        @property
+        def smbCO2EvolutionRate(self) -> Float64ListBuilder: ...
+        @smbCO2EvolutionRate.setter
+        def smbCO2EvolutionRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def smbFastDelta(self) -> Float64ListBuilder: ...
+        @smbFastDelta.setter
+        def smbFastDelta(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def smbSlowDelta(self) -> Float64ListBuilder: ...
+        @smbSlowDelta.setter
+        def smbSlowDelta(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
+        @vsSoilMineralNContent.setter
+        def vsSoilMineralNContent(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilOrganicC(self) -> Float64ListBuilder: ...
+        @soilOrganicC.setter
+        def soilOrganicC(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def somFastDelta(self) -> Float64ListBuilder: ...
+        @somFastDelta.setter
+        def somFastDelta(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def somFastInput(self) -> Float64ListBuilder: ...
+        @somFastInput.setter
+        def somFastInput(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def somSlowDelta(self) -> Float64ListBuilder: ...
+        @somSlowDelta.setter
+        def somSlowDelta(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def sumDenitrification(self) -> float: ...
+        @sumDenitrification.setter
+        def sumDenitrification(self, value: float) -> None: ...
+        @property
+        def sumNetNMineralisation(self) -> float: ...
+        @sumNetNMineralisation.setter
+        def sumNetNMineralisation(self, value: float) -> None: ...
+        @property
+        def sumN2OProduced(self) -> float: ...
+        @sumN2OProduced.setter
+        def sumN2OProduced(self, value: float) -> None: ...
+        @property
+        def sumNH3Volatilised(self) -> float: ...
+        @sumNH3Volatilised.setter
+        def sumNH3Volatilised(self, value: float) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["moduleParams"],
+            size: int | None = None,
+        ) -> SoilOrganicModuleParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["actAmmoniaOxidationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["actNitrificationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["actDenitrificationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomFastDeltaSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomFastInput"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomFastSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomSlowDeltaSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomSlowInput"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["aomSlowSum"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cBalance"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["inertSoilOrganicC"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["netNMineralisationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["smbCO2EvolutionRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["smbFastDelta"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["smbSlowDelta"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vsSoilMineralNContent"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilOrganicC"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["somFastDelta"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["somFastInput"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["somSlowDelta"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilOrganicModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        incorporation: bool | None = None,
+        totalDenitrification: float | None = None,
+        moduleParams: SoilOrganicModuleParametersBuilder | dict[str, Any] | None = None,
+        vsNumberOfLayers: int | None = None,
+        vsNumberOfOrganicLayers: int | None = None,
+        addedOrganicMatter: bool | None = None,
+        irrigationAmount: float | None = None,
+        actAmmoniaOxidationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        actNitrificationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        actDenitrificationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastDeltaSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastInput: Float64ListBuilder | dict[str, Any] | None = None,
+        aomFastSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowDeltaSum: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowInput: Float64ListBuilder | dict[str, Any] | None = None,
+        aomSlowSum: Float64ListBuilder | dict[str, Any] | None = None,
+        cBalance: Float64ListBuilder | dict[str, Any] | None = None,
+        decomposerRespiration: float | None = None,
+        errorMessage: str | None = None,
+        inertSoilOrganicC: Float64ListBuilder | dict[str, Any] | None = None,
+        n2oProduced: float | None = None,
+        n2oProducedNit: float | None = None,
+        n2oProducedDenit: float | None = None,
+        netEcosystemExchange: float | None = None,
+        netEcosystemProduction: float | None = None,
+        netNMineralisation: float | None = None,
+        netNMineralisationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        totalNH3Volatilised: float | None = None,
+        nh3Volatilised: float | None = None,
+        smbCO2EvolutionRate: Float64ListBuilder | dict[str, Any] | None = None,
+        smbFastDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        smbSlowDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
+        soilOrganicC: Float64ListBuilder | dict[str, Any] | None = None,
+        somFastDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        somFastInput: Float64ListBuilder | dict[str, Any] | None = None,
+        somSlowDelta: Float64ListBuilder | dict[str, Any] | None = None,
+        sumDenitrification: float | None = None,
+        sumNetNMineralisation: float | None = None,
+        sumN2OProduced: float | None = None,
+        sumNH3Volatilised: float | None = None,
+        **kwargs: Any,
+    ) -> SoilOrganicModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilOrganicModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilOrganicModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilOrganicModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilOrganicModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilOrganicModuleStateReader: ...
+
+SoilOrganicModuleState: _SoilOrganicModuleStateStructModule
+
+class _SoilTransportModuleStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def pcMinimumAvailableN(self) -> float: ...
+        @property
+        def moduleParams(self) -> SoilTransportModuleParametersReader: ...
+        @property
+        def convection(self) -> Float64ListReader: ...
+        @property
+        def cropNUptake(self) -> float: ...
+        @property
+        def diffusionCoeff(self) -> Float64ListReader: ...
+        @property
+        def dispersion(self) -> Float64ListReader: ...
+        @property
+        def dispersionCoeff(self) -> Float64ListReader: ...
+        @property
+        def vsLeachingDepth(self) -> float: ...
+        @property
+        def leachingAtBoundary(self) -> float: ...
+        @property
+        def vsNDeposition(self) -> float: ...
+        @property
+        def vcNUptakeFromLayer(self) -> Float64ListReader: ...
+        @property
+        def poreWaterVelocity(self) -> Float64ListReader: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListReader: ...
+        @property
+        def soilNO3(self) -> Float64ListReader: ...
+        @property
+        def soilNO3aq(self) -> Float64ListReader: ...
+        @property
+        def timeStep(self) -> float: ...
+        @property
+        def totalDispersion(self) -> Float64ListReader: ...
+        @property
+        def percolationRate(self) -> Float64ListReader: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> SoilTransportModuleStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def pcMinimumAvailableN(self) -> float: ...
+        @pcMinimumAvailableN.setter
+        def pcMinimumAvailableN(self, value: float) -> None: ...
+        @property
+        def moduleParams(self) -> SoilTransportModuleParametersBuilder: ...
+        @moduleParams.setter
+        def moduleParams(
+            self,
+            value: SoilTransportModuleParametersBuilder
+            | SoilTransportModuleParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def convection(self) -> Float64ListBuilder: ...
+        @convection.setter
+        def convection(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cropNUptake(self) -> float: ...
+        @cropNUptake.setter
+        def cropNUptake(self, value: float) -> None: ...
+        @property
+        def diffusionCoeff(self) -> Float64ListBuilder: ...
+        @diffusionCoeff.setter
+        def diffusionCoeff(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def dispersion(self) -> Float64ListBuilder: ...
+        @dispersion.setter
+        def dispersion(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def dispersionCoeff(self) -> Float64ListBuilder: ...
+        @dispersionCoeff.setter
+        def dispersionCoeff(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vsLeachingDepth(self) -> float: ...
+        @vsLeachingDepth.setter
+        def vsLeachingDepth(self, value: float) -> None: ...
+        @property
+        def leachingAtBoundary(self) -> float: ...
+        @leachingAtBoundary.setter
+        def leachingAtBoundary(self, value: float) -> None: ...
+        @property
+        def vsNDeposition(self) -> float: ...
+        @vsNDeposition.setter
+        def vsNDeposition(self, value: float) -> None: ...
+        @property
+        def vcNUptakeFromLayer(self) -> Float64ListBuilder: ...
+        @vcNUptakeFromLayer.setter
+        def vcNUptakeFromLayer(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def poreWaterVelocity(self) -> Float64ListBuilder: ...
+        @poreWaterVelocity.setter
+        def poreWaterVelocity(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
+        @vsSoilMineralNContent.setter
+        def vsSoilMineralNContent(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilNO3(self) -> Float64ListBuilder: ...
+        @soilNO3.setter
+        def soilNO3(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilNO3aq(self) -> Float64ListBuilder: ...
+        @soilNO3aq.setter
+        def soilNO3aq(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def timeStep(self) -> float: ...
+        @timeStep.setter
+        def timeStep(self, value: float) -> None: ...
+        @property
+        def totalDispersion(self) -> Float64ListBuilder: ...
+        @totalDispersion.setter
+        def totalDispersion(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def percolationRate(self) -> Float64ListBuilder: ...
+        @percolationRate.setter
+        def percolationRate(
+            self,
+            value: Float64ListBuilder | Float64ListReader | dict[str, Any],
+        ) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["moduleParams"],
+            size: int | None = None,
+        ) -> SoilTransportModuleParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["convection"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["diffusionCoeff"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["dispersion"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["dispersionCoeff"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vcNUptakeFromLayer"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["poreWaterVelocity"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["vsSoilMineralNContent"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilNO3"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilNO3aq"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["totalDispersion"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["percolationRate"],
+            size: int | None = None,
+        ) -> Float64ListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> SoilTransportModuleStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        pcMinimumAvailableN: float | None = None,
+        moduleParams: SoilTransportModuleParametersBuilder
+        | dict[str, Any]
+        | None = None,
+        convection: Float64ListBuilder | dict[str, Any] | None = None,
+        cropNUptake: float | None = None,
+        diffusionCoeff: Float64ListBuilder | dict[str, Any] | None = None,
+        dispersion: Float64ListBuilder | dict[str, Any] | None = None,
+        dispersionCoeff: Float64ListBuilder | dict[str, Any] | None = None,
+        vsLeachingDepth: float | None = None,
+        leachingAtBoundary: float | None = None,
+        vsNDeposition: float | None = None,
+        vcNUptakeFromLayer: Float64ListBuilder | dict[str, Any] | None = None,
+        poreWaterVelocity: Float64ListBuilder | dict[str, Any] | None = None,
+        vsSoilMineralNContent: Float64ListBuilder | dict[str, Any] | None = None,
+        soilNO3: Float64ListBuilder | dict[str, Any] | None = None,
+        soilNO3aq: Float64ListBuilder | dict[str, Any] | None = None,
+        timeStep: float | None = None,
+        totalDispersion: Float64ListBuilder | dict[str, Any] | None = None,
+        percolationRate: Float64ListBuilder | dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> SoilTransportModuleStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[SoilTransportModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[SoilTransportModuleStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[SoilTransportModuleStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilTransportModuleStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> SoilTransportModuleStateReader: ...
+
+SoilTransportModuleState: _SoilTransportModuleStateStructModule
+
+class _ACDToValueList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueReader: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: ACDToValueReader | ACDToValueBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> ACDToValueBuilder: ...
+
+class _ACDToValueListList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueListReader: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueListReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ACDToValueListBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: ACDToValueListReader | ACDToValueListBuilder | Sequence[Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ACDToValueListBuilder]: ...
+        @override
+        def init(
+            self,
+            index: int,
+            size: int | None = None,
+        ) -> ACDToValueListBuilder: ...
+
+class _TextList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> str: ...
+        @override
+        def __setitem__(self, key: int, value: str) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[str]: ...
+
+class _MonicaModelStateStructModule(_StructModule):
+    class _ACDToValueStructModule(_StructModule):
+        class Reader(_DynamicStructReader):
+            @property
+            def acd(self) -> int: ...
+            @property
+            def value(self) -> float: ...
+            @override
+            def as_builder(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            ) -> ACDToValueBuilder: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            def acd(self) -> int: ...
+            @acd.setter
+            def acd(self, value: int) -> None: ...
+            @property
+            def value(self) -> float: ...
+            @value.setter
+            def value(self, value: float) -> None: ...
+            @override
+            def as_reader(self) -> ACDToValueReader: ...
+
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            acd: int | None = None,
+            value: float | None = None,
+            **kwargs: Any,
+        ) -> ACDToValueBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[ACDToValueReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[ACDToValueReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[ACDToValueBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> ACDToValueReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> ACDToValueReader: ...
+
+    type ACDToValueReader = _ACDToValueStructModule.Reader
+    type ACDToValueBuilder = _ACDToValueStructModule.Builder
+    ACDToValue: _ACDToValueStructModule
+    class Reader(_DynamicStructReader):
+        @property
+        def sitePs(self) -> SiteParametersReader: ...
+        @property
+        def cultivationMethodCount(self) -> int: ...
+        @property
+        def envPs(self) -> EnvironmentParametersReader: ...
+        @property
+        def cropPs(self) -> CropModuleParametersReader: ...
+        @property
+        def vsGroundwaterDepth(self) -> float: ...
+        @property
+        def vwAtmosphericO3Concentration(self) -> float: ...
+        @property
+        def vwAtmosphericCO2Concentration(self) -> float: ...
+        @property
+        def simPs(self) -> SimulationParametersReader: ...
+        @property
+        def groundwaterInformation(
+            self,
+        ) -> MeasuredGroundwaterTableInformationReader: ...
+        @property
+        def soilColumn(self) -> SoilColumnStateReader: ...
+        @property
+        def soilTemperature(self) -> SoilTemperatureModuleStateReader: ...
+        @property
+        def soilMoisture(self) -> SoilMoistureModuleStateReader: ...
+        @property
+        def soilOrganic(self) -> SoilOrganicModuleStateReader: ...
+        @property
+        def soilTransport(self) -> SoilTransportModuleStateReader: ...
+        @property
+        def accuOxygenStress(self) -> float: ...
+        @property
+        def currentCropModule(self) -> CropModuleStateReader: ...
+        @property
+        def sumFertiliser(self) -> float: ...
+        @property
+        def sumOrgFertiliser(self) -> float: ...
+        @property
+        def dailySumFertiliser(self) -> float: ...
+        @property
+        def dailySumOrgFertiliser(self) -> float: ...
+        @property
+        def dailySumOrganicFertilizerDM(self) -> float: ...
+        @property
+        def sumOrganicFertilizerDM(self) -> float: ...
+        @property
+        def humusBalanceCarryOver(self) -> float: ...
+        @property
+        def dailySumIrrigationWater(self) -> float: ...
+        @property
+        def optCarbonExportedResidues(self) -> float: ...
+        @property
+        def optCarbonReturnedResidues(self) -> float: ...
+        @property
+        def currentStepDate(self) -> DateReader: ...
+        @property
+        def climateData(self) -> ACDToValueListListReader: ...
+        @property
+        def currentEvents(self) -> TextListReader: ...
+        @property
+        def previousDaysEvents(self) -> TextListReader: ...
+        @property
+        def clearCropUponNextDay(self) -> bool: ...
+        @property
+        def daysWithCrop(self) -> int: ...
+        @property
+        def accuNStress(self) -> float: ...
+        @property
+        def accuWaterStress(self) -> float: ...
+        @property
+        def accuHeatStress(self) -> float: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> MonicaModelStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def sitePs(self) -> SiteParametersBuilder: ...
+        @sitePs.setter
+        def sitePs(
+            self,
+            value: SiteParametersBuilder | SiteParametersReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cultivationMethodCount(self) -> int: ...
+        @cultivationMethodCount.setter
+        def cultivationMethodCount(self, value: int) -> None: ...
+        @property
+        def envPs(self) -> EnvironmentParametersBuilder: ...
+        @envPs.setter
+        def envPs(
+            self,
+            value: EnvironmentParametersBuilder
+            | EnvironmentParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cropPs(self) -> CropModuleParametersBuilder: ...
+        @cropPs.setter
+        def cropPs(
+            self,
+            value: CropModuleParametersBuilder
+            | CropModuleParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def vsGroundwaterDepth(self) -> float: ...
+        @vsGroundwaterDepth.setter
+        def vsGroundwaterDepth(self, value: float) -> None: ...
+        @property
+        def vwAtmosphericO3Concentration(self) -> float: ...
+        @vwAtmosphericO3Concentration.setter
+        def vwAtmosphericO3Concentration(self, value: float) -> None: ...
+        @property
+        def vwAtmosphericCO2Concentration(self) -> float: ...
+        @vwAtmosphericCO2Concentration.setter
+        def vwAtmosphericCO2Concentration(self, value: float) -> None: ...
+        @property
+        def simPs(self) -> SimulationParametersBuilder: ...
+        @simPs.setter
+        def simPs(
+            self,
+            value: SimulationParametersBuilder
+            | SimulationParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def groundwaterInformation(
+            self,
+        ) -> MeasuredGroundwaterTableInformationBuilder: ...
+        @groundwaterInformation.setter
+        def groundwaterInformation(
+            self,
+            value: MeasuredGroundwaterTableInformationBuilder
+            | MeasuredGroundwaterTableInformationReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilColumn(self) -> SoilColumnStateBuilder: ...
+        @soilColumn.setter
+        def soilColumn(
+            self,
+            value: SoilColumnStateBuilder | SoilColumnStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilTemperature(self) -> SoilTemperatureModuleStateBuilder: ...
+        @soilTemperature.setter
+        def soilTemperature(
+            self,
+            value: SoilTemperatureModuleStateBuilder
+            | SoilTemperatureModuleStateReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilMoisture(self) -> SoilMoistureModuleStateBuilder: ...
+        @soilMoisture.setter
+        def soilMoisture(
+            self,
+            value: SoilMoistureModuleStateBuilder
+            | SoilMoistureModuleStateReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilOrganic(self) -> SoilOrganicModuleStateBuilder: ...
+        @soilOrganic.setter
+        def soilOrganic(
+            self,
+            value: SoilOrganicModuleStateBuilder
+            | SoilOrganicModuleStateReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def soilTransport(self) -> SoilTransportModuleStateBuilder: ...
+        @soilTransport.setter
+        def soilTransport(
+            self,
+            value: SoilTransportModuleStateBuilder
+            | SoilTransportModuleStateReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def accuOxygenStress(self) -> float: ...
+        @accuOxygenStress.setter
+        def accuOxygenStress(self, value: float) -> None: ...
+        @property
+        def currentCropModule(self) -> CropModuleStateBuilder: ...
+        @currentCropModule.setter
+        def currentCropModule(
+            self,
+            value: CropModuleStateBuilder | CropModuleStateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def sumFertiliser(self) -> float: ...
+        @sumFertiliser.setter
+        def sumFertiliser(self, value: float) -> None: ...
+        @property
+        def sumOrgFertiliser(self) -> float: ...
+        @sumOrgFertiliser.setter
+        def sumOrgFertiliser(self, value: float) -> None: ...
+        @property
+        def dailySumFertiliser(self) -> float: ...
+        @dailySumFertiliser.setter
+        def dailySumFertiliser(self, value: float) -> None: ...
+        @property
+        def dailySumOrgFertiliser(self) -> float: ...
+        @dailySumOrgFertiliser.setter
+        def dailySumOrgFertiliser(self, value: float) -> None: ...
+        @property
+        def dailySumOrganicFertilizerDM(self) -> float: ...
+        @dailySumOrganicFertilizerDM.setter
+        def dailySumOrganicFertilizerDM(self, value: float) -> None: ...
+        @property
+        def sumOrganicFertilizerDM(self) -> float: ...
+        @sumOrganicFertilizerDM.setter
+        def sumOrganicFertilizerDM(self, value: float) -> None: ...
+        @property
+        def humusBalanceCarryOver(self) -> float: ...
+        @humusBalanceCarryOver.setter
+        def humusBalanceCarryOver(self, value: float) -> None: ...
+        @property
+        def dailySumIrrigationWater(self) -> float: ...
+        @dailySumIrrigationWater.setter
+        def dailySumIrrigationWater(self, value: float) -> None: ...
+        @property
+        def optCarbonExportedResidues(self) -> float: ...
+        @optCarbonExportedResidues.setter
+        def optCarbonExportedResidues(self, value: float) -> None: ...
+        @property
+        def optCarbonReturnedResidues(self) -> float: ...
+        @optCarbonReturnedResidues.setter
+        def optCarbonReturnedResidues(self, value: float) -> None: ...
+        @property
+        def currentStepDate(self) -> DateBuilder: ...
+        @currentStepDate.setter
+        def currentStepDate(
+            self,
+            value: DateBuilder | DateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def climateData(self) -> ACDToValueListListBuilder: ...
+        @climateData.setter
+        def climateData(
+            self,
+            value: ACDToValueListListBuilder
+            | ACDToValueListListReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def currentEvents(self) -> TextListBuilder: ...
+        @currentEvents.setter
+        def currentEvents(
+            self,
+            value: TextListBuilder | TextListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def previousDaysEvents(self) -> TextListBuilder: ...
+        @previousDaysEvents.setter
+        def previousDaysEvents(
+            self,
+            value: TextListBuilder | TextListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def clearCropUponNextDay(self) -> bool: ...
+        @clearCropUponNextDay.setter
+        def clearCropUponNextDay(self, value: bool) -> None: ...
+        @property
+        def daysWithCrop(self) -> int: ...
+        @daysWithCrop.setter
+        def daysWithCrop(self, value: int) -> None: ...
+        @property
+        def accuNStress(self) -> float: ...
+        @accuNStress.setter
+        def accuNStress(self, value: float) -> None: ...
+        @property
+        def accuWaterStress(self) -> float: ...
+        @accuWaterStress.setter
+        def accuWaterStress(self, value: float) -> None: ...
+        @property
+        def accuHeatStress(self) -> float: ...
+        @accuHeatStress.setter
+        def accuHeatStress(self, value: float) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["sitePs"],
+            size: int | None = None,
+        ) -> SiteParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["envPs"],
+            size: int | None = None,
+        ) -> EnvironmentParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cropPs"],
+            size: int | None = None,
+        ) -> CropModuleParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["simPs"],
+            size: int | None = None,
+        ) -> SimulationParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["groundwaterInformation"],
+            size: int | None = None,
+        ) -> MeasuredGroundwaterTableInformationBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilColumn"],
+            size: int | None = None,
+        ) -> SoilColumnStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilTemperature"],
+            size: int | None = None,
+        ) -> SoilTemperatureModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilMoisture"],
+            size: int | None = None,
+        ) -> SoilMoistureModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilOrganic"],
+            size: int | None = None,
+        ) -> SoilOrganicModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["soilTransport"],
+            size: int | None = None,
+        ) -> SoilTransportModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["currentCropModule"],
+            size: int | None = None,
+        ) -> CropModuleStateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["currentStepDate"],
+            size: int | None = None,
+        ) -> DateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["climateData"],
+            size: int | None = None,
+        ) -> ACDToValueListListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["currentEvents"],
+            size: int | None = None,
+        ) -> TextListBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["previousDaysEvents"],
+            size: int | None = None,
+        ) -> TextListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> MonicaModelStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        sitePs: SiteParametersBuilder | dict[str, Any] | None = None,
+        cultivationMethodCount: int | None = None,
+        envPs: EnvironmentParametersBuilder | dict[str, Any] | None = None,
+        cropPs: CropModuleParametersBuilder | dict[str, Any] | None = None,
+        vsGroundwaterDepth: float | None = None,
+        vwAtmosphericO3Concentration: float | None = None,
+        vwAtmosphericCO2Concentration: float | None = None,
+        simPs: SimulationParametersBuilder | dict[str, Any] | None = None,
+        groundwaterInformation: MeasuredGroundwaterTableInformationBuilder
+        | dict[str, Any]
+        | None = None,
+        soilColumn: SoilColumnStateBuilder | dict[str, Any] | None = None,
+        soilTemperature: SoilTemperatureModuleStateBuilder
+        | dict[str, Any]
+        | None = None,
+        soilMoisture: SoilMoistureModuleStateBuilder | dict[str, Any] | None = None,
+        soilOrganic: SoilOrganicModuleStateBuilder | dict[str, Any] | None = None,
+        soilTransport: SoilTransportModuleStateBuilder | dict[str, Any] | None = None,
+        accuOxygenStress: float | None = None,
+        currentCropModule: CropModuleStateBuilder | dict[str, Any] | None = None,
+        sumFertiliser: float | None = None,
+        sumOrgFertiliser: float | None = None,
+        dailySumFertiliser: float | None = None,
+        dailySumOrgFertiliser: float | None = None,
+        dailySumOrganicFertilizerDM: float | None = None,
+        sumOrganicFertilizerDM: float | None = None,
+        humusBalanceCarryOver: float | None = None,
+        dailySumIrrigationWater: float | None = None,
+        optCarbonExportedResidues: float | None = None,
+        optCarbonReturnedResidues: float | None = None,
+        currentStepDate: DateBuilder | dict[str, Any] | None = None,
+        climateData: ACDToValueListListBuilder | dict[str, Any] | None = None,
+        currentEvents: TextListBuilder | dict[str, Any] | None = None,
+        previousDaysEvents: TextListBuilder | dict[str, Any] | None = None,
+        clearCropUponNextDay: bool | None = None,
+        daysWithCrop: int | None = None,
+        accuNStress: float | None = None,
+        accuWaterStress: float | None = None,
+        accuHeatStress: float | None = None,
+        **kwargs: Any,
+    ) -> MonicaModelStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[MonicaModelStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[MonicaModelStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[MonicaModelStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> MonicaModelStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> MonicaModelStateReader: ...
+
+MonicaModelState: _MonicaModelStateStructModule
+
+class _RuntimeStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def modelState(self) -> MonicaModelStateReader: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> RuntimeStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def modelState(self) -> MonicaModelStateBuilder: ...
+        @modelState.setter
+        def modelState(
+            self,
+            value: MonicaModelStateBuilder | MonicaModelStateReader | dict[str, Any],
+        ) -> None: ...
+        @override
+        def init(
+            self,
+            field: Literal["modelState"],
+            size: int | None = None,
+        ) -> MonicaModelStateBuilder: ...
+        @override
+        def as_reader(self) -> RuntimeStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        modelState: MonicaModelStateBuilder | dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> RuntimeStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[RuntimeStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[RuntimeStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[RuntimeStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> RuntimeStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> RuntimeStateReader: ...
+
+RuntimeState: _RuntimeStateStructModule
+
+class _DateList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DateReader: ...
+        @override
+        def __iter__(self) -> Iterator[DateReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> DateBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: DateReader | DateBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[DateBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> DateBuilder: ...
+
+class _CropStateStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def automaticHarvestParams(self) -> AutomaticHarvestParametersReader: ...
+        @property
+        def speciesName(self) -> str: ...
+        @property
+        def cultivarName(self) -> str: ...
+        @property
+        def seedDate(self) -> DateReader: ...
+        @property
+        def harvestDate(self) -> DateReader: ...
+        @property
+        def isWinterCrop(self) -> MaybeBoolReader: ...
+        @property
+        def isPerennialCrop(self) -> MaybeBoolReader: ...
+        @property
+        def cuttingDates(self) -> DateListReader: ...
+        @property
+        def cropParams(self) -> CropParametersReader: ...
+        @property
+        def perennialCropParams(self) -> CropParametersReader: ...
+        @property
+        def residueParams(self) -> CropResidueParametersReader: ...
+        @property
+        def crossCropAdaptionFactor(self) -> float: ...
+        @property
+        def automaticHarvest(self) -> bool: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> CropStateBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def automaticHarvestParams(self) -> AutomaticHarvestParametersBuilder: ...
+        @automaticHarvestParams.setter
+        def automaticHarvestParams(
+            self,
+            value: AutomaticHarvestParametersBuilder
+            | AutomaticHarvestParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def speciesName(self) -> str: ...
+        @speciesName.setter
+        def speciesName(self, value: str) -> None: ...
+        @property
+        def cultivarName(self) -> str: ...
+        @cultivarName.setter
+        def cultivarName(self, value: str) -> None: ...
+        @property
+        def seedDate(self) -> DateBuilder: ...
+        @seedDate.setter
+        def seedDate(
+            self,
+            value: DateBuilder | DateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def harvestDate(self) -> DateBuilder: ...
+        @harvestDate.setter
+        def harvestDate(
+            self,
+            value: DateBuilder | DateReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def isWinterCrop(self) -> MaybeBoolBuilder: ...
+        @isWinterCrop.setter
+        def isWinterCrop(
+            self,
+            value: MaybeBoolBuilder | MaybeBoolReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def isPerennialCrop(self) -> MaybeBoolBuilder: ...
+        @isPerennialCrop.setter
+        def isPerennialCrop(
+            self,
+            value: MaybeBoolBuilder | MaybeBoolReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cuttingDates(self) -> DateListBuilder: ...
+        @cuttingDates.setter
+        def cuttingDates(
+            self,
+            value: DateListBuilder | DateListReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def cropParams(self) -> CropParametersBuilder: ...
+        @cropParams.setter
+        def cropParams(
+            self,
+            value: CropParametersBuilder | CropParametersReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def perennialCropParams(self) -> CropParametersBuilder: ...
+        @perennialCropParams.setter
+        def perennialCropParams(
+            self,
+            value: CropParametersBuilder | CropParametersReader | dict[str, Any],
+        ) -> None: ...
+        @property
+        def residueParams(self) -> CropResidueParametersBuilder: ...
+        @residueParams.setter
+        def residueParams(
+            self,
+            value: CropResidueParametersBuilder
+            | CropResidueParametersReader
+            | dict[str, Any],
+        ) -> None: ...
+        @property
+        def crossCropAdaptionFactor(self) -> float: ...
+        @crossCropAdaptionFactor.setter
+        def crossCropAdaptionFactor(self, value: float) -> None: ...
+        @property
+        def automaticHarvest(self) -> bool: ...
+        @automaticHarvest.setter
+        def automaticHarvest(self, value: bool) -> None: ...
+        @override
+        @overload
+        def init(
+            self,
+            field: Literal["automaticHarvestParams"],
+            size: int | None = None,
+        ) -> AutomaticHarvestParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["seedDate"],
+            size: int | None = None,
+        ) -> DateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["harvestDate"],
+            size: int | None = None,
+        ) -> DateBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["isWinterCrop"],
+            size: int | None = None,
+        ) -> MaybeBoolBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["isPerennialCrop"],
+            size: int | None = None,
+        ) -> MaybeBoolBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cropParams"],
+            size: int | None = None,
+        ) -> CropParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["perennialCropParams"],
+            size: int | None = None,
+        ) -> CropParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["residueParams"],
+            size: int | None = None,
+        ) -> CropResidueParametersBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["cuttingDates"],
+            size: int | None = None,
+        ) -> DateListBuilder: ...
+        @overload
+        def init(self, field: str, size: int | None = None) -> Any: ...
+        @override
+        def as_reader(self) -> CropStateReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        automaticHarvestParams: AutomaticHarvestParametersBuilder
+        | dict[str, Any]
+        | None = None,
+        speciesName: str | None = None,
+        cultivarName: str | None = None,
+        seedDate: DateBuilder | dict[str, Any] | None = None,
+        harvestDate: DateBuilder | dict[str, Any] | None = None,
+        isWinterCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
+        isPerennialCrop: MaybeBoolBuilder | dict[str, Any] | None = None,
+        cuttingDates: DateListBuilder | dict[str, Any] | None = None,
+        cropParams: CropParametersBuilder | dict[str, Any] | None = None,
+        perennialCropParams: CropParametersBuilder | dict[str, Any] | None = None,
+        residueParams: CropResidueParametersBuilder | dict[str, Any] | None = None,
+        crossCropAdaptionFactor: float | None = None,
+        automaticHarvest: bool | None = None,
+        **kwargs: Any,
+    ) -> CropStateBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[CropStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[CropStateReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[CropStateBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> CropStateReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> CropStateReader: ...
+
+CropState: _CropStateStructModule
+
+class _ICDataStructModule(_StructModule):
+    class Reader(_DynamicStructReader):
+        @property
+        def noCrop(self) -> None: ...
+        @property
+        def height(self) -> float: ...
+        @property
+        def lait(self) -> float: ...
+        @override
+        def which(self) -> Literal["noCrop", "height", "lait"]: ...
+        @override
+        def as_builder(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        ) -> ICDataBuilder: ...
+
+    class Builder(_DynamicStructBuilder):
+        @property
+        def noCrop(self) -> None: ...
+        @noCrop.setter
+        def noCrop(self, value: None) -> None: ...
+        @property
+        def height(self) -> float: ...
+        @height.setter
+        def height(self, value: float) -> None: ...
+        @property
+        def lait(self) -> float: ...
+        @lait.setter
+        def lait(self, value: float) -> None: ...
+        @override
+        def which(self) -> Literal["noCrop", "height", "lait"]: ...
+        @override
+        def as_reader(self) -> ICDataReader: ...
+
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        noCrop: None | None = None,
+        height: float | None = None,
+        lait: float | None = None,
+        **kwargs: Any,
+    ) -> ICDataBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[ICDataReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[ICDataReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[ICDataBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> ICDataReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> ICDataReader: ...
+
+ICData: _ICDataStructModule
+
+# Top-level type aliases for use in type annotations
+type ACDToValueBuilder = _MonicaModelStateStructModule._ACDToValueStructModule.Builder
+type ACDToValueListBuilder = _ACDToValueList.Builder
+type ACDToValueListListBuilder = _ACDToValueListList.Builder
+type ACDToValueListListReader = _ACDToValueListList.Reader
+type ACDToValueListReader = _ACDToValueList.Reader
+type ACDToValueReader = _MonicaModelStateStructModule._ACDToValueStructModule.Reader
+type AOMPropertiesBuilder = _AOMPropertiesStructModule.Builder
+type AOMPropertiesListBuilder = _AOMPropertiesList.Builder
+type AOMPropertiesListReader = _AOMPropertiesList.Reader
+type AOMPropertiesReader = _AOMPropertiesStructModule.Reader
+type BoolListBuilder = _BoolList.Builder
+type BoolListReader = _BoolList.Reader
+type CropModuleStateBuilder = _CropModuleStateStructModule.Builder
+type CropModuleStateReader = _CropModuleStateStructModule.Reader
+type CropStateBuilder = _CropStateStructModule.Builder
+type CropStateReader = _CropStateStructModule.Reader
+type DateListBuilder = _DateList.Builder
+type DateListReader = _DateList.Reader
+type DelayedNMinApplicationParamsBuilder = (
+    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule.Builder
+)
+type DelayedNMinApplicationParamsListBuilder = _DelayedNMinApplicationParamsList.Builder
+type DelayedNMinApplicationParamsListReader = _DelayedNMinApplicationParamsList.Reader
+type DelayedNMinApplicationParamsReader = (
+    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule.Reader
+)
+type Float64ListBuilder = _Float64List.Builder
+type Float64ListListBuilder = _Float64ListList.Builder
+type Float64ListListReader = _Float64ListList.Reader
+type Float64ListReader = _Float64List.Reader
+type FrostModuleStateBuilder = _FrostModuleStateStructModule.Builder
+type FrostModuleStateReader = _FrostModuleStateStructModule.Reader
+type ICDataBuilder = _ICDataStructModule.Builder
+type ICDataReader = _ICDataStructModule.Reader
+type MaybeBoolBuilder = _MaybeBoolStructModule.Builder
+type MaybeBoolReader = _MaybeBoolStructModule.Reader
+type MonicaModelStateBuilder = _MonicaModelStateStructModule.Builder
+type MonicaModelStateReader = _MonicaModelStateStructModule.Reader
+type RuntimeStateBuilder = _RuntimeStateStructModule.Builder
+type RuntimeStateReader = _RuntimeStateStructModule.Reader
+type SnowModuleStateBuilder = _SnowModuleStateStructModule.Builder
+type SnowModuleStateReader = _SnowModuleStateStructModule.Reader
+type SoilColumnStateBuilder = _SoilColumnStateStructModule.Builder
+type SoilColumnStateReader = _SoilColumnStateStructModule.Reader
+type SoilLayerStateBuilder = _SoilLayerStateStructModule.Builder
+type SoilLayerStateListBuilder = _SoilLayerStateList.Builder
+type SoilLayerStateListReader = _SoilLayerStateList.Reader
+type SoilLayerStateReader = _SoilLayerStateStructModule.Reader
+type SoilMoistureModuleStateBuilder = _SoilMoistureModuleStateStructModule.Builder
+type SoilMoistureModuleStateReader = _SoilMoistureModuleStateStructModule.Reader
+type SoilOrganicModuleStateBuilder = _SoilOrganicModuleStateStructModule.Builder
+type SoilOrganicModuleStateReader = _SoilOrganicModuleStateStructModule.Reader
+type SoilTemperatureModuleStateBuilder = _SoilTemperatureModuleStateStructModule.Builder
+type SoilTemperatureModuleStateReader = _SoilTemperatureModuleStateStructModule.Reader
+type SoilTransportModuleStateBuilder = _SoilTransportModuleStateStructModule.Builder
+type SoilTransportModuleStateReader = _SoilTransportModuleStateStructModule.Reader
+type TextListBuilder = _TextList.Builder
+type TextListReader = _TextList.Reader
+type YieldComponentListBuilder = _YieldComponentList.Builder
+type YieldComponentListReader = _YieldComponentList.Reader

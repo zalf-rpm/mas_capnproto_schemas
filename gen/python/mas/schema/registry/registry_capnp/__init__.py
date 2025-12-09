@@ -1,0 +1,122 @@
+"""This is an automatically generated stub for `registry.capnp`."""
+
+import base64
+from typing import NamedTuple
+
+import capnp
+import schema_capnp
+from capnp.lib.capnp import _InterfaceModule, _StructModule
+
+capnp.remove_import_hook()
+
+# Embedded compiled schemas (base64-encoded)
+_SCHEMA_NODES = [
+    "EEpQBgb/aYJ+nMPgG/4AAQkAAxEVehEZNxFFZwAC/3JlZ2lzdHJ5AD8uY2FwbnBRDAEB/05XZnYj8wP1ABERMv+4MwZg0Ut7ygARDUr/6tHyNjz5rqsAEQ1SH0FkbWlu/1JlZ2lzdHJ5AAAA/1JlZ2lzdHJhAAFyURABAv8sX4C/nvnGuQBRKAIBQTwB/2z5sOP+o16MAFE4AgFBTAH/4Ct5IxB/qb4AUUgCAUFYAf+1RA4mAbYw4QBRVAIBQYQBAQwAABEBsv9tYXM6OnNjaAFlbWE6OnJlZx9pc3RyeQAAAQwAABEBov9tYXMuc2NoZQFtYS5yZWdpcwd0cnkAAAEMAAARAUr/cmVnaXN0cnkAAAEBDAAAMQFKAv9naXRodWIuYwhvbS96YWxmLXJwbS9tYXMtaW5mcmFzdHJ1Y3R1cmUvY2FwbnByb3RvX3NjaGVtYXMvZ2VuL2dvL3JlZ2lzdHJ5AAE=",  # registry.capnp
+    "EExQBgb/TldmdiPzA/UAEQ8D/2mCfpzD4Bv+AAABMy8C8QYRFaoRHQcAADEZRwER9RcAAP9yZWdpc3RyeQEuY2FwbnA6QQ9kbWluUAEBURQDBQAA//aGhLH71BbbAbU1cnovgz29EZFiAAIRiQcBAf/W3oABjhu+1QEFj2wQA6GsqRF9egACEXUHAQL/w9tagAzVv44BX/TTfprXh9gRaWIAAhFhBwED/6Phfu5+saWWAbQNu1YG9pKgEVVyAAIRTQcBBP+1IYkUz/gs7gGt/X2r78pi/hFBSgACETkH/2FkZENhdGVnAAdvcnlAAf9yZW1vdmVDYQA/dGVnb3J5QAH/bW92ZU9iamUAB2N0c0AB/3JlbW92ZU9iAB9qZWN0c0AB/3JlZ2lzdHJ5AAAAQAFRBAEB/9VInFnL0a+yAAAA",  # registry.capnp:Admin
+    "EDJQBgb/9oaEsfvUFtsAURUBAQAABQEHAAExFUIBAAERHXcAAf9yZWdpc3RyeQQuY2FwbnA6QWRtaW4uYWRkQ2F0ZWdvcnkkUGFyYW1zAFEIAwQAAAQBAAARKUoAAFEoAwFRNAIBAQEUAQEBARExOgAAUSwDAVE4AgH/Y2F0ZWdvcnkAAAABEP/T2gP+y37L1AAAAQEQAAE/dXBzZXJ0AQEAAgEBAAE=",  # registry.capnp:Admin.addCategory$Params
+    "EEFQBgb/09oD/st+y9QAEQ0B/8mKqHWnyfGZAAUDBwAAM0sBrgERFdoRIQcAABEdrwAB/2NvbW1vbi5jAmFwbnA6SWRJbmZvcm1hdGkDb25QAQFRDAMEAAAEAQAAEUUaAABRQAMBUUwCAREBARQBAQAAEUkqAABRRAMBUVACARECAhQBAgAAEU1iAABRTAMBUVgCAQNpZAEMAAIBDAABD25hbWUBDAACAQwAAf9kZXNjcmlwdAAHaW9uAQwAAgEMAAE=",  # common.capnp:IdInformation
+    "ECNQBgb/tTVyei+DPb0AURUBAQAABAcAATEVSgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5hZGRDYXRlZ29yeSRSZXN1bHRzAABRBAMEAAAEAQAAEQ1CAABRCAMBURQCAX9zdWNjZXNzAQEAAgEBAAE=",  # registry.capnp:Admin.addCategory$Results
+    "EDVQBgb/1t6AAY4bvtUAERUBAAAFAgcAATEVWgEAAREhdwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5yZW1vdmVDYXRlZ29yeSRQYXJhA21zUQgDBAAABAEAABEpWgAAUSgDAVE0AgERAQEUAQEAABExwgAAUTQDAVFAAgH/Y2F0ZWdvcnkAA0lkAQwAAgEMAAH/bW92ZU9iamUCY3RzVG9DYXRlZ29yeUlkAAEMAAIBDAAB",  # registry.capnp:Admin.removeCategory$Params
+    "EChQBgb/BY9sEAOhrKkAERUBAAAFAQcAATEVYgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5yZW1vdmVDYXRlZ29yeSRSZXN1B2x0c1EEAwQAAAQBAAARDXoAAFEMAwFRKAIB/3JlbW92ZWRPAD9iamVjdHMBDgABUAMBARH/1UicWcvRr7IAAAEBDgAB",  # registry.capnp:Admin.removeCategory$Results
+    "EB5QBgb/1UicWcvRr7IAEQ0D/8mKqHWnyfGZAAABM7ABIQIRFdIRIQcAABEdRxFFBwAA/2NvbW1vbi5jAmFwbnA6SWRlbnRpZmlhYmwBZVABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common.capnp:Identifiable
+    "EBJQBgb/sd5JHs+hip0AERoBAAAEBwABMRUyAQAE/2NvbW1vbi5jA2FwbnA6SWRlbnRpZmlhYmxlLmluZm8kUB9hcmFtcw==",  # common.capnp:Identifiable.info$Params
+    "EDZQBgb/w9tagAzVv44AERUBAAAFAgcAATEVQgEAAREddwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5tb3ZlT2JqZWN0cyRQYXJhbXMAUQgDBAAABAEAABEpUgAAUSgDAVFEAgERAQEUAQEAABFBQgAAUTwDAVFIAgH/b2JqZWN0SWQAAXMBDgABUAMBAQwAAgEOAAF/dG9DYXRJZAEMAAIBDAAB",  # registry.capnp:Admin.moveObjects$Params
+    "EChQBgb/X/TTfprXh9gAERUBAAAFAQcAATEVSgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5tb3ZlT2JqZWN0cyRSZXN1bHRzAABRBAMEAAAEAQAAEQ16AABRDAMBUSgCAf9tb3ZlZE9iagA/ZWN0SWRzAQ4AAVADAQEMAAIBDgAB",  # registry.capnp:Admin.moveObjects$Results
+    "EChQBgb/o+F+7n6xpZYAERUBAAAFAQcAATEVUgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5yZW1vdmVPYmplY3RzJFBhcmFtAXNRBAMEAAAEAQAAEQ1SAABRDAMBUSgCAf9vYmplY3RJZAABcwEOAAFQAwEBDAACAQ4AAQ==",  # registry.capnp:Admin.removeObjects$Params
+    "EChQBgb/tA27Vgb2kqAAERUBAAAFAQcAATEVWgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpBZG1pbi5yZW1vdmVPYmplY3RzJFJlc3VsA3RzUQQDBAAABAEAABENegAAUQwDAVEoAgH/cmVtb3ZlZE8AP2JqZWN0cwEOAAFQAwEBEf/VSJxZy9GvsgAAAQEOAAE=",  # registry.capnp:Admin.removeObjects$Results
+    "EBJQBgb/tSGJFM/4LO4AERUBAAAEBwABMRUqAQAE/3JlZ2lzdHJ5Ay5jYXBucDpBZG1pbi5yZWdpc3RyeSRQYQ9yYW1z",  # registry.capnp:Admin.registry$Params
+    "ECNQBgb/rf19q+/KYv4AERUBAAAFAQcAATEVMgEAAREdPwAB/3JlZ2lzdHJ5Ay5jYXBucDpBZG1pbi5yZWdpc3RyeSRSZR9zdWx0c1EEAwQAAAQBAAARDUoAAFEMAwFRGAIB/3JlZ2lzdHJ5AAAAARH/uDMGYNFLe8oAAAEBEQAB",  # registry.capnp:Admin.registry$Results
+    "EDlQBgb/uDMGYNFLe8oAEQ8D/2mCfpzD4Bv+AAABM/MGpgoRFcIRHRcAABElxxGpFwAA/3JlZ2lzdHJ5Ai5jYXBucDpSZWdpc3RyeQBRBAEB/xOs9wxRh3nBABEBMh9FbnRyeVEMAwUAAP+bwjRe5uZJnAGwMHOBtWC/shFRogACEU0HAQH/nbxIsuGDEokB09oD/st+y9QRQWoAAhE5BwEC//rFUWFxU/yfAU0GhrRu9erkES1CAAIRIQf/c3VwcG9ydGUBZENhdGVnb3IHaWVzQAH/Y2F0ZWdvcnkAD0luZm9AAX9lbnRyaWVzQAFRBAEB/9VInFnL0a+yAAAA",  # registry.capnp:Registry
+    "EFBQBgb/E6z3DFGHecEAERgB/7gzBmDRS3vKAAUEBwAAM70I9gkRFfIRIQcAABEd5wAB/3JlZ2lzdHJ5Ai5jYXBucDpSZWdpc3RyeS4fRW50cnlQAQFREAMEAAAEAQAAEWFaAABRYAMBUWwCAREBARQBAQAAEWkiAABRZAMBUXACARECAhQBAgAAEW0qAABRaAMBUXQCAREDAxQBAwAAEXEaAABRbAMBUXgCAf9jYXRlZ29yeQADSWQBDAACAQwAAQdyZWYBEf/VSJxZy9GvsgAAAQERAAEPbmFtZQEMAAIBDAABA2lkAQwAAgEMAAE=",  # registry.capnp:Registry.Entry
+    "EBRQBgb/m8I0XubmSZwAERgBAAAEBwABMRWaAQAE/3JlZ2lzdHJ5BS5jYXBucDpSZWdpc3RyeS5zdXBwb3J0ZWRDYXRlZ29yaWVzJFBhcmEDbXM=",  # registry.capnp:Registry.supportedCategories$Params
+    "EChQBgb/sDBzgbVgv7IAERgBAAAFAQcAATEVogEAARElPwAB/3JlZ2lzdHJ5BS5jYXBucDpSZWdpc3RyeS5zdXBwb3J0ZWRDYXRlZ29yaWVzJFJlc3UHbHRzUQQDBAAABAEAABENKgAAUQgDAVEkAgEPY2F0cwEOAAFQAwEBEP/T2gP+y37L1AAAAQEOAAE=",  # registry.capnp:Registry.supportedCategories$Results
+    "ECRQBgb/nbxIsuGDEokAERgBAAAFAQcAATEVYgEAAREhPwAB/3JlZ2lzdHJ5BC5jYXBucDpSZWdpc3RyeS5jYXRlZ29yeUluZm8kUGFyB2Ftc1EEAwQAAAQBAAARDVoAAFEMAwFRGAIB/2NhdGVnb3J5AANJZAEMAAIBDAAB",  # registry.capnp:Registry.categoryInfo$Params
+    "ECNQBgb/+sVRYXFT/J8AERgBAAAFAQcAATEVOgEAAREdPwAB/3JlZ2lzdHJ5Ay5jYXBucDpSZWdpc3RyeS5lbnRyaWVzJD9QYXJhbXNRBAMEAAAEAQAAEQ1aAABRDAMBURgCAf9jYXRlZ29yeQADSWQBDAACAQwAAQ==",  # registry.capnp:Registry.entries$Params
+    "ECZQBgb/TQaGtG716uQAERgBAAAFAQcAATEVQgEAAREdPwAB/3JlZ2lzdHJ5BC5jYXBucDpSZWdpc3RyeS5lbnRyaWVzJFJlc3VsdHMAUQQDBAAABAEAABENQgAAUQgDAVEkAgF/ZW50cmllcwEOAAFQAwEBEP8TrPcMUYd5wQAAAQEOAAE=",  # registry.capnp:Registry.entries$Results
+    "EC5QBgb/6tHyNjz5rqsAEQ8D/2mCfpzD4Bv+AAABM6gKUA8RFcoRITcAABFRRxF9FwAA/3JlZ2lzdHJ5Ai5jYXBucDpSZWdpc3RyYXIAAFEMAQH/DrJxft2YEaoAERGa/w37deoXR6jlABEVUv+JhFJiRH5ZxwARFVr/Q3Jvc3NEb20BYWluUmVzdG8DcmX/UmVnUGFyYW0AAXP/VW5yZWdpc3QAA2VyUQQDBQAA/w37deoXR6jlATwBxPCAsKmyERFKAAIRCQf/cmVnaXN0ZXIAAABAAVEEAQH/1UicWcvRr7IAAAA=",  # registry.capnp:Registrar
+    "EDRQBgb/DrJxft2YEaoAERkB/+rR8jY8+a6rAAUCBwAAM5ALfwwxFWIBESkHAAARJXcAAf9yZWdpc3RyeQQuY2FwbnA6UmVnaXN0cmFyLkNyb3NzRG9tYWluUmVzdAdvcmVQAQFRCAMEAAAEAQAAESkyAABRJAMBUTACAREBARQBAQAAES1KAABRLAMBUTgCAR92YXRJZAEQ/43Ri9V0XQrhAAABARAAAf9yZXN0b3JlcgAAAAER/zwu2SeEIbafAAABAREAAQ==",  # registry.capnp:Registrar.CrossDomainRestore
+    "EFJQBgb/jdGL1XRdCuEAURIBBP8ma19H0/5ehQAEBwAAM9sBFgMRFcIRHQcAABEZ5wAB/3BlcnNpc3RlAm5jZS5jYXBucDpWYXRJZABQAQFREAMEAAAEAQAAEWFaAABRYAMBUWwCAREBARQBAQAAEWlaAABRaAMBUXQCARECAhQBAgAAEXFaAABRcAMBUXwCAREDAxQBAwAAEXlaAABReAMBUYQCAf9wdWJsaWNLZQADeTABCQACAQkAAf9wdWJsaWNLZQADeTEBCQACAQkAAf9wdWJsaWNLZQADeTIBCQACAQkAAf9wdWJsaWNLZQADeTMBCQACAQkAAQ==",  # persistence.capnp:VatId
+    "ECJQBgb/PC7ZJ4Qhtp8AERID/yZrX0fT/l6FAAABMywR4xMRFdoRIRcAABEtRxFVBwAA/3BlcnNpc3RlAm5jZS5jYXBucDpSZXN0b3IDZXJRBAEB/zrXN0p25UHFABEBcv9SZXN0b3JlUAAfYXJhbXNRBAMFAAD/Otc3SnblQcUBJU0uJR1tltoREUIAAhEFB39yZXN0b3JlQAFQAQE=",  # persistence.capnp:Restorer
+    "EDVQBgb/Otc3SnblQcUAERsB/zwu2SeEIbafAAUCBwAAM28RZBMxFUoBESkHAAARJXcAAf9wZXJzaXN0ZQRuY2UuY2FwbnA6UmVzdG9yZXIuUmVzdG9yZVBhcmFtcwAAUAEBUQgDBAAABAEAABEpSgAAUSgDAVE0AgERAQEUAQEAABExSgAAUTADAVE8AgH/bG9jYWxSZWYAAAABEP+ItBF/tCtB+gAAAQEQAAH/c2VhbGVkQnkAAAABEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence.capnp:Restorer.RestoreParams
+    "EDJQBgb/iLQRf7QrQfoAURwBAf9N3oMdJ2htiABFAQcCAAAzwgphCzEVEgERJQcAABEhdwAB/3BlcnNpc3RlA25jZS5jYXBucDpTdHVyZHlSZWYuVG9rZQFuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence.capnp:SturdyRef.Token
+    "ECNQBgb/I3fIYO2Z1/0AERwB/03egx0naG2IAAUBBwAAM0gJOAoxFRIBESUHAAARIT8AAf9wZXJzaXN0ZQNuY2UuY2FwbnA6U3R1cmR5UmVmLk93bmUBclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence.capnp:SturdyRef.Owner
+    "ECNQBgb/JU0uJR1tltoAERsBAAAFAQcAATEVWgEAAREhPwAB/3BlcnNpc3RlBG5jZS5jYXBucDpSZXN0b3Jlci5yZXN0b3JlJFJlc3VsA3RzUQQDBAAABAEAABENIgAAUQgDAVEUAgEHY2FwARIEAwABARIAAQ==",  # persistence.capnp:Restorer.restore$Results
+    "EFFQBgb/Dft16hdHqOUAERkB/+rR8jY8+a6rAAUEBwAAM4MMFw0xFRoBESUHAAARIecAAf9yZWdpc3RyeQMuY2FwbnA6UmVnaXN0cmFyLlJlZ1BhcmEDbXNQAQFREAMEAAAEAQAAEWEiAABRXAMBUWgCAREBARQBAQAAEWVCAABRYAMBUWwCARECAhQBAgAAEWlaAABRaAMBUXQCAREDAxQBAwAAEXFCAABRbAMBUXgCAQdjYXABEf/VSJxZy9GvsgAAAQERAAF/cmVnTmFtZQEMAAIBDAAB/2NhdGVnb3J5AANJZAEMAAIBDAABf3hEb21haW4BEP8OsnF+3ZgRqgAAAQEQAAE=",  # registry.capnp:Registrar.RegParams
+    "ECBQBgb/iYRSYkR+WccAERkD/+rR8jY8+a6rAAABMxsNXg0xFSIBESUHAAARIUcRTQcAAP9yZWdpc3RyeQMuY2FwbnA6UmVnaXN0cmFyLlVucmVnaXMHdGVyUAEBUQQDBQAA/34qN17foSPQAVQIG5i5ZpGhERFaAAIRCQf/dW5yZWdpc3QAA2VyQAFQAQE=",  # registry.capnp:Registrar.Unregister
+    "EBRQBgb/fio3Xt+hI9AAESQBAAAEBwABMRWyAQAE/3JlZ2lzdHJ5BS5jYXBucDpSZWdpc3RyYXIuVW5yZWdpc3Rlci51bnJlZ2lzdGVyJFAfYXJhbXM=",  # registry.capnp:Registrar.Unregister.unregister$Params
+    "ECRQBgb/VAgbmLlmkaEAUSQBAQAABAcAATEVugEAARElPwAB/3JlZ2lzdHJ5BS5jYXBucDpSZWdpc3RyYXIuVW5yZWdpc3Rlci51bnJlZ2lzdGVyJFI/ZXN1bHRzUQQDBAAABAEAABENQgAAUQgDAVEUAgF/c3VjY2VzcwEBAAIBAQAB",  # registry.capnp:Registrar.Unregister.unregister$Results
+    "EDJQBgb/PAHE8ICwqbIAERkBAAAFAgcAATEVUgEAAREhdwAB/3JlZ2lzdHJ5BC5jYXBucDpSZWdpc3RyYXIucmVnaXN0ZXIkUmVzdWx0AXNRCAMEAAAEAQAAESkyAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAR91bnJlZwER/4mEUmJEflnHAAABAREAAX9yZXJlZ1NSARD/Td6DHSdobYgAAAEBEAAB",  # registry.capnp:Registrar.register$Results
+    "EDhQBgb/Td6DHSdobYgAERIB/yZrX0fT/l6FAAUCBwAAM6UIYwsRFeIRIScAABE1dwAB/3BlcnNpc3RlAm5jZS5jYXBucDpTdHVyZHkHUmVmUQgBAf8jd8hg7ZnX/QARCTL/iLQRf7QrQfoAEQUyH093bmVyH1Rva2VuUQgDBAAABAEAABEpIgAAUSQDAVEwAgERAQEUAQEAABEtSgAAUSwDAVE4AgEHdmF0ARD/h4DE2/LN7NkAAAEBEAAB/2xvY2FsUmVmAAAAARD/iLQRf7QrQfoAAAEBEAAB",  # persistence.capnp:SturdyRef
+    "EDFQBgb/h4DE2/LN7NkAERIB/yZrX0fT/l6FAAUCBwAAM8YHowgRFdIRIQcAABEddwAB/3BlcnNpc3RlAm5jZS5jYXBucDpWYXRQYXQBaFABAVEIAwQAAAQBAAARKRoAAFEkAwFRMAIBEQEBFAEBAAARLUIAAFEoAwFRNAIBA2lkARD/jdGL1XRdCuEAAAEBEAABf2FkZHJlc3MBEP8NW6BxBoFH+wAAAQEQAAE=",  # persistence.capnp:VatPath
+    "EDlQBgb/DVugcQaBR/sAURIBA/8ma19H0/5ehQBFAQcCAQkzGAPEBxEV0hEhBwAAER2vAAH/cGVyc2lzdGUCbmNlLmNhcG5wOkFkZHJlcwFzUAEBUQwDBAz//wEB/2mKiSgEXbKPABFFIgACEQIIFAECAAARLSoAAFEoAwFRNAIBDQH+/xQBAwAAETEqAABRLAMBUTgCAQdpcDYPcG9ydAEHAAIBBwABD2hvc3QBDAACAQwAAQ==",  # persistence.capnp:Address
+    "EDBQBgb/aYqJKARdso8AURoBA/8NW6BxBoFH+wAVAQcBAAERFfIAAREZdwAB/3BlcnNpc3RlAm5jZS5jYXBucDpBZGRyZXMfcy5pcDZRCAMEAAAEAQAAESlCAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAX9sb3dlcjY0AQkAAgEJAAF/dXBwZXI2NAEJAAIBCQAB",  # persistence.capnp:Address.ip6
+]
+
+# Load schemas and build module structure
+_loader = capnp.SchemaLoader()
+for _schema_b64 in _SCHEMA_NODES:
+    _schema_data = base64.b64decode(_schema_b64)
+    _node_reader = schema_capnp.Node.from_bytes_packed(_schema_data)
+    _loader.load_dynamic(_node_reader)
+
+# Build module structure inline
+Admin = _InterfaceModule(_loader.get(0xF503F3237666574E).as_interface(), "Admin")
+Registry = _InterfaceModule(_loader.get(0xCA7B4BD1600633B8).as_interface(), "Registry")
+Registry.Entry = _StructModule(_loader.get(0xC17987510CF7AC13).as_struct(), "Entry")
+Registrar = _InterfaceModule(
+    _loader.get(0xABAEF93C36F2D1EA).as_interface(),
+    "Registrar",
+)
+Registrar.CrossDomainRestore = _StructModule(
+    _loader.get(0xAA1198DD7E71B20E).as_struct(),
+    "CrossDomainRestore",
+)
+Registrar.RegParams = _StructModule(
+    _loader.get(0xE5A84717EA75FB0D).as_struct(),
+    "RegParams",
+)
+Registrar.Unregister = _InterfaceModule(
+    _loader.get(0xC7597E4462528489).as_interface(),
+    "Unregister",
+)
+
+Admin.Server.AddcategoryResultTuple = NamedTuple(
+    "AddcategoryResultTuple",
+    [("success", object)],
+)
+Admin.Server.MoveobjectsResultTuple = NamedTuple(
+    "MoveobjectsResultTuple",
+    [("movedObjectIds", object)],
+)
+Admin.Server.RegistryResultTuple = NamedTuple(
+    "RegistryResultTuple",
+    [("registry", object)],
+)
+Admin.Server.RemovecategoryResultTuple = NamedTuple(
+    "RemovecategoryResultTuple",
+    [("removedObjects", object)],
+)
+Admin.Server.RemoveobjectsResultTuple = NamedTuple(
+    "RemoveobjectsResultTuple",
+    [("removedObjects", object)],
+)
+Registrar.Server.RegisterResultTuple = NamedTuple(
+    "RegisterResultTuple",
+    [("unreg", object), ("reregSR", object)],
+)
+Registrar.Unregister.Server.UnregisterResultTuple = NamedTuple(
+    "UnregisterResultTuple",
+    [("success", object)],
+)
+Registry.Server.CategoryinfoResultTuple = NamedTuple(
+    "CategoryinfoResultTuple",
+    [("id", object), ("name", object), ("description", object)],
+)
+Registry.Server.EntriesResultTuple = NamedTuple(
+    "EntriesResultTuple",
+    [("entries", object)],
+)
+Registry.Server.SupportedcategoriesResultTuple = NamedTuple(
+    "SupportedcategoriesResultTuple",
+    [("cats", object)],
+)
