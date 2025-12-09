@@ -1,0 +1,102 @@
+"""This is an automatically generated stub for `grid.capnp`."""
+
+import base64
+from typing import NamedTuple
+
+import capnp
+import schema_capnp
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+capnp.remove_import_hook()
+
+# Embedded compiled schemas (base64-encoded)
+_SCHEMA_NODES = [
+    "EENQBgb/I6pglHPpc9MAAQUAAxEVWhEZJxE1ZwAC/2dyaWQuY2FwAANucFEIAQH/AbOmZ3fc7KUAEQli/8bjYZaycynkABEJKv9BZ2dyZWdhdAAHaW9uD0dyaWRREAEC/yxfgL+e+ca5AFEoAgFBPAH/bPmw4/6jXowAUTgCAUFIAf/gK3kjEH+pvgBRRAIBQVAB/7VEDiYBtjDhAFFMAgFBeAEBDAAAEQGS/21hczo6c2NoAWVtYTo6Z3JpAWQAAAEMAAARAYL/bWFzLnNjaGUBbWEuZ3JpZAAAAAEMAAARASoPZ3JpZAAAAQwAADEBKgL/Z2l0aHViLmMHb20vemFsZi1ycG0vbWFzLWluZnJhc3RydWN0dXJlL2NhcG5wcm90b19zY2hlbWFzL2dlbi9nby8PZ3JpZAAA",  # grid.capnp
+    "EFJQBgb/AbOmZ3fc7KUAEQsC/yOqYJRz6XPTAAABM8QBcwURFboRHQcAADEZhwEAAf9ncmlkLmNhcAFucDpBZ2dyZT9nYXRpb25QAQFRQAECAAARuSoAAAECEbEqAAABBRGpQgAAAQcRoSIAAAEKEZkiAAABDRGRIgAAAQMRiSoAAAEGEYFCAAABARF5IgAAAQQRcToAAAEOEWkqAAABDxFhKgAAAQgRWSoAAAEJEVEqAAABCxFJKgAAAQwRQSoAAA9ub25lD3dBdmd/d01lZGlhbgdtaW4HbWF4B3N1bQ9pQXZnf2lNZWRpYW4HYXZnP21lZGlhbg93U3VtD2lTdW0Pd01pbg9pTWluD3dNYXgPaU1heA==",  # grid.capnp:Aggregation
+    "EIJQBgb/xuNhlrJzKeQAEQsD/yOqYJRz6XPTAAABM3UFVxERFYIRGWcAADFtBwITxQEnAAD/Z3JpZC5jYXABbnA6R3JpZABRGAEB/9DZc+X6DS7+ABEpMv97V+cn3fu2qQARJVr//wZiCF3Y4rkAESU6/x06M+8XRkSsABEhgv9kjfGeG89ctQARIUr/01XLgIJROdYAESFKH1ZhbHVl/1Jlc29sdXRpAANvbj9Sb3dDb2z/QWdncmVnYXQCaW9uUGFydABMb2NhdGlvbgAA/0NhbGxiYWNrAAAAUSADBQAA/5oHDGEcb37rAbBANYNjAr2oEfF6AAIR6QcBAv/rLR5+udye9wGax3gHSbrXjBHdWgACEdUHAQO/vo3ADPJapv9vJRAWa2+k5wARyVIAAhHBBwEE/7ZU2ipvpwT4Ac8fGyq9MsGbEbViAAIRrQcBAf8vl+bWvfKPlAGUWXH8PvMeohGhQgACEZUHAQX/l71mJJk4c/MBdzNE01fOf+URiWoAAhGBBwEG/7rbz/2z0a3ZAdLrp3gr1Y2bEXViAAIRbQcBB/9IZ2q7aENOuwH7xJ+9bedw0RFhKgACEVUH/2Nsb3Nlc3RWAD9hbHVlQXRAAf9yZXNvbHV0aQADb25AAf9kaW1lbnNpbwABbkAB/25vRGF0YVZhAAdsdWVAAX92YWx1ZUF0QAH/bGF0TG9uQm8AD3VuZHNAAf9zdHJlYW1DZQAHbGxzQAEPdW5pdEABUQgBAf/VSJxZy9GvsgAAAP9lyzbcoNqnwQAAAA==",  # grid.capnp:Grid
+    "EE5QBgb/0Nlz5foNLv4AURABAv/G42GWsnMp5ABEBwQBBDPSBVIGERWyER0HAAARGecAAf9ncmlkLmNhcAFucDpHcmlkLh9WYWx1ZVABAVEQAwQM//8EAQAAEWESAABRXAMBUWgCAQ0B/v8UAQEAABFlEgAAUWADAVFsAgENAv3/FAECAAARaRoAAFFkAwFRcAIBDQP8/xQBAwAAEW0aAABRaAMBUXQCAQFmAQsAAgELAAEBaQEFAAIBBQABA3VpAQkAAgEJAAEDbm8BAQACAQEAAQ==",  # grid.capnp:Grid.Value
+    "EDFQBgb/e1fnJ937tqkAURABAv/G42GWsnMp5ABEBwIBBDNVBq8GERXaESEHAAARHXcAAf9ncmlkLmNhcAJucDpHcmlkLlJlc29sdXRpA29uUAEBUQgDBAz//wQBAAARKTIAAFEkAwFRMAIBDQH+/xQBAQAAES06AABRKAMBUTQCAR9tZXRlcgEFAAIBBQABP2RlZ3JlZQELAAIBCwAB",  # grid.capnp:Grid.Resolution
+    "EDBQBgb//wZiCF3Y4rkAURABAv/G42GWsnMp5AAEBwAAM7MG7gYRFboRHQcAABEZdwAB/2dyaWQuY2FwAW5wOkdyaWQuP1Jvd0NvbFABAVEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLSIAAFEoAwFRNAIBB3JvdwEJAAIBCQABB2NvbAEJAAIBCQAB",  # grid.capnp:Grid.RowCol
+    "EFBQBgb/HToz7xdGRKwAURABAv/G42GWsnMp5AAFAgcAADPyBrIHMRUCAREhBwAAER3nAAH/Z3JpZC5jYXADbnA6R3JpZC5BZ2dyZWdhdGlvblBhcnQAUAEBURADBAAABAEAABFhMgAAUVwDAVFoAgERAQEUAQEAABFlOgAAUWADAVFsAgEBAhQBAgAAEWlKAABRaAMBUXQCAREDARQBAwAAEXE6AABRbAMBUXgCAR92YWx1ZQEQ/9DZc+X6DS7+AAABARAAAT9yb3dDb2wBEP//BmIIXdjiuQAAAQEQAAH/YXJlYUZyYWMAAAABCwACAQsAAT9pVmFsdWUBCwACAQsAAQ==",  # grid.capnp:Grid.AggregationPart
+    "EEFQBgb/ZI3xnhvPXLUAERAB/8bjYZaycynkAAUDBwAAM7YHJwgRFcoRIQcAABEdrwAB/2dyaWQuY2FwAm5wOkdyaWQuTG9jYXRpb24AAFABAVEMAwQAAAQBAAARRWIAAFFEAwFRUAIBEQEBFAEBAAARTToAAFFIAwFRVAIBEQICFAECAAARUTIAAFFMAwFRWAIB/2xhdExvbkNvAAdvcmQBEP/7j8w5MPzx7AAAAQEQAAE/cm93Q29sARD//wZiCF3Y4rkAAAEBEAABH3ZhbHVlARD/0Nlz5foNLv4AAAEBEAAB",  # grid.capnp:Grid.Location
+    "EDBQBgb/+4/MOTD88ewAUQoBAv8k/Md5IFSQkAAEBwAAMx8DjgMRFbIRHQcAABEZdwAB/2dlby5jYXBuAXA6TGF0TG9uH0Nvb3JkUAEBUQgDBAAABAEAABEpIgAAUSQDAVEwAgERAQEUAQEAABEtIgAAUSgDAVE0AgEHbGF0AQsAAgELAAEHbG9uAQsAAgELAAE=",  # geo.capnp:LatLonCoord
+    "EB9QBgb/01XLgIJROdYAERAD/8bjYZaycynkAAABM6wPXBARFcoRIQcAABEdRxFJBwAA/2dyaWQuY2FwAm5wOkdyaWQuQ2FsbGJhY2sAAFABAVEEAwUAAP+79miPccew6QF5JYtZbm9TjhERUgACEQkH/3NlbmRDZWxsAAFzQAFQAQE=",  # grid.capnp:Grid.Callback
+    "ECRQBgb/u/Zoj3HHsOkAURkBAQAABAcAATEVUgEAAREhPwAB/2dyaWQuY2FwBG5wOkdyaWQuQ2FsbGJhY2suc2VuZENlbGxzJFBhcmFtAXNRBAMEAAAEAQAAEQ1KAABRDAMBURgCAf9tYXhDb3VudAAAAAEFAAIBBQAB",  # grid.capnp:Grid.Callback.sendCells$Params
+    "EChQBgb/eSWLWW5vU44AERkBAAAFAQcAATEVWgEAAREhPwAB/2dyaWQuY2FwBG5wOkdyaWQuQ2FsbGJhY2suc2VuZENlbGxzJFJlc3VsA3RzUQQDBAAABAEAABENUgAAUQwDAVEoAgH/bG9jYXRpb24AAXMBDgABUAMBARD/ZI3xnhvPXLUAAAEBDgAB",  # grid.capnp:Grid.Callback.sendCells$Results
+    "EHJQBgb/mgcMYRxvfusAURABAQAABQIHAAExFTIBAAExHVcBAAH/Z3JpZC5jYXADbnA6R3JpZC5jbG9zZXN0VmFsdWVBdCRQH2FyYW1zURgDBAAABAEAABGZYgAAUZgDAVGkAgEBARQBAQEBEaFqAABRoAMBUawCARECARQBAgAAEalaAABRqAMBUbQCAREDARQBAwEBEbEiAABRrAMBUbgCAREEARQBBAEBEbVyAABRtAMBUcACAREFAhQBBQEBEb2CAABRvAMBUcgCAf9sYXRsb25DbwAHb3JkARD/+4/MOTD88ewAAAEBEAAB/2lnbm9yZU5vAA9EYXRhAQEAAgUBAQAB/3Jlc29sdXRpAANvbgEQ/3tX5yfd+7apAAABARAAAQdhZ2cBD/8Bs6Znd9zspQAAAQEPAAH/cmV0dXJuUm8AH3dDb2xzAQEAAgEBAAH/aW5jbHVkZUEBZ2dQYXJ0cwABAQACAQEAAQ==",  # grid.capnp:Grid.closestValueAt$Params
+    "EFRQBgb/sEA1g2MCvagAERABAAAFBAcAATEVOgEAAREd5wAB/2dyaWQuY2FwA25wOkdyaWQuY2xvc2VzdFZhbHVlQXQkUj9lc3VsdHNREAMEAAAEAQAAEWEiAABRXAMBUWgCAREBARQBAQAAEWUaAABRYAMBUWwCARECAhQBAgAAEWkaAABRZAMBUXACAREDAxQBAwAAEW1KAABRbAMBUYgCAQd2YWwBEP/Q2XPl+g0u/gAAAQEQAAEDdGwBEP//BmIIXdjiuQAAAQEQAAEDYnIBEP//BmIIXdjiuQAAAQEQAAH/YWdnUGFydHMAAAABDgABUAMBARD/HToz7xdGRKwAAAEBDgAB",  # grid.capnp:Grid.closestValueAt$Results
+    "EBJQBgb/6y0efrncnvcAERABAAAEBwABMRUSAQAE/2dyaWQuY2FwA25wOkdyaWQucmVzb2x1dGlvbiRQYXJhbQFz",  # grid.capnp:Grid.resolution$Params
+    "ECJQBgb/msd4B0m614wAERABAAAFAQcAATEVGgEAAREdPwAB/2dyaWQuY2FwA25wOkdyaWQucmVzb2x1dGlvbiRSZXN1bAN0c1EEAwQAAAQBAAARDSIAAFEIAwFRFAIBB3JlcwEQ/3tX5yfd+7apAAABARAAAQ==",  # grid.capnp:Grid.resolution$Results
+    "EBJQBga/vo3ADPJaphEQAQAABAcAATEVCgEABP9ncmlkLmNhcANucDpHcmlkLmRpbWVuc2lvbiRQYXJhbXMAAA==",  # grid.capnp:Grid.dimension$Params
+    "EDFQBgb/byUQFmtvpOcAURABAgAABAcAATEVEgEAAREddwAB/2dyaWQuY2FwA25wOkdyaWQuZGltZW5zaW9uJFJlc3VsdAFzUQgDBAAABAEAABEpKgAAUSQDAVEwAgERAQEUAQEAABEtKgAAUSgDAVE0AgEPcm93cwEJAAIBCQABD2NvbHMBCQACAQkAAQ==",  # grid.capnp:Grid.dimension$Results
+    "EBJQBgb/tlTaKm+nBPgAERABAAAEBwABMRUaAQAE/2dyaWQuY2FwA25wOkdyaWQubm9EYXRhVmFsdWUkUGFyYQNtcw==",  # grid.capnp:Grid.noDataValue$Params
+    "ECJQBgb/zx8bKr0ywZsAERABAAAFAQcAATEVIgEAAREdPwAB/2dyaWQuY2FwA25wOkdyaWQubm9EYXRhVmFsdWUkUmVzdQdsdHNRBAMEAAAEAQAAEQ06AABRCAMBURQCAT9ub2RhdGEBEP/Q2XPl+g0u/gAAAQEQAAE=",  # grid.capnp:Grid.noDataValue$Results
+    "EF9QBgb/L5fm1r3yj5QAURABAwAABQEHAAERFfoAATEZHwEAAf9ncmlkLmNhcAJucDpHcmlkLnZhbHVlQXQkP1BhcmFtc1EUAwQAAAQBAAARfSIAAFF4AwFRhAIBEQEBFAEBAAARgSIAAFF8AwFRiAIBAQIUAQIAABGFWgAAUYQDAVGQAgERAwgUAQMBARGNIgAAUYgDAVGUAgERBJAUAQQBARGRggAAUZADAVGcAgEHcm93AQkAAgEJAAEHY29sAQkAAgEJAAH/cmVzb2x1dGkAA29uARD/e1fnJ937tqkAAAEBEAABB2FnZwEP/wGzpmd33OylAAABAQ8AAf9pbmNsdWRlQQFnZ1BhcnRzAAEBAAIBAQAB",  # grid.capnp:Grid.valueAt$Params
+    "EDVQBgb/lFlx/D7zHqIAERABAAAFAgcAATEVAgEAAREZdwAB/2dyaWQuY2FwA25wOkdyaWQudmFsdWVBdCRSZXN1bHRzAFEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFRSAIBB3ZhbAEQ/9DZc+X6DS7+AAABARAAAf9hZ2dQYXJ0cwAAAAEOAAFQAwEBEP8dOjPvF0ZErAAAAQEOAAE=",  # grid.capnp:Grid.valueAt$Results
+    "ECNQBgb/l71mJJk4c/MAURABAQAABAcAATEVIgEAAREdPwAB/2dyaWQuY2FwA25wOkdyaWQubGF0TG9uQm91bmRzJFBhcgdhbXNRBAMEAAAEAQEBEQ1yAABRDAMBURgCAf91c2VDZWxsQwAfZW50ZXIBAQACAQEAAQ==",  # grid.capnp:Grid.latLonBounds$Params
+    "EE9QBgb/dzNE01fOf+UAERABAAAFBAcAATEVKgEAAREd5wAB/2dyaWQuY2FwA25wOkdyaWQubGF0TG9uQm91bmRzJFJlcw91bHRzURADBAAABAEAABFhGgAAUVwDAVFoAgERAQEUAQEAABFlGgAAUWADAVFsAgERAgIUAQIAABFpGgAAUWQDAVFwAgERAwMUAQMAABFtGgAAUWgDAVF0AgEDdGwBEP/7j8w5MPzx7AAAAQEQAAEDdHIBEP/7j8w5MPzx7AAAAQEQAAEDYnIBEP/7j8w5MPzx7AAAAQEQAAEDYmwBEP/7j8w5MPzx7AAAAQEQAAE=",  # grid.capnp:Grid.latLonBounds$Results
+    "EDJQBgb/utvP/bPRrdkAERABAAAFAgcAATEVGgEAAREddwAB/2dyaWQuY2FwA25wOkdyaWQuc3RyZWFtQ2VsbHMkUGFyYQNtc1EIAwQAAAQBAAARKUIAAFEkAwFRMAIBEQEBFAEBAAARLWIAAFEsAwFROAIBf3RvcExlZnQBEP//BmIIXdjiuQAAAQEQAAH/Ym90dG9tUmkAB2dodAEQ//8GYghd2OK5AAABARAAAQ==",  # grid.capnp:Grid.streamCells$Params
+    "ECNQBgb/0uuneCvVjZsAERABAAAFAQcAATEVIgEAAREdPwAB/2dyaWQuY2FwA25wOkdyaWQuc3RyZWFtQ2VsbHMkUmVzdQdsdHNRBAMEAAAEAQAAEQ1KAABRDAMBURgCAf9jYWxsYmFjawAAAAER/9NVy4CCUTnWAAABAREAAQ==",  # grid.capnp:Grid.streamCells$Results
+    "EBFQBgb/SGdqu2hDTrsAERABAAAEBwABERXiAAT/Z3JpZC5jYXACbnA6R3JpZC51bml0JFBhcgdhbXM=",  # grid.capnp:Grid.unit$Params
+    "ECFQBgb/+8SfvW3ncNEAERABAAAFAQcAAREV6gABERk/AAH/Z3JpZC5jYXACbnA6R3JpZC51bml0JFJlcw91bHRzUQQDBAAABAEAABENKgAAUQgDAVEUAgEPdW5pdAEMAAIBDAAB",  # grid.capnp:Grid.unit$Results
+]
+
+# Load schemas and build module structure
+_loader = capnp.SchemaLoader()
+for _schema_b64 in _SCHEMA_NODES:
+    _schema_data = base64.b64decode(_schema_b64)
+    _node_reader = schema_capnp.Node.from_bytes_packed(_schema_data)
+    _loader.load_dynamic(_node_reader)
+
+# Build module structure inline
+Aggregation = _EnumModule(_loader.get(0xA5ECDC7767A6B301).as_enum(), "Aggregation")
+Grid = _InterfaceModule(_loader.get(0xE42973B29661E3C6).as_interface(), "Grid")
+Grid.Value = _StructModule(_loader.get(0xFE2E0DFAE573D9D0).as_struct(), "Value")
+Grid.Resolution = _StructModule(
+    _loader.get(0xA9B6FBDD27E7577B).as_struct(),
+    "Resolution",
+)
+Grid.RowCol = _StructModule(_loader.get(0xB9E2D85D086206FF).as_struct(), "RowCol")
+Grid.AggregationPart = _StructModule(
+    _loader.get(0xAC444617EF333A1D).as_struct(),
+    "AggregationPart",
+)
+Grid.Location = _StructModule(_loader.get(0xB55CCF1B9EF18D64).as_struct(), "Location")
+Grid.Callback = _InterfaceModule(
+    _loader.get(0xD639518280CB55D3).as_interface(),
+    "Callback",
+)
+
+Grid.Server.ClosestvalueatResultTuple = NamedTuple(
+    "ClosestvalueatResultTuple",
+    [("val", object), ("tl", object), ("br", object), ("aggParts", object)],
+)
+Grid.Server.DimensionResultTuple = NamedTuple(
+    "DimensionResultTuple",
+    [("rows", object), ("cols", object)],
+)
+Grid.Server.LatlonboundsResultTuple = NamedTuple(
+    "LatlonboundsResultTuple",
+    [("tl", object), ("tr", object), ("br", object), ("bl", object)],
+)
+Grid.Server.NodatavalueResultTuple = NamedTuple(
+    "NodatavalueResultTuple",
+    [("nodata", object)],
+)
+Grid.Server.ResolutionResultTuple = NamedTuple(
+    "ResolutionResultTuple",
+    [("res", object)],
+)
+Grid.Server.StreamcellsResultTuple = NamedTuple(
+    "StreamcellsResultTuple",
+    [("callback", object)],
+)
+Grid.Server.UnitResultTuple = NamedTuple("UnitResultTuple", [("unit", object)])
+Grid.Server.ValueatResultTuple = NamedTuple(
+    "ValueatResultTuple",
+    [("val", object), ("aggParts", object)],
+)
+Grid.Callback.Server.SendcellsResultTuple = NamedTuple(
+    "SendcellsResultTuple",
+    [("locations", object)],
+)
