@@ -2876,10 +2876,12 @@ namespace Mas.Schema.Fbp
                 switch (reader.which)
                 {
                     case WHICH.Sr:
-                        Sr = reader.Sr;
+                        Sr = CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(reader.Sr);
                         break;
                     case WHICH.Srs:
-                        Srs = reader.Srs;
+                        Srs = reader.Srs?.ToReadOnlyList(_ =>
+                            CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(_)
+                        );
                         break;
                 }
 
@@ -2915,10 +2917,10 @@ namespace Mas.Schema.Fbp
                 switch (which)
                 {
                     case WHICH.Sr:
-                        writer.Sr = Sr;
+                        Sr?.serialize(writer.Sr);
                         break;
                     case WHICH.Srs:
-                        writer.Srs.Init(Srs);
+                        writer.Srs.Init(Srs, (_s1, _v1) => _v1?.serialize(_s1));
                         break;
                 }
 
@@ -2934,9 +2936,9 @@ namespace Mas.Schema.Fbp
 
             public string Name { get; set; }
 
-            public string Sr
+            public Mas.Schema.Persistence.SturdyRef Sr
             {
-                get => _which == WHICH.Sr ? (string)_content : null;
+                get => _which == WHICH.Sr ? (Mas.Schema.Persistence.SturdyRef)_content : null;
                 set
                 {
                     _which = WHICH.Sr;
@@ -2944,9 +2946,12 @@ namespace Mas.Schema.Fbp
                 }
             }
 
-            public IReadOnlyList<string> Srs
+            public IReadOnlyList<Mas.Schema.Persistence.SturdyRef> Srs
             {
-                get => _which == WHICH.Srs ? (IReadOnlyList<string>)_content : null;
+                get =>
+                    _which == WHICH.Srs
+                        ? (IReadOnlyList<Mas.Schema.Persistence.SturdyRef>)_content
+                        : null;
                 set
                 {
                     _which = WHICH.Srs;
@@ -2971,9 +2976,15 @@ namespace Mas.Schema.Fbp
 
                 public WHICH which => (WHICH)ctx.ReadDataUShort(0U, (ushort)0);
                 public string Name => ctx.ReadText(0, null);
-                public string Sr => which == WHICH.Sr ? ctx.ReadText(1, null) : default;
-                public IReadOnlyList<string> Srs =>
-                    which == WHICH.Srs ? ctx.ReadList(1).CastText2() : default;
+                public Mas.Schema.Persistence.SturdyRef.READER Sr =>
+                    which == WHICH.Sr
+                        ? ctx.ReadStruct(1, Mas.Schema.Persistence.SturdyRef.READER.create)
+                        : default;
+                public bool HasSr => ctx.IsStructFieldNonNull(1);
+                public IReadOnlyList<Mas.Schema.Persistence.SturdyRef.READER> Srs =>
+                    which == WHICH.Srs
+                        ? ctx.ReadList(1).Cast(Mas.Schema.Persistence.SturdyRef.READER.create)
+                        : default;
                 public bool HasSrs => ctx.IsStructFieldNonNull(1);
             }
 
@@ -2994,14 +3005,22 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(0, null);
                     set => this.WriteText(0, value, null);
                 }
-                public string Sr
+                public Mas.Schema.Persistence.SturdyRef.WRITER Sr
                 {
-                    get => which == WHICH.Sr ? this.ReadText(1, null) : default;
-                    set => this.WriteText(1, value, null);
+                    get =>
+                        which == WHICH.Sr
+                            ? BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(1)
+                            : default;
+                    set => Link(1, value);
                 }
-                public ListOfTextSerializer Srs
+                public ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER> Srs
                 {
-                    get => which == WHICH.Srs ? BuildPointer<ListOfTextSerializer>(1) : default;
+                    get =>
+                        which == WHICH.Srs
+                            ? BuildPointer<
+                                ListOfStructsSerializer<Mas.Schema.Persistence.SturdyRef.WRITER>
+                            >(1)
+                            : default;
                     set => Link(1, value);
                 }
             }
@@ -3406,7 +3425,7 @@ namespace Mas.Schema.Fbp
     public interface IRunnable : Mas.Schema.Common.IIdentifiable
     {
         Task<bool> Start(
-            string portInfosReaderSr,
+            Mas.Schema.Persistence.SturdyRef portInfosReaderSr,
             string name,
             CancellationToken cancellationToken_ = default
         );
@@ -3420,7 +3439,7 @@ namespace Mas.Schema.Fbp
     public class Runnable_Proxy : Proxy, IRunnable
     {
         public async Task<bool> Start(
-            string portInfosReaderSr,
+            Mas.Schema.Persistence.SturdyRef portInfosReaderSr,
             string name,
             CancellationToken cancellationToken_ = default
         )
@@ -3785,14 +3804,16 @@ namespace Mas.Schema.Fbp
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
-                PortInfosReaderSr = reader.PortInfosReaderSr;
+                PortInfosReaderSr = CapnpSerializable.Create<Mas.Schema.Persistence.SturdyRef>(
+                    reader.PortInfosReaderSr
+                );
                 Name = reader.Name;
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
-                writer.PortInfosReaderSr = PortInfosReaderSr;
+                PortInfosReaderSr?.serialize(writer.PortInfosReaderSr);
                 writer.Name = Name;
             }
 
@@ -3803,7 +3824,7 @@ namespace Mas.Schema.Fbp
 
             public void applyDefaults() { }
 
-            public string PortInfosReaderSr { get; set; }
+            public Mas.Schema.Persistence.SturdyRef PortInfosReaderSr { get; set; }
             public string Name { get; set; }
 
             public struct READER
@@ -3821,7 +3842,9 @@ namespace Mas.Schema.Fbp
 
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
 
-                public string PortInfosReaderSr => ctx.ReadText(0, null);
+                public Mas.Schema.Persistence.SturdyRef.READER PortInfosReaderSr =>
+                    ctx.ReadStruct(0, Mas.Schema.Persistence.SturdyRef.READER.create);
+                public bool HasPortInfosReaderSr => ctx.IsStructFieldNonNull(0);
                 public string Name => ctx.ReadText(1, null);
             }
 
@@ -3832,10 +3855,10 @@ namespace Mas.Schema.Fbp
                     this.SetStruct(0, 2);
                 }
 
-                public string PortInfosReaderSr
+                public Mas.Schema.Persistence.SturdyRef.WRITER PortInfosReaderSr
                 {
-                    get => this.ReadText(0, null);
-                    set => this.WriteText(0, value, null);
+                    get => BuildPointer<Mas.Schema.Persistence.SturdyRef.WRITER>(0);
+                    set => Link(0, value);
                 }
                 public string Name
                 {
@@ -4048,7 +4071,7 @@ namespace Mas.Schema.Fbp
             CancellationToken cancellationToken_ = default
         );
         Task Start(CancellationToken cancellationToken_ = default);
-        Task Stop(CancellationToken cancellationToken_ = default);
+        Task<bool> Stop(CancellationToken cancellationToken_ = default);
         Task SetConfigEntry(
             Mas.Schema.Fbp.Process.ConfigEntry arg_,
             CancellationToken cancellationToken_ = default
@@ -4206,7 +4229,7 @@ namespace Mas.Schema.Fbp
             }
         }
 
-        public async Task Stop(CancellationToken cancellationToken_ = default)
+        public async Task<bool> Stop(CancellationToken cancellationToken_ = default)
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_Stop.WRITER>();
             var arg_ = new Mas.Schema.Fbp.Process.Params_Stop() { };
@@ -4222,7 +4245,7 @@ namespace Mas.Schema.Fbp
             )
             {
                 var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_Stop>(d_);
-                return;
+                return (r_.Success);
             }
         }
 
@@ -4457,16 +4480,24 @@ namespace Mas.Schema.Fbp
             }
         }
 
-        async Task<AnswerOrCounterquestion> Stop(
+        Task<AnswerOrCounterquestion> Stop(
             DeserializerState d_,
             CancellationToken cancellationToken_
         )
         {
             using (d_)
             {
-                await Impl.Stop(cancellationToken_);
-                var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Stop.WRITER>();
-                return s_;
+                return Impatient.MaybeTailCall(
+                    Impl.Stop(cancellationToken_),
+                    success =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Stop.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_Stop { Success = success };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
             }
         }
 
@@ -5567,10 +5598,14 @@ namespace Mas.Schema.Fbp
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
+                Success = reader.Success;
                 applyDefaults();
             }
 
-            public void serialize(WRITER writer) { }
+            public void serialize(WRITER writer)
+            {
+                writer.Success = Success;
+            }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
             {
@@ -5578,6 +5613,8 @@ namespace Mas.Schema.Fbp
             }
 
             public void applyDefaults() { }
+
+            public bool Success { get; set; }
 
             public struct READER
             {
@@ -5593,13 +5630,21 @@ namespace Mas.Schema.Fbp
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
 
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Success => ctx.ReadDataBool(0UL, false);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 0);
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Success
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
                 }
             }
         }
