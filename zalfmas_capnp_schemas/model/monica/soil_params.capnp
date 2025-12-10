@@ -8,7 +8,7 @@ $Python.module("mas.schema.soil");
 
 using Go = import "/capnp/go.capnp";
 $Go.package("monica");
-$Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/monica");
+$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
 
 struct SoilCharacteristicData {
     struct Data {

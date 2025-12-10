@@ -512,7 +512,7 @@ Service<C>::Client::nextConfigRequest(::kj::Maybe< ::capnp::MessageSize> sizeHin
 template <typename C>
 ::kj::Promise<void> Service<C>::Server::nextConfig(NextConfigContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "config.capnp:Service", "nextConfig",
+      "config/config.capnp:Service", "nextConfig",
       0x860d660620aefcdaull, 0);
 }
 template <typename C>
@@ -523,7 +523,7 @@ template <typename C>
     case 0x860d660620aefcdaull:
       return dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("config.capnp:Service", interfaceId);
+      return internalUnimplemented("config/config.capnp:Service", interfaceId);
   }
 }
 template <typename C>
@@ -541,7 +541,7 @@ template <typename C>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "config.capnp:Service",
+          "config/config.capnp:Service",
           0x860d660620aefcdaull, methodId);
   }
 }

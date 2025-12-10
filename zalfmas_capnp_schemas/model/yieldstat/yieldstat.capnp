@@ -8,9 +8,9 @@ $Python.module("mas.schema.model.yieldstat");
 
 using Go = import "/capnp/go.capnp";
 $Go.package("yieldstat");
-$Go.import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/yieldstat");
+$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/yieldstat");
 
-using Crop = import "/crop.capnp";
+using Crop = import "/crop/crop.capnp";
 
 enum ResultId {
     primaryYield                @0; # primary yield for the crop (e.g. the actual fruit)

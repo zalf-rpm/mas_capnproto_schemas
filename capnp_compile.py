@@ -9,14 +9,6 @@ from pathlib import Path
 
 
 @dataclass
-class SchemaConfig:
-    """Configuration for a schema file."""
-
-    output_dir: str
-    base_path: str = ""
-
-
-@dataclass
 class PathsConfig:
     """Configuration for file paths."""
 
@@ -28,7 +20,7 @@ class PathsConfig:
 class CompilerConfig:
     """Configuration for the Cap'n Proto compiler."""
 
-    schemas: dict[str, SchemaConfig]
+    schemas: list[str]
     paths: PathsConfig
     presets: dict[str, list[str]]
 
@@ -43,14 +35,8 @@ def load_config(config_path: Path) -> CompilerConfig:
         with config_path.open("r") as f:
             config_data = json.load(f)
 
-        # Parse schema configs
-        schemas = {
-            key: SchemaConfig(
-                output_dir=schema_data.get("output_dir", ""),
-                base_path=schema_data.get("base_path", ""),
-            )
-            for key, schema_data in config_data.get("schemas", {}).items()
-        }
+        # Get list of schema files
+        schemas = list(config_data.get("schemas", []))
 
         # Parse paths config
         paths_data = config_data.get("paths", {})
@@ -69,47 +55,35 @@ def load_config(config_path: Path) -> CompilerConfig:
         sys.exit(1)
 
 
-def compile_schema(
-    schema: str,
+def compile_schemas(
+    schemas: list[str],
     lang: str,
     capnp_bin: str,
-    schema_config: SchemaConfig,
     config: CompilerConfig,
 ) -> None:
-    """Compile a Cap'n Proto schema file."""
-    # Create paths
+    """Compile Cap'n Proto schema files in a single call."""
     schema_dir = Path(config.paths.schemas_dir)
     output_dir = Path(config.paths.output_base) / lang
-    if schema_config.output_dir:
-        output_dir /= schema_config.output_dir
 
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Handle schema path and source prefix
-    src_prefix = schema_dir
-    if schema_config.base_path:
-        src_prefix /= schema_config.base_path
-        schema_path = Path(schema_config.base_path) / schema
-    else:
-        schema_path = schema
-
-    full_schema_path = schema_dir / schema_path
+    # Build list of full schema paths
+    schema_paths = [str(schema_dir / schema) for schema in schemas]
 
     cmd = [
         capnp_bin,
         "compile",
         f"-I{schema_dir}",
-        f"--src-prefix={src_prefix}",
+        f"--src-prefix={schema_dir}",
         f"-o{lang}:{output_dir}",
-        f"{full_schema_path}",
-    ]
+    ] + schema_paths
 
     try:
         subprocess.run(cmd, check=True)
-        print(f"Successfully compiled {schema_path}")
+        print(f"Successfully compiled {len(schemas)} schema(s)")
     except subprocess.CalledProcessError as e:
-        print(f"Error compiling {schema_path}: {e}")
+        print(f"Error compiling schemas: {e}")
 
 
 def find_executable_path(name: str) -> str | None:
@@ -141,7 +115,7 @@ def main() -> None:
         "--lang",
         "-l",
         nargs="+",
-        choices=["c++", "csharp", "go", "java"],
+        choices=["c++", "csharp", "go", "java", "python"],
         required=True,
         help="Target language(s) to compile for",
     )
@@ -175,7 +149,7 @@ def main() -> None:
     config = load_config(config_path)
 
     # Determine which files to compile
-    all_available_files = set(config.schemas.keys())
+    all_available_files = set(config.schemas)
     if args.preset:
         preset_files = config.presets.get(args.preset, [])
         files_to_compile = set(preset_files)
@@ -189,7 +163,7 @@ def main() -> None:
             print(f"Warning: '{file}' not found in configuration file")
 
     # Get valid files to compile
-    valid_files = files_to_compile & all_available_files
+    valid_files = sorted(files_to_compile & all_available_files)
 
     # Compile for each specified language
     for lang in args.lang:
@@ -213,10 +187,8 @@ def main() -> None:
         print(f"Using capnp at: {capnp_path}")
         print(f"Using capnpc-{lang} at: {capnpc_path}")
 
-        # Compile schemas
-        for file in valid_files:
-            schema_config = config.schemas[file]
-            compile_schema(file, lang, capnp_bin, schema_config, config)
+        # Compile all schemas in a single call
+        compile_schemas(valid_files, lang, capnp_bin, config)
 
 
 if __name__ == "__main__":

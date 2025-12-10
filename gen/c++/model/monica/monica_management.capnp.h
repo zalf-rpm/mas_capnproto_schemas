@@ -15,11 +15,11 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include <climate.capnp.h>
-#include <common.capnp.h>
-#include <crop.capnp.h>
-#include <date.capnp.h>
-#include <geo.capnp.h>
+#include <climate/climate.capnp.h>
+#include <common/common.capnp.h>
+#include <common/date.capnp.h>
+#include <crop/crop.capnp.h>
+#include <geo/geo.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
