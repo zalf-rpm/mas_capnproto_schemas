@@ -9,7 +9,6 @@ from mas.schema.config import config_capnp
 from mas.schema.crop import crop_capnp
 from mas.schema.data import field_exp_data_capnp
 from mas.schema.fbp import fbp_capnp
-from mas.schema.frontend import frontend_capnp
 from mas.schema.geo import geo_capnp
 from mas.schema.grid import grid_capnp
 from mas.schema.jobs import jobs_capnp
@@ -39,7 +38,6 @@ __all__ = [
     "date_capnp",
     "fbp_capnp",
     "field_exp_data_capnp",
-    "frontend_capnp",
     "geo_capnp",
     "grid_capnp",
     "jobs_capnp",
