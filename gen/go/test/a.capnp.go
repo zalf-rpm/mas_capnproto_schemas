@@ -14,15 +14,15 @@ import (
 type A capnp.Client
 
 // A_TypeID is the unique identifier for the type A.
-const A_TypeID = 0xba9eff6fb3abc84f
+const A_TypeID = 0xf2067f36913b4d37
 
 func (c A) Method(ctx context.Context, params func(A_method_Params) error) (A_method_Results_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
 		Method: capnp.Method{
-			InterfaceID:   0xba9eff6fb3abc84f,
+			InterfaceID:   0xf2067f36913b4d37,
 			MethodID:      0,
-			InterfaceName: "a.capnp:A",
+			InterfaceName: "test/a.capnp:A",
 			MethodName:    "method",
 		},
 	}
@@ -133,9 +133,9 @@ func A_Methods(methods []server.Method, s A_Server) []server.Method {
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xba9eff6fb3abc84f,
+			InterfaceID:   0xf2067f36913b4d37,
 			MethodID:      0,
-			InterfaceName: "a.capnp:A",
+			InterfaceName: "test/a.capnp:A",
 			MethodName:    "method",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -175,7 +175,7 @@ func NewA_List(s *capnp.Segment, sz int32) (A_List, error) {
 type A_method_Params capnp.Struct
 
 // A_method_Params_TypeID is the unique identifier for the type A_method_Params.
-const A_method_Params_TypeID = 0xc506e9c0e16825f7
+const A_method_Params_TypeID = 0xf91866c9ad137532
 
 func NewA_method_Params(s *capnp.Segment) (A_method_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -193,7 +193,7 @@ func ReadRootA_method_Params(msg *capnp.Message) (A_method_Params, error) {
 }
 
 func (s A_method_Params) String() string {
-	str, _ := text.Marshal(0xc506e9c0e16825f7, capnp.Struct(s))
+	str, _ := text.Marshal(0xf91866c9ad137532, capnp.Struct(s))
 	return str
 }
 
@@ -257,7 +257,7 @@ func (f A_method_Params_Future) Struct() (A_method_Params, error) {
 type A_method_Results capnp.Struct
 
 // A_method_Results_TypeID is the unique identifier for the type A_method_Results.
-const A_method_Results_TypeID = 0x9e2108f9306a75ef
+const A_method_Results_TypeID = 0xf1a69b7e24044504
 
 func NewA_method_Results(s *capnp.Segment) (A_method_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -275,7 +275,7 @@ func ReadRootA_method_Results(msg *capnp.Message) (A_method_Results, error) {
 }
 
 func (s A_method_Results) String() string {
-	str, _ := text.Marshal(0x9e2108f9306a75ef, capnp.Struct(s))
+	str, _ := text.Marshal(0xf1a69b7e24044504, capnp.Struct(s))
 	return str
 }
 
@@ -336,30 +336,63 @@ func (f A_method_Results_Future) Struct() (A_method_Results, error) {
 	return A_method_Results(p.Struct()), err
 }
 
-const schema_c4b468a2826bb79b = "x\xda\x128\xe0\xc0b\xc8\xab\xce\xc2\xc0\x14h\xc0\xca" +
-	"\xf6\xff}i\x96\xc1O\x0e\xc5y\x0c\x82\\\x8c\x0c\x0c" +
-	"\xac\x8c\xec\x0c\x0c\xc2?\x19O10\x0a\xffe\xb4g" +
-	"`\xfc\xef\x7fb\xf5\xe6\xfc\xff\xf3v1\x08r0\xff" +
-	"\x9f\xbd=\xbbiQ\xc6\x96#\x0c\x0c\x8c\xc2\xb2LA" +
-	"\xc2\x8aL \xe5\xb2L\xee\xc2\xae \xd6\xff\xef\xaa\x19" +
-	"\x0f\x0f\xbcd;\x8al\x98.\xd3!\x06Fa]&" +
-	"{\x86\x94\xff\x89z\xc9\x89\x05y\x05VL\x8ez\xb9" +
-	"\xa9%\x19\xf9)*A\xa9\xc5\xa59%\xc5\x0c\x0c\x81" +
-	",\xcc,\x0c\x0c,\x8c\x0c\x0c\x82\xbcJ\x0c\x0c\x81\x1c" +
-	"\xcc\x8c\x81\"L\x8c\xecE\xa9\xc5\x8c<\x0cL\x8c<" +
-	"\x0c\x8cp\xed\x0c\x8c\x8e\x01\x8c\x8c\x81,\xcc\xacHv" +
-	"2\xc2|\"(h\xc5\xc0$\xc8\xcan\x0f\xb1\xc2\x81" +
-	"1\x80\x91\x11\x8b\xcd\x01\x89E\x89\xb9\xc5(\xf6\x1a!" +
-	"\xec\x95/\x00I\xc3l\x06\x04\x00\x00\xff\xff)\xb1K" +
-	"\xb5"
+const schema_f22d616110f0b140 = "x\xda\x9c\x93Oh\x13O\x14\xc7\xdf\xdb\xec\xf6\x0f\xed" +
+	"\xd2\xdfd~\xa2T\xb4*\xb1\x82h\xb4\x85*\xd4C" +
+	"\x120\xe4TH\x1a\x0bInK\xba\x92\xeaL\x1b\x92" +
+	"\x14$\xa2\"\x18A\x14A\xa1\xf4P\xcfQ\xb4=x" +
+	"\xf0 \xea\xc1\x1e\x02\xe9ID\xa1J\x11O=\x08\xb5" +
+	"1\xe8!\x82\xac\xec\x84\xcdn\x9a\xd4\x8a\xecea\xe6" +
+	"}?\xdf\xef\x9b\xf7N~\xdf\xeb\x97\x87\xd4\xf9U\x90" +
+	"\xa2\xab\xddJ\x87\xa1\xce\xf7\x7f}\xb9\xfe\xf8&\x90>" +
+	"\x04P\xb0\x13\x80\x0e\xb1\x15@:\xc2|\x80\xc6\xab\xe2" +
+	"\xb1G\x89\xfd\xeeE \xaa\xcb\xb8\xbc{\xb0R\xbd\xf0" +
+	"\xc6\x00@:\xc1\xf24\xce\xcc\xeb\x13,D\xaf\x98\x7f" +
+	"\xc6\xfd\xcf\x8b\x0f\x1f\xbc\x90^;\xc5t\xb6\x0cHu" +
+	"!\xf6d\xf9\xf0\xe4\x81\xc1`\xa9E\xac\xc0\xf2\xf4\x96" +
+	"\x10+\xb0\x10]\x12b\xfe\xa3\x1f\x13S\xc9B\x09\"" +
+	"}\x88\x00\xb2y:'\xc4\xe6\x84X\xa8\xd4\xf3)\xb5" +
+	"y\xe4-\x10\x15m\xb1:\xf4\x19\xcb\xd3\xe7\xac\xfeg" +
+	"\xde\x8d^\xec\x8f&\x8bg\xdf9\xb5\xde\x8b\x94\x1f\xc4" +
+	"\xf9\xae\xf5\xb1\x9f\xd7\xefV\xd7Z\x8c\xd5X\x9e\xfe\x12" +
+	"B5\x16\xa2\x07\xb9i\xcc\x9d:\xb7\xb9p\xfb\xc7Z" +
+	"=\xa5\xd0\xea\xe6+ \x1b\xe5;e^\xee\xdaWq" +
+	"R6\x84\xe3\x0dA\x91\x83\xb2\xe7\xeaB\xf1\x9b\xb3=" +
+	"*\xaf\x02R\xc2\xcd\xf3\xd3cg\xee\x9d\xba\xd6Q\x15" +
+	".\xfcO+\xffi\xda\xf1\xaa\xe9b\x88\xe7\xe9\x08\x17" +
+	"O\xc3C4.\\\x0c\xcf\xd2\xa5\xf2\xf9=5\xa7X" +
+	"\x80\x7f\x01\xa4A\xee\x03\xe3\x1f\xbe\x1bFN\xcf\xe6N" +
+	"\\\xf2&%-=\x9d\x1e\x8dy\xb9g\\\xcf\xce\xb2" +
+	"\\\x16 \"\xbbd\x00\x19\x01\x88\xea\x06\x88t\xb90" +
+	"\xf2\xbf\x84\x98\xc3^\x90\xb0\x17\xb0Q\x0c>Q\x1d\x0f" +
+	"#Fd\x97\xe2\x18\x0b\xb4:G\x88\x1b$\xa2t\"" +
+	"\xf7c\x18q\x0b7\xee\xe5\x9e\xb0\x96\xd1x\xb6\x89:" +
+	"lS\x07R:c3\xdb\x91\x136\xd9z\x11\xb4\x06" +
+	"\xe0\xcf\xe4X{\xb23\xef\x14* \xa1\xd2J\x8d\xd6" +
+	"\xa9m\x8b\x92H\xec\x11\x03D\x02[\xc9\x89\xbf\xe9u" +
+	"\x06{@\xc2\x9eVv\xccNlm\x0dZ\x8b\xbds" +
+	"\xaf\x1b\xdc6\x9ev\xe8\xc6ts74\xab4\xe0\xe5" +
+	"z.53\xe9\x19\xd7\x07\x84\xb8S\xe0\x90-\xd0\x99" +
+	"\xd1\xb3\xcd\xcf\xa85B\x05\xecP\xd6\xac\xa3\xb5A\x84" +
+	"\x8c\x8aP\xbe:\xc6\x91\xac\xd5BX\xeb33l7" +
+	"Ji3\xa1\xe5\xe1w\x00\x00\x00\xff\xff9\xd7e\xf8"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
-		String: schema_c4b468a2826bb79b,
+		String: schema_f22d616110f0b140,
 		Nodes: []uint64{
-			0x9e2108f9306a75ef,
-			0xba9eff6fb3abc84f,
-			0xc506e9c0e16825f7,
+			0x86aae6bcee1a970d,
+			0xac121e5aa82ca6bd,
+			0xc102bb9ca7ace092,
+			0xc64526206425c2ab,
+			0xc68563695ada2a40,
+			0xd227ef68de0bc647,
+			0xd444a663531a6b53,
+			0xdcf28e81fa4de615,
+			0xdcf58b9bef546812,
+			0xf01d08c96dc98cc9,
+			0xf1a69b7e24044504,
+			0xf2067f36913b4d37,
+			0xf91866c9ad137532,
 		},
 		Compressed: true,
 	})

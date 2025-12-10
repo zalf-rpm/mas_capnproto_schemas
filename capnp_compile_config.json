@@ -3,54 +3,39 @@
     "schemas_dir": "zalfmas_capnp_schemas",
     "output_base": "gen"
   },
-  "schemas": {
-    "x.capnp": { "output_dir": "test" },
-    "a.capnp": { "output_dir": "test" },
-    "climate.capnp": { "output_dir": "climate" },
-    "cluster_admin_service.capnp": { "output_dir": "cluster" },
-    "common.capnp": { "output_dir": "common" },
-    "config.capnp": { "output_dir": "config" },
-    "crop.capnp": { "output_dir": "crop" },
-    "date.capnp": { "output_dir": "common" },
-    "fbp.capnp": { "output_dir": "fbp" },
-    "field_exp_data.capnp": { "output_dir": "data" },
-    "geo.capnp": { "output_dir": "geo" },
-    "grid.capnp": { "output_dir": "grid" },
-    "jobs.capnp": { "output_dir": "jobs" },
-    "management.capnp": { "output_dir": "management" },
-    "model.capnp": { "output_dir": "model" },
-    "persistence.capnp": { "output_dir": "persistence" },
-    "registry.capnp": { "output_dir": "registry" },
-    "service.capnp": { "output_dir": "service" },
-    "soil.capnp": { "output_dir": "soil" },
-    "storage.capnp": { "output_dir": "storage" },
-    "web-berest-data-import.capnp": { 
-      "output_dir": "model/weberest",
-      "base_path": "model/weberest" 
-    },
-    "yieldstat.capnp": { 
-      "output_dir": "model/yieldstat",
-      "base_path": "model/yieldstat" 
-    },
-    "monica_management.capnp": { 
-      "output_dir": "model/monica",
-      "base_path": "model/monica"
-    },
-    "monica_params.capnp": { 
-      "output_dir": "model/monica",
-      "base_path": "model/monica"
-    },
-    "monica_state.capnp": { 
-      "output_dir": "model/monica",
-      "base_path": "model/monica"
-    },
-    "soil_params.capnp": { 
-      "output_dir": "model/monica",
-      "base_path": "model/monica"
-    }
-  },
+  "schemas": [
+    "test/x.capnp",
+    "test/a.capnp",
+    "climate/climate.capnp",
+    "cluster/cluster_admin_service.capnp",
+    "common/common.capnp",
+    "config/config.capnp",
+    "crop/crop.capnp",
+    "common/date.capnp",
+    "fbp/fbp.capnp",
+    "data/field_exp_data.capnp",
+    "geo/geo.capnp",
+    "grid/grid.capnp",
+    "jobs/jobs.capnp",
+    "management/management.capnp",
+    "model/model.capnp",
+    "persistence/persistence.capnp",
+    "registry/registry.capnp",
+    "service/service.capnp",
+    "soil/soil.capnp",
+    "storage/storage.capnp",
+    "model/weberest/web_berest_data_import.capnp",
+    "model/yieldstat/yieldstat.capnp",
+    "model/monica/monica_management.capnp",
+    "model/monica/monica_params.capnp",
+    "model/monica/monica_state.capnp",
+    "model/monica/soil_params.capnp"
+  ],
   "presets": {
-    "common": ["common.capnp", "date.capnp"],
-    "mgmt": [ "monica_management.capnp", "management.capnp"]
+    "common": ["common/common.capnp", "common/date.capnp"],
+    "mgmt": [
+      "model/monica/monica_management.capnp",
+      "management/management.capnp"
+    ]
   }
 }

@@ -1,4 +1,4 @@
-"""This is an automatically generated stub for `web-berest-data-import.capnp`."""
+"""This is an automatically generated stub for `web_berest_data_import.capnp`."""
 
 from collections.abc import Awaitable
 from typing import Any, NamedTuple, Protocol, override

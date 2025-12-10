@@ -9,12 +9,12 @@ import (
 	schemas "capnproto.org/go/capnp/v3/schemas"
 	server "capnproto.org/go/capnp/v3/server"
 	context "context"
-	climate "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/climate"
-	common "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/common"
-	management "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/management"
-	persistence "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/persistence"
-	service "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/service"
-	soil "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/soil"
+	climate "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/climate"
+	common "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/common"
+	management "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/management"
+	persistence "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/persistence"
+	service "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/service"
+	soil "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/soil"
 )
 
 type XYResult capnp.Struct
@@ -409,7 +409,7 @@ func (c ClimateInstance) Run(ctx context.Context, params func(ClimateInstance_ru
 		Method: capnp.Method{
 			InterfaceID:   0xdfcfeb783c4948fc,
 			MethodID:      0,
-			InterfaceName: "model.capnp:ClimateInstance",
+			InterfaceName: "model/model.capnp:ClimateInstance",
 			MethodName:    "run",
 		},
 	}
@@ -429,7 +429,7 @@ func (c ClimateInstance) RunSet(ctx context.Context, params func(ClimateInstance
 		Method: capnp.Method{
 			InterfaceID:   0xdfcfeb783c4948fc,
 			MethodID:      1,
-			InterfaceName: "model.capnp:ClimateInstance",
+			InterfaceName: "model/model.capnp:ClimateInstance",
 			MethodName:    "runSet",
 		},
 	}
@@ -449,7 +449,7 @@ func (c ClimateInstance) Info(ctx context.Context, params func(common.Identifiab
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -566,7 +566,7 @@ func ClimateInstance_Methods(methods []server.Method, s ClimateInstance_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xdfcfeb783c4948fc,
 			MethodID:      0,
-			InterfaceName: "model.capnp:ClimateInstance",
+			InterfaceName: "model/model.capnp:ClimateInstance",
 			MethodName:    "run",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -578,7 +578,7 @@ func ClimateInstance_Methods(methods []server.Method, s ClimateInstance_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xdfcfeb783c4948fc,
 			MethodID:      1,
-			InterfaceName: "model.capnp:ClimateInstance",
+			InterfaceName: "model/model.capnp:ClimateInstance",
 			MethodName:    "runSet",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -590,7 +590,7 @@ func ClimateInstance_Methods(methods []server.Method, s ClimateInstance_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1155,7 +1155,7 @@ func (c EnvInstance) Run(ctx context.Context, params func(EnvInstance_run_Params
 		Method: capnp.Method{
 			InterfaceID:   0xa5feedafa5ec5c4a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstance",
+			InterfaceName: "model/model.capnp:EnvInstance",
 			MethodName:    "run",
 		},
 	}
@@ -1175,7 +1175,7 @@ func (c EnvInstance) Info(ctx context.Context, params func(common.Identifiable_i
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -1195,7 +1195,7 @@ func (c EnvInstance) Save(ctx context.Context, params func(persistence.Persisten
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 	}
@@ -1215,7 +1215,7 @@ func (c EnvInstance) Stop(ctx context.Context, params func(service.Stoppable_sto
 		Method: capnp.Method{
 			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stoppable",
+			InterfaceName: "service/service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 	}
@@ -1334,7 +1334,7 @@ func EnvInstance_Methods(methods []server.Method, s EnvInstance_Server) []server
 		Method: capnp.Method{
 			InterfaceID:   0xa5feedafa5ec5c4a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstance",
+			InterfaceName: "model/model.capnp:EnvInstance",
 			MethodName:    "run",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1346,7 +1346,7 @@ func EnvInstance_Methods(methods []server.Method, s EnvInstance_Server) []server
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1358,7 +1358,7 @@ func EnvInstance_Methods(methods []server.Method, s EnvInstance_Server) []server
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1370,7 +1370,7 @@ func EnvInstance_Methods(methods []server.Method, s EnvInstance_Server) []server
 		Method: capnp.Method{
 			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stoppable",
+			InterfaceName: "service/service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1588,7 +1588,7 @@ func (c EnvInstanceProxy) RegisterEnvInstance(ctx context.Context, params func(E
 		Method: capnp.Method{
 			InterfaceID:   0x87cbebfc1164a24a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstanceProxy",
+			InterfaceName: "model/model.capnp:EnvInstanceProxy",
 			MethodName:    "registerEnvInstance",
 		},
 	}
@@ -1608,7 +1608,7 @@ func (c EnvInstanceProxy) Run(ctx context.Context, params func(EnvInstance_run_P
 		Method: capnp.Method{
 			InterfaceID:   0xa5feedafa5ec5c4a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstance",
+			InterfaceName: "model/model.capnp:EnvInstance",
 			MethodName:    "run",
 		},
 	}
@@ -1628,7 +1628,7 @@ func (c EnvInstanceProxy) Info(ctx context.Context, params func(common.Identifia
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -1648,7 +1648,7 @@ func (c EnvInstanceProxy) Save(ctx context.Context, params func(persistence.Pers
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 	}
@@ -1668,7 +1668,7 @@ func (c EnvInstanceProxy) Stop(ctx context.Context, params func(service.Stoppabl
 		Method: capnp.Method{
 			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stoppable",
+			InterfaceName: "service/service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 	}
@@ -1789,7 +1789,7 @@ func EnvInstanceProxy_Methods(methods []server.Method, s EnvInstanceProxy_Server
 		Method: capnp.Method{
 			InterfaceID:   0x87cbebfc1164a24a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstanceProxy",
+			InterfaceName: "model/model.capnp:EnvInstanceProxy",
 			MethodName:    "registerEnvInstance",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1801,7 +1801,7 @@ func EnvInstanceProxy_Methods(methods []server.Method, s EnvInstanceProxy_Server
 		Method: capnp.Method{
 			InterfaceID:   0xa5feedafa5ec5c4a,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstance",
+			InterfaceName: "model/model.capnp:EnvInstance",
 			MethodName:    "run",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1813,7 +1813,7 @@ func EnvInstanceProxy_Methods(methods []server.Method, s EnvInstanceProxy_Server
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1825,7 +1825,7 @@ func EnvInstanceProxy_Methods(methods []server.Method, s EnvInstanceProxy_Server
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1837,7 +1837,7 @@ func EnvInstanceProxy_Methods(methods []server.Method, s EnvInstanceProxy_Server
 		Method: capnp.Method{
 			InterfaceID:   0xcd5f6458232e9276,
 			MethodID:      0,
-			InterfaceName: "service.capnp:Stoppable",
+			InterfaceName: "service/service.capnp:Stoppable",
 			MethodName:    "stop",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1885,7 +1885,7 @@ func (c EnvInstanceProxy_Unregister) Unregister(ctx context.Context, params func
 		Method: capnp.Method{
 			InterfaceID:   0xc727892bd5c66f88,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstanceProxy.Unregister",
+			InterfaceName: "model/model.capnp:EnvInstanceProxy.Unregister",
 			MethodName:    "unregister",
 		},
 	}
@@ -1998,7 +1998,7 @@ func EnvInstanceProxy_Unregister_Methods(methods []server.Method, s EnvInstanceP
 		Method: capnp.Method{
 			InterfaceID:   0xc727892bd5c66f88,
 			MethodID:      0,
-			InterfaceName: "model.capnp:EnvInstanceProxy.Unregister",
+			InterfaceName: "model/model.capnp:EnvInstanceProxy.Unregister",
 			MethodName:    "unregister",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -2353,7 +2353,7 @@ func (c InstanceFactory) ModelInfo(ctx context.Context, params func(InstanceFact
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      0,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "modelInfo",
 		},
 	}
@@ -2373,7 +2373,7 @@ func (c InstanceFactory) NewInstance(ctx context.Context, params func(InstanceFa
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      1,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "newInstance",
 		},
 	}
@@ -2393,7 +2393,7 @@ func (c InstanceFactory) NewInstances(ctx context.Context, params func(InstanceF
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      2,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "newInstances",
 		},
 	}
@@ -2413,7 +2413,7 @@ func (c InstanceFactory) Info(ctx context.Context, params func(common.Identifiab
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -2532,7 +2532,7 @@ func InstanceFactory_Methods(methods []server.Method, s InstanceFactory_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      0,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "modelInfo",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -2544,7 +2544,7 @@ func InstanceFactory_Methods(methods []server.Method, s InstanceFactory_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      1,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "newInstance",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -2556,7 +2556,7 @@ func InstanceFactory_Methods(methods []server.Method, s InstanceFactory_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xce552eef738a45ea,
 			MethodID:      2,
-			InterfaceName: "model.capnp:InstanceFactory",
+			InterfaceName: "model/model.capnp:InstanceFactory",
 			MethodName:    "newInstances",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -2568,7 +2568,7 @@ func InstanceFactory_Methods(methods []server.Method, s InstanceFactory_Server) 
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -3014,119 +3014,120 @@ func (f InstanceFactory_newInstances_Results_Future) Struct() (InstanceFactory_n
 	return InstanceFactory_newInstances_Results(p.Struct()), err
 }
 
-const schema_9273388a9624d430 = "x\xda\xacWol\x1bg\x19\x7f\x9e{\xed]\x06)" +
-	"\xf6\xeb\xd7\xb1\x9d*QI\xea\xb2\xa6\xa3VC(\x94" +
-	"\x88)v t\x0e\x1a\xf39\xcb\xd4d\x1d\xec\x92\\" +
-	"2\x0f\xfb\x1c|\xe7\xccF\x1ba\x95\xd6m\xd5$\xa6" +
-	"\xa2\xf2a\xea\xca:\xa9\x1d\x9bX+&\xd84M\x05" +
-	"Q`\xa5\xcb\xd8\xc8X$R\xa0\x1d\xd5\xf8\xb7\xad\x82" +
-	"}d*=\xf4\x9e}\xbe\xd7\x8e\x93\xb4\xd2\x94\x0f9" +
-	"\xbf\xf7\xf8y\x9e\xf7\xf7\xfb=\x7f\xbc\xc3\x94\xe3\x9e\xde" +
-	"\x0dg6\x834\xf2$z\xaf\xb3\xc6\x96\xbf\xf9\xd5\xc9" +
-	"C\x91\x07\x80F\x10\xc0\x8b\xb2\x1f\xfb\xce\xd2\x8d\x08\xc8" +
-	"\x16\xe9\x00\xa0u\xe2\x8f/\xfc\xbdo\x9a\xed\x03\xba\x15" +
-	"\x01<\xfc}W\xe0M\x04\x8f\xd5\xf2\xc6\xf9\xd7^\xd9" +
-	"\xdd\xf9 \xd0V\xb4v\xbc\x15\xfd\xc1\x81]\xc6A\xf0" +
-	"J2\x00k\x0b<\xcb:\x03\xfc\xa9=p/\xa05" +
-	"\xfc\xd4\x14\xbd\xfc\xde\xc2C@[\x89k\x0b\xe0Gv" +
-	"(\xf0.;\x1a\x08\x03\xb0\xe7\x02\xbb\x99\x97\x85\xd9(" +
-	"\x0b[\x9d\xdb\x7f\x7f\xd7\xc4\x0b\xfb\xbf\xd7\xcc\xf9({" +
-	"\x95\xa9\x8c?\xdd\xc9\xb8\xf3\xa1]]\x87F\x94w\x8e" +
-	"\x00\xed\xb0S\x04\xe8;\xcb\xbe\xcdS\x1c\xde\xfb\xfe\xb1" +
-	"\x93\x97\xae\x1ck\x12\xf6g\xec4;e;y\x89\xed" +
-	"f\xd7\x07?\xcf\xba\x82a\xeb\xee\x8f\x1d\xfd\xfawc" +
-	"??\x0eJ+\x8aq\x91\x1bv\x05\x0f\xb0\x9e \xcf" +
-	"\xb47\xc8\xe3\xbe\xfd\xfec'\xf6\x9e\xe8}F\xc4\xee" +
-	"\x89`7\xc7\xeeX\x90c\xd7]\"\x9f\x9a\x08>\xf1" +
-	"l%1\xdbI\xdfo\x82i\x1b\\\xdb\xe0\xf6\x07\x8e" +
-	"\xdf\xf8b\xc7\xe3'E\x03l;\xc0\x0dh\x1b7\xb8" +
-	"o>\xf0\x81\xbe\xff\xf2\x8b\x0d0p\x1a\xd8P\xdb>" +
-	"\x96l\xe3\x89\x0d\xb5\xfd\x03\x80\xdd\x12\xf2Yo\x1e9" +
-	"\xf5h\xee\xe5\xbeS@\xa9\xe4^\x06\x90\x0d\x85\x9eg" +
-	"\xb7\x84\xb8q24\x0fh\x9d\xdc\x968\xfb\xe8\xdb\xc9" +
-	"_\x08\x98\xdd\x1f\xba\x87c\xf6p\xfe\x95\xa5\x1b\x1f\xb9" +
-	"\xe1\x0c\xd0N\xe2\xf2\xc61\xeb\xcb\x84\x06\x91\x95m/" +
-	"\xc5\xd0nv\x96?Y\xbf6\x9f;\x7f\xdf;_x" +
-	"M\xbc\xc3OB\x83\xfc\x0e/\x85\xf8\x1d\xde\x1d:`" +
-	"\xfc;6\xfaz\x03\x09\xc8\x96C\x17\xd9\xdflo\x7f" +
-	"\x0d\x9daZ8\x0c`\xfd\xf4\x8e\xffn>>&-" +
-	"\x02\xed\xaca:\x1a>\xcd\xbdia\xee-\xf5\xa7\xc5" +
-	"o\xbd~\xe4\xc3eP:\xd0\xc9|1\xbc\x8f\x1b\xfc" +
-	"\xc56\xf8\xda\xcc3\xb7\x7f\xf8\xe3\xd4\x05\xd1\x837\xf2" +
-	"*7h\x8fp\x83;6oZZ\x9e/]\x10\x13" +
-	"V\"\xfd\xdc`\xcc6\xb8|s\xf2\x8b\xa5\xf7\xde\xb8" +
-	"\xb0\"\xe1\xfb#\x17\xd9#\x11\x9e\xf0\x83\x91\x87\xd8R" +
-	"\x84'<\xfcr\xf2\xb3\x0b\xfb\xba/\xd6q\x1c\x19\xb7" +
-	"9\xb6\xbdm\xfb\xd1\xf9\xfc\xfe_u\xfc\x0b\x94\xad\xe8" +
-	"T\xd0\x07\x91s\xdc\xc0\xdb\xce\x0d\x1e\xf6\xc8{\x8e^" +
-	"b\xff\x11=li\xb7o\xd4\xdb>\x00\x96\xfd7m" +
-	"\xe5\xf2SZ66\xa9\x92Y}\xb6\x7fH\x9fK\xea" +
-	"\x86\xa9\xea\x93Z\xacP\xd4\xa3)\xb5\xa0\x92\x9c\xa1x" +
-	"\x88\x07\xc0\x83\x00tC7\x80\xd2BP\xf9\xb2\x84\xb2" +
-	"\xa6\xcf\xa1\xdf\x15\x13@\x1c)nR<\x12\x8a\x87\x14" +
-	"\xc3\x8a\x07\x111E\x10\x03\x88n\xf9\x00\xa0\x1f\xb0\x96" +
-	"\xc2u\x0d)\xa4\x0a\xf9R96\xaa\x17\xb4\x99\x8ca" +
-	"j\x85X\xb1\xf6hg\x96C\xa3\xf6]\xe4\xdf\xdd3" +
-	"\x96\xd6|F1k\xa6\x10\x95\x96Z\xce=\x1b\x01\x94" +
-	"(A%.!E\x0cr\xbc\xe8M\xfcp\x17A\xe5" +
-	"6\x09I\xc9\xc0O\x80\x9d\xdf\xc7A\xe2\x8f\xa4\xdcx" +
-	"R\x8b$5f\xe9\xe3i\xf2\x1b\x0a\x1a\xc7q\xcb\xc9" +
-	"\x1b\x88VP<\xc4+\xa8\x10\x1d1Q\xfa\x14@\"" +
-	"\x88\x89(\xd2\x9d\xb2\xe5\xdc\x0e\x1d\xf7\xb2>\xa99\x88" +
-	"\xd6j\xc6N\xbf\xd9a\x1c\xed,j\xf0\xbal\x08\x88" +
-	"S\xbcAi\xe1lp\x16\x11\x15\xbfC\x8a[\x92\x18" +
-	"\xf0\xd6\x1f$Z\x90z\xd3\xf4\xfa~+\xad\x19fR" +
-	"\x9f-\x02\x9a\x03\xb7\x16\xcd\xd9\xa2Y\x8f\xcb\x9e\xb1T" +
-	"\xb6h\xa45N\x02\xc0*4\xec\x10h\xd8\xfe\x19\x00" +
-	"ekEO\xa4TF\xbf\xdb\xff\x01\xb9:6\x19\xa6" +
-	"j\xd6\xc8\xf0\x8b\xdd\xa7\x8e\x16\x0f\x0f\xefp\xf2\x15u" +
-	"\xd2\xcc\x17\xca1]\xbb\xd79\x8a\x0e\xd8\x921V\xe5" +
-	"\xd1\xce\xb6\xc2\x933\xbd\xd0i\xc5\x94v\x03$Z1" +
-	"\xd1\x81t\xbb,\x17\x8a\xfa\x0ad\xebX\x11\x0f\xe3h" +
-	"7\xfd\xa5\x9b\x0f\x8f-,\x9e|\x1e\x00,m\xe1s" +
-	"\x7f~\xf2\xdc\xd3\xbf\xe4\xcfs\x07c\x9b\xf7L}\xe3" +
-	"wW\x0b\xb3-\xf4\x11S5\x01l\xb6\xdd\xd6\x8c\xdb" +
-	"|\xb7\x95g5\x07qD\xda\xb3\xcdE\xbc\x06\xf8F" +
-	"\x17p\x9fY\x9e\xd5Ph\xef\x80^\x1f\x01$s\xab" +
-	"\xaa\xbfi\x9b\xe0|\xcbY\xb3\xaeO\xf4W\xfbDP" +
-	"\xc2\x81\x82\xad\x87\xaa\xac\x84\xe2\x0f4\xf2\xf7\xa5l&" +
-	"\xa7\x9a\x9a\xe8|D3\x9db\x17\xdd\x0fV\xddG%" +
-	"\x9c\x9fRM\xd5\xd0L'ej\xfd3\xa7_\x89\xff" +
-	"p\xee\xe9F\x8dx\xd7\xd1\x88\x11\xad(\xd7\xe0\xd8\xba" +
-	"\xb1\xd2\x00J+Ae\xab\x84V\xc6Q\x0b\x1an<" +
-	"\x97\xdb\xfaxX\x05\xcb\x96\x96\xbf\xe6P\xe5\xb4\xec%" +
-	"\xa8\xdc-\x14\x826\x0e\xa0L\x11Tf%\xa4\x92\x14" +
-	"D\x09\x80\xe6&\x00\x94,A\xa5$!%$\x88\x04" +
-	"\x80\x16\xb9\xa5IPyLB_A3L\xbb~\x85" +
-	"\x86k\xe3jfr\xda\x88V\xc8\x00\xd1\x8c\x06H(" +
-	"\xa0e\xe43\xd9T!?\x0dr&\xab!\xb5z\x0e" +
-	"'\xbe\x7f\xec\xf4\x8c\xe5\xbc\xcf\xcd\xe4\xcc\xa19M\x07" +
-	"\"\x16\xdf\xe0o\x1f\x9f\xf9\xdf\xa5;\x0fW/\x9a\xf0" +
-	" \xc5\xb4\xa8\xd6\x952\xdd\x14\xe3\xa2\xe4\x00T\xae\xb4" +
-	"\xb3\xdb\x0e\xb1\x9d\xff\x93\xe8\x96\x8d\x00Hh'\xff\xe4" +
-	"\xa1m\xfd\x00r.\xa3\xcb9\xb5D\x8c)Y\x9d\x9b" +
-	"\x19\xc8iS\x19U_\xbb\xcc\xed\x97I}:\x1fM" +
-	"\xa9\xbe\xba\"\xf7\xac3R\x84\xa2w6Rt&+" +
-	"\xa5\xe3\x00\x09?&>\x89\xb4W\xb6\x8aB?\xbf\x96" +
-	"\x9e\x9c\xc2\xf5E^\xd3\xdd:\x15\xb4\xa2;\xd6w3" +
-	"\x11\x179_(\xf3\xcb\xb5\xda\x97s\xf62\xfc\xc39" +
-	"re\xe1;\x0boQ%\x0d\x12M\xca\xe8\xee\xb9\xe8" +
-	"l\x0c\xf4\xa6\x09\x90\xe8N\x19\xa5\xdaZ\x84\xceJI" +
-	"{\xee\x01\x89v\xc9\x96\x839`>\x8e\x96SD\xc0" +
-	"'\x96\xf8\xd9\xc7\xcb\xaa:\x98\xc4\x16\xb8\xf6\xccw\xe8" +
-	"\x11^T\x9a@=B\xc3\xd5\xc2\xbcK,L\x00\xa4" +
-	"b\x97\xf9\xc8\xa6`\xa5.\xae\xba\x954\xc9\xf7 \x00" +
-	"\x8f\xa4tHh\xe9\xc5\xdc\x84V\xb8u\x1a\x9do\xa0" +
-	"\x81\x04$$\xeb.D\xcd\xc0i\xda\xb7\xc6\xab\xf0|" +
-	"Z\xc2:\xf5\"u7\x95:|D\xe1\xd6\xdd\x96\xac" +
-	"\xa6\xdb\xeaPm\x165\"\xad\xdb\x84\xea\xc4+\xba\xe7" +
-	"*\xaa,\x0f\\\xbc\xcef\x8d\xceo\x02\xda\xdb\x0d\x12" +
-	"\xdd\xc2\xc5\xeb\xfc\x16Bga\xa6\xed\xfd \xd1\x0d\xf6" +
-	"\x90\x8e\xe3@e\x82\xac!\xc0\xb5\xe6\x8e\x8d*Yw" +
-	"\xae\xf9\xdd\x9f\x95\x0dUy-\x1bm\xb3`\x83n\xb0" +
-	"y\xa389\xa9\x19\x06\"H\x88\xd7\xa0\xc4\xa6\xbde" +
-	"X \xa9\xber\xc4YF\x01\xff\x1f\x00\x00\xff\xff\xdb" +
-	"\x19\x91\xce"
+const schema_9273388a9624d430 = "x\xda\xacWkl\x14\xd7\x15>\xe7\xde\xdd\x8c\xa1P" +
+	"\xfbz\x1c9A\x10\xd7\xf6\xd2\x04Roq]Zb" +
+	"\x15\xed.\xadK\xec\xaa\xcd\xce\x9aD\x98\xd06k\xef" +
+	"\xe0l\xba3\xb3;3\xeb\xecJ\xa1.H!\x09J" +
+	"\xd4\x94*\xad\x84\x806\x91L\x9a\xa8\x01\x09\xb5\x89\x9a" +
+	"(\xad\xfaJ\x8a\x9cGic\x09h\x05Q\x94>\x13" +
+	"\xd4&R\x7f\x14\x01S\xdd\xd9\xbd;w\xed\x01\xe2\xa8" +
+	"\xe2\x07\xe3;g\xcf\xe3\xfb\xcew\xce\x9du\xdd7$" +
+	"#\xfd\xcb\xbf\x7f\x12\xc8\xe8\xc9%\xd1k\xbc\xb1S\xdf" +
+	"\xf8\xd2\xc4c\xd7\xed\x02v\x03\x02DQi\xc3\x81\xfe" +
+	"\xc2\x08\x02\xaa\x1b\x0b\x09@\xef\xc8\xc9g\xff:\xb0C" +
+	"\xdd\x0d,\x8e\x00\x11\xfe\xfe\x91\x02!\x10\xf1Z^?" +
+	"\xf3\xcaK\x9bW\xdd\x0f\xac\x1d\xbduo\xc4\xbe\xb7w" +
+	"\x83\xb3\x0f\xa2D\x01Pw\x15N\xab\x8f\x14\xf8\xd3C" +
+	"\x85{\x01\xbd\x91'r\xec\xc2;\xb3\x0f\x00k\xa7\x81" +
+	"-@\x1b\x0eD\x8d\x15\xa8^kt\x02\xa8\xdd\xc6f" +
+	"\xb5jt\xaa\xc7\x8dNoU\xdf\xef\xef\x1a\x7fv\xcf" +
+	"\xb7\xc3\xbc\x1f7\xce\xabs\x06\x7f:ap\xefC\x1b" +
+	"\xba\x1f\x1b\xd5\xde>\x04\xac\xc7\xcf\x11``\xa3\xf94" +
+	"B\xc4\x1b\xd9\xfe\xee\xcc\xd1s\x97f\x16\xc6U\xfb\xcc" +
+	"\xf7\xd5[L\xeed\xbd\xb9Y\xbd\xdf\xfc\xacz\xd0\xec" +
+	"\xf4\xee^\xfa\xf8\xd7\xbe\x15\xff\xf9a\xd0\xdaQ\x8e\x8b" +
+	"\xdc\xf0\xa0\xf9\xbc:c\xf2L\x9f1y\xdc7\xdf}" +
+	"\xf4\xc8\xf6#\xfdO\xc9\xe0]oe8x\xab-\x0e" +
+	"^O\x85~|\xbc\xe3\xe0\xd3\xb5\xc4|'\x03C\xd6" +
+	"nn\xa0\xf9\x06w\xec:|\xf3s+\xf7\x1f\x95\x0d" +
+	"vY\xcfs\x83\xef\xf8\x06\xf7M\xb7\xbfg\xee\xb9\xf0" +
+	"\xdc<\x188\x0f\xeao\xadc\xea\xab\x96\x0f\x88\xf57" +
+	"\x0eF\xb1\xd5\xfb\xc3\xa1\x17\x1f6^\x18x\x11X'" +
+	"\x09\x8a\x01T\x8f\x17\xdfR\xe7\x8a>f\xc5i@\xef" +
+	"\xe8\xda\xd4\xf1\x87\xdf\x1c\xfe\x85\x84Y\xb4\xb4\x9fc\xf6" +
+	"\xa0\xf5\xd2\xdc\xcd\x0f\xdd\xf82\xb0^\x1a\x10\xe7s\xf5" +
+	"\x9f\xa2\x8d\xea\x92\x12\xf7\x12-mV\xc7\xf8\x93\xf7\x1b" +
+	"\xf7\x993\xf7\xbd}\xcb+r\x0d\xa9\x92\xcdk\xf8r" +
+	"\x89\xd7\xf0\xcf\xa1\xbd\xce\xbf\xe2\xb7\xbf6\x8f\x04\x1c0" +
+	"J\xed\xa8\xee\xf4\xddUK/\xab\x17K\x9d\x00\xdeO" +
+	"\xee\xfco\xef\xe11r\x02Xo\x03\xd4s\xa5\xf7\xb9" +
+	";\xb4\xb9\xbb\xf4\x9fN\x94^;t\xfe\x14h=(" +
+	"R7\xecc\xdc`\xa7o\xf0\x95\xc9\xa7\xee8\xff\xe3" +
+	"\xf4Y\xd9\xc3\x8c}\x9e\x1b\xfc\xcc7\xb8\xb3\xb7k\xee" +
+	"\xd4t\xe5\xac\x9c\xf1{\xf6=\xdc\xe0\xa2op\xe1\xd6" +
+	"\xe1\xcfU\xdey\xfd\xec\x82\x8c\xbb\x9dvT\xfb\x1d\x9e" +
+	"q\x9f\xf3\x80\xba\xd3\xe1\x19\x8f\xbc0\xfc\xe9\xd9\xdd=" +
+	"o\xc9\xee\x0cg\xaf\x9f\x90\xc3\xdd\xad\xfd\xd1\x19k\xcf" +
+	"\xafW\xfe\x03\xb48\x0a\x11\x1dt\x96\x12@\xf5\xa7\xbe" +
+	"\xc1\x83\x11e\xeb\xe3\xe7\xd4\x7f\xcb\x1e\xe6\x1c\xbf\xa4\xbf" +
+	"8\x09\xf0>\xc4?\xf0\x0c+\xa7\x17>iX\x91\x9c" +
+	"^\x88Od\x8bfqp\xc8\x9c\x1a6\x1d7kN" +
+	"\xe8q\xbbl\xc6\xd2Y;k8\x00Z\x84F\x00\"" +
+	"\x08\xc0\x96\xf7\x00h-\x14\xb5/\x10Tts\x0a\xdb" +
+	"\x82\x1e\x04H\"\xc3.-BP>d\xd8\xa9E\x10" +
+	"\x11\xd3\x14\x91\xcb\xa6\xa1:\x00l\x03ld\xb244" +
+	"\x93\xb4mU\xaa\xf1\xdbM[\x9f\xcc;\xaen\xc7\xcb" +
+	"\x8dG\x91\xa0p\x10\xfc~\xebXFw\xca\xb4\xe0\xa6" +
+	"\x11\xb5\x96F\xf6kV\x00h1\x8aZ\x92 C\xec" +
+	"\xe0p\xb3\x8d\xfcp\x03Em\x0bAZq\xf0\xa3\xe0" +
+	"g\xfa\x11 \xfc\x91V\xe7\x9f4\xf2\xa5\x97\xcb\x97V" +
+	"\xaa\xbcbI*\xb8\xcd\x13\x15\x00\xd5m-B\xa3R" +
+	"/\xa3hI\xc6\x9e\x00Hu`*\x86l\xbd\xe2\x89" +
+	":Q\xb8W\xcc\x09] \xdc\x90\x9e_D\xd8a\x12" +
+	"\xfd,\x1ap\x07\xecH\x0c0\xbcQk\xe1\xecpV" +
+	"\x11\xb56AR\xa0ll\x8f6\x1f\xa4Z\x90E3" +
+	"l\xc9\xa0\x97\xd1\x1dw\xd8,\x96\x01\xdd\xc4me\xb7" +
+	"Xv\x1b\xe8\x10\x99\x8dt\xa1\xec$8%\x97ed" +
+	"\x9d\xc4H\xdf\xa7\x00\xb4\x9bjMF+Ul\x0b\x96" +
+	"\x09 o\x99.\xc7\xcd\xba\x0d^\xda\xe4I\xd6\xc4P" +
+	"4\xc8A\xd0\xf3\xc5\xec\x84k\xd9\xd5\xb8\xa9\xdf+\x8e" +
+	"b\xe9l+\xef\xa3\xb0\xd4k\xc8w\xd5\x98E\xac\x13" +
+	"'\xd6\"\x8a\x11\xcfX\x0f@j\x19\xa6V\"\xebS" +
+	"\x14\xbbl.\x80\xba\x89&\xf90\x89\xda2Do\xee" +
+	"\xd6\x03c\xb3'\x8e\x1e\x03\x00O\x9f\xfd\xcc\x9f\x7fx" +
+	"\xfa\xc9_\xf2\xe7\xa9}\xf1\xde\xad\xb9\xaf\xbf\xfaAq" +
+	"G\x91|\xa288\xeaf]\xbf\x07\x82\xb9\x8fk[" +
+	"\xb7T\x8b\xba\xa0\x00\x91\xadY\x1bP\xd0``E\xc0" +
+	"@\xab[-\xea(\xed\x0e\xc0h+\x05\xa4S\x97U" +
+	"\xc6\x15fJ\xad\x09\xd0\x91g\xca`}\xa6t\x10L" +
+	"\xd8\xb5\xf7\xb5\x96\x93\x06E{8\xad\x9f/\xe4\x8d\xac" +
+	"\xab\xcb!FuW\x0c\x069\xc8\xa6z\x90\x18\xc1\xe9" +
+	"\\\xd6\xcd:\xba+\xd2g\xde\xdf\x0d\xf3R\xf2\x07S" +
+	"O~\xb8\x06rb\x99\x84\x9fvSU\x19\x00m\x19" +
+	"E\xed&\x82^\xben\x09\xe8\x04A\x03\xc6\x9b\x836" +
+	"\x18\xec\xf2\xe1K\xfb\xaa\x14n\xb3\x9c\xad\xed\x14\xb5\xbb" +
+	"%\xc1\xe8\xdb\x00\xb4\x1cE\xadH\x90\x11\xd2\x81\x04\x80" +
+	"\x19\xe3\x00Z\x81\xa2V!\xc8(\xed@\x0a\xc0\xca\xdc" +
+	"\xd2\xa5\xa8=J\xb0\xd5\xd6\x1d\xd7\x17\xbb4\xad}\xa0" +
+	"\xdd\xbc\xa1\x8f\xeav\x1e\xa8\xee\xccC\x87\x01z\x8e\x95" +
+	"/\xa4mk\x07(\xf9\x82\x8e\xcc[s \xf5\xdd\x99" +
+	"_Mz\xe2\xbd1i\xb8CS\xba\x09T\x16\xe9\xa6" +
+	"\xdf\xed\x9f\xbcx\xee\xab\x07\xea\xe5\xa6\"\xc80#w" +
+	"r\x98\xfex\x07\xc7\xb7(\xd5\xa2\xaf\xbeZa\xeb{" +
+	"\xfc@}\xfc?\xc2V\xaf\x00@\xcaV\xf1\xbf\"\xec" +
+	"\xdaA\x00\xc5\xc8\x9b\x8a\x91\xadP'\xa7d\xa7&\x13" +
+	"\x86\x9e\xcbg\xcd\x0f\xc2\xa9o2l\xee\xb0\xfc\x06\xa2" +
+	"\xd2H\x88\\m7u\xf9\x93:\x18\x11\xe2b\x8cb" +
+	"\xbb3\xb6\x0d \xd5\x86\xa9\x8f!\xebW\xbc\xb2\xb4\x0e" +
+	"\x163\xd2\xd3\x18*\xb3\x10\x1d\xc42z\xd7\x82\xa6\x0c" +
+	"\x91\xda\x82\xe9\x1a\xb6\xe0\x9a\x91\xc2*/t\x99_\xa8" +
+	"\xb8)\xe2\x1fO\xd3K\xb3\xdf\x9c}\x83i\x19 l" +
+	"X\xc1\xe0\xe6\x8d\xe2\x06\xc36\x8e\x03a\xeb\x15$\x8d" +
+	"{\x1a\x8aK.[s\x0f\x10\xd6\xadx\x82\x05@+" +
+	"\x89\x9e\xd0\x19\xf0\xe5'\xff\xdd\xca\x95W\xdfq\xf2\xf0" +
+	"\x14\xd9_s\x05\xca\xc4f\x95^\xc4\xd2]\xfe\xd0\x90" +
+	"\xd1\x1a\xa9K\xf8.Y\xc2\x00\xc8\xe4\xd1\xf4\x7f[\xab" +
+	"5\xed,r\xf2\x84d\xbd\x0f\x80\xc7\xd3V\x12\xf4\xcc" +
+	"\xb21\xae\xdb\xb7\xed@\xf1\x0bt\x90\x02A*\x85Z" +
+	",Pa\xc3n[\x1d\xa9O\x10ljmd\xc1-" +
+	"\xa8\x09*\xb9\xab\x9b\x0a\xbfJS\xd7wuX\xec\xeb" +
+	"\xc8U'WHg7\x07A\xbdv?\xe1\x9d-\xbe" +
+	"\x03P|\xc2\xb0\xfe\x1e l5\xefl\xf1\xe9\x86\xe2" +
+	"v\xcf\xae\x1f\x04\xc2\x96\xfb\xbb?\x89\x89\xda\x1e\xbaB" +
+	"w^}\x87\xd56\xe5\xbc\xebw\xa8~\x1b\x1f\xc3\xf3" +
+	"\xf4\xab,\xfaB\x1d\x1asS\x10s\xda)OL\xe8" +
+	"\x8e\x83\x08\x04q\xf17\xad\xb0\x914\"\xd1\xd7,2" +
+	"yA2\xc0\xff\x05\x00\x00\xff\xff\xa8\x81\xfb\xe7"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{

@@ -3975,7 +3975,7 @@ Factory<Output>::Client::createRequest(::kj::Maybe< ::capnp::MessageSize> sizeHi
 template <typename Output>
 ::kj::Promise<void> Factory<Output>::Server::create(CreateContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "common.capnp:Factory", "create",
+      "common/common.capnp:Factory", "create",
       0xa869f50b8c586ed9ull, 0);
 }
 template <typename Output>
@@ -3988,7 +3988,7 @@ template <typename Output>
     case 0xb2afd1cb599c48d5ull:
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("common.capnp:Factory", interfaceId);
+      return internalUnimplemented("common/common.capnp:Factory", interfaceId);
   }
 }
 template <typename Output>
@@ -4006,7 +4006,7 @@ template <typename Output>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "common.capnp:Factory",
+          "common/common.capnp:Factory",
           0xa869f50b8c586ed9ull, methodId);
   }
 }
@@ -4247,7 +4247,7 @@ IOFactory<Input, Output>::Client::produceRequest(::kj::Maybe< ::capnp::MessageSi
 template <typename Input, typename Output>
 ::kj::Promise<void> IOFactory<Input, Output>::Server::produce(ProduceContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "common.capnp:IOFactory", "produce",
+      "common/common.capnp:IOFactory", "produce",
       0x9771e5b5c6a27b68ull, 0);
 }
 template <typename Input, typename Output>
@@ -4260,7 +4260,7 @@ template <typename Input, typename Output>
     case 0xb2afd1cb599c48d5ull:
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("common.capnp:IOFactory", interfaceId);
+      return internalUnimplemented("common/common.capnp:IOFactory", interfaceId);
   }
 }
 template <typename Input, typename Output>
@@ -4278,7 +4278,7 @@ template <typename Input, typename Output>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "common.capnp:IOFactory",
+          "common/common.capnp:IOFactory",
           0x9771e5b5c6a27b68ull, methodId);
   }
 }
@@ -4601,7 +4601,7 @@ Holder<T>::Client::valueRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
 template <typename T>
 ::kj::Promise<void> Holder<T>::Server::value(ValueContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "common.capnp:Holder", "value",
+      "common/common.capnp:Holder", "value",
       0xc83045ccbb0b6ac5ull, 0);
 }
 template <typename T>
@@ -4612,7 +4612,7 @@ template <typename T>
     case 0xc83045ccbb0b6ac5ull:
       return dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("common.capnp:Holder", interfaceId);
+      return internalUnimplemented("common/common.capnp:Holder", interfaceId);
   }
 }
 template <typename T>
@@ -4630,7 +4630,7 @@ template <typename T>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "common.capnp:Holder",
+          "common/common.capnp:Holder",
           0xc83045ccbb0b6ac5ull, methodId);
   }
 }
@@ -4708,7 +4708,7 @@ template <typename T>
     case 0xc83045ccbb0b6ac5ull:
       return  ::mas::schema::common::Holder<T>::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("common.capnp:IdentifiableHolder", interfaceId);
+      return internalUnimplemented("common/common.capnp:IdentifiableHolder", interfaceId);
   }
 }
 template <typename T>
@@ -4719,7 +4719,7 @@ template <typename T>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "common.capnp:IdentifiableHolder",
+          "common/common.capnp:IdentifiableHolder",
           0xee543d7c305d56f6ull, methodId);
   }
 }

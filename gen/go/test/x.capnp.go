@@ -6,7 +6,6 @@ import (
 	capnp "capnproto.org/go/capnp/v3"
 	text "capnproto.org/go/capnp/v3/encoding/text"
 	fc "capnproto.org/go/capnp/v3/flowcontrol"
-	schemas "capnproto.org/go/capnp/v3/schemas"
 	server "capnproto.org/go/capnp/v3/server"
 	context "context"
 	math "math"
@@ -108,7 +107,7 @@ func (c X) M(ctx context.Context, params func(X_m_Params) error) (X_m_Results_Fu
 		Method: capnp.Method{
 			InterfaceID:   0xdcf28e81fa4de615,
 			MethodID:      0,
-			InterfaceName: "x.capnp:X",
+			InterfaceName: "test/x.capnp:X",
 			MethodName:    "m",
 		},
 	}
@@ -221,7 +220,7 @@ func X_Methods(methods []server.Method, s X_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xdcf28e81fa4de615,
 			MethodID:      0,
-			InterfaceName: "x.capnp:X",
+			InterfaceName: "test/x.capnp:X",
 			MethodName:    "m",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -423,7 +422,7 @@ func (c Y) M(ctx context.Context, params func(Y_m_Params) error) (Y_m_Results_Fu
 		Method: capnp.Method{
 			InterfaceID:   0xac121e5aa82ca6bd,
 			MethodID:      0,
-			InterfaceName: "x.capnp:Y",
+			InterfaceName: "test/x.capnp:Y",
 			MethodName:    "m",
 		},
 	}
@@ -536,7 +535,7 @@ func Y_Methods(methods []server.Method, s Y_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xac121e5aa82ca6bd,
 			MethodID:      0,
-			InterfaceName: "x.capnp:Y",
+			InterfaceName: "test/x.capnp:Y",
 			MethodName:    "m",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -731,7 +730,7 @@ func (c Z) M(ctx context.Context, params func(Z_m_Params) error) (Z_m_Results_Fu
 		Method: capnp.Method{
 			InterfaceID:   0xc64526206425c2ab,
 			MethodID:      0,
-			InterfaceName: "x.capnp:Z",
+			InterfaceName: "test/x.capnp:Z",
 			MethodName:    "m",
 		},
 	}
@@ -844,7 +843,7 @@ func Z_Methods(methods []server.Method, s Z_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xc64526206425c2ab,
 			MethodID:      0,
-			InterfaceName: "x.capnp:Z",
+			InterfaceName: "test/x.capnp:Z",
 			MethodName:    "m",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1023,54 +1022,4 @@ type Z_m_Results_Future struct{ *capnp.Future }
 func (f Z_m_Results_Future) Struct() (Z_m_Results, error) {
 	p, err := f.Future.Ptr()
 	return Z_m_Results(p.Struct()), err
-}
-
-const schema_ffd06af2f026177b = "x\xda\x8c\x93\xcfk\xd4@\x14\xc7\xdfw&q\xb7\xdd" +
-	"\xeeav\x14\xa1\xe0/\xa8\x15E\x17\xf5\xe8\xa5\x01\x95" +
-	"\xd0\x83\xb0\xc9zHr[ba\xa3\x9bZ\xda\x0a\x8a" +
-	"'\x0f\xeaA\x11\xf4\"\xa8\xa7\x1e\xaa\xd5\xfe\x07\xeaA" +
-	"\x0f\x0b9\x08\"^*E<\xf5hk\xc1C\x05\x89" +
-	"LBLB\xd7\x1f\xb7\x81y\xef\xf3y\xdf\x97\xccq" +
-	"\x07\x86v\xa2~['f\x19\xfa\x8e\xb8\xfep\xf4\xeb" +
-	"\xab\xb5\xe7\xb7H\x0c\x83HG\x85H.\xb1\x05\x82\\" +
-	"b\x13\x84\xf8\xf5\xe2\xd1g\xde\xde\xc62\x89*\x8f\xaf" +
-	"\xef\x1e\xdf\xd8\xbc\xf8>&\x82\x8c\x98-\xdf1U\x1e" +
-	"1S~S\xa7\xf8\xc1\x97\xe5\xa7O^\xb27E\xd8" +
-	"\x0a{D\x90+\x09\xec\xc5\xdb\x83\x17\xf6\x8f\x9f\xedo" +
-	"\x83m1[\xfeL`[\xcc\x94\x07\xb8\x82\x19G>" +
-	"y\x81\x7f\xb3O\xd60@\xa4\xa9\xdb!\xae`C\\" +
-	"\xc1\xcc~\xedsw\xfd\xd0\x07\x12U\xe4\xb0Tz\x98" +
-	"\xdb\xf2\x18OO\xaa\xb6}i\xb4\xed/\x9e\xf9Xd" +
-	"Mr\x95r2\xb9\xdf\xb5v\xee\xc7\x8d{\x9b\xab\xdb" +
-	"\x06\x0b\xb8-\xc3\x04\x14pS\xdeO\x06kt\xcf\xaf" +
-	"?\xbe\xf3}5M\x99\xb0\xae\xf1\x05\xd2\xe2\xe8n\x14" +
-	"F\xd5=\x1bE\x8b\x9bL\xec\xf2\x09:\x1d_m\xfa" +
-	"\x9d\x99\xe9\x99Sp\x9a\xe1\x98=5w\xa5\xd2\x9b\x9f" +
-	"\xb34\xae\x11i \x12\xf5\x06\x91U\xe5\xb0v2`" +
-	"\x1e#\xc40B\xf8\xddFp[\x80\xa5q\xbd\xb0j" +
-	"d\xd3\x08\xd1 &\xf4\x0aB\x03-\xe4]p\x9b\xe1" +
-	"X\xab3\xdb\xe1a\xc9u2w\xed\xebN\xf5z\x97" +
-	"\x07\xf8\xbc\xdc\x97eC\xb6\xca?\xfa\x9c\xc1\xbeb\xb6" +
-	"\x00:1\xe8%W;u\x0d\xac\xf7!\xf2OD\x80" +
-	"(t\xc2\xfb\x8fe\xce\xa2F\x0c\xb5\x92\xd0\xc9\xc3e" +
-	"\xbf\x1a\xb2\xd7\xf0\xd7ef\xb2\xf2\x08\xff\x88<\x9dE" +
-	"\xfe\x15\x00\x00\xff\xff M\xdcB"
-
-func RegisterSchema(reg *schemas.Registry) {
-	reg.Register(&schemas.Schema{
-		String: schema_ffd06af2f026177b,
-		Nodes: []uint64{
-			0x86aae6bcee1a970d,
-			0xac121e5aa82ca6bd,
-			0xc102bb9ca7ace092,
-			0xc64526206425c2ab,
-			0xc68563695ada2a40,
-			0xd227ef68de0bc647,
-			0xd444a663531a6b53,
-			0xdcf28e81fa4de615,
-			0xdcf58b9bef546812,
-			0xf01d08c96dc98cc9,
-		},
-		Compressed: true,
-	})
 }
