@@ -1,4 +1,4 @@
-@0xc4b468a2826bb79b;
+@0xf22d616110f0b140;
 
 using Cxx = import "/capnp/c++.capnp";
 $Cxx.namespace("mas::rpc::test");
