@@ -60,6 +60,7 @@ def compile_schemas(
     lang: str,
     capnp_bin: str,
     config: CompilerConfig,
+    use_relative_paths: bool = False,
 ) -> None:
     """Compile Cap'n Proto schema files in a single call."""
     schema_dir = Path(config.paths.schemas_dir)
@@ -68,8 +69,13 @@ def compile_schemas(
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Build list of full schema paths
-    schema_paths = [str(schema_dir / schema) for schema in schemas]
+    # Build list of schema paths
+    if use_relative_paths:
+        # Files are already relative paths from execution directory
+        schema_paths = schemas
+    else:
+        # Build paths from schemas_dir
+        schema_paths = [str(schema_dir / schema) for schema in schemas]
 
     cmd = [
         capnp_bin,
@@ -149,21 +155,21 @@ def main() -> None:
     config = load_config(config_path)
 
     # Determine which files to compile
-    all_available_files = set(config.schemas)
+    use_relative_paths = False
     if args.preset:
+        # Use preset from config
         preset_files = config.presets.get(args.preset, [])
-        files_to_compile = set(preset_files)
+        if not preset_files:
+            print(f"Error: Preset '{args.preset}' not found in configuration")
+            sys.exit(1)
+        files_to_compile = preset_files
+    elif args.files:
+        # Files passed via --files are relative paths from execution directory
+        files_to_compile = args.files
+        use_relative_paths = True
     else:
-        files_to_compile = set(args.files) if args.files else all_available_files
-
-    # Validate requested files
-    invalid_files = files_to_compile - all_available_files
-    if invalid_files:
-        for file in invalid_files:
-            print(f"Warning: '{file}' not found in configuration file")
-
-    # Get valid files to compile
-    valid_files = sorted(files_to_compile & all_available_files)
+        # No files or preset specified, compile all from config
+        files_to_compile = config.schemas
 
     # Compile for each specified language
     for lang in args.lang:
@@ -188,7 +194,7 @@ def main() -> None:
         print(f"Using capnpc-{lang} at: {capnpc_path}")
 
         # Compile all schemas in a single call
-        compile_schemas(valid_files, lang, capnp_bin, config)
+        compile_schemas(files_to_compile, lang, capnp_bin, config, use_relative_paths)
 
 
 if __name__ == "__main__":
