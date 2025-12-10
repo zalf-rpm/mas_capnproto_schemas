@@ -43,7 +43,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /workspace
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 ca-certificates libstdc++6 curl && \
+    python3 python3-pip python3-venv ca-certificates libstdc++6 curl git && \
     curl -fsSLO https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
@@ -57,8 +57,11 @@ COPY --from=capnp-builder /out/capnpc-csharp /opt/capnpc-csharp
 RUN ln -s /opt/capnpc-csharp/capnpc-csharp /usr/local/bin/capnpc-csharp
 RUN ldconfig
 
+# Install capnpc-python plugin
+RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git@feature/capnpc-plugin-support"
+
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
-# Override languages via: docker run ... capnp-gen --lang c++ go
-# capnpc-go plugin installed in /usr/local/bin (already in default PATH)
+# Override languages via: docker run ... capnp-gen --lang c++ go python
+# capnpc-go and capnpc-python plugins installed in /usr/local/bin (already in default PATH)
 ENTRYPOINT ["python3", "capnp_compile.py"]
-CMD ["--lang", "c++", "go", "csharp"]
+CMD ["--lang", "c++", "go", "csharp", "python"]

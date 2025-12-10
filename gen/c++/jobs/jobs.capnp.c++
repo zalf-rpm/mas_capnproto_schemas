@@ -5,22 +5,23 @@
 
 namespace capnp {
 namespace schemas {
-static const ::capnp::_::AlignedData<51> b_a05b60b71ca38848 = {
+static const ::capnp::_::AlignedData<52> b_a05b60b71ca38848 = {
   {   0,   0,   0,   0,   6,   0,   6,   0,
      72, 136, 163,  28, 183,  96,  91, 160,
-     11,   0,   0,   0,   1,   0,   1,   0,
+     16,   0,   0,   0,   1,   0,   1,   0,
      12, 102,  46, 199, 237, 226, 231, 231,
       1,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   1,   0,   0,   0,
-    102,   1,   0,   0, 196,   1,   0,   0,
-     21,   0,   0,   0, 122,   0,   0,   0,
-     25,   0,   0,   0,   7,   0,   0,   0,
+    189,   1,   0,   0,  27,   2,   0,   0,
+     21,   0,   0,   0, 162,   0,   0,   0,
+     29,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     21,   0,   0,   0, 119,   0,   0,   0,
+     25,   0,   0,   0, 119,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    141,   0,   0,   0,  15,   0,   0,   0,
-    106, 111,  98, 115,  46,  99,  97, 112,
-    110, 112,  58,  74, 111,  98,   0,   0,
+    145,   0,   0,   0,  15,   0,   0,   0,
+    106, 111,  98, 115,  47, 106, 111,  98,
+    115,  46,  99,  97, 112, 110, 112,  58,
+     74, 111,  98,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   1,   0,   1,   0,
       8,   0,   0,   0,   3,   0,   4,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -63,27 +64,27 @@ static const ::capnp::_::AlignedData<51> b_a05b60b71ca38848 = {
 static const uint16_t m_a05b60b71ca38848[] = {0, 1};
 static const uint16_t i_a05b60b71ca38848[] = {0, 1};
 const ::capnp::_::RawSchema s_a05b60b71ca38848 = {
-  0xa05b60b71ca38848, b_a05b60b71ca38848.words, 51, nullptr, m_a05b60b71ca38848,
+  0xa05b60b71ca38848, b_a05b60b71ca38848.words, 52, nullptr, m_a05b60b71ca38848,
   0, 2, i_a05b60b71ca38848, nullptr, nullptr, { &s_a05b60b71ca38848, nullptr, nullptr, 0, 0, nullptr }, true
 };
 #endif  // !CAPNP_LITE
 static const ::capnp::_::AlignedData<33> b_b8745454d013cbf0 = {
   {   0,   0,   0,   0,   6,   0,   6,   0,
     240, 203,  19, 208,  84,  84, 116, 184,
-     11,   0,   0,   0,   3,   0,   0,   0,
+     16,   0,   0,   0,   3,   0,   0,   0,
      12, 102,  46, 199, 237, 226, 231, 231,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    198,   1,   0,   0,  30,   2,   0,   0,
-     21,   0,   0,   0, 154,   0,   0,   0,
+     29,   2,   0,   0, 117,   2,   0,   0,
+     21,   0,   0,   0, 194,   0,   0,   0,
      29,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      25,   0,   0,   0,  71,   0,   0,   0,
      65,   0,   0,   0,  39,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    106, 111,  98, 115,  46,  99,  97, 112,
-    110, 112,  58,  83, 101, 114, 118, 105,
-     99, 101,   0,   0,   0,   0,   0,   0,
+    106, 111,  98, 115,  47, 106, 111,  98,
+    115,  46,  99,  97, 112, 110, 112,  58,
+     83, 101, 114, 118, 105,  99, 101,   0,
       0,   0,   0,   0,   1,   0,   1,   0,
       4,   0,   0,   0,   3,   0,   5,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -119,22 +120,22 @@ const ::capnp::_::RawSchema s_b8745454d013cbf0 = {
 static const ::capnp::_::AlignedData<18> b_ea3ba97e764a031c = {
   {   0,   0,   0,   0,   6,   0,   6,   0,
      28,   3,  74, 118, 126, 169,  59, 234,
-     19,   0,   0,   0,   1,   0,   0,   0,
+     24,   0,   0,   0,   1,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     21,   0,   0,   0,  18,   1,   0,   0,
+     21,   0,   0,   0,  58,   1,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    106, 111,  98, 115,  46,  99,  97, 112,
-    110, 112,  58,  83, 101, 114, 118, 105,
-     99, 101,  46, 110, 101, 120, 116,  74,
-    111,  98,  36,  80,  97, 114,  97, 109,
-    115,   0,   0,   0,   0,   0,   0,   0, }
+    106, 111,  98, 115,  47, 106, 111,  98,
+    115,  46,  99,  97, 112, 110, 112,  58,
+     83, 101, 114, 118, 105,  99, 101,  46,
+    110, 101, 120, 116,  74, 111,  98,  36,
+     80,  97, 114,  97, 109, 115,   0,   0, }
 };
 ::capnp::word const* const bp_ea3ba97e764a031c = b_ea3ba97e764a031c.words;
 #if !CAPNP_LITE
@@ -146,22 +147,22 @@ const ::capnp::_::RawSchema s_ea3ba97e764a031c = {
 static const ::capnp::_::AlignedData<34> b_e067ec22521ebebb = {
   {   0,   0,   0,   0,   6,   0,   6,   0,
     187, 190,  30,  82,  34, 236, 103, 224,
-     19,   0,   0,   0,   1,   0,   0,   0,
+     24,   0,   0,   0,   1,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       1,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     21,   0,   0,   0,  26,   1,   0,   0,
+     21,   0,   0,   0,  66,   1,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
      29,   0,   0,   0,  63,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-    106, 111,  98, 115,  46,  99,  97, 112,
-    110, 112,  58,  83, 101, 114, 118, 105,
-     99, 101,  46, 110, 101, 120, 116,  74,
-    111,  98,  36,  82, 101, 115, 117, 108,
-    116, 115,   0,   0,   0,   0,   0,   0,
+    106, 111,  98, 115,  47, 106, 111,  98,
+    115,  46,  99,  97, 112, 110, 112,  58,
+     83, 101, 114, 118, 105,  99, 101,  46,
+    110, 101, 120, 116,  74, 111,  98,  36,
+     82, 101, 115, 117, 108, 116, 115,   0,
       4,   0,   0,   0,   3,   0,   4,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   1,   0,   0,   0,   0,   0,
@@ -208,7 +209,7 @@ Service::Client::nextJobRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
 }
 ::kj::Promise<void> Service::Server::nextJob(NextJobContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "jobs.capnp:Service", "nextJob",
+      "jobs/jobs.capnp:Service", "nextJob",
       0xb8745454d013cbf0ull, 0);
 }
 ::capnp::Capability::Server::DispatchCallResult Service::Server::dispatchCall(
@@ -222,7 +223,7 @@ Service::Client::nextJobRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("jobs.capnp:Service", interfaceId);
+      return internalUnimplemented("jobs/jobs.capnp:Service", interfaceId);
   }
 }
 ::capnp::Capability::Server::DispatchCallResult Service::Server::dispatchCallInternal(
@@ -239,7 +240,7 @@ Service::Client::nextJobRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "jobs.capnp:Service",
+          "jobs/jobs.capnp:Service",
           0xb8745454d013cbf0ull, methodId);
   }
 }

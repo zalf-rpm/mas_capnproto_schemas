@@ -5,6 +5,9 @@
 
 #include <capnp/generated-header-support.h>
 #include <kj/windows-sanity.h>
+#if !CAPNP_LITE
+#include <capnp/capability.h>
+#endif  // !CAPNP_LITE
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
@@ -12,8 +15,8 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include <climate.capnp.h>
-#include <date.capnp.h>
+#include <climate/climate.capnp.h>
+#include <common/date.capnp.h>
 #include "monica_management.capnp.h"
 
 CAPNP_BEGIN_HEADER

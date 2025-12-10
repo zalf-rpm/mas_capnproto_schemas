@@ -15,7 +15,7 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include "common.capnp.h"
+#include <common/common.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
@@ -2808,7 +2808,7 @@ Factory<Payload>::Client::createRequest(::kj::Maybe< ::capnp::MessageSize> sizeH
 template <typename Payload>
 ::kj::Promise<void> Factory<Payload>::Server::create(CreateContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "service.capnp:Factory", "create",
+      "service/service.capnp:Factory", "create",
       0x8ab0ecb99c269c7full, 0);
 }
 template <typename Payload>
@@ -2820,7 +2820,7 @@ Factory<Payload>::Client::serviceInterfaceNamesRequest(::kj::Maybe< ::capnp::Mes
 template <typename Payload>
 ::kj::Promise<void> Factory<Payload>::Server::serviceInterfaceNames(ServiceInterfaceNamesContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "service.capnp:Factory", "serviceInterfaceNames",
+      "service/service.capnp:Factory", "serviceInterfaceNames",
       0x8ab0ecb99c269c7full, 1);
 }
 template <typename Payload>
@@ -2833,7 +2833,7 @@ template <typename Payload>
     case 0xb2afd1cb599c48d5ull:
       return  ::mas::schema::common::Identifiable::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("service.capnp:Factory", interfaceId);
+      return internalUnimplemented("service/service.capnp:Factory", interfaceId);
   }
 }
 template <typename Payload>
@@ -2858,7 +2858,7 @@ template <typename Payload>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "service.capnp:Factory",
+          "service/service.capnp:Factory",
           0x8ab0ecb99c269c7full, methodId);
   }
 }

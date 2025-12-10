@@ -15,9 +15,9 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include "common.capnp.h"
-#include "persistence.capnp.h"
-#include "service.capnp.h"
+#include <common/common.capnp.h>
+#include <persistence/persistence.capnp.h>
+#include <service/service.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
@@ -7674,7 +7674,7 @@ Channel<V>::ChanReader::Client::readRequest(::kj::Maybe< ::capnp::MessageSize> s
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::read(ReadContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Reader", "read",
+      "fbp/fbp.capnp:Channel.Reader", "read",
       0x8bc69192f3bc97ccull, 0);
 }
 template <typename V>
@@ -7686,7 +7686,7 @@ Channel<V>::ChanReader::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> 
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::close(CloseContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Reader", "close",
+      "fbp/fbp.capnp:Channel.Reader", "close",
       0x8bc69192f3bc97ccull, 1);
 }
 template <typename V>
@@ -7698,7 +7698,7 @@ Channel<V>::ChanReader::Client::readIfMsgRequest(::kj::Maybe< ::capnp::MessageSi
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanReader::Server::readIfMsg(ReadIfMsgContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Reader", "readIfMsg",
+      "fbp/fbp.capnp:Channel.Reader", "readIfMsg",
       0x8bc69192f3bc97ccull, 2);
 }
 template <typename V>
@@ -7713,7 +7713,7 @@ template <typename V>
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("fbp.capnp:Channel.Reader", interfaceId);
+      return internalUnimplemented("fbp/fbp.capnp:Channel.Reader", interfaceId);
   }
 }
 template <typename V>
@@ -7745,7 +7745,7 @@ template <typename V>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "fbp.capnp:Channel.Reader",
+          "fbp/fbp.capnp:Channel.Reader",
           0x8bc69192f3bc97ccull, methodId);
   }
 }
@@ -7957,7 +7957,7 @@ Channel<V>::ChanWriter::Client::writeRequest(::kj::Maybe< ::capnp::MessageSize> 
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::write(WriteContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Writer", "write",
+      "fbp/fbp.capnp:Channel.Writer", "write",
       0xf7fec613b4a8c79full, 0);
 }
 template <typename V>
@@ -7969,7 +7969,7 @@ Channel<V>::ChanWriter::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> 
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::close(CloseContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Writer", "close",
+      "fbp/fbp.capnp:Channel.Writer", "close",
       0xf7fec613b4a8c79full, 1);
 }
 template <typename V>
@@ -7981,7 +7981,7 @@ Channel<V>::ChanWriter::Client::writeIfSpaceRequest(::kj::Maybe< ::capnp::Messag
 template <typename V>
 ::kj::Promise<void> Channel<V>::ChanWriter::Server::writeIfSpace(WriteIfSpaceContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel.Writer", "writeIfSpace",
+      "fbp/fbp.capnp:Channel.Writer", "writeIfSpace",
       0xf7fec613b4a8c79full, 2);
 }
 template <typename V>
@@ -7996,7 +7996,7 @@ template <typename V>
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("fbp.capnp:Channel.Writer", interfaceId);
+      return internalUnimplemented("fbp/fbp.capnp:Channel.Writer", interfaceId);
   }
 }
 template <typename V>
@@ -8028,7 +8028,7 @@ template <typename V>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "fbp.capnp:Channel.Writer",
+          "fbp/fbp.capnp:Channel.Writer",
           0xf7fec613b4a8c79full, methodId);
   }
 }
@@ -8680,7 +8680,7 @@ Channel<V>::Client::setBufferSizeRequest(::kj::Maybe< ::capnp::MessageSize> size
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::setBufferSize(SetBufferSizeContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "setBufferSize",
+      "fbp/fbp.capnp:Channel", "setBufferSize",
       0x9c62c32b2ff2b1e8ull, 0);
 }
 template <typename V>
@@ -8692,7 +8692,7 @@ Channel<V>::Client::readerRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::reader(ReaderContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "reader",
+      "fbp/fbp.capnp:Channel", "reader",
       0x9c62c32b2ff2b1e8ull, 1);
 }
 template <typename V>
@@ -8704,7 +8704,7 @@ Channel<V>::Client::writerRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::writer(WriterContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "writer",
+      "fbp/fbp.capnp:Channel", "writer",
       0x9c62c32b2ff2b1e8ull, 2);
 }
 template <typename V>
@@ -8716,7 +8716,7 @@ Channel<V>::Client::endpointsRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::endpoints(EndpointsContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "endpoints",
+      "fbp/fbp.capnp:Channel", "endpoints",
       0x9c62c32b2ff2b1e8ull, 3);
 }
 template <typename V>
@@ -8728,7 +8728,7 @@ Channel<V>::Client::setAutoCloseSemanticsRequest(::kj::Maybe< ::capnp::MessageSi
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::setAutoCloseSemantics(SetAutoCloseSemanticsContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "setAutoCloseSemantics",
+      "fbp/fbp.capnp:Channel", "setAutoCloseSemantics",
       0x9c62c32b2ff2b1e8ull, 4);
 }
 template <typename V>
@@ -8740,7 +8740,7 @@ Channel<V>::Client::closeRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
 template <typename V>
 ::kj::Promise<void> Channel<V>::Server::close(CloseContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "fbp.capnp:Channel", "close",
+      "fbp/fbp.capnp:Channel", "close",
       0x9c62c32b2ff2b1e8ull, 5);
 }
 template <typename V>
@@ -8755,7 +8755,7 @@ template <typename V>
     case 0xc1a7daa0dc36cb65ull:
       return  ::mas::schema::persistence::Persistent::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("fbp.capnp:Channel", interfaceId);
+      return internalUnimplemented("fbp/fbp.capnp:Channel", interfaceId);
   }
 }
 template <typename V>
@@ -8808,7 +8808,7 @@ template <typename V>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "fbp.capnp:Channel",
+          "fbp/fbp.capnp:Channel",
           0x9c62c32b2ff2b1e8ull, methodId);
   }
 }

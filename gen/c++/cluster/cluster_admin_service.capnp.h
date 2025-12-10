@@ -15,7 +15,7 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include "common.capnp.h"
+#include <common/common.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
@@ -5119,7 +5119,7 @@ Cluster::ValueHolder<T>::Client::valueRequest(::kj::Maybe< ::capnp::MessageSize>
 template <typename T>
 ::kj::Promise<void> Cluster::ValueHolder<T>::Server::value(ValueContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "cluster_admin_service.capnp:Cluster.ValueHolder", "value",
+      "cluster/cluster_admin_service.capnp:Cluster.ValueHolder", "value",
       0xd6acf080dcf2b4c8ull, 0);
 }
 template <typename T>
@@ -5131,7 +5131,7 @@ Cluster::ValueHolder<T>::Client::releaseRequest(::kj::Maybe< ::capnp::MessageSiz
 template <typename T>
 ::kj::Promise<void> Cluster::ValueHolder<T>::Server::release(ReleaseContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "cluster_admin_service.capnp:Cluster.ValueHolder", "release",
+      "cluster/cluster_admin_service.capnp:Cluster.ValueHolder", "release",
       0xd6acf080dcf2b4c8ull, 1);
 }
 template <typename T>
@@ -5142,7 +5142,7 @@ template <typename T>
     case 0xd6acf080dcf2b4c8ull:
       return dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("cluster_admin_service.capnp:Cluster.ValueHolder", interfaceId);
+      return internalUnimplemented("cluster/cluster_admin_service.capnp:Cluster.ValueHolder", interfaceId);
   }
 }
 template <typename T>
@@ -5167,7 +5167,7 @@ template <typename T>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "cluster_admin_service.capnp:Cluster.ValueHolder",
+          "cluster/cluster_admin_service.capnp:Cluster.ValueHolder",
           0xd6acf080dcf2b4c8ull, methodId);
   }
 }
@@ -5509,12 +5509,12 @@ inline bool Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder:
 inline  ::capnp::Text::Reader Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Reader::getRegistrationToken() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_bea41d4487c101c4 + 58);
+        ::capnp::schemas::bp_bea41d4487c101c4 + 59);
 }
 inline  ::capnp::Text::Builder Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder::getRegistrationToken() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS),
-        ::capnp::schemas::bp_bea41d4487c101c4 + 58);
+        ::capnp::schemas::bp_bea41d4487c101c4 + 59);
 }
 inline void Cluster::ModelInstanceFactory::RegisterModelInstanceParams::Builder::setRegistrationToken( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(

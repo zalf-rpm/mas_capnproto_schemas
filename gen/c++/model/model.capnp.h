@@ -15,12 +15,12 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include "climate.capnp.h"
-#include "common.capnp.h"
-#include "management.capnp.h"
-#include "persistence.capnp.h"
-#include "service.capnp.h"
-#include "soil.capnp.h"
+#include <climate/climate.capnp.h>
+#include <common/common.capnp.h>
+#include <management/management.capnp.h>
+#include <persistence/persistence.capnp.h>
+#include <service/service.capnp.h>
+#include <soil/soil.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
@@ -3319,7 +3319,7 @@ EnvInstance<RestInput, Output>::Client::runRequest(::kj::Maybe< ::capnp::Message
 template <typename RestInput, typename Output>
 ::kj::Promise<void> EnvInstance<RestInput, Output>::Server::run(RunContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "model.capnp:EnvInstance", "run",
+      "model/model.capnp:EnvInstance", "run",
       0xa5feedafa5ec5c4aull, 0);
 }
 template <typename RestInput, typename Output>
@@ -3336,7 +3336,7 @@ template <typename RestInput, typename Output>
     case 0xcd5f6458232e9276ull:
       return  ::mas::schema::service::Stoppable::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("model.capnp:EnvInstance", interfaceId);
+      return internalUnimplemented("model/model.capnp:EnvInstance", interfaceId);
   }
 }
 template <typename RestInput, typename Output>
@@ -3354,7 +3354,7 @@ template <typename RestInput, typename Output>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "model.capnp:EnvInstance",
+          "model/model.capnp:EnvInstance",
           0xa5feedafa5ec5c4aull, methodId);
   }
 }
@@ -3538,7 +3538,7 @@ EnvInstanceProxy<RestInput, Output>::Unregister::Client::unregisterRequest(::kj:
 template <typename RestInput, typename Output>
 ::kj::Promise<void> EnvInstanceProxy<RestInput, Output>::Unregister::Server::unregister(UnregisterContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "model.capnp:EnvInstanceProxy.Unregister", "unregister",
+      "model/model.capnp:EnvInstanceProxy.Unregister", "unregister",
       0xc727892bd5c66f88ull, 0);
 }
 template <typename RestInput, typename Output>
@@ -3549,7 +3549,7 @@ template <typename RestInput, typename Output>
     case 0xc727892bd5c66f88ull:
       return dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("model.capnp:EnvInstanceProxy.Unregister", interfaceId);
+      return internalUnimplemented("model/model.capnp:EnvInstanceProxy.Unregister", interfaceId);
   }
 }
 template <typename RestInput, typename Output>
@@ -3567,7 +3567,7 @@ template <typename RestInput, typename Output>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "model.capnp:EnvInstanceProxy.Unregister",
+          "model/model.capnp:EnvInstanceProxy.Unregister",
           0xc727892bd5c66f88ull, methodId);
   }
 }
@@ -3776,7 +3776,7 @@ EnvInstanceProxy<RestInput, Output>::Client::registerEnvInstanceRequest(::kj::Ma
 template <typename RestInput, typename Output>
 ::kj::Promise<void> EnvInstanceProxy<RestInput, Output>::Server::registerEnvInstance(RegisterEnvInstanceContext) {
   return ::capnp::Capability::Server::internalUnimplemented(
-      "model.capnp:EnvInstanceProxy", "registerEnvInstance",
+      "model/model.capnp:EnvInstanceProxy", "registerEnvInstance",
       0x87cbebfc1164a24aull, 0);
 }
 template <typename RestInput, typename Output>
@@ -3795,7 +3795,7 @@ template <typename RestInput, typename Output>
     case 0xcd5f6458232e9276ull:
       return  ::mas::schema::service::Stoppable::Server::dispatchCallInternal(methodId, context);
     default:
-      return internalUnimplemented("model.capnp:EnvInstanceProxy", interfaceId);
+      return internalUnimplemented("model/model.capnp:EnvInstanceProxy", interfaceId);
   }
 }
 template <typename RestInput, typename Output>
@@ -3813,7 +3813,7 @@ template <typename RestInput, typename Output>
     default:
       (void)context;
       return ::capnp::Capability::Server::internalUnimplemented(
-          "model.capnp:EnvInstanceProxy",
+          "model/model.capnp:EnvInstanceProxy",
           0x87cbebfc1164a24aull, methodId);
   }
 }

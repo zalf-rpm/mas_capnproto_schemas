@@ -58,7 +58,6 @@ add_library(capnp_schemas_lib
 		storage/storage.capnp.h
 		storage/storage.capnp.c++
 
-
 		model/yieldstat/yieldstat.capnp.h
 		model/yieldstat/yieldstat.capnp.c++
 
@@ -68,8 +67,8 @@ add_library(capnp_schemas_lib
 		test/a.capnp.c++
 )
 
-target_link_libraries(capnp_schemas_lib 
-	PUBLIC 
+target_link_libraries(capnp_schemas_lib
+	PUBLIC
 	CapnProto::capnp
 	CapnProto::capnpc
 	CapnProto::capnp-rpc
@@ -77,7 +76,7 @@ target_link_libraries(capnp_schemas_lib
 	CapnProto::kj-async
 	CapnProto::kj-http
 	CapnProto::kj-gzip
-	CapnProto::capnp-json	
+	CapnProto::capnp-json
 )
 target_include_directories(capnp_schemas_lib
 		PUBLIC
