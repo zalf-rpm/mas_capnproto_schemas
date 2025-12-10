@@ -3,6 +3,7 @@
     "schemas_dir": "zalfmas_capnp_schemas",
     "output_base": "gen"
   },
+  "comment": "Schema paths below are relative to schemas_dir. Files passed via --files are relative to execution directory.",
   "schemas": [
     "test/x.capnp",
     "test/a.capnp",
