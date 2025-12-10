@@ -5,7 +5,7 @@ on:
       languages:
         description: "Languages to generate (space-separated)"
         required: false
-        default: "c++ go csharp"
+        default: "c++ go csharp python"
       capnp_version:
         description: "Override CAPNP_VERSION build arg"
         required: false
@@ -44,7 +44,7 @@ jobs:
             echo "Generating for languages: $langs"
             docker run --rm -u $(id -u):$(id -g) -v "$PWD":/workspace -w /workspace capnp-gen --lang $langs
           else
-            echo "Generating for default languages (c++ go csharp)"
+            echo "Generating for default languages (c++ go csharp python)"
             docker run --rm -u $(id -u):$(id -g) -v "$PWD":/workspace -w /workspace capnp-gen
           fi
       - name: Show diff (if any)

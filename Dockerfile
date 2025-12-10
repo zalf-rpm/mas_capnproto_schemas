@@ -61,7 +61,7 @@ RUN ldconfig
 RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git@feature/capnpc-plugin-support"
 
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
-# Override languages via: docker run ... capnp-gen --lang c++ go
-# capnpc-go plugin installed in /usr/local/bin (already in default PATH)
+# Override languages via: docker run ... capnp-gen --lang c++ go python
+# capnpc-go and capnpc-python plugins installed in /usr/local/bin (already in default PATH)
 ENTRYPOINT ["python3", "capnp_compile.py"]
-CMD ["--lang", "c++", "go", "csharp"]
+CMD ["--lang", "c++", "go", "csharp", "python"]
