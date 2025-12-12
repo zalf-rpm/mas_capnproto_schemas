@@ -253,6 +253,20 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   start @5 ();
   # start process
 
-  stop @6 () -> (success :Bool);
+  stop @6 ();
   # stop process
+
+  enum State {
+    started   @0; # process is running
+    stopped   @1; # process is not running
+    canceled  @2; # stop requested but still running
+  }
+
+  interface StateTransition {
+    stateChanged @0 (old :State, new :State);
+  }
+
+  state @8 (transitionCallback :StateTransition) -> (currentState :State);
+  # return current state of process and
+  # optionally ask for notifications if there's a state transition
 }
