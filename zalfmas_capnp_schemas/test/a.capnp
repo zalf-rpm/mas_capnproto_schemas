@@ -1,0 +1,19 @@
+@0xf22d616110f0b140;
+
+using Cxx = import "/capnp/c++.capnp";
+$Cxx.namespace("mas::rpc::test");
+
+using Python = import "/capnp/python.capnp";
+$Python.module("mas.schema.test");
+
+using Java = import "/capnp/java.capnp";
+$Java.package("de.zalf.mas");
+$Java.outerClassname("OuterA");
+
+using Go = import "/capnp/go.capnp";
+$Go.package("test");
+$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/test");
+
+interface A {
+    method @0 (param :Text) -> (res :Text);
+}

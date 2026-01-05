@@ -10,7 +10,7 @@ namespace Mas.Rpc.Test
 {
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-        TypeId(0xba9eff6fb3abc84fUL),
+        TypeId(0xf2067f36913b4d37UL),
         Proxy(typeof(Mas.Rpc.Test.A_Proxy)),
         Skeleton(typeof(Mas.Rpc.Test.A_Skeleton))
     ]
@@ -21,7 +21,7 @@ namespace Mas.Rpc.Test
 
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-        TypeId(0xba9eff6fb3abc84fUL)
+        TypeId(0xf2067f36913b4d37UL)
     ]
     public class A_Proxy : Proxy, IA
     {
@@ -35,7 +35,7 @@ namespace Mas.Rpc.Test
             arg_?.serialize(in_);
             using (
                 var d_ = await Call(
-                    13447466392595712079UL,
+                    17439766479380368695UL,
                     0,
                     in_.Rewrap<DynamicSerializerState>(),
                     false,
@@ -51,7 +51,7 @@ namespace Mas.Rpc.Test
 
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-        TypeId(0xba9eff6fb3abc84fUL)
+        TypeId(0xf2067f36913b4d37UL)
     ]
     public class A_Skeleton : Skeleton<IA>
     {
@@ -60,7 +60,7 @@ namespace Mas.Rpc.Test
             SetMethodTable(Method);
         }
 
-        public override ulong InterfaceId => 13447466392595712079UL;
+        public override ulong InterfaceId => 17439766479380368695UL;
 
         Task<AnswerOrCounterquestion> Method(
             DeserializerState d_,
@@ -89,11 +89,11 @@ namespace Mas.Rpc.Test
     {
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0xc506e9c0e16825f7UL)
+            TypeId(0xf91866c9ad137532UL)
         ]
         public class Params_Method : ICapnpSerializable
         {
-            public const UInt64 typeId = 0xc506e9c0e16825f7UL;
+            public const UInt64 typeId = 0xf91866c9ad137532UL;
 
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
@@ -151,11 +151,11 @@ namespace Mas.Rpc.Test
 
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
-            TypeId(0x9e2108f9306a75efUL)
+            TypeId(0xf1a69b7e24044504UL)
         ]
         public class Result_Method : ICapnpSerializable
         {
-            public const UInt64 typeId = 0x9e2108f9306a75efUL;
+            public const UInt64 typeId = 0xf1a69b7e24044504UL;
 
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {

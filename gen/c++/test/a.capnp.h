@@ -21,9 +21,9 @@ CAPNP_BEGIN_HEADER
 namespace capnp {
 namespace schemas {
 
-CAPNP_DECLARE_SCHEMA(ba9eff6fb3abc84f);
-CAPNP_DECLARE_SCHEMA(c506e9c0e16825f7);
-CAPNP_DECLARE_SCHEMA(9e2108f9306a75ef);
+CAPNP_DECLARE_SCHEMA(f2067f36913b4d37);
+CAPNP_DECLARE_SCHEMA(f91866c9ad137532);
+CAPNP_DECLARE_SCHEMA(f1a69b7e24044504);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -45,7 +45,7 @@ struct A {
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
-    CAPNP_DECLARE_INTERFACE_HEADER(ba9eff6fb3abc84f)
+    CAPNP_DECLARE_INTERFACE_HEADER(f2067f36913b4d37)
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
   };
   #endif  // !CAPNP_LITE
@@ -59,7 +59,7 @@ struct A::MethodParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(c506e9c0e16825f7, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(f91866c9ad137532, 0, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -74,7 +74,7 @@ struct A::MethodResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9e2108f9306a75ef, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(f1a69b7e24044504, 0, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE

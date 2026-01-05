@@ -9,8 +9,8 @@ import (
 	schemas "capnproto.org/go/capnp/v3/schemas"
 	server "capnproto.org/go/capnp/v3/server"
 	context "context"
-	common "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/common"
-	persistence "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/persistence"
+	common "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/common"
+	persistence "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/persistence"
 )
 
 type Job capnp.Struct
@@ -110,7 +110,7 @@ func (c Service) NextJob(ctx context.Context, params func(Service_nextJob_Params
 		Method: capnp.Method{
 			InterfaceID:   0xb8745454d013cbf0,
 			MethodID:      0,
-			InterfaceName: "jobs.capnp:Service",
+			InterfaceName: "jobs/jobs.capnp:Service",
 			MethodName:    "nextJob",
 		},
 	}
@@ -130,7 +130,7 @@ func (c Service) Info(ctx context.Context, params func(common.Identifiable_info_
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -150,7 +150,7 @@ func (c Service) Save(ctx context.Context, params func(persistence.Persistent_Sa
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 	}
@@ -267,7 +267,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xb8745454d013cbf0,
 			MethodID:      0,
-			InterfaceName: "jobs.capnp:Service",
+			InterfaceName: "jobs/jobs.capnp:Service",
 			MethodName:    "nextJob",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -279,7 +279,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -291,7 +291,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -484,31 +484,32 @@ func (p Service_nextJob_Results_Future) Job() Job_Future {
 	return Job_Future{Future: p.Future.Field(0, nil)}
 }
 
-const schema_e7e7e2edc72e660c = "x\xda|\x8f=k\x14Q\x18\x85\xcf\x99\xfb\xae3\x10" +
-	"C\xf6\xeeM%A!\x04D\xd1%\x12\"\x1a\x8b\xc4" +
-	"\x14\x1a\xa6\xda\x1b\xd3\x88\x8d3\xbb\xe3GHf\x96\x99" +
-	"I\xfc(L\xebo\x10\xc1\x88\x88\xa4\x10\xc1FA\x10" +
-	",\xc4b\x09ha#\x16b\x13P\x03\xfe\x83+\xa3" +
-	"\xee\xc6\xca\xee-\xcey\xde\xf3L\xaerNN\x0c?" +
-	"\x08\xe0\xd9Nm\x9f[\xb8\xfbh\xec\xc5\xe5K\x9b\xb0" +
-	"C\xa4\xdb\x7f\xa5\xf9n\xf7\xeb\xce\x0ej\xf4\xeb4\xd3" +
-	"r\xdb\x9c\x16\x1f0\xd3r\x030Oe\xc4\xfd\xec\x99" +
-	"\xf7KK\xe5K\xe8!\xb5\x97\x07\xcdC\xb9g\xb6~" +
-	"\x87\x1f\xcby\xb3-\x87\x01\xf7\xea\xf5\xc1\xc5\xf1\x1fW" +
-	"\xbf@\x1b\xa2\x82\x02So\xe5\x00A\xb3-\xb3\xa0\x1b" +
-	"S\xe1\xfa\x9d\xad3\xdf\xfe\x04\xaa\xf6\xd4\xae4\x88\xef" +
-	"n9\x8b\x8bf;\xeab6\xed\xce\x84Y\xdc\"m" +
-	"\xa0\x04\x10\x02\xfa\xc8Q\xc0N(\xdaI\x8f\xe4(I" +
-	"\xea\xe39`\x8f)\xdaS\x1eG:Q\x19\xb1A\xee" +
-	"\x09\x02l\x80.\xcd\xce\xad\xe5\xe5\xb5\x04\x87\xf20\x8b" +
-	"\x0b\x12\x1e\x09\x9e\x15j\xceo\xb4\xa2[+Y\xd4\x19" +
-	"|g\xda\x9d\xb9\x90\xe4\xeb\xd7U;\xa9\x16\x88\xaa\x01" +
-	"\x83\xd5\xec\xfbi=\x0fO\xd7\xfc\x8d4\xb9Y\x86Y" +
-	"<G\x1b\x90\xee\xe3\xc2\xfd\x8b\xbd\x0f\xcf\x9e\x03pI" +
-	"\xef\xe4\xe7\xcdOO\xdeTw\x9f\xae\xfa\xf4v\xd2\xfc" +
-	"\xdb\x9cXL\x8a\xb5\x15U\x16V\x06\xb2\xc3\xe3\x80\x0d" +
-	"\x14\xed\xa8G\x7f9\x8bY\xff\xc7\x8a\xac\x83\xff%\xb6" +
-	"\xa2<Ze\xf1+\x00\x00\xff\xff\xe6\x81\x8eD"
+const schema_e7e7e2edc72e660c = "x\xda\x9cP\xbfk\x14A\x14\xfe\xbe\x9d9\xf7\x04C" +
+	"v2)\x04\x83B\x08\x88\x12\xcf\x88 \x1a\x91$W" +
+	"h\xd8\xea&I#6\xee&\xeb\x8f\x90\xb9\x0d\xbb\x9b" +
+	"\xa8\x8di\xfd#,\x82\x16!\x85\x04\x05Q\x10\x04m" +
+	",\x0eA\x8bk\x82\x85\xd8\x04D!\x8d\xf5\xc8\xaa\xb7" +
+	"\x11\xc1&\xbc\xe6\xc1\xfb\xde\xf7kl\xeb\xc8\xa4<\xd3" +
+	"\xb7\xb1\x0dov\xf7`\xed\x80\x9b~\xf0x\xe8\xc5\xf5" +
+	"k\xeb0\x01\xe9\x0e\xddh\xbc\xfb\xfeeg\x075\xfa" +
+	"\x01\xf5\x05\xfbHOY\x1f\xd0\x97\xec\x1d@?\xb7\xfd" +
+	"n\xb7\xa3?\xcc\xcd\x15/\xa1\x02\xb1\x87\x07\xf5\xa6}" +
+	"\xab\x9f\xfe\x02?\xb1Wt\xd7\x1e\x07\xdc\xab\xd7Gg" +
+	"\x86\xbf\xdd\xfc\x0cu\x98(I\x81\xb3\xefm\x93\xa0\xee" +
+	"\xda\x09\xd0\x0d\x89p\xf5\xfe\xe6\xc5\xaf\xbf\x01\xb2\xbc\xff" +
+	"\xb0\xe3\x84\xdb\xd7\x8c\xba\xc54\xceO/\xa61\xf3\xc6" +
+	"|\xb4\xdc^\x1e\xf7\xc34n\x91\xa6.$ \x09\xa8" +
+	"\x13'\x013\"h\xc6<\x92\x83$\xa9Ne\x80\x19" +
+	"\x154\xe7=\xf6/DE\xc4\x01r\xaf\x1b\x80\x03\xa0" +
+	"k\xa7\x97W\xb2\xe2V\x82cY\x98\xc69\x09\x8f\x04" +
+	"\xa7$\x15\x9bk\xad\xe8\xdeR\x1a-T\x16\xbc\x9e\x85" +
+	"\xd9$[\xbd=\x9f\xa0\xb4!E\x0d\xa8R\xb3\xd7\x8f" +
+	"RMx\xaa\xe6\xaf\xb5\x93\xbbE\x98\xc6\x934u\xd2" +
+	"u\xa7\x1f^\xed|\xdcz\x06\xc0%\x9ds\x9f\xd6\xb7" +
+	"7\xde\x94{OB\xfe#\xd1\xf8\xf3>2\x93\xe4+" +
+	"KE\x0e#\xab\xd8}\xc3\x80\xa9\x0b\x9aA\x8f~\xd9" +
+	"P\xf0W>2\x00+Z\xf1?\xda\x89V\x94E6" +
+	"\xff\x19\x00\x00\xff\xff\xb9u\xb79"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{

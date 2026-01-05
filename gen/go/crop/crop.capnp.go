@@ -9,9 +9,9 @@ import (
 	schemas "capnproto.org/go/capnp/v3/schemas"
 	server "capnproto.org/go/capnp/v3/server"
 	context "context"
-	common "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/common"
-	persistence "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/persistence"
-	registry "github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/registry"
+	common "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/common"
+	persistence "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/persistence"
+	registry "github.com/zalf-rpm/mas_capnproto_schemas/gen/go/registry"
 )
 
 type Crop capnp.Client
@@ -25,7 +25,7 @@ func (c Crop) Parameters(ctx context.Context, params func(Crop_parameters_Params
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      0,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "parameters",
 		},
 	}
@@ -45,7 +45,7 @@ func (c Crop) Cultivar(ctx context.Context, params func(Crop_cultivar_Params) er
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      1,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "cultivar",
 		},
 	}
@@ -65,7 +65,7 @@ func (c Crop) Species(ctx context.Context, params func(Crop_species_Params) erro
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      2,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "species",
 		},
 	}
@@ -85,7 +85,7 @@ func (c Crop) Info(ctx context.Context, params func(common.Identifiable_info_Par
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -105,7 +105,7 @@ func (c Crop) Save(ctx context.Context, params func(persistence.Persistent_SaveP
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 	}
@@ -226,7 +226,7 @@ func Crop_Methods(methods []server.Method, s Crop_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      0,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "parameters",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -238,7 +238,7 @@ func Crop_Methods(methods []server.Method, s Crop_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      1,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "cultivar",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -250,7 +250,7 @@ func Crop_Methods(methods []server.Method, s Crop_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xe88d97a324bf5c84,
 			MethodID:      2,
-			InterfaceName: "crop.capnp:Crop",
+			InterfaceName: "crop/crop.capnp:Crop",
 			MethodName:    "species",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -262,7 +262,7 @@ func Crop_Methods(methods []server.Method, s Crop_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -274,7 +274,7 @@ func Crop_Methods(methods []server.Method, s Crop_Server) []server.Method {
 		Method: capnp.Method{
 			InterfaceID:   0xc1a7daa0dc36cb65,
 			MethodID:      0,
-			InterfaceName: "persistence.capnp:Persistent",
+			InterfaceName: "persistence/persistence.capnp:Persistent",
 			MethodName:    "save",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -812,7 +812,7 @@ func (c Service) SupportedCategories(ctx context.Context, params func(registry.R
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      0,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "supportedCategories",
 		},
 	}
@@ -832,7 +832,7 @@ func (c Service) CategoryInfo(ctx context.Context, params func(registry.Registry
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      1,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "categoryInfo",
 		},
 	}
@@ -852,7 +852,7 @@ func (c Service) Entries(ctx context.Context, params func(registry.Registry_entr
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      2,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "entries",
 		},
 	}
@@ -872,7 +872,7 @@ func (c Service) Info(ctx context.Context, params func(common.Identifiable_info_
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 	}
@@ -991,7 +991,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      0,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "supportedCategories",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1003,7 +1003,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      1,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "categoryInfo",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1015,7 +1015,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xca7b4bd1600633b8,
 			MethodID:      2,
-			InterfaceName: "registry.capnp:Registry",
+			InterfaceName: "registry/registry.capnp:Registry",
 			MethodName:    "entries",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1027,7 +1027,7 @@ func Service_Methods(methods []server.Method, s Service_Server) []server.Method 
 		Method: capnp.Method{
 			InterfaceID:   0xb2afd1cb599c48d5,
 			MethodID:      0,
-			InterfaceName: "common.capnp:Identifiable",
+			InterfaceName: "common/common.capnp:Identifiable",
 			MethodName:    "info",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
@@ -1047,39 +1047,40 @@ func NewService_List(s *capnp.Segment, sz int32) (Service_List, error) {
 	return capnp.CapList[Service](l), err
 }
 
-const schema_f98a24e1969df972 = "x\xda\xa4\x92Mh\x13A\x14\xc7\xffof3[\xb4" +
-	"\xd1lV)\x8a\xde\x02bAi-~\x05K\x82E" +
-	"h\x14!\xa3^\xfc\xc4\x10W\x08\xb6\xe9\xb2\x93\xf4\xa0" +
-	"\xa0 *(\xd4S\xab(\x0a\x82\x88\xe0E\x90 \xa2" +
-	"\x87\xa8\x08\x8a9\x15\xf5R\xaa\"x\xf0$T\xbc\xb4" +
-	"\x88#\xbb\xedn\x17\x03^\xbc\x0d\xbc\xdf{\xff\xc7\xfb" +
-	"M\xcf*\x967z\x93\xcdN09\x9e\x10\xfa\xd5\xa9" +
-	"m\xcf\x1f\xbf\x9c\x1e\x83\xb5\x94ko\xf6\xf6\xb5/\x99" +
-	"+\xb3\x00\xd9\xbb\xc4M{\xaf0\x01\xbb L\xbb " +
-	"\xba\x00=x\xe2\xd3\xf7c\x97\x1f4`\xa5\x08H\x90" +
-	"\x09\xf4m\x17\x8c@v\xbf\xc8\x81\xf4\xd3\xf1\xcc\xbdg" +
-	"\xc6\xd6f\x1c8*\x96\xf8\x80\x13\x00\x87\xaf\xee\xa8-" +
-	"\xa3\xea\x9by\xc0\xf0\xeb\x17E\x9a`\xe8K\x07\xe4\x06" +
-	"\xef\xd7\xdc\xd7x\xeb\xb0X\xed\xb7\xd6\x83\xd6\x0bG\x9a" +
-	"\x99\xbb\xd7\xc7\xbe\xb5m:!\xce\xdb7\x82M'\xc4" +
-	"k{\xa5\xb9\x0e\xd0\xa7e\xe3s\xd7L\xf5G,'" +
-	"i2?\xa7\xd1\xd3\xdb\xbdi\xcd\xc7\x9f\x8b\x15{F" +
-	"\xccAc@\x97\xbd\x11wc\xb9\xe4R\xd5\xcd\xeew" +
-	"\xbc\xd1\x0a/;E\xa2\"OH\x83H?\xe9\x13\xc7" +
-	"'\xf7\x9cy\x0b By\xd5\xcd\x0e\xf8o\xe5:\xe5" +
-	"\x8a\xa32\xfb\x1cU\x1f\xaa)H\x83\x1b\x80A\x80\x95" +
-	"\xec\x06d\x07'\xb9\x82\xd1\xf2J\xf5\xe4\x08\xa5\xf4\xbb" +
-	")\xfe\xbbu\xb6\xf5\x1e J\x81\xda\xe7\x95\xebC\xb5" +
-	"\xcah\xc9\x8b\x06\xfe\xf7D\xb7\xe4\x95\x86\x9d\x9a\xe3\xa9" +
-	"L\xd1\x7f\x92\xfa'\x13\xe4\xf2\x9a\x8a\xc7f\x17cs" +
-	"\x01\xaa(\x0dF\xe9X\x1c-\x8cB\x91Hv\xf2\x04" +
-	"\xb1\xc89\x85\x8a-y\x08\xcc*\x98D\x91'\x0a\x7f" +
-	"\x8e\xd5\xbf\x1b\xcc\xdal\x02\x91)\x0a\xbf\x9d\xb5~'" +
-	"\x98\xb5\xd6\xd4\xe1\x9a\xe0\x9e\xca\x93\x0eo\x05 O\xe7" +
-	"\x16L\xe4Iv\x10\xe9\x0f\x83\xb7\x0e\xb6&\x1f>\xf2" +
-	"\xa59\xad-\xd3w\xa6\xee\xbf\x88\x0b\x14m\x07\x0f\x8e" +
-	"\xa3\x10\x02\x7f\x0b\xce\xcd\xd7\xff\x04\x00\x00\xff\xff\xe3\xf5" +
-	"\xfc\xa9"
+const schema_f98a24e1969df972 = "x\xda\xac\x92Kh\xd4^\x18\xc5\xcf\x97d\x9a\x16\xfe" +
+	"\xfdO\xd3(]\xa8\x08\x12\x10\x07Z\xfb\xa0>\x8a\xc3" +
+	"\x8cuSu\x93Lu\xe1\x13C\xbc\xc2`o&\xdc" +
+	"L\xbbP\xd4\x8d\x08\x0a#\x08>6\x0a\x82H\xa1\x1b" +
+	"A\x06\x11]T\x8b\xa08\xab\xa2n\x86\xaa\x08.\\" +
+	"\x89\x157\x15\xf1JF3Ft6\"\xd9\x04\xee\xef" +
+	"\xfb\xce\xe1;\xa7\xbf\xbe\"\xaf\x0dtN\xd7\xa1\x8c\x7f" +
+	"\xe8H\xb5\xc9GG7=\xb83\xb7P\x81\xd1\xa5J" +
+	"\xb1t\xed\xf2\x1b\xeb\xdc\x12@\xe6f>gn\xe5:" +
+	"`f\xb9nfy\x0f \xc7\x0e\xbfz\x7f\xf0\xecL" +
+	"\x15\xc6r\x02R\xa4\x03C\xbd<C s\x98\xe7@" +
+	"\xf2\xdeE\xeb\xe6}m\xe3l\x12\xd8\xcd\x07#\xe0@" +
+	"\x03\xd8w~K\xf9\x7f\xf2\x9f|\x07\xb4\xe8\xfd\x04\x1f" +
+	"!h\xf2\xcc.\xa7W|\xf9\xfc69\xca\xf8h4" +
+	"\xca\x1b\xa3\xa7\xf7\xcfZ7\xaeT\xde\xfd\xe6\xb4\xc2g" +
+	"\xccK\x0d\xa7\x17\xf8c\xd3\xf0\xd7\x02\xf2\x98S}\xdd" +
+	"\xb3\xe8\x7fL\xe8t\xf8\x99H\xa7\xda?\x90\x19\\\xf9" +
+	"\xf2S\xe2e\x91\xaf!\xc8\xbf\xfa =Q\x0a\xd6{" +
+	"\xa2\xa4\x04}\x9e\x1b\xf8\xc1\xc88\x13SE\x8f\xc1&" +
+	"\xb2\xd5\x94\xa3\x11\xc9\xbbCm\x87\xe6w\x1e\x7f\x8a\x04" +
+	"\xaf\xc6\xfc6Q\x0a\xfa\xc2\x80yE\x16Z\x05\x16\xa6" +
+	"''\xca\xa1\xa3\xa9\x1a\xa0\x11`tf\x00\xa7]%" +
+	"g\x99B\xe9\xa2\x7f\xa4D]\xf2Y]\xfdZ;Y" +
+	"{\x0e\x10u\x81Z,\xf5&'\xca\xc5)WX\x05" +
+	"\xb6:\xfcg[\x03W\xb8\x9c\x95\x99\x08\xad\x9c\x1d\xfd" +
+	"\x87MPk\x05\x16XC\x1fI\x03#?\x0d\xe4\x1a" +
+	"hH\xddP\xa8;!L\xf1\xbet\xb4\xd0&r\xfe" +
+	"SS\xa44[Dqi\x0cg/\x14c\xbbN\xd4" +
+	"L\x9e\xe2.\x1a\xd9\x1dP\x8ca\x1dhfOq\x91" +
+	"\x8du\xa3P\x8cU\xba\x8c\xbdB\x15a\x9ed|9" +
+	"\x00y:\xf5#\x9c<9\xedD\xf2\xc5\xd8\xd5=\xb5" +
+	"\xf9[\xb7\xa30Ym\xc3\xc2\xf5\xfa\xf4\xc3\xd6\xc16" +
+	"3\xb0\xdd\xf4/\xb7\xfas\xfe\xb6+t\x97\x87\xdf\x02" +
+	"\x00\x00\xff\xff\x19\xe7/\x93"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{

@@ -15,9 +15,9 @@
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
-#include "common.capnp.h"
-#include "persistence.capnp.h"
-#include "registry.capnp.h"
+#include <common/common.capnp.h>
+#include <persistence/persistence.capnp.h>
+#include <registry/registry.capnp.h>
 
 CAPNP_BEGIN_HEADER
 
