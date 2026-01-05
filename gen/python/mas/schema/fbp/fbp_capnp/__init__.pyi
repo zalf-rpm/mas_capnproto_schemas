@@ -13,6 +13,7 @@ from capnp.lib.capnp import (
     _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _InterfaceModule,
     _StructModule,
 )
 
@@ -2244,6 +2245,68 @@ class _ProcessInterfaceModule(
     type ConfigEntryReader = _ConfigEntryStructModule.Reader
     type ConfigEntryBuilder = _ConfigEntryStructModule.Builder
     ConfigEntry: _ConfigEntryStructModule
+    class _StateEnumModule:
+        started: int
+        stopped: int
+        canceled: int
+
+    State: _StateEnumModule
+    class _StateTransitionInterfaceModule(_InterfaceModule):
+        class StatechangedRequest(Protocol):
+            old: ProcessStateEnum
+            new: ProcessStateEnum
+            def send(
+                self,
+            ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient.StatechangedResult: ...
+
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient: ...
+        class Server(_DynamicCapabilityServer):
+            class StatechangedResult(Awaitable[None], Protocol): ...
+
+            class StatechangedParams(Protocol):
+                old: ProcessStateEnum
+                new: ProcessStateEnum
+
+            class StatechangedCallContext(Protocol):
+                params: _ProcessInterfaceModule._StateTransitionInterfaceModule.Server.StatechangedParams
+
+            def stateChanged(
+                self,
+                old: ProcessStateEnum,
+                new: ProcessStateEnum,
+                _context: _ProcessInterfaceModule._StateTransitionInterfaceModule.Server.StatechangedCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[None]: ...
+            def stateChanged_context(
+                self,
+                context: _ProcessInterfaceModule._StateTransitionInterfaceModule.Server.StatechangedCallContext,
+            ) -> Awaitable[None]: ...
+
+        class StateTransitionClient(_DynamicCapabilityClient):
+            class StatechangedResult(Awaitable[None], Protocol): ...
+
+            def stateChanged(
+                self,
+                old: ProcessStateEnum | None = None,
+                new: ProcessStateEnum | None = None,
+            ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient.StatechangedResult: ...
+            def stateChanged_request(
+                self,
+                old: ProcessStateEnum | None = None,
+                new: ProcessStateEnum | None = None,
+            ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule.StatechangedRequest: ...
+
+    StateTransition: _StateTransitionInterfaceModule
+    type StateTransitionClient = (
+        _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
+    )
+    type StateTransitionServer = (
+        _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+    )
     class InportsRequest(Protocol):
         def send(self) -> _ProcessInterfaceModule.ProcessClient.InportsResult: ...
 
@@ -2289,6 +2352,13 @@ class _ProcessInterfaceModule(
         def send(
             self,
         ) -> _ProcessInterfaceModule.ProcessClient.SetconfigentryResult: ...
+
+    class StateRequest(Protocol):
+        transitionCallback: (
+            StateTransitionClient
+            | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+        )
+        def send(self) -> _ProcessInterfaceModule.ProcessClient.StateResult: ...
 
     @override
     def _new_client(
@@ -2363,14 +2433,14 @@ class _ProcessInterfaceModule(
             def init(self, field: str, size: int | None = None) -> Any: ...
 
         class StartResult(Awaitable[None], Protocol): ...
-
-        class StopResult(_DynamicStructBuilder):
-            @property
-            def success(self) -> bool: ...
-            @success.setter
-            def success(self, value: bool) -> None: ...
-
+        class StopResult(Awaitable[None], Protocol): ...
         class SetconfigentryResult(Awaitable[None], Protocol): ...
+
+        class StateResult(_DynamicStructBuilder):
+            @property
+            def currentState(self) -> ProcessStateEnum: ...
+            @currentState.setter
+            def currentState(self, value: ProcessStateEnum) -> None: ...
 
         class InportsResultTuple(NamedTuple):
             ports: PortListBuilder | PortListReader
@@ -2387,8 +2457,8 @@ class _ProcessInterfaceModule(
         class ConfigentriesResultTuple(NamedTuple):
             config: ConfigEntryListBuilder | ConfigEntryListReader
 
-        class StopResultTuple(NamedTuple):
-            success: bool
+        class StateResultTuple(NamedTuple):
+            currentState: ProcessStateEnum
 
         class InportsParams(Protocol): ...
 
@@ -2440,8 +2510,6 @@ class _ProcessInterfaceModule(
 
         class StopCallContext(Protocol):
             params: _ProcessInterfaceModule.Server.StopParams
-            @property
-            def results(self) -> _ProcessInterfaceModule.Server.StopResult: ...
 
         class SetconfigentryParams(Protocol):
             name: str
@@ -2449,6 +2517,14 @@ class _ProcessInterfaceModule(
 
         class SetconfigentryCallContext(Protocol):
             params: _ProcessInterfaceModule.Server.SetconfigentryParams
+
+        class StateParams(Protocol):
+            transitionCallback: StateTransitionClient
+
+        class StateCallContext(Protocol):
+            params: _ProcessInterfaceModule.Server.StateParams
+            @property
+            def results(self) -> _ProcessInterfaceModule.Server.StateResult: ...
 
         def inPorts(
             self,
@@ -2528,9 +2604,7 @@ class _ProcessInterfaceModule(
             self,
             _context: _ProcessInterfaceModule.Server.StopCallContext,
             **kwargs: Any,
-        ) -> Awaitable[
-            bool | _ProcessInterfaceModule.Server.StopResultTuple | None
-        ]: ...
+        ) -> Awaitable[None]: ...
         def stop_context(
             self,
             context: _ProcessInterfaceModule.Server.StopCallContext,
@@ -2545,6 +2619,18 @@ class _ProcessInterfaceModule(
         def setConfigEntry_context(
             self,
             context: _ProcessInterfaceModule.Server.SetconfigentryCallContext,
+        ) -> Awaitable[None]: ...
+        def state(
+            self,
+            transitionCallback: StateTransitionClient,
+            _context: _ProcessInterfaceModule.Server.StateCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            ProcessStateEnum | _ProcessInterfaceModule.Server.StateResultTuple | None
+        ]: ...
+        def state_context(
+            self,
+            context: _ProcessInterfaceModule.Server.StateCallContext,
         ) -> Awaitable[None]: ...
 
     class ProcessClient(
@@ -2567,11 +2653,11 @@ class _ProcessInterfaceModule(
             config: ConfigEntryListReader
 
         class StartResult(Awaitable[None], Protocol): ...
-
-        class StopResult(Awaitable[StopResult], Protocol):
-            success: bool
-
+        class StopResult(Awaitable[None], Protocol): ...
         class SetconfigentryResult(Awaitable[None], Protocol): ...
+
+        class StateResult(Awaitable[StateResult], Protocol):
+            currentState: ProcessStateEnum
 
         def inPorts(self) -> _ProcessInterfaceModule.ProcessClient.InportsResult: ...
         def connectInPort(
@@ -2601,6 +2687,12 @@ class _ProcessInterfaceModule(
             name: str | None = None,
             val: ValueBuilder | ValueReader | dict[str, Any] | None = None,
         ) -> _ProcessInterfaceModule.ProcessClient.SetconfigentryResult: ...
+        def state(
+            self,
+            transitionCallback: StateTransitionClient
+            | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+            | None = None,
+        ) -> _ProcessInterfaceModule.ProcessClient.StateResult: ...
         def inPorts_request(self) -> _ProcessInterfaceModule.InportsRequest: ...
         def connectInPort_request(
             self,
@@ -2623,6 +2715,12 @@ class _ProcessInterfaceModule(
             name: str | None = None,
             val: ValueBuilder | None = None,
         ) -> _ProcessInterfaceModule.SetconfigentryRequest: ...
+        def state_request(
+            self,
+            transitionCallback: StateTransitionClient
+            | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+            | None = None,
+        ) -> _ProcessInterfaceModule.StateRequest: ...
 
 class _ConfigEntryList:
     class Reader(_DynamicListReader):
@@ -3084,6 +3182,7 @@ type PortListReader = _PortList.Reader
 type PortReader = _ComponentStructModule._PortStructModule.Reader
 type ProcessClient = _ProcessInterfaceModule.ProcessClient
 type ProcessServer = _ProcessInterfaceModule.Server
+type ProcessStateEnum = int | Literal["started", "stopped", "canceled"]
 type ReadResult = _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadResult
 type ReaderClient = _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient
 type ReaderClientListBuilder = _ReaderClientList.Builder
@@ -3109,6 +3208,14 @@ type StartupInfoBuilder = _ChannelInterfaceModule._StartupInfoStructModule.Build
 type StartupInfoListBuilder = _StartupInfoList.Builder
 type StartupInfoListReader = _StartupInfoList.Reader
 type StartupInfoReader = _ChannelInterfaceModule._StartupInfoStructModule.Reader
+type StateResult = _ProcessInterfaceModule.ProcessClient.StateResult
+type StateTransitionClient = (
+    _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
+)
+type StateTransitionServer = (
+    _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+)
+type StatechangedResult = _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient.StatechangedResult
 type StopResult = _ProcessInterfaceModule.ProcessClient.StopResult
 type SturdyRefListBuilder = _SturdyRefList.Builder
 type SturdyRefListReader = _SturdyRefList.Reader
