@@ -24,7 +24,10 @@ _SCHEMA_NODES = [
 ]
 
 # Load schemas and build module structure
-_loader = capnp.SchemaLoader()
+# Use a shared loader stored on capnp module so capabilities work across schema modules
+if not hasattr(capnp, "_embedded_schema_loader"):
+    capnp._embedded_schema_loader = capnp.SchemaLoader()
+_loader = capnp._embedded_schema_loader
 for _schema_b64 in _SCHEMA_NODES:
     _schema_data = base64.b64decode(_schema_b64)
     _node_reader = schema_capnp.Node.from_bytes_packed(_schema_data)
