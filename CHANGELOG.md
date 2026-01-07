@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.46](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.45...v0.1.46) (2026-01-07)
+
+
+### Features
+
+* Add python and restructure schemas base dir ([#25](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/25)) ([2f9e992](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/2f9e9922793a0ab5b8e30b0402d2306086693653))
+
+
+### Bug Fixes
+
+* use shared schema loader ([30f3b64](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/30f3b64fd82fb9781ffb6868f946462fc73090c3))
+
 ## [0.1.45](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.44...v0.1.45) (2025-12-05)
 
 
