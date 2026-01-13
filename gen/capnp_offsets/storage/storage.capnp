@@ -1,18 +1,19 @@
-# storage.capnp
+# storage/storage.capnp
 @0x9755d0b34b9db39d;
 $import "/capnp/c++.capnp".namespace("mas::schema::storage");
+$import "/capnp/python.capnp".module("mas.schema.storage");
 $import "/capnp/go.capnp".package("storage");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/storage");
-interface Store @0xe69f958aa2386f06 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/storage");
+interface Store @0xe69f958aa2386f06 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
   newContainer @0 (name :Text, description :Text) -> (container :Container);
   containerWithId @1 (id :Text) -> (container :Container);
-  listContainers @2 () -> (containers :List(Container));
+  listContainers @2 () -> (containers :List(InfoAndContainer));
   removeContainer @3 (id :Text) -> (success :Bool);
   importContainer @4 (json :Text) -> (container :Container);
-  interface Container @0x878131f45567ae62 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
+  interface Container @0x878131f45567ae62 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
     export @0 () -> (json :Text);
-    downloadEntries @1 () -> (entries :List(import "/common.capnp".Pair(Text, Entry.Value)));
-    listEntries @2 () -> (entries :List(Entry));
+    downloadEntries @1 () -> (entries :List(import "/common/common.capnp".Pair(Text, Entry.Value)));
+    listEntries @2 () -> (entries :List(KeyAndEntry));
     getEntry @3 (key :Text) -> (entry :Entry);
     addEntry @6 (key :Text, value :Entry.Value, replaceExisting :Bool) -> (entry :Entry, success :Bool);
     removeEntry @4 (key :Text) -> (success :Bool);
@@ -53,10 +54,19 @@ interface Store @0xe69f958aa2386f06 superclasses(import "/common.capnp".Identifi
         }
       }
     }
+    struct KeyAndEntry @0xefe759a6f2ffc230 {  # 0 bytes, 2 ptrs
+      key @0 :Text;  # ptr[0]
+      entry @1 :Entry;  # ptr[1]
+    }
+  }
+  struct InfoAndContainer @0xeaec227ef03ec200 {  # 0 bytes, 3 ptrs
+    id @0 :Text;  # ptr[0]
+    name @1 :Text;  # ptr[1]
+    container @2 :Container;  # ptr[2]
   }
   struct ImportExportData @0x847d262cefd2f142 {  # 0 bytes, 3 ptrs
-    info @0 :import "/common.capnp".IdInformation;  # ptr[0]
-    entries @1 :List(import "/common.capnp".Pair(Text, Container.Entry.Value));  # ptr[1]
+    info @0 :import "/common/common.capnp".IdInformation;  # ptr[0]
+    entries @1 :List(import "/common/common.capnp".Pair(Text, Container.Entry.Value));  # ptr[1]
     isAnyValue @2 :List(Bool);  # ptr[2]
   }
 }

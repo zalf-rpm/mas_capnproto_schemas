@@ -1,14 +1,15 @@
 # model/monica/monica_management.capnp
 @0x93337c65a295d42f;
 $import "/capnp/c++.capnp".namespace("mas::schema::model::monica");
+$import "/capnp/python.capnp".module("mas.schema.model.monica");
 $import "/capnp/go.capnp".package("monica");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/monica");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
 struct ILRDates @0xa1f99f32eea02590 {  # 0 bytes, 5 ptrs
-  sowing @0 :import "/date.capnp".Date;  # ptr[0]
-  earliestSowing @1 :import "/date.capnp".Date;  # ptr[1]
-  latestSowing @2 :import "/date.capnp".Date;  # ptr[2]
-  harvest @3 :import "/date.capnp".Date;  # ptr[3]
-  latestHarvest @4 :import "/date.capnp".Date;  # ptr[4]
+  sowing @0 :import "/common/date.capnp".Date;  # ptr[0]
+  earliestSowing @1 :import "/common/date.capnp".Date;  # ptr[1]
+  latestSowing @2 :import "/common/date.capnp".Date;  # ptr[2]
+  harvest @3 :import "/common/date.capnp".Date;  # ptr[3]
+  latestHarvest @4 :import "/common/date.capnp".Date;  # ptr[4]
 }
 enum EventType @0xd0290daf8de9f2b0 {
   sowing @0;
@@ -34,14 +35,14 @@ enum PlantOrgan @0xb33447204cdf022c {
 }
 struct Event @0xcf672ab379467704 {  # 8 bytes, 4 ptrs
   type @0 :ExternalType;  # bits[0, 16)
-  info @1 :import "/common.capnp".IdInformation;  # ptr[0]
+  info @1 :import "/common/common.capnp".IdInformation;  # ptr[0]
   union {  # tag bits [16, 32)
     at :group {  # union tag = 0
-      date @2 :import "/date.capnp".Date;  # ptr[1]
+      date @2 :import "/common/date.capnp".Date;  # ptr[1]
     }
     between :group {  # union tag = 1
-      earliest @3 :import "/date.capnp".Date;  # ptr[1]
-      latest @4 :import "/date.capnp".Date;  # ptr[2]
+      earliest @3 :import "/common/date.capnp".Date;  # ptr[1]
+      latest @4 :import "/common/date.capnp".Date;  # ptr[2]
     }
     after :group {  # union tag = 2
       event @5 :Type;  # ptr[1]
@@ -61,6 +62,9 @@ struct Event @0xcf672ab379467704 {  # 8 bytes, 4 ptrs
     mineralFertilization @7;
     nDemandFertilization @8;
     cutting @9;
+    setValue @10;
+    saveState @11;
+    weather @12;
   }
   enum PhenoStage @0xb2bf3a5557791bc1 {
     emergence @0;
@@ -76,10 +80,17 @@ struct Event @0xcf672ab379467704 {  # 8 bytes, 4 ptrs
   }
 }
 struct Params @0xcb20e21466098705 {  # 0 bytes, 0 ptrs
+  struct DailyWeather @0xa332cfe9735a304c {  # 0 bytes, 1 ptrs
+    data @0 :List(KV);  # ptr[0]
+    struct KV @0xa63c8017ca26718b {  # 16 bytes, 0 ptrs
+      key @0 :import "/climate/climate.capnp".Element;  # bits[0, 16)
+      value @1 :Float64;  # bits[64, 128)
+    }
+  }
   struct Sowing @0xc6880d1c13ec14dc {  # 8 bytes, 2 ptrs
     cultivar @0 :Text;  # ptr[0]
     plantDensity @1 :UInt16;  # bits[0, 16)
-    crop @2 :import "/crop.capnp".Crop;  # ptr[1]
+    crop @2 :import "/crop/crop.capnp".Crop;  # ptr[1]
   }
   struct AutomaticSowing @0xd1bfc1c9617d9453 {  # 64 bytes, 2 ptrs
     sowing @9 :Sowing;  # ptr[1]
@@ -124,7 +135,7 @@ struct Params @0xcb20e21466098705 {  # 0 bytes, 0 ptrs
   }
   struct Cutting @0x8460dac6abff7ed9 {  # 8 bytes, 1 ptrs
     cuttingSpec @0 :List(Spec);  # ptr[0]
-    cutMaxAssimilationRatePercentage @1 :Float64;  # bits[0, 64)
+    cutMaxAssimilationRatePercentage @1 :Float64 = 100;  # bits[0, 64)
     enum CL @0xe444f780b29541a7 {
       cut @0;
       left @1;
@@ -195,7 +206,11 @@ struct Params @0xcb20e21466098705 {  # 0 bytes, 0 ptrs
       sulfateConcentration @1 :Float64;  # bits[64, 128)
     }
   }
+  struct SaveState @0xdd84803fc87ac648 {  # 16 bytes, 0 ptrs
+    noOfPreviousDaysSerializedClimateData @0 :UInt64;  # bits[0, 64)
+    asJson @1 :Bool;  # bits[64, 65)
+  }
 }
-interface Service @0xbfda1920aff38c07 superclasses(import "/common.capnp".Identifiable) {
-  managementAt @0 import "/geo.capnp".LatLonCoord -> (mgmt :List(Event));
+interface Service @0xbfda1920aff38c07 superclasses(import "/common/common.capnp".Identifiable) {
+  managementAt @0 import "/geo/geo.capnp".LatLonCoord -> (mgmt :List(Event));
 }

@@ -1,8 +1,9 @@
-# soil.capnp
+# soil/soil.capnp
 @0xff3f350f11891951;
 $import "/capnp/c++.capnp".namespace("mas::schema::soil");
+$import "/capnp/python.capnp".module("mas.schema.soil");
 $import "/capnp/go.capnp".package("soil");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/soil");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/soil");
 enum SType @0xc2e4a3c8ff61b40a {
   unknown @0;
   ka5 @1;
@@ -57,14 +58,14 @@ struct ProfileData @0xdf4bbf1c883a8790 {  # 8 bytes, 1 ptrs
   layers @0 :List(Layer);  # ptr[0]
   percentageOfArea @1 :Float32 = 100;  # bits[0, 32)
 }
-interface Profile @0xff67c2a593419c29 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
+interface Profile @0xff67c2a593419c29 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
   data @0 () -> ProfileData;
-  geoLocation @1 () -> import "/geo.capnp".LatLonCoord;
+  geoLocation @1 () -> import "/geo/geo.capnp".LatLonCoord;
 }
-interface Service @0xa09aa71427dc64e1 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
+interface Service @0xa09aa71427dc64e1 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
   checkAvailableParameters @0 Query -> Query.Result;
   getAllAvailableParameters @1 (onlyRawData :Bool) -> (mandatory :List(PropertyName), optional :List(PropertyName));
-  closestProfilesAt @2 (coord :import "/geo.capnp".LatLonCoord, query :Query) -> (profiles :List(Profile));
+  closestProfilesAt @2 (coord :import "/geo/geo.capnp".LatLonCoord, query :Query) -> (profiles :List(Profile));
   streamAllProfiles @3 Query -> (allProfiles :Stream);
   interface Stream @0xf4f8ab568ffbc939 {
     nextProfiles @0 (maxCount :Int64 = 100) -> (profiles :List(Profile));

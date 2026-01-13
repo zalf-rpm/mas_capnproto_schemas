@@ -1,8 +1,9 @@
-# grid.capnp
+# grid/grid.capnp
 @0xd373e9739460aa23;
 $import "/capnp/c++.capnp".namespace("mas::schema::grid");
+$import "/capnp/python.capnp".module("mas.schema.grid");
 $import "/capnp/go.capnp".package("grid");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/grid");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/grid");
 enum Aggregation @0xa5ecdc7767a6b301 {
   none @0;
   avg @8;
@@ -21,13 +22,13 @@ enum Aggregation @0xa5ecdc7767a6b301 {
   wSum @10;
   iSum @11;
 }
-interface Grid @0xe42973b29661e3c6 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
-  closestValueAt @0 (latlonCoord :import "/geo.capnp".LatLonCoord, ignoreNoData :Bool = true, resolution :Resolution, agg :Aggregation, returnRowCols :Bool, includeAggParts :Bool) -> (val :Value, tl :RowCol, br :RowCol, aggParts :List(AggregationPart));
+interface Grid @0xe42973b29661e3c6 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
+  closestValueAt @0 (latlonCoord :import "/geo/geo.capnp".LatLonCoord, ignoreNoData :Bool = true, resolution :Resolution, agg :Aggregation, returnRowCols :Bool, includeAggParts :Bool) -> (val :Value, tl :RowCol, br :RowCol, aggParts :List(AggregationPart));
   valueAt @4 (row :UInt64, col :UInt64, resolution :Resolution, agg :Aggregation, includeAggParts :Bool) -> (val :Value, aggParts :List(AggregationPart));
   resolution @1 () -> (res :Resolution);
   dimension @2 () -> (rows :UInt64, cols :UInt64);
   noDataValue @3 () -> (nodata :Value);
-  latLonBounds @5 (useCellCenter :Bool) -> (tl :import "/geo.capnp".LatLonCoord, tr :import "/geo.capnp".LatLonCoord, br :import "/geo.capnp".LatLonCoord, bl :import "/geo.capnp".LatLonCoord);
+  latLonBounds @5 (useCellCenter :Bool) -> (tl :import "/geo/geo.capnp".LatLonCoord, tr :import "/geo/geo.capnp".LatLonCoord, br :import "/geo/geo.capnp".LatLonCoord, bl :import "/geo/geo.capnp".LatLonCoord);
   streamCells @6 (topLeft :RowCol, bottomRight :RowCol) -> (callback :Callback);
   unit @7 () -> (unit :Text);
   struct Value @0xfe2e0dfae573d9d0 {  # 16 bytes, 0 ptrs
@@ -55,7 +56,7 @@ interface Grid @0xe42973b29661e3c6 superclasses(import "/common.capnp".Identifia
     iValue @3 :Float64;  # bits[64, 128)
   }
   struct Location @0xb55ccf1b9ef18d64 {  # 0 bytes, 3 ptrs
-    latLonCoord @0 :import "/geo.capnp".LatLonCoord;  # ptr[0]
+    latLonCoord @0 :import "/geo/geo.capnp".LatLonCoord;  # ptr[0]
     rowCol @1 :RowCol;  # ptr[1]
     value @2 :Value;  # ptr[2]
   }

@@ -1,8 +1,9 @@
 # model/monica/monica_params.capnp
 @0xeef9ddc7a345de6d;
 $import "/capnp/c++.capnp".namespace("mas::schema::model::monica");
+$import "/capnp/python.capnp".module("mas.schema.model.monica");
 $import "/capnp/go.capnp".package("monica");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/monica");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
 struct CropSpec @0xa74f5574681f9d55 {  # 0 bytes, 2 ptrs
   cropParams @0 :CropParameters;  # ptr[0]
   residueParams @1 :CropResidueParameters;  # ptr[1]
@@ -176,7 +177,7 @@ struct SiteParameters @0xb599bbd2f1465f9c {  # 80 bytes, 1 ptrs
 }
 struct EnvironmentParameters @0xc0ff4a277ca4be0a {  # 72 bytes, 2 ptrs
   albedo @0 :Float64 = 0.23;  # bits[0, 64)
-  rcp @11 :import "/climate.capnp".RCP;  # bits[528, 544)
+  rcp @11 :import "/climate/climate.capnp".RCP;  # bits[528, 544)
   atmosphericCO2 @1 :Float64;  # bits[64, 128)
   atmosphericCO2s @2 :List(YearToValue);  # ptr[0]
   atmosphericO3 @3 :Float64;  # bits[128, 192)
@@ -196,13 +197,13 @@ struct MeasuredGroundwaterTableInformation @0xc1092d6c4c110e29 {  # 8 bytes, 1 p
   groundwaterInformationAvailable @0 :Bool;  # bits[0, 1)
   groundwaterInfo @1 :List(DateToValue);  # ptr[0]
   struct DateToValue @0x81b8ffeeb01d76f7 {  # 8 bytes, 1 ptrs
-    date @0 :import "/date.capnp".Date;  # ptr[0]
+    date @0 :import "/common/date.capnp".Date;  # ptr[0]
     value @1 :Float64;  # bits[0, 64)
   }
 }
 struct SimulationParameters @0xffac0fa5c7156a5d {  # 16 bytes, 5 ptrs
-  startDate @0 :import "/date.capnp".Date;  # ptr[0]
-  endDate @1 :import "/date.capnp".Date;  # ptr[1]
+  startDate @0 :import "/common/date.capnp".Date;  # ptr[0]
+  endDate @1 :import "/common/date.capnp".Date;  # ptr[1]
   nitrogenResponseOn @2 :Bool = true;  # bits[0, 1)
   waterDeficitResponseOn @3 :Bool = true;  # bits[1, 2)
   emergenceFloodingControlOn @4 :Bool = true;  # bits[2, 3)

@@ -1,8 +1,9 @@
-# management.capnp
+# management/management.capnp
 @0xb30a3af53cea6b3e;
 $import "/capnp/c++.capnp".namespace("mas::schema::management");
+$import "/capnp/python.capnp".module("mas.schema.management");
 $import "/capnp/go.capnp".package("management");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/management");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/management");
 enum EventType @0x82a74595175b71a3 {
   sowing @0;
   automaticSowing @1;
@@ -27,14 +28,14 @@ enum PlantOrgan @0xc2d50914b83d42de {
 }
 struct Event @0x9c5dedfd679ac842 {  # 8 bytes, 4 ptrs
   type @0 :ExternalType;  # bits[0, 16)
-  info @1 :import "/common.capnp".IdInformation;  # ptr[0]
+  info @1 :import "/common/common.capnp".IdInformation;  # ptr[0]
   union {  # tag bits [16, 32)
     at :group {  # union tag = 0
-      date @2 :import "/date.capnp".Date;  # ptr[1]
+      date @2 :import "/common/date.capnp".Date;  # ptr[1]
     }
     between :group {  # union tag = 1
-      earliest @3 :import "/date.capnp".Date;  # ptr[1]
-      latest @4 :import "/date.capnp".Date;  # ptr[2]
+      earliest @3 :import "/common/date.capnp".Date;  # ptr[1]
+      latest @4 :import "/common/date.capnp".Date;  # ptr[2]
     }
     after :group {  # union tag = 2
       event @5 :Type;  # ptr[1]
@@ -72,7 +73,7 @@ struct Params @0x9d247c812334c917 {  # 0 bytes, 0 ptrs
   struct Sowing @0x80ce153f3bc9a9e8 {  # 8 bytes, 2 ptrs
     cultivar @0 :Text;  # ptr[0]
     plantDensity @1 :UInt16;  # bits[0, 16)
-    crop @2 :import "/crop.capnp".Crop;  # ptr[1]
+    crop @2 :import "/crop/crop.capnp".Crop;  # ptr[1]
   }
   struct AutomaticSowing @0xcfcf44997e7ceab4 {  # 64 bytes, 2 ptrs
     sowing @9 :Sowing;  # ptr[1]
@@ -117,7 +118,7 @@ struct Params @0x9d247c812334c917 {  # 0 bytes, 0 ptrs
   }
   struct Cutting @0xfec75f2ddd43431d {  # 8 bytes, 1 ptrs
     cuttingSpec @0 :List(Spec);  # ptr[0]
-    cutMaxAssimilationRatePercentage @1 :Float64;  # bits[0, 64)
+    cutMaxAssimilationRatePercentage @1 :Float64 = 100;  # bits[0, 64)
     enum CL @0x825bb2508c0b37b2 {
       cut @0;
       left @1;
@@ -181,12 +182,12 @@ struct Nutrient @0xaafe4332e17aa43e {  # 16 bytes, 0 ptrs
     percent @2;
   }
 }
-interface Fertilizer @0x8c4cb8d60ae5aec7 superclasses(import "/common.capnp".Identifiable, import "/persistence.capnp".Persistent) {
+interface Fertilizer @0x8c4cb8d60ae5aec7 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
   nutrients @0 () -> (nutrients :List(Nutrient));
   parameters @1 () -> (params :AnyPointer);
 }
-interface FertilizerService @0xbbb7aeae0d097e05 superclasses(import "/registry.capnp".Registry) {
+interface FertilizerService @0xbbb7aeae0d097e05 superclasses(import "/registry/registry.capnp".Registry) {
 }
-interface Service @0xc876b729b7d7f6d9 superclasses(import "/common.capnp".Identifiable) {
-  managementAt @0 import "/geo.capnp".LatLonCoord -> (mgmt :List(Event));
+interface Service @0xc876b729b7d7f6d9 superclasses(import "/common/common.capnp".Identifiable) {
+  managementAt @0 import "/geo/geo.capnp".LatLonCoord -> (mgmt :List(Event));
 }

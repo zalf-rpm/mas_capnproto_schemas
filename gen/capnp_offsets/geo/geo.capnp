@@ -1,8 +1,9 @@
-# geo.capnp
+# geo/geo.capnp
 @0x9090542079c7fc24;
 $import "/capnp/c++.capnp".namespace("mas::schema::geo");
+$import "/capnp/python.capnp".module("mas.schema.geo");
 $import "/capnp/go.capnp".package("geo");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/geo");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/geo");
 enum CoordType @0xe529b4deb322ece8 {
   gk @0;
   utm @1;

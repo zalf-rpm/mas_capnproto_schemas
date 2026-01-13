@@ -1,20 +1,21 @@
-# cluster_admin_service.capnp
+# cluster/cluster_admin_service.capnp
 @0xf3c1b27d6da9d0fa;
 $import "/capnp/c++.capnp".namespace("mas::schema::cluster");
+$import "/capnp/python.capnp".module("mas.schema.cluster");
 $import "/capnp/go.capnp".package("cluster");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/cluster");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/cluster");
 struct Cluster @0xf7485d56d6f20e7d {  # 0 bytes, 0 ptrs
   interface Unregister @0xe8b1f7a192651bbe {
     unregister @0 () -> (success :Bool);
   }
-  interface AdminMaster @0xbf24278c65f633ce superclasses(import "/common.capnp".Identifiable) {
+  interface AdminMaster @0xbf24278c65f633ce superclasses(import "/common/common.capnp".Identifiable) {
     registerModelInstanceFactory @0 (aModelId :Text, aFactory :ModelInstanceFactory) -> (unregister :Unregister);
     availableModels @1 () -> (factories :List(ModelInstanceFactory));
   }
-  interface UserMaster @0xec42c6df28354b60 superclasses(import "/common.capnp".Identifiable) {
+  interface UserMaster @0xec42c6df28354b60 superclasses(import "/common/common.capnp".Identifiable) {
     availableModels @0 () -> (factories :List(ModelInstanceFactory));
   }
-  interface Runtime @0xf849848fea5c4776 superclasses(import "/common.capnp".Identifiable) {
+  interface Runtime @0xf849848fea5c4776 superclasses(import "/common/common.capnp".Identifiable) {
     registerModelInstanceFactory @0 (aModelId :Text, aFactory :ModelInstanceFactory) -> (unregister :Unregister);
     availableModels @1 () -> (factories :List(ModelInstanceFactory));
     numberOfCores @2 () -> (cores :Int16);
@@ -29,7 +30,7 @@ struct Cluster @0xf7485d56d6f20e7d {  # 0 bytes, 0 ptrs
     value @0 () -> (val :T);
     release @1 () -> () $import "/capnp/go.capnp".name("releaseValue");
   }
-  interface ModelInstanceFactory @0xfd9959998f9f0ebe superclasses(import "/common.capnp".Identifiable) {
+  interface ModelInstanceFactory @0xfd9959998f9f0ebe superclasses(import "/common/common.capnp".Identifiable) {
     registerModelInstance @5 (instance :Capability, registrationToken :Text = "") -> (unregister :Unregister);
     modelId @4 () -> (id :Text);
     newInstance @0 () -> (instance :ValueHolder);

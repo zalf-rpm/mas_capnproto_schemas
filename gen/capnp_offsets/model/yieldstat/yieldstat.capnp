@@ -1,8 +1,9 @@
 # model/yieldstat/yieldstat.capnp
 @0xb80c8fd14e523f9b;
 $import "/capnp/c++.capnp".namespace("mas::schema::model::yieldstat");
+$import "/capnp/python.capnp".module("mas.schema.model.yieldstat");
 $import "/capnp/go.capnp".package("yieldstat");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/yieldstat");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/yieldstat");
 enum ResultId @0xcfe218c48d227e0d {
   primaryYield @0;
   dryMatter @1;

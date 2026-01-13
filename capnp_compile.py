@@ -62,7 +62,7 @@ def compile_schemas(
     config: CompilerConfig,
     use_relative_paths: bool = False,
 ) -> None:
-    """Compile Cap'n Proto schema files in a single call."""
+    """Compile Cap'n Proto schema files."""
     schema_dir = Path(config.paths.schemas_dir)
     output_dir = Path(config.paths.output_base) / lang
 
@@ -77,19 +77,51 @@ def compile_schemas(
         # Build paths from schemas_dir
         schema_paths = [str(schema_dir / schema) for schema in schemas]
 
-    cmd = [
-        capnp_bin,
-        "compile",
-        f"-I{schema_dir}",
-        f"--src-prefix={schema_dir}",
-        f"-o{lang}:{output_dir}",
-    ] + schema_paths
+    # capnp_offsets uses built-in -ocapnp which outputs to stdout,
+    # so compile each file individually and redirect output
+    if lang == "capnp_offsets":
+        for schema_path in schema_paths:
+            # Determine relative path structure for output
+            if use_relative_paths:
+                schema_file = Path(schema_path)
+            else:
+                schema_file = Path(schema_path).relative_to(schema_dir)
 
-    try:
-        subprocess.run(cmd, check=True)
+            # Create output file path (preserve directory structure)
+            output_file = output_dir / schema_file
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+
+            cmd = [
+                capnp_bin,
+                "compile",
+                f"-I{schema_dir}",
+                f"--src-prefix={schema_dir}",
+                "-ocapnp",
+                schema_path,
+            ]
+
+            try:
+                with output_file.open("w") as f:
+                    subprocess.run(cmd, check=True, stdout=f)
+            except subprocess.CalledProcessError as e:
+                print(f"Error compiling {schema_path}: {e}")
+                raise
         print(f"Successfully compiled {len(schemas)} schema(s)")
-    except subprocess.CalledProcessError as e:
-        print(f"Error compiling schemas: {e}")
+    else:
+        # Standard plugin-based compilation
+        cmd = [
+            capnp_bin,
+            "compile",
+            f"-I{schema_dir}",
+            f"--src-prefix={schema_dir}",
+            f"-o{lang}:{output_dir}",
+        ] + schema_paths
+
+        try:
+            subprocess.run(cmd, check=True)
+            print(f"Successfully compiled {len(schemas)} schema(s)")
+        except subprocess.CalledProcessError as e:
+            print(f"Error compiling schemas: {e}")
 
 
 def find_executable_path(name: str) -> str | None:
@@ -121,7 +153,7 @@ def main() -> None:
         "--lang",
         "-l",
         nargs="+",
-        choices=["c++", "csharp", "go", "java", "python"],
+        choices=["c++", "csharp", "go", "java", "python", "capnp_offsets"],
         required=True,
         help="Target language(s) to compile for",
     )
@@ -180,18 +212,22 @@ def main() -> None:
 
         # Check compiler paths
         capnp_path = find_executable_path(capnp_bin)
-        capnpc_path = find_executable_path(f"capnpc-{lang}")
 
         if not capnp_path:
             print(f"Error: Could not locate '{capnp_bin}' executable")
             continue
 
-        if not capnpc_path:
-            print(f"Error: Could not locate 'capnpc-{lang}' executable")
-            continue
-
         print(f"Using capnp at: {capnp_path}")
-        print(f"Using capnpc-{lang} at: {capnpc_path}")
+
+        # capnp_offsets uses built-in -ocapnp, no plugin needed
+        if lang != "capnp_offsets":
+            capnpc_path = find_executable_path(f"capnpc-{lang}")
+
+            if not capnpc_path:
+                print(f"Error: Could not locate 'capnpc-{lang}' executable")
+                continue
+
+            print(f"Using capnpc-{lang} at: {capnpc_path}")
 
         # Compile all schemas in a single call
         compile_schemas(files_to_compile, lang, capnp_bin, config, use_relative_paths)

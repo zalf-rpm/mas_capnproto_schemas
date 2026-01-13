@@ -1,8 +1,9 @@
-# persistence.capnp
+# persistence/persistence.capnp
 @0x855efed3475f6b26;
 $import "/capnp/c++.capnp".namespace("mas::schema::persistence");
+$import "/capnp/python.capnp".module("mas.schema.persistence");
 $import "/capnp/go.capnp".package("persistence");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/persistence");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/persistence");
 struct VatId @0xe10a5d74d58bd18d {  # 32 bytes, 0 ptrs
   publicKey0 @0 :UInt64;  # bits[0, 64)
   publicKey1 @1 :UInt64;  # bits[64, 128)
@@ -59,23 +60,27 @@ interface Restorer @0x9fb6218427d92e3c {
     sealedBy @1 :SturdyRef.Owner;  # ptr[1]
   }
 }
-interface HostPortResolver @0xaa8d91fab6d01d9f superclasses(import "/common.capnp".Identifiable, Restorer) {
+interface HostPortResolver @0xaa8d91fab6d01d9f superclasses(import "/common/common.capnp".Identifiable, Restorer) {
   resolve @0 (id :Text) -> (host :Text, port :UInt16) $import "/capnp/go.capnp".name("ResolveIdent");
   interface Registrar @0xb0caf775704690b2 {
     register @0 RegisterParams -> (heartbeat :Heartbeat, secsHeartbeatInterval :UInt32);
-    struct RegisterParams @0xbf018f62ff460d0f {  # 8 bytes, 3 ptrs
+    struct RegisterParams @0xbf018f62ff460d0f {  # 8 bytes, 4 ptrs
       base64VatId @0 :Text;  # ptr[0]
       host @1 :Text;  # ptr[1]
       port @2 :UInt16;  # bits[0, 16)
       alias @3 :Text;  # ptr[2]
+      identityProof @4 :Data;  # ptr[3]
     }
   }
 }
-interface Gateway @0x8f9c2c0a602f27ed superclasses(import "/common.capnp".Identifiable, Restorer) {
+interface Gateway @0x8f9c2c0a602f27ed superclasses(import "/common/common.capnp".Identifiable, Restorer) {
   register @0 (cap :Capability) -> RegResults;
   struct RegResults @0xa232c65d79e97faa {  # 8 bytes, 2 ptrs
     sturdyRef @0 :SturdyRef;  # ptr[0]
     heartbeat @1 :Heartbeat;  # ptr[1]
     secsHeartbeatInterval @2 :UInt32;  # bits[0, 32)
   }
+}
+interface GatewayRegistrable @0x8253222fdf37608d {
+  sturdyRefAtGateway @0 (gatewaySR :SturdyRef, gatewayId :Text) -> (selfAtGatewaySR :SturdyRef);
 }

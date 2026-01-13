@@ -1,8 +1,9 @@
-# common.capnp
+# common/common.capnp
 @0x99f1c9a775a88ac9;
 $import "/capnp/c++.capnp".namespace("mas::schema::common");
+$import "/capnp/python.capnp".module("mas.schema.common");
 $import "/capnp/go.capnp".package("common");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/common");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/common");
 struct IdInformation @0xd4cb7ecbfe03dad3 {  # 0 bytes, 3 ptrs
   id @0 :Text;  # ptr[0]
   name @1 :Text;  # ptr[1]
@@ -13,12 +14,21 @@ interface Identifiable @0xb2afd1cb599c48d5 {
 }
 struct StructuredText @0xed6c098b67cad454 {  # 8 bytes, 1 ptrs
   value @0 :Text;  # ptr[0]
+  type @5 :Type;  # bits[16, 32)
   structure :group {
     union {  # tag bits [0, 16)
       none @1 :Void;  # bits[0, 0), union tag = 0
       json @2 :Void;  # bits[0, 0), union tag = 1
       xml @3 :Void;  # bits[0, 0), union tag = 2
+      toml @4 :Void;  # bits[0, 0), union tag = 3
     }
+  }
+  enum Type @0x9eebc43e17b5974f {
+    unstructured @0;
+    json @1;
+    xml @2;
+    toml @3;
+    sturdyRef @4;
   }
 }
 struct Value @0xe17592335373b246 {  # 16 bytes, 1 ptrs
@@ -52,9 +62,21 @@ struct Value @0xe17592335373b246 {  # 16 bytes, 1 ptrs
     lt @26 :List(Text);  # ptr[0], union tag = 26
     ld @27 :List(Data);  # ptr[0], union tag = 27
     lcap @28 :List(Capability);  # ptr[0], union tag = 28
+    lpair @29 :List(Pair);  # ptr[0], union tag = 29
   }
+}
+interface Factory @0xa869f50b8c586ed9 (Output) superclasses(Identifiable) {
+  create @0 () -> (out :Output);
+}
+interface IOFactory @0x9771e5b5c6a27b68 (Input, Output) superclasses(Identifiable) {
+  produce @0 (in :Input) -> (out :Output);
 }
 struct Pair @0xb9d4864725174733 (F, S) {  # 0 bytes, 2 ptrs
   fst @0 :F;  # ptr[0]
   snd @1 :S;  # ptr[1]
+}
+interface Holder @0xc83045ccbb0b6ac5 (T) {
+  value @0 () -> (value :T);
+}
+interface IdentifiableHolder @0xee543d7c305d56f6 (T) superclasses(Identifiable, Holder(T)) {
 }

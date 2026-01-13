@@ -1,8 +1,9 @@
 # model/monica/monica_state.capnp
 @0x86ea47c297746539;
 $import "/capnp/c++.capnp".namespace("mas::schema::model::monica");
+$import "/capnp/python.capnp".module("mas.schema.model.monica");
 $import "/capnp/go.capnp".package("monica");
-$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas-infrastructure/capnproto_schemas/gen/go/model/monica");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
 struct MaybeBool @0xd8af9210839bc071 {  # 8 bytes, 0 ptrs
   value @0 :Bool;  # bits[0, 1)
 }
@@ -12,11 +13,11 @@ struct RuntimeState @0xd599d06dc405571a {  # 0 bytes, 1 ptrs
 struct CropState @0x8b008567c93f7c7d {  # 16 bytes, 11 ptrs
   speciesName @1 :Text;  # ptr[1]
   cultivarName @2 :Text;  # ptr[2]
-  seedDate @3 :import "/date.capnp".Date;  # ptr[3]
-  harvestDate @4 :import "/date.capnp".Date;  # ptr[4]
+  seedDate @3 :import "/common/date.capnp".Date;  # ptr[3]
+  harvestDate @4 :import "/common/date.capnp".Date;  # ptr[4]
   isWinterCrop @5 :MaybeBool;  # ptr[5]
   isPerennialCrop @6 :MaybeBool;  # ptr[6]
-  cuttingDates @7 :List(import "/date.capnp".Date);  # ptr[7]
+  cuttingDates @7 :List(import "/common/date.capnp".Date);  # ptr[7]
   cropParams @8 :import "/model/monica/monica_params.capnp".CropParameters;  # ptr[8]
   perennialCropParams @9 :import "/model/monica/monica_params.capnp".CropParameters;  # ptr[9]
   residueParams @10 :import "/model/monica/monica_params.capnp".CropResidueParameters;  # ptr[10]
@@ -113,7 +114,7 @@ struct MonicaModelState @0xab56969492d293b3 {  # 144 bytes, 15 ptrs
   dailySumIrrigationWater @23 :Float64;  # bits[768, 832)
   optCarbonExportedResidues @24 :Float64;  # bits[832, 896)
   optCarbonReturnedResidues @25 :Float64;  # bits[896, 960)
-  currentStepDate @26 :import "/date.capnp".Date;  # ptr[11]
+  currentStepDate @26 :import "/common/date.capnp".Date;  # ptr[11]
   climateData @27 :List(List(ACDToValue));  # ptr[12]
   currentEvents @28 :List(Text);  # ptr[13]
   previousDaysEvents @29 :List(Text);  # ptr[14]
