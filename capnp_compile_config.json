@@ -25,6 +25,7 @@
     "service/service.capnp",
     "soil/soil.capnp",
     "storage/storage.capnp",
+    "dakis/modam.capnp",
     "model/weberest/web_berest_data_import.capnp",
     "model/yieldstat/yieldstat.capnp",
     "model/monica/monica_management.capnp",
