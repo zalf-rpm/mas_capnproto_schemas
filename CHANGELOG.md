@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.46](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.45...v0.1.46) (2026-01-14)
+
+
+### Features
+
+* add capnp offset generation to unified script and github action ([4b442ff](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/4b442ffe6934ffd9a4e197992cd058cc3fafe79c))
+* add modam service for dakis ([4878108](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/487810886efe7ff987cb8dfceea70b04b8355f61))
+* Add python and restructure schemas base dir ([#25](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/25)) ([2f9e992](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/2f9e9922793a0ab5b8e30b0402d2306086693653))
+* differentiate the different model types to run ([fd8e878](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/fd8e878f419d979fdab80ed89ea7e0a8867d1fa2))
+
+
+### Bug Fixes
+
+* use shared schema loader ([30f3b64](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/30f3b64fd82fb9781ffb6868f946462fc73090c3))
+
 ## [0.1.45](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.44...v0.1.45) (2025-12-05)
 
 
