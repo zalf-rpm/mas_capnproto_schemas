@@ -13,6 +13,9 @@ $Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/dakis/modam");
 interface ModamWrapperService {
   # Interface for running the MODAM model
 
-  run @0 (input :Text) -> (output :Text);
-  # Run the MODAM model with text input and return text output
+  runAemModel @0 (input :Text) -> (output :Text);
+  # Run the MODAM AEM model with text input and return text output
+
+  runFieldModel @1 (input :Text) -> (output :Text);
+  # Run the MODAM field model with text input and return text output
 }

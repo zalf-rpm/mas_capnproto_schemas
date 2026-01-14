@@ -16,23 +16,43 @@ type ModamWrapperService capnp.Client
 // ModamWrapperService_TypeID is the unique identifier for the type ModamWrapperService.
 const ModamWrapperService_TypeID = 0xdb3fb36057abc378
 
-func (c ModamWrapperService) Run(ctx context.Context, params func(ModamWrapperService_run_Params) error) (ModamWrapperService_run_Results_Future, capnp.ReleaseFunc) {
+func (c ModamWrapperService) RunAemModel(ctx context.Context, params func(ModamWrapperService_runAemModel_Params) error) (ModamWrapperService_runAemModel_Results_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
 		Method: capnp.Method{
 			InterfaceID:   0xdb3fb36057abc378,
 			MethodID:      0,
 			InterfaceName: "dakis/modam.capnp:ModamWrapperService",
-			MethodName:    "run",
+			MethodName:    "runAemModel",
 		},
 	}
 	if params != nil {
 		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
-		s.PlaceArgs = func(s capnp.Struct) error { return params(ModamWrapperService_run_Params(s)) }
+		s.PlaceArgs = func(s capnp.Struct) error { return params(ModamWrapperService_runAemModel_Params(s)) }
 	}
 
 	ans, release := capnp.Client(c).SendCall(ctx, s)
-	return ModamWrapperService_run_Results_Future{Future: ans.Future()}, release
+	return ModamWrapperService_runAemModel_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c ModamWrapperService) RunFieldModel(ctx context.Context, params func(ModamWrapperService_runFieldModel_Params) error) (ModamWrapperService_runFieldModel_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xdb3fb36057abc378,
+			MethodID:      1,
+			InterfaceName: "dakis/modam.capnp:ModamWrapperService",
+			MethodName:    "runFieldModel",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(ModamWrapperService_runFieldModel_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return ModamWrapperService_runFieldModel_Results_Future{Future: ans.Future()}, release
 
 }
 
@@ -109,7 +129,9 @@ func (c ModamWrapperService) GetFlowLimiter() fc.FlowLimiter {
 
 // A ModamWrapperService_Server is a ModamWrapperService with a local implementation.
 type ModamWrapperService_Server interface {
-	Run(context.Context, ModamWrapperService_run) error
+	RunAemModel(context.Context, ModamWrapperService_runAemModel) error
+
+	RunFieldModel(context.Context, ModamWrapperService_runFieldModel) error
 }
 
 // ModamWrapperService_NewServer creates a new Server from an implementation of ModamWrapperService_Server.
@@ -128,7 +150,7 @@ func ModamWrapperService_ServerToClient(s ModamWrapperService_Server) ModamWrapp
 // This can be used to create a more complicated Server.
 func ModamWrapperService_Methods(methods []server.Method, s ModamWrapperService_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 1)
+		methods = make([]server.Method, 0, 2)
 	}
 
 	methods = append(methods, server.Method{
@@ -136,31 +158,60 @@ func ModamWrapperService_Methods(methods []server.Method, s ModamWrapperService_
 			InterfaceID:   0xdb3fb36057abc378,
 			MethodID:      0,
 			InterfaceName: "dakis/modam.capnp:ModamWrapperService",
-			MethodName:    "run",
+			MethodName:    "runAemModel",
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
-			return s.Run(ctx, ModamWrapperService_run{call})
+			return s.RunAemModel(ctx, ModamWrapperService_runAemModel{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xdb3fb36057abc378,
+			MethodID:      1,
+			InterfaceName: "dakis/modam.capnp:ModamWrapperService",
+			MethodName:    "runFieldModel",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.RunFieldModel(ctx, ModamWrapperService_runFieldModel{call})
 		},
 	})
 
 	return methods
 }
 
-// ModamWrapperService_run holds the state for a server call to ModamWrapperService.run.
+// ModamWrapperService_runAemModel holds the state for a server call to ModamWrapperService.runAemModel.
 // See server.Call for documentation.
-type ModamWrapperService_run struct {
+type ModamWrapperService_runAemModel struct {
 	*server.Call
 }
 
 // Args returns the call's arguments.
-func (c ModamWrapperService_run) Args() ModamWrapperService_run_Params {
-	return ModamWrapperService_run_Params(c.Call.Args())
+func (c ModamWrapperService_runAemModel) Args() ModamWrapperService_runAemModel_Params {
+	return ModamWrapperService_runAemModel_Params(c.Call.Args())
 }
 
 // AllocResults allocates the results struct.
-func (c ModamWrapperService_run) AllocResults() (ModamWrapperService_run_Results, error) {
+func (c ModamWrapperService_runAemModel) AllocResults() (ModamWrapperService_runAemModel_Results, error) {
 	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return ModamWrapperService_run_Results(r), err
+	return ModamWrapperService_runAemModel_Results(r), err
+}
+
+// ModamWrapperService_runFieldModel holds the state for a server call to ModamWrapperService.runFieldModel.
+// See server.Call for documentation.
+type ModamWrapperService_runFieldModel struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c ModamWrapperService_runFieldModel) Args() ModamWrapperService_runFieldModel_Params {
+	return ModamWrapperService_runFieldModel_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c ModamWrapperService_runFieldModel) AllocResults() (ModamWrapperService_runFieldModel_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return ModamWrapperService_runFieldModel_Results(r), err
 }
 
 // ModamWrapperService_List is a list of ModamWrapperService.
@@ -172,194 +223,366 @@ func NewModamWrapperService_List(s *capnp.Segment, sz int32) (ModamWrapperServic
 	return capnp.CapList[ModamWrapperService](l), err
 }
 
-type ModamWrapperService_run_Params capnp.Struct
+type ModamWrapperService_runAemModel_Params capnp.Struct
 
-// ModamWrapperService_run_Params_TypeID is the unique identifier for the type ModamWrapperService_run_Params.
-const ModamWrapperService_run_Params_TypeID = 0xda027c8ae9dacdcc
+// ModamWrapperService_runAemModel_Params_TypeID is the unique identifier for the type ModamWrapperService_runAemModel_Params.
+const ModamWrapperService_runAemModel_Params_TypeID = 0xda027c8ae9dacdcc
 
-func NewModamWrapperService_run_Params(s *capnp.Segment) (ModamWrapperService_run_Params, error) {
+func NewModamWrapperService_runAemModel_Params(s *capnp.Segment) (ModamWrapperService_runAemModel_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return ModamWrapperService_run_Params(st), err
+	return ModamWrapperService_runAemModel_Params(st), err
 }
 
-func NewRootModamWrapperService_run_Params(s *capnp.Segment) (ModamWrapperService_run_Params, error) {
+func NewRootModamWrapperService_runAemModel_Params(s *capnp.Segment) (ModamWrapperService_runAemModel_Params, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return ModamWrapperService_run_Params(st), err
+	return ModamWrapperService_runAemModel_Params(st), err
 }
 
-func ReadRootModamWrapperService_run_Params(msg *capnp.Message) (ModamWrapperService_run_Params, error) {
+func ReadRootModamWrapperService_runAemModel_Params(msg *capnp.Message) (ModamWrapperService_runAemModel_Params, error) {
 	root, err := msg.Root()
-	return ModamWrapperService_run_Params(root.Struct()), err
+	return ModamWrapperService_runAemModel_Params(root.Struct()), err
 }
 
-func (s ModamWrapperService_run_Params) String() string {
+func (s ModamWrapperService_runAemModel_Params) String() string {
 	str, _ := text.Marshal(0xda027c8ae9dacdcc, capnp.Struct(s))
 	return str
 }
 
-func (s ModamWrapperService_run_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s ModamWrapperService_runAemModel_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (ModamWrapperService_run_Params) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_run_Params {
-	return ModamWrapperService_run_Params(capnp.Struct{}.DecodeFromPtr(p))
+func (ModamWrapperService_runAemModel_Params) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_runAemModel_Params {
+	return ModamWrapperService_runAemModel_Params(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s ModamWrapperService_run_Params) ToPtr() capnp.Ptr {
+func (s ModamWrapperService_runAemModel_Params) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s ModamWrapperService_run_Params) IsValid() bool {
+func (s ModamWrapperService_runAemModel_Params) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s ModamWrapperService_run_Params) Message() *capnp.Message {
+func (s ModamWrapperService_runAemModel_Params) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s ModamWrapperService_run_Params) Segment() *capnp.Segment {
+func (s ModamWrapperService_runAemModel_Params) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-func (s ModamWrapperService_run_Params) Input() (string, error) {
+func (s ModamWrapperService_runAemModel_Params) Input() (string, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
-func (s ModamWrapperService_run_Params) HasInput() bool {
+func (s ModamWrapperService_runAemModel_Params) HasInput() bool {
 	return capnp.Struct(s).HasPtr(0)
 }
 
-func (s ModamWrapperService_run_Params) InputBytes() ([]byte, error) {
+func (s ModamWrapperService_runAemModel_Params) InputBytes() ([]byte, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
-func (s ModamWrapperService_run_Params) SetInput(v string) error {
+func (s ModamWrapperService_runAemModel_Params) SetInput(v string) error {
 	return capnp.Struct(s).SetText(0, v)
 }
 
-// ModamWrapperService_run_Params_List is a list of ModamWrapperService_run_Params.
-type ModamWrapperService_run_Params_List = capnp.StructList[ModamWrapperService_run_Params]
+// ModamWrapperService_runAemModel_Params_List is a list of ModamWrapperService_runAemModel_Params.
+type ModamWrapperService_runAemModel_Params_List = capnp.StructList[ModamWrapperService_runAemModel_Params]
 
-// NewModamWrapperService_run_Params creates a new list of ModamWrapperService_run_Params.
-func NewModamWrapperService_run_Params_List(s *capnp.Segment, sz int32) (ModamWrapperService_run_Params_List, error) {
+// NewModamWrapperService_runAemModel_Params creates a new list of ModamWrapperService_runAemModel_Params.
+func NewModamWrapperService_runAemModel_Params_List(s *capnp.Segment, sz int32) (ModamWrapperService_runAemModel_Params_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
-	return capnp.StructList[ModamWrapperService_run_Params](l), err
+	return capnp.StructList[ModamWrapperService_runAemModel_Params](l), err
 }
 
-// ModamWrapperService_run_Params_Future is a wrapper for a ModamWrapperService_run_Params promised by a client call.
-type ModamWrapperService_run_Params_Future struct{ *capnp.Future }
+// ModamWrapperService_runAemModel_Params_Future is a wrapper for a ModamWrapperService_runAemModel_Params promised by a client call.
+type ModamWrapperService_runAemModel_Params_Future struct{ *capnp.Future }
 
-func (f ModamWrapperService_run_Params_Future) Struct() (ModamWrapperService_run_Params, error) {
+func (f ModamWrapperService_runAemModel_Params_Future) Struct() (ModamWrapperService_runAemModel_Params, error) {
 	p, err := f.Future.Ptr()
-	return ModamWrapperService_run_Params(p.Struct()), err
+	return ModamWrapperService_runAemModel_Params(p.Struct()), err
 }
 
-type ModamWrapperService_run_Results capnp.Struct
+type ModamWrapperService_runAemModel_Results capnp.Struct
 
-// ModamWrapperService_run_Results_TypeID is the unique identifier for the type ModamWrapperService_run_Results.
-const ModamWrapperService_run_Results_TypeID = 0x89dee76797d04686
+// ModamWrapperService_runAemModel_Results_TypeID is the unique identifier for the type ModamWrapperService_runAemModel_Results.
+const ModamWrapperService_runAemModel_Results_TypeID = 0x89dee76797d04686
 
-func NewModamWrapperService_run_Results(s *capnp.Segment) (ModamWrapperService_run_Results, error) {
+func NewModamWrapperService_runAemModel_Results(s *capnp.Segment) (ModamWrapperService_runAemModel_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return ModamWrapperService_run_Results(st), err
+	return ModamWrapperService_runAemModel_Results(st), err
 }
 
-func NewRootModamWrapperService_run_Results(s *capnp.Segment) (ModamWrapperService_run_Results, error) {
+func NewRootModamWrapperService_runAemModel_Results(s *capnp.Segment) (ModamWrapperService_runAemModel_Results, error) {
 	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
-	return ModamWrapperService_run_Results(st), err
+	return ModamWrapperService_runAemModel_Results(st), err
 }
 
-func ReadRootModamWrapperService_run_Results(msg *capnp.Message) (ModamWrapperService_run_Results, error) {
+func ReadRootModamWrapperService_runAemModel_Results(msg *capnp.Message) (ModamWrapperService_runAemModel_Results, error) {
 	root, err := msg.Root()
-	return ModamWrapperService_run_Results(root.Struct()), err
+	return ModamWrapperService_runAemModel_Results(root.Struct()), err
 }
 
-func (s ModamWrapperService_run_Results) String() string {
+func (s ModamWrapperService_runAemModel_Results) String() string {
 	str, _ := text.Marshal(0x89dee76797d04686, capnp.Struct(s))
 	return str
 }
 
-func (s ModamWrapperService_run_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+func (s ModamWrapperService_runAemModel_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
 	return capnp.Struct(s).EncodeAsPtr(seg)
 }
 
-func (ModamWrapperService_run_Results) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_run_Results {
-	return ModamWrapperService_run_Results(capnp.Struct{}.DecodeFromPtr(p))
+func (ModamWrapperService_runAemModel_Results) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_runAemModel_Results {
+	return ModamWrapperService_runAemModel_Results(capnp.Struct{}.DecodeFromPtr(p))
 }
 
-func (s ModamWrapperService_run_Results) ToPtr() capnp.Ptr {
+func (s ModamWrapperService_runAemModel_Results) ToPtr() capnp.Ptr {
 	return capnp.Struct(s).ToPtr()
 }
-func (s ModamWrapperService_run_Results) IsValid() bool {
+func (s ModamWrapperService_runAemModel_Results) IsValid() bool {
 	return capnp.Struct(s).IsValid()
 }
 
-func (s ModamWrapperService_run_Results) Message() *capnp.Message {
+func (s ModamWrapperService_runAemModel_Results) Message() *capnp.Message {
 	return capnp.Struct(s).Message()
 }
 
-func (s ModamWrapperService_run_Results) Segment() *capnp.Segment {
+func (s ModamWrapperService_runAemModel_Results) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
-func (s ModamWrapperService_run_Results) Output() (string, error) {
+func (s ModamWrapperService_runAemModel_Results) Output() (string, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.Text(), err
 }
 
-func (s ModamWrapperService_run_Results) HasOutput() bool {
+func (s ModamWrapperService_runAemModel_Results) HasOutput() bool {
 	return capnp.Struct(s).HasPtr(0)
 }
 
-func (s ModamWrapperService_run_Results) OutputBytes() ([]byte, error) {
+func (s ModamWrapperService_runAemModel_Results) OutputBytes() ([]byte, error) {
 	p, err := capnp.Struct(s).Ptr(0)
 	return p.TextBytes(), err
 }
 
-func (s ModamWrapperService_run_Results) SetOutput(v string) error {
+func (s ModamWrapperService_runAemModel_Results) SetOutput(v string) error {
 	return capnp.Struct(s).SetText(0, v)
 }
 
-// ModamWrapperService_run_Results_List is a list of ModamWrapperService_run_Results.
-type ModamWrapperService_run_Results_List = capnp.StructList[ModamWrapperService_run_Results]
+// ModamWrapperService_runAemModel_Results_List is a list of ModamWrapperService_runAemModel_Results.
+type ModamWrapperService_runAemModel_Results_List = capnp.StructList[ModamWrapperService_runAemModel_Results]
 
-// NewModamWrapperService_run_Results creates a new list of ModamWrapperService_run_Results.
-func NewModamWrapperService_run_Results_List(s *capnp.Segment, sz int32) (ModamWrapperService_run_Results_List, error) {
+// NewModamWrapperService_runAemModel_Results creates a new list of ModamWrapperService_runAemModel_Results.
+func NewModamWrapperService_runAemModel_Results_List(s *capnp.Segment, sz int32) (ModamWrapperService_runAemModel_Results_List, error) {
 	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
-	return capnp.StructList[ModamWrapperService_run_Results](l), err
+	return capnp.StructList[ModamWrapperService_runAemModel_Results](l), err
 }
 
-// ModamWrapperService_run_Results_Future is a wrapper for a ModamWrapperService_run_Results promised by a client call.
-type ModamWrapperService_run_Results_Future struct{ *capnp.Future }
+// ModamWrapperService_runAemModel_Results_Future is a wrapper for a ModamWrapperService_runAemModel_Results promised by a client call.
+type ModamWrapperService_runAemModel_Results_Future struct{ *capnp.Future }
 
-func (f ModamWrapperService_run_Results_Future) Struct() (ModamWrapperService_run_Results, error) {
+func (f ModamWrapperService_runAemModel_Results_Future) Struct() (ModamWrapperService_runAemModel_Results, error) {
 	p, err := f.Future.Ptr()
-	return ModamWrapperService_run_Results(p.Struct()), err
+	return ModamWrapperService_runAemModel_Results(p.Struct()), err
 }
 
-const schema_e7b5fe53a32655c8 = "x\xda28&\xed\xc0b\xc8\xcb~\x87\x81)\x88\x8b" +
-	"\x95\xed\x7f\x9b\xdb\x85\xe9\xe9\xcf\xefu2\x08\xaa12" +
-	"0\xb02\xb230\x18\xbf\xcc\x9d\xc4\xc8\xc0(\xfc3" +
-	"\xd7\x9e\x81\xf1\xff\x99\xb3\xb7^v\xd50\xddBV " +
-	"\x99\xd7\x05R\xa0\x99\x07RPqxux\xc2f\xfb" +
-	"\xdb\x0c\x82B\xcc\xffO\x84\xaa-\x0e\xfe\xb7\xf59\x03" +
-	"\x03\xa3\xb1g\x9e\x11\xa3pd\x1e;\x03\x83ph\x9e" +
-	"\xbbpm\x1e;\xc3\x7f\xb2`\xfc\xff\x94\xc4\xec\xccb" +
-	"\xfd\xdc|\xd6\x94\xc4\\\xbd\xe4\xc4\x82\xbc\x02+\xdf\xfc" +
-	"\x94\xc4\xdc\xf0\xa2\xc4\x82\x82\xd4\xa2\xe0\xd4\xa2\xb2\xcc\xe4" +
-	"T\xbd\xa2\xd2<\x95\xa0\xd4\xe2\xd2\x9c\x12\xc6\xe2@\x16" +
-	"f\x16\x06\x06\x16F\x06\x06A^+\x06\x86@\x0ef" +
-	"\xc6@\x11&F\xfb\xfc\xd2\x92\x82\xd2\x12F\x1e\x06&" +
-	"F\x1e\x06FRL\x0eH,J\xcc-f`@6" +
-	"\xd9\x08a\xb2|f\x1e6\x83\x99q\x19,\x0f69" +
-	"\x80\x911\x90\x85\x99\x95\x81\x01\x1e\xd0\x8c\xb0(\x11\x14" +
-	"Tb`\x12deg/*\xcds`\x0c`d\x04" +
-	"\x04\x00\x00\xff\xff\x83\xa7\x8d\xe5"
+type ModamWrapperService_runFieldModel_Params capnp.Struct
+
+// ModamWrapperService_runFieldModel_Params_TypeID is the unique identifier for the type ModamWrapperService_runFieldModel_Params.
+const ModamWrapperService_runFieldModel_Params_TypeID = 0x943b0ea4d050f605
+
+func NewModamWrapperService_runFieldModel_Params(s *capnp.Segment) (ModamWrapperService_runFieldModel_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return ModamWrapperService_runFieldModel_Params(st), err
+}
+
+func NewRootModamWrapperService_runFieldModel_Params(s *capnp.Segment) (ModamWrapperService_runFieldModel_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return ModamWrapperService_runFieldModel_Params(st), err
+}
+
+func ReadRootModamWrapperService_runFieldModel_Params(msg *capnp.Message) (ModamWrapperService_runFieldModel_Params, error) {
+	root, err := msg.Root()
+	return ModamWrapperService_runFieldModel_Params(root.Struct()), err
+}
+
+func (s ModamWrapperService_runFieldModel_Params) String() string {
+	str, _ := text.Marshal(0x943b0ea4d050f605, capnp.Struct(s))
+	return str
+}
+
+func (s ModamWrapperService_runFieldModel_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (ModamWrapperService_runFieldModel_Params) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_runFieldModel_Params {
+	return ModamWrapperService_runFieldModel_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s ModamWrapperService_runFieldModel_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s ModamWrapperService_runFieldModel_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s ModamWrapperService_runFieldModel_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s ModamWrapperService_runFieldModel_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s ModamWrapperService_runFieldModel_Params) Input() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s ModamWrapperService_runFieldModel_Params) HasInput() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s ModamWrapperService_runFieldModel_Params) InputBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s ModamWrapperService_runFieldModel_Params) SetInput(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+// ModamWrapperService_runFieldModel_Params_List is a list of ModamWrapperService_runFieldModel_Params.
+type ModamWrapperService_runFieldModel_Params_List = capnp.StructList[ModamWrapperService_runFieldModel_Params]
+
+// NewModamWrapperService_runFieldModel_Params creates a new list of ModamWrapperService_runFieldModel_Params.
+func NewModamWrapperService_runFieldModel_Params_List(s *capnp.Segment, sz int32) (ModamWrapperService_runFieldModel_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[ModamWrapperService_runFieldModel_Params](l), err
+}
+
+// ModamWrapperService_runFieldModel_Params_Future is a wrapper for a ModamWrapperService_runFieldModel_Params promised by a client call.
+type ModamWrapperService_runFieldModel_Params_Future struct{ *capnp.Future }
+
+func (f ModamWrapperService_runFieldModel_Params_Future) Struct() (ModamWrapperService_runFieldModel_Params, error) {
+	p, err := f.Future.Ptr()
+	return ModamWrapperService_runFieldModel_Params(p.Struct()), err
+}
+
+type ModamWrapperService_runFieldModel_Results capnp.Struct
+
+// ModamWrapperService_runFieldModel_Results_TypeID is the unique identifier for the type ModamWrapperService_runFieldModel_Results.
+const ModamWrapperService_runFieldModel_Results_TypeID = 0x96ba69d12ba4187e
+
+func NewModamWrapperService_runFieldModel_Results(s *capnp.Segment) (ModamWrapperService_runFieldModel_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return ModamWrapperService_runFieldModel_Results(st), err
+}
+
+func NewRootModamWrapperService_runFieldModel_Results(s *capnp.Segment) (ModamWrapperService_runFieldModel_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return ModamWrapperService_runFieldModel_Results(st), err
+}
+
+func ReadRootModamWrapperService_runFieldModel_Results(msg *capnp.Message) (ModamWrapperService_runFieldModel_Results, error) {
+	root, err := msg.Root()
+	return ModamWrapperService_runFieldModel_Results(root.Struct()), err
+}
+
+func (s ModamWrapperService_runFieldModel_Results) String() string {
+	str, _ := text.Marshal(0x96ba69d12ba4187e, capnp.Struct(s))
+	return str
+}
+
+func (s ModamWrapperService_runFieldModel_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (ModamWrapperService_runFieldModel_Results) DecodeFromPtr(p capnp.Ptr) ModamWrapperService_runFieldModel_Results {
+	return ModamWrapperService_runFieldModel_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s ModamWrapperService_runFieldModel_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s ModamWrapperService_runFieldModel_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s ModamWrapperService_runFieldModel_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s ModamWrapperService_runFieldModel_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s ModamWrapperService_runFieldModel_Results) Output() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s ModamWrapperService_runFieldModel_Results) HasOutput() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s ModamWrapperService_runFieldModel_Results) OutputBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s ModamWrapperService_runFieldModel_Results) SetOutput(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+// ModamWrapperService_runFieldModel_Results_List is a list of ModamWrapperService_runFieldModel_Results.
+type ModamWrapperService_runFieldModel_Results_List = capnp.StructList[ModamWrapperService_runFieldModel_Results]
+
+// NewModamWrapperService_runFieldModel_Results creates a new list of ModamWrapperService_runFieldModel_Results.
+func NewModamWrapperService_runFieldModel_Results_List(s *capnp.Segment, sz int32) (ModamWrapperService_runFieldModel_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[ModamWrapperService_runFieldModel_Results](l), err
+}
+
+// ModamWrapperService_runFieldModel_Results_Future is a wrapper for a ModamWrapperService_runFieldModel_Results promised by a client call.
+type ModamWrapperService_runFieldModel_Results_Future struct{ *capnp.Future }
+
+func (f ModamWrapperService_runFieldModel_Results_Future) Struct() (ModamWrapperService_runFieldModel_Results, error) {
+	p, err := f.Future.Ptr()
+	return ModamWrapperService_runFieldModel_Results(p.Struct()), err
+}
+
+const schema_e7b5fe53a32655c8 = "x\xda2\x90\x92q`1\xe4\xdd~\x87\x81)\x98\x83" +
+	"\x8b\x95\xed\x7f\x9b\xdb\x85\xe9\xe9\xcf\xefu2\x08\xaa1" +
+	"20\xb02\xb230\x18;\xe6]bd`\x14\x0e" +
+	"\xcd\xb3g`\xfc\xcf\xfa-\xe0\xc2\x12>\xeb)\xc8\x0a" +
+	"J\xf3n\x81\x14t\x82\x15\xd4I,\xd1\xbe\x98\xb9k" +
+	"\x1a\xb2\x82\x95y\x8f@\x0a\xf6\x82\x15\x9c9{\xebe" +
+	"W\x0d\xd3-d\x05w\xf3N\x81\x14|\x04+\xa88" +
+	"\xbc:<a\xb3\xfdm\x06A!\xe6\xff'B\xd5\x16" +
+	"\x07\xff\xdb\xfa\x9c\x81\x81\xd1X0\xdf\x88QX1\x9f" +
+	"\x9d\x81AX6\xbf]\xb84\x9f\x9d\xe1?Y0\xfe" +
+	"\x7fJbvf\xb1~n>[Jb\xae^rb" +
+	"A^\x81\x95o~JbnxQbAAjQ" +
+	"pjQYfr\xaa^Qi\x9ecj\xaeo~" +
+	"Jj\x8eJPjqiN\x09cq \x0b3\x0b" +
+	"\x03\x03\x0b#\x03\x83 \xaf\x15\x03C \x073c\xa0" +
+	"\x08\x13\xa3}~iIAi\x09#\x0f\x03\x13#\x0f" +
+	"\x03#\x096\xb8e\xa6\xe6\xa4@\xec\x08H,Jd" +
+	"\xceE\xb1\xc2\x08a\x85|f\x1e\xc56\x80|\xc1\x9e" +
+	"SB}_\xc0\xc3\x09\xe4\x87\xdcb\x06\x06\xd2<\xc1" +
+	"\x8c\xcb\x02y\xb0\x0d\x01\x8c\x8c\x81\x1c\xcc\xac\x0c\x0c\xf0" +
+	"\xe4\xc3\x08K\xaa\x82\x86I\x0cL\x82\x9a\xec\x8c\x88\xc4" +
+	"\xc9\x08K\x84\x82\xb2E\x0cL\x82\xa2\xec\xffa\x0ed" +
+	"`OI\xcdq`\xfc\x0f\x0b\x14\x06y\xb0\xa3\x1d\x18" +
+	"\x03\x18\x19\x01\x01\x00\x00\xff\xff\xdd\xe5\xf1S"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_e7b5fe53a32655c8,
 		Nodes: []uint64{
 			0x89dee76797d04686,
+			0x943b0ea4d050f605,
+			0x96ba69d12ba4187e,
 			0xda027c8ae9dacdcc,
 			0xdb3fb36057abc378,
 		},

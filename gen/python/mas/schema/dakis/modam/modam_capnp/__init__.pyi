@@ -11,13 +11,17 @@ from capnp.lib.capnp import (
 )
 
 class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
-    class RunRequest(Protocol):
+    class RunaemmodelRequest(Protocol):
         input: str
         def send(
             self,
-        ) -> (
-            _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunResult
-        ): ...
+        ) -> _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunaemmodelResult: ...
+
+    class RunfieldmodelRequest(Protocol):
+        input: str
+        def send(
+            self,
+        ) -> _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunfieldmodelResult: ...
 
     @override
     def _new_client(
@@ -25,52 +29,96 @@ class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
         server: _DynamicCapabilityServer,
     ) -> _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient: ...
     class Server(_DynamicCapabilityServer):
-        class RunResult(_DynamicStructBuilder):
+        class RunaemmodelResult(_DynamicStructBuilder):
             @property
             def output(self) -> str: ...
             @output.setter
             def output(self, value: str) -> None: ...
 
-        class RunResultTuple(NamedTuple):
+        class RunfieldmodelResult(_DynamicStructBuilder):
+            @property
+            def output(self) -> str: ...
+            @output.setter
+            def output(self, value: str) -> None: ...
+
+        class RunaemmodelResultTuple(NamedTuple):
             output: str
 
-        class RunParams(Protocol):
+        class RunfieldmodelResultTuple(NamedTuple):
+            output: str
+
+        class RunaemmodelParams(Protocol):
             input: str
 
-        class RunCallContext(Protocol):
-            params: _ModamWrapperServiceInterfaceModule.Server.RunParams
+        class RunaemmodelCallContext(Protocol):
+            params: _ModamWrapperServiceInterfaceModule.Server.RunaemmodelParams
             @property
             def results(
                 self,
-            ) -> _ModamWrapperServiceInterfaceModule.Server.RunResult: ...
+            ) -> _ModamWrapperServiceInterfaceModule.Server.RunaemmodelResult: ...
 
-        def run(
+        class RunfieldmodelParams(Protocol):
+            input: str
+
+        class RunfieldmodelCallContext(Protocol):
+            params: _ModamWrapperServiceInterfaceModule.Server.RunfieldmodelParams
+            @property
+            def results(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule.Server.RunfieldmodelResult: ...
+
+        def runAemModel(
             self,
             input: str,
-            _context: _ModamWrapperServiceInterfaceModule.Server.RunCallContext,
+            _context: _ModamWrapperServiceInterfaceModule.Server.RunaemmodelCallContext,
             **kwargs: Any,
         ) -> Awaitable[
-            str | _ModamWrapperServiceInterfaceModule.Server.RunResultTuple | None
+            str
+            | _ModamWrapperServiceInterfaceModule.Server.RunaemmodelResultTuple
+            | None
         ]: ...
-        def run_context(
+        def runAemModel_context(
             self,
-            context: _ModamWrapperServiceInterfaceModule.Server.RunCallContext,
+            context: _ModamWrapperServiceInterfaceModule.Server.RunaemmodelCallContext,
+        ) -> Awaitable[None]: ...
+        def runFieldModel(
+            self,
+            input: str,
+            _context: _ModamWrapperServiceInterfaceModule.Server.RunfieldmodelCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            str
+            | _ModamWrapperServiceInterfaceModule.Server.RunfieldmodelResultTuple
+            | None
+        ]: ...
+        def runFieldModel_context(
+            self,
+            context: _ModamWrapperServiceInterfaceModule.Server.RunfieldmodelCallContext,
         ) -> Awaitable[None]: ...
 
     class ModamWrapperServiceClient(_DynamicCapabilityClient):
-        class RunResult(Awaitable[RunResult], Protocol):
+        class RunaemmodelResult(Awaitable[RunaemmodelResult], Protocol):
             output: str
 
-        def run(
+        class RunfieldmodelResult(Awaitable[RunfieldmodelResult], Protocol):
+            output: str
+
+        def runAemModel(
             self,
             input: str | None = None,
-        ) -> (
-            _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunResult
-        ): ...
-        def run_request(
+        ) -> _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunaemmodelResult: ...
+        def runFieldModel(
             self,
             input: str | None = None,
-        ) -> _ModamWrapperServiceInterfaceModule.RunRequest: ...
+        ) -> _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunfieldmodelResult: ...
+        def runAemModel_request(
+            self,
+            input: str | None = None,
+        ) -> _ModamWrapperServiceInterfaceModule.RunaemmodelRequest: ...
+        def runFieldModel_request(
+            self,
+            input: str | None = None,
+        ) -> _ModamWrapperServiceInterfaceModule.RunfieldmodelRequest: ...
 
 ModamWrapperService: _ModamWrapperServiceInterfaceModule
 
@@ -79,4 +127,9 @@ type ModamWrapperServiceClient = (
     _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient
 )
 type ModamWrapperServiceServer = _ModamWrapperServiceInterfaceModule.Server
-type RunResult = _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunResult
+type RunaemmodelResult = (
+    _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunaemmodelResult
+)
+type RunfieldmodelResult = (
+    _ModamWrapperServiceInterfaceModule.ModamWrapperServiceClient.RunfieldmodelResult
+)

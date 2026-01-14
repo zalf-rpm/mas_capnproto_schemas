@@ -12,9 +12,11 @@ capnp.remove_import_hook()
 # Embedded compiled schemas (base64-encoded)
 _SCHEMA_NODES = [
     "EEJQBgb/yFUmo1P+tecAAQwAAxEVkhEdFxExZwAC/2Rha2lzL21vAWRhbS5jYXBuAXBRBAEB/3jDq1dgsz/bABEBov9Nb2RhbVdyYQFwcGVyU2VydgdpY2VREAEC/yxfgL+e+ca5AFEoAgFBPAH/bPmw4/6jXowAUTgCAUFMAf/gK3kjEH+pvgBRSAIBQVQB/7VEDiYBtjDhAFFQAgFBeAEBDAAAEQGa/21hczo6c2NoAWVtYTo6ZGFrA2lzAAABDAAAEQG6/21hcy5zY2hlAW1hLmRha2lzPy5tb2RhbQAAAQwAABEBMh9tb2RhbQAAAQwAADEB6gH/Z2l0aHViLmMGb20vemFsZi1ycG0vbWFzX2NhcG5wcm90b19zY2hlbWFzL2dlbi9nby9kYWtpcy9tD29kYW0AAA==",  # dakis/modam.capnp
-    "EB9QBgb/eMOrV2CzP9sAERID/8hVJqNT/rXnAAABM0QB+QExFTIBESUHAAARIUcRSQcAAP9kYWtpcy9tbwNkYW0uY2FwbnA6TW9kYW1XcmFwcGVyU2UfcnZpY2VQAQFRBAMFAAD/zM3a6Yp8AtoBhkbQl2fn3okRESIAAhEFBwdydW5AAVABAQ==",  # dakis/modam.capnp:ModamWrapperService
-    "ECRQBgb/zM3a6Yp8AtoAESYBAAAFAQcAATEVigEAARElPwAB/2Rha2lzL21vBWRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1biRQYXJhbXMAAFEEAwQAAAQBAAARDTIAAFEIAwFRFAIBH2lucHV0AQwAAgEMAAE=",  # dakis/modam.capnp:ModamWrapperService.run$Params
-    "ECRQBgb/hkbQl2fn3okAESYBAAAFAQcAATEVkgEAARElPwAB/2Rha2lzL21vBWRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1biRSZXN1bHQBc1EEAwQAAAQBAAARDToAAFEIAwFRFAIBP291dHB1dAEMAAIBDAAB",  # dakis/modam.capnp:ModamWrapperService.run$Results
+    "ECtQBgb/eMOrV2CzP9sAERID/8hVJqNT/rXnAAABM0QBfwIxFTIBESUHAAARIYcReQcAAP9kYWtpcy9tbwNkYW0uY2FwbnA6TW9kYW1XcmFwcGVyU2UfcnZpY2VQAQFRCAMFAAD/zM3a6Yp8AtoBhkbQl2fn3okRMWIAAhEpBwEB/wX2UNCkDjuUAX4YpCvRabqWER1yAAIRFQf/cnVuQWVtTW8AB2RlbEAB/3J1bkZpZWxkAB9Nb2RlbEABUAEB",  # dakis/modam.capnp:ModamWrapperService
+    "ECVQBgb/zM3a6Yp8AtoAESYBAAAFAQcAATEVygEAAREpPwAB/2Rha2lzL21vBmRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1bkFlbU1vZGVsJFBhcmFtcwAAUQQDBAAABAEAABENMgAAUQgDAVEUAgEfaW5wdXQBDAACAQwAAQ==",  # dakis/modam.capnp:ModamWrapperService.runAemModel$Params
+    "ECVQBgb/hkbQl2fn3okAESYBAAAFAQcAATEV0gEAAREpPwAB/2Rha2lzL21vBmRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1bkFlbU1vZGVsJFJlc3VsdAFzUQQDBAAABAEAABENOgAAUQgDAVEUAgE/b3V0cHV0AQwAAgEMAAE=",  # dakis/modam.capnp:ModamWrapperService.runAemModel$Results
+    "ECVQBgb/BfZQ0KQOO5QAESYBAAAFAQcAATEV2gEAAREpPwAB/2Rha2lzL21vBmRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1bkZpZWxkTW9kZWwkUGFyYQNtc1EEAwQAAAQBAAARDTIAAFEIAwFRFAIBH2lucHV0AQwAAgEMAAE=",  # dakis/modam.capnp:ModamWrapperService.runFieldModel$Params
+    "ECVQBgb/fhikK9FpupYAESYBAAAFAQcAATEV4gEAAREpPwAB/2Rha2lzL21vBmRhbS5jYXBucDpNb2RhbVdyYXBwZXJTZXJ2aWNlLnJ1bkZpZWxkTW9kZWwkUmVzdQdsdHNRBAMEAAAEAQAAEQ06AABRCAMBURQCAT9vdXRwdXQBDAACAQwAAQ==",  # dakis/modam.capnp:ModamWrapperService.runFieldModel$Results
 ]
 
 # Load schemas and build module structure
@@ -33,7 +35,11 @@ ModamWrapperService = _InterfaceModule(
     "ModamWrapperService",
 )
 
-ModamWrapperService.Server.RunResultTuple = NamedTuple(
-    "RunResultTuple",
+ModamWrapperService.Server.RunaemmodelResultTuple = NamedTuple(
+    "RunaemmodelResultTuple",
+    [("output", object)],
+)
+ModamWrapperService.Server.RunfieldmodelResultTuple = NamedTuple(
+    "RunfieldmodelResultTuple",
     [("output", object)],
 )
