@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.47](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.46...v0.1.47) (2026-01-15)
+
+
+### Bug Fixes
+
+* run with fixed generator including the proper stubs to augment ([8c96f2d](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/8c96f2d27fddca00cc4a850ecaa9ad61fdaf63cb))
+
 ## [0.1.46](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.45...v0.1.46) (2026-01-14)
 
 
