@@ -74,7 +74,7 @@ interface HostPortResolver @0xaa8d91fab6d01d9f superclasses(import "/common/comm
   }
 }
 interface Gateway @0x8f9c2c0a602f27ed superclasses(import "/common/common.capnp".Identifiable, Restorer) {
-  register @0 (cap :Capability) -> RegResults;
+  register @0 (cap :Capability, secretSeed :Text) -> RegResults;
   struct RegResults @0xa232c65d79e97faa {  # 8 bytes, 2 ptrs
     sturdyRef @0 :SturdyRef;  # ptr[0]
     heartbeat @1 :Heartbeat;  # ptr[1]

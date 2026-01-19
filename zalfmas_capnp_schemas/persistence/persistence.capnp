@@ -189,9 +189,11 @@ interface Gateway extends(Identifiable, Restorer) {
   # interface to "register" caps at a gateway so they can be reached from
   # the gateways outer side and be saved to the gateways restorer
 
-  register @0 (cap :Capability) -> RegResults;
+  register @0 (cap :Capability, secretSeed:Text) -> RegResults;
   # Register a capability at the gateway and return sturdy refs pointing to the gateway
   # which can be used to access the capability later
+  # The optional secretSeed parameter is used to influence the creation of the local ref
+  # on the gateway to have it reproducable and stable across service restarts.
 
   struct RegResults {
     sturdyRef               @0 :SturdyRef;

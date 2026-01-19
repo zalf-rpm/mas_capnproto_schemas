@@ -2058,6 +2058,7 @@ namespace Mas.Schema.Persistence
     {
         Task<Mas.Schema.Persistence.Gateway.RegResults> Register(
             BareProxy cap,
+            string secretSeed,
             CancellationToken cancellationToken_ = default
         );
     }
@@ -2070,12 +2071,17 @@ namespace Mas.Schema.Persistence
     {
         public Task<Mas.Schema.Persistence.Gateway.RegResults> Register(
             BareProxy cap,
+            string secretSeed,
             CancellationToken cancellationToken_ = default
         )
         {
             var in_ =
                 SerializerState.CreateForRpc<Mas.Schema.Persistence.Gateway.Params_Register.WRITER>();
-            var arg_ = new Mas.Schema.Persistence.Gateway.Params_Register() { Cap = cap };
+            var arg_ = new Mas.Schema.Persistence.Gateway.Params_Register()
+            {
+                Cap = cap,
+                SecretSeed = secretSeed,
+            };
             arg_?.serialize(in_);
             return Impatient.MakePipelineAware(
                 Call(
@@ -2175,7 +2181,7 @@ namespace Mas.Schema.Persistence
                     d_
                 );
                 return Impatient.MaybeTailCall(
-                    Impl.Register(in_.Cap, cancellationToken_),
+                    Impl.Register(in_.Cap, in_.SecretSeed, cancellationToken_),
                     r_ =>
                     {
                         var s_ =
@@ -2287,12 +2293,14 @@ namespace Mas.Schema.Persistence
             {
                 var reader = READER.create(arg_);
                 Cap = reader.Cap;
+                SecretSeed = reader.SecretSeed;
                 applyDefaults();
             }
 
             public void serialize(WRITER writer)
             {
                 writer.Cap = Cap;
+                writer.SecretSeed = SecretSeed;
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2303,6 +2311,7 @@ namespace Mas.Schema.Persistence
             public void applyDefaults() { }
 
             public BareProxy Cap { get; set; }
+            public string SecretSeed { get; set; }
 
             public struct READER
             {
@@ -2320,19 +2329,25 @@ namespace Mas.Schema.Persistence
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
 
                 public BareProxy Cap => ctx.ReadCap(0);
+                public string SecretSeed => ctx.ReadText(1, null);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 1);
+                    this.SetStruct(0, 2);
                 }
 
                 public BareProxy Cap
                 {
                     get => ReadCap<BareProxy>(0);
                     set => LinkObject(0, value);
+                }
+                public string SecretSeed
+                {
+                    get => this.ReadText(1, null);
+                    set => this.WriteText(1, value, null);
                 }
             }
         }

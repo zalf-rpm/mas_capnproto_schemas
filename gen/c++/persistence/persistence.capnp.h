@@ -515,7 +515,7 @@ struct Gateway::RegisterParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(c78c1529af44abab, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(c78c1529af44abab, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2721,6 +2721,9 @@ public:
   inline  ::capnp::Capability::Client getCap() const;
 #endif  // !CAPNP_LITE
 
+  inline bool hasSecretSeed() const;
+  inline  ::capnp::Text::Reader getSecretSeed() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -2757,6 +2760,13 @@ public:
   inline void adoptCap(::capnp::Orphan< ::capnp::Capability>&& value);
   inline ::capnp::Orphan< ::capnp::Capability> disownCap();
 #endif  // !CAPNP_LITE
+
+  inline bool hasSecretSeed();
+  inline  ::capnp::Text::Builder getSecretSeed();
+  inline void setSecretSeed( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSecretSeed(unsigned int size);
+  inline void adoptSecretSeed(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSecretSeed();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -4336,6 +4346,40 @@ inline ::capnp::Orphan< ::capnp::Capability> Gateway::RegisterParams::Builder::d
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
+
+inline bool Gateway::RegisterParams::Reader::hasSecretSeed() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Gateway::RegisterParams::Builder::hasSecretSeed() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Gateway::RegisterParams::Reader::getSecretSeed() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Gateway::RegisterParams::Builder::getSecretSeed() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void Gateway::RegisterParams::Builder::setSecretSeed( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Gateway::RegisterParams::Builder::initSecretSeed(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void Gateway::RegisterParams::Builder::adoptSecretSeed(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Gateway::RegisterParams::Builder::disownSecretSeed() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
 
 #if !CAPNP_LITE
 inline GatewayRegistrable::Client::Client(decltype(nullptr))

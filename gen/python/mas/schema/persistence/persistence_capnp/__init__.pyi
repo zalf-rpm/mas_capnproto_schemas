@@ -1616,6 +1616,7 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
     RegResults: _RegResultsStructModule
     class RegisterRequest(Protocol):
         cap: AnyPointer
+        secretSeed: str
         def send(self) -> _GatewayInterfaceModule.GatewayClient.RegisterResult: ...
 
     @override
@@ -1642,6 +1643,7 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
 
         class RegisterParams(Protocol):
             cap: AnyPointer
+            secretSeed: str
 
         class RegisterCallContext(Protocol):
             params: _GatewayInterfaceModule.Server.RegisterParams
@@ -1651,6 +1653,7 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
         def register(
             self,
             cap: AnyPointer,
+            secretSeed: str,
             _context: _GatewayInterfaceModule.Server.RegisterCallContext,
             **kwargs: Any,
         ) -> Awaitable[_GatewayInterfaceModule.Server.RegisterResultTuple | None]: ...
@@ -1671,10 +1674,12 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
         def register(
             self,
             cap: AnyPointer | None = None,
+            secretSeed: str | None = None,
         ) -> _GatewayInterfaceModule.GatewayClient.RegisterResult: ...
         def register_request(
             self,
             cap: AnyPointer | None = None,
+            secretSeed: str | None = None,
         ) -> _GatewayInterfaceModule.RegisterRequest: ...
 
 Gateway: _GatewayInterfaceModule
