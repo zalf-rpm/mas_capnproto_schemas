@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.48](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.47...v0.1.48) (2026-01-19)
+
+
+### Features
+
+* add secretSeed param to gateway register method to have stable adresses if needed ([f16f5e5](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/f16f5e56e4d4d7f88553a2b4720e062482363586))
+
 ## [0.1.47](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.46...v0.1.47) (2026-01-15)
 
 
