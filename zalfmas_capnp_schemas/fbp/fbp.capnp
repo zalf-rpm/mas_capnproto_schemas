@@ -194,7 +194,7 @@ struct Component {
     inPorts       @2 :List(Port); # the components allowed input ports
     outPorts      @3 :List(Port); # the components allowed input ports
 
-    defaultConfig @4 :Text; # default configuration for component
+    defaultConfig @4 :Common.StructuredText; # default configuration for component
 
     factory :union {
       none        @5 :Void;               # no factory available
