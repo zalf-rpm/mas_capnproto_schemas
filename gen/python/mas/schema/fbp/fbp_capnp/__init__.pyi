@@ -20,6 +20,8 @@ from capnp.lib.capnp import (
 from mas.schema.common.common_capnp import (
     IdInformationBuilder,
     IdInformationReader,
+    StructuredTextBuilder,
+    StructuredTextReader,
     ValueBuilder,
     ValueReader,
     _IdentifiableInterfaceModule,
@@ -2984,7 +2986,7 @@ class _ComponentStructModule(_StructModule):
         @property
         def outPorts(self) -> PortListReader: ...
         @property
-        def defaultConfig(self) -> str: ...
+        def defaultConfig(self) -> StructuredTextReader: ...
         @property
         def factory(self) -> ComponentFactoryReader: ...
         @override
@@ -3021,9 +3023,12 @@ class _ComponentStructModule(_StructModule):
             value: PortListBuilder | PortListReader | dict[str, Any],
         ) -> None: ...
         @property
-        def defaultConfig(self) -> str: ...
+        def defaultConfig(self) -> StructuredTextBuilder: ...
         @defaultConfig.setter
-        def defaultConfig(self, value: str) -> None: ...
+        def defaultConfig(
+            self,
+            value: StructuredTextBuilder | StructuredTextReader | dict[str, Any],
+        ) -> None: ...
         @property
         def factory(self) -> ComponentFactoryBuilder: ...
         @factory.setter
@@ -3038,6 +3043,12 @@ class _ComponentStructModule(_StructModule):
             field: Literal["info"],
             size: int | None = None,
         ) -> IdInformationBuilder: ...
+        @overload
+        def init(
+            self,
+            field: Literal["defaultConfig"],
+            size: int | None = None,
+        ) -> StructuredTextBuilder: ...
         @overload
         def init(
             self,
@@ -3070,7 +3081,7 @@ class _ComponentStructModule(_StructModule):
         type: ComponentComponentTypeEnum | None = None,
         inPorts: PortListBuilder | dict[str, Any] | None = None,
         outPorts: PortListBuilder | dict[str, Any] | None = None,
-        defaultConfig: str | None = None,
+        defaultConfig: StructuredTextBuilder | dict[str, Any] | None = None,
         factory: ComponentFactoryBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> ComponentBuilder: ...

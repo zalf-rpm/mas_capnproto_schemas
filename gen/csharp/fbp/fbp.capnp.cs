@@ -3046,7 +3046,9 @@ namespace Mas.Schema.Fbp
             OutPorts = reader.OutPorts?.ToReadOnlyList(_ =>
                 CapnpSerializable.Create<Mas.Schema.Fbp.Component.Port>(_)
             );
-            DefaultConfig = reader.DefaultConfig;
+            DefaultConfig = CapnpSerializable.Create<Mas.Schema.Common.StructuredText>(
+                reader.DefaultConfig
+            );
             Factory = CapnpSerializable.Create<Mas.Schema.Fbp.Component.factory>(reader.Factory);
             applyDefaults();
         }
@@ -3057,7 +3059,7 @@ namespace Mas.Schema.Fbp
             writer.Type = Type;
             writer.InPorts.Init(InPorts, (_s1, _v1) => _v1?.serialize(_s1));
             writer.OutPorts.Init(OutPorts, (_s1, _v1) => _v1?.serialize(_s1));
-            writer.DefaultConfig = DefaultConfig;
+            DefaultConfig?.serialize(writer.DefaultConfig);
             Factory?.serialize(writer.Factory);
         }
 
@@ -3072,7 +3074,7 @@ namespace Mas.Schema.Fbp
         public Mas.Schema.Fbp.Component.ComponentType Type { get; set; }
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> InPorts { get; set; }
         public IReadOnlyList<Mas.Schema.Fbp.Component.Port> OutPorts { get; set; }
-        public string DefaultConfig { get; set; }
+        public Mas.Schema.Common.StructuredText DefaultConfig { get; set; }
         public Mas.Schema.Fbp.Component.factory Factory { get; set; }
 
         public struct READER
@@ -3101,7 +3103,9 @@ namespace Mas.Schema.Fbp
             public IReadOnlyList<Mas.Schema.Fbp.Component.Port.READER> OutPorts =>
                 ctx.ReadList(2).Cast(Mas.Schema.Fbp.Component.Port.READER.create);
             public bool HasOutPorts => ctx.IsStructFieldNonNull(2);
-            public string DefaultConfig => ctx.ReadText(3, null);
+            public Mas.Schema.Common.StructuredText.READER DefaultConfig =>
+                ctx.ReadStruct(3, Mas.Schema.Common.StructuredText.READER.create);
+            public bool HasDefaultConfig => ctx.IsStructFieldNonNull(3);
             public factory.READER Factory => new factory.READER(ctx);
         }
 
@@ -3134,10 +3138,10 @@ namespace Mas.Schema.Fbp
                     BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.Component.Port.WRITER>>(2);
                 set => Link(2, value);
             }
-            public string DefaultConfig
+            public Mas.Schema.Common.StructuredText.WRITER DefaultConfig
             {
-                get => this.ReadText(3, null);
-                set => this.WriteText(3, value, null);
+                get => BuildPointer<Mas.Schema.Common.StructuredText.WRITER>(3);
+                set => Link(3, value);
             }
             public factory.WRITER Factory
             {
