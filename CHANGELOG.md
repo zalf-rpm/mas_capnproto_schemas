@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.50](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.49...v0.1.50) (2026-02-24)
+
+
+### Bug Fixes
+
+* test ([74963a3](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/74963a397aa7ebc85ae3339f56bce989598d7e1b))
+
 ## [0.1.49](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.48...v0.1.49) (2026-02-24)
 
 
