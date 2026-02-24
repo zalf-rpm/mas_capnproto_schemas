@@ -4441,7 +4441,7 @@ public:
   inline  ::capnp::List< ::mas::schema::fbp::Component::Port,  ::capnp::Kind::STRUCT>::Reader getOutPorts() const;
 
   inline bool hasDefaultConfig() const;
-  inline  ::capnp::Text::Reader getDefaultConfig() const;
+  inline  ::mas::schema::common::StructuredText::Reader getDefaultConfig() const;
 
   inline typename Factory::Reader getFactory() const;
 
@@ -4498,11 +4498,11 @@ public:
   inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Component::Port,  ::capnp::Kind::STRUCT>> disownOutPorts();
 
   inline bool hasDefaultConfig();
-  inline  ::capnp::Text::Builder getDefaultConfig();
-  inline void setDefaultConfig( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initDefaultConfig(unsigned int size);
-  inline void adoptDefaultConfig(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownDefaultConfig();
+  inline  ::mas::schema::common::StructuredText::Builder getDefaultConfig();
+  inline void setDefaultConfig( ::mas::schema::common::StructuredText::Reader value);
+  inline  ::mas::schema::common::StructuredText::Builder initDefaultConfig();
+  inline void adoptDefaultConfig(::capnp::Orphan< ::mas::schema::common::StructuredText>&& value);
+  inline ::capnp::Orphan< ::mas::schema::common::StructuredText> disownDefaultConfig();
 
   inline typename Factory::Builder getFactory();
   inline typename Factory::Builder initFactory();
@@ -4526,6 +4526,7 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::common::IdInformation::Pipeline getInfo();
+  inline  ::mas::schema::common::StructuredText::Pipeline getDefaultConfig();
   inline typename Factory::Pipeline getFactory();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
@@ -9927,29 +9928,34 @@ inline bool Component::Builder::hasDefaultConfig() {
   return !_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Component::Reader::getDefaultConfig() const {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+inline  ::mas::schema::common::StructuredText::Reader Component::Reader::getDefaultConfig() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Component::Builder::getDefaultConfig() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+inline  ::mas::schema::common::StructuredText::Builder Component::Builder::getDefaultConfig() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline void Component::Builder::setDefaultConfig( ::capnp::Text::Reader value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+#if !CAPNP_LITE
+inline  ::mas::schema::common::StructuredText::Pipeline Component::Pipeline::getDefaultConfig() {
+  return  ::mas::schema::common::StructuredText::Pipeline(_typeless.getPointerField(3));
+}
+#endif  // !CAPNP_LITE
+inline void Component::Builder::setDefaultConfig( ::mas::schema::common::StructuredText::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::set(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Component::Builder::initDefaultConfig(unsigned int size) {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
-      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+inline  ::mas::schema::common::StructuredText::Builder Component::Builder::initDefaultConfig() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::init(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 inline void Component::Builder::adoptDefaultConfig(
-    ::capnp::Orphan< ::capnp::Text>&& value) {
-  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+    ::capnp::Orphan< ::mas::schema::common::StructuredText>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::adopt(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Component::Builder::disownDefaultConfig() {
-  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::common::StructuredText> Component::Builder::disownDefaultConfig() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::disown(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 

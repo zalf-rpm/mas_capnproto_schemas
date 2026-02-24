@@ -89,7 +89,7 @@ struct Component @0xd717ff7d6815a6b0 {  # 8 bytes, 5 ptrs
   type @1 :ComponentType;  # bits[0, 16)
   inPorts @2 :List(Port);  # ptr[1]
   outPorts @3 :List(Port);  # ptr[2]
-  defaultConfig @4 :Text;  # ptr[3]
+  defaultConfig @4 :import "/common/common.capnp".StructuredText;  # ptr[3]
   factory :group {
     union {  # tag bits [16, 32)
       none @5 :Void;  # bits[0, 0), union tag = 0
