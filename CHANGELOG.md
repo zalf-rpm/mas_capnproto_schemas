@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.49](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.48...v0.1.49) (2026-02-24)
+
+
+### Features
+
+* made defaultConfig StructuredText ([98a02b6](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/98a02b6f915747ce3da1f374cab5b00e68cf9a53))
+
 ## [0.1.48](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.47...v0.1.48) (2026-01-19)
 
 
