@@ -177,16 +177,17 @@ struct Component {
             standard @0; # standard port
         }
 
-        enum ContentType {
-            structuredText @0;
-        }
-
-        name        @0 :Text; # port name
+        name        @0 :Text;
+        # port name
 
         contentType @1 :Text;
         # type of content, e.g. common.capnp:StructuredText or geo.capnp:LatLngCoord or Text
 
-        type        @2 :PortType = standard; # port type
+        desc @3 :Text;
+        # description of the ports meaning
+
+        type        @2 :PortType = standard;
+        # port type
     }
 
     info          @0 :Common.IdInformation; # id, name and description of this FBP component
@@ -212,7 +213,12 @@ interface Runnable extends(Common.Identifiable) {
     create @0 () -> (out :Runnable);
   }
 
-  start @0 (portInfosReaderSr :SturdyRef, name :Text) -> (success :Bool);
+  interface StoppedCallback {
+    # notify listener that the Runnable stopped
+    stopped @0 ();
+  }
+
+  start @0 (portInfosReaderSr :SturdyRef, name :Text, stoppedCb :StoppedCallback) -> (success :Bool);
   # start component with a sturdy ref to a reader of PortInfos
   # the component will use the port infos to connect to the channels
   # and given an optional nam
