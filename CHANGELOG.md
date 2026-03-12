@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.51](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.50...v0.1.51) (2026-03-12)
+
+
+### Features
+
+* added port description and callback for a stopped Runnable ([a43a63a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/a43a63a4d80f7c316b992639a0ebb7183594a8c5))
+* recompile capnp schemas ([#34](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/34)) ([d753359](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/d753359818ad1bf0ab4b3c0e9cc3c066c46aa561))
+
+
+### Bug Fixes
+
+* Change commit message type to 'feat' for schema recompilation ([9a778eb](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/9a778ebbffe2404afe75ae1bffdd29304691ae28))
+* missing renamings for from chore to feat ([0d60a20](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/0d60a20845e61999cdfb361829ae716e251f2546))
+
 ## [0.1.50](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.49...v0.1.50) (2026-02-24)
 
 
