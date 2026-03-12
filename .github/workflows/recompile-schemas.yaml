@@ -57,8 +57,8 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "feat: recompile capnp schemas"
-          branch: chore/recompile-capnp-schemas
-          title: "chore: recompile Cap'n Proto schemas"
+          branch: feat/recompile-capnp-schemas
+          title: "feat: recompile Cap'n Proto schemas"
           body: |
             Automated schema recompilation (manual trigger).
             Inputs:
