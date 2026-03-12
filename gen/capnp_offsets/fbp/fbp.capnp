@@ -104,23 +104,24 @@ struct Component @0xd717ff7d6815a6b0 {  # 8 bytes, 5 ptrs
     view @3;
     process @4;
   }
-  struct Port @0xc28d2829add1cd72 {  # 8 bytes, 2 ptrs
+  struct Port @0xc28d2829add1cd72 {  # 8 bytes, 3 ptrs
     name @0 :Text;  # ptr[0]
     contentType @1 :Text;  # ptr[1]
+    desc @3 :Text;  # ptr[2]
     type @2 :PortType;  # bits[0, 16)
     enum PortType @0xf58d7a7318a06224 {
       standard @0;
     }
-    enum ContentType @0xf30610cf0ed94a2f {
-      structuredText @0;
-    }
   }
 }
 interface Runnable @0xbde616d300754ff0 superclasses(import "/common/common.capnp".Identifiable) {
-  start @0 (portInfosReaderSr :import "/persistence/persistence.capnp".SturdyRef, name :Text) -> (success :Bool);
+  start @0 (portInfosReaderSr :import "/persistence/persistence.capnp".SturdyRef, name :Text, stoppedCb :StoppedCallback) -> (success :Bool);
   stop @1 () -> (success :Bool);
   interface Factory @0xf5694db406aa9975 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :Runnable);
+  }
+  interface StoppedCallback @0xcba63cd37fbd1806 {
+    stopped @0 () -> ();
   }
 }
 interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".GatewayRegistrable) {

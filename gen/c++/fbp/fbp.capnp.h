@@ -86,16 +86,14 @@ enum class PortType_f58d7a7318a06224: uint16_t {
   STANDARD,
 };
 CAPNP_DECLARE_ENUM(PortType, f58d7a7318a06224);
-CAPNP_DECLARE_SCHEMA(f30610cf0ed94a2f);
-enum class ContentType_f30610cf0ed94a2f: uint16_t {
-  STRUCTURED_TEXT,
-};
-CAPNP_DECLARE_ENUM(ContentType, f30610cf0ed94a2f);
 CAPNP_DECLARE_SCHEMA(e1a4104633d629d4);
 CAPNP_DECLARE_SCHEMA(bde616d300754ff0);
 CAPNP_DECLARE_SCHEMA(f5694db406aa9975);
 CAPNP_DECLARE_SCHEMA(ef35cb55860e1c65);
 CAPNP_DECLARE_SCHEMA(8e483f7d2668e153);
+CAPNP_DECLARE_SCHEMA(cba63cd37fbd1806);
+CAPNP_DECLARE_SCHEMA(d1af5943b11af54f);
+CAPNP_DECLARE_SCHEMA(dd1022930cf32629);
 CAPNP_DECLARE_SCHEMA(9e5b8ec57b93780c);
 CAPNP_DECLARE_SCHEMA(f34a8f368330a36d);
 CAPNP_DECLARE_SCHEMA(a593e62c492f42f1);
@@ -818,11 +816,9 @@ struct Component::Port {
   class Pipeline;
   typedef ::capnp::schemas::PortType_f58d7a7318a06224 PortType;
 
-  typedef ::capnp::schemas::ContentType_f30610cf0ed94a2f ContentType;
-
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(c28d2829add1cd72, 1, 2)
+    CAPNP_DECLARE_STRUCT_HEADER(c28d2829add1cd72, 1, 3)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -858,6 +854,7 @@ struct Runnable {
 #endif  // !CAPNP_LITE
 
   struct Factory;
+  struct StoppedCallback;
   struct StartParams;
   struct StartResults;
   struct StopParams;
@@ -920,6 +917,55 @@ struct Runnable::Factory::CreateResults {
   };
 };
 
+struct Runnable::StoppedCallback {
+  StoppedCallback() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct StoppedParams;
+  struct StoppedResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(cba63cd37fbd1806)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Runnable::StoppedCallback::StoppedParams {
+  StoppedParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d1af5943b11af54f, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Runnable::StoppedCallback::StoppedResults {
+  StoppedResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(dd1022930cf32629, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
 struct Runnable::StartParams {
   StartParams() = delete;
 
@@ -928,7 +974,7 @@ struct Runnable::StartParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9e5b8ec57b93780c, 0, 2)
+    CAPNP_DECLARE_STRUCT_HEADER(9e5b8ec57b93780c, 0, 3)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -4561,6 +4607,9 @@ public:
 
   inline  ::mas::schema::fbp::Component::Port::PortType getType() const;
 
+  inline bool hasDesc() const;
+  inline  ::capnp::Text::Reader getDesc() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -4605,6 +4654,13 @@ public:
 
   inline  ::mas::schema::fbp::Component::Port::PortType getType();
   inline void setType( ::mas::schema::fbp::Component::Port::PortType value);
+
+  inline bool hasDesc();
+  inline  ::capnp::Text::Builder getDesc();
+  inline void setDesc( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initDesc(unsigned int size);
+  inline void adoptDesc(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownDesc();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -5017,6 +5073,201 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+class Runnable::StoppedCallback::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef StoppedCallback Calls;
+  typedef StoppedCallback Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Runnable::StoppedCallback::StoppedParams,  ::mas::schema::fbp::Runnable::StoppedCallback::StoppedResults> stoppedRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Runnable::StoppedCallback::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef StoppedCallback Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Runnable::StoppedCallback::StoppedParams StoppedParams;
+  typedef  ::mas::schema::fbp::Runnable::StoppedCallback::StoppedResults StoppedResults;
+  typedef ::capnp::CallContext<StoppedParams, StoppedResults> StoppedContext;
+  virtual ::kj::Promise<void> stopped(StoppedContext context);
+
+  inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Runnable::StoppedCallback>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Runnable::StoppedCallback::StoppedParams::Reader {
+public:
+  typedef StoppedParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Runnable::StoppedCallback::StoppedParams::Builder {
+public:
+  typedef StoppedParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Runnable::StoppedCallback::StoppedParams::Pipeline {
+public:
+  typedef StoppedParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Runnable::StoppedCallback::StoppedResults::Reader {
+public:
+  typedef StoppedResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Runnable::StoppedCallback::StoppedResults::Builder {
+public:
+  typedef StoppedResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Runnable::StoppedCallback::StoppedResults::Pipeline {
+public:
+  typedef StoppedResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 class Runnable::StartParams::Reader {
 public:
   typedef StartParams Reads;
@@ -5039,6 +5290,11 @@ public:
 
   inline bool hasName() const;
   inline  ::capnp::Text::Reader getName() const;
+
+  inline bool hasStoppedCb() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client getStoppedCb() const;
+#endif  // !CAPNP_LITE
 
 private:
   ::capnp::_::StructReader _reader;
@@ -5082,6 +5338,15 @@ public:
   inline void adoptName(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownName();
 
+  inline bool hasStoppedCb();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client getStoppedCb();
+  inline void setStoppedCb( ::mas::schema::fbp::Runnable::StoppedCallback::Client&& value);
+  inline void setStoppedCb( ::mas::schema::fbp::Runnable::StoppedCallback::Client& value);
+  inline void adoptStoppedCb(::capnp::Orphan< ::mas::schema::fbp::Runnable::StoppedCallback>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Runnable::StoppedCallback> disownStoppedCb();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -5101,6 +5366,7 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::persistence::SturdyRef::Pipeline getPortInfosReaderSr();
+  inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client getStoppedCb();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -10057,6 +10323,40 @@ inline void Component::Port::Builder::setType( ::mas::schema::fbp::Component::Po
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
+inline bool Component::Port::Reader::hasDesc() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool Component::Port::Builder::hasDesc() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Component::Port::Reader::getDesc() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Component::Port::Builder::getDesc() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline void Component::Port::Builder::setDesc( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Component::Port::Builder::initDesc(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
+}
+inline void Component::Port::Builder::adoptDesc(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Component::Port::Builder::disownDesc() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
 inline  ::mas::schema::fbp::Component::Factory::Which Component::Factory::Reader::which() const {
   return _reader.getDataField<Which>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS);
@@ -10291,6 +10591,30 @@ inline ::capnp::Orphan< ::mas::schema::fbp::Runnable> Runnable::Factory::CreateR
 }
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+inline Runnable::StoppedCallback::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Runnable::StoppedCallback::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Runnable::StoppedCallback::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Runnable::StoppedCallback::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Runnable::StoppedCallback::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client& Runnable::StoppedCallback::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client& Runnable::StoppedCallback::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
 inline bool Runnable::StartParams::Reader::hasPortInfosReaderSr() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -10363,6 +10687,45 @@ inline ::capnp::Orphan< ::capnp::Text> Runnable::StartParams::Builder::disownNam
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
+
+inline bool Runnable::StartParams::Reader::hasStoppedCb() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool Runnable::StartParams::Builder::hasStoppedCb() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client Runnable::StartParams::Reader::getStoppedCb() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client Runnable::StartParams::Builder::getStoppedCb() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Runnable::StoppedCallback::Client Runnable::StartParams::Pipeline::getStoppedCb() {
+  return  ::mas::schema::fbp::Runnable::StoppedCallback::Client(_typeless.getPointerField(2).asCap());
+}
+inline void Runnable::StartParams::Builder::setStoppedCb( ::mas::schema::fbp::Runnable::StoppedCallback::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Runnable::StartParams::Builder::setStoppedCb( ::mas::schema::fbp::Runnable::StoppedCallback::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), cap);
+}
+inline void Runnable::StartParams::Builder::adoptStoppedCb(
+    ::capnp::Orphan< ::mas::schema::fbp::Runnable::StoppedCallback>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Runnable::StoppedCallback> Runnable::StartParams::Builder::disownStoppedCb() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Runnable::StoppedCallback>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
 
 inline bool Runnable::StartResults::Reader::getSuccess() const {
   return _reader.getDataField<bool>(

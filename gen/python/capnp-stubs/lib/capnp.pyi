@@ -919,6 +919,11 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
+    ) -> fbp_capnp.StoppedCallbackClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_interface(
+        self,
         schema: grid_capnp._GridInterfaceModule._CallbackInterfaceModule,
     ) -> grid_capnp.CallbackClient: ...  # type: ignore[reportOverlappingOverload]
     @overload
@@ -2783,6 +2788,11 @@ class _CapabilityClient:
         self,
         schema: fbp_capnp._ProcessInterfaceModule._StateTransitionInterfaceModule,
     ) -> fbp_capnp.StateTransitionClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
+    ) -> fbp_capnp.StoppedCallbackClient: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def cast_as(
         self,

@@ -1973,9 +1973,60 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
     Factory: _FactoryInterfaceModule
     type FactoryClient = _RunnableInterfaceModule._FactoryInterfaceModule.FactoryClient
     type FactoryServer = _RunnableInterfaceModule._FactoryInterfaceModule.Server
+    class _StoppedCallbackInterfaceModule(_InterfaceModule):
+        class StoppedRequest(Protocol):
+            def send(
+                self,
+            ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient.StoppedResult: ...
+
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient: ...
+        class Server(_DynamicCapabilityServer):
+            class StoppedResult(Awaitable[None], Protocol): ...
+            class StoppedParams(Protocol): ...
+
+            class StoppedCallContext(Protocol):
+                params: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server.StoppedParams
+
+            def stopped(
+                self,
+                _context: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server.StoppedCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[None]: ...
+            def stopped_context(
+                self,
+                context: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server.StoppedCallContext,
+            ) -> Awaitable[None]: ...
+
+        class StoppedCallbackClient(_DynamicCapabilityClient):
+            class StoppedResult(Awaitable[None], Protocol): ...
+
+            def stopped(
+                self,
+            ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient.StoppedResult: ...
+            def stopped_request(
+                self,
+            ) -> (
+                _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedRequest
+            ): ...
+
+    StoppedCallback: _StoppedCallbackInterfaceModule
+    type StoppedCallbackClient = (
+        _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
+    )
+    type StoppedCallbackServer = (
+        _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+    )
     class StartRequest(Protocol):
         portInfosReaderSr: SturdyRefBuilder
         name: str
+        stoppedCb: (
+            StoppedCallbackClient
+            | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+        )
         @overload
         def init(self, name: Literal["portInfosReaderSr"]) -> SturdyRefBuilder: ...
         @overload
@@ -2012,6 +2063,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
         class StartParams(Protocol):
             portInfosReaderSr: SturdyRefReader
             name: str
+            stoppedCb: StoppedCallbackClient
 
         class StartCallContext(Protocol):
             params: _RunnableInterfaceModule.Server.StartParams
@@ -2029,6 +2081,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             self,
             portInfosReaderSr: SturdyRefReader,
             name: str,
+            stoppedCb: StoppedCallbackClient,
             _context: _RunnableInterfaceModule.Server.StartCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -2064,12 +2117,18 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             | dict[str, Any]
             | None = None,
             name: str | None = None,
+            stoppedCb: StoppedCallbackClient
+            | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+            | None = None,
         ) -> _RunnableInterfaceModule.RunnableClient.StartResult: ...
         def stop(self) -> _RunnableInterfaceModule.RunnableClient.StopResult: ...
         def start_request(
             self,
             portInfosReaderSr: SturdyRefBuilder | None = None,
             name: str | None = None,
+            stoppedCb: StoppedCallbackClient
+            | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+            | None = None,
         ) -> _RunnableInterfaceModule.StartRequest: ...
         def stop_request(self) -> _RunnableInterfaceModule.StopRequest: ...
 
@@ -2765,10 +2824,6 @@ class _ComponentStructModule(_StructModule):
             standard: int
 
         PortType: _PortTypeEnumModule
-        class _ContentTypeEnumModule:
-            structuredText: int
-
-        ContentType: _ContentTypeEnumModule
         class Reader(_DynamicStructReader):
             @property
             def name(self) -> str: ...
@@ -2776,6 +2831,8 @@ class _ComponentStructModule(_StructModule):
             def contentType(self) -> str: ...
             @property
             def type(self) -> ComponentPortPortTypeEnum: ...
+            @property
+            def desc(self) -> str: ...
             @override
             def as_builder(
                 self,
@@ -2796,6 +2853,10 @@ class _ComponentStructModule(_StructModule):
             def type(self) -> ComponentPortPortTypeEnum: ...
             @type.setter
             def type(self, value: ComponentPortPortTypeEnum) -> None: ...
+            @property
+            def desc(self) -> str: ...
+            @desc.setter
+            def desc(self, value: str) -> None: ...
             @override
             def as_reader(self) -> PortReader: ...
 
@@ -2807,6 +2868,7 @@ class _ComponentStructModule(_StructModule):
             name: str | None = None,
             contentType: str | None = None,
             type: ComponentPortPortTypeEnum | None = None,
+            desc: str | None = None,
             **kwargs: Any,
         ) -> PortBuilder: ...
         @override
@@ -3150,7 +3212,6 @@ type ComponentFactoryBuilder = (
 type ComponentFactoryReader = (
     _ComponentStructModule._ComponentFactoryStructModule.Reader
 )
-type ComponentPortContentTypeEnum = int | Literal["structuredText"]
 type ComponentPortPortTypeEnum = int | Literal["standard"]
 type ComponentReader = _ComponentStructModule.Reader
 type ConfigEntryBuilder = _ProcessInterfaceModule._ConfigEntryStructModule.Builder
@@ -3228,6 +3289,13 @@ type StateTransitionServer = (
 )
 type StatechangedResult = _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient.StatechangedResult
 type StopResult = _ProcessInterfaceModule.ProcessClient.StopResult
+type StoppedCallbackClient = (
+    _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
+)
+type StoppedCallbackServer = (
+    _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+)
+type StoppedResult = _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient.StoppedResult
 type SturdyRefListBuilder = _SturdyRefList.Builder
 type SturdyRefListReader = _SturdyRefList.Reader
 type TextListBuilder = _TextList.Builder
