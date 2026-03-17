@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.52](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.51...v0.1.52) (2026-03-17)
+
+
+### Features
+
+* allowCancellation of read and writer methods ([4656e57](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/4656e57af421a85977557de8349fcea7ca218e23))
+* recompile capnp schemas ([#36](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/36)) ([eea38fe](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/eea38feb272b8c58d7f3ec00c3206e8514676742))
+
 ## [0.1.51](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.50...v0.1.51) (2026-03-12)
 
 
