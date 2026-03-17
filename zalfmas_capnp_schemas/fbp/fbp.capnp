@@ -88,7 +88,7 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
   }
 
   interface Reader extends(Common.Identifiable, Persistent) $Cxx.name("ChanReader") {
-    read          @0 () -> Msg;
+    read          @0 () -> Msg $Cxx.allowCancellation;
     # read blocking until message is available
 
     readIfMsg     @2 () -> Msg;
@@ -99,7 +99,7 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
   }
 
   interface Writer extends(Common.Identifiable, Persistent) $Cxx.name("ChanWriter") {
-    write           @0 Msg;
+    write           @0 Msg $Cxx.allowCancellation;
     # write blocking until message is written
 
     writeIfSpace    @2 Msg -> (success :Bool);
