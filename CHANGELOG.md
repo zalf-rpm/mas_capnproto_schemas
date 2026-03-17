@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.53](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.52...v0.1.53) (2026-03-17)
+
+
+### Features
+
+* compile also model/monica/sim_setup.capnp ([62ff5ea](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/62ff5ea3efe0801b69081d96841ddd8b6f722bf8))
+* recompile capnp schemas ([#38](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/38)) ([390f7b0](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/390f7b02030ff19427ed530bb89092f95229bc5c))
+
 ## [0.1.52](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.51...v0.1.52) (2026-03-17)
 
 
