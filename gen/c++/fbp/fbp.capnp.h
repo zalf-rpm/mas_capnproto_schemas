@@ -8457,7 +8457,7 @@ template <typename V>
         read(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::ChanReader::ReadParams, typename  ::mas::schema::fbp::Channel<V>::Msg>(context)),
         false,
-        false
+        true
       };
     case 1:
       return {
@@ -8740,7 +8740,7 @@ template <typename V>
         write(::capnp::Capability::Server::internalGetTypedContext<
             typename  ::mas::schema::fbp::Channel<V>::Msg, typename  ::mas::schema::fbp::Channel<V>::ChanWriter::WriteResults>(context)),
         false,
-        false
+        true
       };
     case 1:
       return {

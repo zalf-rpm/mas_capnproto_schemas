@@ -51,12 +51,12 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
     writers @7 :List(Writer);  # ptr[5]
   }
   interface Reader @0x8bc69192f3bc97cc superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanReader") {
-    read @0 () -> Msg;
+    read @0 () -> Msg $import "/capnp/c++.capnp".allowCancellation(void);
     readIfMsg @2 () -> Msg;
     close @1 () -> ();
   }
   interface Writer @0xf7fec613b4a8c79f superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanWriter") {
-    write @0 Msg -> ();
+    write @0 Msg -> () $import "/capnp/c++.capnp".allowCancellation(void);
     writeIfSpace @2 Msg -> (success :Bool);
     close @1 () -> ();
   }
