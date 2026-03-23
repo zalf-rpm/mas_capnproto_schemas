@@ -174,7 +174,8 @@ struct Component {
 
     struct Port {
         enum PortType {
-            standard @0; # standard port
+            standard  @0; # standard port
+            array     @1; # array port (only an out port can be an array port)
         }
 
         name        @0 :Text;
