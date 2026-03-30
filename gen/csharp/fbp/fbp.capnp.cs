@@ -3416,6 +3416,7 @@ namespace Mas.Schema.Fbp
             public enum PortType : ushort
             {
                 standard,
+                array,
             }
         }
     }

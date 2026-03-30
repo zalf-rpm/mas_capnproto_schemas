@@ -12,7 +12,7 @@ static const ::capnp::_::AlignedData<472> b_a4b1a2ad9a77fdc7 = {
     177, 208, 253,  54, 125, 116,  87, 172,
      10,   0,   7,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-     22,   0,   0,   0, 228,   4,   0,   0,
+     79,   1,   0,   0,  29,   6,   0,   0,
      21,   0,   0,   0,  26,   1,   0,   0,
      37,   0,   0,   0,   7,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -493,6 +493,10 @@ const ::capnp::_::RawSchema s_a4b1a2ad9a77fdc7 = {
 
 // =======================================================================================
 
+namespace mas {
+namespace schema {
+namespace model {
+namespace monica {
 
 // Setup
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
@@ -507,4 +511,8 @@ constexpr ::capnp::_::RawSchema const* Setup::_capnpPrivate::schema;
 #endif  // !CAPNP_LITE
 
 
+}  // namespace
+}  // namespace
+}  // namespace
+}  // namespace
 

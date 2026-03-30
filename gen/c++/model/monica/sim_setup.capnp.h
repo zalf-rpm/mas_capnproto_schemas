@@ -26,6 +26,10 @@ CAPNP_DECLARE_SCHEMA(a4b1a2ad9a77fdc7);
 }  // namespace schemas
 }  // namespace capnp
 
+namespace mas {
+namespace schema {
+namespace model {
+namespace monica {
 
 struct Setup {
   Setup() = delete;
@@ -899,6 +903,10 @@ inline ::capnp::Orphan< ::capnp::Text> Setup::Builder::disownComment() {
       ::capnp::bounded<9>() * ::capnp::POINTERS));
 }
 
+}  // namespace
+}  // namespace
+}  // namespace
+}  // namespace
 
 CAPNP_END_HEADER
 

@@ -27,6 +27,7 @@ from mas.schema.model.monica import (
     monica_management_capnp,
     monica_params_capnp,
     monica_state_capnp,
+    sim_setup_capnp,
 )
 from mas.schema.model.weberest import web_berest_data_import_capnp
 from mas.schema.model.yieldstat import yieldstat_capnp
@@ -39,7 +40,6 @@ from mas.schema.storage import storage_capnp
 # Type alias for anypointer to reflect what is really allowed for anypointer inputs
 # Generated imports for project-specific types
 from mas.schema.test import a_capnp, x_capnp
-from model.monica import sim_setup_capnp
 
 # Import schema.capnp types for precise node property types
 # These are _DynamicStructReader at runtime but typed more precisely
@@ -1622,6 +1622,11 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: sim_setup_capnp._SetupStructModule,
+    ) -> sim_setup_capnp.SetupReader: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_struct(
+        self,
         schema: yieldstat_capnp._OutputStructModule,
     ) -> yieldstat_capnp.OutputReader: ...  # type: ignore[reportOverlappingOverload]
     @overload
@@ -1990,11 +1995,6 @@ class _DynamicObjectReader:
     ) -> soil_params_capnp.SoilCharacteristicModifierReader: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def as_struct(self, schema: x_capnp._SStructModule) -> x_capnp.SReader: ...  # type: ignore[reportOverlappingOverload]
-    @overload
-    def as_struct(
-        self,
-        schema: sim_setup_capnp._SetupStructModule,
-    ) -> sim_setup_capnp.SetupReader: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def as_struct(
         self,

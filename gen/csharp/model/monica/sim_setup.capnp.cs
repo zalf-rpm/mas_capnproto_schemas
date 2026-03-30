@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Capnp;
 using Capnp.Rpc;
 
-namespace CapnpGen
+namespace Mas.Schema.Model.Monica
 {
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),

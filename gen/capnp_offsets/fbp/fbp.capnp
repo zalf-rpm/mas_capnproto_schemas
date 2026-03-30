@@ -111,6 +111,7 @@ struct Component @0xd717ff7d6815a6b0 {  # 8 bytes, 5 ptrs
     type @2 :PortType;  # bits[0, 16)
     enum PortType @0xf58d7a7318a06224 {
       standard @0;
+      array @1;
     }
   }
 }

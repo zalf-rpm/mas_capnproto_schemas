@@ -1,5 +1,9 @@
 # model/monica/sim_setup.capnp
 @0xac57747d36fdd0b1;
+$import "/capnp/c++.capnp".namespace("mas::schema::model::monica");
+$import "/capnp/python.capnp".module("mas.schema.model.monica");
+$import "/capnp/go.capnp".package("monica");
+$import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
 struct Setup @0xa4b1a2ad9a77fdc7 {  # 24 bytes, 10 ptrs
   runId @0 :Int64;  # bits[0, 64)
   sowingTime @1 :Text;  # ptr[0]
