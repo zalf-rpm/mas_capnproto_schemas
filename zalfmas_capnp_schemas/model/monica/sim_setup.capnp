@@ -1,5 +1,15 @@
 @0xac57747d36fdd0b1;
 
+using Cxx = import "/capnp/c++.capnp";
+$Cxx.namespace("mas::schema::model::monica");
+
+using Python = import "/capnp/python.capnp";
+$Python.module("mas.schema.model.monica");
+
+using Go = import "/capnp/go.capnp";
+$Go.package("monica");
+$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/model/monica");
+
 struct Setup {
     runId                       @0  :Int64;
     sowingTime                  @1  :Text;
