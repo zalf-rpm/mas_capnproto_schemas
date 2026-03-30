@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.54](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.53...v0.1.54) (2026-03-30)
+
+
+### Features
+
+* added array output port type ([8bcef3f](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/8bcef3fac444e5ed11788eef1a4419c9309afcc2))
+* recompile capnp schemas ([#40](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/40)) ([9cb718a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/9cb718a96edc500881e9aea131f19226b176e108))
+
+
+### Bug Fixes
+
+* missing annotations to compile that schema ([c4a665c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/c4a665c915339c322b6326f7a80e69e7128716a0))
+
 ## [0.1.53](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.52...v0.1.53) (2026-03-17)
 
 
