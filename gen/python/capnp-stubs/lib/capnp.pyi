@@ -915,6 +915,16 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule,
+    ) -> fbp_capnp.StatsCallbackClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.UnregisterClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp._ProcessInterfaceModule._StateTransitionInterfaceModule,
     ) -> fbp_capnp.StateTransitionClient: ...  # type: ignore[reportOverlappingOverload]
     @overload
@@ -1069,6 +1079,11 @@ class _DynamicObjectReader:
         self,
         schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule,
     ) -> storage_capnp.ValueReader: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
+    ) -> fbp_capnp.StatsReader: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def as_struct(
         self,
@@ -2789,6 +2804,16 @@ class _CapabilityClient:
         self,
         schema: modam_capnp._ModamWrapperServiceInterfaceModule,
     ) -> modam_capnp.ModamWrapperServiceClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule,
+    ) -> fbp_capnp.StatsCallbackClient: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.UnregisterClient: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def cast_as(
         self,
