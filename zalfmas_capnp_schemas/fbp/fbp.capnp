@@ -124,7 +124,7 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
       unreg @0 () -> (success :Bool);
     }
 
-    status @0 () -> Stats;
+    status @0 (stats :Stats);
   }
 
   registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
