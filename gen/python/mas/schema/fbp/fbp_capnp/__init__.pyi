@@ -2822,6 +2822,7 @@ class _ComponentStructModule(_StructModule):
     class _PortStructModule(_StructModule):
         class _PortTypeEnumModule:
             standard: int
+            array: int
 
         PortType: _PortTypeEnumModule
         class Reader(_DynamicStructReader):
@@ -3212,7 +3213,7 @@ type ComponentFactoryBuilder = (
 type ComponentFactoryReader = (
     _ComponentStructModule._ComponentFactoryStructModule.Reader
 )
-type ComponentPortPortTypeEnum = int | Literal["standard"]
+type ComponentPortPortTypeEnum = int | Literal["standard", "array"]
 type ComponentReader = _ComponentStructModule.Reader
 type ConfigEntryBuilder = _ProcessInterfaceModule._ConfigEntryStructModule.Builder
 type ConfigEntryListBuilder = _ConfigEntryList.Builder
