@@ -957,6 +957,252 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
     type StartupInfoReader = _StartupInfoStructModule.Reader
     type StartupInfoBuilder = _StartupInfoStructModule.Builder
     StartupInfo: _StartupInfoStructModule
+    class _StatsCallbackInterfaceModule(_InterfaceModule):
+        class _StatsStructModule(_StructModule):
+            class Reader(_DynamicStructReader):
+                @property
+                def noOfWaitingWriters(self) -> int: ...
+                @property
+                def noOfWaitingReaders(self) -> int: ...
+                @property
+                def noOfIpsInQueue(self) -> int: ...
+                @property
+                def totalNoOfIpsReceived(self) -> int: ...
+                @property
+                def timestamp(self) -> str: ...
+                @property
+                def updateIntervalInMs(self) -> int: ...
+                @override
+                def as_builder(
+                    self,
+                    num_first_segment_words: int | None = None,
+                    allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                ) -> StatsBuilder: ...
+
+            class Builder(_DynamicStructBuilder):
+                @property
+                def noOfWaitingWriters(self) -> int: ...
+                @noOfWaitingWriters.setter
+                def noOfWaitingWriters(self, value: int) -> None: ...
+                @property
+                def noOfWaitingReaders(self) -> int: ...
+                @noOfWaitingReaders.setter
+                def noOfWaitingReaders(self, value: int) -> None: ...
+                @property
+                def noOfIpsInQueue(self) -> int: ...
+                @noOfIpsInQueue.setter
+                def noOfIpsInQueue(self, value: int) -> None: ...
+                @property
+                def totalNoOfIpsReceived(self) -> int: ...
+                @totalNoOfIpsReceived.setter
+                def totalNoOfIpsReceived(self, value: int) -> None: ...
+                @property
+                def timestamp(self) -> str: ...
+                @timestamp.setter
+                def timestamp(self, value: str) -> None: ...
+                @property
+                def updateIntervalInMs(self) -> int: ...
+                @updateIntervalInMs.setter
+                def updateIntervalInMs(self, value: int) -> None: ...
+                @override
+                def as_reader(self) -> StatsReader: ...
+
+            @override
+            def new_message(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                noOfWaitingWriters: int | None = None,
+                noOfWaitingReaders: int | None = None,
+                noOfIpsInQueue: int | None = None,
+                totalNoOfIpsReceived: int | None = None,
+                timestamp: str | None = None,
+                updateIntervalInMs: int | None = None,
+                **kwargs: Any,
+            ) -> StatsBuilder: ...
+            @override
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> AbstractContextManager[StatsReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[False],
+            ) -> AbstractContextManager[StatsReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[True],
+            ) -> AbstractContextManager[StatsBuilder]: ...
+            @override
+            def from_bytes_packed(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> _DynamicStructReader: ...
+            @override
+            def read(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> StatsReader: ...
+            @override
+            def read_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> StatsReader: ...
+
+        type StatsReader = _StatsStructModule.Reader
+        type StatsBuilder = _StatsStructModule.Builder
+        Stats: _StatsStructModule
+        class _UnregisterInterfaceModule(_InterfaceModule):
+            class UnregRequest(Protocol):
+                def send(
+                    self,
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient.UnregResult: ...
+
+            @override
+            def _new_client(
+                self,
+                server: _DynamicCapabilityServer,
+            ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient: ...
+            class Server(_DynamicCapabilityServer):
+                class UnregResult(_DynamicStructBuilder):
+                    @property
+                    def success(self) -> bool: ...
+                    @success.setter
+                    def success(self, value: bool) -> None: ...
+
+                class UnregResultTuple(NamedTuple):
+                    success: bool
+
+                class UnregParams(Protocol): ...
+
+                class UnregCallContext(Protocol):
+                    params: _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server.UnregParams
+                    @property
+                    def results(
+                        self,
+                    ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server.UnregResult: ...
+
+                def unreg(
+                    self,
+                    _context: _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server.UnregCallContext,
+                    **kwargs: Any,
+                ) -> Awaitable[
+                    bool
+                    | _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server.UnregResultTuple
+                    | None
+                ]: ...
+                def unreg_context(
+                    self,
+                    context: _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server.UnregCallContext,
+                ) -> Awaitable[None]: ...
+
+            class UnregisterClient(_DynamicCapabilityClient):
+                class UnregResult(Awaitable[UnregResult], Protocol):
+                    success: bool
+
+                def unreg(
+                    self,
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient.UnregResult: ...
+                def unreg_request(
+                    self,
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregRequest: ...
+
+        Unregister: _UnregisterInterfaceModule
+        type UnregisterClient = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
+        type UnregisterServer = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+        class StatusRequest(Protocol):
+            def send(
+                self,
+            ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient.StatusResult: ...
+
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> (
+            _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
+        ): ...
+        class Server(_DynamicCapabilityServer):
+            class StatusResult(Awaitable[StatusResult], Protocol):
+                noOfWaitingWriters: int
+                noOfWaitingReaders: int
+                noOfIpsInQueue: int
+                totalNoOfIpsReceived: int
+                timestamp: str
+                updateIntervalInMs: int
+
+            class StatusResultTuple(NamedTuple):
+                noOfWaitingWriters: int
+                noOfWaitingReaders: int
+                noOfIpsInQueue: int
+                totalNoOfIpsReceived: int
+                timestamp: str
+                updateIntervalInMs: int
+
+            class StatusParams(Protocol): ...
+
+            class StatusCallContext(Protocol):
+                params: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusParams
+                @property
+                def results(self) -> StatsBuilder: ...
+
+            def status(
+                self,
+                _context: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusCallContext,
+                **kwargs: Any,
+            ) -> Awaitable[
+                _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusResultTuple
+                | None
+            ]: ...
+            def status_context(
+                self,
+                context: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusCallContext,
+            ) -> Awaitable[None]: ...
+
+        class StatsCallbackClient(_DynamicCapabilityClient):
+            class StatusResult(Awaitable[StatusResult], Protocol):
+                noOfWaitingWriters: int
+                noOfWaitingReaders: int
+                noOfIpsInQueue: int
+                totalNoOfIpsReceived: int
+                timestamp: str
+                updateIntervalInMs: int
+
+            def status(
+                self,
+            ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient.StatusResult: ...
+            def status_request(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatusRequest
+            ): ...
+
+    StatsCallback: _StatsCallbackInterfaceModule
+    type StatsCallbackClient = (
+        _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
+    )
+    type StatsCallbackServer = (
+        _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+    )
     class SetbuffersizeRequest(Protocol):
         size: int
         def send(self) -> _ChannelInterfaceModule.ChannelClient.SetbuffersizeResult: ...
@@ -979,6 +1225,16 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
     class CloseRequest(Protocol):
         waitForEmptyBuffer: bool
         def send(self) -> _ChannelInterfaceModule.ChannelClient.CloseResult: ...
+
+    class RegisterstatscallbackRequest(Protocol):
+        callback: (
+            StatsCallbackClient
+            | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+        )
+        updateIntervalInMs: int
+        def send(
+            self,
+        ) -> _ChannelInterfaceModule.ChannelClient.RegisterstatscallbackResult: ...
 
     @override
     def _new_client(
@@ -1052,6 +1308,21 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
 
+        class RegisterstatscallbackResult(_DynamicStructBuilder):
+            @property
+            def unregisterCallback(
+                self,
+            ) -> (
+                _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+                | _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
+            ): ...
+            @unregisterCallback.setter
+            def unregisterCallback(
+                self,
+                value: _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+                | _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient,
+            ) -> None: ...
+
         class ReaderResultTuple(NamedTuple):
             r: (
                 _ChannelInterfaceModule._ReaderInterfaceModule.Server
@@ -1072,6 +1343,12 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             w: (
                 _ChannelInterfaceModule._WriterInterfaceModule.Server
                 | _ChannelInterfaceModule._WriterInterfaceModule.WriterClient
+            )
+
+        class RegisterstatscallbackResultTuple(NamedTuple):
+            unregisterCallback: (
+                _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+                | _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
             )
 
         class SetbuffersizeParams(Protocol):
@@ -1112,6 +1389,17 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
 
         class CloseCallContext(Protocol):
             params: _ChannelInterfaceModule.Server.CloseParams
+
+        class RegisterstatscallbackParams(Protocol):
+            callback: StatsCallbackClient
+            updateIntervalInMs: int
+
+        class RegisterstatscallbackCallContext(Protocol):
+            params: _ChannelInterfaceModule.Server.RegisterstatscallbackParams
+            @property
+            def results(
+                self,
+            ) -> _ChannelInterfaceModule.Server.RegisterstatscallbackResult: ...
 
         def setBufferSize(
             self,
@@ -1178,6 +1466,21 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             context: _ChannelInterfaceModule.Server.CloseCallContext,
         ) -> Awaitable[None]: ...
+        def registerStatsCallback(
+            self,
+            callback: StatsCallbackClient,
+            updateIntervalInMs: int,
+            _context: _ChannelInterfaceModule.Server.RegisterstatscallbackCallContext,
+            **kwargs: Any,
+        ) -> Awaitable[
+            _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+            | _ChannelInterfaceModule.Server.RegisterstatscallbackResultTuple
+            | None
+        ]: ...
+        def registerStatsCallback_context(
+            self,
+            context: _ChannelInterfaceModule.Server.RegisterstatscallbackCallContext,
+        ) -> Awaitable[None]: ...
 
     class ChannelClient(
         _IdentifiableInterfaceModule.IdentifiableClient,
@@ -1198,6 +1501,12 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
         class CloseResult(Awaitable[None], Protocol): ...
 
+        class RegisterstatscallbackResult(
+            Awaitable[RegisterstatscallbackResult],
+            Protocol,
+        ):
+            unregisterCallback: _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
+
         def setBufferSize(
             self,
             size: int | None = None,
@@ -1215,6 +1524,13 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             waitForEmptyBuffer: bool | None = None,
         ) -> _ChannelInterfaceModule.ChannelClient.CloseResult: ...
+        def registerStatsCallback(
+            self,
+            callback: StatsCallbackClient
+            | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+            | None = None,
+            updateIntervalInMs: int | None = None,
+        ) -> _ChannelInterfaceModule.ChannelClient.RegisterstatscallbackResult: ...
         def setBufferSize_request(
             self,
             size: int | None = None,
@@ -1230,6 +1546,13 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             self,
             waitForEmptyBuffer: bool | None = None,
         ) -> _ChannelInterfaceModule.CloseRequest: ...
+        def registerStatsCallback_request(
+            self,
+            callback: StatsCallbackClient
+            | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+            | None = None,
+            updateIntervalInMs: int | None = None,
+        ) -> _ChannelInterfaceModule.RegisterstatscallbackRequest: ...
 
 class _SturdyRefList:
     class Reader(_DynamicListReader):
@@ -3265,6 +3588,9 @@ type ReaderServer = _ChannelInterfaceModule._ReaderInterfaceModule.Server
 type ReadifmsgResult = (
     _ChannelInterfaceModule._ReaderInterfaceModule.ReaderClient.ReadifmsgResult
 )
+type RegisterstatscallbackResult = (
+    _ChannelInterfaceModule.ChannelClient.RegisterstatscallbackResult
+)
 type RunnableClient = _RunnableInterfaceModule.RunnableClient
 type RunnableServer = _RunnableInterfaceModule.Server
 type SetautoclosesemanticsResult = (
@@ -3289,6 +3615,17 @@ type StateTransitionServer = (
     _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
 )
 type StatechangedResult = _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient.StatechangedResult
+type StatsBuilder = (
+    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule.Builder
+)
+type StatsCallbackClient = (
+    _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
+)
+type StatsCallbackServer = _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+type StatsReader = (
+    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule.Reader
+)
+type StatusResult = _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient.StatusResult
 type StopResult = _ProcessInterfaceModule.ProcessClient.StopResult
 type StoppedCallbackClient = (
     _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
@@ -3301,6 +3638,9 @@ type SturdyRefListBuilder = _SturdyRefList.Builder
 type SturdyRefListReader = _SturdyRefList.Reader
 type TextListBuilder = _TextList.Builder
 type TextListReader = _TextList.Reader
+type UnregResult = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient.UnregResult
+type UnregisterClient = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
+type UnregisterServer = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
 type WriteResult = (
     _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteResult
 )

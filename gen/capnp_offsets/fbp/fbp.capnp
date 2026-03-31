@@ -23,6 +23,7 @@ struct IIP @0xf3705fb36d44a21f {  # 0 bytes, 1 ptrs
   content @0 :AnyPointer;  # ptr[0]
 }
 interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
+  registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
   setBufferSize @0 (size :UInt64 = 1) -> ();
   reader @1 () -> (r :Reader);
   writer @2 () -> (w :Writer);
@@ -59,6 +60,20 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
     write @0 Msg -> () $import "/capnp/c++.capnp".allowCancellation(void);
     writeIfSpace @2 Msg -> (success :Bool);
     close @1 () -> ();
+  }
+  interface StatsCallback @0xdc35430a1815920b {
+    status @0 () -> Stats;
+    struct Stats @0xa42eae9c9a785dbf {  # 24 bytes, 1 ptrs
+      noOfWaitingWriters @0 :UInt16;  # bits[0, 16)
+      noOfWaitingReaders @1 :UInt16;  # bits[16, 32)
+      noOfIpsInQueue @2 :UInt64;  # bits[64, 128)
+      totalNoOfIpsReceived @3 :UInt64;  # bits[128, 192)
+      timestamp @4 :Text;  # ptr[0]
+      updateIntervalInMs @5 :UInt32;  # bits[32, 64)
+    }
+    interface Unregister @0xb9fc8977d77cd1d9 {
+      unreg @0 () -> (success :Bool);
+    }
   }
 }
 interface StartChannelsService @0xd0cd6d829b810229 superclasses(import "/common/common.capnp".Identifiable) {
