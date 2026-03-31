@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.56](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.55...v0.1.56) (2026-03-31)
+
+
+### Features
+
+* recompile capnp schemas ([#44](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/44)) ([672a12a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/672a12afcbbea5f3dcbb3f342b4f1d8566f2aa5e))
+
+
+### Bug Fixes
+
+* moved Stats to argument position, where it belongs ([61eb5fb](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/61eb5fb356710eefe34cdbe93dbf260d2e818503))
+
 ## [0.1.55](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.54...v0.1.55) (2026-03-31)
 
 
