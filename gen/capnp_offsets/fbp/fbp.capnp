@@ -62,7 +62,7 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
     close @1 () -> ();
   }
   interface StatsCallback @0xdc35430a1815920b {
-    status @0 () -> Stats;
+    status @0 (stats :Stats) -> ();
     struct Stats @0xa42eae9c9a785dbf {  # 24 bytes, 1 ptrs
       noOfWaitingWriters @0 :UInt16;  # bits[0, 16)
       noOfWaitingReaders @1 :UInt16;  # bits[16, 32)

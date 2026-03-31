@@ -1861,7 +1861,8 @@ namespace Mas.Schema.Fbp
         ]
         public interface IStatsCallback : IDisposable
         {
-            Task<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats> Status(
+            Task Status(
+                Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats stats,
                 CancellationToken cancellationToken_ = default
             );
         }
@@ -1872,13 +1873,17 @@ namespace Mas.Schema.Fbp
         ]
         public class StatsCallback_Proxy : Proxy, IStatsCallback
         {
-            public async Task<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats> Status(
+            public async Task Status(
+                Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats stats,
                 CancellationToken cancellationToken_ = default
             )
             {
                 var in_ =
                     SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Params_Status.WRITER>();
-                var arg_ = new Mas.Schema.Fbp.Channel<TV>.StatsCallback.Params_Status() { };
+                var arg_ = new Mas.Schema.Fbp.Channel<TV>.StatsCallback.Params_Status()
+                {
+                    Stats = stats,
+                };
                 arg_?.serialize(in_);
                 using (
                     var d_ = await Call(
@@ -1891,10 +1896,10 @@ namespace Mas.Schema.Fbp
                 )
                 {
                     var r_ =
-                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats>(
+                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Result_Status>(
                             d_
                         );
-                    return r_;
+                    return;
                 }
             }
         }
@@ -1912,23 +1917,21 @@ namespace Mas.Schema.Fbp
 
             public override ulong InterfaceId => 15867662572742611467UL;
 
-            Task<AnswerOrCounterquestion> Status(
+            async Task<AnswerOrCounterquestion> Status(
                 DeserializerState d_,
                 CancellationToken cancellationToken_
             )
             {
                 using (d_)
                 {
-                    return Impatient.MaybeTailCall(
-                        Impl.Status(cancellationToken_),
-                        r_ =>
-                        {
-                            var s_ =
-                                SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats.WRITER>();
-                            r_.serialize(s_);
-                            return s_;
-                        }
-                    );
+                    var in_ =
+                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Params_Status>(
+                            d_
+                        );
+                    await Impl.Status(in_.Stats, cancellationToken_);
+                    var s_ =
+                        SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Result_Status.WRITER>();
+                    return s_;
                 }
             }
         }
@@ -2249,6 +2252,78 @@ namespace Mas.Schema.Fbp
             public class Params_Status : ICapnpSerializable
             {
                 public const UInt64 typeId = 0x8cfcf298a5aca163UL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Stats =
+                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats>(
+                            reader.Stats
+                        );
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    Stats?.serialize(writer.Stats);
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats Stats { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats.READER Stats =>
+                        ctx.ReadStruct(
+                            0,
+                            Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats.READER.create
+                        );
+                    public bool HasStats => ctx.IsStructFieldNonNull(0);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 1);
+                    }
+
+                    public Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats.WRITER Stats
+                    {
+                        get =>
+                            BuildPointer<Mas.Schema.Fbp.Channel<TV>.StatsCallback.Stats.WRITER>(0);
+                        set => Link(0, value);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xae03a8ca1cbb8c9dUL)
+            ]
+            public class Result_Status : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xae03a8ca1cbb8c9dUL;
 
                 void ICapnpSerializable.Deserialize(DeserializerState arg_)
                 {

@@ -1130,6 +1130,11 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         type UnregisterClient = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.UnregisterClient
         type UnregisterServer = _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
         class StatusRequest(Protocol):
+            stats: StatsBuilder
+            @overload
+            def init(self, name: Literal["stats"]) -> StatsBuilder: ...
+            @overload
+            def init(self, name: str, size: int = ...) -> Any: ...
             def send(
                 self,
             ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient.StatusResult: ...
@@ -1142,56 +1147,35 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
         ): ...
         class Server(_DynamicCapabilityServer):
-            class StatusResult(Awaitable[StatusResult], Protocol):
-                noOfWaitingWriters: int
-                noOfWaitingReaders: int
-                noOfIpsInQueue: int
-                totalNoOfIpsReceived: int
-                timestamp: str
-                updateIntervalInMs: int
+            class StatusResult(Awaitable[None], Protocol): ...
 
-            class StatusResultTuple(NamedTuple):
-                noOfWaitingWriters: int
-                noOfWaitingReaders: int
-                noOfIpsInQueue: int
-                totalNoOfIpsReceived: int
-                timestamp: str
-                updateIntervalInMs: int
-
-            class StatusParams(Protocol): ...
+            class StatusParams(Protocol):
+                stats: StatsReader
 
             class StatusCallContext(Protocol):
                 params: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusParams
-                @property
-                def results(self) -> StatsBuilder: ...
 
             def status(
                 self,
+                stats: StatsReader,
                 _context: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusCallContext,
                 **kwargs: Any,
-            ) -> Awaitable[
-                _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusResultTuple
-                | None
-            ]: ...
+            ) -> Awaitable[None]: ...
             def status_context(
                 self,
                 context: _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server.StatusCallContext,
             ) -> Awaitable[None]: ...
 
         class StatsCallbackClient(_DynamicCapabilityClient):
-            class StatusResult(Awaitable[StatusResult], Protocol):
-                noOfWaitingWriters: int
-                noOfWaitingReaders: int
-                noOfIpsInQueue: int
-                totalNoOfIpsReceived: int
-                timestamp: str
-                updateIntervalInMs: int
+            class StatusResult(Awaitable[None], Protocol): ...
 
             def status(
                 self,
+                stats: StatsBuilder | StatsReader | dict[str, Any] | None = None,
             ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient.StatusResult: ...
             def status_request(
                 self,
+                stats: StatsBuilder | None = None,
             ) -> (
                 _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatusRequest
             ): ...
