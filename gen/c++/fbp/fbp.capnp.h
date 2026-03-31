@@ -59,6 +59,7 @@ CAPNP_DECLARE_SCHEMA(b9fc8977d77cd1d9);
 CAPNP_DECLARE_SCHEMA(8bf55c9c28099c6d);
 CAPNP_DECLARE_SCHEMA(f1408abe03832f8d);
 CAPNP_DECLARE_SCHEMA(8cfcf298a5aca163);
+CAPNP_DECLARE_SCHEMA(ae03a8ca1cbb8c9d);
 CAPNP_DECLARE_SCHEMA(92101e3b7a761333);
 CAPNP_DECLARE_SCHEMA(fe6a08d5e0712c23);
 CAPNP_DECLARE_SCHEMA(e607c9dd64da04c4);
@@ -498,6 +499,7 @@ struct Channel<V>::StatsCallback {
   struct Stats;
   struct Unregister;
   struct StatusParams;
+  struct StatusResults;
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
@@ -601,7 +603,27 @@ struct Channel<V>::StatsCallback::StatusParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(8cfcf298a5aca163, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(8cfcf298a5aca163, 0, 1)
+    #if !CAPNP_LITE
+    static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
+    static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
+    static const ::capnp::_::RawBrandedSchema::Dependency brandDependencies[];
+    static const ::capnp::_::RawBrandedSchema specificBrand;
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return ::capnp::_::ChooseBrand<_capnpPrivate, V>::brand(); }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+template <typename V>
+struct Channel<V>::StatsCallback::StatusResults {
+  StatusResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(ae03a8ca1cbb8c9d, 0, 0)
     #if !CAPNP_LITE
     static const ::capnp::_::RawBrandedSchema::Scope brandScopes[];
     static const ::capnp::_::RawBrandedSchema::Binding brandBindings[];
@@ -3112,7 +3134,7 @@ public:
     return castAs<typename Channel<V2>::StatsCallback>();
   }
 
-  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>) statusRequest(
+  CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults>) statusRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
@@ -3132,7 +3154,8 @@ public:
 
 protected:
   typedef typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams StatusParams;
-  typedef ::capnp::CallContext<StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats> StatusContext;
+  typedef typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults StatusResults;
+  typedef ::capnp::CallContext<StatusParams, StatusResults> StatusContext;
   virtual ::kj::Promise<void> status(StatusContext context);
 
   inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Client thisCap() {
@@ -3521,6 +3544,9 @@ public:
     return typename Channel<V2>::StatsCallback::Reader(_reader);
   }
 
+  inline bool hasStats() const;
+  inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Reader getStats() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -3555,6 +3581,13 @@ public:
     return typename Channel<V2>::StatsCallback::Builder(_builder);
   }
 
+  inline bool hasStats();
+  inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Builder getStats();
+  inline void setStats(typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Reader value);
+  inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Builder initStats();
+  inline void adoptStats(::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>&& value);
+  inline ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats> disownStats();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -3569,6 +3602,91 @@ template <typename V>
 class Channel<V>::StatsCallback::StatusParams::Pipeline {
 public:
   typedef StatusParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Pipeline getStats();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+template <typename V>
+class Channel<V>::StatsCallback::StatusResults::Reader {
+public:
+  typedef StatusResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  template <typename V2 = ::capnp::AnyPointer>
+  typename Channel<V2>::StatsCallback::Reader asChannelGeneric() const {
+    return typename Channel<V2>::StatsCallback::Reader(_reader);
+  }
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+template <typename V>
+class Channel<V>::StatsCallback::StatusResults::Builder {
+public:
+  typedef StatusResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  template <typename V2 = ::capnp::AnyPointer>
+  typename Channel<V2>::StatsCallback::Builder asChannelGeneric() {
+    return typename Channel<V2>::StatsCallback::Builder(_builder);
+  }
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+template <typename V>
+class Channel<V>::StatsCallback::StatusResults::Pipeline {
+public:
+  typedef StatusResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -10044,6 +10162,54 @@ const ::capnp::_::RawBrandedSchema Channel<V>::StatsCallback::Unregister::_capnp
 };
 #endif  // !CAPNP_LITE
 
+template <typename V>
+inline bool Channel<V>::StatsCallback::StatusParams::Reader::hasStats() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename V>
+inline bool Channel<V>::StatsCallback::StatusParams::Builder::hasStats() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Reader Channel<V>::StatsCallback::StatusParams::Reader::getStats() const {
+  return ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Builder Channel<V>::StatsCallback::StatusParams::Builder::getStats() {
+  return ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Pipeline Channel<V>::StatsCallback::StatusParams::Pipeline::getStats() {
+  return typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+template <typename V>
+inline void Channel<V>::StatsCallback::StatusParams::Builder::setStats(typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Reader value) {
+  ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+template <typename V>
+inline typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::Builder Channel<V>::StatsCallback::StatusParams::Builder::initStats() {
+  return ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+template <typename V>
+inline void Channel<V>::StatsCallback::StatusParams::Builder::adoptStats(
+    ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>&& value) {
+  ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+template <typename V>
+inline ::capnp::Orphan<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats> Channel<V>::StatsCallback::StatusParams::Builder::disownStats() {
+  return ::capnp::_::PointerHelpers<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
 // Channel<V>::StatsCallback::StatusParams
 #if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
 template <typename V>
@@ -10067,17 +10233,50 @@ const ::capnp::_::RawBrandedSchema::Binding Channel<V>::StatsCallback::StatusPar
   ::capnp::_::brandBindingFor<V>(),
 };
 template <typename V>
+const ::capnp::_::RawBrandedSchema::Dependency Channel<V>::StatsCallback::StatusParams::_capnpPrivate::brandDependencies[] = {
+  { 16777216,  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::_capnpPrivate::brand() },
+};
+template <typename V>
 const ::capnp::_::RawBrandedSchema Channel<V>::StatsCallback::StatusParams::_capnpPrivate::specificBrand = {
-  &::capnp::schemas::s_8cfcf298a5aca163, brandScopes, nullptr,
+  &::capnp::schemas::s_8cfcf298a5aca163, brandScopes, brandDependencies,
+  1, 1, nullptr
+};
+#endif  // !CAPNP_LITE
+
+// Channel<V>::StatsCallback::StatusResults
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename V>
+constexpr uint16_t Channel<V>::StatsCallback::StatusResults::_capnpPrivate::dataWordSize;
+template <typename V>
+constexpr uint16_t Channel<V>::StatsCallback::StatusResults::_capnpPrivate::pointerCount;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+#if !CAPNP_LITE
+#if CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename V>
+constexpr ::capnp::Kind Channel<V>::StatsCallback::StatusResults::_capnpPrivate::kind;
+template <typename V>
+constexpr ::capnp::_::RawSchema const* Channel<V>::StatsCallback::StatusResults::_capnpPrivate::schema;
+#endif  // !CAPNP_NEED_REDUNDANT_CONSTEXPR_DECL
+template <typename V>
+const ::capnp::_::RawBrandedSchema::Scope Channel<V>::StatsCallback::StatusResults::_capnpPrivate::brandScopes[] = {
+  { 0x9c62c32b2ff2b1e8, brandBindings + 0, 1, false},
+};
+template <typename V>
+const ::capnp::_::RawBrandedSchema::Binding Channel<V>::StatsCallback::StatusResults::_capnpPrivate::brandBindings[] = {
+  ::capnp::_::brandBindingFor<V>(),
+};
+template <typename V>
+const ::capnp::_::RawBrandedSchema Channel<V>::StatsCallback::StatusResults::_capnpPrivate::specificBrand = {
+  &::capnp::schemas::s_ae03a8ca1cbb8c9d, brandScopes, nullptr,
   1, 0, nullptr
 };
 #endif  // !CAPNP_LITE
 
 #if !CAPNP_LITE
 template <typename V>
-CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>)
+CAPNP_AUTO_IF_MSVC(::capnp::Request<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults>)
 Channel<V>::StatsCallback::Client::statusRequest(::kj::Maybe< ::capnp::MessageSize> sizeHint) {
-  return newCall<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>(
+  return newCall<typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults>(
       0xdc35430a1815920bull, 0, sizeHint, {true});
 }
 template <typename V>
@@ -10105,7 +10304,7 @@ template <typename V>
     case 0:
       return {
         status(::capnp::Capability::Server::internalGetTypedContext<
-            typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats>(context)),
+            typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams, typename  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults>(context)),
         false,
         false
       };
@@ -10137,7 +10336,7 @@ const ::capnp::_::RawBrandedSchema::Binding Channel<V>::StatsCallback::_capnpPri
 template <typename V>
 const ::capnp::_::RawBrandedSchema::Dependency Channel<V>::StatsCallback::_capnpPrivate::brandDependencies[] = {
   { 33554432,  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusParams::_capnpPrivate::brand() },
-  { 50331648,  ::mas::schema::fbp::Channel<V>::StatsCallback::Stats::_capnpPrivate::brand() },
+  { 50331648,  ::mas::schema::fbp::Channel<V>::StatsCallback::StatusResults::_capnpPrivate::brand() },
 };
 template <typename V>
 const ::capnp::_::RawBrandedSchema Channel<V>::StatsCallback::_capnpPrivate::specificBrand = {
