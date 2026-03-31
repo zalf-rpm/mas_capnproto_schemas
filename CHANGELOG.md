@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.55](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.54...v0.1.55) (2026-03-31)
+
+
+### Features
+
+* added stats callback to channel schema ([73bf55f](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/73bf55f5cb1db671ac2ad1facf5bba22ab1e4f21))
+* recompile capnp schemas ([#42](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/42)) ([13ff0f5](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/13ff0f5329a333ce798df8a74e579c9eb6fac32a))
+
 ## [0.1.54](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.53...v0.1.54) (2026-03-30)
 
 
