@@ -109,6 +109,29 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
     # close this writing end of the channel
   }
 
+  interface StatsCallback {
+    # delivers some status information about this channel
+    struct Stats {
+      noOfWaitingWriters    @0 :UInt16;
+      noOfWaitingReaders    @1 :UInt16;
+      noOfIpsInQueue        @2 :UInt64;
+      totalNoOfIpsReceived  @3 :UInt64;
+      timestamp             @4 :Text;
+      updateIntervalInMs    @5 :UInt32;
+    }
+
+    interface Unregister {
+      unreg @0 () -> (success :Bool);
+    }
+
+    status @0 () -> Stats;
+  }
+
+  registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
+  # register a callback to receive status information every "updateIntervalInMs" milliseconds
+  # 0 ms means update on every received message (which will be very slow)
+  # returns an unregister callback
+
   setBufferSize @0 (size :UInt64 = 1);
   # set buffer size of channel, lowest allowed value = 1, meaning basically no buffer
 
