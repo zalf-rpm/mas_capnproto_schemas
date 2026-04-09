@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `yieldstat.capnp`."""
 
 import base64
@@ -30,15 +31,16 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 ResultId = _EnumModule(_loader.get(0xCFE218C48D227E0D).as_enum(), "ResultId")
 RestInput = _StructModule(_loader.get(0xA47F8D65869200AF).as_struct(), "RestInput")
 Result = _StructModule(_loader.get(0x8DB55634A0E7D054).as_struct(), "Result")
 Result.ResultToValue = _StructModule(
-    _loader.get(0x8D365BD4F0136FC0).as_struct(),
+    Result.schema.fields["values"].schema.elementType,
     "ResultToValue",
 )
 Output = _StructModule(_loader.get(0x932A681F81B4BE19).as_struct(), "Output")
 Output.YearToResult = _StructModule(
-    _loader.get(0xA008C533888C3A5E).as_struct(),
+    Output.schema.fields["results"].schema.elementType,
     "YearToResult",
 )

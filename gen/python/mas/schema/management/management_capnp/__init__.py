@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `management.capnp`."""
 
 import base64
@@ -72,11 +73,12 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 EventType = _EnumModule(_loader.get(0x82A74595175B71A3).as_enum(), "EventType")
 PlantOrgan = _EnumModule(_loader.get(0xC2D50914B83D42DE).as_enum(), "PlantOrgan")
 Event = _StructModule(_loader.get(0x9C5DEDFD679AC842).as_struct(), "Event")
 Event.ExternalType = _EnumModule(
-    _loader.get(0xF082EC2D0EB50C9B).as_enum(),
+    Event.schema.fields["type"].schema,
     "ExternalType",
 )
 Event.PhenoStage = _EnumModule(_loader.get(0x8FA09457BC1BFC34).as_enum(), "PhenoStage")
@@ -88,16 +90,16 @@ Params.AutomaticSowing = _StructModule(
     "AutomaticSowing",
 )
 Params.AutomaticSowing.AvgSoilTemp = _StructModule(
-    _loader.get(0x9D81D2BF4CD0F868).as_struct(),
+    Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
     "AvgSoilTemp",
 )
 Params.Harvest = _StructModule(_loader.get(0xEED4E55BB04289EF).as_struct(), "Harvest")
 Params.Harvest.CropUsage = _EnumModule(
-    _loader.get(0x8F0CBEC420589373).as_enum(),
+    Params.Harvest.schema.fields["optCarbMgmtData"].schema.fields["cropUsage"].schema,
     "CropUsage",
 )
 Params.Harvest.OptCarbonMgmtData = _StructModule(
-    _loader.get(0x8CB6B3E3C50D3665).as_struct(),
+    Params.Harvest.schema.fields["optCarbMgmtData"].schema,
     "OptCarbonMgmtData",
 )
 Params.AutomaticHarvest = _StructModule(
@@ -105,9 +107,22 @@ Params.AutomaticHarvest = _StructModule(
     "AutomaticHarvest",
 )
 Params.Cutting = _StructModule(_loader.get(0xFEC75F2DDD43431D).as_struct(), "Cutting")
-Params.Cutting.CL = _EnumModule(_loader.get(0x825BB2508C0B37B2).as_enum(), "CL")
-Params.Cutting.Unit = _EnumModule(_loader.get(0xF0C763E472409BA2).as_enum(), "Unit")
-Params.Cutting.Spec = _StructModule(_loader.get(0x9A221E04FAF79EFC).as_struct(), "Spec")
+Params.Cutting.CL = _EnumModule(
+    Params.Cutting.schema.fields["cuttingSpec"]
+    .schema.elementType.fields["cutOrLeft"]
+    .schema,
+    "CL",
+)
+Params.Cutting.Unit = _EnumModule(
+    Params.Cutting.schema.fields["cuttingSpec"]
+    .schema.elementType.fields["unit"]
+    .schema,
+    "Unit",
+)
+Params.Cutting.Spec = _StructModule(
+    Params.Cutting.schema.fields["cuttingSpec"].schema.elementType,
+    "Spec",
+)
 Params.MineralFertilization = _StructModule(
     _loader.get(0xD3DA30EA7B25D921).as_struct(),
     "MineralFertilization",
@@ -126,8 +141,14 @@ Params.Irrigation = _StructModule(
     "Irrigation",
 )
 Nutrient = _StructModule(_loader.get(0xAAFE4332E17AA43E).as_struct(), "Nutrient")
-Nutrient.Name = _EnumModule(_loader.get(0xBC6B579ACF43FB6E).as_enum(), "Name")
-Nutrient.Unit = _EnumModule(_loader.get(0x987B68B57EDBBDB6).as_enum(), "Unit")
+Nutrient.Name = _EnumModule(
+    Nutrient.schema.fields["nutrient"].schema,
+    "Name",
+)
+Nutrient.Unit = _EnumModule(
+    Nutrient.schema.fields["unit"].schema,
+    "Unit",
+)
 Fertilizer = _InterfaceModule(
     _loader.get(0x8C4CB8D60AE5AEC7).as_interface(),
     "Fertilizer",

@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `service.capnp`."""
 
 import base64
@@ -51,6 +52,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Admin = _InterfaceModule(_loader.get(0xFEC1F88B198DF649).as_interface(), "Admin")
 SimpleFactory = _InterfaceModule(
     _loader.get(0xABA5829222C213CB).as_interface(),
@@ -58,11 +60,11 @@ SimpleFactory = _InterfaceModule(
 )
 Factory = _InterfaceModule(_loader.get(0x8AB0ECB99C269C7F).as_interface(), "Factory")
 Factory.CreateParams = _StructModule(
-    _loader.get(0xC2B88517CCAA9197).as_struct(),
+    Factory.schema.methods["create"].param_type,
     "CreateParams",
 )
 Factory.AccessInfo = _StructModule(
-    _loader.get(0xB9816A53DF7CB62E).as_struct(),
+    Factory.schema.methods["create"].result_type,
     "AccessInfo",
 )
 Stoppable = _InterfaceModule(

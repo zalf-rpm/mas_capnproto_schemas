@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `common.capnp`."""
 
 import base64
@@ -43,6 +44,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 IdInformation = _StructModule(
     _loader.get(0xD4CB7ECBFE03DAD3).as_struct(),
     "IdInformation",
@@ -55,7 +57,10 @@ StructuredText = _StructModule(
     _loader.get(0xED6C098B67CAD454).as_struct(),
     "StructuredText",
 )
-StructuredText.Type = _EnumModule(_loader.get(0x9EEBC43E17B5974F).as_enum(), "Type")
+StructuredText.Type = _EnumModule(
+    StructuredText.schema.fields["type"].schema,
+    "Type",
+)
 Value = _StructModule(_loader.get(0xE17592335373B246).as_struct(), "Value")
 Factory = _InterfaceModule(_loader.get(0xA869F50B8C586ED9).as_interface(), "Factory")
 IOFactory = _InterfaceModule(

@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `soil_params.capnp`."""
 
 import base64
@@ -30,12 +31,13 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 SoilCharacteristicData = _StructModule(
     _loader.get(0xFC682227304E2281).as_struct(),
     "SoilCharacteristicData",
 )
 SoilCharacteristicData.Data = _StructModule(
-    _loader.get(0xEAFAAB57E025DB63).as_struct(),
+    SoilCharacteristicData.schema.fields["list"].schema.elementType,
     "Data",
 )
 SoilCharacteristicModifier = _StructModule(
@@ -43,7 +45,7 @@ SoilCharacteristicModifier = _StructModule(
     "SoilCharacteristicModifier",
 )
 SoilCharacteristicModifier.Data = _StructModule(
-    _loader.get(0xA968A46CCDE8B1B4).as_struct(),
+    SoilCharacteristicModifier.schema.fields["list"].schema.elementType,
     "Data",
 )
 CapillaryRiseRate = _StructModule(
@@ -51,6 +53,6 @@ CapillaryRiseRate = _StructModule(
     "CapillaryRiseRate",
 )
 CapillaryRiseRate.Data = _StructModule(
-    _loader.get(0xB78A89C58FAD885D).as_struct(),
+    CapillaryRiseRate.schema.fields["list"].schema.elementType,
     "Data",
 )

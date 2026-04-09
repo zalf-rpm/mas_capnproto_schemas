@@ -10,6 +10,11 @@ from contextlib import AbstractContextManager, asynccontextmanager
 from ssl import SSLContext
 from typing import IO, Any, Literal, overload
 
+from capnp._internal import CapnpModule as _CapnpModule
+from capnp._internal import CapnpTypesModule as _CapnpTypesModule
+from capnp._internal import (
+    Server as _Server,
+)
 from mas.schema.climate import climate_capnp
 from mas.schema.cluster import cluster_admin_service_capnp
 from mas.schema.common import common_capnp, date_capnp
@@ -46,12 +51,6 @@ from mas.schema.test import a_capnp, x_capnp
 from schema_capnp import FieldReader as _SchemaFieldReader
 from schema_capnp import NodeReader as _SchemaNodeReader
 
-from .._internal import CapnpModule as _CapnpModule
-from .._internal import CapnpTypesModule as _CapnpTypesModule
-from .._internal import (
-    Server as _Server,
-)
-
 type AnyPointer = (
     str
     | bytes
@@ -82,14 +81,12 @@ type AnyList = (
     | _DynamicObjectReader
     | _DynamicObjectBuilder
 )
-type _CapnpModuleType = _CapnpModule
-
 types: _CapnpTypesModule
 
-class KjException(Exception):
-    """Exception raised by Cap'n Proto operations.
+class KjError(Exception):
+    """Represent an exception raised by Cap'n Proto operations.
 
-    KjException is a wrapper of the internal C++ exception type.
+    KjError is a wrapper of the internal C++ exception type.
     It contains an enum named `Type` and several properties providing
     information about the exception.
     """
@@ -127,10 +124,12 @@ class KjException(Exception):
         nature: str | None = None,
         durability: str | None = None,
         wrapper: Any = None,
-        type: str | None = None,
+        exception_type: str | None = None,
     ) -> None: ...
     def _to_python(self) -> Exception:
         """Convert to a more specific Python exception if appropriate."""
+
+KjException = KjError
 
 class _NestedNodeReader:
     """pycapnp's internal representation of a nested node in a schema.
@@ -147,7 +146,7 @@ class _NestedNodeReader:
     def name(self) -> str:
         """The name of the nested node."""
 
-class _List_NestedNode_Reader:
+class _ListNestedNodeReader:
     """pycapnp's internal list of nested nodes.
 
     This is distinct from schema_capnp list types which are _DynamicListReader.
@@ -189,7 +188,7 @@ class _NodeReader:
         """Whether this node is a struct."""
 
     @property
-    def nestedNodes(self) -> _List_NestedNode_Reader:
+    def nestedNodes(self) -> _ListNestedNodeReader:
         """List of nested nodes."""
 
     @property
@@ -224,7 +223,7 @@ class _InterfaceMethod:
     result_type: _StructSchema
 
 class _Schema:
-    """Base class for _StructSchema and _ParsedSchema"""
+    """Base class for _StructSchema and _ParsedSchema."""
 
     def as_const_value(self) -> Any: ...
     @property
@@ -252,11 +251,11 @@ class _StructSchema(_Schema):
 
     @property
     def fields(self) -> dict[str, _StructSchemaField]:
-        """All of the _StructSchemaField in this schema as a dict"""
+        """All of the _StructSchemaField in this schema as a dict."""
 
     @property
     def fields_list(self) -> list[_StructSchemaField]:
-        """All of the _StructSchemaField in this schema as a list"""
+        """All of the _StructSchemaField in this schema as a list."""
 
 class _EnumSchema:
     """Schema for enum types.
@@ -267,11 +266,11 @@ class _EnumSchema:
 
     @property
     def enumerants(self) -> dict[str, int]:
-        """The list of enumerants as a dictionary"""
+        """The list of enumerants as a dictionary."""
 
     @property
     def node(self) -> _SchemaNodeReader:
-        """The raw schema node"""
+        """The raw schema node."""
 
 class _InterfaceSchema:
     """Schema for interface types, parameterized by the interface type.
@@ -286,22 +285,22 @@ class _InterfaceSchema:
 
     @property
     def method_names_inherited(self) -> set[str]:
-        """A set of the function names in the interface, including inherited methods"""
+        """A set of the function names in the interface, including inherited methods."""
 
     @property
     def methods(self) -> dict[str, _InterfaceMethod]:
-        """A mapping of method names to their respective _InterfaceMethod"""
+        """A mapping of method names to their respective _InterfaceMethod."""
 
     @property
     def methods_inherited(self) -> dict[str, _InterfaceMethod]:
-        """A mapping of method names to their respective _InterfaceMethod, including inherited methods"""
+        """A mapping of method names to their respective _InterfaceMethod, including inherited methods."""
 
     @property
     def superclasses(self) -> list[Any]:
-        """A list of superclasses for this interface"""
+        """A list of superclasses for this interface."""
     @property
     def node(self) -> _SchemaNodeReader:
-        """The raw schema node"""
+        """The raw schema node."""
 
 class _ListSchema:
     """Schema for list types.
@@ -430,26 +429,7 @@ class _StructModule:
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_DynamicStructReader]:
-        """Create a reader for this struct type from a bytes buffer (unpacked).
-
-        Returns a context manager that yields a reader. The context manager must be
-        used to ensure proper memory management.
-
-        Args:
-            buf: Bytes buffer containing the serialized message
-            traversal_limit_in_words: Optional limit on pointer dereferences
-            nesting_limit: Optional limit on nesting depth
-
-        Returns:
-            Context manager yielding a reader for this struct type
-
-        Example:
-            with Person.from_bytes(data) as reader:
-                print(reader.name)
-
-        """
-
+    ) -> AbstractContextManager[_DynamicStructReader]: ...
     @overload
     def from_bytes(
         self,
@@ -458,27 +438,7 @@ class _StructModule:
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_DynamicStructReader]:
-        """Create a reader for this struct type from a bytes buffer (unpacked).
-
-        Returns a context manager that yields a reader. The context manager must be
-        used to ensure proper memory management.
-
-        Args:
-            buf: Bytes buffer containing the serialized message
-            traversal_limit_in_words: Optional limit on pointer dereferences
-            nesting_limit: Optional limit on nesting depth
-            builder: If False, returns a reader
-
-        Returns:
-            Context manager yielding a reader for this struct type
-
-        Example:
-            with Person.from_bytes(data, builder=False) as reader:
-                print(reader.name)
-
-        """
-
+    ) -> AbstractContextManager[_DynamicStructReader]: ...
     @overload
     def from_bytes(
         self,
@@ -487,27 +447,7 @@ class _StructModule:
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_DynamicStructBuilder]:
-        """Create a builder for this struct type from a bytes buffer (unpacked).
-
-        Returns a context manager that yields a builder. The context manager must be
-        used to ensure proper memory management.
-
-        Args:
-            buf: Bytes buffer containing the serialized message
-            traversal_limit_in_words: Optional limit on pointer dereferences
-            nesting_limit: Optional limit on nesting depth
-            builder: If True, returns a builder (mutable)
-
-        Returns:
-            Context manager yielding a builder for this struct type
-
-        Example:
-            with Person.from_bytes(data, builder=True) as builder:
-                builder.name = "New Name"
-
-        """
-
+    ) -> AbstractContextManager[_DynamicStructBuilder]: ...
     def from_bytes_packed(
         self,
         buf: bytes,
@@ -2490,11 +2430,11 @@ class _CallContext:
         the message memory to be freed.
         """
 
-    def tail_call(self, tailRequest: _Request) -> None:
+    def tail_call(self, tail_request: _Request) -> None:
         """Perform a tail call to another capability.
 
         Args:
-            tailRequest: Request to tail call
+            tail_request: Request to tail call
 
         """
 
@@ -3259,11 +3199,11 @@ def load(
 
     """
 
-def register_type(id: int, klass: type) -> None:
+def register_type(schema_id: int, klass: type) -> None:
     """Register a type with the given schema ID.
 
     Args:
-        id: Schema node ID
+        schema_id: Schema node ID
         klass: Python class to register
 
     """
@@ -3576,6 +3516,8 @@ class AsyncIoStream:
         Args:
             host: Hostname to connect to
             port: Port number to connect to
+            ssl: Optional SSL context for securing the connection
+            ssl_handshake_timeout: Optional timeout for the SSL handshake in seconds
             **kwargs: Additional connection options
 
         Returns:
@@ -3668,14 +3610,45 @@ def kj_loop() -> AsyncIterator[None]:
     """
 
 __all__ = [
-    # Exception class
-    "KjException",
     # Public classes
     "AsyncIoStream",
+    # Exception class
+    "KjException",
     "SchemaLoader",
     "SchemaParser",
     "TwoPartyClient",
     "TwoPartyServer",
+    # Internal classes that are exposed but prefixed with underscore
+    "_CapabilityClient",
+    "_DynamicCapabilityClient",
+    "_DynamicListBuilder",
+    "_DynamicListReader",
+    "_DynamicOrphan",
+    "_DynamicResizableListBuilder",
+    "_DynamicStructBuilder",
+    "_DynamicStructReader",
+    "_EnumModule",
+    "_EnumSchema",
+    "_EventLoop",
+    "_InterfaceMethod",
+    "_InterfaceModule",
+    "_InterfaceSchema",
+    "_ListNestedNodeReader",
+    "_ListSchema",
+    "_MallocMessageBuilder",
+    "_NestedNodeReader",
+    "_NodeReader",
+    "_PackedFdMessageReader",
+    "_ParsedSchema",
+    "_PyCustomMessageBuilder",
+    "_Schema",
+    "_StreamFdMessageReader",
+    "_StructModule",
+    "_StructSchema",
+    "_StructSchemaField",
+    "_init_capnp_api",
+    "_write_message_to_fd",
+    "_write_packed_message_to_fd",
     # Public functions
     "add_import_hook",
     "cleanup_global_schema_parser",
@@ -3687,38 +3660,7 @@ __all__ = [
     "register_type",
     "remove_import_hook",
     "run",
-    "void_task_done_callback",
     # Modules
     "types",
-    # Internal classes that are exposed but prefixed with underscore
-    "_CapabilityClient",
-    "_DynamicCapabilityClient",
-    "_DynamicListBuilder",
-    "_DynamicListReader",
-    "_DynamicOrphan",
-    "_DynamicResizableListBuilder",
-    "_DynamicStructBuilder",
-    "_DynamicStructReader",
-    "_EventLoop",
-    "_EnumSchema",
-    "_InterfaceSchema",
-    "_InterfaceMethod",
-    "_InterfaceModule",
-    "_ListSchema",
-    "_MallocMessageBuilder",
-    "_NodeReader",
-    "_NestedNodeReader",
-    "_List_NestedNode_Reader",
-    "_PackedFdMessageReader",
-    "_ParsedSchema",
-    "_PyCustomMessageBuilder",
-    "_StreamFdMessageReader",
-    "_StructModule",
-    "_StructSchema",
-    "_EnumModule",
-    "_StructSchemaField",
-    "_init_capnp_api",
-    "_write_message_to_fd",
-    "_write_packed_message_to_fd",
-    "_Schema",
+    "void_task_done_callback",
 ]

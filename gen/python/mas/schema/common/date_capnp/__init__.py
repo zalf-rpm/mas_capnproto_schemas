@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `date.capnp`."""
 
 import base64
@@ -25,4 +26,5 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Date = _StructModule(_loader.get(0x97E6FEAC0322118D).as_struct(), "Date")

@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `config.capnp`."""
 
 import base64
@@ -28,6 +29,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Service = _InterfaceModule(_loader.get(0x860D660620AEFCDA).as_interface(), "Service")
 
 Service.Server.NextconfigResultTuple = NamedTuple(

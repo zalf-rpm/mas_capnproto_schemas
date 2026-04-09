@@ -58,7 +58,7 @@ RUN ln -s /opt/capnpc-csharp/capnpc-csharp /usr/local/bin/capnpc-csharp
 RUN ldconfig
 
 # Install capnpc-python plugin
-RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git@feature/capnpc-plugin-support"
+RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git"
 
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
 # Override languages via: docker run ... capnp-gen --lang c++ go python capnp_offsets

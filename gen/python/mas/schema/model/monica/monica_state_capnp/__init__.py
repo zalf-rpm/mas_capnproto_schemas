@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `monica_state.capnp`."""
 
 import base64
@@ -72,6 +73,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 MaybeBool = _StructModule(_loader.get(0xD8AF9210839BC071).as_struct(), "MaybeBool")
 RuntimeState = _StructModule(
     _loader.get(0xD599D06DC405571A).as_struct(),
@@ -87,7 +89,7 @@ SoilColumnState = _StructModule(
     "SoilColumnState",
 )
 SoilColumnState.DelayedNMinApplicationParams = _StructModule(
-    _loader.get(0xD1EDCF54F4EDF638).as_struct(),
+    SoilColumnState.schema.fields["delayedNMinApplications"].schema.elementType,
     "DelayedNMinApplicationParams",
 )
 SoilLayerState = _StructModule(
@@ -99,7 +101,7 @@ MonicaModelState = _StructModule(
     "MonicaModelState",
 )
 MonicaModelState.ACDToValue = _StructModule(
-    _loader.get(0x98E203C76F83D365).as_struct(),
+    MonicaModelState.schema.fields["climateData"].schema.elementType.elementType,
     "ACDToValue",
 )
 CropModuleState = _StructModule(

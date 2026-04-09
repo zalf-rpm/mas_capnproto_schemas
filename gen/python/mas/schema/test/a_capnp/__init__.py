@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `a.capnp`."""
 
 import base64
@@ -28,6 +29,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 A = _InterfaceModule(_loader.get(0xF2067F36913B4D37).as_interface(), "A")
 
 A.Server.MethodResultTuple = NamedTuple("MethodResultTuple", [("res", object)])

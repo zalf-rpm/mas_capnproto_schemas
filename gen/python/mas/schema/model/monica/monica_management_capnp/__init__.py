@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `monica_management.capnp`."""
 
 import base64
@@ -72,12 +73,13 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 ILRDates = _StructModule(_loader.get(0xA1F99F32EEA02590).as_struct(), "ILRDates")
 EventType = _EnumModule(_loader.get(0xD0290DAF8DE9F2B0).as_enum(), "EventType")
 PlantOrgan = _EnumModule(_loader.get(0xB33447204CDF022C).as_enum(), "PlantOrgan")
 Event = _StructModule(_loader.get(0xCF672AB379467704).as_struct(), "Event")
 Event.ExternalType = _EnumModule(
-    _loader.get(0xE5484DC513EE11E0).as_enum(),
+    Event.schema.fields["type"].schema,
     "ExternalType",
 )
 Event.PhenoStage = _EnumModule(_loader.get(0xB2BF3A5557791BC1).as_enum(), "PhenoStage")
@@ -88,7 +90,7 @@ Params.DailyWeather = _StructModule(
     "DailyWeather",
 )
 Params.DailyWeather.KV = _StructModule(
-    _loader.get(0xA63C8017CA26718B).as_struct(),
+    Params.DailyWeather.schema.fields["data"].schema.elementType,
     "KV",
 )
 Params.Sowing = _StructModule(_loader.get(0xC6880D1C13EC14DC).as_struct(), "Sowing")
@@ -97,16 +99,16 @@ Params.AutomaticSowing = _StructModule(
     "AutomaticSowing",
 )
 Params.AutomaticSowing.AvgSoilTemp = _StructModule(
-    _loader.get(0x846F567433B186D1).as_struct(),
+    Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
     "AvgSoilTemp",
 )
 Params.Harvest = _StructModule(_loader.get(0x8FEB941D70F2A468).as_struct(), "Harvest")
 Params.Harvest.CropUsage = _EnumModule(
-    _loader.get(0xA9A9BC941E963701).as_enum(),
+    Params.Harvest.schema.fields["optCarbMgmtData"].schema.fields["cropUsage"].schema,
     "CropUsage",
 )
 Params.Harvest.OptCarbonMgmtData = _StructModule(
-    _loader.get(0xAF49AB9BBE76E375).as_struct(),
+    Params.Harvest.schema.fields["optCarbMgmtData"].schema,
     "OptCarbonMgmtData",
 )
 Params.AutomaticHarvest = _StructModule(
@@ -114,15 +116,28 @@ Params.AutomaticHarvest = _StructModule(
     "AutomaticHarvest",
 )
 Params.Cutting = _StructModule(_loader.get(0x8460DAC6ABFF7ED9).as_struct(), "Cutting")
-Params.Cutting.CL = _EnumModule(_loader.get(0xE444F780B29541A7).as_enum(), "CL")
-Params.Cutting.Unit = _EnumModule(_loader.get(0x94D32947F136655E).as_enum(), "Unit")
-Params.Cutting.Spec = _StructModule(_loader.get(0xFAE5DCFCCBB93A23).as_struct(), "Spec")
+Params.Cutting.CL = _EnumModule(
+    Params.Cutting.schema.fields["cuttingSpec"]
+    .schema.elementType.fields["cutOrLeft"]
+    .schema,
+    "CL",
+)
+Params.Cutting.Unit = _EnumModule(
+    Params.Cutting.schema.fields["cuttingSpec"]
+    .schema.elementType.fields["unit"]
+    .schema,
+    "Unit",
+)
+Params.Cutting.Spec = _StructModule(
+    Params.Cutting.schema.fields["cuttingSpec"].schema.elementType,
+    "Spec",
+)
 Params.MineralFertilization = _StructModule(
     _loader.get(0xA363D226E178DEBD).as_struct(),
     "MineralFertilization",
 )
 Params.MineralFertilization.Parameters = _StructModule(
-    _loader.get(0xC75B5EF2E9B05C2D).as_struct(),
+    Params.MineralFertilization.schema.fields["partition"].schema,
     "Parameters",
 )
 Params.NDemandFertilization = _StructModule(
@@ -134,11 +149,11 @@ Params.OrganicFertilization = _StructModule(
     "OrganicFertilization",
 )
 Params.OrganicFertilization.OrganicMatterParameters = _StructModule(
-    _loader.get(0x95CDC661A6600137).as_struct(),
+    Params.OrganicFertilization.schema.fields["params"].schema.fields["params"].schema,
     "OrganicMatterParameters",
 )
 Params.OrganicFertilization.Parameters = _StructModule(
-    _loader.get(0xBA0C11CF818D29FD).as_struct(),
+    Params.OrganicFertilization.schema.fields["params"].schema,
     "Parameters",
 )
 Params.Tillage = _StructModule(_loader.get(0xAA49811A4E3E2C59).as_struct(), "Tillage")
@@ -147,7 +162,7 @@ Params.Irrigation = _StructModule(
     "Irrigation",
 )
 Params.Irrigation.Parameters = _StructModule(
-    _loader.get(0xAEC9E089E87F1599).as_struct(),
+    Params.Irrigation.schema.fields["params"].schema,
     "Parameters",
 )
 Params.SaveState = _StructModule(
