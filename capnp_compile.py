@@ -2,9 +2,11 @@
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -23,26 +25,22 @@ class CompilerConfig:
 
     schemas: list[str]
     paths: PathsConfig
+    preserved_outputs: dict[str, list[str]]
     presets: dict[str, list[str]]
 
 
-def is_preserved_output(path: Path, output_dir: Path, lang: str) -> bool:
+def is_preserved_output(
+    path: Path,
+    output_dir: Path,
+    lang: str,
+    config: CompilerConfig,
+) -> bool:
     """Return whether the path should survive output cleanup."""
     relative_path = path.relative_to(output_dir)
-
-    if lang == "python":
-        shim_package = Path("zalfmas_capnp_schemas_with_stubs")
-        return relative_path == shim_package or relative_path.is_relative_to(shim_package)
-
-    if len(relative_path.parts) != 1:
-        return False
-
-    if lang == "c++":
-        return relative_path.name == "CMakeLists.txt"
-
-    if lang == "csharp":
-        return relative_path.name == ".gitignore" or relative_path.suffix == ".csproj"
-
+    for preserved_output in config.preserved_outputs.get(lang, []):
+        preserved_path = Path(preserved_output)
+        if relative_path == preserved_path or relative_path.is_relative_to(preserved_path):
+            return True
     return False
 
 
@@ -54,11 +52,16 @@ def remove_path(path: Path) -> None:
         path.unlink(missing_ok=True)
 
 
-def prune_empty_parents(path: Path, output_dir: Path, lang: str) -> None:
+def prune_empty_parents(
+    path: Path,
+    output_dir: Path,
+    lang: str,
+    config: CompilerConfig,
+) -> None:
     """Remove empty parent directories up to the language output root."""
     current = path.parent
     while current != output_dir and current.exists():
-        if is_preserved_output(current, output_dir, lang) or any(current.iterdir()):
+        if is_preserved_output(current, output_dir, lang, config) or any(current.iterdir()):
             break
         current.rmdir()
         current = current.parent
@@ -129,7 +132,7 @@ def prepare_output_dir(
     if clean_all_outputs:
         print(f"Cleaning generated output in {output_dir}")
         for child in output_dir.iterdir():
-            if is_preserved_output(child, output_dir, lang):
+            if is_preserved_output(child, output_dir, lang, config):
                 continue
             remove_path(child)
     else:
@@ -140,10 +143,37 @@ def prepare_output_dir(
             for generated_path in generated_paths_for_schema(relative_schema, lang, output_dir):
                 if generated_path.exists():
                     remove_path(generated_path)
-                    prune_empty_parents(generated_path, output_dir, lang)
+                    prune_empty_parents(generated_path, output_dir, lang, config)
 
     if lang == "python":
         remove_python_cache_entries(output_dir)
+
+
+def refresh_go_module(output_dir: Path, go_bin: str) -> bool:
+    """Refresh the preserved Go module metadata after code generation."""
+    go_mod_file = output_dir / "go.mod"
+    if not go_mod_file.exists():
+        print(f"Error: Go module file {go_mod_file} not found")
+        return False
+
+    with tempfile.TemporaryDirectory(prefix="capnp-go-") as temp_dir:
+        temp_root = Path(temp_dir)
+        env = os.environ.copy()
+        env["HOME"] = str(temp_root / "home")
+        env["GOCACHE"] = str(temp_root / "gocache")
+        env["GOPATH"] = str(temp_root / "gopath")
+        env["GOMODCACHE"] = str(Path(env["GOPATH"]) / "pkg" / "mod")
+
+        for env_var in ("HOME", "GOCACHE", "GOPATH", "GOMODCACHE"):
+            Path(env[env_var]).mkdir(parents=True, exist_ok=True)
+
+        try:
+            subprocess.run([go_bin, "mod", "tidy"], cwd=output_dir, check=True, env=env)
+            print(f"Updated Go module metadata in {output_dir}")
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Error updating Go module metadata: {e}")
+            return False
 
 
 def load_config(config_path: Path) -> CompilerConfig:
@@ -169,6 +199,10 @@ def load_config(config_path: Path) -> CompilerConfig:
         return CompilerConfig(
             schemas=schemas,
             paths=paths,
+            preserved_outputs={
+                lang: list(outputs)
+                for lang, outputs in config_data.get("preserved_outputs", {}).items()
+            },
             presets=config_data.get("presets", {}),
         )
     except json.JSONDecodeError as e:
@@ -183,7 +217,7 @@ def compile_schemas(
     config: CompilerConfig,
     use_relative_paths: bool = False,
     clean_all_outputs: bool = False,
-) -> None:
+) -> bool:
     """Compile Cap'n Proto schema files."""
     schema_dir = Path(config.paths.schemas_dir)
     output_dir = Path(config.paths.output_base) / lang
@@ -226,8 +260,9 @@ def compile_schemas(
                     subprocess.run(cmd, check=True, stdout=f)
             except subprocess.CalledProcessError as e:
                 print(f"Error compiling {schema_path}: {e}")
-                raise
+                return False
         print(f"Successfully compiled {len(schemas)} schema(s)")
+        return True
     else:
         # Standard plugin-based compilation
         cmd = [
@@ -243,6 +278,9 @@ def compile_schemas(
             print(f"Successfully compiled {len(schemas)} schema(s)")
         except subprocess.CalledProcessError as e:
             print(f"Error compiling schemas: {e}")
+            return False
+
+    return True
 
 
 def find_executable_path(name: str) -> str | None:
@@ -327,6 +365,7 @@ def main() -> None:
     clean_all_outputs = not args.files and not args.preset
 
     # Compile for each specified language
+    failed_languages: list[str] = []
     for lang in args.lang:
         print(f"\nCompiling for language: {lang}")
 
@@ -338,6 +377,7 @@ def main() -> None:
 
         if not capnp_path:
             print(f"Error: Could not locate '{capnp_bin}' executable")
+            failed_languages.append(lang)
             continue
 
         print(f"Using capnp at: {capnp_path}")
@@ -348,19 +388,39 @@ def main() -> None:
 
             if not capnpc_path:
                 print(f"Error: Could not locate 'capnpc-{lang}' executable")
+                failed_languages.append(lang)
                 continue
 
             print(f"Using capnpc-{lang} at: {capnpc_path}")
 
-        # Compile all schemas in a single call
-        compile_schemas(
+        go_bin = None
+        if lang == "go":
+            go_bin = find_executable_path("go")
+            if not go_bin:
+                print("Error: Could not locate 'go' executable")
+                failed_languages.append(lang)
+                continue
+
+            print(f"Using go at: {go_bin}")
+
+        if not compile_schemas(
             files_to_compile,
             lang,
             capnp_bin,
             config,
             use_relative_paths,
             clean_all_outputs,
-        )
+        ):
+            failed_languages.append(lang)
+            continue
+
+        if lang == "go" and go_bin:
+            go_output_dir = Path(config.paths.output_base) / lang
+            if not refresh_go_module(go_output_dir, go_bin):
+                failed_languages.append(lang)
+
+    if failed_languages:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

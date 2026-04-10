@@ -5,9 +5,9 @@ FROM debian:13 AS capnp-builder
 
 ARG CAPNP_VERSION=1.2.0
 ARG JOBS=6
-# Go plugin (capnpc-go) version/pkg (keep separate so we can pin later if needed)
+# Go plugin (capnpc-go) version/pkg (kept configurable, but pinned by default)
 ARG CAPNPC_GO_PKG=capnproto.org/go/capnp/v3/capnpc-go
-ARG CAPNPC_GO_VERSION=latest
+ARG CAPNPC_GO_VERSION=v3.1.0-alpha.2
 ENV DEBIAN_FRONTEND=noninteractive \
     CAPNP_SRC=capnproto-c++-${CAPNP_VERSION} \
     GOBIN=/usr/local/bin
@@ -43,7 +43,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /workspace
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 python3-pip python3-venv ca-certificates libstdc++6 curl git && \
+    python3 python3-pip python3-venv ca-certificates libstdc++6 curl git golang-go && \
     curl -fsSLO https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
@@ -62,6 +62,6 @@ RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/
 
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
 # Override languages via: docker run ... capnp-gen --lang c++ go python capnp_offsets
-# capnpc-go and capnpc-python plugins installed in /usr/local/bin (already in default PATH)
+# capnpc-go, go, and capnpc-python are available for Go module refresh and code generation.
 ENTRYPOINT ["python3", "capnp_compile.py"]
 CMD ["--lang", "c++", "go", "csharp", "python", "capnp_offsets"]

@@ -1,6 +1,6 @@
 # zalfmas-capnp-schemas
 
-Containerized Cap'n Proto schema compiler with C++ and Go (capnpc-go) support.
+Containerized Cap'n Proto schema compiler with C++, C#, Go, Python, and capnp-offset support.
 
 ## Build image
 
@@ -13,7 +13,7 @@ Optional build arguments:
 - CAPNP_VERSION (default 1.2.0)
 - JOBS (parallel make jobs, default 6)
 - CAPNPC_GO_PKG (Go plugin module path)
-- CAPNPC_GO_VERSION (default latest)
+- CAPNPC_GO_VERSION (default v3.1.0-alpha.2)
 
 Example:
 
@@ -23,8 +23,8 @@ docker build --build-arg CAPNP_VERSION=1.2.0 --build-arg JOBS=12 -t capnp-gen .
 
 ## Basic usage
 
-The image ENTRYPOINT is: python3 capnp_compile.py
-Default CMD: --lang c++ go
+The image ENTRYPOINT is: `python3 capnp_compile.py`
+Default CMD: `--lang c++ go csharp python capnp_offsets`
 
 ```bash
 docker run --rm -u $(id -u):$(id -g) \
@@ -43,6 +43,8 @@ docker run --rm -u $(id -u):$(id -g) \
 - Schemas must be available inside the mounted workspace (default: current directory).
 - Generated code is written relative to /workspace (your mounted directory).
 - capnpc-go is on PATH (installed in /usr/local/bin).
+- Go generation maintains a single module rooted at `gen/go`.
+- `gen/go/go.mod` is preserved by the generator, and `go mod tidy` runs automatically after Go regeneration to refresh `go.sum`.
 - Adjust UID/GID mapping with -u to avoid root-owned outputs.
 
 ## Updating Go plugin only

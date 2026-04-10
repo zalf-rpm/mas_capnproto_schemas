@@ -4,6 +4,13 @@
     "output_base": "gen"
   },
   "comment": "Schema paths below are relative to schemas_dir. Files passed via --files are relative to execution directory.",
+  "preserved_outputs_comment": "Paths below are relative to each language directory under output_base and are preserved during cleanup.",
+  "preserved_outputs": {
+    "c++": ["CMakeLists.txt"],
+    "csharp": [".gitignore", "zalfmas_capnpschemas.csproj"],
+    "go": ["go.mod", "go.sum"],
+    "python": ["zalfmas_capnp_schemas_with_stubs"]
+  },
   "schemas": [
     "test/x.capnp",
     "test/a.capnp",

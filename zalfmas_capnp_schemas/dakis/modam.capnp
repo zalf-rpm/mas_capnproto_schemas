@@ -8,7 +8,7 @@ $Python.module("mas.schema.dakis.modam");
 
 using Go = import "/capnp/go.capnp";
 $Go.package("modam");
-$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/dakis/modam");
+$Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/dakis");
 
 interface ModamWrapperService {
   # Interface for running the MODAM model
