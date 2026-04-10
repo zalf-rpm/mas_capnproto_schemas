@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `climate.capnp`."""
 
 import base64
@@ -107,6 +108,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 GCM = _EnumModule(_loader.get(0xCE396869EEDE9F10).as_enum(), "GCM")
 RCM = _EnumModule(_loader.get(0x8671DEC53083E351).as_enum(), "RCM")
 SSP = _EnumModule(_loader.get(0xD3780AE416347AEE).as_enum(), "SSP")
@@ -121,14 +123,19 @@ Metadata.Supported = _InterfaceModule(
     "Supported",
 )
 Metadata.Value = _StructModule(_loader.get(0xC48E24C968A234DB).as_struct(), "Value")
-Metadata.Entry = _StructModule(_loader.get(0x85AF7FEA06D0820C).as_struct(), "Entry")
+Metadata.Entry = _StructModule(
+    Metadata.schema.fields["entries"].schema.elementType,
+    "Entry",
+)
 Metadata.Information = _InterfaceModule(
-    _loader.get(0xC781EDEAB8160CB7).as_interface(),
+    Metadata.schema.fields["info"].schema,
     "Information",
 )
 Dataset = _InterfaceModule(_loader.get(0xF635FDD1F05960F0).as_interface(), "Dataset")
 Dataset.GetLocationsCallback = _InterfaceModule(
-    _loader.get(0xD61BA043F14FE175).as_interface(),
+    Dataset.schema.methods["streamLocations"]
+    .result_type.fields["locationsCallback"]
+    .schema,
     "GetLocationsCallback",
 )
 MetaPlusData = _StructModule(
@@ -137,13 +144,16 @@ MetaPlusData = _StructModule(
 )
 Element = _EnumModule(_loader.get(0xE35760B4DB5AB564).as_enum(), "Element")
 Location = _StructModule(_loader.get(0x85BA7385F313FE19).as_struct(), "Location")
-Location.KV = _StructModule(_loader.get(0xC5FD13A53AE6D46A).as_struct(), "KV")
+Location.KV = _StructModule(
+    Location.schema.fields["customData"].schema.elementType,
+    "KV",
+)
 TimeSeries = _InterfaceModule(
     _loader.get(0xA7769F40FE6E6DE8).as_interface(),
     "TimeSeries",
 )
 TimeSeries.Resolution = _EnumModule(
-    _loader.get(0xB466CACF63EC03C2).as_enum(),
+    TimeSeries.schema.methods["resolution"].result_type.fields["resolution"].schema,
     "Resolution",
 )
 TimeSeriesData = _StructModule(
@@ -156,7 +166,7 @@ CSVTimeSeriesFactory = _InterfaceModule(
     "CSVTimeSeriesFactory",
 )
 CSVTimeSeriesFactory.CSVConfig = _StructModule(
-    _loader.get(0xEBA81CA9F46690B8).as_struct(),
+    CSVTimeSeriesFactory.schema.methods["create"].param_type.fields["config"].schema,
     "CSVConfig",
 )
 AlterTimeSeriesWrapper = _InterfaceModule(
@@ -164,11 +174,16 @@ AlterTimeSeriesWrapper = _InterfaceModule(
     "AlterTimeSeriesWrapper",
 )
 AlterTimeSeriesWrapper.Altered = _StructModule(
-    _loader.get(0xD085B9BAF390BEC5).as_struct(),
+    AlterTimeSeriesWrapper.schema.methods["alteredElements"]
+    .result_type.fields["list"]
+    .schema.elementType,
     "Altered",
 )
 AlterTimeSeriesWrapper.AlterType = _EnumModule(
-    _loader.get(0xB5DD785107C358CA).as_enum(),
+    AlterTimeSeriesWrapper.schema.methods["alteredElements"]
+    .result_type.fields["list"]
+    .schema.elementType.fields["type"]
+    .schema,
     "AlterType",
 )
 AlterTimeSeriesWrapperFactory = _InterfaceModule(

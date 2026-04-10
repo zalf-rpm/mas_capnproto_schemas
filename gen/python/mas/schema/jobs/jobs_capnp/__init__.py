@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `jobs.capnp`."""
 
 import base64
@@ -29,6 +30,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Job = _StructModule(_loader.get(0xA05B60B71CA38848).as_struct(), "Job")
 Service = _InterfaceModule(_loader.get(0xB8745454D013CBF0).as_interface(), "Service")
 

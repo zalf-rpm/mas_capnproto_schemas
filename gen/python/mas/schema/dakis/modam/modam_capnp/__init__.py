@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `modam.capnp`."""
 
 import base64
@@ -30,6 +31,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 ModamWrapperService = _InterfaceModule(
     _loader.get(0xDB3FB36057ABC378).as_interface(),
     "ModamWrapperService",

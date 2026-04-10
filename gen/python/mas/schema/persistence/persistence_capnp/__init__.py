@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `persistence.capnp`."""
 
 import base64
@@ -56,12 +57,16 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 VatId = _StructModule(_loader.get(0xE10A5D74D58BD18D).as_struct(), "VatId")
 Address = _StructModule(_loader.get(0xFB47810671A05B0D).as_struct(), "Address")
 VatPath = _StructModule(_loader.get(0xD9ECCDF2DBC48087).as_struct(), "VatPath")
 SturdyRef = _StructModule(_loader.get(0x886D68271D83DE4D).as_struct(), "SturdyRef")
 SturdyRef.Owner = _StructModule(_loader.get(0xFDD799ED60C87723).as_struct(), "Owner")
-SturdyRef.Token = _StructModule(_loader.get(0xFA412BB47F11B488).as_struct(), "Token")
+SturdyRef.Token = _StructModule(
+    SturdyRef.schema.fields["localRef"].schema,
+    "Token",
+)
 Heartbeat = _InterfaceModule(
     _loader.get(0x9FB3BDFAD147CA3A).as_interface(),
     "Heartbeat",
@@ -71,11 +76,11 @@ Persistent = _InterfaceModule(
     "Persistent",
 )
 Persistent.SaveParams = _StructModule(
-    _loader.get(0xD5E0AAC4225E0343).as_struct(),
+    Persistent.schema.methods["save"].param_type,
     "SaveParams",
 )
 Persistent.SaveResults = _StructModule(
-    _loader.get(0xDC5BD1EF982CEC13).as_struct(),
+    Persistent.schema.methods["save"].result_type,
     "SaveResults",
 )
 Persistent.ReleaseSturdyRef = _InterfaceModule(
@@ -84,7 +89,7 @@ Persistent.ReleaseSturdyRef = _InterfaceModule(
 )
 Restorer = _InterfaceModule(_loader.get(0x9FB6218427D92E3C).as_interface(), "Restorer")
 Restorer.RestoreParams = _StructModule(
-    _loader.get(0xC541E5764A37D73A).as_struct(),
+    Restorer.schema.methods["restore"].param_type,
     "RestoreParams",
 )
 HostPortResolver = _InterfaceModule(
@@ -96,12 +101,12 @@ HostPortResolver.Registrar = _InterfaceModule(
     "Registrar",
 )
 HostPortResolver.Registrar.RegisterParams = _StructModule(
-    _loader.get(0xBF018F62FF460D0F).as_struct(),
+    HostPortResolver.Registrar.schema.methods["register"].param_type,
     "RegisterParams",
 )
 Gateway = _InterfaceModule(_loader.get(0x8F9C2C0A602F27ED).as_interface(), "Gateway")
 Gateway.RegResults = _StructModule(
-    _loader.get(0xA232C65D79E97FAA).as_struct(),
+    Gateway.schema.methods["register"].result_type,
     "RegResults",
 )
 GatewayRegistrable = _InterfaceModule(

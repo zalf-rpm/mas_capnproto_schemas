@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `geo.capnp`."""
 
 import base64
@@ -39,6 +40,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 CoordType = _EnumModule(_loader.get(0xE529B4DEB322ECE8).as_enum(), "CoordType")
 EPSG = _StructModule(_loader.get(0xB79427A74EB97FC0).as_struct(), "EPSG")
 EPSG.wgs84 = _loader.get(0xCDAF64C4789F2B7D).as_const_value()

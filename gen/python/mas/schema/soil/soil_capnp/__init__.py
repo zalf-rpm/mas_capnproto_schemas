@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `soil.capnp`."""
 
 import base64
@@ -45,17 +46,23 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 SType = _EnumModule(_loader.get(0xC2E4A3C8FF61B40A).as_enum(), "SType")
 PropertyName = _EnumModule(_loader.get(0x9E391AE1C6CD2567).as_enum(), "PropertyName")
 Layer = _StructModule(_loader.get(0x984640F05B3ADA4F).as_struct(), "Layer")
-Layer.Property = _StructModule(_loader.get(0x92F4B81BCFDB71B0).as_struct(), "Property")
+Layer.Property = _StructModule(
+    Layer.schema.fields["properties"].schema.elementType,
+    "Property",
+)
 Query = _StructModule(_loader.get(0xBD4065087E22CA0D).as_struct(), "Query")
 Query.Result = _StructModule(_loader.get(0xBF4E1B07AD88943F).as_struct(), "Result")
 ProfileData = _StructModule(_loader.get(0xDF4BBF1C883A8790).as_struct(), "ProfileData")
 Profile = _InterfaceModule(_loader.get(0xFF67C2A593419C29).as_interface(), "Profile")
 Service = _InterfaceModule(_loader.get(0xA09AA71427DC64E1).as_interface(), "Service")
 Service.Stream = _InterfaceModule(
-    _loader.get(0xF4F8AB568FFBC939).as_interface(),
+    Service.schema.methods["streamAllProfiles"]
+    .result_type.fields["allProfiles"]
+    .schema,
     "Stream",
 )
 

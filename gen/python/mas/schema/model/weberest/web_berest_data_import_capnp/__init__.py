@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `web_berest_data_import.capnp`."""
 
 import base64
@@ -28,6 +29,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 DWLABImport = _InterfaceModule(
     _loader.get(0xA1A4AD9D143EAA6F).as_interface(),
     "DWLABImport",

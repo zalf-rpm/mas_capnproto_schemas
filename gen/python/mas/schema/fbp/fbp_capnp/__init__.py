@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `fbp.capnp`."""
 
 import base64
@@ -127,38 +128,55 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 IP = _StructModule(_loader.get(0xAF0A1DC4709A5CCF).as_struct(), "IP")
-IP.KV = _StructModule(_loader.get(0x9E9E5391E0C499E6).as_struct(), "KV")
-IP.Type = _EnumModule(_loader.get(0xF684CAE29BDC484E).as_enum(), "Type")
+IP.KV = _StructModule(
+    IP.schema.fields["attributes"].schema.elementType,
+    "KV",
+)
+IP.Type = _EnumModule(
+    IP.schema.fields["type"].schema,
+    "Type",
+)
 IIP = _StructModule(_loader.get(0xF3705FB36D44A21F).as_struct(), "IIP")
 Channel = _InterfaceModule(_loader.get(0x9C62C32B2FF2B1E8).as_interface(), "Channel")
 Channel.CloseSemantics = _EnumModule(
-    _loader.get(0xA8D787CAE7E0B243).as_enum(),
+    Channel.schema.methods["setAutoCloseSemantics"].param_type.fields["cs"].schema,
     "CloseSemantics",
 )
-Channel.Msg = _StructModule(_loader.get(0xD5B512F4BCD0AA2E).as_struct(), "Msg")
+Channel.Msg = _StructModule(
+    Channel.schema.methods["reader"]
+    .result_type.fields["r"]
+    .schema.methods["read"]
+    .result_type,
+    "Msg",
+)
 Channel.StartupInfo = _StructModule(
     _loader.get(0xE3D7A3237F175028).as_struct(),
     "StartupInfo",
 )
 Channel.Reader = _InterfaceModule(
-    _loader.get(0x8BC69192F3BC97CC).as_interface(),
+    Channel.schema.methods["reader"].result_type.fields["r"].schema,
     "Reader",
 )
 Channel.Writer = _InterfaceModule(
-    _loader.get(0xF7FEC613B4A8C79F).as_interface(),
+    Channel.schema.methods["writer"].result_type.fields["w"].schema,
     "Writer",
 )
 Channel.StatsCallback = _InterfaceModule(
-    _loader.get(0xDC35430A1815920B).as_interface(),
+    Channel.schema.methods["registerStatsCallback"]
+    .param_type.fields["callback"]
+    .schema,
     "StatsCallback",
 )
 Channel.StatsCallback.Stats = _StructModule(
-    _loader.get(0xA42EAE9C9A785DBF).as_struct(),
+    Channel.StatsCallback.schema.methods["status"].param_type.fields["stats"].schema,
     "Stats",
 )
 Channel.StatsCallback.Unregister = _InterfaceModule(
-    _loader.get(0xB9FC8977D77CD1D9).as_interface(),
+    Channel.schema.methods["registerStatsCallback"]
+    .result_type.fields["unregisterCallback"]
+    .schema,
     "Unregister",
 )
 StartChannelsService = _InterfaceModule(
@@ -166,22 +184,25 @@ StartChannelsService = _InterfaceModule(
     "StartChannelsService",
 )
 StartChannelsService.Params = _StructModule(
-    _loader.get(0x9576B9A98D58FBA2).as_struct(),
+    StartChannelsService.schema.methods["start"].param_type,
     "Params",
 )
 PortInfos = _StructModule(_loader.get(0xECE0EFA9A922D4A8).as_struct(), "PortInfos")
 PortInfos.NameAndSR = _StructModule(
-    _loader.get(0x8A4D34C4B5EB1545).as_struct(),
+    PortInfos.schema.fields["inPorts"].schema.elementType,
     "NameAndSR",
 )
 Component = _StructModule(_loader.get(0xD717FF7D6815A6B0).as_struct(), "Component")
 Component.ComponentType = _EnumModule(
-    _loader.get(0xC6976AC75246B450).as_enum(),
+    Component.schema.fields["type"].schema,
     "ComponentType",
 )
-Component.Port = _StructModule(_loader.get(0xC28D2829ADD1CD72).as_struct(), "Port")
+Component.Port = _StructModule(
+    Component.schema.fields["inPorts"].schema.elementType,
+    "Port",
+)
 Component.Port.PortType = _EnumModule(
-    _loader.get(0xF58D7A7318A06224).as_enum(),
+    Component.Port.schema.fields["type"].schema,
     "PortType",
 )
 Runnable = _InterfaceModule(_loader.get(0xBDE616D300754FF0).as_interface(), "Runnable")
@@ -190,7 +211,7 @@ Runnable.Factory = _InterfaceModule(
     "Factory",
 )
 Runnable.StoppedCallback = _InterfaceModule(
-    _loader.get(0xCBA63CD37FBD1806).as_interface(),
+    Runnable.schema.methods["start"].param_type.fields["stoppedCb"].schema,
     "StoppedCallback",
 )
 Process = _InterfaceModule(_loader.get(0xBBAD56943A039783).as_interface(), "Process")
@@ -199,12 +220,21 @@ Process.Factory = _InterfaceModule(
     "Factory",
 )
 Process.ConfigEntry = _StructModule(
-    _loader.get(0xA8D0BDFB4DDDA7B3).as_struct(),
+    Process.schema.methods["configEntries"]
+    .result_type.fields["config"]
+    .schema.elementType,
     "ConfigEntry",
 )
-Process.State = _EnumModule(_loader.get(0xE67044233BE769A5).as_enum(), "State")
+Process.State = _EnumModule(
+    Process.schema.methods["state"]
+    .param_type.fields["transitionCallback"]
+    .schema.methods["stateChanged"]
+    .param_type.fields["old"]
+    .schema,
+    "State",
+)
 Process.StateTransition = _InterfaceModule(
-    _loader.get(0x9C8FA975665CFAFA).as_interface(),
+    Process.schema.methods["state"].param_type.fields["transitionCallback"].schema,
     "StateTransition",
 )
 

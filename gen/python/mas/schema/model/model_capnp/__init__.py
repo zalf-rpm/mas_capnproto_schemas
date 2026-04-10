@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `model.capnp`."""
 
 import base64
@@ -108,9 +109,13 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 XYResult = _StructModule(_loader.get(0x851D47C6CCDECF08).as_struct(), "XYResult")
 Stat = _StructModule(_loader.get(0xA6BE2E805EA10A68).as_struct(), "Stat")
-Stat.Type = _EnumModule(_loader.get(0xBD33BB6D8CBD9ED2).as_enum(), "Type")
+Stat.Type = _EnumModule(
+    Stat.schema.fields["type"].schema,
+    "Type",
+)
 XYPlusResult = _StructModule(
     _loader.get(0x8F86B66260D02D1D).as_struct(),
     "XYPlusResult",
@@ -129,7 +134,9 @@ EnvInstanceProxy = _InterfaceModule(
     "EnvInstanceProxy",
 )
 EnvInstanceProxy.Unregister = _InterfaceModule(
-    _loader.get(0xC727892BD5C66F88).as_interface(),
+    EnvInstanceProxy.schema.methods["registerEnvInstance"]
+    .result_type.fields["unregister"]
+    .schema,
     "Unregister",
 )
 InstanceFactory = _InterfaceModule(

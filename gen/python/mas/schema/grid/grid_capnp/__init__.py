@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `grid.capnp`."""
 
 import base64
@@ -52,21 +53,37 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Aggregation = _EnumModule(_loader.get(0xA5ECDC7767A6B301).as_enum(), "Aggregation")
 Grid = _InterfaceModule(_loader.get(0xE42973B29661E3C6).as_interface(), "Grid")
-Grid.Value = _StructModule(_loader.get(0xFE2E0DFAE573D9D0).as_struct(), "Value")
+Grid.Value = _StructModule(
+    Grid.schema.methods["closestValueAt"].result_type.fields["val"].schema,
+    "Value",
+)
 Grid.Resolution = _StructModule(
-    _loader.get(0xA9B6FBDD27E7577B).as_struct(),
+    Grid.schema.methods["closestValueAt"].param_type.fields["resolution"].schema,
     "Resolution",
 )
-Grid.RowCol = _StructModule(_loader.get(0xB9E2D85D086206FF).as_struct(), "RowCol")
+Grid.RowCol = _StructModule(
+    Grid.schema.methods["closestValueAt"].result_type.fields["tl"].schema,
+    "RowCol",
+)
 Grid.AggregationPart = _StructModule(
-    _loader.get(0xAC444617EF333A1D).as_struct(),
+    Grid.schema.methods["closestValueAt"]
+    .result_type.fields["aggParts"]
+    .schema.elementType,
     "AggregationPart",
 )
-Grid.Location = _StructModule(_loader.get(0xB55CCF1B9EF18D64).as_struct(), "Location")
+Grid.Location = _StructModule(
+    Grid.schema.methods["streamCells"]
+    .result_type.fields["callback"]
+    .schema.methods["sendCells"]
+    .result_type.fields["locations"]
+    .schema.elementType,
+    "Location",
+)
 Grid.Callback = _InterfaceModule(
-    _loader.get(0xD639518280CB55D3).as_interface(),
+    Grid.schema.methods["streamCells"].result_type.fields["callback"].schema,
     "Callback",
 )
 

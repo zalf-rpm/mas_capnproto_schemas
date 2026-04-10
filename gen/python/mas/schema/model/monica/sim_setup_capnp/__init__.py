@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `sim_setup.capnp`."""
 
 import base64
@@ -25,4 +26,5 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Setup = _StructModule(_loader.get(0xA4B1A2AD9A77FDC7).as_struct(), "Setup")

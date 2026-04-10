@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `crop.capnp`."""
 
 import base64
@@ -34,6 +35,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Crop = _InterfaceModule(_loader.get(0xE88D97A324BF5C84).as_interface(), "Crop")
 Service = _InterfaceModule(_loader.get(0x8DDCC2B6C0386BC4).as_interface(), "Service")
 

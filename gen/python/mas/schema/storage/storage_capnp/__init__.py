@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `storage.capnp`."""
 
 import base64
@@ -64,25 +65,33 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Store = _InterfaceModule(_loader.get(0xE69F958AA2386F06).as_interface(), "Store")
 Store.Container = _InterfaceModule(
-    _loader.get(0x878131F45567AE62).as_interface(),
+    Store.schema.methods["newContainer"].result_type.fields["container"].schema,
     "Container",
 )
 Store.Container.Entry = _InterfaceModule(
-    _loader.get(0xFA1A243E7BF478C0).as_interface(),
+    Store.Container.schema.methods["listEntries"]
+    .result_type.fields["entries"]
+    .schema.elementType.fields["entry"]
+    .schema,
     "Entry",
 )
 Store.Container.Entry.Value = _StructModule(
-    _loader.get(0xE2185CC449928F5C).as_struct(),
+    Store.Container.Entry.schema.methods["getValue"].result_type.fields["value"].schema,
     "Value",
 )
 Store.Container.KeyAndEntry = _StructModule(
-    _loader.get(0xEFE759A6F2FFC230).as_struct(),
+    Store.Container.schema.methods["listEntries"]
+    .result_type.fields["entries"]
+    .schema.elementType,
     "KeyAndEntry",
 )
 Store.InfoAndContainer = _StructModule(
-    _loader.get(0xEAEC227EF03EC200).as_struct(),
+    Store.schema.methods["listContainers"]
+    .result_type.fields["containers"]
+    .schema.elementType,
     "InfoAndContainer",
 )
 Store.ImportExportData = _StructModule(

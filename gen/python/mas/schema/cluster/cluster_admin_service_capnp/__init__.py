@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `cluster_admin_service.capnp`."""
 
 import base64
@@ -69,6 +70,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Cluster = _StructModule(_loader.get(0xF7485D56D6F20E7D).as_struct(), "Cluster")
 Cluster.Unregister = _InterfaceModule(
     _loader.get(0xE8B1F7A192651BBE).as_interface(),

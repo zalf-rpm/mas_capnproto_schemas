@@ -30,7 +30,7 @@ RUN curl -fsSLO https://packages.microsoft.com/config/debian/13/packages-microso
     apt-get update && \
     apt-get install -y dotnet-sdk-10.0
 
-RUN git clone -b net9.0 https://github.com/zalf-rpm/capnproto-dotnetcore.git && \
+RUN git clone -b master https://github.com/zalf-rpm/capnproto-dotnetcore.git && \
     cd capnproto-dotnetcore && \
     dotnet publish -c Release capnpc-csharp/capnpc-csharp.csproj --framework net10.0 -o /out/capnpc-csharp
 
@@ -58,7 +58,7 @@ RUN ln -s /opt/capnpc-csharp/capnpc-csharp /usr/local/bin/capnpc-csharp
 RUN ldconfig
 
 # Install capnpc-python plugin
-RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git@feature/capnpc-plugin-support"
+RUN pip3 install --no-cache-dir --break-system-packages "git+https://github.com/zalf-rpm/capnp-stub-generator.git"
 
 # Default entrypoint runs code generation (expects repo mounted at /workspace)
 # Override languages via: docker run ... capnp-gen --lang c++ go python capnp_offsets

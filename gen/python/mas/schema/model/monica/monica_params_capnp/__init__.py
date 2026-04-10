@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `monica_params.capnp`."""
 
 import base64
@@ -64,6 +65,7 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 CropSpec = _StructModule(_loader.get(0xA74F5574681F9D55).as_struct(), "CropSpec")
 CropParameters = _StructModule(
     _loader.get(0x8AC5CFB21988C168).as_struct(),
@@ -86,7 +88,7 @@ AutomaticHarvestParameters = _StructModule(
     "AutomaticHarvestParameters",
 )
 AutomaticHarvestParameters.HarvestTime = _EnumModule(
-    _loader.get(0x990BDCF2BE83B604).as_enum(),
+    AutomaticHarvestParameters.schema.fields["harvestTime"].schema,
     "HarvestTime",
 )
 NMinCropParameters = _StructModule(
@@ -118,7 +120,7 @@ EnvironmentParameters = _StructModule(
     "EnvironmentParameters",
 )
 EnvironmentParameters.YearToValue = _StructModule(
-    _loader.get(0xE68D439455FD9CCE).as_struct(),
+    EnvironmentParameters.schema.fields["atmosphericCO2s"].schema.elementType,
     "YearToValue",
 )
 MeasuredGroundwaterTableInformation = _StructModule(
@@ -126,7 +128,9 @@ MeasuredGroundwaterTableInformation = _StructModule(
     "MeasuredGroundwaterTableInformation",
 )
 MeasuredGroundwaterTableInformation.DateToValue = _StructModule(
-    _loader.get(0x81B8FFEEB01D76F7).as_struct(),
+    MeasuredGroundwaterTableInformation.schema.fields[
+        "groundwaterInfo"
+    ].schema.elementType,
     "DateToValue",
 )
 SimulationParameters = _StructModule(
@@ -156,7 +160,7 @@ SoilTransportModuleParameters = _StructModule(
 Voc = _StructModule(_loader.get(0xB87956E2953771DB).as_struct(), "Voc")
 Voc.Emissions = _StructModule(_loader.get(0xD9ED2C1C754D683E).as_struct(), "Emissions")
 Voc.Emissions.SpeciesIdToEmission = _StructModule(
-    _loader.get(0xD11F8D1479E2F010).as_struct(),
+    Voc.Emissions.schema.fields["speciesIdToIsopreneEmission"].schema.elementType,
     "SpeciesIdToEmission",
 )
 Voc.SpeciesData = _StructModule(

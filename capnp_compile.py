@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -23,6 +24,126 @@ class CompilerConfig:
     schemas: list[str]
     paths: PathsConfig
     presets: dict[str, list[str]]
+
+
+def is_preserved_output(path: Path, output_dir: Path, lang: str) -> bool:
+    """Return whether the path should survive output cleanup."""
+    relative_path = path.relative_to(output_dir)
+
+    if lang == "python":
+        shim_package = Path("zalfmas_capnp_schemas_with_stubs")
+        return relative_path == shim_package or relative_path.is_relative_to(shim_package)
+
+    if len(relative_path.parts) != 1:
+        return False
+
+    if lang == "c++":
+        return relative_path.name == "CMakeLists.txt"
+
+    if lang == "csharp":
+        return relative_path.name == ".gitignore" or relative_path.suffix == ".csproj"
+
+    return False
+
+
+def remove_path(path: Path) -> None:
+    """Remove a file or directory tree."""
+    if path.is_dir() and not path.is_symlink():
+        shutil.rmtree(path)
+    else:
+        path.unlink(missing_ok=True)
+
+
+def prune_empty_parents(path: Path, output_dir: Path, lang: str) -> None:
+    """Remove empty parent directories up to the language output root."""
+    current = path.parent
+    while current != output_dir and current.exists():
+        if is_preserved_output(current, output_dir, lang) or any(current.iterdir()):
+            break
+        current.rmdir()
+        current = current.parent
+
+
+def remove_python_cache_entries(output_dir: Path) -> None:
+    """Drop Python cache artifacts, including those below preserved shim packages."""
+    for cache_dir in list(output_dir.rglob("__pycache__")):
+        shutil.rmtree(cache_dir, ignore_errors=True)
+
+    for pyc_file in list(output_dir.rglob("*.pyc")):
+        pyc_file.unlink(missing_ok=True)
+
+
+def schema_relative_path(schema: str, schema_dir: Path, use_relative_paths: bool) -> Path:
+    """Normalize a schema path to a path relative to the schema root."""
+    schema_path = Path(schema)
+    if not use_relative_paths:
+        return schema_path
+
+    if schema_path.is_absolute():
+        return schema_path.relative_to(schema_dir.resolve())
+
+    try:
+        return schema_path.relative_to(schema_dir)
+    except ValueError:
+        return schema_path
+
+
+def generated_paths_for_schema(schema: Path, lang: str, output_dir: Path) -> list[Path]:
+    """Return generated paths that can be safely removed for a schema subset build."""
+    if lang == "c++":
+        return [
+            output_dir / schema.with_suffix(".capnp.h"),
+            output_dir / schema.with_suffix(".capnp.c++"),
+        ]
+
+    if lang == "csharp":
+        return [output_dir / schema.with_suffix(".capnp.cs")]
+
+    if lang == "go":
+        return [output_dir / schema.with_suffix(".capnp.go")]
+
+    if lang == "capnp_offsets":
+        return [output_dir / schema]
+
+    if lang == "python":
+        module_name = f"{schema.stem}_capnp"
+        return [
+            output_dir / "mas" / "schema" / schema.parent / module_name,
+            output_dir / schema.parent / module_name,
+        ]
+
+    return []
+
+
+def prepare_output_dir(
+    schemas: list[str],
+    lang: str,
+    config: CompilerConfig,
+    use_relative_paths: bool,
+    clean_all_outputs: bool,
+) -> None:
+    """Remove stale generated output before regenerating."""
+    output_dir = Path(config.paths.output_base) / lang
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    if clean_all_outputs:
+        print(f"Cleaning generated output in {output_dir}")
+        for child in output_dir.iterdir():
+            if is_preserved_output(child, output_dir, lang):
+                continue
+            remove_path(child)
+    else:
+        print(f"Cleaning stale generated files in {output_dir}")
+        schema_dir = Path(config.paths.schemas_dir)
+        for schema in schemas:
+            relative_schema = schema_relative_path(schema, schema_dir, use_relative_paths)
+            for generated_path in generated_paths_for_schema(relative_schema, lang, output_dir):
+                if generated_path.exists():
+                    remove_path(generated_path)
+                    prune_empty_parents(generated_path, output_dir, lang)
+
+    if lang == "python":
+        remove_python_cache_entries(output_dir)
 
 
 def load_config(config_path: Path) -> CompilerConfig:
@@ -61,13 +182,13 @@ def compile_schemas(
     capnp_bin: str,
     config: CompilerConfig,
     use_relative_paths: bool = False,
+    clean_all_outputs: bool = False,
 ) -> None:
     """Compile Cap'n Proto schema files."""
     schema_dir = Path(config.paths.schemas_dir)
     output_dir = Path(config.paths.output_base) / lang
 
-    # Ensure output directory exists
-    output_dir.mkdir(parents=True, exist_ok=True)
+    prepare_output_dir(schemas, lang, config, use_relative_paths, clean_all_outputs)
 
     # Build list of schema paths
     if use_relative_paths:
@@ -183,7 +304,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Load configuration
-    config_path = Path("capnp_compile_config.json")
+    config_path = Path(args.config)
     config = load_config(config_path)
 
     # Determine which files to compile
@@ -202,6 +323,8 @@ def main() -> None:
     else:
         # No files or preset specified, compile all from config
         files_to_compile = config.schemas
+
+    clean_all_outputs = not args.files and not args.preset
 
     # Compile for each specified language
     for lang in args.lang:
@@ -230,7 +353,14 @@ def main() -> None:
             print(f"Using capnpc-{lang} at: {capnpc_path}")
 
         # Compile all schemas in a single call
-        compile_schemas(files_to_compile, lang, capnp_bin, config, use_relative_paths)
+        compile_schemas(
+            files_to_compile,
+            lang,
+            capnp_bin,
+            config,
+            use_relative_paths,
+            clean_all_outputs,
+        )
 
 
 if __name__ == "__main__":

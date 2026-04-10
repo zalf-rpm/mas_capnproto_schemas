@@ -1,3 +1,4 @@
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
 """This is an automatically generated stub for `registry.capnp`."""
 
 import base64
@@ -63,23 +64,27 @@ for _schema_b64 in _SCHEMA_NODES:
     _loader.load_dynamic(_node_reader)
 
 # Build module structure inline
+
 Admin = _InterfaceModule(_loader.get(0xF503F3237666574E).as_interface(), "Admin")
 Registry = _InterfaceModule(_loader.get(0xCA7B4BD1600633B8).as_interface(), "Registry")
-Registry.Entry = _StructModule(_loader.get(0xC17987510CF7AC13).as_struct(), "Entry")
+Registry.Entry = _StructModule(
+    Registry.schema.methods["entries"].result_type.fields["entries"].schema.elementType,
+    "Entry",
+)
 Registrar = _InterfaceModule(
     _loader.get(0xABAEF93C36F2D1EA).as_interface(),
     "Registrar",
 )
 Registrar.CrossDomainRestore = _StructModule(
-    _loader.get(0xAA1198DD7E71B20E).as_struct(),
+    Registrar.schema.methods["register"].param_type.fields["xDomain"].schema,
     "CrossDomainRestore",
 )
 Registrar.RegParams = _StructModule(
-    _loader.get(0xE5A84717EA75FB0D).as_struct(),
+    Registrar.schema.methods["register"].param_type,
     "RegParams",
 )
 Registrar.Unregister = _InterfaceModule(
-    _loader.get(0xC7597E4462528489).as_interface(),
+    Registrar.schema.methods["register"].result_type.fields["unreg"].schema,
     "Unregister",
 )
 
