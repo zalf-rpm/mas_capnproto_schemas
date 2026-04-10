@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.57](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.56...v0.1.57) (2026-04-10)
+
+
+### Features
+
+* clear out code before regenerating and regenerate python code with fix ([f17f47c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/f17f47c84bb5ac76030138b08108c7b656e69e0d))
+
 ## [0.1.56](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.55...v0.1.56) (2026-03-31)
 
 
