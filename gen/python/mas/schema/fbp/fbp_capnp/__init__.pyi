@@ -737,8 +737,8 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def write(
                 self,
                 value: AnyPointer | None = None,
-                done: None | None = None,
-                noMsg: None | None = None,
+                done: None = None,
+                noMsg: None = None,
             ) -> (
                 _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteResult
             ): ...
@@ -750,14 +750,14 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def writeIfSpace(
                 self,
                 value: AnyPointer | None = None,
-                done: None | None = None,
-                noMsg: None | None = None,
+                done: None = None,
+                noMsg: None = None,
             ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriterClient.WriteifspaceResult: ...
             def write_request(
                 self,
                 value: AnyPointer | None = None,
-                done: None | None = None,
-                noMsg: None | None = None,
+                done: None = None,
+                noMsg: None = None,
             ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriteRequest: ...
             def close_request(
                 self,
@@ -765,8 +765,8 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def writeIfSpace_request(
                 self,
                 value: AnyPointer | None = None,
-                done: None | None = None,
-                noMsg: None | None = None,
+                done: None = None,
+                noMsg: None = None,
             ) -> _ChannelInterfaceModule._WriterInterfaceModule.WriteifspaceRequest: ...
 
     Writer: _WriterInterfaceModule
@@ -1212,7 +1212,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
 
     class RegisterstatscallbackRequest(Protocol):
         callback: (
-            StatsCallbackClient
+            _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
             | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
         )
         updateIntervalInMs: int
@@ -1375,7 +1375,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             params: _ChannelInterfaceModule.Server.CloseParams
 
         class RegisterstatscallbackParams(Protocol):
-            callback: StatsCallbackClient
+            callback: _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
             updateIntervalInMs: int
 
         class RegisterstatscallbackCallContext(Protocol):
@@ -1452,7 +1452,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> Awaitable[None]: ...
         def registerStatsCallback(
             self,
-            callback: StatsCallbackClient,
+            callback: _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient,
             updateIntervalInMs: int,
             _context: _ChannelInterfaceModule.Server.RegisterstatscallbackCallContext,
             **kwargs: Any,
@@ -1510,7 +1510,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> _ChannelInterfaceModule.ChannelClient.CloseResult: ...
         def registerStatsCallback(
             self,
-            callback: StatsCallbackClient
+            callback: _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
             | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
             | None = None,
             updateIntervalInMs: int | None = None,
@@ -1532,7 +1532,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> _ChannelInterfaceModule.CloseRequest: ...
         def registerStatsCallback_request(
             self,
-            callback: StatsCallbackClient
+            callback: _ChannelInterfaceModule._StatsCallbackInterfaceModule.StatsCallbackClient
             | _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
             | None = None,
             updateIntervalInMs: int | None = None,
@@ -2331,7 +2331,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
         portInfosReaderSr: SturdyRefBuilder
         name: str
         stoppedCb: (
-            StoppedCallbackClient
+            _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
             | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
         )
         @overload
@@ -2370,7 +2370,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
         class StartParams(Protocol):
             portInfosReaderSr: SturdyRefReader
             name: str
-            stoppedCb: StoppedCallbackClient
+            stoppedCb: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
 
         class StartCallContext(Protocol):
             params: _RunnableInterfaceModule.Server.StartParams
@@ -2388,7 +2388,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             self,
             portInfosReaderSr: SturdyRefReader,
             name: str,
-            stoppedCb: StoppedCallbackClient,
+            stoppedCb: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient,
             _context: _RunnableInterfaceModule.Server.StartCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -2424,7 +2424,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             | dict[str, Any]
             | None = None,
             name: str | None = None,
-            stoppedCb: StoppedCallbackClient
+            stoppedCb: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
             | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
             | None = None,
         ) -> _RunnableInterfaceModule.RunnableClient.StartResult: ...
@@ -2433,7 +2433,7 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             self,
             portInfosReaderSr: SturdyRefBuilder | None = None,
             name: str | None = None,
-            stoppedCb: StoppedCallbackClient
+            stoppedCb: _RunnableInterfaceModule._StoppedCallbackInterfaceModule.StoppedCallbackClient
             | _RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
             | None = None,
         ) -> _RunnableInterfaceModule.StartRequest: ...
@@ -2723,7 +2723,7 @@ class _ProcessInterfaceModule(
 
     class StateRequest(Protocol):
         transitionCallback: (
-            StateTransitionClient
+            _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
             | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
         )
         def send(self) -> _ProcessInterfaceModule.ProcessClient.StateResult: ...
@@ -2887,7 +2887,7 @@ class _ProcessInterfaceModule(
             params: _ProcessInterfaceModule.Server.SetconfigentryParams
 
         class StateParams(Protocol):
-            transitionCallback: StateTransitionClient
+            transitionCallback: _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
 
         class StateCallContext(Protocol):
             params: _ProcessInterfaceModule.Server.StateParams
@@ -2990,7 +2990,7 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[None]: ...
         def state(
             self,
-            transitionCallback: StateTransitionClient,
+            transitionCallback: _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient,
             _context: _ProcessInterfaceModule.Server.StateCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -3057,7 +3057,7 @@ class _ProcessInterfaceModule(
         ) -> _ProcessInterfaceModule.ProcessClient.SetconfigentryResult: ...
         def state(
             self,
-            transitionCallback: StateTransitionClient
+            transitionCallback: _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
             | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
             | None = None,
         ) -> _ProcessInterfaceModule.ProcessClient.StateResult: ...
@@ -3085,7 +3085,7 @@ class _ProcessInterfaceModule(
         ) -> _ProcessInterfaceModule.SetconfigentryRequest: ...
         def state_request(
             self,
-            transitionCallback: StateTransitionClient
+            transitionCallback: _ProcessInterfaceModule._StateTransitionInterfaceModule.StateTransitionClient
             | _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
             | None = None,
         ) -> _ProcessInterfaceModule.StateRequest: ...
