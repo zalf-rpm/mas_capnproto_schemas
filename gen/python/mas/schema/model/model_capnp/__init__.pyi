@@ -409,7 +409,10 @@ XYPlusResult: _XYPlusResultStructModule
 
 class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
     class RunRequest(Protocol):
-        timeSeries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server
+        timeSeries: (
+            _TimeSeriesInterfaceModule.TimeSeriesClient
+            | _TimeSeriesInterfaceModule.Server
+        )
         def send(
             self,
         ) -> _ClimateInstanceInterfaceModule.ClimateInstanceClient.RunResult: ...
@@ -477,7 +480,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
             result: XYPlusResultBuilder | XYPlusResultReader
 
         class RunParams(Protocol):
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
 
         class RunCallContext(Protocol):
             params: _ClimateInstanceInterfaceModule.Server.RunParams
@@ -496,7 +499,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
 
         def run(
             self,
-            timeSeries: TimeSeriesClient,
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient,
             _context: _ClimateInstanceInterfaceModule.Server.RunCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -534,7 +537,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
 
         def run(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _ClimateInstanceInterfaceModule.ClimateInstanceClient.RunResult: ...
@@ -547,7 +550,7 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
         ) -> _ClimateInstanceInterfaceModule.ClimateInstanceClient.RunsetResult: ...
         def run_request(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _ClimateInstanceInterfaceModule.RunRequest: ...
@@ -866,7 +869,10 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
         _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule.Server
     )
     class RegisterenvinstanceRequest(Protocol):
-        instance: EnvInstanceClient | _EnvInstanceInterfaceModule.Server
+        instance: (
+            _EnvInstanceInterfaceModule.EnvInstanceClient
+            | _EnvInstanceInterfaceModule.Server
+        )
         def send(
             self,
         ) -> _EnvInstanceProxyInterfaceModule.EnvInstanceProxyClient.RegisterenvinstanceResult: ...
@@ -899,7 +905,7 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             )
 
         class RegisterenvinstanceParams(Protocol):
-            instance: EnvInstanceClient
+            instance: _EnvInstanceInterfaceModule.EnvInstanceClient
 
         class RegisterenvinstanceCallContext(Protocol):
             params: _EnvInstanceProxyInterfaceModule.Server.RegisterenvinstanceParams
@@ -910,7 +916,7 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
 
         def registerEnvInstance(
             self,
-            instance: EnvInstanceClient,
+            instance: _EnvInstanceInterfaceModule.EnvInstanceClient,
             _context: _EnvInstanceProxyInterfaceModule.Server.RegisterenvinstanceCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -929,13 +935,13 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
 
         def registerEnvInstance(
             self,
-            instance: EnvInstanceClient
+            instance: _EnvInstanceInterfaceModule.EnvInstanceClient
             | _EnvInstanceInterfaceModule.Server
             | None = None,
         ) -> _EnvInstanceProxyInterfaceModule.EnvInstanceProxyClient.RegisterenvinstanceResult: ...
         def registerEnvInstance_request(
             self,
-            instance: EnvInstanceClient
+            instance: _EnvInstanceInterfaceModule.EnvInstanceClient
             | _EnvInstanceInterfaceModule.Server
             | None = None,
         ) -> _EnvInstanceProxyInterfaceModule.RegisterenvinstanceRequest: ...
