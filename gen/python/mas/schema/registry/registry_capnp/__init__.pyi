@@ -997,7 +997,10 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
     )
     type UnregisterServer = _RegistrarInterfaceModule._UnregisterInterfaceModule.Server
     class RegisterRequest(Protocol):
-        cap: IdentifiableClient | _IdentifiableInterfaceModule.Server
+        cap: (
+            _IdentifiableInterfaceModule.IdentifiableClient
+            | _IdentifiableInterfaceModule.Server
+        )
         regName: str
         categoryId: str
         xDomain: CrossDomainRestoreBuilder
@@ -1051,7 +1054,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             reregSR: SturdyRefBuilder | SturdyRefReader
 
         class RegisterParams(Protocol):
-            cap: IdentifiableClient
+            cap: _IdentifiableInterfaceModule.IdentifiableClient
             regName: str
             categoryId: str
             xDomain: CrossDomainRestoreReader
@@ -1063,7 +1066,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
 
         def register(
             self,
-            cap: IdentifiableClient,
+            cap: _IdentifiableInterfaceModule.IdentifiableClient,
             regName: str,
             categoryId: str,
             xDomain: CrossDomainRestoreReader,
@@ -1082,7 +1085,9 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
 
         def register(
             self,
-            cap: IdentifiableClient | _IdentifiableInterfaceModule.Server | None = None,
+            cap: _IdentifiableInterfaceModule.IdentifiableClient
+            | _IdentifiableInterfaceModule.Server
+            | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
             xDomain: CrossDomainRestoreBuilder
@@ -1092,7 +1097,9 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
         ) -> _RegistrarInterfaceModule.RegistrarClient.RegisterResult: ...
         def register_request(
             self,
-            cap: IdentifiableClient | _IdentifiableInterfaceModule.Server | None = None,
+            cap: _IdentifiableInterfaceModule.IdentifiableClient
+            | _IdentifiableInterfaceModule.Server
+            | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
             xDomain: CrossDomainRestoreBuilder | None = None,

@@ -124,7 +124,7 @@ class _ClusterStructModule(_StructModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
             aFactory: (
-                ModelInstanceFactoryClient
+                _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
             )
             def send(
@@ -190,7 +190,7 @@ class _ClusterStructModule(_StructModule):
 
             class RegistermodelinstancefactoryParams(Protocol):
                 aModelId: str
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
 
             class RegistermodelinstancefactoryCallContext(Protocol):
                 params: _ClusterStructModule._AdminMasterInterfaceModule.Server.RegistermodelinstancefactoryParams
@@ -211,7 +211,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory(
                 self,
                 aModelId: str,
-                aFactory: ModelInstanceFactoryClient,
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient,
                 _context: _ClusterStructModule._AdminMasterInterfaceModule.Server.RegistermodelinstancefactoryCallContext,
                 **kwargs: Any,
             ) -> Awaitable[
@@ -252,7 +252,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory(
                 self,
                 aModelId: str | None = None,
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
                 | None = None,
             ) -> _ClusterStructModule._AdminMasterInterfaceModule.AdminMasterClient.RegistermodelinstancefactoryResult: ...
@@ -262,7 +262,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory_request(
                 self,
                 aModelId: str | None = None,
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
                 | None = None,
             ) -> _ClusterStructModule._AdminMasterInterfaceModule.RegistermodelinstancefactoryRequest: ...
@@ -904,7 +904,7 @@ class _ClusterStructModule(_StructModule):
         class RegistermodelinstancefactoryRequest(Protocol):
             aModelId: str
             aFactory: (
-                ModelInstanceFactoryClient
+                _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
             )
             def send(
@@ -1014,7 +1014,7 @@ class _ClusterStructModule(_StructModule):
 
             class RegistermodelinstancefactoryParams(Protocol):
                 aModelId: str
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
 
             class RegistermodelinstancefactoryCallContext(Protocol):
                 params: _ClusterStructModule._RuntimeInterfaceModule.Server.RegistermodelinstancefactoryParams
@@ -1064,7 +1064,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory(
                 self,
                 aModelId: str,
-                aFactory: ModelInstanceFactoryClient,
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient,
                 _context: _ClusterStructModule._RuntimeInterfaceModule.Server.RegistermodelinstancefactoryCallContext,
                 **kwargs: Any,
             ) -> Awaitable[
@@ -1158,7 +1158,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory(
                 self,
                 aModelId: str | None = None,
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
                 | None = None,
             ) -> _ClusterStructModule._RuntimeInterfaceModule.RuntimeClient.RegistermodelinstancefactoryResult: ...
@@ -1179,7 +1179,7 @@ class _ClusterStructModule(_StructModule):
             def registerModelInstanceFactory_request(
                 self,
                 aModelId: str | None = None,
-                aFactory: ModelInstanceFactoryClient
+                aFactory: _ClusterStructModule._ModelInstanceFactoryInterfaceModule.ModelInstanceFactoryClient
                 | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
                 | None = None,
             ) -> _ClusterStructModule._RuntimeInterfaceModule.RegistermodelinstancefactoryRequest: ...

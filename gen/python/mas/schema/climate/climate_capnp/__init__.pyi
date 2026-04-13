@@ -2974,7 +2974,10 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         ) -> _AlterTimeSeriesWrapperInterfaceModule.AlterTimeSeriesWrapperClient.RemoveResult: ...
 
     class ReplacewrappedtimeseriesRequest(Protocol):
-        timeSeries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server
+        timeSeries: (
+            _TimeSeriesInterfaceModule.TimeSeriesClient
+            | _TimeSeriesInterfaceModule.Server
+        )
         def send(
             self,
         ) -> _AlterTimeSeriesWrapperInterfaceModule.AlterTimeSeriesWrapperClient.ReplacewrappedtimeseriesResult: ...
@@ -3092,7 +3095,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             params: _AlterTimeSeriesWrapperInterfaceModule.Server.RemoveParams
 
         class ReplacewrappedtimeseriesParams(Protocol):
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
 
         class ReplacewrappedtimeseriesCallContext(Protocol):
             params: _AlterTimeSeriesWrapperInterfaceModule.Server.ReplacewrappedtimeseriesParams
@@ -3150,7 +3153,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         ) -> Awaitable[None]: ...
         def replaceWrappedTimeSeries(
             self,
-            timeSeries: TimeSeriesClient,
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient,
             _context: _AlterTimeSeriesWrapperInterfaceModule.Server.ReplacewrappedtimeseriesCallContext,
             **kwargs: Any,
         ) -> Awaitable[None]: ...
@@ -3189,7 +3192,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         ) -> _AlterTimeSeriesWrapperInterfaceModule.AlterTimeSeriesWrapperClient.RemoveResult: ...
         def replaceWrappedTimeSeries(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _AlterTimeSeriesWrapperInterfaceModule.AlterTimeSeriesWrapperClient.ReplacewrappedtimeseriesResult: ...
@@ -3210,7 +3213,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         ) -> _AlterTimeSeriesWrapperInterfaceModule.RemoveRequest: ...
         def replaceWrappedTimeSeries_request(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _AlterTimeSeriesWrapperInterfaceModule.ReplacewrappedtimeseriesRequest: ...
@@ -3244,7 +3247,10 @@ AlterTimeSeriesWrapper: _AlterTimeSeriesWrapperInterfaceModule
 
 class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule):
     class WrapRequest(Protocol):
-        timeSeries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server
+        timeSeries: (
+            _TimeSeriesInterfaceModule.TimeSeriesClient
+            | _TimeSeriesInterfaceModule.Server
+        )
         def send(
             self,
         ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule.AlterTimeSeriesWrapperFactoryClient.WrapResult: ...
@@ -3277,7 +3283,7 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
             )
 
         class WrapParams(Protocol):
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
 
         class WrapCallContext(Protocol):
             params: _AlterTimeSeriesWrapperFactoryInterfaceModule.Server.WrapParams
@@ -3288,7 +3294,7 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
 
         def wrap(
             self,
-            timeSeries: TimeSeriesClient,
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient,
             _context: _AlterTimeSeriesWrapperFactoryInterfaceModule.Server.WrapCallContext,
             **kwargs: Any,
         ) -> Awaitable[
@@ -3309,13 +3315,13 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
 
         def wrap(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule.AlterTimeSeriesWrapperFactoryClient.WrapResult: ...
         def wrap_request(
             self,
-            timeSeries: TimeSeriesClient
+            timeSeries: _TimeSeriesInterfaceModule.TimeSeriesClient
             | _TimeSeriesInterfaceModule.Server
             | None = None,
         ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule.WrapRequest: ...
