@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `fbp.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -239,69 +238,4 @@ Process.State = _EnumModule(
 Process.StateTransition = _InterfaceModule(
     Process.schema.methods["state"].param_type.fields["transitionCallback"].schema,
     "StateTransition",
-)
-
-Channel.Server.EndpointsResultTuple = NamedTuple(
-    "EndpointsResultTuple",
-    [("r", object), ("w", object)],
-)
-Channel.Server.ReaderResultTuple = NamedTuple("ReaderResultTuple", [("r", object)])
-Channel.Server.RegisterstatscallbackResultTuple = NamedTuple(
-    "RegisterstatscallbackResultTuple",
-    [("unregisterCallback", object)],
-)
-Channel.Server.WriterResultTuple = NamedTuple("WriterResultTuple", [("w", object)])
-Channel.Reader.Server.ReadResultTuple = NamedTuple(
-    "ReadResultTuple",
-    [("value", object), ("done", object), ("noMsg", object)],
-)
-Channel.Reader.Server.ReadifmsgResultTuple = NamedTuple(
-    "ReadifmsgResultTuple",
-    [("value", object), ("done", object), ("noMsg", object)],
-)
-Channel.StatsCallback.Unregister.Server.UnregResultTuple = NamedTuple(
-    "UnregResultTuple",
-    [("success", object)],
-)
-Channel.Writer.Server.WriteifspaceResultTuple = NamedTuple(
-    "WriteifspaceResultTuple",
-    [("success", object)],
-)
-Process.Server.ConfigentriesResultTuple = NamedTuple(
-    "ConfigentriesResultTuple",
-    [("config", object)],
-)
-Process.Server.ConnectinportResultTuple = NamedTuple(
-    "ConnectinportResultTuple",
-    [("connected", object)],
-)
-Process.Server.ConnectoutportResultTuple = NamedTuple(
-    "ConnectoutportResultTuple",
-    [("connected", object)],
-)
-Process.Server.InportsResultTuple = NamedTuple(
-    "InportsResultTuple",
-    [("ports", object)],
-)
-Process.Server.OutportsResultTuple = NamedTuple(
-    "OutportsResultTuple",
-    [("ports", object)],
-)
-Process.Server.StateResultTuple = NamedTuple(
-    "StateResultTuple",
-    [("currentState", object)],
-)
-Process.Factory.Server.CreateResultTuple = NamedTuple(
-    "CreateResultTuple",
-    [("out", object)],
-)
-Runnable.Server.StartResultTuple = NamedTuple("StartResultTuple", [("success", object)])
-Runnable.Server.StopResultTuple = NamedTuple("StopResultTuple", [("success", object)])
-Runnable.Factory.Server.CreateResultTuple = NamedTuple(
-    "CreateResultTuple",
-    [("out", object)],
-)
-StartChannelsService.Server.StartResultTuple = NamedTuple(
-    "StartResultTuple",
-    [("startupInfos", object), ("stop", object)],
 )

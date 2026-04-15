@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `service.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -71,21 +70,3 @@ Stoppable = _InterfaceModule(
     _loader.get(0xCD5F6458232E9276).as_interface(),
     "Stoppable",
 )
-
-Admin.Server.IdentitiesResultTuple = NamedTuple(
-    "IdentitiesResultTuple",
-    [("infos", object)],
-)
-Factory.Server.CreateResultTuple = NamedTuple(
-    "CreateResultTuple",
-    [("adminCap", object), ("serviceCaps", object), ("error", object)],
-)
-Factory.Server.ServiceinterfacenamesResultTuple = NamedTuple(
-    "ServiceinterfacenamesResultTuple",
-    [("names", object)],
-)
-SimpleFactory.Server.CreateResultTuple = NamedTuple(
-    "CreateResultTuple",
-    [("caps", object)],
-)
-Stoppable.Server.StopResultTuple = NamedTuple("StopResultTuple", [("success", object)])

@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `jobs.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -35,5 +34,3 @@ for _schema_b64 in _SCHEMA_NODES:
 
 Job = _StructModule(_loader.get(0xA05B60B71CA38848).as_struct(), "Job")
 Service = _InterfaceModule(_loader.get(0xB8745454D013CBF0).as_interface(), "Service")
-
-Service.Server.NextjobResultTuple = NamedTuple("NextjobResultTuple", [("job", object)])

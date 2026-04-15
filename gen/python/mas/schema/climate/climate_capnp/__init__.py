@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `climate.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -191,109 +190,4 @@ AlterTimeSeriesWrapper.AlterType = _EnumModule(
 AlterTimeSeriesWrapperFactory = _InterfaceModule(
     _loader.get(0xC5F12DF0A2A52744).as_interface(),
     "AlterTimeSeriesWrapperFactory",
-)
-
-AlterTimeSeriesWrapperFactory.Server.WrapResultTuple = NamedTuple(
-    "WrapResultTuple",
-    [("wrapper", object)],
-)
-AlterTimeSeriesWrapper.Server.AlterResultTuple = NamedTuple(
-    "AlterResultTuple",
-    [("timeSeries", object)],
-)
-AlterTimeSeriesWrapper.Server.AlteredelementsResultTuple = NamedTuple(
-    "AlteredelementsResultTuple",
-    [("list", object)],
-)
-AlterTimeSeriesWrapper.Server.WrappedtimeseriesResultTuple = NamedTuple(
-    "WrappedtimeseriesResultTuple",
-    [("timeSeries", object)],
-)
-CSVTimeSeriesFactory.Server.CreateResultTuple = NamedTuple(
-    "CreateResultTuple",
-    [("timeseries", object), ("error", object)],
-)
-Dataset.Server.ClosesttimeseriesatResultTuple = NamedTuple(
-    "ClosesttimeseriesatResultTuple",
-    [("timeSeries", object)],
-)
-Dataset.Server.LocationsResultTuple = NamedTuple(
-    "LocationsResultTuple",
-    [("locations", object)],
-)
-Dataset.Server.MetadataResultTuple = NamedTuple(
-    "MetadataResultTuple",
-    [("entries", object), ("info", object)],
-)
-Dataset.Server.StreamlocationsResultTuple = NamedTuple(
-    "StreamlocationsResultTuple",
-    [("locationsCallback", object)],
-)
-Dataset.Server.TimeseriesatResultTuple = NamedTuple(
-    "TimeseriesatResultTuple",
-    [("timeSeries", object)],
-)
-Dataset.GetLocationsCallback.Server.NextlocationsResultTuple = NamedTuple(
-    "NextlocationsResultTuple",
-    [("locations", object)],
-)
-Metadata.Information.Server.ForallResultTuple = NamedTuple(
-    "ForallResultTuple",
-    [("all", object)],
-)
-Metadata.Information.Server.ForoneResultTuple = NamedTuple(
-    "ForoneResultTuple",
-    [("id", object), ("name", object), ("description", object)],
-)
-Metadata.Supported.Server.CategoriesResultTuple = NamedTuple(
-    "CategoriesResultTuple",
-    [("types", object)],
-)
-Metadata.Supported.Server.SupportedvaluesResultTuple = NamedTuple(
-    "SupportedvaluesResultTuple",
-    [("values", object)],
-)
-Service.Server.GetavailabledatasetsResultTuple = NamedTuple(
-    "GetavailabledatasetsResultTuple",
-    [("datasets", object)],
-)
-Service.Server.GetdatasetsforResultTuple = NamedTuple(
-    "GetdatasetsforResultTuple",
-    [("datasets", object)],
-)
-TimeSeries.Server.DataResultTuple = NamedTuple("DataResultTuple", [("data", object)])
-TimeSeries.Server.DatatResultTuple = NamedTuple("DatatResultTuple", [("data", object)])
-TimeSeries.Server.HeaderResultTuple = NamedTuple(
-    "HeaderResultTuple",
-    [("header", object)],
-)
-TimeSeries.Server.LocationResultTuple = NamedTuple(
-    "LocationResultTuple",
-    [
-        ("id", object),
-        ("heightNN", object),
-        ("latlon", object),
-        ("timeSeries", object),
-        ("customData", object),
-    ],
-)
-TimeSeries.Server.MetadataResultTuple = NamedTuple(
-    "MetadataResultTuple",
-    [("entries", object), ("info", object)],
-)
-TimeSeries.Server.RangeResultTuple = NamedTuple(
-    "RangeResultTuple",
-    [("startDate", object), ("endDate", object)],
-)
-TimeSeries.Server.ResolutionResultTuple = NamedTuple(
-    "ResolutionResultTuple",
-    [("resolution", object)],
-)
-TimeSeries.Server.SubheaderResultTuple = NamedTuple(
-    "SubheaderResultTuple",
-    [("timeSeries", object)],
-)
-TimeSeries.Server.SubrangeResultTuple = NamedTuple(
-    "SubrangeResultTuple",
-    [("timeSeries", object)],
 )

@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `model.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -144,34 +143,4 @@ EnvInstanceProxy.Unregister = _InterfaceModule(
 InstanceFactory = _InterfaceModule(
     _loader.get(0xCE552EEF738A45EA).as_interface(),
     "InstanceFactory",
-)
-
-ClimateInstance.Server.RunResultTuple = NamedTuple(
-    "RunResultTuple",
-    [("result", object)],
-)
-ClimateInstance.Server.RunsetResultTuple = NamedTuple(
-    "RunsetResultTuple",
-    [("result", object)],
-)
-EnvInstance.Server.RunResultTuple = NamedTuple("RunResultTuple", [("result", object)])
-EnvInstanceProxy.Server.RegisterenvinstanceResultTuple = NamedTuple(
-    "RegisterenvinstanceResultTuple",
-    [("unregister", object)],
-)
-EnvInstanceProxy.Unregister.Server.UnregisterResultTuple = NamedTuple(
-    "UnregisterResultTuple",
-    [("success", object)],
-)
-InstanceFactory.Server.ModelinfoResultTuple = NamedTuple(
-    "ModelinfoResultTuple",
-    [("id", object), ("name", object), ("description", object)],
-)
-InstanceFactory.Server.NewinstanceResultTuple = NamedTuple(
-    "NewinstanceResultTuple",
-    [("instance", object)],
-)
-InstanceFactory.Server.NewinstancesResultTuple = NamedTuple(
-    "NewinstancesResultTuple",
-    [("instances", object)],
 )

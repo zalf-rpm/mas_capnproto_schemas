@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `management.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -161,16 +160,3 @@ FertilizerService = _InterfaceModule(
     "FertilizerService",
 )
 Service = _InterfaceModule(_loader.get(0xC876B729B7D7F6D9).as_interface(), "Service")
-
-Fertilizer.Server.NutrientsResultTuple = NamedTuple(
-    "NutrientsResultTuple",
-    [("nutrients", object)],
-)
-Fertilizer.Server.ParametersResultTuple = NamedTuple(
-    "ParametersResultTuple",
-    [("params", object)],
-)
-Service.Server.ManagementatResultTuple = NamedTuple(
-    "ManagementatResultTuple",
-    [("mgmt", object)],
-)

@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `storage.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -99,65 +98,4 @@ Store.InfoAndContainer = _StructModule(
 Store.ImportExportData = _StructModule(
     _loader.get(0x847D262CEFD2F142).as_struct(),
     "ImportExportData",
-)
-
-Store.Server.ContainerwithidResultTuple = NamedTuple(
-    "ContainerwithidResultTuple",
-    [("container", object)],
-)
-Store.Server.ImportcontainerResultTuple = NamedTuple(
-    "ImportcontainerResultTuple",
-    [("container", object)],
-)
-Store.Server.ListcontainersResultTuple = NamedTuple(
-    "ListcontainersResultTuple",
-    [("containers", object)],
-)
-Store.Server.NewcontainerResultTuple = NamedTuple(
-    "NewcontainerResultTuple",
-    [("container", object)],
-)
-Store.Server.RemovecontainerResultTuple = NamedTuple(
-    "RemovecontainerResultTuple",
-    [("success", object)],
-)
-Store.Container.Server.AddentryResultTuple = NamedTuple(
-    "AddentryResultTuple",
-    [("entry", object), ("success", object)],
-)
-Store.Container.Server.ClearResultTuple = NamedTuple(
-    "ClearResultTuple",
-    [("success", object)],
-)
-Store.Container.Server.DownloadentriesResultTuple = NamedTuple(
-    "DownloadentriesResultTuple",
-    [("entries", object)],
-)
-Store.Container.Server.ExportResultTuple = NamedTuple(
-    "ExportResultTuple",
-    [("json", object)],
-)
-Store.Container.Server.GetentryResultTuple = NamedTuple(
-    "GetentryResultTuple",
-    [("entry", object)],
-)
-Store.Container.Server.ListentriesResultTuple = NamedTuple(
-    "ListentriesResultTuple",
-    [("entries", object)],
-)
-Store.Container.Server.RemoveentryResultTuple = NamedTuple(
-    "RemoveentryResultTuple",
-    [("success", object)],
-)
-Store.Container.Entry.Server.GetkeyResultTuple = NamedTuple(
-    "GetkeyResultTuple",
-    [("key", object)],
-)
-Store.Container.Entry.Server.GetvalueResultTuple = NamedTuple(
-    "GetvalueResultTuple",
-    [("value", object), ("isUnset", object)],
-)
-Store.Container.Entry.Server.SetvalueResultTuple = NamedTuple(
-    "SetvalueResultTuple",
-    [("success", object)],
 )

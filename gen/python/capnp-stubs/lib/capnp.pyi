@@ -590,361 +590,378 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._AlterTimeSeriesWrapperInterfaceModule,
-    ) -> climate_capnp.AlterTimeSeriesWrapperClient: ...
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperClient: ...
     @overload
     def as_interface(
         self,
-        schema: model_capnp._EnvInstanceProxyInterfaceModule,
-    ) -> model_capnp.EnvInstanceProxyClient: ...
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceProxyClient: ...
     @overload
     def as_interface(
         self,
-        schema: model_capnp._EnvInstanceInterfaceModule,
-    ) -> model_capnp.EnvInstanceClient: ...
+        schema: model_capnp.types.modules._EnvInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._DatasetInterfaceModule,
-    ) -> climate_capnp.DatasetClient: ...
+        schema: climate_capnp.types.modules._DatasetInterfaceModule,
+    ) -> climate_capnp.types.clients.DatasetClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._ServiceInterfaceModule,
-    ) -> climate_capnp.ServiceClient: ...
+        schema: climate_capnp.types.modules._ServiceInterfaceModule,
+    ) -> climate_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._TimeSeriesInterfaceModule,
-    ) -> climate_capnp.TimeSeriesClient: ...
+        schema: climate_capnp.types.modules._TimeSeriesInterfaceModule,
+    ) -> climate_capnp.types.clients.TimeSeriesClient: ...
     @overload
     def as_interface(
         self,
-        schema: common_capnp._IdentifiableHolderInterfaceModule,
-    ) -> common_capnp.IdentifiableHolderClient: ...
+        schema: common_capnp.types.modules._IdentifiableHolderInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableHolderClient: ...
     @overload
     def as_interface(
         self,
-        schema: crop_capnp._CropInterfaceModule,
-    ) -> crop_capnp.CropClient: ...
+        schema: crop_capnp.types.modules._CropInterfaceModule,
+    ) -> crop_capnp.types.clients.CropClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule,
-    ) -> fbp_capnp.ChannelClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._ReaderInterfaceModule,
-    ) -> fbp_capnp.ReaderClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule,
+    ) -> fbp_capnp.types.clients.ReaderClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._WriterInterfaceModule,
-    ) -> fbp_capnp.WriterClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._WriterInterfaceModule,
+    ) -> fbp_capnp.types.clients.WriterClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule,
-    ) -> fbp_capnp.ProcessClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessClient: ...
     @overload
     def as_interface(
         self,
-        schema: grid_capnp._GridInterfaceModule,
-    ) -> grid_capnp.GridClient: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule,
+    ) -> grid_capnp.types.clients.GridClient: ...
     @overload
     def as_interface(
         self,
-        schema: jobs_capnp._ServiceInterfaceModule,
-    ) -> jobs_capnp.ServiceClient: ...
+        schema: jobs_capnp.types.modules._ServiceInterfaceModule,
+    ) -> jobs_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: management_capnp._FertilizerInterfaceModule,
-    ) -> management_capnp.FertilizerClient: ...
+        schema: management_capnp.types.modules._FertilizerInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._GatewayInterfaceModule,
-    ) -> persistence_capnp.GatewayClient: ...
+        schema: persistence_capnp.types.modules._GatewayInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._HostPortResolverInterfaceModule,
-    ) -> persistence_capnp.HostPortResolverClient: ...
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule,
+    ) -> persistence_capnp.types.clients.HostPortResolverClient: ...
     @overload
     def as_interface(
         self,
-        schema: soil_capnp._ProfileInterfaceModule,
-    ) -> soil_capnp.ProfileClient: ...
+        schema: soil_capnp.types.modules._ProfileInterfaceModule,
+    ) -> soil_capnp.types.clients.ProfileClient: ...
     @overload
     def as_interface(
         self,
-        schema: soil_capnp._ServiceInterfaceModule,
-    ) -> soil_capnp.ServiceClient: ...
+        schema: soil_capnp.types.modules._ServiceInterfaceModule,
+    ) -> soil_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: storage_capnp._StoreInterfaceModule,
-    ) -> storage_capnp.StoreClient: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule,
+    ) -> storage_capnp.types.clients.StoreClient: ...
     @overload
     def as_interface(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule,
-    ) -> storage_capnp.ContainerClient: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule,
+    ) -> storage_capnp.types.clients.ContainerClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._AlterTimeSeriesWrapperFactoryInterfaceModule,
-    ) -> climate_capnp.AlterTimeSeriesWrapperFactoryClient: ...
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._CSVTimeSeriesFactoryInterfaceModule,
-    ) -> climate_capnp.CSVTimeSeriesFactoryClient: ...
+        schema: climate_capnp.types.modules._CSVTimeSeriesFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.CSVTimeSeriesFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._AdminMasterInterfaceModule,
-    ) -> cluster_admin_service_capnp.AdminMasterClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._AdminMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.AdminMasterClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._ModelInstanceFactoryInterfaceModule,
-    ) -> cluster_admin_service_capnp.ModelInstanceFactoryClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ModelInstanceFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._RuntimeInterfaceModule,
-    ) -> cluster_admin_service_capnp.RuntimeClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._RuntimeInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.RuntimeClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._UserMasterInterfaceModule,
-    ) -> cluster_admin_service_capnp.UserMasterClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UserMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UserMasterClient: ...
     @overload
     def as_interface(
         self,
-        schema: common_capnp._FactoryInterfaceModule,
-    ) -> common_capnp.FactoryClient: ...
+        schema: common_capnp.types.modules._FactoryInterfaceModule,
+    ) -> common_capnp.types.clients.FactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: common_capnp._IOFactoryInterfaceModule,
-    ) -> common_capnp.IOFactoryClient: ...
+        schema: common_capnp.types.modules._IOFactoryInterfaceModule,
+    ) -> common_capnp.types.clients.IOFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: crop_capnp._ServiceInterfaceModule,
-    ) -> crop_capnp.ServiceClient: ...
+        schema: crop_capnp.types.modules._ServiceInterfaceModule,
+    ) -> crop_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule._FactoryInterfaceModule,
-    ) -> fbp_capnp.FactoryClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._RunnableInterfaceModule,
-    ) -> fbp_capnp.RunnableClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._StartChannelsServiceInterfaceModule,
-    ) -> fbp_capnp.StartChannelsServiceClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: management_capnp._FertilizerServiceInterfaceModule,
-    ) -> management_capnp.FertilizerServiceClient: ...
+        schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule,
+    ) -> fbp_capnp.types.clients.StartChannelsServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: management_capnp._ServiceInterfaceModule,
-    ) -> management_capnp.ServiceClient: ...
+        schema: management_capnp.types.modules._FertilizerServiceInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: model_capnp._ClimateInstanceInterfaceModule,
-    ) -> model_capnp.ClimateInstanceClient: ...
+        schema: management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> management_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: model_capnp._InstanceFactoryInterfaceModule,
-    ) -> model_capnp.InstanceFactoryClient: ...
+        schema: model_capnp.types.modules._ClimateInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.ClimateInstanceClient: ...
     @overload
     def as_interface(
         self,
-        schema: monica_management_capnp._ServiceInterfaceModule,
-    ) -> monica_management_capnp.ServiceClient: ...
+        schema: model_capnp.types.modules._InstanceFactoryInterfaceModule,
+    ) -> model_capnp.types.clients.InstanceFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: registry_capnp._AdminInterfaceModule,
-    ) -> registry_capnp.AdminClient: ...
+        schema: monica_management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> monica_management_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule,
-    ) -> registry_capnp.RegistrarClient: ...
+        schema: registry_capnp.types.modules._AdminInterfaceModule,
+    ) -> registry_capnp.types.clients.AdminClient: ...
     @overload
     def as_interface(
         self,
-        schema: registry_capnp._RegistryInterfaceModule,
-    ) -> registry_capnp.RegistryClient: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistrarClient: ...
     @overload
     def as_interface(
         self,
-        schema: service_capnp._AdminInterfaceModule,
-    ) -> service_capnp.AdminClient: ...
+        schema: registry_capnp.types.modules._RegistryInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistryClient: ...
     @overload
     def as_interface(
         self,
-        schema: service_capnp._FactoryInterfaceModule,
-    ) -> service_capnp.FactoryClient: ...
+        schema: service_capnp.types.modules._AdminInterfaceModule,
+    ) -> service_capnp.types.clients.AdminClient: ...
     @overload
     def as_interface(
         self,
-        schema: service_capnp._SimpleFactoryInterfaceModule,
-    ) -> service_capnp.SimpleFactoryClient: ...
+        schema: service_capnp.types.modules._FactoryInterfaceModule,
+    ) -> service_capnp.types.clients.FactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule,
-    ) -> climate_capnp.GetLocationsCallbackClient: ...
+        schema: service_capnp.types.modules._SimpleFactoryInterfaceModule,
+    ) -> service_capnp.types.clients.SimpleFactoryClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._MetadataStructModule._InformationInterfaceModule,
-    ) -> climate_capnp.InformationClient: ...
+        schema: climate_capnp.types.modules._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule,
+    ) -> climate_capnp.types.clients.GetLocationsCallbackClient: ...
     @overload
     def as_interface(
         self,
-        schema: climate_capnp._MetadataStructModule._SupportedInterfaceModule,
-    ) -> climate_capnp.SupportedClient: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._InformationInterfaceModule,
+    ) -> climate_capnp.types.clients.InformationClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._UnregisterInterfaceModule,
-    ) -> cluster_admin_service_capnp.UnregisterClient: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._SupportedInterfaceModule,
+    ) -> climate_capnp.types.clients.SupportedClient: ...
     @overload
     def as_interface(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._ValueHolderInterfaceModule,
-    ) -> cluster_admin_service_capnp.ValueHolderClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UnregisterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UnregisterClient: ...
     @overload
     def as_interface(
         self,
-        schema: common_capnp._HolderInterfaceModule,
-    ) -> common_capnp.HolderClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ValueHolderInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ValueHolderClient: ...
     @overload
     def as_interface(
         self,
-        schema: common_capnp._IdentifiableInterfaceModule,
-    ) -> common_capnp.IdentifiableClient: ...
+        schema: common_capnp.types.modules._HolderInterfaceModule,
+    ) -> common_capnp.types.clients.HolderClient: ...
     @overload
     def as_interface(
         self,
-        schema: config_capnp._ServiceInterfaceModule,
-    ) -> config_capnp.ServiceClient: ...
+        schema: common_capnp.types.modules._IdentifiableInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableClient: ...
     @overload
     def as_interface(
         self,
-        schema: modam_capnp._ModamWrapperServiceInterfaceModule,
-    ) -> modam_capnp.ModamWrapperServiceClient: ...
+        schema: config_capnp.types.modules._ServiceInterfaceModule,
+    ) -> config_capnp.types.clients.ServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule,
-    ) -> fbp_capnp.StatsCallbackClient: ...
+        schema: modam_capnp.types.modules._ModamWrapperServiceInterfaceModule,
+    ) -> modam_capnp.types.clients.ModamWrapperServiceClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
-    ) -> fbp_capnp.UnregisterClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule._StateTransitionInterfaceModule,
-    ) -> fbp_capnp.StateTransitionClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.UnregisterClient: ...
     @overload
     def as_interface(
         self,
-        schema: fbp_capnp._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
-    ) -> fbp_capnp.StoppedCallbackClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._StateTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.StateTransitionClient: ...
     @overload
     def as_interface(
         self,
-        schema: grid_capnp._GridInterfaceModule._CallbackInterfaceModule,
-    ) -> grid_capnp.CallbackClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StoppedCallbackClient: ...
     @overload
     def as_interface(
         self,
-        schema: model_capnp._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule,
-    ) -> model_capnp.UnregisterClient: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._CallbackInterfaceModule,
+    ) -> grid_capnp.types.clients.CallbackClient: ...
     @overload
     def as_interface(
         self,
-        schema: web_berest_data_import_capnp._DWLABImportInterfaceModule,
-    ) -> web_berest_data_import_capnp.DWLABImportClient: ...
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule,
+    ) -> model_capnp.types.clients.UnregisterClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._GatewayRegistrableInterfaceModule,
-    ) -> persistence_capnp.GatewayRegistrableClient: ...
+        schema: web_berest_data_import_capnp.types.modules._DWLABImportInterfaceModule,
+    ) -> web_berest_data_import_capnp.types.clients.DWLABImportClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._HeartbeatInterfaceModule,
-    ) -> persistence_capnp.HeartbeatClient: ...
+        schema: persistence_capnp.types.modules._GatewayRegistrableInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayRegistrableClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._HostPortResolverInterfaceModule._RegistrarInterfaceModule,
-    ) -> persistence_capnp.RegistrarClient: ...
+        schema: persistence_capnp.types.modules._HeartbeatInterfaceModule,
+    ) -> persistence_capnp.types.clients.HeartbeatClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule,
-    ) -> persistence_capnp.PersistentClient: ...
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule,
+    ) -> persistence_capnp.types.clients.RegistrarClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule,
-    ) -> persistence_capnp.ReleaseSturdyRefClient: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule,
+    ) -> persistence_capnp.types.clients.PersistentClient: ...
     @overload
     def as_interface(
         self,
-        schema: persistence_capnp._RestorerInterfaceModule,
-    ) -> persistence_capnp.RestorerClient: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule,
+    ) -> persistence_capnp.types.clients.ReleaseSturdyRefClient: ...
     @overload
     def as_interface(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule._UnregisterInterfaceModule,
-    ) -> registry_capnp.UnregisterClient: ...
+        schema: persistence_capnp.types.modules._RestorerInterfaceModule,
+    ) -> persistence_capnp.types.clients.RestorerClient: ...
     @overload
     def as_interface(
         self,
-        schema: service_capnp._StoppableInterfaceModule,
-    ) -> service_capnp.StoppableClient: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._UnregisterInterfaceModule,
+    ) -> registry_capnp.types.clients.UnregisterClient: ...
     @overload
     def as_interface(
         self,
-        schema: soil_capnp._ServiceInterfaceModule._StreamInterfaceModule,
-    ) -> soil_capnp.StreamClient: ...
+        schema: service_capnp.types.modules._StoppableInterfaceModule,
+    ) -> service_capnp.types.clients.StoppableClient: ...
     @overload
     def as_interface(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule,
-    ) -> storage_capnp.EntryClient: ...
+        schema: soil_capnp.types.modules._ServiceInterfaceModule._StreamInterfaceModule,
+    ) -> soil_capnp.types.clients.StreamClient: ...
     @overload
-    def as_interface(self, schema: a_capnp._AInterfaceModule) -> a_capnp.AClient: ...
+    def as_interface(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule,
+    ) -> storage_capnp.types.clients.EntryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: a_capnp.types.modules._AInterfaceModule,
+    ) -> a_capnp.types.clients.AClient: ...
     @overload
-    def as_interface(self, schema: x_capnp._XInterfaceModule) -> x_capnp.XClient: ...
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._XInterfaceModule,
+    ) -> x_capnp.types.clients.XClient: ...
     @overload
-    def as_interface(self, schema: x_capnp._YInterfaceModule) -> x_capnp.YClient: ...
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._YInterfaceModule,
+    ) -> x_capnp.types.clients.YClient: ...
     @overload
-    def as_interface(self, schema: x_capnp._ZInterfaceModule) -> x_capnp.ZClient: ...
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._ZInterfaceModule,
+    ) -> x_capnp.types.clients.ZClient: ...
     @overload
     def as_interface(
         self,
@@ -971,535 +988,542 @@ class _DynamicObjectReader:
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp._EventList],
-    ) -> monica_management_capnp.EventListReader: ...
+        schema: type[monica_management_capnp.types._all._EventList],
+    ) -> monica_management_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp._KVList],
-    ) -> monica_management_capnp.KVListReader: ...
+        schema: type[monica_management_capnp.types._all._KVList],
+    ) -> monica_management_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp._SpecList],
-    ) -> monica_management_capnp.SpecListReader: ...
+        schema: type[monica_management_capnp.types._all._SpecList],
+    ) -> monica_management_capnp.types.readers.SpecListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._BoolList],
-    ) -> monica_params_capnp.BoolListReader: ...
+        schema: type[monica_params_capnp.types._all._BoolList],
+    ) -> monica_params_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._DateToValueList],
-    ) -> monica_params_capnp.DateToValueListReader: ...
+        schema: type[monica_params_capnp.types._all._DateToValueList],
+    ) -> monica_params_capnp.types.readers.DateToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._Float64List],
-    ) -> monica_params_capnp.Float64ListReader: ...
+        schema: type[monica_params_capnp.types._all._Float64List],
+    ) -> monica_params_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._Float64ListList],
-    ) -> monica_params_capnp.Float64ListListReader: ...
+        schema: type[monica_params_capnp.types._all._Float64ListList],
+    ) -> monica_params_capnp.types.readers.Float64ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._SoilParametersList],
-    ) -> monica_params_capnp.SoilParametersListReader: ...
+        schema: type[monica_params_capnp.types._all._SoilParametersList],
+    ) -> monica_params_capnp.types.readers.SoilParametersListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._SpeciesIdToEmissionList],
-    ) -> monica_params_capnp.SpeciesIdToEmissionListReader: ...
+        schema: type[monica_params_capnp.types._all._SpeciesIdToEmissionList],
+    ) -> monica_params_capnp.types.readers.SpeciesIdToEmissionListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._YearToValueList],
-    ) -> monica_params_capnp.YearToValueListReader: ...
+        schema: type[monica_params_capnp.types._all._YearToValueList],
+    ) -> monica_params_capnp.types.readers.YearToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp._YieldComponentList],
-    ) -> monica_params_capnp.YieldComponentListReader: ...
+        schema: type[monica_params_capnp.types._all._YieldComponentList],
+    ) -> monica_params_capnp.types.readers.YieldComponentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._ACDToValueList],
-    ) -> monica_state_capnp.ACDToValueListReader: ...
+        schema: type[monica_state_capnp.types._all._ACDToValueList],
+    ) -> monica_state_capnp.types.readers.ACDToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._ACDToValueListList],
-    ) -> monica_state_capnp.ACDToValueListListReader: ...
+        schema: type[monica_state_capnp.types._all._ACDToValueListList],
+    ) -> monica_state_capnp.types.readers.ACDToValueListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._AOMPropertiesList],
-    ) -> monica_state_capnp.AOMPropertiesListReader: ...
+        schema: type[monica_state_capnp.types._all._AOMPropertiesList],
+    ) -> monica_state_capnp.types.readers.AOMPropertiesListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._BoolList],
-    ) -> monica_state_capnp.BoolListReader: ...
+        schema: type[monica_state_capnp.types._all._BoolList],
+    ) -> monica_state_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._DateList],
-    ) -> monica_state_capnp.DateListReader: ...
+        schema: type[monica_state_capnp.types._all._DateList],
+    ) -> monica_state_capnp.types.readers.DateListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._DelayedNMinApplicationParamsList],
-    ) -> monica_state_capnp.DelayedNMinApplicationParamsListReader: ...
+        schema: type[monica_state_capnp.types._all._DelayedNMinApplicationParamsList],
+    ) -> monica_state_capnp.types.readers.DelayedNMinApplicationParamsListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._Float64List],
-    ) -> monica_state_capnp.Float64ListReader: ...
+        schema: type[monica_state_capnp.types._all._Float64List],
+    ) -> monica_state_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._Float64ListList],
-    ) -> monica_state_capnp.Float64ListListReader: ...
+        schema: type[monica_state_capnp.types._all._Float64ListList],
+    ) -> monica_state_capnp.types.readers.Float64ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._SoilLayerStateList],
-    ) -> monica_state_capnp.SoilLayerStateListReader: ...
+        schema: type[monica_state_capnp.types._all._SoilLayerStateList],
+    ) -> monica_state_capnp.types.readers.SoilLayerStateListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._TextList],
-    ) -> monica_state_capnp.TextListReader: ...
+        schema: type[monica_state_capnp.types._all._TextList],
+    ) -> monica_state_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp._YieldComponentList],
-    ) -> monica_state_capnp.YieldComponentListReader: ...
+        schema: type[monica_state_capnp.types._all._YieldComponentList],
+    ) -> monica_state_capnp.types.readers.YieldComponentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[yieldstat_capnp._ResultToValueList],
-    ) -> yieldstat_capnp.ResultToValueListReader: ...
+        schema: type[yieldstat_capnp.types._all._ResultToValueList],
+    ) -> yieldstat_capnp.types.readers.ResultToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[yieldstat_capnp._YearToResultList],
-    ) -> yieldstat_capnp.YearToResultListReader: ...
+        schema: type[yieldstat_capnp.types._all._YearToResultList],
+    ) -> yieldstat_capnp.types.readers.YearToResultListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._AlteredList],
-    ) -> climate_capnp.AlteredListReader: ...
+        schema: type[climate_capnp.types._all._AlteredList],
+    ) -> climate_capnp.types.readers.AlteredListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._DatasetClientList],
-    ) -> climate_capnp.DatasetClientListReader: ...
+        schema: type[climate_capnp.types._all._DatasetClientList],
+    ) -> climate_capnp.types.readers.DatasetClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._ElementEnumList],
-    ) -> climate_capnp.ElementEnumListReader: ...
+        schema: type[climate_capnp.types._all._ElementEnumList],
+    ) -> climate_capnp.types.readers.ElementEnumListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._EntryList],
-    ) -> climate_capnp.EntryListReader: ...
+        schema: type[climate_capnp.types._all._EntryList],
+    ) -> climate_capnp.types.readers.EntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._Float32List],
-    ) -> climate_capnp.Float32ListReader: ...
+        schema: type[climate_capnp.types._all._Float32List],
+    ) -> climate_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._Float32ListList],
-    ) -> climate_capnp.Float32ListListReader: ...
+        schema: type[climate_capnp.types._all._Float32ListList],
+    ) -> climate_capnp.types.readers.Float32ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._IdInformationList],
-    ) -> climate_capnp.IdInformationListReader: ...
+        schema: type[climate_capnp.types._all._IdInformationList],
+    ) -> climate_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._KVList],
-    ) -> climate_capnp.KVListReader: ...
+        schema: type[climate_capnp.types._all._KVList],
+    ) -> climate_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._LocationList],
-    ) -> climate_capnp.LocationListReader: ...
+        schema: type[climate_capnp.types._all._LocationList],
+    ) -> climate_capnp.types.readers.LocationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._MetaPlusDataList],
-    ) -> climate_capnp.MetaPlusDataListReader: ...
+        schema: type[climate_capnp.types._all._MetaPlusDataList],
+    ) -> climate_capnp.types.readers.MetaPlusDataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp._PairList],
-    ) -> climate_capnp.PairListReader: ...
+        schema: type[climate_capnp.types._all._PairList],
+    ) -> climate_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[cluster_admin_service_capnp._ModelInstanceFactoryClientList],
-    ) -> cluster_admin_service_capnp.ModelInstanceFactoryClientListReader: ...
+        schema: type[
+            cluster_admin_service_capnp.types._all._ModelInstanceFactoryClientList
+        ],
+    ) -> (
+        cluster_admin_service_capnp.types.readers.ModelInstanceFactoryClientListReader
+    ): ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._AnyPointerList],
-    ) -> common_capnp.AnyPointerListReader: ...
+        schema: type[common_capnp.types._all._AnyPointerList],
+    ) -> common_capnp.types.readers.AnyPointerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._BoolList],
-    ) -> common_capnp.BoolListReader: ...
+        schema: type[common_capnp.types._all._BoolList],
+    ) -> common_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._DataList],
-    ) -> common_capnp.DataListReader: ...
+        schema: type[common_capnp.types._all._DataList],
+    ) -> common_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Float32List],
-    ) -> common_capnp.Float32ListReader: ...
+        schema: type[common_capnp.types._all._Float32List],
+    ) -> common_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Float64List],
-    ) -> common_capnp.Float64ListReader: ...
+        schema: type[common_capnp.types._all._Float64List],
+    ) -> common_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Int16List],
-    ) -> common_capnp.Int16ListReader: ...
+        schema: type[common_capnp.types._all._Int16List],
+    ) -> common_capnp.types.readers.Int16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Int32List],
-    ) -> common_capnp.Int32ListReader: ...
+        schema: type[common_capnp.types._all._Int32List],
+    ) -> common_capnp.types.readers.Int32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Int64List],
-    ) -> common_capnp.Int64ListReader: ...
+        schema: type[common_capnp.types._all._Int64List],
+    ) -> common_capnp.types.readers.Int64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Int8List],
-    ) -> common_capnp.Int8ListReader: ...
+        schema: type[common_capnp.types._all._Int8List],
+    ) -> common_capnp.types.readers.Int8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._PairList],
-    ) -> common_capnp.PairListReader: ...
+        schema: type[common_capnp.types._all._PairList],
+    ) -> common_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._TextList],
-    ) -> common_capnp.TextListReader: ...
+        schema: type[common_capnp.types._all._TextList],
+    ) -> common_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Uint16List],
-    ) -> common_capnp.Uint16ListReader: ...
+        schema: type[common_capnp.types._all._Uint16List],
+    ) -> common_capnp.types.readers.Uint16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Uint32List],
-    ) -> common_capnp.Uint32ListReader: ...
+        schema: type[common_capnp.types._all._Uint32List],
+    ) -> common_capnp.types.readers.Uint32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Uint64List],
-    ) -> common_capnp.Uint64ListReader: ...
+        schema: type[common_capnp.types._all._Uint64List],
+    ) -> common_capnp.types.readers.Uint64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp._Uint8List],
-    ) -> common_capnp.Uint8ListReader: ...
+        schema: type[common_capnp.types._all._Uint8List],
+    ) -> common_capnp.types.readers.Uint8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._EnvironmentModificationList],
-    ) -> field_exp_data_capnp.EnvironmentModificationListReader: ...
+        schema: type[field_exp_data_capnp.types._all._EnvironmentModificationList],
+    ) -> field_exp_data_capnp.types.readers.EnvironmentModificationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._FertilizerEventList],
-    ) -> field_exp_data_capnp.FertilizerEventListReader: ...
+        schema: type[field_exp_data_capnp.types._all._FertilizerEventList],
+    ) -> field_exp_data_capnp.types.readers.FertilizerEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._HarvestEventList],
-    ) -> field_exp_data_capnp.HarvestEventListReader: ...
+        schema: type[field_exp_data_capnp.types._all._HarvestEventList],
+    ) -> field_exp_data_capnp.types.readers.HarvestEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._InitialConditionsLayerList],
-    ) -> field_exp_data_capnp.InitialConditionsLayerListReader: ...
+        schema: type[field_exp_data_capnp.types._all._InitialConditionsLayerList],
+    ) -> field_exp_data_capnp.types.readers.InitialConditionsLayerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._IrrigationEventList],
-    ) -> field_exp_data_capnp.IrrigationEventListReader: ...
+        schema: type[field_exp_data_capnp.types._all._IrrigationEventList],
+    ) -> field_exp_data_capnp.types.readers.IrrigationEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._PlantingEventList],
-    ) -> field_exp_data_capnp.PlantingEventListReader: ...
+        schema: type[field_exp_data_capnp.types._all._PlantingEventList],
+    ) -> field_exp_data_capnp.types.readers.PlantingEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._PlotList],
-    ) -> field_exp_data_capnp.PlotListReader: ...
+        schema: type[field_exp_data_capnp.types._all._PlotList],
+    ) -> field_exp_data_capnp.types.readers.PlotListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp._TreatmentList],
-    ) -> field_exp_data_capnp.TreatmentListReader: ...
+        schema: type[field_exp_data_capnp.types._all._TreatmentList],
+    ) -> field_exp_data_capnp.types.readers.TreatmentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._ConfigEntryList],
-    ) -> fbp_capnp.ConfigEntryListReader: ...
+        schema: type[fbp_capnp.types._all._ConfigEntryList],
+    ) -> fbp_capnp.types.readers.ConfigEntryListReader: ...
     @overload
-    def as_list(self, schema: type[fbp_capnp._KVList]) -> fbp_capnp.KVListReader: ...
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types._all._KVList],
+    ) -> fbp_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._NameAndSRList],
-    ) -> fbp_capnp.NameAndSRListReader: ...
+        schema: type[fbp_capnp.types._all._NameAndSRList],
+    ) -> fbp_capnp.types.readers.NameAndSRListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._PortList],
-    ) -> fbp_capnp.PortListReader: ...
+        schema: type[fbp_capnp.types._all._PortList],
+    ) -> fbp_capnp.types.readers.PortListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._ReaderClientList],
-    ) -> fbp_capnp.ReaderClientListReader: ...
+        schema: type[fbp_capnp.types._all._ReaderClientList],
+    ) -> fbp_capnp.types.readers.ReaderClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._StartupInfoList],
-    ) -> fbp_capnp.StartupInfoListReader: ...
+        schema: type[fbp_capnp.types._all._StartupInfoList],
+    ) -> fbp_capnp.types.readers.StartupInfoListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._SturdyRefList],
-    ) -> fbp_capnp.SturdyRefListReader: ...
+        schema: type[fbp_capnp.types._all._SturdyRefList],
+    ) -> fbp_capnp.types.readers.SturdyRefListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._TextList],
-    ) -> fbp_capnp.TextListReader: ...
+        schema: type[fbp_capnp.types._all._TextList],
+    ) -> fbp_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp._WriterClientList],
-    ) -> fbp_capnp.WriterClientListReader: ...
+        schema: type[fbp_capnp.types._all._WriterClientList],
+    ) -> fbp_capnp.types.readers.WriterClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[grid_capnp._AggregationPartList],
-    ) -> grid_capnp.AggregationPartListReader: ...
+        schema: type[grid_capnp.types._all._AggregationPartList],
+    ) -> grid_capnp.types.readers.AggregationPartListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[grid_capnp._LocationList],
-    ) -> grid_capnp.LocationListReader: ...
+        schema: type[grid_capnp.types._all._LocationList],
+    ) -> grid_capnp.types.readers.LocationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp._EventList],
-    ) -> management_capnp.EventListReader: ...
+        schema: type[management_capnp.types._all._EventList],
+    ) -> management_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp._NutrientList],
-    ) -> management_capnp.NutrientListReader: ...
+        schema: type[management_capnp.types._all._NutrientList],
+    ) -> management_capnp.types.readers.NutrientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp._SpecList],
-    ) -> management_capnp.SpecListReader: ...
+        schema: type[management_capnp.types._all._SpecList],
+    ) -> management_capnp.types.readers.SpecListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp._EventList],
-    ) -> model_capnp.EventListReader: ...
+        schema: type[model_capnp.types._all._EventList],
+    ) -> model_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp._Float64List],
-    ) -> model_capnp.Float64ListReader: ...
+        schema: type[model_capnp.types._all._Float64List],
+    ) -> model_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp._IdentifiableClientList],
-    ) -> model_capnp.IdentifiableClientListReader: ...
+        schema: type[model_capnp.types._all._IdentifiableClientList],
+    ) -> model_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp._StatList],
-    ) -> model_capnp.StatListReader: ...
+        schema: type[model_capnp.types._all._StatList],
+    ) -> model_capnp.types.readers.StatListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp._TimeSeriesClientList],
-    ) -> model_capnp.TimeSeriesClientListReader: ...
+        schema: type[model_capnp.types._all._TimeSeriesClientList],
+    ) -> model_capnp.types.readers.TimeSeriesClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp._EntryList],
-    ) -> registry_capnp.EntryListReader: ...
+        schema: type[registry_capnp.types._all._EntryList],
+    ) -> registry_capnp.types.readers.EntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp._IdInformationList],
-    ) -> registry_capnp.IdInformationListReader: ...
+        schema: type[registry_capnp.types._all._IdInformationList],
+    ) -> registry_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp._IdentifiableClientList],
-    ) -> registry_capnp.IdentifiableClientListReader: ...
+        schema: type[registry_capnp.types._all._IdentifiableClientList],
+    ) -> registry_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp._TextList],
-    ) -> registry_capnp.TextListReader: ...
+        schema: type[registry_capnp.types._all._TextList],
+    ) -> registry_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp._IdInformationList],
-    ) -> service_capnp.IdInformationListReader: ...
+        schema: type[service_capnp.types._all._IdInformationList],
+    ) -> service_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp._IdentifiableClientList],
-    ) -> service_capnp.IdentifiableClientListReader: ...
+        schema: type[service_capnp.types._all._IdentifiableClientList],
+    ) -> service_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp._PairList],
-    ) -> service_capnp.PairListReader: ...
+        schema: type[service_capnp.types._all._PairList],
+    ) -> service_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp._TextList],
-    ) -> service_capnp.TextListReader: ...
+        schema: type[service_capnp.types._all._TextList],
+    ) -> service_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp._LayerList],
-    ) -> soil_capnp.LayerListReader: ...
+        schema: type[soil_capnp.types._all._LayerList],
+    ) -> soil_capnp.types.readers.LayerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp._ProfileClientList],
-    ) -> soil_capnp.ProfileClientListReader: ...
+        schema: type[soil_capnp.types._all._ProfileClientList],
+    ) -> soil_capnp.types.readers.ProfileClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp._PropertyList],
-    ) -> soil_capnp.PropertyListReader: ...
+        schema: type[soil_capnp.types._all._PropertyList],
+    ) -> soil_capnp.types.readers.PropertyListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp._PropertyNameEnumList],
-    ) -> soil_capnp.PropertyNameEnumListReader: ...
+        schema: type[soil_capnp.types._all._PropertyNameEnumList],
+    ) -> soil_capnp.types.readers.PropertyNameEnumListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_params_capnp._DataList],
-    ) -> soil_params_capnp.DataListReader: ...
+        schema: type[soil_params_capnp.types._all._DataList],
+    ) -> soil_params_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._BoolList],
-    ) -> storage_capnp.BoolListReader: ...
+        schema: type[storage_capnp.types._all._BoolList],
+    ) -> storage_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._DataList],
-    ) -> storage_capnp.DataListReader: ...
+        schema: type[storage_capnp.types._all._DataList],
+    ) -> storage_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Float32List],
-    ) -> storage_capnp.Float32ListReader: ...
+        schema: type[storage_capnp.types._all._Float32List],
+    ) -> storage_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Float64List],
-    ) -> storage_capnp.Float64ListReader: ...
+        schema: type[storage_capnp.types._all._Float64List],
+    ) -> storage_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._InfoAndContainerList],
-    ) -> storage_capnp.InfoAndContainerListReader: ...
+        schema: type[storage_capnp.types._all._InfoAndContainerList],
+    ) -> storage_capnp.types.readers.InfoAndContainerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Int16List],
-    ) -> storage_capnp.Int16ListReader: ...
+        schema: type[storage_capnp.types._all._Int16List],
+    ) -> storage_capnp.types.readers.Int16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Int32List],
-    ) -> storage_capnp.Int32ListReader: ...
+        schema: type[storage_capnp.types._all._Int32List],
+    ) -> storage_capnp.types.readers.Int32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Int64List],
-    ) -> storage_capnp.Int64ListReader: ...
+        schema: type[storage_capnp.types._all._Int64List],
+    ) -> storage_capnp.types.readers.Int64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Int8List],
-    ) -> storage_capnp.Int8ListReader: ...
+        schema: type[storage_capnp.types._all._Int8List],
+    ) -> storage_capnp.types.readers.Int8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._KeyAndEntryList],
-    ) -> storage_capnp.KeyAndEntryListReader: ...
+        schema: type[storage_capnp.types._all._KeyAndEntryList],
+    ) -> storage_capnp.types.readers.KeyAndEntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._PairList],
-    ) -> storage_capnp.PairListReader: ...
+        schema: type[storage_capnp.types._all._PairList],
+    ) -> storage_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._TextList],
-    ) -> storage_capnp.TextListReader: ...
+        schema: type[storage_capnp.types._all._TextList],
+    ) -> storage_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Uint16List],
-    ) -> storage_capnp.Uint16ListReader: ...
+        schema: type[storage_capnp.types._all._Uint16List],
+    ) -> storage_capnp.types.readers.Uint16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Uint32List],
-    ) -> storage_capnp.Uint32ListReader: ...
+        schema: type[storage_capnp.types._all._Uint32List],
+    ) -> storage_capnp.types.readers.Uint32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Uint64List],
-    ) -> storage_capnp.Uint64ListReader: ...
+        schema: type[storage_capnp.types._all._Uint64List],
+    ) -> storage_capnp.types.readers.Uint64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp._Uint8List],
-    ) -> storage_capnp.Uint8ListReader: ...
+        schema: type[storage_capnp.types._all._Uint8List],
+    ) -> storage_capnp.types.readers.Uint8ListReader: ...
     def as_list(self, schema: _ListSchema) -> Any:
         """Cast this AnyPointer to a list.
 
@@ -1513,974 +1537,1009 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
-    ) -> monica_management_capnp.AvgSoilTempReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
+    ) -> monica_management_capnp.types.readers.AvgSoilTempReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._CuttingStructModule._SpecStructModule,
-    ) -> monica_management_capnp.SpecReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._CuttingStructModule._SpecStructModule,
+    ) -> monica_management_capnp.types.readers.SpecReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._DailyWeatherStructModule._KVStructModule,
-    ) -> monica_management_capnp.KVReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._DailyWeatherStructModule._KVStructModule,
+    ) -> monica_management_capnp.types.readers.KVReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
-    ) -> monica_management_capnp.OptCarbonMgmtDataReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
+    ) -> monica_management_capnp.types.readers.OptCarbonMgmtDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._IrrigationStructModule._ParametersStructModule,
-    ) -> monica_management_capnp.ParametersReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._IrrigationStructModule._ParametersStructModule,
+    ) -> monica_management_capnp.types.readers.ParamsIrrigationParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule,
-    ) -> monica_management_capnp.OrganicMatterParametersReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule,
+    ) -> (
+        monica_management_capnp.types.readers.ParamsMineralFertilizationParametersReader
+    ): ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._EmissionsStructModule._SpeciesIdToEmissionStructModule,
-    ) -> monica_params_capnp.SpeciesIdToEmissionReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule,
+    ) -> monica_management_capnp.types.readers.OrganicMatterParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule,
-    ) -> storage_capnp.ValueReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule._ParametersStructModule,
+    ) -> (
+        monica_management_capnp.types.readers.ParamsOrganicFertilizationParametersReader
+    ): ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
-    ) -> fbp_capnp.StatsReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._EmissionsStructModule._SpeciesIdToEmissionStructModule,
+    ) -> monica_params_capnp.types.readers.SpeciesIdToEmissionReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
-    ) -> management_capnp.AvgSoilTempReader: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule,
+    ) -> storage_capnp.types.readers.ValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._CuttingStructModule._SpecStructModule,
-    ) -> management_capnp.SpecReader: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
+    ) -> fbp_capnp.types.readers.StatsReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
-    ) -> management_capnp.OptCarbonMgmtDataReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
+    ) -> management_capnp.types.readers.AvgSoilTempReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._EventStructModule._EventAfterStructModule,
-    ) -> monica_management_capnp.EventAfterReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._CuttingStructModule._SpecStructModule,
+    ) -> management_capnp.types.readers.SpecReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._EventStructModule._EventAtStructModule,
-    ) -> monica_management_capnp.EventAtReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
+    ) -> management_capnp.types.readers.OptCarbonMgmtDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._EventStructModule._EventBetweenStructModule,
-    ) -> monica_management_capnp.EventBetweenReader: ...
+        schema: monica_management_capnp.types.modules._EventStructModule._EventAfterStructModule,
+    ) -> monica_management_capnp.types.readers.EventAfterReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._EventStructModule._TypeStructModule,
-    ) -> monica_management_capnp.TypeReader: ...
+        schema: monica_management_capnp.types.modules._EventStructModule._EventAtStructModule,
+    ) -> monica_management_capnp.types.readers.EventAtReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._AutomaticHarvestStructModule,
-    ) -> monica_management_capnp.AutomaticHarvestReader: ...
+        schema: monica_management_capnp.types.modules._EventStructModule._EventBetweenStructModule,
+    ) -> monica_management_capnp.types.readers.EventBetweenReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._AutomaticSowingStructModule,
-    ) -> monica_management_capnp.AutomaticSowingReader: ...
+        schema: monica_management_capnp.types.modules._EventStructModule._TypeStructModule,
+    ) -> monica_management_capnp.types.readers.TypeReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._CuttingStructModule,
-    ) -> monica_management_capnp.CuttingReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticHarvestStructModule,
+    ) -> monica_management_capnp.types.readers.AutomaticHarvestReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._DailyWeatherStructModule,
-    ) -> monica_management_capnp.DailyWeatherReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule,
+    ) -> monica_management_capnp.types.readers.AutomaticSowingReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._HarvestStructModule,
-    ) -> monica_management_capnp.HarvestReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._CuttingStructModule,
+    ) -> monica_management_capnp.types.readers.CuttingReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._IrrigationStructModule,
-    ) -> monica_management_capnp.IrrigationReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._DailyWeatherStructModule,
+    ) -> monica_management_capnp.types.readers.DailyWeatherReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._MineralFertilizationStructModule,
-    ) -> monica_management_capnp.MineralFertilizationReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._HarvestStructModule,
+    ) -> monica_management_capnp.types.readers.HarvestReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._NDemandFertilizationStructModule,
-    ) -> monica_management_capnp.NDemandFertilizationReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._IrrigationStructModule,
+    ) -> monica_management_capnp.types.readers.IrrigationReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._OrganicFertilizationStructModule,
-    ) -> monica_management_capnp.OrganicFertilizationReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule,
+    ) -> monica_management_capnp.types.readers.MineralFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._SaveStateStructModule,
-    ) -> monica_management_capnp.SaveStateReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._NDemandFertilizationStructModule,
+    ) -> monica_management_capnp.types.readers.NDemandFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._SowingStructModule,
-    ) -> monica_management_capnp.SowingReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule,
+    ) -> monica_management_capnp.types.readers.OrganicFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule._TillageStructModule,
-    ) -> monica_management_capnp.TillageReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._SaveStateStructModule,
+    ) -> monica_management_capnp.types.readers.SaveStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._EnvironmentParametersStructModule._YearToValueStructModule,
-    ) -> monica_params_capnp.YearToValueReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._SowingStructModule,
+    ) -> monica_management_capnp.types.readers.SowingReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._MeasuredGroundwaterTableInformationStructModule._DateToValueStructModule,
-    ) -> monica_params_capnp.DateToValueReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule._TillageStructModule,
+    ) -> monica_management_capnp.types.readers.TillageReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._CPDataStructModule,
-    ) -> monica_params_capnp.CPDataReader: ...
+        schema: monica_params_capnp.types.modules._EnvironmentParametersStructModule._YearToValueStructModule,
+    ) -> monica_params_capnp.types.readers.YearToValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._EmissionsStructModule,
-    ) -> monica_params_capnp.EmissionsReader: ...
+        schema: monica_params_capnp.types.modules._MeasuredGroundwaterTableInformationStructModule._DateToValueStructModule,
+    ) -> monica_params_capnp.types.readers.DateToValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._EnzymeActivityTStructModule,
-    ) -> monica_params_capnp.EnzymeActivityTReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._CPDataStructModule,
+    ) -> monica_params_capnp.types.readers.CPDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._FoliageTStructModule,
-    ) -> monica_params_capnp.FoliageTReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._EmissionsStructModule,
+    ) -> monica_params_capnp.types.readers.EmissionsReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._LeafEmissionTStructModule,
-    ) -> monica_params_capnp.LeafEmissionTReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._EnzymeActivityTStructModule,
+    ) -> monica_params_capnp.types.readers.EnzymeActivityTReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._LeafEmissionsStructModule,
-    ) -> monica_params_capnp.LeafEmissionsReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._FoliageTStructModule,
+    ) -> monica_params_capnp.types.readers.FoliageTReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._MicroClimateDataStructModule,
-    ) -> monica_params_capnp.MicroClimateDataReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._LeafEmissionTStructModule,
+    ) -> monica_params_capnp.types.readers.LeafEmissionTReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._PhotosynthTStructModule,
-    ) -> monica_params_capnp.PhotosynthTReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._LeafEmissionsStructModule,
+    ) -> monica_params_capnp.types.readers.LeafEmissionsReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule._SpeciesDataStructModule,
-    ) -> monica_params_capnp.SpeciesDataReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._MicroClimateDataStructModule,
+    ) -> monica_params_capnp.types.readers.MicroClimateDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._MonicaModelStateStructModule._ACDToValueStructModule,
-    ) -> monica_state_capnp.ACDToValueReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._PhotosynthTStructModule,
+    ) -> monica_params_capnp.types.readers.PhotosynthTReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule,
-    ) -> monica_state_capnp.DelayedNMinApplicationParamsReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule._SpeciesDataStructModule,
+    ) -> monica_params_capnp.types.readers.SpeciesDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: yieldstat_capnp._OutputStructModule._YearToResultStructModule,
-    ) -> yieldstat_capnp.YearToResultReader: ...
+        schema: monica_state_capnp.types.modules._MonicaModelStateStructModule._ACDToValueStructModule,
+    ) -> monica_state_capnp.types.readers.ACDToValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: yieldstat_capnp._ResultStructModule._ResultToValueStructModule,
-    ) -> yieldstat_capnp.ResultToValueReader: ...
+        schema: monica_state_capnp.types.modules._SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule,
+    ) -> monica_state_capnp.types.readers.DelayedNMinApplicationParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule,
-    ) -> persistence_capnp.RegisterParamsReader: ...
+        schema: yieldstat_capnp.types.modules._OutputStructModule._YearToResultStructModule,
+    ) -> yieldstat_capnp.types.readers.YearToResultReader: ...
     @overload
     def as_struct(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule._KeyAndEntryStructModule,
-    ) -> storage_capnp.KeyAndEntryReader: ...
+        schema: yieldstat_capnp.types.modules._ResultStructModule._ResultToValueStructModule,
+    ) -> yieldstat_capnp.types.readers.ResultToValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule,
-    ) -> climate_capnp.AlteredReader: ...
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule,
+    ) -> persistence_capnp.types.readers.RegisterParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._CSVTimeSeriesFactoryInterfaceModule._CSVConfigStructModule,
-    ) -> climate_capnp.CSVConfigReader: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._KeyAndEntryStructModule,
+    ) -> storage_capnp.types.readers.KeyAndEntryReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._LocationStructModule._KVStructModule,
-    ) -> climate_capnp.KVReader: ...
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule,
+    ) -> climate_capnp.types.readers.AlteredReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._MetadataStructModule._EntryStructModule,
-    ) -> climate_capnp.EntryReader: ...
+        schema: climate_capnp.types.modules._CSVTimeSeriesFactoryInterfaceModule._CSVConfigStructModule,
+    ) -> climate_capnp.types.readers.CSVConfigReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._MetadataStructModule._ValueStructModule,
-    ) -> climate_capnp.ValueReader: ...
+        schema: climate_capnp.types.modules._LocationStructModule._KVStructModule,
+    ) -> climate_capnp.types.readers.KVReader: ...
     @overload
     def as_struct(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._ZmqPipelineAddressesStructModule,
-    ) -> cluster_admin_service_capnp.ZmqPipelineAddressesReader: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._EntryStructModule,
+    ) -> climate_capnp.types.readers.EntryReader: ...
     @overload
     def as_struct(
         self,
-        schema: common_capnp._StructuredTextStructModule._StructuredTextStructureStructModule,
-    ) -> common_capnp.StructuredTextStructureReader: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._ValueStructModule,
+    ) -> climate_capnp.types.readers.ValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._MsgStructModule,
-    ) -> fbp_capnp.MsgReader: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ZmqPipelineAddressesStructModule,
+    ) -> cluster_admin_service_capnp.types.readers.ZmqPipelineAddressesReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StartupInfoStructModule,
-    ) -> fbp_capnp.StartupInfoReader: ...
+        schema: common_capnp.types.modules._StructuredTextStructModule._StructuredTextStructureStructModule,
+    ) -> common_capnp.types.readers.StructuredTextStructureReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ComponentStructModule._ComponentFactoryStructModule,
-    ) -> fbp_capnp.ComponentFactoryReader: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._MsgStructModule,
+    ) -> fbp_capnp.types.readers.MsgReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ComponentStructModule._PortStructModule,
-    ) -> fbp_capnp.PortReader: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StartupInfoStructModule,
+    ) -> fbp_capnp.types.readers.StartupInfoReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._IPStructModule._KVStructModule,
-    ) -> fbp_capnp.KVReader: ...
+        schema: fbp_capnp.types.modules._ComponentStructModule._ComponentFactoryStructModule,
+    ) -> fbp_capnp.types.readers.ComponentFactoryReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._PortInfosStructModule._NameAndSRStructModule,
-    ) -> fbp_capnp.NameAndSRReader: ...
+        schema: fbp_capnp.types.modules._ComponentStructModule._PortStructModule,
+    ) -> fbp_capnp.types.readers.PortReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule._ConfigEntryStructModule,
-    ) -> fbp_capnp.ConfigEntryReader: ...
+        schema: fbp_capnp.types.modules._IPStructModule._KVStructModule,
+    ) -> fbp_capnp.types.readers.KVReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._StartChannelsServiceInterfaceModule._ParamsStructModule,
-    ) -> fbp_capnp.ParamsReader: ...
+        schema: fbp_capnp.types.modules._PortInfosStructModule._NameAndSRStructModule,
+    ) -> fbp_capnp.types.readers.NameAndSRReader: ...
     @overload
     def as_struct(
         self,
-        schema: grid_capnp._GridInterfaceModule._AggregationPartStructModule,
-    ) -> grid_capnp.AggregationPartReader: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ConfigEntryStructModule,
+    ) -> fbp_capnp.types.readers.ConfigEntryReader: ...
     @overload
     def as_struct(
         self,
-        schema: grid_capnp._GridInterfaceModule._LocationStructModule,
-    ) -> grid_capnp.LocationReader: ...
+        schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule._ParamsStructModule,
+    ) -> fbp_capnp.types.readers.ParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: grid_capnp._GridInterfaceModule._ResolutionStructModule,
-    ) -> grid_capnp.ResolutionReader: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._AggregationPartStructModule,
+    ) -> grid_capnp.types.readers.AggregationPartReader: ...
     @overload
     def as_struct(
         self,
-        schema: grid_capnp._GridInterfaceModule._RowColStructModule,
-    ) -> grid_capnp.RowColReader: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._LocationStructModule,
+    ) -> grid_capnp.types.readers.LocationReader: ...
     @overload
     def as_struct(
         self,
-        schema: grid_capnp._GridInterfaceModule._ValueStructModule,
-    ) -> grid_capnp.ValueReader: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._ResolutionStructModule,
+    ) -> grid_capnp.types.readers.ResolutionReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._EventStructModule._EventAfterStructModule,
-    ) -> management_capnp.EventAfterReader: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._RowColStructModule,
+    ) -> grid_capnp.types.readers.RowColReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._EventStructModule._EventAtStructModule,
-    ) -> management_capnp.EventAtReader: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._ValueStructModule,
+    ) -> grid_capnp.types.readers.ValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._EventStructModule._EventBetweenStructModule,
-    ) -> management_capnp.EventBetweenReader: ...
+        schema: management_capnp.types.modules._EventStructModule._EventAfterStructModule,
+    ) -> management_capnp.types.readers.EventAfterReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._EventStructModule._TypeStructModule,
-    ) -> management_capnp.TypeReader: ...
+        schema: management_capnp.types.modules._EventStructModule._EventAtStructModule,
+    ) -> management_capnp.types.readers.EventAtReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._AutomaticHarvestStructModule,
-    ) -> management_capnp.AutomaticHarvestReader: ...
+        schema: management_capnp.types.modules._EventStructModule._EventBetweenStructModule,
+    ) -> management_capnp.types.readers.EventBetweenReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._AutomaticSowingStructModule,
-    ) -> management_capnp.AutomaticSowingReader: ...
+        schema: management_capnp.types.modules._EventStructModule._TypeStructModule,
+    ) -> management_capnp.types.readers.TypeReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._CuttingStructModule,
-    ) -> management_capnp.CuttingReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticHarvestStructModule,
+    ) -> management_capnp.types.readers.AutomaticHarvestReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._HarvestStructModule,
-    ) -> management_capnp.HarvestReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule,
+    ) -> management_capnp.types.readers.AutomaticSowingReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._IrrigationStructModule,
-    ) -> management_capnp.IrrigationReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._CuttingStructModule,
+    ) -> management_capnp.types.readers.CuttingReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._MineralFertilizationStructModule,
-    ) -> management_capnp.MineralFertilizationReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._HarvestStructModule,
+    ) -> management_capnp.types.readers.HarvestReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._NDemandFertilizationStructModule,
-    ) -> management_capnp.NDemandFertilizationReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._IrrigationStructModule,
+    ) -> management_capnp.types.readers.IrrigationReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._OrganicFertilizationStructModule,
-    ) -> management_capnp.OrganicFertilizationReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule,
+    ) -> management_capnp.types.readers.MineralFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._SowingStructModule,
-    ) -> management_capnp.SowingReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._NDemandFertilizationStructModule,
+    ) -> management_capnp.types.readers.NDemandFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule._TillageStructModule,
-    ) -> management_capnp.TillageReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule,
+    ) -> management_capnp.types.readers.OrganicFertilizationReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._EventStructModule,
-    ) -> monica_management_capnp.EventReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._SowingStructModule,
+    ) -> management_capnp.types.readers.SowingReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ILRDatesStructModule,
-    ) -> monica_management_capnp.ILRDatesReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule._TillageStructModule,
+    ) -> management_capnp.types.readers.TillageReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_management_capnp._ParamsStructModule,
-    ) -> monica_management_capnp.ParamsReader: ...
+        schema: monica_management_capnp.types.modules._EventStructModule,
+    ) -> monica_management_capnp.types.readers.EventReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._AutomaticHarvestParametersStructModule,
-    ) -> monica_params_capnp.AutomaticHarvestParametersReader: ...
+        schema: monica_management_capnp.types.modules._ILRDatesStructModule,
+    ) -> monica_management_capnp.types.readers.ILRDatesReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._AutomaticIrrigationParametersStructModule,
-    ) -> monica_params_capnp.AutomaticIrrigationParametersReader: ...
+        schema: monica_management_capnp.types.modules._ParamsStructModule,
+    ) -> monica_management_capnp.types.readers.ParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._CropModuleParametersStructModule,
-    ) -> monica_params_capnp.CropModuleParametersReader: ...
+        schema: monica_params_capnp.types.modules._AutomaticHarvestParametersStructModule,
+    ) -> monica_params_capnp.types.readers.AutomaticHarvestParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._CropParametersStructModule,
-    ) -> monica_params_capnp.CropParametersReader: ...
+        schema: monica_params_capnp.types.modules._AutomaticIrrigationParametersStructModule,
+    ) -> monica_params_capnp.types.readers.AutomaticIrrigationParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._CropResidueParametersStructModule,
-    ) -> monica_params_capnp.CropResidueParametersReader: ...
+        schema: monica_params_capnp.types.modules._CropModuleParametersStructModule,
+    ) -> monica_params_capnp.types.readers.CropModuleParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._CropSpecStructModule,
-    ) -> monica_params_capnp.CropSpecReader: ...
+        schema: monica_params_capnp.types.modules._CropParametersStructModule,
+    ) -> monica_params_capnp.types.readers.CropParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._CultivarParametersStructModule,
-    ) -> monica_params_capnp.CultivarParametersReader: ...
+        schema: monica_params_capnp.types.modules._CropResidueParametersStructModule,
+    ) -> monica_params_capnp.types.readers.CropResidueParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._EnvironmentParametersStructModule,
-    ) -> monica_params_capnp.EnvironmentParametersReader: ...
+        schema: monica_params_capnp.types.modules._CropSpecStructModule,
+    ) -> monica_params_capnp.types.readers.CropSpecReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._MeasuredGroundwaterTableInformationStructModule,
-    ) -> monica_params_capnp.MeasuredGroundwaterTableInformationReader: ...
+        schema: monica_params_capnp.types.modules._CultivarParametersStructModule,
+    ) -> monica_params_capnp.types.readers.CultivarParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._NMinApplicationParametersStructModule,
-    ) -> monica_params_capnp.NMinApplicationParametersReader: ...
+        schema: monica_params_capnp.types.modules._EnvironmentParametersStructModule,
+    ) -> monica_params_capnp.types.readers.EnvironmentParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._NMinCropParametersStructModule,
-    ) -> monica_params_capnp.NMinCropParametersReader: ...
+        schema: monica_params_capnp.types.modules._MeasuredGroundwaterTableInformationStructModule,
+    ) -> (
+        monica_params_capnp.types.readers.MeasuredGroundwaterTableInformationReader
+    ): ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SimulationParametersStructModule,
-    ) -> monica_params_capnp.SimulationParametersReader: ...
+        schema: monica_params_capnp.types.modules._NMinApplicationParametersStructModule,
+    ) -> monica_params_capnp.types.readers.NMinApplicationParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SiteParametersStructModule,
-    ) -> monica_params_capnp.SiteParametersReader: ...
+        schema: monica_params_capnp.types.modules._NMinCropParametersStructModule,
+    ) -> monica_params_capnp.types.readers.NMinCropParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SoilMoistureModuleParametersStructModule,
-    ) -> monica_params_capnp.SoilMoistureModuleParametersReader: ...
+        schema: monica_params_capnp.types.modules._SimulationParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SimulationParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SoilOrganicModuleParametersStructModule,
-    ) -> monica_params_capnp.SoilOrganicModuleParametersReader: ...
+        schema: monica_params_capnp.types.modules._SiteParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SiteParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SoilParametersStructModule,
-    ) -> monica_params_capnp.SoilParametersReader: ...
+        schema: monica_params_capnp.types.modules._SoilMoistureModuleParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SoilMoistureModuleParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SoilTemperatureModuleParametersStructModule,
-    ) -> monica_params_capnp.SoilTemperatureModuleParametersReader: ...
+        schema: monica_params_capnp.types.modules._SoilOrganicModuleParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SoilOrganicModuleParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SoilTransportModuleParametersStructModule,
-    ) -> monica_params_capnp.SoilTransportModuleParametersReader: ...
+        schema: monica_params_capnp.types.modules._SoilParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SoilParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SpeciesParametersStructModule,
-    ) -> monica_params_capnp.SpeciesParametersReader: ...
+        schema: monica_params_capnp.types.modules._SoilTemperatureModuleParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SoilTemperatureModuleParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._SticsParametersStructModule,
-    ) -> monica_params_capnp.SticsParametersReader: ...
+        schema: monica_params_capnp.types.modules._SoilTransportModuleParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SoilTransportModuleParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._VocStructModule,
-    ) -> monica_params_capnp.VocReader: ...
+        schema: monica_params_capnp.types.modules._SpeciesParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SpeciesParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_params_capnp._YieldComponentStructModule,
-    ) -> monica_params_capnp.YieldComponentReader: ...
+        schema: monica_params_capnp.types.modules._SticsParametersStructModule,
+    ) -> monica_params_capnp.types.readers.SticsParametersReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._AOMPropertiesStructModule,
-    ) -> monica_state_capnp.AOMPropertiesReader: ...
+        schema: monica_params_capnp.types.modules._VocStructModule,
+    ) -> monica_params_capnp.types.readers.VocReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._CropModuleStateStructModule,
-    ) -> monica_state_capnp.CropModuleStateReader: ...
+        schema: monica_params_capnp.types.modules._YieldComponentStructModule,
+    ) -> monica_params_capnp.types.readers.YieldComponentReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._CropStateStructModule,
-    ) -> monica_state_capnp.CropStateReader: ...
+        schema: monica_state_capnp.types.modules._AOMPropertiesStructModule,
+    ) -> monica_state_capnp.types.readers.AOMPropertiesReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._FrostModuleStateStructModule,
-    ) -> monica_state_capnp.FrostModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._CropModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.CropModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._ICDataStructModule,
-    ) -> monica_state_capnp.ICDataReader: ...
+        schema: monica_state_capnp.types.modules._CropStateStructModule,
+    ) -> monica_state_capnp.types.readers.CropStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._MaybeBoolStructModule,
-    ) -> monica_state_capnp.MaybeBoolReader: ...
+        schema: monica_state_capnp.types.modules._FrostModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.FrostModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._MonicaModelStateStructModule,
-    ) -> monica_state_capnp.MonicaModelStateReader: ...
+        schema: monica_state_capnp.types.modules._ICDataStructModule,
+    ) -> monica_state_capnp.types.readers.ICDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._RuntimeStateStructModule,
-    ) -> monica_state_capnp.RuntimeStateReader: ...
+        schema: monica_state_capnp.types.modules._MaybeBoolStructModule,
+    ) -> monica_state_capnp.types.readers.MaybeBoolReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SnowModuleStateStructModule,
-    ) -> monica_state_capnp.SnowModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._MonicaModelStateStructModule,
+    ) -> monica_state_capnp.types.readers.MonicaModelStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilColumnStateStructModule,
-    ) -> monica_state_capnp.SoilColumnStateReader: ...
+        schema: monica_state_capnp.types.modules._RuntimeStateStructModule,
+    ) -> monica_state_capnp.types.readers.RuntimeStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilLayerStateStructModule,
-    ) -> monica_state_capnp.SoilLayerStateReader: ...
+        schema: monica_state_capnp.types.modules._SnowModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.SnowModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilMoistureModuleStateStructModule,
-    ) -> monica_state_capnp.SoilMoistureModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._SoilColumnStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilColumnStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilOrganicModuleStateStructModule,
-    ) -> monica_state_capnp.SoilOrganicModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._SoilLayerStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilLayerStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilTemperatureModuleStateStructModule,
-    ) -> monica_state_capnp.SoilTemperatureModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._SoilMoistureModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilMoistureModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: monica_state_capnp._SoilTransportModuleStateStructModule,
-    ) -> monica_state_capnp.SoilTransportModuleStateReader: ...
+        schema: monica_state_capnp.types.modules._SoilOrganicModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilOrganicModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: sim_setup_capnp._SetupStructModule,
-    ) -> sim_setup_capnp.SetupReader: ...
+        schema: monica_state_capnp.types.modules._SoilTemperatureModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilTemperatureModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: yieldstat_capnp._OutputStructModule,
-    ) -> yieldstat_capnp.OutputReader: ...
+        schema: monica_state_capnp.types.modules._SoilTransportModuleStateStructModule,
+    ) -> monica_state_capnp.types.readers.SoilTransportModuleStateReader: ...
     @overload
     def as_struct(
         self,
-        schema: yieldstat_capnp._RestInputStructModule,
-    ) -> yieldstat_capnp.RestInputReader: ...
+        schema: sim_setup_capnp.types.modules._SetupStructModule,
+    ) -> sim_setup_capnp.types.readers.SetupReader: ...
     @overload
     def as_struct(
         self,
-        schema: yieldstat_capnp._ResultStructModule,
-    ) -> yieldstat_capnp.ResultReader: ...
+        schema: yieldstat_capnp.types.modules._OutputStructModule,
+    ) -> yieldstat_capnp.types.readers.OutputReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._AddressStructModule._AddressIp6StructModule,
-    ) -> persistence_capnp.AddressIp6Reader: ...
+        schema: yieldstat_capnp.types.modules._RestInputStructModule,
+    ) -> yieldstat_capnp.types.readers.RestInputReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._GatewayInterfaceModule._RegResultsStructModule,
-    ) -> persistence_capnp.RegResultsReader: ...
+        schema: yieldstat_capnp.types.modules._ResultStructModule,
+    ) -> yieldstat_capnp.types.readers.ResultReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule._SaveParamsStructModule,
-    ) -> persistence_capnp.SaveParamsReader: ...
+        schema: persistence_capnp.types.modules._AddressStructModule._AddressIp6StructModule,
+    ) -> persistence_capnp.types.readers.AddressIp6Reader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule._SaveResultsStructModule,
-    ) -> persistence_capnp.SaveResultsReader: ...
+        schema: persistence_capnp.types.modules._GatewayInterfaceModule._RegResultsStructModule,
+    ) -> persistence_capnp.types.readers.RegResultsReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._RestorerInterfaceModule._RestoreParamsStructModule,
-    ) -> persistence_capnp.RestoreParamsReader: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._SaveParamsStructModule,
+    ) -> persistence_capnp.types.readers.SaveParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._SturdyRefStructModule._OwnerStructModule,
-    ) -> persistence_capnp.OwnerReader: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._SaveResultsStructModule,
+    ) -> persistence_capnp.types.readers.SaveResultsReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._SturdyRefStructModule._TokenStructModule,
-    ) -> persistence_capnp.TokenReader: ...
+        schema: persistence_capnp.types.modules._RestorerInterfaceModule._RestoreParamsStructModule,
+    ) -> persistence_capnp.types.readers.RestoreParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule._CrossDomainRestoreStructModule,
-    ) -> registry_capnp.CrossDomainRestoreReader: ...
+        schema: persistence_capnp.types.modules._SturdyRefStructModule._OwnerStructModule,
+    ) -> persistence_capnp.types.readers.OwnerReader: ...
     @overload
     def as_struct(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule._RegParamsStructModule,
-    ) -> registry_capnp.RegParamsReader: ...
+        schema: persistence_capnp.types.modules._SturdyRefStructModule._TokenStructModule,
+    ) -> persistence_capnp.types.readers.TokenReader: ...
     @overload
     def as_struct(
         self,
-        schema: registry_capnp._RegistryInterfaceModule._EntryStructModule,
-    ) -> registry_capnp.EntryReader: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._CrossDomainRestoreStructModule,
+    ) -> registry_capnp.types.readers.CrossDomainRestoreReader: ...
     @overload
     def as_struct(
         self,
-        schema: service_capnp._FactoryInterfaceModule._AccessInfoStructModule,
-    ) -> service_capnp.AccessInfoReader: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._RegParamsStructModule,
+    ) -> registry_capnp.types.readers.RegParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: service_capnp._FactoryInterfaceModule._CreateParamsStructModule,
-    ) -> service_capnp.CreateParamsReader: ...
+        schema: registry_capnp.types.modules._RegistryInterfaceModule._EntryStructModule,
+    ) -> registry_capnp.types.readers.EntryReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_capnp._LayerStructModule._PropertyStructModule,
-    ) -> soil_capnp.PropertyReader: ...
+        schema: service_capnp.types.modules._FactoryInterfaceModule._AccessInfoStructModule,
+    ) -> service_capnp.types.readers.AccessInfoReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_capnp._QueryStructModule._ResultStructModule,
-    ) -> soil_capnp.ResultReader: ...
+        schema: service_capnp.types.modules._FactoryInterfaceModule._CreateParamsStructModule,
+    ) -> service_capnp.types.readers.CreateParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_params_capnp._CapillaryRiseRateStructModule._DataStructModule,
-    ) -> soil_params_capnp.DataReader: ...
+        schema: soil_capnp.types.modules._LayerStructModule._PropertyStructModule,
+    ) -> soil_capnp.types.readers.PropertyReader: ...
     @overload
     def as_struct(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ImportExportDataStructModule,
-    ) -> storage_capnp.ImportExportDataReader: ...
+        schema: soil_capnp.types.modules._QueryStructModule._ResultStructModule,
+    ) -> soil_capnp.types.readers.ResultReader: ...
     @overload
     def as_struct(
         self,
-        schema: storage_capnp._StoreInterfaceModule._InfoAndContainerStructModule,
-    ) -> storage_capnp.InfoAndContainerReader: ...
+        schema: soil_params_capnp.types.modules._CapillaryRiseRateStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.readers.CapillaryRiseRateDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._EnsembleMemberStructModule,
-    ) -> climate_capnp.EnsembleMemberReader: ...
+        schema: soil_params_capnp.types.modules._SoilCharacteristicDataStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.readers.SoilCharacteristicDataDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._LocationStructModule,
-    ) -> climate_capnp.LocationReader: ...
+        schema: soil_params_capnp.types.modules._SoilCharacteristicModifierStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.readers.SoilCharacteristicModifierDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._MetaPlusDataStructModule,
-    ) -> climate_capnp.MetaPlusDataReader: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ImportExportDataStructModule,
+    ) -> storage_capnp.types.readers.ImportExportDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._MetadataStructModule,
-    ) -> climate_capnp.MetadataReader: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._InfoAndContainerStructModule,
+    ) -> storage_capnp.types.readers.InfoAndContainerReader: ...
     @overload
     def as_struct(
         self,
-        schema: climate_capnp._TimeSeriesDataStructModule,
-    ) -> climate_capnp.TimeSeriesDataReader: ...
+        schema: climate_capnp.types.modules._EnsembleMemberStructModule,
+    ) -> climate_capnp.types.readers.EnsembleMemberReader: ...
     @overload
     def as_struct(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule,
-    ) -> cluster_admin_service_capnp.ClusterReader: ...
+        schema: climate_capnp.types.modules._LocationStructModule,
+    ) -> climate_capnp.types.readers.LocationReader: ...
     @overload
     def as_struct(
         self,
-        schema: common_capnp._IdInformationStructModule,
-    ) -> common_capnp.IdInformationReader: ...
+        schema: climate_capnp.types.modules._MetaPlusDataStructModule,
+    ) -> climate_capnp.types.readers.MetaPlusDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: common_capnp._PairStructModule,
-    ) -> common_capnp.PairReader: ...
+        schema: climate_capnp.types.modules._MetadataStructModule,
+    ) -> climate_capnp.types.readers.MetadataReader: ...
     @overload
     def as_struct(
         self,
-        schema: common_capnp._StructuredTextStructModule,
-    ) -> common_capnp.StructuredTextReader: ...
+        schema: climate_capnp.types.modules._TimeSeriesDataStructModule,
+    ) -> climate_capnp.types.readers.TimeSeriesDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: common_capnp._ValueStructModule,
-    ) -> common_capnp.ValueReader: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule,
+    ) -> cluster_admin_service_capnp.types.readers.ClusterReader: ...
     @overload
     def as_struct(
         self,
-        schema: date_capnp._DateStructModule,
-    ) -> date_capnp.DateReader: ...
+        schema: common_capnp.types.modules._IdInformationStructModule,
+    ) -> common_capnp.types.readers.IdInformationReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._CultivarStructModule,
-    ) -> field_exp_data_capnp.CultivarReader: ...
+        schema: common_capnp.types.modules._PairStructModule,
+    ) -> common_capnp.types.readers.PairReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._EnvironmentModificationStructModule,
-    ) -> field_exp_data_capnp.EnvironmentModificationReader: ...
+        schema: common_capnp.types.modules._StructuredTextStructModule,
+    ) -> common_capnp.types.readers.StructuredTextReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._ExperimentDescriptionStructModule,
-    ) -> field_exp_data_capnp.ExperimentDescriptionReader: ...
+        schema: common_capnp.types.modules._ValueStructModule,
+    ) -> common_capnp.types.readers.ValueReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._FertilizerEventStructModule,
-    ) -> field_exp_data_capnp.FertilizerEventReader: ...
+        schema: date_capnp.types.modules._DateStructModule,
+    ) -> date_capnp.types.readers.DateReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._FieldStructModule,
-    ) -> field_exp_data_capnp.FieldReader: ...
+        schema: field_exp_data_capnp.types.modules._CultivarStructModule,
+    ) -> field_exp_data_capnp.types.readers.CultivarReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._HarvestEventStructModule,
-    ) -> field_exp_data_capnp.HarvestEventReader: ...
+        schema: field_exp_data_capnp.types.modules._EnvironmentModificationStructModule,
+    ) -> field_exp_data_capnp.types.readers.EnvironmentModificationReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._InitialConditionsLayerStructModule,
-    ) -> field_exp_data_capnp.InitialConditionsLayerReader: ...
+        schema: field_exp_data_capnp.types.modules._ExperimentDescriptionStructModule,
+    ) -> field_exp_data_capnp.types.readers.ExperimentDescriptionReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._IrrigationEventStructModule,
-    ) -> field_exp_data_capnp.IrrigationEventReader: ...
+        schema: field_exp_data_capnp.types.modules._FertilizerEventStructModule,
+    ) -> field_exp_data_capnp.types.readers.FertilizerEventReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._PlantingEventStructModule,
-    ) -> field_exp_data_capnp.PlantingEventReader: ...
+        schema: field_exp_data_capnp.types.modules._FieldStructModule,
+    ) -> field_exp_data_capnp.types.readers.FieldReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._PlotStructModule,
-    ) -> field_exp_data_capnp.PlotReader: ...
+        schema: field_exp_data_capnp.types.modules._HarvestEventStructModule,
+    ) -> field_exp_data_capnp.types.readers.HarvestEventReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._ResidueStructModule,
-    ) -> field_exp_data_capnp.ResidueReader: ...
+        schema: field_exp_data_capnp.types.modules._InitialConditionsLayerStructModule,
+    ) -> field_exp_data_capnp.types.readers.InitialConditionsLayerReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._SoilMetadataStructModule,
-    ) -> field_exp_data_capnp.SoilMetadataReader: ...
+        schema: field_exp_data_capnp.types.modules._IrrigationEventStructModule,
+    ) -> field_exp_data_capnp.types.readers.IrrigationEventReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._TreatmentStructModule,
-    ) -> field_exp_data_capnp.TreatmentReader: ...
+        schema: field_exp_data_capnp.types.modules._PlantingEventStructModule,
+    ) -> field_exp_data_capnp.types.readers.PlantingEventReader: ...
     @overload
     def as_struct(
         self,
-        schema: field_exp_data_capnp._WeatherStationStructModule,
-    ) -> field_exp_data_capnp.WeatherStationReader: ...
+        schema: field_exp_data_capnp.types.modules._PlotStructModule,
+    ) -> field_exp_data_capnp.types.readers.PlotReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._ComponentStructModule,
-    ) -> fbp_capnp.ComponentReader: ...
+        schema: field_exp_data_capnp.types.modules._ResidueStructModule,
+    ) -> field_exp_data_capnp.types.readers.ResidueReader: ...
     @overload
-    def as_struct(self, schema: fbp_capnp._IIPStructModule) -> fbp_capnp.IIPReader: ...
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._SoilMetadataStructModule,
+    ) -> field_exp_data_capnp.types.readers.SoilMetadataReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._TreatmentStructModule,
+    ) -> field_exp_data_capnp.types.readers.TreatmentReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._WeatherStationStructModule,
+    ) -> field_exp_data_capnp.types.readers.WeatherStationReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ComponentStructModule,
+    ) -> fbp_capnp.types.readers.ComponentReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IIPStructModule,
+    ) -> fbp_capnp.types.readers.IIPReader: ...
     @overload
-    def as_struct(self, schema: fbp_capnp._IPStructModule) -> fbp_capnp.IPReader: ...
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IPStructModule,
+    ) -> fbp_capnp.types.readers.IPReader: ...
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp._PortInfosStructModule,
-    ) -> fbp_capnp.PortInfosReader: ...
+        schema: fbp_capnp.types.modules._PortInfosStructModule,
+    ) -> fbp_capnp.types.readers.PortInfosReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._CoordStructModule,
-    ) -> geo_capnp.CoordReader: ...
+        schema: geo_capnp.types.modules._CoordStructModule,
+    ) -> geo_capnp.types.readers.CoordReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._EPSGStructModule,
-    ) -> geo_capnp.EPSGReader: ...
+        schema: geo_capnp.types.modules._EPSGStructModule,
+    ) -> geo_capnp.types.readers.EPSGReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._GKCoordStructModule,
-    ) -> geo_capnp.GKCoordReader: ...
+        schema: geo_capnp.types.modules._GKCoordStructModule,
+    ) -> geo_capnp.types.readers.GKCoordReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._LatLonCoordStructModule,
-    ) -> geo_capnp.LatLonCoordReader: ...
+        schema: geo_capnp.types.modules._LatLonCoordStructModule,
+    ) -> geo_capnp.types.readers.LatLonCoordReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._Point2DStructModule,
-    ) -> geo_capnp.Point2DReader: ...
+        schema: geo_capnp.types.modules._Point2DStructModule,
+    ) -> geo_capnp.types.readers.Point2DReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._RectBoundsStructModule,
-    ) -> geo_capnp.RectBoundsReader: ...
+        schema: geo_capnp.types.modules._RectBoundsStructModule,
+    ) -> geo_capnp.types.readers.RectBoundsReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._RowColStructModule,
-    ) -> geo_capnp.RowColReader: ...
+        schema: geo_capnp.types.modules._RowColStructModule,
+    ) -> geo_capnp.types.readers.RowColReader: ...
     @overload
     def as_struct(
         self,
-        schema: geo_capnp._UTMCoordStructModule,
-    ) -> geo_capnp.UTMCoordReader: ...
+        schema: geo_capnp.types.modules._UTMCoordStructModule,
+    ) -> geo_capnp.types.readers.UTMCoordReader: ...
     @overload
     def as_struct(
         self,
-        schema: jobs_capnp._JobStructModule,
-    ) -> jobs_capnp.JobReader: ...
+        schema: jobs_capnp.types.modules._JobStructModule,
+    ) -> jobs_capnp.types.readers.JobReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._EventStructModule,
-    ) -> management_capnp.EventReader: ...
+        schema: management_capnp.types.modules._EventStructModule,
+    ) -> management_capnp.types.readers.EventReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._NutrientStructModule,
-    ) -> management_capnp.NutrientReader: ...
+        schema: management_capnp.types.modules._NutrientStructModule,
+    ) -> management_capnp.types.readers.NutrientReader: ...
     @overload
     def as_struct(
         self,
-        schema: management_capnp._ParamsStructModule,
-    ) -> management_capnp.ParamsReader: ...
+        schema: management_capnp.types.modules._ParamsStructModule,
+    ) -> management_capnp.types.readers.ParamsReader: ...
     @overload
     def as_struct(
         self,
-        schema: model_capnp._EnvStructModule,
-    ) -> model_capnp.EnvReader: ...
+        schema: model_capnp.types.modules._EnvStructModule,
+    ) -> model_capnp.types.readers.EnvReader: ...
     @overload
     def as_struct(
         self,
-        schema: model_capnp._StatStructModule,
-    ) -> model_capnp.StatReader: ...
+        schema: model_capnp.types.modules._StatStructModule,
+    ) -> model_capnp.types.readers.StatReader: ...
     @overload
     def as_struct(
         self,
-        schema: model_capnp._XYPlusResultStructModule,
-    ) -> model_capnp.XYPlusResultReader: ...
+        schema: model_capnp.types.modules._XYPlusResultStructModule,
+    ) -> model_capnp.types.readers.XYPlusResultReader: ...
     @overload
     def as_struct(
         self,
-        schema: model_capnp._XYResultStructModule,
-    ) -> model_capnp.XYResultReader: ...
+        schema: model_capnp.types.modules._XYResultStructModule,
+    ) -> model_capnp.types.readers.XYResultReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._AddressStructModule,
-    ) -> persistence_capnp.AddressReader: ...
+        schema: persistence_capnp.types.modules._AddressStructModule,
+    ) -> persistence_capnp.types.readers.AddressReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._SturdyRefStructModule,
-    ) -> persistence_capnp.SturdyRefReader: ...
+        schema: persistence_capnp.types.modules._SturdyRefStructModule,
+    ) -> persistence_capnp.types.readers.SturdyRefReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._VatIdStructModule,
-    ) -> persistence_capnp.VatIdReader: ...
+        schema: persistence_capnp.types.modules._VatIdStructModule,
+    ) -> persistence_capnp.types.readers.VatIdReader: ...
     @overload
     def as_struct(
         self,
-        schema: persistence_capnp._VatPathStructModule,
-    ) -> persistence_capnp.VatPathReader: ...
+        schema: persistence_capnp.types.modules._VatPathStructModule,
+    ) -> persistence_capnp.types.readers.VatPathReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_capnp._LayerStructModule,
-    ) -> soil_capnp.LayerReader: ...
+        schema: soil_capnp.types.modules._LayerStructModule,
+    ) -> soil_capnp.types.readers.LayerReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_capnp._ProfileDataStructModule,
-    ) -> soil_capnp.ProfileDataReader: ...
+        schema: soil_capnp.types.modules._ProfileDataStructModule,
+    ) -> soil_capnp.types.readers.ProfileDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_capnp._QueryStructModule,
-    ) -> soil_capnp.QueryReader: ...
+        schema: soil_capnp.types.modules._QueryStructModule,
+    ) -> soil_capnp.types.readers.QueryReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_params_capnp._CapillaryRiseRateStructModule,
-    ) -> soil_params_capnp.CapillaryRiseRateReader: ...
+        schema: soil_params_capnp.types.modules._CapillaryRiseRateStructModule,
+    ) -> soil_params_capnp.types.readers.CapillaryRiseRateReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_params_capnp._SoilCharacteristicDataStructModule,
-    ) -> soil_params_capnp.SoilCharacteristicDataReader: ...
+        schema: soil_params_capnp.types.modules._SoilCharacteristicDataStructModule,
+    ) -> soil_params_capnp.types.readers.SoilCharacteristicDataReader: ...
     @overload
     def as_struct(
         self,
-        schema: soil_params_capnp._SoilCharacteristicModifierStructModule,
-    ) -> soil_params_capnp.SoilCharacteristicModifierReader: ...
+        schema: soil_params_capnp.types.modules._SoilCharacteristicModifierStructModule,
+    ) -> soil_params_capnp.types.readers.SoilCharacteristicModifierReader: ...
     @overload
-    def as_struct(self, schema: x_capnp._SStructModule) -> x_capnp.SReader: ...
+    def as_struct(
+        self,
+        schema: x_capnp.types.modules._SStructModule,
+    ) -> x_capnp.types.readers.SReader: ...
     @overload
     def as_struct(
         self,
@@ -3008,366 +3067,378 @@ class _CapabilityClient:
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._AlterTimeSeriesWrapperInterfaceModule,
-    ) -> climate_capnp.AlterTimeSeriesWrapperClient: ...
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperClient: ...
     @overload
     def cast_as(
         self,
-        schema: model_capnp._EnvInstanceProxyInterfaceModule,
-    ) -> model_capnp.EnvInstanceProxyClient: ...
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceProxyClient: ...
     @overload
     def cast_as(
         self,
-        schema: model_capnp._EnvInstanceInterfaceModule,
-    ) -> model_capnp.EnvInstanceClient: ...
+        schema: model_capnp.types.modules._EnvInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._DatasetInterfaceModule,
-    ) -> climate_capnp.DatasetClient: ...
+        schema: climate_capnp.types.modules._DatasetInterfaceModule,
+    ) -> climate_capnp.types.clients.DatasetClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._ServiceInterfaceModule,
-    ) -> climate_capnp.ServiceClient: ...
+        schema: climate_capnp.types.modules._ServiceInterfaceModule,
+    ) -> climate_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._TimeSeriesInterfaceModule,
-    ) -> climate_capnp.TimeSeriesClient: ...
+        schema: climate_capnp.types.modules._TimeSeriesInterfaceModule,
+    ) -> climate_capnp.types.clients.TimeSeriesClient: ...
     @overload
     def cast_as(
         self,
-        schema: common_capnp._IdentifiableHolderInterfaceModule,
-    ) -> common_capnp.IdentifiableHolderClient: ...
+        schema: common_capnp.types.modules._IdentifiableHolderInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableHolderClient: ...
     @overload
     def cast_as(
         self,
-        schema: crop_capnp._CropInterfaceModule,
-    ) -> crop_capnp.CropClient: ...
+        schema: crop_capnp.types.modules._CropInterfaceModule,
+    ) -> crop_capnp.types.clients.CropClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule,
-    ) -> fbp_capnp.ChannelClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._ReaderInterfaceModule,
-    ) -> fbp_capnp.ReaderClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule,
+    ) -> fbp_capnp.types.clients.ReaderClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._WriterInterfaceModule,
-    ) -> fbp_capnp.WriterClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._WriterInterfaceModule,
+    ) -> fbp_capnp.types.clients.WriterClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule,
-    ) -> fbp_capnp.ProcessClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessClient: ...
     @overload
     def cast_as(
         self,
-        schema: grid_capnp._GridInterfaceModule,
-    ) -> grid_capnp.GridClient: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule,
+    ) -> grid_capnp.types.clients.GridClient: ...
     @overload
     def cast_as(
         self,
-        schema: jobs_capnp._ServiceInterfaceModule,
-    ) -> jobs_capnp.ServiceClient: ...
+        schema: jobs_capnp.types.modules._ServiceInterfaceModule,
+    ) -> jobs_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: management_capnp._FertilizerInterfaceModule,
-    ) -> management_capnp.FertilizerClient: ...
+        schema: management_capnp.types.modules._FertilizerInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._GatewayInterfaceModule,
-    ) -> persistence_capnp.GatewayClient: ...
+        schema: persistence_capnp.types.modules._GatewayInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._HostPortResolverInterfaceModule,
-    ) -> persistence_capnp.HostPortResolverClient: ...
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule,
+    ) -> persistence_capnp.types.clients.HostPortResolverClient: ...
     @overload
     def cast_as(
         self,
-        schema: soil_capnp._ProfileInterfaceModule,
-    ) -> soil_capnp.ProfileClient: ...
+        schema: soil_capnp.types.modules._ProfileInterfaceModule,
+    ) -> soil_capnp.types.clients.ProfileClient: ...
     @overload
     def cast_as(
         self,
-        schema: soil_capnp._ServiceInterfaceModule,
-    ) -> soil_capnp.ServiceClient: ...
+        schema: soil_capnp.types.modules._ServiceInterfaceModule,
+    ) -> soil_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: storage_capnp._StoreInterfaceModule,
-    ) -> storage_capnp.StoreClient: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule,
+    ) -> storage_capnp.types.clients.StoreClient: ...
     @overload
     def cast_as(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule,
-    ) -> storage_capnp.ContainerClient: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule,
+    ) -> storage_capnp.types.clients.ContainerClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._AlterTimeSeriesWrapperFactoryInterfaceModule,
-    ) -> climate_capnp.AlterTimeSeriesWrapperFactoryClient: ...
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._CSVTimeSeriesFactoryInterfaceModule,
-    ) -> climate_capnp.CSVTimeSeriesFactoryClient: ...
+        schema: climate_capnp.types.modules._CSVTimeSeriesFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.CSVTimeSeriesFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._AdminMasterInterfaceModule,
-    ) -> cluster_admin_service_capnp.AdminMasterClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._AdminMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.AdminMasterClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._ModelInstanceFactoryInterfaceModule,
-    ) -> cluster_admin_service_capnp.ModelInstanceFactoryClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ModelInstanceFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._RuntimeInterfaceModule,
-    ) -> cluster_admin_service_capnp.RuntimeClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._RuntimeInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.RuntimeClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._UserMasterInterfaceModule,
-    ) -> cluster_admin_service_capnp.UserMasterClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UserMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UserMasterClient: ...
     @overload
     def cast_as(
         self,
-        schema: common_capnp._FactoryInterfaceModule,
-    ) -> common_capnp.FactoryClient: ...
+        schema: common_capnp.types.modules._FactoryInterfaceModule,
+    ) -> common_capnp.types.clients.FactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: common_capnp._IOFactoryInterfaceModule,
-    ) -> common_capnp.IOFactoryClient: ...
+        schema: common_capnp.types.modules._IOFactoryInterfaceModule,
+    ) -> common_capnp.types.clients.IOFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: crop_capnp._ServiceInterfaceModule,
-    ) -> crop_capnp.ServiceClient: ...
+        schema: crop_capnp.types.modules._ServiceInterfaceModule,
+    ) -> crop_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule._FactoryInterfaceModule,
-    ) -> fbp_capnp.FactoryClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._RunnableInterfaceModule,
-    ) -> fbp_capnp.RunnableClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._RunnableInterfaceModule._FactoryInterfaceModule,
-    ) -> fbp_capnp.FactoryClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._StartChannelsServiceInterfaceModule,
-    ) -> fbp_capnp.StartChannelsServiceClient: ...
+        schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule,
+    ) -> fbp_capnp.types.clients.StartChannelsServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: management_capnp._FertilizerServiceInterfaceModule,
-    ) -> management_capnp.FertilizerServiceClient: ...
+        schema: management_capnp.types.modules._FertilizerServiceInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: management_capnp._ServiceInterfaceModule,
-    ) -> management_capnp.ServiceClient: ...
+        schema: management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> management_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: model_capnp._ClimateInstanceInterfaceModule,
-    ) -> model_capnp.ClimateInstanceClient: ...
+        schema: model_capnp.types.modules._ClimateInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.ClimateInstanceClient: ...
     @overload
     def cast_as(
         self,
-        schema: model_capnp._InstanceFactoryInterfaceModule,
-    ) -> model_capnp.InstanceFactoryClient: ...
+        schema: model_capnp.types.modules._InstanceFactoryInterfaceModule,
+    ) -> model_capnp.types.clients.InstanceFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: monica_management_capnp._ServiceInterfaceModule,
-    ) -> monica_management_capnp.ServiceClient: ...
+        schema: monica_management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> monica_management_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: registry_capnp._AdminInterfaceModule,
-    ) -> registry_capnp.AdminClient: ...
+        schema: registry_capnp.types.modules._AdminInterfaceModule,
+    ) -> registry_capnp.types.clients.AdminClient: ...
     @overload
     def cast_as(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule,
-    ) -> registry_capnp.RegistrarClient: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistrarClient: ...
     @overload
     def cast_as(
         self,
-        schema: registry_capnp._RegistryInterfaceModule,
-    ) -> registry_capnp.RegistryClient: ...
+        schema: registry_capnp.types.modules._RegistryInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistryClient: ...
     @overload
     def cast_as(
         self,
-        schema: service_capnp._AdminInterfaceModule,
-    ) -> service_capnp.AdminClient: ...
+        schema: service_capnp.types.modules._AdminInterfaceModule,
+    ) -> service_capnp.types.clients.AdminClient: ...
     @overload
     def cast_as(
         self,
-        schema: service_capnp._FactoryInterfaceModule,
-    ) -> service_capnp.FactoryClient: ...
+        schema: service_capnp.types.modules._FactoryInterfaceModule,
+    ) -> service_capnp.types.clients.FactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: service_capnp._SimpleFactoryInterfaceModule,
-    ) -> service_capnp.SimpleFactoryClient: ...
+        schema: service_capnp.types.modules._SimpleFactoryInterfaceModule,
+    ) -> service_capnp.types.clients.SimpleFactoryClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule,
-    ) -> climate_capnp.GetLocationsCallbackClient: ...
+        schema: climate_capnp.types.modules._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule,
+    ) -> climate_capnp.types.clients.GetLocationsCallbackClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._MetadataStructModule._InformationInterfaceModule,
-    ) -> climate_capnp.InformationClient: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._InformationInterfaceModule,
+    ) -> climate_capnp.types.clients.InformationClient: ...
     @overload
     def cast_as(
         self,
-        schema: climate_capnp._MetadataStructModule._SupportedInterfaceModule,
-    ) -> climate_capnp.SupportedClient: ...
+        schema: climate_capnp.types.modules._MetadataStructModule._SupportedInterfaceModule,
+    ) -> climate_capnp.types.clients.SupportedClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._UnregisterInterfaceModule,
-    ) -> cluster_admin_service_capnp.UnregisterClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UnregisterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UnregisterClient: ...
     @overload
     def cast_as(
         self,
-        schema: cluster_admin_service_capnp._ClusterStructModule._ValueHolderInterfaceModule,
-    ) -> cluster_admin_service_capnp.ValueHolderClient: ...
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ValueHolderInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ValueHolderClient: ...
     @overload
     def cast_as(
         self,
-        schema: common_capnp._HolderInterfaceModule,
-    ) -> common_capnp.HolderClient: ...
+        schema: common_capnp.types.modules._HolderInterfaceModule,
+    ) -> common_capnp.types.clients.HolderClient: ...
     @overload
     def cast_as(
         self,
-        schema: common_capnp._IdentifiableInterfaceModule,
-    ) -> common_capnp.IdentifiableClient: ...
+        schema: common_capnp.types.modules._IdentifiableInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableClient: ...
     @overload
     def cast_as(
         self,
-        schema: config_capnp._ServiceInterfaceModule,
-    ) -> config_capnp.ServiceClient: ...
+        schema: config_capnp.types.modules._ServiceInterfaceModule,
+    ) -> config_capnp.types.clients.ServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: modam_capnp._ModamWrapperServiceInterfaceModule,
-    ) -> modam_capnp.ModamWrapperServiceClient: ...
+        schema: modam_capnp.types.modules._ModamWrapperServiceInterfaceModule,
+    ) -> modam_capnp.types.clients.ModamWrapperServiceClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule,
-    ) -> fbp_capnp.StatsCallbackClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
-    ) -> fbp_capnp.UnregisterClient: ...
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.UnregisterClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._ProcessInterfaceModule._StateTransitionInterfaceModule,
-    ) -> fbp_capnp.StateTransitionClient: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._StateTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.StateTransitionClient: ...
     @overload
     def cast_as(
         self,
-        schema: fbp_capnp._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
-    ) -> fbp_capnp.StoppedCallbackClient: ...
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StoppedCallbackClient: ...
     @overload
     def cast_as(
         self,
-        schema: grid_capnp._GridInterfaceModule._CallbackInterfaceModule,
-    ) -> grid_capnp.CallbackClient: ...
+        schema: grid_capnp.types.modules._GridInterfaceModule._CallbackInterfaceModule,
+    ) -> grid_capnp.types.clients.CallbackClient: ...
     @overload
     def cast_as(
         self,
-        schema: model_capnp._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule,
-    ) -> model_capnp.UnregisterClient: ...
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule,
+    ) -> model_capnp.types.clients.UnregisterClient: ...
     @overload
     def cast_as(
         self,
-        schema: web_berest_data_import_capnp._DWLABImportInterfaceModule,
-    ) -> web_berest_data_import_capnp.DWLABImportClient: ...
+        schema: web_berest_data_import_capnp.types.modules._DWLABImportInterfaceModule,
+    ) -> web_berest_data_import_capnp.types.clients.DWLABImportClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._GatewayRegistrableInterfaceModule,
-    ) -> persistence_capnp.GatewayRegistrableClient: ...
+        schema: persistence_capnp.types.modules._GatewayRegistrableInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayRegistrableClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._HeartbeatInterfaceModule,
-    ) -> persistence_capnp.HeartbeatClient: ...
+        schema: persistence_capnp.types.modules._HeartbeatInterfaceModule,
+    ) -> persistence_capnp.types.clients.HeartbeatClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._HostPortResolverInterfaceModule._RegistrarInterfaceModule,
-    ) -> persistence_capnp.RegistrarClient: ...
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule,
+    ) -> persistence_capnp.types.clients.RegistrarClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule,
-    ) -> persistence_capnp.PersistentClient: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule,
+    ) -> persistence_capnp.types.clients.PersistentClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule,
-    ) -> persistence_capnp.ReleaseSturdyRefClient: ...
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule,
+    ) -> persistence_capnp.types.clients.ReleaseSturdyRefClient: ...
     @overload
     def cast_as(
         self,
-        schema: persistence_capnp._RestorerInterfaceModule,
-    ) -> persistence_capnp.RestorerClient: ...
+        schema: persistence_capnp.types.modules._RestorerInterfaceModule,
+    ) -> persistence_capnp.types.clients.RestorerClient: ...
     @overload
     def cast_as(
         self,
-        schema: registry_capnp._RegistrarInterfaceModule._UnregisterInterfaceModule,
-    ) -> registry_capnp.UnregisterClient: ...
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._UnregisterInterfaceModule,
+    ) -> registry_capnp.types.clients.UnregisterClient: ...
     @overload
     def cast_as(
         self,
-        schema: service_capnp._StoppableInterfaceModule,
-    ) -> service_capnp.StoppableClient: ...
+        schema: service_capnp.types.modules._StoppableInterfaceModule,
+    ) -> service_capnp.types.clients.StoppableClient: ...
     @overload
     def cast_as(
         self,
-        schema: soil_capnp._ServiceInterfaceModule._StreamInterfaceModule,
-    ) -> soil_capnp.StreamClient: ...
+        schema: soil_capnp.types.modules._ServiceInterfaceModule._StreamInterfaceModule,
+    ) -> soil_capnp.types.clients.StreamClient: ...
     @overload
     def cast_as(
         self,
-        schema: storage_capnp._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule,
-    ) -> storage_capnp.EntryClient: ...
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule,
+    ) -> storage_capnp.types.clients.EntryClient: ...
     @overload
-    def cast_as(self, schema: a_capnp._AInterfaceModule) -> a_capnp.AClient: ...
+    def cast_as(
+        self,
+        schema: a_capnp.types.modules._AInterfaceModule,
+    ) -> a_capnp.types.clients.AClient: ...
     @overload
-    def cast_as(self, schema: x_capnp._XInterfaceModule) -> x_capnp.XClient: ...
+    def cast_as(
+        self,
+        schema: x_capnp.types.modules._XInterfaceModule,
+    ) -> x_capnp.types.clients.XClient: ...
     @overload
-    def cast_as(self, schema: x_capnp._YInterfaceModule) -> x_capnp.YClient: ...
+    def cast_as(
+        self,
+        schema: x_capnp.types.modules._YInterfaceModule,
+    ) -> x_capnp.types.clients.YClient: ...
     @overload
-    def cast_as(self, schema: x_capnp._ZInterfaceModule) -> x_capnp.ZClient: ...
+    def cast_as(
+        self,
+        schema: x_capnp.types.modules._ZInterfaceModule,
+    ) -> x_capnp.types.clients.ZClient: ...
     @overload
     def cast_as(
         self,
