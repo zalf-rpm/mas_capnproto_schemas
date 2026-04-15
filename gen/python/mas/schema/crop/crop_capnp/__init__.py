@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `crop.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -41,10 +40,3 @@ for _schema_b64 in _SCHEMA_NODES:
 
 Crop = _InterfaceModule(_loader.get(0xE88D97A324BF5C84).as_interface(), "Crop")
 Service = _InterfaceModule(_loader.get(0x8DDCC2B6C0386BC4).as_interface(), "Service")
-
-Crop.Server.CultivarResultTuple = NamedTuple("CultivarResultTuple", [("info", object)])
-Crop.Server.ParametersResultTuple = NamedTuple(
-    "ParametersResultTuple",
-    [("params", object)],
-)
-Crop.Server.SpeciesResultTuple = NamedTuple("SpeciesResultTuple", [("info", object)])

@@ -1,0 +1,1 @@
+"""Server result helper types for `soil_params.capnp`."""

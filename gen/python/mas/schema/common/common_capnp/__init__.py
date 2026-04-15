@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `common.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -72,15 +71,4 @@ Holder = _InterfaceModule(_loader.get(0xC83045CCBB0B6AC5).as_interface(), "Holde
 IdentifiableHolder = _InterfaceModule(
     _loader.get(0xEE543D7C305D56F6).as_interface(),
     "IdentifiableHolder",
-)
-
-Factory.Server.CreateResultTuple = NamedTuple("CreateResultTuple", [("out", object)])
-Holder.Server.ValueResultTuple = NamedTuple("ValueResultTuple", [("value", object)])
-IOFactory.Server.ProduceResultTuple = NamedTuple(
-    "ProduceResultTuple",
-    [("out", object)],
-)
-Identifiable.Server.InfoResultTuple = NamedTuple(
-    "InfoResultTuple",
-    [("id", object), ("name", object), ("description", object)],
 )

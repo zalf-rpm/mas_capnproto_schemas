@@ -1,0 +1,30 @@
+"""Request helper types for `climate.capnp`."""
+
+from ._all import AlteredelementsRequest as AlteredelementsRequest
+from ._all import AlterRequest as AlterRequest
+from ._all import CategoriesRequest as CategoriesRequest
+from ._all import ClosesttimeseriesatRequest as ClosesttimeseriesatRequest
+from ._all import CreateRequest as CreateRequest
+from ._all import DataRequest as DataRequest
+from ._all import DatasetMetadataRequest as DatasetMetadataRequest
+from ._all import DatatRequest as DatatRequest
+from ._all import ForallRequest as ForallRequest
+from ._all import ForoneRequest as ForoneRequest
+from ._all import GetavailabledatasetsRequest as GetavailabledatasetsRequest
+from ._all import GetdatasetsforRequest as GetdatasetsforRequest
+from ._all import HeaderRequest as HeaderRequest
+from ._all import LocationRequest as LocationRequest
+from ._all import LocationsRequest as LocationsRequest
+from ._all import NextlocationsRequest as NextlocationsRequest
+from ._all import RangeRequest as RangeRequest
+from ._all import RemoveRequest as RemoveRequest
+from ._all import ReplacewrappedtimeseriesRequest as ReplacewrappedtimeseriesRequest
+from ._all import ResolutionRequest as ResolutionRequest
+from ._all import StreamlocationsRequest as StreamlocationsRequest
+from ._all import SubheaderRequest as SubheaderRequest
+from ._all import SubrangeRequest as SubrangeRequest
+from ._all import SupportedvaluesRequest as SupportedvaluesRequest
+from ._all import TimeseriesatRequest as TimeseriesatRequest
+from ._all import TimeSeriesMetadataRequest as TimeSeriesMetadataRequest
+from ._all import WrappedtimeseriesRequest as WrappedtimeseriesRequest
+from ._all import WrapRequest as WrapRequest

@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `soil.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -66,33 +65,4 @@ Service.Stream = _InterfaceModule(
     .result_type.fields["allProfiles"]
     .schema,
     "Stream",
-)
-
-Profile.Server.DataResultTuple = NamedTuple(
-    "DataResultTuple",
-    [("layers", object), ("percentageOfArea", object)],
-)
-Profile.Server.GeolocationResultTuple = NamedTuple(
-    "GeolocationResultTuple",
-    [("lat", object), ("lon", object)],
-)
-Service.Server.CheckavailableparametersResultTuple = NamedTuple(
-    "CheckavailableparametersResultTuple",
-    [("failed", object), ("mandatory", object), ("optional", object)],
-)
-Service.Server.ClosestprofilesatResultTuple = NamedTuple(
-    "ClosestprofilesatResultTuple",
-    [("profiles", object)],
-)
-Service.Server.GetallavailableparametersResultTuple = NamedTuple(
-    "GetallavailableparametersResultTuple",
-    [("mandatory", object), ("optional", object)],
-)
-Service.Server.StreamallprofilesResultTuple = NamedTuple(
-    "StreamallprofilesResultTuple",
-    [("allProfiles", object)],
-)
-Service.Stream.Server.NextprofilesResultTuple = NamedTuple(
-    "NextprofilesResultTuple",
-    [("profiles", object)],
 )

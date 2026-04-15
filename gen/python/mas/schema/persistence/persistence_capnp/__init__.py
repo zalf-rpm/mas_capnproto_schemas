@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `persistence.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -114,29 +113,3 @@ GatewayRegistrable = _InterfaceModule(
     _loader.get(0x8253222FDF37608D).as_interface(),
     "GatewayRegistrable",
 )
-
-Gateway.Server.RegisterResultTuple = NamedTuple(
-    "RegisterResultTuple",
-    [("sturdyRef", object), ("heartbeat", object), ("secsHeartbeatInterval", object)],
-)
-GatewayRegistrable.Server.SturdyrefatgatewayResultTuple = NamedTuple(
-    "SturdyrefatgatewayResultTuple",
-    [("selfAtGatewaySR", object)],
-)
-HostPortResolver.Server.ResolveResultTuple = NamedTuple(
-    "ResolveResultTuple",
-    [("host", object), ("port", object)],
-)
-HostPortResolver.Registrar.Server.RegisterResultTuple = NamedTuple(
-    "RegisterResultTuple",
-    [("heartbeat", object), ("secsHeartbeatInterval", object)],
-)
-Persistent.Server.SaveResultTuple = NamedTuple(
-    "SaveResultTuple",
-    [("sturdyRef", object), ("unsaveSR", object)],
-)
-Persistent.ReleaseSturdyRef.Server.ReleaseResultTuple = NamedTuple(
-    "ReleaseResultTuple",
-    [("success", object)],
-)
-Restorer.Server.RestoreResultTuple = NamedTuple("RestoreResultTuple", [("cap", object)])
