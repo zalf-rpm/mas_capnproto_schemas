@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `monica_management.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -171,8 +170,3 @@ Params.SaveState = _StructModule(
     "SaveState",
 )
 Service = _InterfaceModule(_loader.get(0xBFDA1920AFF38C07).as_interface(), "Service")
-
-Service.Server.ManagementatResultTuple = NamedTuple(
-    "ManagementatResultTuple",
-    [("mgmt", object)],
-)

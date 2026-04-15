@@ -1,0 +1,24 @@
+"""Server result helper types for `climate.capnp`."""
+
+from .._all import AlteredelementsServerResult as AlteredelementsServerResult
+from .._all import AlterServerResult as AlterServerResult
+from .._all import CategoriesServerResult as CategoriesServerResult
+from .._all import ClosesttimeseriesatServerResult as ClosesttimeseriesatServerResult
+from .._all import CreateServerResult as CreateServerResult
+from .._all import DataServerResult as DataServerResult
+from .._all import DatatServerResult as DatatServerResult
+from .._all import ForallServerResult as ForallServerResult
+from .._all import GetavailabledatasetsServerResult as GetavailabledatasetsServerResult
+from .._all import GetdatasetsforServerResult as GetdatasetsforServerResult
+from .._all import HeaderServerResult as HeaderServerResult
+from .._all import LocationsServerResult as LocationsServerResult
+from .._all import NextlocationsServerResult as NextlocationsServerResult
+from .._all import RangeServerResult as RangeServerResult
+from .._all import ResolutionServerResult as ResolutionServerResult
+from .._all import StreamlocationsServerResult as StreamlocationsServerResult
+from .._all import SubheaderServerResult as SubheaderServerResult
+from .._all import SubrangeServerResult as SubrangeServerResult
+from .._all import SupportedvaluesServerResult as SupportedvaluesServerResult
+from .._all import TimeseriesatServerResult as TimeseriesatServerResult
+from .._all import WrappedtimeseriesServerResult as WrappedtimeseriesServerResult
+from .._all import WrapServerResult as WrapServerResult

@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `modam.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -35,13 +34,4 @@ for _schema_b64 in _SCHEMA_NODES:
 ModamWrapperService = _InterfaceModule(
     _loader.get(0xDB3FB36057ABC378).as_interface(),
     "ModamWrapperService",
-)
-
-ModamWrapperService.Server.RunaemmodelResultTuple = NamedTuple(
-    "RunaemmodelResultTuple",
-    [("output", object)],
-)
-ModamWrapperService.Server.RunfieldmodelResultTuple = NamedTuple(
-    "RunfieldmodelResultTuple",
-    [("output", object)],
 )

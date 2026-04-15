@@ -1,0 +1,60 @@
+"""Context helper types for `climate.capnp`."""
+
+from ._all import AlterCallContext as AlterCallContext
+from ._all import AlteredelementsCallContext as AlteredelementsCallContext
+from ._all import AlteredelementsParams as AlteredelementsParams
+from ._all import AlterParams as AlterParams
+from ._all import CategoriesCallContext as CategoriesCallContext
+from ._all import CategoriesParams as CategoriesParams
+from ._all import ClosesttimeseriesatCallContext as ClosesttimeseriesatCallContext
+from ._all import ClosesttimeseriesatParams as ClosesttimeseriesatParams
+from ._all import CreateCallContext as CreateCallContext
+from ._all import CreateParams as CreateParams
+from ._all import DataCallContext as DataCallContext
+from ._all import DataParams as DataParams
+from ._all import DatasetMetadataCallContext as DatasetMetadataCallContext
+from ._all import DatasetMetadataParams as DatasetMetadataParams
+from ._all import DatatCallContext as DatatCallContext
+from ._all import DatatParams as DatatParams
+from ._all import ForallCallContext as ForallCallContext
+from ._all import ForallParams as ForallParams
+from ._all import ForoneCallContext as ForoneCallContext
+from ._all import ForoneParams as ForoneParams
+from ._all import GetavailabledatasetsCallContext as GetavailabledatasetsCallContext
+from ._all import GetavailabledatasetsParams as GetavailabledatasetsParams
+from ._all import GetdatasetsforCallContext as GetdatasetsforCallContext
+from ._all import GetdatasetsforParams as GetdatasetsforParams
+from ._all import HeaderCallContext as HeaderCallContext
+from ._all import HeaderParams as HeaderParams
+from ._all import LocationCallContext as LocationCallContext
+from ._all import LocationParams as LocationParams
+from ._all import LocationsCallContext as LocationsCallContext
+from ._all import LocationsParams as LocationsParams
+from ._all import NextlocationsCallContext as NextlocationsCallContext
+from ._all import NextlocationsParams as NextlocationsParams
+from ._all import RangeCallContext as RangeCallContext
+from ._all import RangeParams as RangeParams
+from ._all import RemoveCallContext as RemoveCallContext
+from ._all import RemoveParams as RemoveParams
+from ._all import (
+    ReplacewrappedtimeseriesCallContext as ReplacewrappedtimeseriesCallContext,
+)
+from ._all import ReplacewrappedtimeseriesParams as ReplacewrappedtimeseriesParams
+from ._all import ResolutionCallContext as ResolutionCallContext
+from ._all import ResolutionParams as ResolutionParams
+from ._all import StreamlocationsCallContext as StreamlocationsCallContext
+from ._all import StreamlocationsParams as StreamlocationsParams
+from ._all import SubheaderCallContext as SubheaderCallContext
+from ._all import SubheaderParams as SubheaderParams
+from ._all import SubrangeCallContext as SubrangeCallContext
+from ._all import SubrangeParams as SubrangeParams
+from ._all import SupportedvaluesCallContext as SupportedvaluesCallContext
+from ._all import SupportedvaluesParams as SupportedvaluesParams
+from ._all import TimeseriesatCallContext as TimeseriesatCallContext
+from ._all import TimeseriesatParams as TimeseriesatParams
+from ._all import TimeSeriesMetadataCallContext as TimeSeriesMetadataCallContext
+from ._all import TimeSeriesMetadataParams as TimeSeriesMetadataParams
+from ._all import WrapCallContext as WrapCallContext
+from ._all import WrapParams as WrapParams
+from ._all import WrappedtimeseriesCallContext as WrappedtimeseriesCallContext
+from ._all import WrappedtimeseriesParams as WrappedtimeseriesParams

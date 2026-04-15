@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `x.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -41,6 +40,3 @@ S = _StructModule(_loader.get(0xD227EF68DE0BC647).as_struct(), "S")
 X = _InterfaceModule(_loader.get(0xDCF28E81FA4DE615).as_interface(), "X")
 Y = _InterfaceModule(_loader.get(0xAC121E5AA82CA6BD).as_interface(), "Y")
 Z = _InterfaceModule(_loader.get(0xC64526206425C2AB).as_interface(), "Z")
-
-X.Server.MResultTuple = NamedTuple("MResultTuple", [("t", object)])
-Z.Server.MResultTuple = NamedTuple("MResultTuple", [("r", object)])

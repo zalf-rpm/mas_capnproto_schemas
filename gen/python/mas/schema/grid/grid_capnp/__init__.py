@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `grid.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -87,38 +86,4 @@ Grid.Location = _StructModule(
 Grid.Callback = _InterfaceModule(
     Grid.schema.methods["streamCells"].result_type.fields["callback"].schema,
     "Callback",
-)
-
-Grid.Server.ClosestvalueatResultTuple = NamedTuple(
-    "ClosestvalueatResultTuple",
-    [("val", object), ("tl", object), ("br", object), ("aggParts", object)],
-)
-Grid.Server.DimensionResultTuple = NamedTuple(
-    "DimensionResultTuple",
-    [("rows", object), ("cols", object)],
-)
-Grid.Server.LatlonboundsResultTuple = NamedTuple(
-    "LatlonboundsResultTuple",
-    [("tl", object), ("tr", object), ("br", object), ("bl", object)],
-)
-Grid.Server.NodatavalueResultTuple = NamedTuple(
-    "NodatavalueResultTuple",
-    [("nodata", object)],
-)
-Grid.Server.ResolutionResultTuple = NamedTuple(
-    "ResolutionResultTuple",
-    [("res", object)],
-)
-Grid.Server.StreamcellsResultTuple = NamedTuple(
-    "StreamcellsResultTuple",
-    [("callback", object)],
-)
-Grid.Server.UnitResultTuple = NamedTuple("UnitResultTuple", [("unit", object)])
-Grid.Server.ValueatResultTuple = NamedTuple(
-    "ValueatResultTuple",
-    [("val", object), ("aggParts", object)],
-)
-Grid.Callback.Server.SendcellsResultTuple = NamedTuple(
-    "SendcellsResultTuple",
-    [("locations", object)],
 )

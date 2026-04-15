@@ -2,7 +2,6 @@
 """This is an automatically generated stub for `config.capnp`."""
 
 import base64
-from typing import NamedTuple
 
 import capnp
 import schema_capnp
@@ -31,8 +30,3 @@ for _schema_b64 in _SCHEMA_NODES:
 # Build module structure inline
 
 Service = _InterfaceModule(_loader.get(0x860D660620AEFCDA).as_interface(), "Service")
-
-Service.Server.NextconfigResultTuple = NamedTuple(
-    "NextconfigResultTuple",
-    [("config", object), ("noFurtherConfigs", object)],
-)
