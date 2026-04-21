@@ -1,3 +1,7 @@
 """Enum helper aliases for `common.capnp`."""
 
-from ._all import StructuredTextTypeEnum as StructuredTextTypeEnum
+from typing import Literal
+
+type StructuredTextTypeEnum = (
+    int | Literal["unstructured", "json", "xml", "toml", "sturdyRef"]
+)

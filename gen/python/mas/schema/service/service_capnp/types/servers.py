@@ -1,5 +1,7 @@
 """Runtime placeholder module for server helpers of `service.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from .. import Admin, Factory, SimpleFactory, Stoppable
 
 AdminServer = Admin.Server

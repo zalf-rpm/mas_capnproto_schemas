@@ -1,13 +1,25 @@
 """Server helper types for `climate.capnp`."""
 
-from ._all import (
-    AlterTimeSeriesWrapperFactoryServer as AlterTimeSeriesWrapperFactoryServer,
+from mas.schema.climate.climate_capnp.types import modules as modules
+
+AlterTimeSeriesWrapperFactoryServer = (
+    modules._AlterTimeSeriesWrapperFactoryInterfaceModule.Server
 )
-from ._all import AlterTimeSeriesWrapperServer as AlterTimeSeriesWrapperServer
-from ._all import CSVTimeSeriesFactoryServer as CSVTimeSeriesFactoryServer
-from ._all import DatasetServer as DatasetServer
-from ._all import GetLocationsCallbackServer as GetLocationsCallbackServer
-from ._all import InformationServer as InformationServer
-from ._all import ServiceServer as ServiceServer
-from ._all import SupportedServer as SupportedServer
-from ._all import TimeSeriesServer as TimeSeriesServer
+
+AlterTimeSeriesWrapperServer = modules._AlterTimeSeriesWrapperInterfaceModule.Server
+
+CSVTimeSeriesFactoryServer = modules._CSVTimeSeriesFactoryInterfaceModule.Server
+
+DatasetServer = modules._DatasetInterfaceModule.Server
+
+GetLocationsCallbackServer = (
+    modules._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule.Server
+)
+
+InformationServer = modules._MetadataStructModule._InformationInterfaceModule.Server
+
+ServiceServer = modules._ServiceInterfaceModule.Server
+
+SupportedServer = modules._MetadataStructModule._SupportedInterfaceModule.Server
+
+TimeSeriesServer = modules._TimeSeriesInterfaceModule.Server

@@ -5,7 +5,18 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.fbp.fbp_capnp.types.modules import (
+    _ChannelInterfaceModule,
+    _ComponentStructModule,
+    _IIPStructModule,
+    _IPStructModule,
+    _PortInfosStructModule,
+    _ProcessInterfaceModule,
+    _RunnableInterfaceModule,
+    _StartChannelsServiceInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -28,6 +39,15 @@ _SCHEMA_NODES = [
     "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
     "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
     "EGdQBgb/zJe885KRxosAERYD/+ix8i8rw2KcAAAAEAEztAkQCxEV6hEhBxEhHxFFxxNZAScAAP9mYnAvZmJwLgJjYXBucDpDaGFubmVsLlJlD2FkZXJQAQFRBAEC/86R8f55p2TyAFEEAgFBFAEBDAAAEQFa/0NoYW5SZWFkAANlcgAAUQwDBQAA/6Uri9uZXTPAAS6q0Lz0ErXVEVEqEVEfQWwBQXwBEY0HAQL/yEGM8WTqKJQBGoJTv6EI/rMRgTIAAEF8AUGMARGdBwEB/0RAzJ+pIeWJAS6q0Lz0ErXVEZFSAABBkAFBoAERsQcPcmVhZFEEAQL/zp38jP+WcKwAUQQCAUEMAQADEQEfUQQCAf/osfIvK8NinAABAQAAEQEfUQQCAf/osfIvK8NinAABAQAAQAEfY2xvc2URAR9RBAIB/+ix8i8rw2KcAAEBAAARAR9RBAIB/+ix8i8rw2KcAAEBAABAAf9yZWFkSWZNcwABZxEBH1EEAgH/6LHyLyvDYpwAAQEAABEBH1EEAgH/6LHyLyvDYpwAAQEAAEABUQgBAf/VSJxZy9GvsgAAAP9lyzbcoNqnwQAAAA==",  # fbp/fbp.capnp:Channel.Reader
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EBNQBgb/pSuL25ldM8AAER0BAAAEBxABAAAxFUoBAAT/ZmJwL2ZicC4EY2FwbnA6Q2hhbm5lbC5SZWFkZXIucmVhZCRQYXJhbXMAAA==",  # fbp/fbp.capnp:Channel.Reader.read$Params
     "EBNQBgb/yEGM8WTqKJQAER0BAAAEBxABAAAxFVIBAAT/ZmJwL2ZicC4EY2FwbnA6Q2hhbm5lbC5SZWFkZXIuY2xvc2UkUGFyYW0Bcw==",  # fbp/fbp.capnp:Channel.Reader.close$Params
     "EBNQBgb/GoJTv6EI/rMAER0BAAAEBxABAAAxFVoBAAT/ZmJwL2ZicC4EY2FwbnA6Q2hhbm5lbC5SZWFkZXIuY2xvc2UkUmVzdWwDdHM=",  # fbp/fbp.capnp:Channel.Reader.close$Results
@@ -70,7 +90,6 @@ _SCHEMA_NODES = [
     "EClQBgb/ULRGUsdql8YAERgC/7CmFWh9/xfXAAABM9EWBBgxFTIBESUHAAARIX8AAf9mYnAvZmJwLgNjYXBucDpDb21wb25lbnQuQ29tcG9uZW4fdFR5cGVQAQFRFAECAAARNUoAAAEBETEiAAABAhEpQgAAAQMRISoAAAEEERlCAAD/c3RhbmRhcmQAAAAHaWlwf3N1YmZsb3cPdmlld39wcm9jZXNz",  # fbp/fbp.capnp:Component.ComponentType
     "EFRQBgb/cs3RrSkojcIAURgBAf+wphVoff8X1wAFAwcAADMKGOwZERXqESEXAAARLecAAf9mYnAvZmJwLgJjYXBucDpDb21wb25lbnQuD1BvcnRRBAEB/yRioBhzeo31ABEBSv9Qb3J0VHlwZQAAAFEQAwQAAAQBAAARYSoAAFFcAwFRaAIBEQEBFAEBAAARZWIAAFFkAwFRcAIBAQMUAQIBARFtKgAAUWgDAVF0AgERAgIUAQMAABFxKgAAUWwDAVF4AgEPbmFtZQEMAAIBDAAB/2NvbnRlbnRUAAd5cGUBDAACAQwAAQ90eXBlAQ//JGKgGHN6jfUAAAEBDwABD2Rlc2MBDAACAQwAAQ==",  # fbp/fbp.capnp:Component.Port
     "EB1QBgb/JGKgGHN6jfUAER0C/3LN0a0pKI3CAAABMyAYshgxFTIBESUHAAARITcAAf9mYnAvZmJwLgNjYXBucDpDb21wb25lbnQuUG9ydC5Qb3IfdFR5cGVQAQFRCAECAAAREUoAAAEBEQ0yAAD/c3RhbmRhcmQAAAAfYXJyYXk=",  # fbp/fbp.capnp:Component.Port.PortType
-    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
     "ED5QBgb/VNTKZ4sJbO0AURQBAf/Jiqh1p8nxmQAFAQcAADMUAg0EMRUaARElFwAAES2vAAH/Y29tbW9uL2MDb21tb24uY2FwbnA6U3RydWN0dXJlZFRlA3h0UQQBAf9Pl7UXPsTrngARASoPVHlwZVEMAwQAAAQBAAARRTIAAFFAAwFRTAIBAQIBAf/MYsKxUvXL6AARSVIAAhEBARQBBQEBETUqAABRMAMBUTwCAR92YWx1ZQEMAAIBDAAB/3N0cnVjdHVyAAFlD3R5cGUBD/9Pl7UXPsTrngAAAQEPAAE=",  # common/common.capnp:StructuredText
     "ECpQBgb/T5e1Fz7E654AESMC/1TUymeLCWztAAABM4QCCwMxFUIBESUHAAARIX8AAf9jb21tb24vYwRvbW1vbi5jYXBucDpTdHJ1Y3R1cmVkVGV4dC5UeXBlAFABAVEUAQIAABE1agAAAQERMSoAAAECESkiAAABAxEhKgAAAQQRGVIAAP91bnN0cnVjdAAPdXJlZA9qc29uB3htbA90b21s/3N0dXJkeVJlAAFm",  # common/common.capnp:StructuredText.Type
     "EFBQBgb/zGLCsVL1y+gAUSMBAf9U1Mpniwls7QBVAQcBBAABMRVqAQABESHnAAH/Y29tbW9uL2MEb21tb24uY2FwbnA6U3RydWN0dXJlZFRleHQuc3RydWMPdHVyZVEQAwQM//8UAQEAABFhKgAAUVwDAVFoAgENAf7/FAECAAARZSoAAFFgAwFRbAIBDQL9/xQBAwAAEWkiAABRZAMBUXACAQ0D/P8UAQQAABFtKgAAUWgDAVF0AgEPbm9uZQAGD2pzb24ABgd4bWwABg90b21sAAY=",  # common/common.capnp:StructuredText.structure
@@ -97,6 +116,9 @@ _SCHEMA_NODES = [
     "ECBQBgb/+vpcZnWpj5wAERYD/4OXAzqUVq27AAABM6sj+CMxFTIBESUHAAARIUcRTQcAAP9mYnAvZmJwLgNjYXBucDpQcm9jZXNzLlN0YXRlVHJhbnMfaXRpb25QAQFRBAMFAAD/IDQhlxpqGfYBr1OCPK+J1fAREWoAAhEJB/9zdGF0ZUNoYQAPbmdlZEABUAEB",  # fbp/fbp.capnp:Process.StateTransition
     "EDRQBgb/IDQhlxpqGfYAUSYBAQAABAcAATEV0gEAAREpdwAB/2ZicC9mYnAuBmNhcG5wOlByb2Nlc3MuU3RhdGVUcmFuc2l0aW9uLnN0YXRlQ2hhbmdlZCRQYXJhbQFzUQgDBAAABAEAABEpIgAAUSQDAVEwAgERAQEUAQEAABEtIgAAUSgDAVE0AgEHb2xkAQ//pWnnOyNEcOYAAAEBDwABB25ldwEP/6Vp5zsjRHDmAAABAQ8AAQ==",  # fbp/fbp.capnp:Process.StateTransition.stateChanged$Params
     "EBVQBgb/r1OCPK+J1fAAESYBAAAEBwABMRXaAQAE/2ZicC9mYnAuBmNhcG5wOlByb2Nlc3MuU3RhdGVUcmFuc2l0aW9uLnN0YXRlQ2hhbmdlZCRSZXN1bAN0cw==",  # fbp/fbp.capnp:Process.StateTransition.stateChanged$Results
+    "ECNQBgb/jWA33y8iU4IAER4D/yZrX0fT/l6FAAABM6Ae6R8xFYoBES0HAAARKUcRWQcAAP9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6R2F0ZXdheVJlZ2lzdHJhYmxlAABQAQFRBAMFAAD/RJ230nhdTLYBtvDueoawuPcREZoAAhENB/9zdHVyZHlSZQFmQXRHYXRldwNheUABUAEB",  # persistence/persistence.capnp:GatewayRegistrable
+    "EDhQBgb/RJ230nhdTLYAETEBAAAFAgcAATEVWgIAARExdwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpHYXRld2F5UmVnaXN0cmFibGUuc3R1cmR5UmVmQXRHYXRld2F5JFBhcmEDbXNRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFSAABRMAMBUTwCAf9nYXRld2F5UwABUgEQ/03egx0naG2IAAABARAAAf9nYXRld2F5SQABZAEMAAIBDAAB",  # persistence/persistence.capnp:GatewayRegistrable.sturdyRefAtGateway$Params
+    "EChQBgb/tvDueoawuPcAETEBAAAFAQcAATEVYgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpHYXRld2F5UmVnaXN0cmFibGUuc3R1cmR5UmVmQXRHYXRld2F5JFJlc3UHbHRzUQQDBAAABAEAABENggAAUQwDAVEYAgH/c2VsZkF0R2EBdGV3YXlTUgABEP9N3oMdJ2htiAAAAQEQAAE=",  # persistence/persistence.capnp:GatewayRegistrable.sturdyRefAtGateway$Results
     "EBJQBgb/fnn3z17q7PcAERYBAAAEBwABMRUqAQAE/2ZicC9mYnAuA2NhcG5wOlByb2Nlc3MuaW5Qb3J0cyRQYQ9yYW1z",  # fbp/fbp.capnp:Process.inPorts$Params
     "ECZQBgb/IQ0FCnNUkc0AERYBAAAFAQcAATEVMgEAAREdPwAB/2ZicC9mYnAuA2NhcG5wOlByb2Nlc3MuaW5Qb3J0cyRSZR9zdWx0c1EEAwQAAAQBAAARDTIAAFEIAwFRJAIBH3BvcnRzAQ4AAVADAQEQ/3LN0a0pKI3CAAABAQ4AAQ==",  # fbp/fbp.capnp:Process.inPorts$Results
     "EDNQBgb/o3TufNjzO9wAERYBAAAFAgcAATEVWgEAAREhdwAB/2ZicC9mYnAuBGNhcG5wOlByb2Nlc3MuY29ubmVjdEluUG9ydCRQYXJhA21zUQgDBAAABAEAABEpKgAAUSQDAVEwAgERAQEUAQEAABEtUgAAUSwDAVE4AgEPbmFtZQEMAAIBDAAB/3N0dXJkeVJlAAFmARD/Td6DHSdobYgAAAEBEAAB",  # fbp/fbp.capnp:Process.connectInPort$Params
@@ -114,9 +136,6 @@ _SCHEMA_NODES = [
     "EBNQBgb/3Vd6sDKHYMgAERYBAAAEBwABMRVqAQAE/2ZicC9mYnAuBGNhcG5wOlByb2Nlc3Muc2V0Q29uZmlnRW50cnkkUmVzD3VsdHM=",  # fbp/fbp.capnp:Process.setConfigEntry$Results
     "ECRQBgb/CsJDOnLH+bYAERYBAAAFAQcAATEVGgEAAREdPwAB/2ZicC9mYnAuA2NhcG5wOlByb2Nlc3Muc3RhdGUkUGFyYQNtc1EEAwQAAAQBAAARDZoAAFEQAwFRHAIB/3RyYW5zaXRpAW9uQ2FsbGJhA2NrARH/+vpcZnWpj5wAAAEBEQAB",  # fbp/fbp.capnp:Process.state$Params
     "ECNQBgb/zodTMLh7PNgAURYBAQAABAcAATEVIgEAAREdPwAB/2ZicC9mYnAuA2NhcG5wOlByb2Nlc3Muc3RhdGUkUmVzdQdsdHNRBAMEAAAEAQAAEQ1qAABRDAMBURgCAf9jdXJyZW50UwAPdGF0ZQEP/6Vp5zsjRHDmAAABAQ8AAQ==",  # fbp/fbp.capnp:Process.state$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
-    "ECNQBgb/jWA33y8iU4IAER4D/yZrX0fT/l6FAAABM6Ae6R8xFYoBES0HAAARKUcRWQcAAP9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6R2F0ZXdheVJlZ2lzdHJhYmxlAABQAQFRBAMFAAD/RJ230nhdTLYBtvDueoawuPcREZoAAhENB/9zdHVyZHlSZQFmQXRHYXRldwNheUABUAEB",  # persistence/persistence.capnp:GatewayRegistrable
 ]
 
 # Load schemas and build module structure
@@ -131,8 +150,8 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-IP = _StructModule(_loader.get(0xAF0A1DC4709A5CCF).as_struct(), "IP")
-IP.KV = _StructModule(
+IP = _IPStructModule(_loader.get(0xAF0A1DC4709A5CCF).as_struct(), "IP")
+IP.KV = _IPStructModule._KVStructModule(
     IP.schema.fields["attributes"].schema.elementType,
     "KV",
 )
@@ -140,66 +159,81 @@ IP.Type = _EnumModule(
     IP.schema.fields["type"].schema,
     "Type",
 )
-IIP = _StructModule(_loader.get(0xF3705FB36D44A21F).as_struct(), "IIP")
-Channel = _InterfaceModule(_loader.get(0x9C62C32B2FF2B1E8).as_interface(), "Channel")
+IIP = _IIPStructModule(_loader.get(0xF3705FB36D44A21F).as_struct(), "IIP")
+Channel = _ChannelInterfaceModule(
+    _loader.get(0x9C62C32B2FF2B1E8).as_interface(),
+    "Channel",
+)
 Channel.CloseSemantics = _EnumModule(
     Channel.schema.methods["setAutoCloseSemantics"].param_type.fields["cs"].schema,
     "CloseSemantics",
 )
-Channel.Msg = _StructModule(
+Channel.Msg = _ChannelInterfaceModule._MsgStructModule(
     Channel.schema.methods["reader"]
     .result_type.fields["r"]
     .schema.methods["read"]
     .result_type,
     "Msg",
 )
-Channel.StartupInfo = _StructModule(
+Channel.StartupInfo = _ChannelInterfaceModule._StartupInfoStructModule(
     _loader.get(0xE3D7A3237F175028).as_struct(),
     "StartupInfo",
 )
-Channel.Reader = _InterfaceModule(
+Channel.Reader = _ChannelInterfaceModule._ReaderInterfaceModule(
     Channel.schema.methods["reader"].result_type.fields["r"].schema,
     "Reader",
 )
-Channel.Writer = _InterfaceModule(
+Channel.Writer = _ChannelInterfaceModule._WriterInterfaceModule(
     Channel.schema.methods["writer"].result_type.fields["w"].schema,
     "Writer",
 )
-Channel.StatsCallback = _InterfaceModule(
+Channel.StatsCallback = _ChannelInterfaceModule._StatsCallbackInterfaceModule(
     Channel.schema.methods["registerStatsCallback"]
     .param_type.fields["callback"]
     .schema,
     "StatsCallback",
 )
-Channel.StatsCallback.Stats = _StructModule(
-    Channel.StatsCallback.schema.methods["status"].param_type.fields["stats"].schema,
-    "Stats",
+Channel.StatsCallback.Stats = (
+    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule(
+        Channel.StatsCallback.schema.methods["status"]
+        .param_type.fields["stats"]
+        .schema,
+        "Stats",
+    )
 )
-Channel.StatsCallback.Unregister = _InterfaceModule(
-    Channel.schema.methods["registerStatsCallback"]
-    .result_type.fields["unregisterCallback"]
-    .schema,
-    "Unregister",
+Channel.StatsCallback.Unregister = (
+    _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule(
+        Channel.schema.methods["registerStatsCallback"]
+        .result_type.fields["unregisterCallback"]
+        .schema,
+        "Unregister",
+    )
 )
-StartChannelsService = _InterfaceModule(
+StartChannelsService = _StartChannelsServiceInterfaceModule(
     _loader.get(0xD0CD6D829B810229).as_interface(),
     "StartChannelsService",
 )
-StartChannelsService.Params = _StructModule(
+StartChannelsService.Params = _StartChannelsServiceInterfaceModule._ParamsStructModule(
     StartChannelsService.schema.methods["start"].param_type,
     "Params",
 )
-PortInfos = _StructModule(_loader.get(0xECE0EFA9A922D4A8).as_struct(), "PortInfos")
-PortInfos.NameAndSR = _StructModule(
+PortInfos = _PortInfosStructModule(
+    _loader.get(0xECE0EFA9A922D4A8).as_struct(),
+    "PortInfos",
+)
+PortInfos.NameAndSR = _PortInfosStructModule._NameAndSRStructModule(
     PortInfos.schema.fields["inPorts"].schema.elementType,
     "NameAndSR",
 )
-Component = _StructModule(_loader.get(0xD717FF7D6815A6B0).as_struct(), "Component")
+Component = _ComponentStructModule(
+    _loader.get(0xD717FF7D6815A6B0).as_struct(),
+    "Component",
+)
 Component.ComponentType = _EnumModule(
     Component.schema.fields["type"].schema,
     "ComponentType",
 )
-Component.Port = _StructModule(
+Component.Port = _ComponentStructModule._PortStructModule(
     Component.schema.fields["inPorts"].schema.elementType,
     "Port",
 )
@@ -207,21 +241,27 @@ Component.Port.PortType = _EnumModule(
     Component.Port.schema.fields["type"].schema,
     "PortType",
 )
-Runnable = _InterfaceModule(_loader.get(0xBDE616D300754FF0).as_interface(), "Runnable")
-Runnable.Factory = _InterfaceModule(
+Runnable = _RunnableInterfaceModule(
+    _loader.get(0xBDE616D300754FF0).as_interface(),
+    "Runnable",
+)
+Runnable.Factory = _RunnableInterfaceModule._FactoryInterfaceModule(
     _loader.get(0xF5694DB406AA9975).as_interface(),
     "Factory",
 )
-Runnable.StoppedCallback = _InterfaceModule(
+Runnable.StoppedCallback = _RunnableInterfaceModule._StoppedCallbackInterfaceModule(
     Runnable.schema.methods["start"].param_type.fields["stoppedCb"].schema,
     "StoppedCallback",
 )
-Process = _InterfaceModule(_loader.get(0xBBAD56943A039783).as_interface(), "Process")
-Process.Factory = _InterfaceModule(
+Process = _ProcessInterfaceModule(
+    _loader.get(0xBBAD56943A039783).as_interface(),
+    "Process",
+)
+Process.Factory = _ProcessInterfaceModule._FactoryInterfaceModule(
     _loader.get(0xB01652AB8F1AC0D3).as_interface(),
     "Factory",
 )
-Process.ConfigEntry = _StructModule(
+Process.ConfigEntry = _ProcessInterfaceModule._ConfigEntryStructModule(
     Process.schema.methods["configEntries"]
     .result_type.fields["config"]
     .schema.elementType,
@@ -235,7 +275,7 @@ Process.State = _EnumModule(
     .schema,
     "State",
 )
-Process.StateTransition = _InterfaceModule(
+Process.StateTransition = _ProcessInterfaceModule._StateTransitionInterfaceModule(
     Process.schema.methods["state"].param_type.fields["transitionCallback"].schema,
     "StateTransition",
 )

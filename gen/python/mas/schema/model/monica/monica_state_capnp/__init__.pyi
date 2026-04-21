@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `monica_state.capnp`."""
 
-from . import types as types
+from mas.schema.model.monica.monica_state_capnp import types as types
 
 MaybeBool: types.modules._MaybeBoolStructModule
 CropModuleState: types.modules._CropModuleStateStructModule

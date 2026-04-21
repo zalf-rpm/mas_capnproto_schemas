@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `geo.capnp`."""
 
-from . import types as types
+from mas.schema.geo.geo_capnp import types as types
 
 class _CoordTypeEnumModule:
     gk: int

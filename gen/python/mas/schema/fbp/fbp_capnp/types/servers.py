@@ -1,5 +1,7 @@
 """Runtime placeholder module for server helpers of `fbp.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from .. import Channel, Process, Runnable, StartChannelsService
 
 ChannelServer = Channel.Server

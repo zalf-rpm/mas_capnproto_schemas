@@ -5,7 +5,32 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.model.monica.monica_params_capnp.types.modules import (
+    _AutomaticHarvestParametersStructModule,
+    _AutomaticIrrigationParametersStructModule,
+    _CropModuleParametersStructModule,
+    _CropParametersStructModule,
+    _CropResidueParametersStructModule,
+    _CropSpecStructModule,
+    _CultivarParametersStructModule,
+    _EnvironmentParametersStructModule,
+    _MeasuredGroundwaterTableInformationStructModule,
+    _NMinApplicationParametersStructModule,
+    _NMinCropParametersStructModule,
+    _SimulationParametersStructModule,
+    _SiteParametersStructModule,
+    _SoilMoistureModuleParametersStructModule,
+    _SoilOrganicModuleParametersStructModule,
+    _SoilParametersStructModule,
+    _SoilTemperatureModuleParametersStructModule,
+    _SoilTransportModuleParametersStructModule,
+    _SpeciesParametersStructModule,
+    _SticsParametersStructModule,
+    _VocStructModule,
+    _YieldComponentStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -66,24 +91,27 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-CropSpec = _StructModule(_loader.get(0xA74F5574681F9D55).as_struct(), "CropSpec")
-CropParameters = _StructModule(
+CropSpec = _CropSpecStructModule(
+    _loader.get(0xA74F5574681F9D55).as_struct(),
+    "CropSpec",
+)
+CropParameters = _CropParametersStructModule(
     _loader.get(0x8AC5CFB21988C168).as_struct(),
     "CropParameters",
 )
-SpeciesParameters = _StructModule(
+SpeciesParameters = _SpeciesParametersStructModule(
     _loader.get(0xD2D587C796186E8B).as_struct(),
     "SpeciesParameters",
 )
-CultivarParameters = _StructModule(
+CultivarParameters = _CultivarParametersStructModule(
     _loader.get(0xF206F12E39AB7F9B).as_struct(),
     "CultivarParameters",
 )
-YieldComponent = _StructModule(
+YieldComponent = _YieldComponentStructModule(
     _loader.get(0xDBFE301C0DDEFE4E).as_struct(),
     "YieldComponent",
 )
-AutomaticHarvestParameters = _StructModule(
+AutomaticHarvestParameters = _AutomaticHarvestParametersStructModule(
     _loader.get(0xC5F724BD00C2F628).as_struct(),
     "AutomaticHarvestParameters",
 )
@@ -91,105 +119,120 @@ AutomaticHarvestParameters.HarvestTime = _EnumModule(
     AutomaticHarvestParameters.schema.fields["harvestTime"].schema,
     "HarvestTime",
 )
-NMinCropParameters = _StructModule(
+NMinCropParameters = _NMinCropParametersStructModule(
     _loader.get(0xEA9236083718FDC2).as_struct(),
     "NMinCropParameters",
 )
-NMinApplicationParameters = _StructModule(
+NMinApplicationParameters = _NMinApplicationParametersStructModule(
     _loader.get(0xDE7576C640B5AD18).as_struct(),
     "NMinApplicationParameters",
 )
-CropResidueParameters = _StructModule(
+CropResidueParameters = _CropResidueParametersStructModule(
     _loader.get(0x8491DC2C2F94F1D1).as_struct(),
     "CropResidueParameters",
 )
-SoilParameters = _StructModule(
+SoilParameters = _SoilParametersStructModule(
     _loader.get(0xB42137D4B8BA3EF6).as_struct(),
     "SoilParameters",
 )
-AutomaticIrrigationParameters = _StructModule(
+AutomaticIrrigationParameters = _AutomaticIrrigationParametersStructModule(
     _loader.get(0x8890F17A143C6896).as_struct(),
     "AutomaticIrrigationParameters",
 )
-SiteParameters = _StructModule(
+SiteParameters = _SiteParametersStructModule(
     _loader.get(0xB599BBD2F1465F9C).as_struct(),
     "SiteParameters",
 )
-EnvironmentParameters = _StructModule(
+EnvironmentParameters = _EnvironmentParametersStructModule(
     _loader.get(0xC0FF4A277CA4BE0A).as_struct(),
     "EnvironmentParameters",
 )
-EnvironmentParameters.YearToValue = _StructModule(
-    EnvironmentParameters.schema.fields["atmosphericCO2s"].schema.elementType,
-    "YearToValue",
+EnvironmentParameters.YearToValue = (
+    _EnvironmentParametersStructModule._YearToValueStructModule(
+        EnvironmentParameters.schema.fields["atmosphericCO2s"].schema.elementType,
+        "YearToValue",
+    )
 )
-MeasuredGroundwaterTableInformation = _StructModule(
+MeasuredGroundwaterTableInformation = _MeasuredGroundwaterTableInformationStructModule(
     _loader.get(0xC1092D6C4C110E29).as_struct(),
     "MeasuredGroundwaterTableInformation",
 )
-MeasuredGroundwaterTableInformation.DateToValue = _StructModule(
-    MeasuredGroundwaterTableInformation.schema.fields[
-        "groundwaterInfo"
-    ].schema.elementType,
-    "DateToValue",
+MeasuredGroundwaterTableInformation.DateToValue = (
+    _MeasuredGroundwaterTableInformationStructModule._DateToValueStructModule(
+        MeasuredGroundwaterTableInformation.schema.fields[
+            "groundwaterInfo"
+        ].schema.elementType,
+        "DateToValue",
+    )
 )
-SimulationParameters = _StructModule(
+SimulationParameters = _SimulationParametersStructModule(
     _loader.get(0xFFAC0FA5C7156A5D).as_struct(),
     "SimulationParameters",
 )
-CropModuleParameters = _StructModule(
+CropModuleParameters = _CropModuleParametersStructModule(
     _loader.get(0xE4D6D0D9AE1553DA).as_struct(),
     "CropModuleParameters",
 )
-SoilMoistureModuleParameters = _StructModule(
+SoilMoistureModuleParameters = _SoilMoistureModuleParametersStructModule(
     _loader.get(0xCDFF1B0306EA58CF).as_struct(),
     "SoilMoistureModuleParameters",
 )
-SoilOrganicModuleParameters = _StructModule(
+SoilOrganicModuleParameters = _SoilOrganicModuleParametersStructModule(
     _loader.get(0xB3E73F8C19AFD787).as_struct(),
     "SoilOrganicModuleParameters",
 )
-SoilTemperatureModuleParameters = _StructModule(
+SoilTemperatureModuleParameters = _SoilTemperatureModuleParametersStructModule(
     _loader.get(0xF0C41D021228D929).as_struct(),
     "SoilTemperatureModuleParameters",
 )
-SoilTransportModuleParameters = _StructModule(
+SoilTransportModuleParameters = _SoilTransportModuleParametersStructModule(
     _loader.get(0xC5CB65E585742338).as_struct(),
     "SoilTransportModuleParameters",
 )
-Voc = _StructModule(_loader.get(0xB87956E2953771DB).as_struct(), "Voc")
-Voc.Emissions = _StructModule(_loader.get(0xD9ED2C1C754D683E).as_struct(), "Emissions")
-Voc.Emissions.SpeciesIdToEmission = _StructModule(
-    Voc.Emissions.schema.fields["speciesIdToIsopreneEmission"].schema.elementType,
-    "SpeciesIdToEmission",
+Voc = _VocStructModule(_loader.get(0xB87956E2953771DB).as_struct(), "Voc")
+Voc.Emissions = _VocStructModule._EmissionsStructModule(
+    _loader.get(0xD9ED2C1C754D683E).as_struct(),
+    "Emissions",
 )
-Voc.SpeciesData = _StructModule(
+Voc.Emissions.SpeciesIdToEmission = (
+    _VocStructModule._EmissionsStructModule._SpeciesIdToEmissionStructModule(
+        Voc.Emissions.schema.fields["speciesIdToIsopreneEmission"].schema.elementType,
+        "SpeciesIdToEmission",
+    )
+)
+Voc.SpeciesData = _VocStructModule._SpeciesDataStructModule(
     _loader.get(0x80D5A7B782142E87).as_struct(),
     "SpeciesData",
 )
-Voc.CPData = _StructModule(_loader.get(0xCF0F425C8BD69FA2).as_struct(), "CPData")
-Voc.MicroClimateData = _StructModule(
+Voc.CPData = _VocStructModule._CPDataStructModule(
+    _loader.get(0xCF0F425C8BD69FA2).as_struct(),
+    "CPData",
+)
+Voc.MicroClimateData = _VocStructModule._MicroClimateDataStructModule(
     _loader.get(0xF246442C7AEE0AF5).as_struct(),
     "MicroClimateData",
 )
-Voc.PhotosynthT = _StructModule(
+Voc.PhotosynthT = _VocStructModule._PhotosynthTStructModule(
     _loader.get(0xF95DB11410E33EFC).as_struct(),
     "PhotosynthT",
 )
-Voc.FoliageT = _StructModule(_loader.get(0xEE0B04CC3F52F33C).as_struct(), "FoliageT")
-Voc.EnzymeActivityT = _StructModule(
+Voc.FoliageT = _VocStructModule._FoliageTStructModule(
+    _loader.get(0xEE0B04CC3F52F33C).as_struct(),
+    "FoliageT",
+)
+Voc.EnzymeActivityT = _VocStructModule._EnzymeActivityTStructModule(
     _loader.get(0xC281C6E5BE483337).as_struct(),
     "EnzymeActivityT",
 )
-Voc.LeafEmissionT = _StructModule(
+Voc.LeafEmissionT = _VocStructModule._LeafEmissionTStructModule(
     _loader.get(0xE82D760B257DADDB).as_struct(),
     "LeafEmissionT",
 )
-Voc.LeafEmissions = _StructModule(
+Voc.LeafEmissions = _VocStructModule._LeafEmissionsStructModule(
     _loader.get(0xC8AEB5222AC5EF40).as_struct(),
     "LeafEmissions",
 )
-SticsParameters = _StructModule(
+SticsParameters = _SticsParametersStructModule(
     _loader.get(0xCE5B0091FD9ACB21).as_struct(),
     "SticsParameters",
 )

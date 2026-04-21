@@ -1,5 +1,5 @@
 """Enum helper aliases for `monica_params.capnp`."""
 
-from ._all import (
-    AutomaticHarvestParametersHarvestTimeEnum as AutomaticHarvestParametersHarvestTimeEnum,
-)
+from typing import Literal
+
+type AutomaticHarvestParametersHarvestTimeEnum = int | Literal["maturity", "unknown"]

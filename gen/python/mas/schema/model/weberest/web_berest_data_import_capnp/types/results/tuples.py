@@ -1,5 +1,7 @@
 """Runtime placeholder module for result tuple helpers of `web_berest_data_import.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from typing import NamedTuple
 
 

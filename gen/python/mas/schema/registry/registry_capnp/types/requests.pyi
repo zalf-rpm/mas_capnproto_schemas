@@ -1,12 +1,78 @@
 """Request helper types for `registry.capnp`."""
 
-from ._all import AddcategoryRequest as AddcategoryRequest
-from ._all import CategoryinfoRequest as CategoryinfoRequest
-from ._all import EntriesRequest as EntriesRequest
-from ._all import MoveobjectsRequest as MoveobjectsRequest
-from ._all import RegisterRequest as RegisterRequest
-from ._all import RegistryRequest as RegistryRequest
-from ._all import RemovecategoryRequest as RemovecategoryRequest
-from ._all import RemoveobjectsRequest as RemoveobjectsRequest
-from ._all import SupportedcategoriesRequest as SupportedcategoriesRequest
-from ._all import UnregisterRequest as UnregisterRequest
+from collections.abc import Sequence
+from typing import Any, Literal, Protocol, overload
+
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.registry.registry_capnp.types import builders as builders
+from mas.schema.registry.registry_capnp.types import readers as readers
+from mas.schema.registry.registry_capnp.types.results import client as results_client
+
+class AddcategoryRequest(Protocol):
+    category: IdInformationBuilder
+    upsert: bool
+    @overload
+    def init(self, name: Literal["category"]) -> IdInformationBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.AddcategoryResult: ...
+
+class RemovecategoryRequest(Protocol):
+    categoryId: str
+    moveObjectsToCategoryId: str
+    def send(self) -> results_client.RemovecategoryResult: ...
+
+class MoveobjectsRequest(Protocol):
+    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    toCatId: str
+    @overload
+    def init(
+        self,
+        name: Literal["objectIds"],
+        size: int = ...,
+    ) -> builders.TextListBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.MoveobjectsResult: ...
+
+class RemoveobjectsRequest(Protocol):
+    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    @overload
+    def init(
+        self,
+        name: Literal["objectIds"],
+        size: int = ...,
+    ) -> builders.TextListBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.RemoveobjectsResult: ...
+
+class RegistryRequest(Protocol):
+    def send(self) -> results_client.RegistryResult: ...
+
+class SupportedcategoriesRequest(Protocol):
+    def send(self) -> results_client.SupportedcategoriesResult: ...
+
+class CategoryinfoRequest(Protocol):
+    categoryId: str
+    def send(self) -> results_client.CategoryinfoResult: ...
+
+class EntriesRequest(Protocol):
+    categoryId: str
+    def send(self) -> results_client.EntriesResult: ...
+
+class UnregisterRequest(Protocol):
+    def send(self) -> results_client.UnregisterResult: ...
+
+class RegisterRequest(Protocol):
+    cap: IdentifiableClient | _IdentifiableInterfaceModule.Server
+    regName: str
+    categoryId: str
+    xDomain: builders.CrossDomainRestoreBuilder
+    @overload
+    def init(self, name: Literal["xDomain"]) -> builders.CrossDomainRestoreBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.RegisterResult: ...

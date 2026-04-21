@@ -1,26 +1,82 @@
 """Request helper types for `cluster_admin_service.capnp`."""
 
-from ._all import AdminMasterAvailablemodelsRequest as AdminMasterAvailablemodelsRequest
-from ._all import (
-    AdminMasterRegistermodelinstancefactoryRequest as AdminMasterRegistermodelinstancefactoryRequest,
+from typing import Protocol
+
+from mas.schema.cluster.cluster_admin_service_capnp.types import clients as clients
+from mas.schema.cluster.cluster_admin_service_capnp.types import common as common
+from mas.schema.cluster.cluster_admin_service_capnp.types import modules as modules
+from mas.schema.cluster.cluster_admin_service_capnp.types.results import (
+    client as results_client,
 )
-from ._all import FreenumberofcoresRequest as FreenumberofcoresRequest
-from ._all import ModelidRequest as ModelidRequest
-from ._all import NewcloudviaproxyRequest as NewcloudviaproxyRequest
-from ._all import (
-    NewcloudviazmqpipelineproxiesRequest as NewcloudviazmqpipelineproxiesRequest,
-)
-from ._all import NewinstanceRequest as NewinstanceRequest
-from ._all import NewinstancesRequest as NewinstancesRequest
-from ._all import NumberofcoresRequest as NumberofcoresRequest
-from ._all import RegistermodelinstanceRequest as RegistermodelinstanceRequest
-from ._all import ReleaseRequest as ReleaseRequest
-from ._all import ReservenumberofcoresRequest as ReservenumberofcoresRequest
-from ._all import RestoresturdyrefRequest as RestoresturdyrefRequest
-from ._all import RuntimeAvailablemodelsRequest as RuntimeAvailablemodelsRequest
-from ._all import (
-    RuntimeRegistermodelinstancefactoryRequest as RuntimeRegistermodelinstancefactoryRequest,
-)
-from ._all import UnregisterRequest as UnregisterRequest
-from ._all import UserMasterAvailablemodelsRequest as UserMasterAvailablemodelsRequest
-from ._all import ValueRequest as ValueRequest
+
+class UnregisterRequest(Protocol):
+    def send(self) -> results_client.UnregisterResult: ...
+
+class ValueRequest(Protocol):
+    def send(self) -> results_client.ValueResult: ...
+
+class ReleaseRequest(Protocol):
+    def send(self) -> results_client.ReleaseResult: ...
+
+class NewinstanceRequest(Protocol):
+    def send(self) -> results_client.NewinstanceResult: ...
+
+class NewinstancesRequest(Protocol):
+    numberOfInstances: int
+    def send(self) -> results_client.NewinstancesResult: ...
+
+class NewcloudviazmqpipelineproxiesRequest(Protocol):
+    numberOfInstances: int
+    def send(self) -> results_client.NewcloudviazmqpipelineproxiesResult: ...
+
+class NewcloudviaproxyRequest(Protocol):
+    numberOfInstances: int
+    def send(self) -> results_client.NewcloudviaproxyResult: ...
+
+class ModelidRequest(Protocol):
+    def send(self) -> results_client.ModelidResult: ...
+
+class RegistermodelinstanceRequest(Protocol):
+    instance: common.AnyPointer
+    registrationToken: str
+    def send(self) -> results_client.RegistermodelinstanceResult: ...
+
+class RestoresturdyrefRequest(Protocol):
+    sturdyRef: str
+    def send(self) -> results_client.RestoresturdyrefResult: ...
+
+class AdminMasterRegistermodelinstancefactoryRequest(Protocol):
+    aModelId: str
+    aFactory: (
+        clients.ModelInstanceFactoryClient
+        | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+    )
+    def send(self) -> results_client.AdminMasterRegistermodelinstancefactoryResult: ...
+
+class AdminMasterAvailablemodelsRequest(Protocol):
+    def send(self) -> results_client.AdminMasterAvailablemodelsResult: ...
+
+class UserMasterAvailablemodelsRequest(Protocol):
+    def send(self) -> results_client.UserMasterAvailablemodelsResult: ...
+
+class RuntimeRegistermodelinstancefactoryRequest(Protocol):
+    aModelId: str
+    aFactory: (
+        clients.ModelInstanceFactoryClient
+        | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+    )
+    def send(self) -> results_client.RuntimeRegistermodelinstancefactoryResult: ...
+
+class RuntimeAvailablemodelsRequest(Protocol):
+    def send(self) -> results_client.RuntimeAvailablemodelsResult: ...
+
+class NumberofcoresRequest(Protocol):
+    def send(self) -> results_client.NumberofcoresResult: ...
+
+class FreenumberofcoresRequest(Protocol):
+    def send(self) -> results_client.FreenumberofcoresResult: ...
+
+class ReservenumberofcoresRequest(Protocol):
+    reserveCores: int
+    aModelId: str
+    def send(self) -> results_client.ReservenumberofcoresResult: ...

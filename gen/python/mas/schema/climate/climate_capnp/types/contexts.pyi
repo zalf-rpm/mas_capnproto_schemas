@@ -1,60 +1,221 @@
 """Context helper types for `climate.capnp`."""
 
-from ._all import AlterCallContext as AlterCallContext
-from ._all import AlteredelementsCallContext as AlteredelementsCallContext
-from ._all import AlteredelementsParams as AlteredelementsParams
-from ._all import AlterParams as AlterParams
-from ._all import CategoriesCallContext as CategoriesCallContext
-from ._all import CategoriesParams as CategoriesParams
-from ._all import ClosesttimeseriesatCallContext as ClosesttimeseriesatCallContext
-from ._all import ClosesttimeseriesatParams as ClosesttimeseriesatParams
-from ._all import CreateCallContext as CreateCallContext
-from ._all import CreateParams as CreateParams
-from ._all import DataCallContext as DataCallContext
-from ._all import DataParams as DataParams
-from ._all import DatasetMetadataCallContext as DatasetMetadataCallContext
-from ._all import DatasetMetadataParams as DatasetMetadataParams
-from ._all import DatatCallContext as DatatCallContext
-from ._all import DatatParams as DatatParams
-from ._all import ForallCallContext as ForallCallContext
-from ._all import ForallParams as ForallParams
-from ._all import ForoneCallContext as ForoneCallContext
-from ._all import ForoneParams as ForoneParams
-from ._all import GetavailabledatasetsCallContext as GetavailabledatasetsCallContext
-from ._all import GetavailabledatasetsParams as GetavailabledatasetsParams
-from ._all import GetdatasetsforCallContext as GetdatasetsforCallContext
-from ._all import GetdatasetsforParams as GetdatasetsforParams
-from ._all import HeaderCallContext as HeaderCallContext
-from ._all import HeaderParams as HeaderParams
-from ._all import LocationCallContext as LocationCallContext
-from ._all import LocationParams as LocationParams
-from ._all import LocationsCallContext as LocationsCallContext
-from ._all import LocationsParams as LocationsParams
-from ._all import NextlocationsCallContext as NextlocationsCallContext
-from ._all import NextlocationsParams as NextlocationsParams
-from ._all import RangeCallContext as RangeCallContext
-from ._all import RangeParams as RangeParams
-from ._all import RemoveCallContext as RemoveCallContext
-from ._all import RemoveParams as RemoveParams
-from ._all import (
-    ReplacewrappedtimeseriesCallContext as ReplacewrappedtimeseriesCallContext,
-)
-from ._all import ReplacewrappedtimeseriesParams as ReplacewrappedtimeseriesParams
-from ._all import ResolutionCallContext as ResolutionCallContext
-from ._all import ResolutionParams as ResolutionParams
-from ._all import StreamlocationsCallContext as StreamlocationsCallContext
-from ._all import StreamlocationsParams as StreamlocationsParams
-from ._all import SubheaderCallContext as SubheaderCallContext
-from ._all import SubheaderParams as SubheaderParams
-from ._all import SubrangeCallContext as SubrangeCallContext
-from ._all import SubrangeParams as SubrangeParams
-from ._all import SupportedvaluesCallContext as SupportedvaluesCallContext
-from ._all import SupportedvaluesParams as SupportedvaluesParams
-from ._all import TimeseriesatCallContext as TimeseriesatCallContext
-from ._all import TimeseriesatParams as TimeseriesatParams
-from ._all import TimeSeriesMetadataCallContext as TimeSeriesMetadataCallContext
-from ._all import TimeSeriesMetadataParams as TimeSeriesMetadataParams
-from ._all import WrapCallContext as WrapCallContext
-from ._all import WrapParams as WrapParams
-from ._all import WrappedtimeseriesCallContext as WrappedtimeseriesCallContext
-from ._all import WrappedtimeseriesParams as WrappedtimeseriesParams
+from typing import Protocol
+
+from mas.schema.climate.climate_capnp.types import builders as builders
+from mas.schema.climate.climate_capnp.types import clients as clients
+from mas.schema.climate.climate_capnp.types import enums as enums
+from mas.schema.climate.climate_capnp.types import readers as readers
+from mas.schema.climate.climate_capnp.types.results import server as results_server
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.date_capnp.types.readers import DateReader
+from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+
+class CategoriesParams(Protocol): ...
+
+class CategoriesCallContext(Protocol):
+    params: CategoriesParams
+    @property
+    def results(self) -> results_server.CategoriesServerResult: ...
+
+class SupportedvaluesParams(Protocol):
+    typeId: str
+
+class SupportedvaluesCallContext(Protocol):
+    params: SupportedvaluesParams
+    @property
+    def results(self) -> results_server.SupportedvaluesServerResult: ...
+
+class ForoneParams(Protocol):
+    entry: readers.EntryReader
+
+class ForoneCallContext(Protocol):
+    params: ForoneParams
+    @property
+    def results(self) -> IdInformationBuilder: ...
+
+class ForallParams(Protocol): ...
+
+class ForallCallContext(Protocol):
+    params: ForallParams
+    @property
+    def results(self) -> results_server.ForallServerResult: ...
+
+class ResolutionParams(Protocol): ...
+
+class ResolutionCallContext(Protocol):
+    params: ResolutionParams
+    @property
+    def results(self) -> results_server.ResolutionServerResult: ...
+
+class RangeParams(Protocol): ...
+
+class RangeCallContext(Protocol):
+    params: RangeParams
+    @property
+    def results(self) -> results_server.RangeServerResult: ...
+
+class HeaderParams(Protocol): ...
+
+class HeaderCallContext(Protocol):
+    params: HeaderParams
+    @property
+    def results(self) -> results_server.HeaderServerResult: ...
+
+class DataParams(Protocol): ...
+
+class DataCallContext(Protocol):
+    params: DataParams
+    @property
+    def results(self) -> results_server.DataServerResult: ...
+
+class DatatParams(Protocol): ...
+
+class DatatCallContext(Protocol):
+    params: DatatParams
+    @property
+    def results(self) -> results_server.DatatServerResult: ...
+
+class SubrangeParams(Protocol):
+    start: DateReader
+    end: DateReader
+
+class SubrangeCallContext(Protocol):
+    params: SubrangeParams
+    @property
+    def results(self) -> results_server.SubrangeServerResult: ...
+
+class SubheaderParams(Protocol):
+    elements: readers.ElementEnumListReader
+
+class SubheaderCallContext(Protocol):
+    params: SubheaderParams
+    @property
+    def results(self) -> results_server.SubheaderServerResult: ...
+
+class TimeSeriesMetadataParams(Protocol): ...
+
+class TimeSeriesMetadataCallContext(Protocol):
+    params: TimeSeriesMetadataParams
+    @property
+    def results(self) -> builders.MetadataBuilder: ...
+
+class LocationParams(Protocol): ...
+
+class LocationCallContext(Protocol):
+    params: LocationParams
+    @property
+    def results(self) -> builders.LocationBuilder: ...
+
+class NextlocationsParams(Protocol):
+    maxCount: int
+
+class NextlocationsCallContext(Protocol):
+    params: NextlocationsParams
+    @property
+    def results(self) -> results_server.NextlocationsServerResult: ...
+
+class DatasetMetadataParams(Protocol): ...
+
+class DatasetMetadataCallContext(Protocol):
+    params: DatasetMetadataParams
+    @property
+    def results(self) -> builders.MetadataBuilder: ...
+
+class ClosesttimeseriesatParams(Protocol):
+    latlon: LatLonCoordReader
+
+class ClosesttimeseriesatCallContext(Protocol):
+    params: ClosesttimeseriesatParams
+    @property
+    def results(self) -> results_server.ClosesttimeseriesatServerResult: ...
+
+class TimeseriesatParams(Protocol):
+    locationId: str
+
+class TimeseriesatCallContext(Protocol):
+    params: TimeseriesatParams
+    @property
+    def results(self) -> results_server.TimeseriesatServerResult: ...
+
+class LocationsParams(Protocol): ...
+
+class LocationsCallContext(Protocol):
+    params: LocationsParams
+    @property
+    def results(self) -> results_server.LocationsServerResult: ...
+
+class StreamlocationsParams(Protocol):
+    startAfterLocationId: str
+
+class StreamlocationsCallContext(Protocol):
+    params: StreamlocationsParams
+    @property
+    def results(self) -> results_server.StreamlocationsServerResult: ...
+
+class GetavailabledatasetsParams(Protocol): ...
+
+class GetavailabledatasetsCallContext(Protocol):
+    params: GetavailabledatasetsParams
+    @property
+    def results(self) -> results_server.GetavailabledatasetsServerResult: ...
+
+class GetdatasetsforParams(Protocol):
+    template: readers.MetadataReader
+
+class GetdatasetsforCallContext(Protocol):
+    params: GetdatasetsforParams
+    @property
+    def results(self) -> results_server.GetdatasetsforServerResult: ...
+
+class CreateParams(Protocol):
+    csvData: str
+    config: readers.CSVConfigReader
+
+class CreateCallContext(Protocol):
+    params: CreateParams
+    @property
+    def results(self) -> results_server.CreateServerResult: ...
+
+class WrappedtimeseriesParams(Protocol): ...
+
+class WrappedtimeseriesCallContext(Protocol):
+    params: WrappedtimeseriesParams
+    @property
+    def results(self) -> results_server.WrappedtimeseriesServerResult: ...
+
+class AlteredelementsParams(Protocol): ...
+
+class AlteredelementsCallContext(Protocol):
+    params: AlteredelementsParams
+    @property
+    def results(self) -> results_server.AlteredelementsServerResult: ...
+
+class AlterParams(Protocol):
+    desc: readers.AlteredReader
+    asNewTimeSeries: bool
+
+class AlterCallContext(Protocol):
+    params: AlterParams
+    @property
+    def results(self) -> results_server.AlterServerResult: ...
+
+class RemoveParams(Protocol):
+    alteredElement: enums.ElementEnum
+
+class RemoveCallContext(Protocol):
+    params: RemoveParams
+
+class ReplacewrappedtimeseriesParams(Protocol):
+    timeSeries: clients.TimeSeriesClient
+
+class ReplacewrappedtimeseriesCallContext(Protocol):
+    params: ReplacewrappedtimeseriesParams
+
+class WrapParams(Protocol):
+    timeSeries: clients.TimeSeriesClient
+
+class WrapCallContext(Protocol):
+    params: WrapParams
+    @property
+    def results(self) -> results_server.WrapServerResult: ...

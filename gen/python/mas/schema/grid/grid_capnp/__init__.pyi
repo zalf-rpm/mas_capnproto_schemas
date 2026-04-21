@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `grid.capnp`."""
 
-from . import types as types
+from mas.schema.grid.grid_capnp import types as types
 
 class _AggregationEnumModule:
     none: int

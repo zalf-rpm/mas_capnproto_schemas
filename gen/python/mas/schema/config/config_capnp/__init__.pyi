@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `config.capnp`."""
 
-from . import types as types
+from mas.schema.config.config_capnp import types as types
 
 Service: types.modules._ServiceInterfaceModule
 

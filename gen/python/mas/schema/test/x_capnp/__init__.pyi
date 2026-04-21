@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `x.capnp`."""
 
-from . import types as types
+from mas.schema.test.x_capnp import types as types
 
 X: types.modules._XInterfaceModule
 S: types.modules._SStructModule

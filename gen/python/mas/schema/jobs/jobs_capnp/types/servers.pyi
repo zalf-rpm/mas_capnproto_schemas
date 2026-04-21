@@ -1,3 +1,5 @@
 """Server helper types for `jobs.capnp`."""
 
-from ._all import ServiceServer as ServiceServer
+from mas.schema.jobs.jobs_capnp.types import modules as modules
+
+ServiceServer = modules._ServiceInterfaceModule.Server

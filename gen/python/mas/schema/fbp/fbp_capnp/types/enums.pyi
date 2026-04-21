@@ -1,7 +1,15 @@
 """Enum helper aliases for `fbp.capnp`."""
 
-from ._all import ChannelCloseSemanticsEnum as ChannelCloseSemanticsEnum
-from ._all import ComponentComponentTypeEnum as ComponentComponentTypeEnum
-from ._all import ComponentPortPortTypeEnum as ComponentPortPortTypeEnum
-from ._all import IPTypeEnum as IPTypeEnum
-from ._all import ProcessStateEnum as ProcessStateEnum
+from typing import Literal
+
+type ChannelCloseSemanticsEnum = int | Literal["fbp", "no"]
+
+type ComponentComponentTypeEnum = (
+    int | Literal["standard", "iip", "subflow", "view", "process"]
+)
+
+type ComponentPortPortTypeEnum = int | Literal["standard", "array"]
+
+type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
+
+type ProcessStateEnum = int | Literal["started", "stopped", "canceled"]

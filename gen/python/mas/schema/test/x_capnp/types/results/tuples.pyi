@@ -1,4 +1,9 @@
 """Result tuple helper types for `x.capnp`."""
 
-from .._all import XMResultTuple as XMResultTuple
-from .._all import ZMResultTuple as ZMResultTuple
+from typing import NamedTuple
+
+class XMResultTuple(NamedTuple):
+    t: str
+
+class ZMResultTuple(NamedTuple):
+    r: float

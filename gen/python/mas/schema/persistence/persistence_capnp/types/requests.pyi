@@ -1,10 +1,60 @@
 """Request helper types for `persistence.capnp`."""
 
-from ._all import BeatRequest as BeatRequest
-from ._all import GatewayRegisterRequest as GatewayRegisterRequest
-from ._all import RegistrarRegisterRequest as RegistrarRegisterRequest
-from ._all import ReleaseRequest as ReleaseRequest
-from ._all import ResolveRequest as ResolveRequest
-from ._all import RestoreRequest as RestoreRequest
-from ._all import SaveRequest as SaveRequest
-from ._all import SturdyrefatgatewayRequest as SturdyrefatgatewayRequest
+from typing import Any, Literal, Protocol, overload
+
+from mas.schema.persistence.persistence_capnp.types import builders as builders
+from mas.schema.persistence.persistence_capnp.types import common as common
+from mas.schema.persistence.persistence_capnp.types.results import (
+    client as results_client,
+)
+
+class BeatRequest(Protocol):
+    def send(self) -> results_client.BeatResult: ...
+
+class ReleaseRequest(Protocol):
+    def send(self) -> results_client.ReleaseResult: ...
+
+class SaveRequest(Protocol):
+    sealFor: builders.OwnerBuilder
+    @overload
+    def init(self, name: Literal["sealFor"]) -> builders.OwnerBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.SaveResult: ...
+
+class RestoreRequest(Protocol):
+    localRef: builders.TokenBuilder
+    sealedBy: builders.OwnerBuilder
+    @overload
+    def init(self, name: Literal["localRef"]) -> builders.TokenBuilder: ...
+    @overload
+    def init(self, name: Literal["sealedBy"]) -> builders.OwnerBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.RestoreResult: ...
+
+class RegistrarRegisterRequest(Protocol):
+    base64VatId: str
+    host: str
+    port: int
+    alias: str
+    identityProof: bytes
+    def send(self) -> results_client.RegistrarRegisterResult: ...
+
+class ResolveRequest(Protocol):
+    id: str
+    def send(self) -> results_client.ResolveResult: ...
+
+class GatewayRegisterRequest(Protocol):
+    cap: common.AnyPointer
+    secretSeed: str
+    def send(self) -> results_client.GatewayRegisterResult: ...
+
+class SturdyrefatgatewayRequest(Protocol):
+    gatewaySR: builders.SturdyRefBuilder
+    gatewayId: str
+    @overload
+    def init(self, name: Literal["gatewaySR"]) -> builders.SturdyRefBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.SturdyrefatgatewayResult: ...

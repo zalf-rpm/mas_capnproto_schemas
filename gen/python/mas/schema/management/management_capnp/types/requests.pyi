@@ -1,5 +1,18 @@
 """Request helper types for `management.capnp`."""
 
-from ._all import ManagementatRequest as ManagementatRequest
-from ._all import NutrientsRequest as NutrientsRequest
-from ._all import ParametersRequest as ParametersRequest
+from typing import Protocol
+
+from mas.schema.management.management_capnp.types.results import (
+    client as results_client,
+)
+
+class NutrientsRequest(Protocol):
+    def send(self) -> results_client.NutrientsResult: ...
+
+class ParametersRequest(Protocol):
+    def send(self) -> results_client.ParametersResult: ...
+
+class ManagementatRequest(Protocol):
+    lat: float
+    lon: float
+    def send(self) -> results_client.ManagementatResult: ...

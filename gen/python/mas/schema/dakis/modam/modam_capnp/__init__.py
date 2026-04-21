@@ -5,7 +5,10 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.dakis.modam.modam_capnp.types.modules import (
+    _ModamWrapperServiceInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -31,7 +34,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-ModamWrapperService = _InterfaceModule(
+ModamWrapperService = _ModamWrapperServiceInterfaceModule(
     _loader.get(0xDB3FB36057ABC378).as_interface(),
     "ModamWrapperService",
 )
