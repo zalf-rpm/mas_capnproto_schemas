@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `field_exp_data.capnp`."""
 
-from . import types as types
+from mas.schema.data.field_exp_data_capnp import types as types
 
 WeatherStation: types.modules._WeatherStationStructModule
 SoilMetadata: types.modules._SoilMetadataStructModule

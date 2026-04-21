@@ -1,20 +1,86 @@
 """Context helper types for `grid.capnp`."""
 
-from ._all import ClosestvalueatCallContext as ClosestvalueatCallContext
-from ._all import ClosestvalueatParams as ClosestvalueatParams
-from ._all import DimensionCallContext as DimensionCallContext
-from ._all import DimensionParams as DimensionParams
-from ._all import LatlonboundsCallContext as LatlonboundsCallContext
-from ._all import LatlonboundsParams as LatlonboundsParams
-from ._all import NodatavalueCallContext as NodatavalueCallContext
-from ._all import NodatavalueParams as NodatavalueParams
-from ._all import ResolutionCallContext as ResolutionCallContext
-from ._all import ResolutionParams as ResolutionParams
-from ._all import SendcellsCallContext as SendcellsCallContext
-from ._all import SendcellsParams as SendcellsParams
-from ._all import StreamcellsCallContext as StreamcellsCallContext
-from ._all import StreamcellsParams as StreamcellsParams
-from ._all import UnitCallContext as UnitCallContext
-from ._all import UnitParams as UnitParams
-from ._all import ValueatCallContext as ValueatCallContext
-from ._all import ValueatParams as ValueatParams
+from typing import Protocol
+
+from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+from mas.schema.grid.grid_capnp.types import enums as enums
+from mas.schema.grid.grid_capnp.types import readers as readers
+from mas.schema.grid.grid_capnp.types.results import server as results_server
+
+class SendcellsParams(Protocol):
+    maxCount: int
+
+class SendcellsCallContext(Protocol):
+    params: SendcellsParams
+    @property
+    def results(self) -> results_server.SendcellsServerResult: ...
+
+class ClosestvalueatParams(Protocol):
+    latlonCoord: LatLonCoordReader
+    ignoreNoData: bool
+    resolution: readers.ResolutionReader
+    agg: enums.AggregationEnum
+    returnRowCols: bool
+    includeAggParts: bool
+
+class ClosestvalueatCallContext(Protocol):
+    params: ClosestvalueatParams
+    @property
+    def results(self) -> results_server.ClosestvalueatServerResult: ...
+
+class ResolutionParams(Protocol): ...
+
+class ResolutionCallContext(Protocol):
+    params: ResolutionParams
+    @property
+    def results(self) -> results_server.ResolutionServerResult: ...
+
+class DimensionParams(Protocol): ...
+
+class DimensionCallContext(Protocol):
+    params: DimensionParams
+    @property
+    def results(self) -> results_server.DimensionServerResult: ...
+
+class NodatavalueParams(Protocol): ...
+
+class NodatavalueCallContext(Protocol):
+    params: NodatavalueParams
+    @property
+    def results(self) -> results_server.NodatavalueServerResult: ...
+
+class ValueatParams(Protocol):
+    row: int
+    col: int
+    resolution: readers.ResolutionReader
+    agg: enums.AggregationEnum
+    includeAggParts: bool
+
+class ValueatCallContext(Protocol):
+    params: ValueatParams
+    @property
+    def results(self) -> results_server.ValueatServerResult: ...
+
+class LatlonboundsParams(Protocol):
+    useCellCenter: bool
+
+class LatlonboundsCallContext(Protocol):
+    params: LatlonboundsParams
+    @property
+    def results(self) -> results_server.LatlonboundsServerResult: ...
+
+class StreamcellsParams(Protocol):
+    topLeft: readers.RowColReader
+    bottomRight: readers.RowColReader
+
+class StreamcellsCallContext(Protocol):
+    params: StreamcellsParams
+    @property
+    def results(self) -> results_server.StreamcellsServerResult: ...
+
+class UnitParams(Protocol): ...
+
+class UnitCallContext(Protocol):
+    params: UnitParams
+    @property
+    def results(self) -> results_server.UnitServerResult: ...

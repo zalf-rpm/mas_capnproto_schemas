@@ -1,11 +1,68 @@
 """Enum helper aliases for `management.capnp`."""
 
-from ._all import EventExternalTypeEnum as EventExternalTypeEnum
-from ._all import EventPhenoStageEnum as EventPhenoStageEnum
-from ._all import EventTypeEnum as EventTypeEnum
-from ._all import NutrientNameEnum as NutrientNameEnum
-from ._all import NutrientUnitEnum as NutrientUnitEnum
-from ._all import ParamsCuttingCLEnum as ParamsCuttingCLEnum
-from ._all import ParamsCuttingUnitEnum as ParamsCuttingUnitEnum
-from ._all import ParamsHarvestCropUsageEnum as ParamsHarvestCropUsageEnum
-from ._all import PlantOrganEnum as PlantOrganEnum
+from typing import Literal
+
+type EventExternalTypeEnum = (
+    int
+    | Literal[
+        "sowing",
+        "automaticSowing",
+        "harvest",
+        "automaticHarvest",
+        "irrigation",
+        "tillage",
+        "organicFertilization",
+        "mineralFertilization",
+        "nDemandFertilization",
+        "cutting",
+    ]
+)
+
+type EventPhenoStageEnum = (
+    int | Literal["emergence", "flowering", "anthesis", "maturity"]
+)
+
+type EventTypeEnum = (
+    int
+    | Literal[
+        "sowing",
+        "automaticSowing",
+        "harvest",
+        "automaticHarvest",
+        "irrigation",
+        "tillage",
+        "organicFertilization",
+        "mineralFertilization",
+        "nDemandFertilization",
+        "cutting",
+        "setValue",
+        "saveState",
+    ]
+)
+
+type NutrientNameEnum = (
+    int
+    | Literal[
+        "urea",
+        "ammonia",
+        "nitrate",
+        "phosphorus",
+        "potassium",
+        "sulfate",
+        "organicC",
+        "organicN",
+        "organicP",
+        "organicNFast",
+        "organicNSlow",
+    ]
+)
+
+type NutrientUnitEnum = int | Literal["none", "fraction", "percent"]
+
+type ParamsCuttingCLEnum = int | Literal["cut", "left"]
+
+type ParamsCuttingUnitEnum = int | Literal["percentage", "biomass", "lai"]
+
+type ParamsHarvestCropUsageEnum = int | Literal["greenManure", "biomassProduction"]
+
+type PlantOrganEnum = int | Literal["root", "leaf", "shoot", "fruit", "strukt", "sugar"]

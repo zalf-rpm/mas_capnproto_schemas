@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `common.capnp`."""
 
-from . import types as types
+from mas.schema.common.common_capnp import types as types
 
 IdInformation: types.modules._IdInformationStructModule
 Identifiable: types.modules._IdentifiableInterfaceModule

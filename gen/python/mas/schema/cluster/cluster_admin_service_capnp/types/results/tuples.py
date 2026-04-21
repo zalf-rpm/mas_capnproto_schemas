@@ -1,5 +1,7 @@
 """Runtime placeholder module for result tuple helpers of `cluster_admin_service.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from typing import NamedTuple
 
 

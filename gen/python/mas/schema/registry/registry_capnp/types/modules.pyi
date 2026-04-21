@@ -8,8 +8,13 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _InterfaceMethod,
     _InterfaceModule,
+    _InterfaceSchema,
+    _ListSchema,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
@@ -20,87 +25,398 @@ from mas.schema.persistence.persistence_capnp.types.clients import RestorerClien
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _RestorerInterfaceModule,
 )
-
-from . import _all as _all
+from mas.schema.registry.registry_capnp.types import builders as builders
+from mas.schema.registry.registry_capnp.types import clients as clients
+from mas.schema.registry.registry_capnp.types import contexts as contexts
+from mas.schema.registry.registry_capnp.types import readers as readers
+from mas.schema.registry.registry_capnp.types import schemas as schemas
+from mas.schema.registry.registry_capnp.types import servers as servers
+from mas.schema.registry.registry_capnp.types.results import tuples as results_tuples
 
 class _AdminInterfaceModule(_IdentifiableInterfaceModule):
+    class _AdminSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleAddCategoryParamSchema(_StructSchema):
+            class _CategoryField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["category"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryParamSchema._CategoryField: ...
+                @overload
+                def __getitem__(self, key: Literal["upsert"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryParamSchema._Fields: ...
+
+        class _AdminInterfaceModuleAddCategoryResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["success"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleRemoveCategoryParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["moveObjectsToCategoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryParamSchema._Fields: ...
+
+        class _AdminInterfaceModuleRemoveCategoryResultSchema(_StructSchema):
+            class _RemovedObjectsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> _InterfaceSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema._RemovedObjectsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["removedObjects"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema._RemovedObjectsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleMoveObjectsParamSchema(_StructSchema):
+            class _ObjectIdsField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _ListSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["objectIds"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsParamSchema._ObjectIdsField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["toCatId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsParamSchema._Fields: ...
+
+        class _AdminInterfaceModuleMoveObjectsResultSchema(_StructSchema):
+            class _MovedObjectIdsField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _ListSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["movedObjectIds"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema._MovedObjectIdsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleRemoveObjectsParamSchema(_StructSchema):
+            class _ObjectIdsField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _ListSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["objectIds"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsParamSchema._ObjectIdsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsParamSchema._Fields: ...
+
+        class _AdminInterfaceModuleRemoveObjectsResultSchema(_StructSchema):
+            class _RemovedObjectsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> _InterfaceSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema._RemovedObjectsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["removedObjects"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema._RemovedObjectsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleRegistryParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryParamSchema._Fields: ...
+
+        class _AdminInterfaceModuleRegistryResultSchema(_StructSchema):
+            class _RegistryField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["registry"],
+                ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema._RegistryField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["addCategory"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryParamSchema,
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["removeCategory"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryParamSchema,
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["moveObjects"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsParamSchema,
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["removeObjects"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsParamSchema,
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["registry"],
+            ) -> _InterfaceMethod[
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryParamSchema,
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(self) -> _AdminInterfaceModule._AdminSchema._Methods: ...
+
+    @property
     @override
-    def _new_client(self, server: _DynamicCapabilityServer) -> _all.AdminClient: ...
+    def schema(self) -> schemas._AdminSchema: ...
+    @override
+    def _new_client(self, server: _DynamicCapabilityServer) -> clients.AdminClient: ...
     class Server(_IdentifiableInterfaceModule.Server):
         def addCategory(
             self,
             category: IdInformationReader,
             upsert: bool,
-            _context: _all.AddcategoryCallContext,
+            _context: contexts.AddcategoryCallContext,
             **kwargs: object,
-        ) -> Awaitable[bool | _all.AddcategoryResultTuple | None]: ...
+        ) -> Awaitable[bool | results_tuples.AddcategoryResultTuple | None]: ...
         def addCategory_context(
             self,
-            context: _all.AddcategoryCallContext,
+            context: contexts.AddcategoryCallContext,
         ) -> Awaitable[None]: ...
         def removeCategory(
             self,
             categoryId: str,
             moveObjectsToCategoryId: str,
-            _context: _all.RemovecategoryCallContext,
+            _context: contexts.RemovecategoryCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.IdentifiableClientListBuilder
-            | _all.IdentifiableClientListReader
+            builders.IdentifiableClientListBuilder
+            | readers.IdentifiableClientListReader
             | Sequence[Any]
-            | _all.RemovecategoryResultTuple
+            | results_tuples.RemovecategoryResultTuple
             | None
         ]: ...
         def removeCategory_context(
             self,
-            context: _all.RemovecategoryCallContext,
+            context: contexts.RemovecategoryCallContext,
         ) -> Awaitable[None]: ...
         def moveObjects(
             self,
-            objectIds: _all.TextListReader,
+            objectIds: readers.TextListReader,
             toCatId: str,
-            _context: _all.MoveobjectsCallContext,
+            _context: contexts.MoveobjectsCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.TextListBuilder
-            | _all.TextListReader
+            builders.TextListBuilder
+            | readers.TextListReader
             | Sequence[Any]
-            | _all.MoveobjectsResultTuple
+            | results_tuples.MoveobjectsResultTuple
             | None
         ]: ...
         def moveObjects_context(
             self,
-            context: _all.MoveobjectsCallContext,
+            context: contexts.MoveobjectsCallContext,
         ) -> Awaitable[None]: ...
         def removeObjects(
             self,
-            objectIds: _all.TextListReader,
-            _context: _all.RemoveobjectsCallContext,
+            objectIds: readers.TextListReader,
+            _context: contexts.RemoveobjectsCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.IdentifiableClientListBuilder
-            | _all.IdentifiableClientListReader
+            builders.IdentifiableClientListBuilder
+            | readers.IdentifiableClientListReader
             | Sequence[Any]
-            | _all.RemoveobjectsResultTuple
+            | results_tuples.RemoveobjectsResultTuple
             | None
         ]: ...
         def removeObjects_context(
             self,
-            context: _all.RemoveobjectsCallContext,
+            context: contexts.RemoveobjectsCallContext,
         ) -> Awaitable[None]: ...
         def registry(
             self,
-            _context: _all.RegistryCallContext,
+            _context: contexts.RegistryCallContext,
             **kwargs: object,
         ) -> Awaitable[
             _RegistryInterfaceModule.Server
-            | _all.RegistryClient
-            | _all.RegistryResultTuple
+            | clients.RegistryClient
+            | results_tuples.RegistryResultTuple
             | None
         ]: ...
         def registry_context(
             self,
-            context: _all.RegistryCallContext,
+            context: contexts.RegistryCallContext,
         ) -> Awaitable[None]: ...
 
 class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
@@ -108,6 +424,41 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _EntrySchema(_StructSchema):
+            class _RefField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["ref"],
+                ) -> (
+                    _RegistryInterfaceModule._EntryStructModule._EntrySchema._RefField
+                ): ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistryInterfaceModule._EntryStructModule._EntrySchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._RegistryEntrySchema: ...
         @override
         def new_message(
             self,
@@ -118,7 +469,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             name: str | None = None,
             id: str | None = None,
             **kwargs: object,
-        ) -> _all.EntryBuilder: ...
+        ) -> builders.EntryBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -126,7 +477,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.EntryReader]: ...
+        ) -> AbstractContextManager[readers.EntryReader]: ...
         @overload
         def from_bytes(
             self,
@@ -135,7 +486,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.EntryReader]: ...
+        ) -> AbstractContextManager[readers.EntryReader]: ...
         @overload
         def from_bytes(
             self,
@@ -144,7 +495,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.EntryBuilder]: ...
+        ) -> AbstractContextManager[builders.EntryBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -158,59 +509,62 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EntryReader: ...
+        ) -> readers.EntryReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EntryReader: ...
+        ) -> readers.EntryReader: ...
 
     Entry: _EntryStructModule
     @override
-    def _new_client(self, server: _DynamicCapabilityServer) -> _all.RegistryClient: ...
+    def _new_client(
+        self,
+        server: _DynamicCapabilityServer,
+    ) -> clients.RegistryClient: ...
     class Server(_IdentifiableInterfaceModule.Server):
         def supportedCategories(
             self,
-            _context: _all.SupportedcategoriesCallContext,
+            _context: contexts.SupportedcategoriesCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.IdInformationListBuilder
-            | _all.IdInformationListReader
+            builders.IdInformationListBuilder
+            | readers.IdInformationListReader
             | Sequence[Any]
-            | _all.SupportedcategoriesResultTuple
+            | results_tuples.SupportedcategoriesResultTuple
             | None
         ]: ...
         def supportedCategories_context(
             self,
-            context: _all.SupportedcategoriesCallContext,
+            context: contexts.SupportedcategoriesCallContext,
         ) -> Awaitable[None]: ...
         def categoryInfo(
             self,
             categoryId: str,
-            _context: _all.CategoryinfoCallContext,
+            _context: contexts.CategoryinfoCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.CategoryinfoResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.CategoryinfoResultTuple | None]: ...
         def categoryInfo_context(
             self,
-            context: _all.CategoryinfoCallContext,
+            context: contexts.CategoryinfoCallContext,
         ) -> Awaitable[None]: ...
         def entries(
             self,
             categoryId: str,
-            _context: _all.EntriesCallContext,
+            _context: contexts.EntriesCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.EntryListBuilder
-            | _all.EntryListReader
+            builders.EntryListBuilder
+            | readers.EntryListReader
             | Sequence[Any]
-            | _all.EntriesResultTuple
+            | results_tuples.EntriesResultTuple
             | None
         ]: ...
         def entries_context(
             self,
-            context: _all.EntriesCallContext,
+            context: contexts.EntriesCallContext,
         ) -> Awaitable[None]: ...
 
 class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
@@ -218,6 +572,40 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _CrossDomainRestoreSchema(_StructSchema):
+            class _VatIdField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _RestorerField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["vatId"],
+                ) -> _RegistrarInterfaceModule._CrossDomainRestoreStructModule._CrossDomainRestoreSchema._VatIdField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["restorer"],
+                ) -> _RegistrarInterfaceModule._CrossDomainRestoreStructModule._CrossDomainRestoreSchema._RestorerField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._CrossDomainRestoreStructModule._CrossDomainRestoreSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._RegistrarCrossDomainRestoreSchema: ...
         @override
         def new_message(
             self,
@@ -226,7 +614,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             vatId: VatIdBuilder | dict[str, Any] | None = None,
             restorer: RestorerClient | _RestorerInterfaceModule.Server | None = None,
             **kwargs: object,
-        ) -> _all.CrossDomainRestoreBuilder: ...
+        ) -> builders.CrossDomainRestoreBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -234,7 +622,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.CrossDomainRestoreReader]: ...
+        ) -> AbstractContextManager[readers.CrossDomainRestoreReader]: ...
         @overload
         def from_bytes(
             self,
@@ -243,7 +631,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.CrossDomainRestoreReader]: ...
+        ) -> AbstractContextManager[readers.CrossDomainRestoreReader]: ...
         @overload
         def from_bytes(
             self,
@@ -252,7 +640,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.CrossDomainRestoreBuilder]: ...
+        ) -> AbstractContextManager[builders.CrossDomainRestoreBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -266,20 +654,64 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CrossDomainRestoreReader: ...
+        ) -> readers.CrossDomainRestoreReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CrossDomainRestoreReader: ...
+        ) -> readers.CrossDomainRestoreReader: ...
 
     CrossDomainRestore: _CrossDomainRestoreStructModule
     class _RegParamsStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _RegParamsSchema(_StructSchema):
+            class _CapField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _XDomainField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._RegistrarCrossDomainRestoreSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cap"],
+                ) -> _RegistrarInterfaceModule._RegParamsStructModule._RegParamsSchema._CapField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["regName"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["xDomain"],
+                ) -> _RegistrarInterfaceModule._RegParamsStructModule._RegParamsSchema._XDomainField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._RegParamsStructModule._RegParamsSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._RegistrarRegParamsSchema: ...
         @override
         def new_message(
             self,
@@ -288,9 +720,9 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             cap: IdentifiableClient | _IdentifiableInterfaceModule.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
-            xDomain: _all.CrossDomainRestoreBuilder | dict[str, Any] | None = None,
+            xDomain: builders.CrossDomainRestoreBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.RegParamsBuilder: ...
+        ) -> builders.RegParamsBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -298,7 +730,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.RegParamsReader]: ...
+        ) -> AbstractContextManager[readers.RegParamsReader]: ...
         @overload
         def from_bytes(
             self,
@@ -307,7 +739,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.RegParamsReader]: ...
+        ) -> AbstractContextManager[readers.RegParamsReader]: ...
         @overload
         def from_bytes(
             self,
@@ -316,7 +748,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.RegParamsBuilder]: ...
+        ) -> AbstractContextManager[builders.RegParamsBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -330,48 +762,234 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.RegParamsReader: ...
+        ) -> readers.RegParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.RegParamsReader: ...
+        ) -> readers.RegParamsReader: ...
 
     RegParams: _RegParamsStructModule
     class _UnregisterInterfaceModule(_InterfaceModule):
+        class _UnregisterSchema(_InterfaceSchema):
+            class _UnregisterInterfaceModuleUnregisterParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema._Fields: ...
+
+            class _UnregisterInterfaceModuleUnregisterResultSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["success"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema._Fields: ...
+
+            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["unregister"],
+                ) -> _InterfaceMethod[
+                    _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema,
+                    _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema,
+                ]: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: str,
+                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._Methods: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._RegistrarUnregisterSchema: ...
         @override
         def _new_client(
             self,
             server: _DynamicCapabilityServer,
-        ) -> _all.UnregisterClient: ...
+        ) -> clients.UnregisterClient: ...
         class Server(_DynamicCapabilityServer):
             def unregister(
                 self,
-                _context: _all.UnregisterCallContext,
+                _context: contexts.UnregisterCallContext,
                 **kwargs: object,
-            ) -> Awaitable[bool | _all.UnregisterResultTuple | None]: ...
+            ) -> Awaitable[bool | results_tuples.UnregisterResultTuple | None]: ...
             def unregister_context(
                 self,
-                context: _all.UnregisterCallContext,
+                context: contexts.UnregisterCallContext,
             ) -> Awaitable[None]: ...
 
     Unregister: _UnregisterInterfaceModule
     type UnregisterServer = _RegistrarInterfaceModule._UnregisterInterfaceModule.Server
+
+    class _RegistrarSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _RegistrarInterfaceModuleRegisterParamSchema(_StructSchema):
+            class _CapField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _XDomainField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._RegistrarCrossDomainRestoreSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cap"],
+                ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema._CapField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["regName"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["xDomain"],
+                ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema._XDomainField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema._Fields: ...
+
+        class _RegistrarInterfaceModuleRegisterResultSchema(_StructSchema):
+            class _UnregField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._RegistrarUnregisterSchema: ...
+
+            class _ReregSRField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["unreg"],
+                ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema._UnregField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["reregSR"],
+                ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema._ReregSRField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["register"],
+            ) -> _InterfaceMethod[
+                _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema,
+                _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(self) -> _RegistrarInterfaceModule._RegistrarSchema._Methods: ...
+
+    @property
     @override
-    def _new_client(self, server: _DynamicCapabilityServer) -> _all.RegistrarClient: ...
+    def schema(self) -> schemas._RegistrarSchema: ...
+    @override
+    def _new_client(
+        self,
+        server: _DynamicCapabilityServer,
+    ) -> clients.RegistrarClient: ...
     class Server(_IdentifiableInterfaceModule.Server):
         def register(
             self,
             cap: IdentifiableClient,
             regName: str,
             categoryId: str,
-            xDomain: _all.CrossDomainRestoreReader,
-            _context: _all.RegisterCallContext,
+            xDomain: readers.CrossDomainRestoreReader,
+            _context: contexts.RegisterCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.RegisterResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.RegisterResultTuple | None]: ...
         def register_context(
             self,
-            context: _all.RegisterCallContext,
+            context: contexts.RegisterCallContext,
         ) -> Awaitable[None]: ...

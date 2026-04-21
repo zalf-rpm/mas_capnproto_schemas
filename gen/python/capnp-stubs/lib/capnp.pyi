@@ -8,7 +8,7 @@ from collections.abc import (
 )
 from contextlib import AbstractContextManager, asynccontextmanager
 from ssl import SSLContext
-from typing import IO, Any, Literal, overload
+from typing import IO, Any, Generic, Literal, TypeVar, overload
 
 # Type alias for anypointer to reflect what is really allowed for anypointer inputs
 from capnp._internal import CapnpModule as _CapnpModule
@@ -82,6 +82,9 @@ type AnyList = (
     | _DynamicObjectBuilder
 )
 type _CapnpModuleType = _CapnpModule
+
+_MethodParamSchemaT = TypeVar("_MethodParamSchemaT", covariant=True)
+_MethodResultSchemaT = TypeVar("_MethodResultSchemaT", covariant=True)
 
 types: _CapnpTypesModule
 
@@ -218,9 +221,9 @@ class _StructSchemaField:
         This property may raise for primitive/unknown types.
         """
 
-class _InterfaceMethod:
-    param_type: _StructSchema
-    result_type: _StructSchema
+class _InterfaceMethod(Generic[_MethodParamSchemaT, _MethodResultSchemaT]):
+    param_type: _MethodParamSchemaT
+    result_type: _MethodResultSchemaT
 
 class _Schema:
     """Base class for _StructSchema and _ParsedSchema."""
@@ -288,11 +291,13 @@ class _InterfaceSchema:
         """A set of the function names in the interface, including inherited methods."""
 
     @property
-    def methods(self) -> dict[str, _InterfaceMethod]:
+    def methods(self) -> dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]:
         """A mapping of method names to their respective _InterfaceMethod."""
 
     @property
-    def methods_inherited(self) -> dict[str, _InterfaceMethod]:
+    def methods_inherited(
+        self,
+    ) -> dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]:
         """A mapping of method names to their respective _InterfaceMethod, including inherited methods."""
 
     @property
@@ -1047,183 +1052,183 @@ class _DynamicObjectReader:
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp.types._all._EventList],
+        schema: type[monica_management_capnp.types.lists._EventList],
     ) -> monica_management_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp.types._all._KVList],
+        schema: type[monica_management_capnp.types.lists._KVList],
     ) -> monica_management_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_management_capnp.types._all._SpecList],
+        schema: type[monica_management_capnp.types.lists._SpecList],
     ) -> monica_management_capnp.types.readers.SpecListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._BoolList],
+        schema: type[monica_params_capnp.types.lists._BoolList],
     ) -> monica_params_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._DateToValueList],
+        schema: type[monica_params_capnp.types.lists._DateToValueList],
     ) -> monica_params_capnp.types.readers.DateToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._Float64List],
+        schema: type[monica_params_capnp.types.lists._Float64List],
     ) -> monica_params_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._Float64ListList],
+        schema: type[monica_params_capnp.types.lists._Float64ListList],
     ) -> monica_params_capnp.types.readers.Float64ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._SoilParametersList],
+        schema: type[monica_params_capnp.types.lists._SoilParametersList],
     ) -> monica_params_capnp.types.readers.SoilParametersListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._SpeciesIdToEmissionList],
+        schema: type[monica_params_capnp.types.lists._SpeciesIdToEmissionList],
     ) -> monica_params_capnp.types.readers.SpeciesIdToEmissionListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._YearToValueList],
+        schema: type[monica_params_capnp.types.lists._YearToValueList],
     ) -> monica_params_capnp.types.readers.YearToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_params_capnp.types._all._YieldComponentList],
+        schema: type[monica_params_capnp.types.lists._YieldComponentList],
     ) -> monica_params_capnp.types.readers.YieldComponentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._ACDToValueList],
+        schema: type[monica_state_capnp.types.lists._ACDToValueList],
     ) -> monica_state_capnp.types.readers.ACDToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._ACDToValueListList],
+        schema: type[monica_state_capnp.types.lists._ACDToValueListList],
     ) -> monica_state_capnp.types.readers.ACDToValueListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._AOMPropertiesList],
+        schema: type[monica_state_capnp.types.lists._AOMPropertiesList],
     ) -> monica_state_capnp.types.readers.AOMPropertiesListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._BoolList],
+        schema: type[monica_state_capnp.types.lists._BoolList],
     ) -> monica_state_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._DateList],
+        schema: type[monica_state_capnp.types.lists._DateList],
     ) -> monica_state_capnp.types.readers.DateListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._DelayedNMinApplicationParamsList],
+        schema: type[monica_state_capnp.types.lists._DelayedNMinApplicationParamsList],
     ) -> monica_state_capnp.types.readers.DelayedNMinApplicationParamsListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._Float64List],
+        schema: type[monica_state_capnp.types.lists._Float64List],
     ) -> monica_state_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._Float64ListList],
+        schema: type[monica_state_capnp.types.lists._Float64ListList],
     ) -> monica_state_capnp.types.readers.Float64ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._SoilLayerStateList],
+        schema: type[monica_state_capnp.types.lists._SoilLayerStateList],
     ) -> monica_state_capnp.types.readers.SoilLayerStateListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._TextList],
+        schema: type[monica_state_capnp.types.lists._TextList],
     ) -> monica_state_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[monica_state_capnp.types._all._YieldComponentList],
+        schema: type[monica_state_capnp.types.lists._YieldComponentList],
     ) -> monica_state_capnp.types.readers.YieldComponentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[yieldstat_capnp.types._all._ResultToValueList],
+        schema: type[yieldstat_capnp.types.lists._ResultToValueList],
     ) -> yieldstat_capnp.types.readers.ResultToValueListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[yieldstat_capnp.types._all._YearToResultList],
+        schema: type[yieldstat_capnp.types.lists._YearToResultList],
     ) -> yieldstat_capnp.types.readers.YearToResultListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._AlteredList],
+        schema: type[climate_capnp.types.lists._AlteredList],
     ) -> climate_capnp.types.readers.AlteredListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._DatasetClientList],
+        schema: type[climate_capnp.types.lists._DatasetClientList],
     ) -> climate_capnp.types.readers.DatasetClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._ElementEnumList],
+        schema: type[climate_capnp.types.lists._ElementEnumList],
     ) -> climate_capnp.types.readers.ElementEnumListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._EntryList],
+        schema: type[climate_capnp.types.lists._EntryList],
     ) -> climate_capnp.types.readers.EntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._Float32List],
+        schema: type[climate_capnp.types.lists._Float32List],
     ) -> climate_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._Float32ListList],
+        schema: type[climate_capnp.types.lists._Float32ListList],
     ) -> climate_capnp.types.readers.Float32ListListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._IdInformationList],
+        schema: type[climate_capnp.types.lists._IdInformationList],
     ) -> climate_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._KVList],
+        schema: type[climate_capnp.types.lists._KVList],
     ) -> climate_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._LocationList],
+        schema: type[climate_capnp.types.lists._LocationList],
     ) -> climate_capnp.types.readers.LocationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._MetaPlusDataList],
+        schema: type[climate_capnp.types.lists._MetaPlusDataList],
     ) -> climate_capnp.types.readers.MetaPlusDataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[climate_capnp.types._all._PairList],
+        schema: type[climate_capnp.types.lists._PairList],
     ) -> climate_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
         schema: type[
-            cluster_admin_service_capnp.types._all._ModelInstanceFactoryClientList
+            cluster_admin_service_capnp.types.lists._ModelInstanceFactoryClientList
         ],
     ) -> (
         cluster_admin_service_capnp.types.readers.ModelInstanceFactoryClientListReader
@@ -1231,357 +1236,357 @@ class _DynamicObjectReader:
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._AnyPointerList],
+        schema: type[common_capnp.types.lists._AnyPointerList],
     ) -> common_capnp.types.readers.AnyPointerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._BoolList],
+        schema: type[common_capnp.types.lists._BoolList],
     ) -> common_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._DataList],
+        schema: type[common_capnp.types.lists._DataList],
     ) -> common_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Float32List],
+        schema: type[common_capnp.types.lists._Float32List],
     ) -> common_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Float64List],
+        schema: type[common_capnp.types.lists._Float64List],
     ) -> common_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Int16List],
+        schema: type[common_capnp.types.lists._Int16List],
     ) -> common_capnp.types.readers.Int16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Int32List],
+        schema: type[common_capnp.types.lists._Int32List],
     ) -> common_capnp.types.readers.Int32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Int64List],
+        schema: type[common_capnp.types.lists._Int64List],
     ) -> common_capnp.types.readers.Int64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Int8List],
+        schema: type[common_capnp.types.lists._Int8List],
     ) -> common_capnp.types.readers.Int8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._PairList],
+        schema: type[common_capnp.types.lists._PairList],
     ) -> common_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._TextList],
+        schema: type[common_capnp.types.lists._TextList],
     ) -> common_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Uint16List],
+        schema: type[common_capnp.types.lists._Uint16List],
     ) -> common_capnp.types.readers.Uint16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Uint32List],
+        schema: type[common_capnp.types.lists._Uint32List],
     ) -> common_capnp.types.readers.Uint32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Uint64List],
+        schema: type[common_capnp.types.lists._Uint64List],
     ) -> common_capnp.types.readers.Uint64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[common_capnp.types._all._Uint8List],
+        schema: type[common_capnp.types.lists._Uint8List],
     ) -> common_capnp.types.readers.Uint8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._EnvironmentModificationList],
+        schema: type[field_exp_data_capnp.types.lists._EnvironmentModificationList],
     ) -> field_exp_data_capnp.types.readers.EnvironmentModificationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._FertilizerEventList],
+        schema: type[field_exp_data_capnp.types.lists._FertilizerEventList],
     ) -> field_exp_data_capnp.types.readers.FertilizerEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._HarvestEventList],
+        schema: type[field_exp_data_capnp.types.lists._HarvestEventList],
     ) -> field_exp_data_capnp.types.readers.HarvestEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._InitialConditionsLayerList],
+        schema: type[field_exp_data_capnp.types.lists._InitialConditionsLayerList],
     ) -> field_exp_data_capnp.types.readers.InitialConditionsLayerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._IrrigationEventList],
+        schema: type[field_exp_data_capnp.types.lists._IrrigationEventList],
     ) -> field_exp_data_capnp.types.readers.IrrigationEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._PlantingEventList],
+        schema: type[field_exp_data_capnp.types.lists._PlantingEventList],
     ) -> field_exp_data_capnp.types.readers.PlantingEventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._PlotList],
+        schema: type[field_exp_data_capnp.types.lists._PlotList],
     ) -> field_exp_data_capnp.types.readers.PlotListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[field_exp_data_capnp.types._all._TreatmentList],
+        schema: type[field_exp_data_capnp.types.lists._TreatmentList],
     ) -> field_exp_data_capnp.types.readers.TreatmentListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._ConfigEntryList],
+        schema: type[fbp_capnp.types.lists._ConfigEntryList],
     ) -> fbp_capnp.types.readers.ConfigEntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._KVList],
+        schema: type[fbp_capnp.types.lists._KVList],
     ) -> fbp_capnp.types.readers.KVListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._NameAndSRList],
+        schema: type[fbp_capnp.types.lists._NameAndSRList],
     ) -> fbp_capnp.types.readers.NameAndSRListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._PortList],
+        schema: type[fbp_capnp.types.lists._PortList],
     ) -> fbp_capnp.types.readers.PortListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._ReaderClientList],
+        schema: type[fbp_capnp.types.lists._ReaderClientList],
     ) -> fbp_capnp.types.readers.ReaderClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._StartupInfoList],
+        schema: type[fbp_capnp.types.lists._StartupInfoList],
     ) -> fbp_capnp.types.readers.StartupInfoListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._SturdyRefList],
+        schema: type[fbp_capnp.types.lists._SturdyRefList],
     ) -> fbp_capnp.types.readers.SturdyRefListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._TextList],
+        schema: type[fbp_capnp.types.lists._TextList],
     ) -> fbp_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[fbp_capnp.types._all._WriterClientList],
+        schema: type[fbp_capnp.types.lists._WriterClientList],
     ) -> fbp_capnp.types.readers.WriterClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[grid_capnp.types._all._AggregationPartList],
+        schema: type[grid_capnp.types.lists._AggregationPartList],
     ) -> grid_capnp.types.readers.AggregationPartListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[grid_capnp.types._all._LocationList],
+        schema: type[grid_capnp.types.lists._LocationList],
     ) -> grid_capnp.types.readers.LocationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp.types._all._EventList],
+        schema: type[management_capnp.types.lists._EventList],
     ) -> management_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp.types._all._NutrientList],
+        schema: type[management_capnp.types.lists._NutrientList],
     ) -> management_capnp.types.readers.NutrientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[management_capnp.types._all._SpecList],
+        schema: type[management_capnp.types.lists._SpecList],
     ) -> management_capnp.types.readers.SpecListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp.types._all._EventList],
+        schema: type[model_capnp.types.lists._EventList],
     ) -> model_capnp.types.readers.EventListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp.types._all._Float64List],
+        schema: type[model_capnp.types.lists._Float64List],
     ) -> model_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp.types._all._IdentifiableClientList],
+        schema: type[model_capnp.types.lists._IdentifiableClientList],
     ) -> model_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp.types._all._StatList],
+        schema: type[model_capnp.types.lists._StatList],
     ) -> model_capnp.types.readers.StatListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[model_capnp.types._all._TimeSeriesClientList],
+        schema: type[model_capnp.types.lists._TimeSeriesClientList],
     ) -> model_capnp.types.readers.TimeSeriesClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp.types._all._EntryList],
+        schema: type[registry_capnp.types.lists._EntryList],
     ) -> registry_capnp.types.readers.EntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp.types._all._IdInformationList],
+        schema: type[registry_capnp.types.lists._IdInformationList],
     ) -> registry_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp.types._all._IdentifiableClientList],
+        schema: type[registry_capnp.types.lists._IdentifiableClientList],
     ) -> registry_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[registry_capnp.types._all._TextList],
+        schema: type[registry_capnp.types.lists._TextList],
     ) -> registry_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp.types._all._IdInformationList],
+        schema: type[service_capnp.types.lists._IdInformationList],
     ) -> service_capnp.types.readers.IdInformationListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp.types._all._IdentifiableClientList],
+        schema: type[service_capnp.types.lists._IdentifiableClientList],
     ) -> service_capnp.types.readers.IdentifiableClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp.types._all._PairList],
+        schema: type[service_capnp.types.lists._PairList],
     ) -> service_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[service_capnp.types._all._TextList],
+        schema: type[service_capnp.types.lists._TextList],
     ) -> service_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp.types._all._LayerList],
+        schema: type[soil_capnp.types.lists._LayerList],
     ) -> soil_capnp.types.readers.LayerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp.types._all._ProfileClientList],
+        schema: type[soil_capnp.types.lists._ProfileClientList],
     ) -> soil_capnp.types.readers.ProfileClientListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp.types._all._PropertyList],
+        schema: type[soil_capnp.types.lists._PropertyList],
     ) -> soil_capnp.types.readers.PropertyListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_capnp.types._all._PropertyNameEnumList],
+        schema: type[soil_capnp.types.lists._PropertyNameEnumList],
     ) -> soil_capnp.types.readers.PropertyNameEnumListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[soil_params_capnp.types._all._DataList],
+        schema: type[soil_params_capnp.types.lists._DataList],
     ) -> soil_params_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._BoolList],
+        schema: type[storage_capnp.types.lists._BoolList],
     ) -> storage_capnp.types.readers.BoolListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._DataList],
+        schema: type[storage_capnp.types.lists._DataList],
     ) -> storage_capnp.types.readers.DataListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Float32List],
+        schema: type[storage_capnp.types.lists._Float32List],
     ) -> storage_capnp.types.readers.Float32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Float64List],
+        schema: type[storage_capnp.types.lists._Float64List],
     ) -> storage_capnp.types.readers.Float64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._InfoAndContainerList],
+        schema: type[storage_capnp.types.lists._InfoAndContainerList],
     ) -> storage_capnp.types.readers.InfoAndContainerListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Int16List],
+        schema: type[storage_capnp.types.lists._Int16List],
     ) -> storage_capnp.types.readers.Int16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Int32List],
+        schema: type[storage_capnp.types.lists._Int32List],
     ) -> storage_capnp.types.readers.Int32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Int64List],
+        schema: type[storage_capnp.types.lists._Int64List],
     ) -> storage_capnp.types.readers.Int64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Int8List],
+        schema: type[storage_capnp.types.lists._Int8List],
     ) -> storage_capnp.types.readers.Int8ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._KeyAndEntryList],
+        schema: type[storage_capnp.types.lists._KeyAndEntryList],
     ) -> storage_capnp.types.readers.KeyAndEntryListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._PairList],
+        schema: type[storage_capnp.types.lists._PairList],
     ) -> storage_capnp.types.readers.PairListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._TextList],
+        schema: type[storage_capnp.types.lists._TextList],
     ) -> storage_capnp.types.readers.TextListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Uint16List],
+        schema: type[storage_capnp.types.lists._Uint16List],
     ) -> storage_capnp.types.readers.Uint16ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Uint32List],
+        schema: type[storage_capnp.types.lists._Uint32List],
     ) -> storage_capnp.types.readers.Uint32ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Uint64List],
+        schema: type[storage_capnp.types.lists._Uint64List],
     ) -> storage_capnp.types.readers.Uint64ListReader: ...
     @overload
     def as_list(
         self,
-        schema: type[storage_capnp.types._all._Uint8List],
+        schema: type[storage_capnp.types.lists._Uint8List],
     ) -> storage_capnp.types.readers.Uint8ListReader: ...
     def as_list(self, schema: _ListSchema) -> Any:
         """Cast this AnyPointer to a list.

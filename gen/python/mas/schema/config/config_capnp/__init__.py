@@ -5,7 +5,8 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.config.config_capnp.types.modules import _ServiceInterfaceModule
 
 capnp.remove_import_hook()
 
@@ -29,4 +30,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Service = _InterfaceModule(_loader.get(0x860D660620AEFCDA).as_interface(), "Service")
+Service = _ServiceInterfaceModule(
+    _loader.get(0x860D660620AEFCDA).as_interface(),
+    "Service",
+)

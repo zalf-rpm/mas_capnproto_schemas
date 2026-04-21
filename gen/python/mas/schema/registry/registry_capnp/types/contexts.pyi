@@ -1,21 +1,85 @@
 """Context helper types for `registry.capnp`."""
 
-from ._all import AddcategoryCallContext as AddcategoryCallContext
-from ._all import AddcategoryParams as AddcategoryParams
-from ._all import CategoryinfoCallContext as CategoryinfoCallContext
-from ._all import CategoryinfoParams as CategoryinfoParams
-from ._all import EntriesCallContext as EntriesCallContext
-from ._all import EntriesParams as EntriesParams
-from ._all import MoveobjectsCallContext as MoveobjectsCallContext
-from ._all import MoveobjectsParams as MoveobjectsParams
-from ._all import RegisterCallContext as RegisterCallContext
-from ._all import RegistryCallContext as RegistryCallContext
-from ._all import RegistryParams as RegistryParams
-from ._all import RemovecategoryCallContext as RemovecategoryCallContext
-from ._all import RemovecategoryParams as RemovecategoryParams
-from ._all import RemoveobjectsCallContext as RemoveobjectsCallContext
-from ._all import RemoveobjectsParams as RemoveobjectsParams
-from ._all import SupportedcategoriesCallContext as SupportedcategoriesCallContext
-from ._all import SupportedcategoriesParams as SupportedcategoriesParams
-from ._all import UnregisterCallContext as UnregisterCallContext
-from ._all import UnregisterParams as UnregisterParams
+from typing import Protocol
+
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.registry.registry_capnp.types import readers as readers
+from mas.schema.registry.registry_capnp.types.results import server as results_server
+
+class AddcategoryParams(Protocol):
+    category: IdInformationReader
+    upsert: bool
+
+class AddcategoryCallContext(Protocol):
+    params: AddcategoryParams
+    @property
+    def results(self) -> results_server.AddcategoryServerResult: ...
+
+class RemovecategoryParams(Protocol):
+    categoryId: str
+    moveObjectsToCategoryId: str
+
+class RemovecategoryCallContext(Protocol):
+    params: RemovecategoryParams
+    @property
+    def results(self) -> results_server.RemovecategoryServerResult: ...
+
+class MoveobjectsParams(Protocol):
+    objectIds: readers.TextListReader
+    toCatId: str
+
+class MoveobjectsCallContext(Protocol):
+    params: MoveobjectsParams
+    @property
+    def results(self) -> results_server.MoveobjectsServerResult: ...
+
+class RemoveobjectsParams(Protocol):
+    objectIds: readers.TextListReader
+
+class RemoveobjectsCallContext(Protocol):
+    params: RemoveobjectsParams
+    @property
+    def results(self) -> results_server.RemoveobjectsServerResult: ...
+
+class SupportedcategoriesParams(Protocol): ...
+
+class SupportedcategoriesCallContext(Protocol):
+    params: SupportedcategoriesParams
+    @property
+    def results(self) -> results_server.SupportedcategoriesServerResult: ...
+
+class CategoryinfoParams(Protocol):
+    categoryId: str
+
+class CategoryinfoCallContext(Protocol):
+    params: CategoryinfoParams
+    @property
+    def results(self) -> IdInformationBuilder: ...
+
+class EntriesParams(Protocol):
+    categoryId: str
+
+class EntriesCallContext(Protocol):
+    params: EntriesParams
+    @property
+    def results(self) -> results_server.EntriesServerResult: ...
+
+class RegistryParams(Protocol): ...
+
+class RegistryCallContext(Protocol):
+    params: RegistryParams
+    @property
+    def results(self) -> results_server.RegistryServerResult: ...
+
+class UnregisterParams(Protocol): ...
+
+class UnregisterCallContext(Protocol):
+    params: UnregisterParams
+    @property
+    def results(self) -> results_server.UnregisterServerResult: ...
+
+class RegisterCallContext(Protocol):
+    params: readers.RegParamsReader
+    @property
+    def results(self) -> results_server.RegisterServerResult: ...

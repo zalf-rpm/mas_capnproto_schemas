@@ -5,7 +5,21 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.climate.climate_capnp.types.modules import (
+    _AlterTimeSeriesWrapperFactoryInterfaceModule,
+    _AlterTimeSeriesWrapperInterfaceModule,
+    _CSVTimeSeriesFactoryInterfaceModule,
+    _DatasetInterfaceModule,
+    _EnsembleMemberStructModule,
+    _LocationStructModule,
+    _MetadataStructModule,
+    _MetaPlusDataStructModule,
+    _ServiceInterfaceModule,
+    _TimeSeriesDataStructModule,
+    _TimeSeriesInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -41,6 +55,21 @@ _SCHEMA_NODES = [
     "EDFQBgb/+4/MOTD88ewAUQ4BAv8k/Md5IFSQkAAEBwAAMxADfwMRFdIRIQcAABEddwAB/2dlby9nZW8uAmNhcG5wOkxhdExvbkNvb3IBZFABAVEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLSIAAFEoAwFRNAIBB2xhdAELAAIBCwABB2xvbgELAAIBCwAB",  # geo/geo.capnp:LatLonCoord
     "EHxQBgb/6G1u/kCfdqcAERYD/xhF6xDkOh2gAAABM9Yc2yIxFQoBESUXAAAxMUcCE60BJwAA/2NsaW1hdGUvA2NsaW1hdGUuY2FwbnA6VGltZVNlcmllcwAAUQQBAf/CA+xjz8pmtAARAVr/UmVzb2x1dGkAA29uUSQDBQAA/9H9ctIZBT/qAdZupqHZrQ7NExEBWgACEwkBBwEB/xbJI2sMz2v/ARssAnb0J+y5Ef0yAAIR8QcBAv+hl4quAnDXjwFQoE8UbxR2iRHlOgACEdkHAQP/zX1dxGuYeI4B6eo+10g0PZwRzSoAAhHBBwEE/yU1hbEj+fjvAfuU6qbA3uDCEbUyAAIRqQcBBf/ub0nib1uq+AEytwl9FOff9xGdSgACEZUHAQb/uJP26N5kw4wB34DoymOBI8MRiVIAAhGBBwEH/zRmlVwixCzOAbBtVWbp0jb7EXVKAAIRbQcBCP8Tow8bsJ4yywEZ/hPzhXO6hRFhSgACEVkH/3Jlc29sdXRpAANvbkABH3JhbmdlQAE/aGVhZGVyQAEPZGF0YUABH2RhdGFUQAH/c3VicmFuZ2UAAABAAf9zdWJoZWFkZQABckAB/21ldGFkYXRhAAAAQAH/bG9jYXRpb24AAABAAVEIAQH/1UicWcvRr7IAAAD/Zcs23KDap8EAAAA=",  # climate/climate.capnp:TimeSeries
     "EB1QBgb/wgPsY8/KZrQAESEC/+htbv5An3anAAABM1EdrR0xFWIBESkHAAARJTcAAf9jbGltYXRlLwRjbGltYXRlLmNhcG5wOlRpbWVTZXJpZXMuUmVzb2x1dAdpb25QAQFRCAECAAARETIAAAEBEQk6AAAfZGFpbHk/aG91cmx5",  # climate/climate.capnp:TimeSeries.Resolution
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "ECRQBgb/I3fIYO2Z1/0AESgB/03egx0naG2IAAUBBwAAM0EJMQoxFXIBESkHAAARJT8AAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmLh9Pd25lclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence/persistence.capnp:SturdyRef.Owner
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "EDlQBgb/Td6DHSdobYgAER4B/yZrX0fT/l6FAAUCBwAAM54IXAsxFUIBESUnAAAROXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmAFEIAQH/I3fIYO2Z1/0AEQky/4i0EX+0K0H6ABEFMh9Pd25lch9Ub2tlblEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFROAIBB3ZhdAEQ/4eAxNvyzezZAAABARAAAf9sb2NhbFJlZgAAAAEQ/4i0EX+0K0H6AAABARAAAQ==",  # persistence/persistence.capnp:SturdyRef
+    "EDNQBgb/iLQRf7QrQfoAUSgBAf9N3oMdJ2htiABFAQcCAAAzuwpaCzEVcgERKQcAABEldwAB/3BlcnNpc3RlBG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpTdHVyZHlSZWYuH1Rva2VuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence/persistence.capnp:SturdyRef.Token
+    "EDJQBgb/h4DE2/LN7NkAER4B/yZrX0fT/l6FAAUCBwAAM78HnAgxFTIBESUHAAARIXcAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEfdFBhdGhQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAQNpZAEQ/43Ri9V0XQrhAAABARAAAX9hZGRyZXNzARD/DVugcQaBR/sAAAEBEAAB",  # persistence/persistence.capnp:VatPath
+    "EFRQBgb/jdGL1XRdCuEAUR4BBP8ma19H0/5ehQAEBwAAM9QBDwMxFSIBESUHAAARIecAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEHdElkUAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpWgAAUWgDAVF0AgERAgIUAQIAABFxWgAAUXADAVF8AgERAwMUAQMAABF5WgAAUXgDAVGEAgH/cHVibGljS2UAA3kwAQkAAgEJAAH/cHVibGljS2UAA3kxAQkAAgEJAAH/cHVibGljS2UAA3kyAQkAAgEJAAH/cHVibGljS2UAA3kzAQkAAgEJAAE=",  # persistence/persistence.capnp:VatId
+    "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
+    "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EBRQBgb/0f1y0hkFP+oAESEBAAAEBwABMRWaAQAE/2NsaW1hdGUvBWNsaW1hdGUuY2FwbnA6VGltZVNlcmllcy5yZXNvbHV0aW9uJFBhcmEDbXM=",  # climate/climate.capnp:TimeSeries.resolution$Params
     "ECVQBgb/1m6modmtDs0AUSEBAQAABAcAATEVogEAARElPwAB/2NsaW1hdGUvBWNsaW1hdGUuY2FwbnA6VGltZVNlcmllcy5yZXNvbHV0aW9uJFJlc3UHbHRzUQQDBAAABAEAABENWgAAUQwDAVEYAgH/cmVzb2x1dGkAA29uAQ//wgPsY8/KZrQAAAEBDwAB",  # climate/climate.capnp:TimeSeries.resolution$Results
     "EBNQBgb/FskjawzPa/8AESEBAAAEBwABMRVyAQAE/2NsaW1hdGUvBGNsaW1hdGUuY2FwbnA6VGltZVNlcmllcy5yYW5nZSRQH2FyYW1z",  # climate/climate.capnp:TimeSeries.range$Params
@@ -94,8 +123,6 @@ _SCHEMA_NODES = [
     "ECNQBgb/RCelovAt8cUAERYD/xhF6xDkOh2gAAABMzctVC4xFaIBES0HAAARKUcRURcAAP9jbGltYXRlLwVjbGltYXRlLmNhcG5wOkFsdGVyVGltZVNlcmllc1dyYXBwZXJGYWN0B29yeVABAVEEAwUAAP/+iwHcBkgGlQERXc2brIKJtBERKgACEQUHD3dyYXBAAVEEAQH/1UicWcvRr7IAAAA=",  # climate/climate.capnp:AlterTimeSeriesWrapperFactory
     "ECZQBgb//osB3AZIBpUAETQBAAAFAQcAATEVAgIAAREpPwAB/2NsaW1hdGUvB2NsaW1hdGUuY2FwbnA6QWx0ZXJUaW1lU2VyaWVzV3JhcHBlckZhY3Rvcnkud3JhcCRQYXJhbXMAUQQDBAAABAEAABENWgAAUQwDAVEYAgH/dGltZVNlcmkAA2VzARH/6G1u/kCfdqcAAAEBEQAB",  # climate/climate.capnp:AlterTimeSeriesWrapperFactory.wrap$Params
     "ECZQBgb/EV3Nm6yCibQAETQBAAAFAQcAATEVCgIAAREtPwAB/2NsaW1hdGUvB2NsaW1hdGUuY2FwbnA6QWx0ZXJUaW1lU2VyaWVzV3JhcHBlckZhY3Rvcnkud3JhcCRSZXN1bHRzAABRBAMEAAAEAQAAEQ1CAABRCAMBURQCAX93cmFwcGVyARH/soSXl++A9OEAAAEBEQAB",  # climate/climate.capnp:AlterTimeSeriesWrapperFactory.wrap$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
 ]
 
 # Load schemas and build module structure
@@ -114,71 +141,94 @@ GCM = _EnumModule(_loader.get(0xCE396869EEDE9F10).as_enum(), "GCM")
 RCM = _EnumModule(_loader.get(0x8671DEC53083E351).as_enum(), "RCM")
 SSP = _EnumModule(_loader.get(0xD3780AE416347AEE).as_enum(), "SSP")
 RCP = _EnumModule(_loader.get(0x8EF30778310C94CC).as_enum(), "RCP")
-EnsembleMember = _StructModule(
+EnsembleMember = _EnsembleMemberStructModule(
     _loader.get(0xC8CAACD1CD5DA434).as_struct(),
     "EnsembleMember",
 )
-Metadata = _StructModule(_loader.get(0xFB36D2E966556DB0).as_struct(), "Metadata")
-Metadata.Supported = _InterfaceModule(
+Metadata = _MetadataStructModule(
+    _loader.get(0xFB36D2E966556DB0).as_struct(),
+    "Metadata",
+)
+Metadata.Supported = _MetadataStructModule._SupportedInterfaceModule(
     _loader.get(0xAB06444B30722E01).as_interface(),
     "Supported",
 )
-Metadata.Value = _StructModule(_loader.get(0xC48E24C968A234DB).as_struct(), "Value")
-Metadata.Entry = _StructModule(
+Metadata.Value = _MetadataStructModule._ValueStructModule(
+    _loader.get(0xC48E24C968A234DB).as_struct(),
+    "Value",
+)
+Metadata.Entry = _MetadataStructModule._EntryStructModule(
     Metadata.schema.fields["entries"].schema.elementType,
     "Entry",
 )
-Metadata.Information = _InterfaceModule(
+Metadata.Information = _MetadataStructModule._InformationInterfaceModule(
     Metadata.schema.fields["info"].schema,
     "Information",
 )
-Dataset = _InterfaceModule(_loader.get(0xF635FDD1F05960F0).as_interface(), "Dataset")
-Dataset.GetLocationsCallback = _InterfaceModule(
-    Dataset.schema.methods["streamLocations"]
-    .result_type.fields["locationsCallback"]
-    .schema,
-    "GetLocationsCallback",
+Dataset = _DatasetInterfaceModule(
+    _loader.get(0xF635FDD1F05960F0).as_interface(),
+    "Dataset",
 )
-MetaPlusData = _StructModule(
+Dataset.GetLocationsCallback = (
+    _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule(
+        Dataset.schema.methods["streamLocations"]
+        .result_type.fields["locationsCallback"]
+        .schema,
+        "GetLocationsCallback",
+    )
+)
+MetaPlusData = _MetaPlusDataStructModule(
     _loader.get(0xD7A67FEC5F22E5A0).as_struct(),
     "MetaPlusData",
 )
 Element = _EnumModule(_loader.get(0xE35760B4DB5AB564).as_enum(), "Element")
-Location = _StructModule(_loader.get(0x85BA7385F313FE19).as_struct(), "Location")
-Location.KV = _StructModule(
+Location = _LocationStructModule(
+    _loader.get(0x85BA7385F313FE19).as_struct(),
+    "Location",
+)
+Location.KV = _LocationStructModule._KVStructModule(
     Location.schema.fields["customData"].schema.elementType,
     "KV",
 )
-TimeSeries = _InterfaceModule(
+TimeSeries = _TimeSeriesInterfaceModule(
     _loader.get(0xA7769F40FE6E6DE8).as_interface(),
     "TimeSeries",
 )
 TimeSeries.Resolution = _EnumModule(
-    TimeSeries.schema.methods["resolution"].result_type.fields["resolution"].schema,
+    _loader.get(0xB466CACF63EC03C2).as_enum(),
     "Resolution",
 )
-TimeSeriesData = _StructModule(
+TimeSeriesData = _TimeSeriesDataStructModule(
     _loader.get(0xF1C1CCF59BC6964F).as_struct(),
     "TimeSeriesData",
 )
-Service = _InterfaceModule(_loader.get(0xFE7D08D4352B0C5F).as_interface(), "Service")
-CSVTimeSeriesFactory = _InterfaceModule(
+Service = _ServiceInterfaceModule(
+    _loader.get(0xFE7D08D4352B0C5F).as_interface(),
+    "Service",
+)
+CSVTimeSeriesFactory = _CSVTimeSeriesFactoryInterfaceModule(
     _loader.get(0xA418C26CC59929D9).as_interface(),
     "CSVTimeSeriesFactory",
 )
-CSVTimeSeriesFactory.CSVConfig = _StructModule(
-    CSVTimeSeriesFactory.schema.methods["create"].param_type.fields["config"].schema,
-    "CSVConfig",
+CSVTimeSeriesFactory.CSVConfig = (
+    _CSVTimeSeriesFactoryInterfaceModule._CSVConfigStructModule(
+        CSVTimeSeriesFactory.schema.methods["create"]
+        .param_type.fields["config"]
+        .schema,
+        "CSVConfig",
+    )
 )
-AlterTimeSeriesWrapper = _InterfaceModule(
+AlterTimeSeriesWrapper = _AlterTimeSeriesWrapperInterfaceModule(
     _loader.get(0xE1F480EF979784B2).as_interface(),
     "AlterTimeSeriesWrapper",
 )
-AlterTimeSeriesWrapper.Altered = _StructModule(
-    AlterTimeSeriesWrapper.schema.methods["alteredElements"]
-    .result_type.fields["list"]
-    .schema.elementType,
-    "Altered",
+AlterTimeSeriesWrapper.Altered = (
+    _AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule(
+        AlterTimeSeriesWrapper.schema.methods["alteredElements"]
+        .result_type.fields["list"]
+        .schema.elementType,
+        "Altered",
+    )
 )
 AlterTimeSeriesWrapper.AlterType = _EnumModule(
     AlterTimeSeriesWrapper.schema.methods["alteredElements"]
@@ -187,7 +237,7 @@ AlterTimeSeriesWrapper.AlterType = _EnumModule(
     .schema,
     "AlterType",
 )
-AlterTimeSeriesWrapperFactory = _InterfaceModule(
+AlterTimeSeriesWrapperFactory = _AlterTimeSeriesWrapperFactoryInterfaceModule(
     _loader.get(0xC5F12DF0A2A52744).as_interface(),
     "AlterTimeSeriesWrapperFactory",
 )

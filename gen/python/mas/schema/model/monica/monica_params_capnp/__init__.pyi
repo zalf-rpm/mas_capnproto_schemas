@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `monica_params.capnp`."""
 
-from . import types as types
+from mas.schema.model.monica.monica_params_capnp import types as types
 
 SpeciesParameters: types.modules._SpeciesParametersStructModule
 YieldComponent: types.modules._YieldComponentStructModule

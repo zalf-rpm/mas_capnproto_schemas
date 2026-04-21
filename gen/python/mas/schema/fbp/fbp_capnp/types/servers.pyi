@@ -1,13 +1,31 @@
 """Server helper types for `fbp.capnp`."""
 
-from ._all import ChannelServer as ChannelServer
-from ._all import FactoryServer as FactoryServer
-from ._all import ProcessServer as ProcessServer
-from ._all import ReaderServer as ReaderServer
-from ._all import RunnableServer as RunnableServer
-from ._all import StartChannelsServiceServer as StartChannelsServiceServer
-from ._all import StateTransitionServer as StateTransitionServer
-from ._all import StatsCallbackServer as StatsCallbackServer
-from ._all import StoppedCallbackServer as StoppedCallbackServer
-from ._all import UnregisterServer as UnregisterServer
-from ._all import WriterServer as WriterServer
+from mas.schema.fbp.fbp_capnp.types import modules as modules
+
+ChannelServer = modules._ChannelInterfaceModule.Server
+
+FactoryServer = modules._ProcessInterfaceModule._FactoryInterfaceModule.Server
+
+ProcessServer = modules._ProcessInterfaceModule.Server
+
+ReaderServer = modules._ChannelInterfaceModule._ReaderInterfaceModule.Server
+
+RunnableServer = modules._RunnableInterfaceModule.Server
+
+StartChannelsServiceServer = modules._StartChannelsServiceInterfaceModule.Server
+
+StateTransitionServer = (
+    modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
+)
+
+StatsCallbackServer = (
+    modules._ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
+)
+
+StoppedCallbackServer = (
+    modules._RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
+)
+
+UnregisterServer = modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+
+WriterServer = modules._ChannelInterfaceModule._WriterInterfaceModule.Server

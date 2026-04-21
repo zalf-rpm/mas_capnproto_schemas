@@ -1,5 +1,19 @@
 """Client result helper types for `crop.capnp`."""
 
-from .._all import CultivarResult as CultivarResult
-from .._all import ParametersResult as ParametersResult
-from .._all import SpeciesResult as SpeciesResult
+from collections.abc import Awaitable
+from typing import Protocol
+
+from capnp.lib.capnp import (
+    _DynamicObjectReader,
+)
+
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
+
+class ParametersResult(Awaitable[ParametersResult], Protocol):
+    params: _DynamicObjectReader
+
+class CultivarResult(Awaitable[CultivarResult], Protocol):
+    info: IdInformationReader
+
+class SpeciesResult(Awaitable[SpeciesResult], Protocol):
+    info: IdInformationReader

@@ -5,7 +5,8 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.common.date_capnp.types.modules import _DateStructModule
 
 capnp.remove_import_hook()
 
@@ -27,4 +28,4 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Date = _StructModule(_loader.get(0x97E6FEAC0322118D).as_struct(), "Date")
+Date = _DateStructModule(_loader.get(0x97E6FEAC0322118D).as_struct(), "Date")

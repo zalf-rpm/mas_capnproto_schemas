@@ -5,7 +5,8 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.storage.storage_capnp.types.modules import _StoreInterfaceModule
 
 capnp.remove_import_hook()
 
@@ -23,6 +24,22 @@ _SCHEMA_NODES = [
     "ECVQBgb/r+sNf6ok/6QAESwBAAAFAQcAATEV4gEAAREpPwAB/3N0b3JhZ2UvBnN0b3JhZ2UuY2FwbnA6U3RvcmUuQ29udGFpbmVyLkVudHJ5LnNldFZhbHVlJFBhcgdhbXNRBAMEAAAEAQAAEQ0yAABRCAMBURQCAR92YWx1ZQEQ/1yPkknEXBjiAAABARAAAQ==",  # storage/storage.capnp:Store.Container.Entry.setValue$Params
     "ECVQBgb/Aa6bCH65Z9YAUSwBAQAABAcAATEV6gEAAREpPwAB/3N0b3JhZ2UvBnN0b3JhZ2UuY2FwbnA6U3RvcmUuQ29udGFpbmVyLkVudHJ5LnNldFZhbHVlJFJlcw91bHRzUQQDBAAABAEAABENQgAAUQgDAVEUAgF/c3VjY2VzcwEBAAIBAQAB",  # storage/storage.capnp:Store.Container.Entry.setValue$Results
     "EDRQBgb/MML/8qZZ5+8AESYB/2KuZ1X0MYGHAAUCBwAAM2YJtQkxFZIBES0HAAARKXcAAf9zdG9yYWdlLwVzdG9yYWdlLmNhcG5wOlN0b3JlLkNvbnRhaW5lci5LZXlBbmRFbnRyAXlQAQFRCAMEAAAEAQAAESkiAABRJAMBUTACAREBARQBAQAAES0yAABRKAMBUTQCAQdrZXkBDAACAQwAAR9lbnRyeQER/8B49Hs+JBr6AAABAREAAQ==",  # storage/storage.capnp:Store.Container.KeyAndEntry
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "ECRQBgb/I3fIYO2Z1/0AESgB/03egx0naG2IAAUBBwAAM0EJMQoxFXIBESkHAAARJT8AAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmLh9Pd25lclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence/persistence.capnp:SturdyRef.Owner
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "EDlQBgb/Td6DHSdobYgAER4B/yZrX0fT/l6FAAUCBwAAM54IXAsxFUIBESUnAAAROXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmAFEIAQH/I3fIYO2Z1/0AEQky/4i0EX+0K0H6ABEFMh9Pd25lch9Ub2tlblEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFROAIBB3ZhdAEQ/4eAxNvyzezZAAABARAAAf9sb2NhbFJlZgAAAAEQ/4i0EX+0K0H6AAABARAAAQ==",  # persistence/persistence.capnp:SturdyRef
+    "EDNQBgb/iLQRf7QrQfoAUSgBAf9N3oMdJ2htiABFAQcCAAAzuwpaCzEVcgERKQcAABEldwAB/3BlcnNpc3RlBG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpTdHVyZHlSZWYuH1Rva2VuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence/persistence.capnp:SturdyRef.Token
+    "EDJQBgb/h4DE2/LN7NkAER4B/yZrX0fT/l6FAAUCBwAAM78HnAgxFTIBESUHAAARIXcAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEfdFBhdGhQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAQNpZAEQ/43Ri9V0XQrhAAABARAAAX9hZGRyZXNzARD/DVugcQaBR/sAAAEBEAAB",  # persistence/persistence.capnp:VatPath
+    "EFRQBgb/jdGL1XRdCuEAUR4BBP8ma19H0/5ehQAEBwAAM9QBDwMxFSIBESUHAAARIecAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEHdElkUAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpWgAAUWgDAVF0AgERAgIUAQIAABFxWgAAUXADAVF8AgERAwMUAQMAABF5WgAAUXgDAVGEAgH/cHVibGljS2UAA3kwAQkAAgEJAAH/cHVibGljS2UAA3kxAQkAAgEJAAH/cHVibGljS2UAA3kyAQkAAgEJAAH/cHVibGljS2UAA3kzAQkAAgEJAAE=",  # persistence/persistence.capnp:VatId
+    "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
+    "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EBRQBgb/XswivomIE54AESYBAAAEBwABMRWiAQAE/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUuQ29udGFpbmVyLmV4cG9ydCRQYXIHYW1z",  # storage/storage.capnp:Store.Container.export$Params
     "ECRQBgb/7slRc02EFKkAESYBAAAFAQcAATEVqgEAARElPwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUuQ29udGFpbmVyLmV4cG9ydCRSZXMPdWx0c1EEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2pzb24BDAACAQwAAQ==",  # storage/storage.capnp:Store.Container.export$Results
     "EBVQBgb/lAljjhcU/JMAESYBAAAEBwABMRXqAQAE/3N0b3JhZ2UvBnN0b3JhZ2UuY2FwbnA6U3RvcmUuQ29udGFpbmVyLmRvd25sb2FkRW50cmllcyRQYQ9yYW1z",  # storage/storage.capnp:Store.Container.downloadEntries$Params
@@ -40,7 +57,6 @@ _SCHEMA_NODES = [
     "EDNQBgb/VJ66f3NXO4gAUSYBAQAABQEHAAExFboBAAERJXcAAf9zdG9yYWdlLwVzdG9yYWdlLmNhcG5wOlN0b3JlLkNvbnRhaW5lci5hZGRFbnRyeSRSP2VzdWx0c1EIAwQAAAQBAAARKTIAAFEkAwFRMAIBAQEUAQEAABEtQgAAUSgDAVE0AgEfZW50cnkBEf/AePR7PiQa+gAAAQERAAF/c3VjY2VzcwEBAAIBAQAB",  # storage/storage.capnp:Store.Container.addEntry$Results
     "EENQBgb+wj7wfiLs6hEcAf8GbziiipWf5gAFAwcAADM6DaQNMRVqAREpBwAAESWvAAH/c3RvcmFnZS8Ec3RvcmFnZS5jYXBucDpTdG9yZS5JbmZvQW5kQ29udGEPaW5lclABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTVIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2NvbnRhaW5lAAFyARH/Yq5nVfQxgYcAAAEBEQAB",  # storage/storage.capnp:Store.InfoAndContainer
     "EF1QBgb/QvHS7ywmfYQAERwB/wZvOKKKlZ/mAAUDBwAAM80ORxAxFWoBESkHAAARJa8AAf9zdG9yYWdlLwRzdG9yYWdlLmNhcG5wOlN0b3JlLkltcG9ydEV4cG9ydA9EYXRhUAEBUQwDBAAABAEAABFFKgAAUUADAVFMAgERAQEUAQEAABFJQgAAUUQDAVGoAgERAgIUAQIAABGlWgAAUaQDAVHAAgEPaW5mbwEQ/9PaA/7LfsvUAAABARAAAX9lbnRyaWVzAQ4AAVADAQEQ/zNHFyVHhtS5AAAAQAERAR9RBAIB/zNHFyVHhtS5AAAAEQEnUQgBAQEBUQgDAQEBURADAQEMAAIBEP9cj5JJxFwY4gAAAQEOAAH/aXNBbnlWYWwAA3VlAQ4AAVADAQEBAAIBDgAB",  # storage/storage.capnp:Store.ImportExportData
-    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
     "EDNQBgb/9psrZ024TLwAERwBAAAFAgcAATEVggEAAREhdwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUubmV3Q29udGFpbmVyJFBhcmFtcwBRCAMEAAAEAQAAESkqAABRJAMBUTACAREBARQBAQAAES1iAABRLAMBUTgCAQ9uYW1lAQwAAgEMAAH/ZGVzY3JpcHQAB2lvbgEMAAIBDAAB",  # storage/storage.capnp:Store.newContainer$Params
     "ECVQBgb/rJeZOr9JI/MAERwBAAAFAQcAATEVigEAARElPwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUubmV3Q29udGFpbmVyJFJlc3VsdHMAAFEEAwQAAAQBAAARDVIAAFEMAwFRGAIB/2NvbnRhaW5lAAFyARH/Yq5nVfQxgYcAAAEBEQAB",  # storage/storage.capnp:Store.newContainer$Results
     "ECRQBgb/RCeNn8e+F/UAERwBAAAFAQcAATEVmgEAARElPwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUuY29udGFpbmVyV2l0aElkJFBhcmEDbXNRBAMEAAAEAQAAEQ0aAABRCAMBURQCAQNpZAEMAAIBDAAB",  # storage/storage.capnp:Store.containerWithId$Params
@@ -51,8 +67,6 @@ _SCHEMA_NODES = [
     "ECRQBgb9DoUmOGAEqlEcAQEAAAQHAAExFaIBAAERJT8AAf9zdG9yYWdlLwVzdG9yYWdlLmNhcG5wOlN0b3JlLnJlbW92ZUNvbnRhaW5lciRSZXN1B2x0c1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # storage/storage.capnp:Store.removeContainer$Results
     "ECRQBgb/MqsXAsReProAERwBAAAFAQcAATEVmgEAARElPwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUuaW1wb3J0Q29udGFpbmVyJFBhcmEDbXNRBAMEAAAEAQAAEQ0qAABRCAMBURQCAQ9qc29uAQwAAgEMAAE=",  # storage/storage.capnp:Store.importContainer$Params
     "ECVQBgb/z4msdSYaj4kAERwBAAAFAQcAATEVogEAARElPwAB/3N0b3JhZ2UvBXN0b3JhZ2UuY2FwbnA6U3RvcmUuaW1wb3J0Q29udGFpbmVyJFJlc3UHbHRzUQQDBAAABAEAABENUgAAUQwDAVEYAgH/Y29udGFpbmUAAXIBEf9irmdV9DGBhwAAAQERAAE=",  # storage/storage.capnp:Store.importContainer$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
 ]
 
 # Load schemas and build module structure
@@ -67,35 +81,39 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Store = _InterfaceModule(_loader.get(0xE69F958AA2386F06).as_interface(), "Store")
-Store.Container = _InterfaceModule(
+Store = _StoreInterfaceModule(_loader.get(0xE69F958AA2386F06).as_interface(), "Store")
+Store.Container = _StoreInterfaceModule._ContainerInterfaceModule(
     Store.schema.methods["newContainer"].result_type.fields["container"].schema,
     "Container",
 )
-Store.Container.Entry = _InterfaceModule(
-    Store.Container.schema.methods["listEntries"]
-    .result_type.fields["entries"]
-    .schema.elementType.fields["entry"]
-    .schema,
-    "Entry",
+Store.Container.Entry = (
+    _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule(
+        Store.Container.schema.methods["listEntries"]
+        .result_type.fields["entries"]
+        .schema.elementType.fields["entry"]
+        .schema,
+        "Entry",
+    )
 )
-Store.Container.Entry.Value = _StructModule(
+Store.Container.Entry.Value = _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule(
     Store.Container.Entry.schema.methods["getValue"].result_type.fields["value"].schema,
     "Value",
 )
-Store.Container.KeyAndEntry = _StructModule(
-    Store.Container.schema.methods["listEntries"]
-    .result_type.fields["entries"]
-    .schema.elementType,
-    "KeyAndEntry",
+Store.Container.KeyAndEntry = (
+    _StoreInterfaceModule._ContainerInterfaceModule._KeyAndEntryStructModule(
+        Store.Container.schema.methods["listEntries"]
+        .result_type.fields["entries"]
+        .schema.elementType,
+        "KeyAndEntry",
+    )
 )
-Store.InfoAndContainer = _StructModule(
+Store.InfoAndContainer = _StoreInterfaceModule._InfoAndContainerStructModule(
     Store.schema.methods["listContainers"]
     .result_type.fields["containers"]
     .schema.elementType,
     "InfoAndContainer",
 )
-Store.ImportExportData = _StructModule(
+Store.ImportExportData = _StoreInterfaceModule._ImportExportDataStructModule(
     _loader.get(0x847D262CEFD2F142).as_struct(),
     "ImportExportData",
 )

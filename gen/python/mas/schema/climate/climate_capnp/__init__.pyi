@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `climate.capnp`."""
 
-from . import types as types
+from mas.schema.climate.climate_capnp import types as types
 
 class _GCMEnumModule:
     cccmaCanEsm2: int
@@ -68,6 +68,7 @@ class _ElementEnumModule:
 
 TimeSeries: types.modules._TimeSeriesInterfaceModule
 Location: types.modules._LocationStructModule
+
 Dataset: types.modules._DatasetInterfaceModule
 MetaPlusData: types.modules._MetaPlusDataStructModule
 TimeSeriesData: types.modules._TimeSeriesDataStructModule

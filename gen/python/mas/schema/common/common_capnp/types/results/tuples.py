@@ -1,5 +1,7 @@
 """Runtime placeholder module for result tuple helpers of `common.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from typing import NamedTuple
 
 

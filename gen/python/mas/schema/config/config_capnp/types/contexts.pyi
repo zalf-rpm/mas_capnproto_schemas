@@ -1,4 +1,12 @@
 """Context helper types for `config.capnp`."""
 
-from ._all import NextconfigCallContext as NextconfigCallContext
-from ._all import NextconfigParams as NextconfigParams
+from typing import Protocol
+
+from mas.schema.config.config_capnp.types.results import server as results_server
+
+class NextconfigParams(Protocol): ...
+
+class NextconfigCallContext(Protocol):
+    params: NextconfigParams
+    @property
+    def results(self) -> results_server.NextconfigServerResult: ...

@@ -5,7 +5,14 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.model.monica.monica_management_capnp.types.modules import (
+    _EventStructModule,
+    _ILRDatesStructModule,
+    _ParamsStructModule,
+    _ServiceInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -30,6 +37,21 @@ _SCHEMA_NODES = [
     "EGxQBgb/ZLVa27RgV+MAERYC/xhF6xDkOh2gAAABM0UVvxoRFfIRIQcAADEdzwEAAf9jbGltYXRlLwJjbGltYXRlLmNhcG5wOkVsH2VtZW50UAEBUUwBAgAAEd0qAAABARHVKgAAAQIRzSoAAAEDEcU6AAABBBG9QgAAAQURtSoAAAEGEa1KAAABBxGpYgAAAQgRpUoAAAEJEaFKAAABChGdWgAAAQsRmSIAAAEMEZEaAAABDRGJIgAAAQ4RgWoAAAEPEX2KAAABEBF9agAAARExeSIBAAABEhGBMgAAD3RtaW4PdGF2Zw90bWF4P3ByZWNpcH9nbG9icmFkD3dpbmT/c3VuaG91cnMAAAD/Y2xvdWRhbW8AB3VudP9yZWxodW1pZAAAAP9haXJwcmVzcwAAAP92YXBvcnByZQADc3MHY28yA28zB2V0MP9kZXdwb2ludAAPVGVtcP9zcGVjaWZpYwFIdW1pZGl0eQAA/3Nub3dmYWxsAA9GbHV4/3N1cmZhY2VEA293bndlbGxpbmdMb25nd2F2ZVJhZGlhdAdpb24fcG90RVQ=",  # climate/climate.capnp:Element
     "EEVQBgb/3BTsExwNiMYAUSwBAf8FhwlmFOIgywAFAgcAADPnC/IMMRWaAREtBwAAESmvAAH/bW9kZWwvbW8FbmljYS9tb25pY2FfbWFuYWdlbWVudC5jYXBucDpQYXJhbXMuU293aQNuZ1ABAVEMAwQAAAQBAAARRUoAAFFEAwFRUAIBAQEUAQEBARFNagAAUUwDAVFYAgERAgEUAQIAABFVKgAAUVADAVFcAgH/Y3VsdGl2YXIAAAABDAACAQwAAf9wbGFudERlbgAPc2l0eQEHAAIBBwABD2Nyb3ABEf+EXL8ko5eN6AAAAQERAAE=",  # model/monica/monica_management.capnp:Params.Sowing
     "EDdQBgb/hFy/JKOXjegAERAD/3L5nZbhJIr5AAABM+cBQQMRFaoRHQcAABEZxxGZJwAA/2Nyb3AvY3JvAXAuY2FwbnA6D0Nyb3BQAQFRDAMFAQL/W448dA4BbsgBhlRRLXL8+uQRUVoAAhFJBwEB/3pRtN8X8W7yAbqUJKW7BDe/ET1KAAIRNQcAAP+0MDEqMhzd9AFIZN7uXomqtBEpQgACER0H/3BhcmFtZXRlAANyc0AB/2N1bHRpdmFyAAAAQAF/c3BlY2llc0ABUQgBAf/VSJxZy9GvsgAAAP9lyzbcoNqnwQAAAA==",  # crop/crop.capnp:Crop
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "ECRQBgb/I3fIYO2Z1/0AESgB/03egx0naG2IAAUBBwAAM0EJMQoxFXIBESkHAAARJT8AAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmLh9Pd25lclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence/persistence.capnp:SturdyRef.Owner
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "EDlQBgb/Td6DHSdobYgAER4B/yZrX0fT/l6FAAUCBwAAM54IXAsxFUIBESUnAAAROXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmAFEIAQH/I3fIYO2Z1/0AEQky/4i0EX+0K0H6ABEFMh9Pd25lch9Ub2tlblEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFROAIBB3ZhdAEQ/4eAxNvyzezZAAABARAAAf9sb2NhbFJlZgAAAAEQ/4i0EX+0K0H6AAABARAAAQ==",  # persistence/persistence.capnp:SturdyRef
+    "EDNQBgb/iLQRf7QrQfoAUSgBAf9N3oMdJ2htiABFAQcCAAAzuwpaCzEVcgERKQcAABEldwAB/3BlcnNpc3RlBG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpTdHVyZHlSZWYuH1Rva2VuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence/persistence.capnp:SturdyRef.Token
+    "EDJQBgb/h4DE2/LN7NkAER4B/yZrX0fT/l6FAAUCBwAAM78HnAgxFTIBESUHAAARIXcAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEfdFBhdGhQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAQNpZAEQ/43Ri9V0XQrhAAABARAAAX9hZGRyZXNzARD/DVugcQaBR/sAAAEBEAAB",  # persistence/persistence.capnp:VatPath
+    "EFRQBgb/jdGL1XRdCuEAUR4BBP8ma19H0/5ehQAEBwAAM9QBDwMxFSIBESUHAAARIecAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEHdElkUAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpWgAAUWgDAVF0AgERAgIUAQIAABFxWgAAUXADAVF8AgERAwMUAQMAABF5WgAAUXgDAVGEAgH/cHVibGljS2UAA3kwAQkAAgEJAAH/cHVibGljS2UAA3kxAQkAAgEJAAH/cHVibGljS2UAA3kyAQkAAgEJAAH/cHVibGljS2UAA3kzAQkAAgEJAAE=",  # persistence/persistence.capnp:VatId
+    "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
+    "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EBJQBgb/W448dA4BbsgAERUBAAAEBwABMRU6AQAE/2Nyb3AvY3JvA3AuY2FwbnA6Q3JvcC5wYXJhbWV0ZXJzJD9QYXJhbXM=",  # crop/crop.capnp:Crop.parameters$Params
     "ECJQBgb/hlRRLXL8+uQAERUBAAAFAQcAATEVQgEAAREdPwAB/2Nyb3AvY3JvBHAuY2FwbnA6Q3JvcC5wYXJhbWV0ZXJzJFJlc3VsdHMAUQQDBAAABAEAABENOgAAUQgDAVEUAgE/cGFyYW1zARIAAgESAAE=",  # crop/crop.capnp:Crop.parameters$Results
     "EBJQBgb/elG03xfxbvIAERUBAAAEBwABMRUqAQAE/2Nyb3AvY3JvA3AuY2FwbnA6Q3JvcC5jdWx0aXZhciRQYQ9yYW1z",  # crop/crop.capnp:Crop.cultivar$Params
@@ -59,7 +81,6 @@ _SCHEMA_NODES = [
     "ECNQBgb/B4zzryAZ2r8AESUD/y/UlaJlfDOTAAABM+gklyUxFWoBESkHAAARJUcRURcAAP9tb2RlbC9tbwRuaWNhL21vbmljYV9tYW5hZ2VtZW50LmNhcG5wOlNlcg92aWNlUAEBUQQDBQAA//uPzDkw/PHsAdt7Vtw/ei3zERFqAAIRCQf/bWFuYWdlbWUAD250QXRAAVEEAQH/1UicWcvRr7IAAAA=",  # model/monica/monica_management.capnp:Service
     "EDFQBgb/+4/MOTD88ewAUQ4BAv8k/Md5IFSQkAAEBwAAMxADfwMRFdIRIQcAABEddwAB/2dlby9nZW8uAmNhcG5wOkxhdExvbkNvb3IBZFABAVEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLSIAAFEoAwFRNAIBB2xhdAELAAIBCwABB2xvbgELAAIBCwAB",  # geo/geo.capnp:LatLonCoord
     "ECpQBgb/23tW3D96LfMAES0BAAAFAQcAATEVEgIAAREtPwAB/21vZGVsL21vB25pY2EvbW9uaWNhX21hbmFnZW1lbnQuY2FwbnA6U2VydmljZS5tYW5hZ2VtZW50QXQkUmVzdWx0AXNRBAMEAAAEAQAAEQ0qAABRCAMBUSQCAQ9tZ210AQ4AAVADAQEQ/wR3RnmzKmfPAAABAQ4AAQ==",  # model/monica/monica_management.capnp:Service.managementAt$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
 ]
 
 # Load schemas and build module structure
@@ -74,48 +95,67 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-ILRDates = _StructModule(_loader.get(0xA1F99F32EEA02590).as_struct(), "ILRDates")
+ILRDates = _ILRDatesStructModule(
+    _loader.get(0xA1F99F32EEA02590).as_struct(),
+    "ILRDates",
+)
 EventType = _EnumModule(_loader.get(0xD0290DAF8DE9F2B0).as_enum(), "EventType")
 PlantOrgan = _EnumModule(_loader.get(0xB33447204CDF022C).as_enum(), "PlantOrgan")
-Event = _StructModule(_loader.get(0xCF672AB379467704).as_struct(), "Event")
+Event = _EventStructModule(_loader.get(0xCF672AB379467704).as_struct(), "Event")
 Event.ExternalType = _EnumModule(
     Event.schema.fields["type"].schema,
     "ExternalType",
 )
 Event.PhenoStage = _EnumModule(_loader.get(0xB2BF3A5557791BC1).as_enum(), "PhenoStage")
-Event.Type = _StructModule(_loader.get(0xB91010C363E568A4).as_struct(), "Type")
-Params = _StructModule(_loader.get(0xCB20E21466098705).as_struct(), "Params")
-Params.DailyWeather = _StructModule(
+Event.Type = _EventStructModule._TypeStructModule(
+    _loader.get(0xB91010C363E568A4).as_struct(),
+    "Type",
+)
+Params = _ParamsStructModule(_loader.get(0xCB20E21466098705).as_struct(), "Params")
+Params.DailyWeather = _ParamsStructModule._DailyWeatherStructModule(
     _loader.get(0xA332CFE9735A304C).as_struct(),
     "DailyWeather",
 )
-Params.DailyWeather.KV = _StructModule(
+Params.DailyWeather.KV = _ParamsStructModule._DailyWeatherStructModule._KVStructModule(
     Params.DailyWeather.schema.fields["data"].schema.elementType,
     "KV",
 )
-Params.Sowing = _StructModule(_loader.get(0xC6880D1C13EC14DC).as_struct(), "Sowing")
-Params.AutomaticSowing = _StructModule(
+Params.Sowing = _ParamsStructModule._SowingStructModule(
+    _loader.get(0xC6880D1C13EC14DC).as_struct(),
+    "Sowing",
+)
+Params.AutomaticSowing = _ParamsStructModule._AutomaticSowingStructModule(
     _loader.get(0xD1BFC1C9617D9453).as_struct(),
     "AutomaticSowing",
 )
-Params.AutomaticSowing.AvgSoilTemp = _StructModule(
-    Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
-    "AvgSoilTemp",
+Params.AutomaticSowing.AvgSoilTemp = (
+    _ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule(
+        Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
+        "AvgSoilTemp",
+    )
 )
-Params.Harvest = _StructModule(_loader.get(0x8FEB941D70F2A468).as_struct(), "Harvest")
+Params.Harvest = _ParamsStructModule._HarvestStructModule(
+    _loader.get(0x8FEB941D70F2A468).as_struct(),
+    "Harvest",
+)
 Params.Harvest.CropUsage = _EnumModule(
     Params.Harvest.schema.fields["optCarbMgmtData"].schema.fields["cropUsage"].schema,
     "CropUsage",
 )
-Params.Harvest.OptCarbonMgmtData = _StructModule(
-    Params.Harvest.schema.fields["optCarbMgmtData"].schema,
-    "OptCarbonMgmtData",
+Params.Harvest.OptCarbonMgmtData = (
+    _ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule(
+        Params.Harvest.schema.fields["optCarbMgmtData"].schema,
+        "OptCarbonMgmtData",
+    )
 )
-Params.AutomaticHarvest = _StructModule(
+Params.AutomaticHarvest = _ParamsStructModule._AutomaticHarvestStructModule(
     _loader.get(0xF805D22FABB80702).as_struct(),
     "AutomaticHarvest",
 )
-Params.Cutting = _StructModule(_loader.get(0x8460DAC6ABFF7ED9).as_struct(), "Cutting")
+Params.Cutting = _ParamsStructModule._CuttingStructModule(
+    _loader.get(0x8460DAC6ABFF7ED9).as_struct(),
+    "Cutting",
+)
 Params.Cutting.CL = _EnumModule(
     Params.Cutting.schema.fields["cuttingSpec"]
     .schema.elementType.fields["cutOrLeft"]
@@ -128,45 +168,57 @@ Params.Cutting.Unit = _EnumModule(
     .schema,
     "Unit",
 )
-Params.Cutting.Spec = _StructModule(
+Params.Cutting.Spec = _ParamsStructModule._CuttingStructModule._SpecStructModule(
     Params.Cutting.schema.fields["cuttingSpec"].schema.elementType,
     "Spec",
 )
-Params.MineralFertilization = _StructModule(
+Params.MineralFertilization = _ParamsStructModule._MineralFertilizationStructModule(
     _loader.get(0xA363D226E178DEBD).as_struct(),
     "MineralFertilization",
 )
-Params.MineralFertilization.Parameters = _StructModule(
-    Params.MineralFertilization.schema.fields["partition"].schema,
-    "Parameters",
+Params.MineralFertilization.Parameters = (
+    _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule(
+        Params.MineralFertilization.schema.fields["partition"].schema,
+        "Parameters",
+    )
 )
-Params.NDemandFertilization = _StructModule(
+Params.NDemandFertilization = _ParamsStructModule._NDemandFertilizationStructModule(
     _loader.get(0xC7C14E92E0CD461C).as_struct(),
     "NDemandFertilization",
 )
-Params.OrganicFertilization = _StructModule(
+Params.OrganicFertilization = _ParamsStructModule._OrganicFertilizationStructModule(
     _loader.get(0xB492838C7FED50B0).as_struct(),
     "OrganicFertilization",
 )
-Params.OrganicFertilization.OrganicMatterParameters = _StructModule(
+Params.OrganicFertilization.OrganicMatterParameters = _ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule(
     Params.OrganicFertilization.schema.fields["params"].schema.fields["params"].schema,
     "OrganicMatterParameters",
 )
-Params.OrganicFertilization.Parameters = _StructModule(
-    Params.OrganicFertilization.schema.fields["params"].schema,
-    "Parameters",
+Params.OrganicFertilization.Parameters = (
+    _ParamsStructModule._OrganicFertilizationStructModule._ParametersStructModule(
+        Params.OrganicFertilization.schema.fields["params"].schema,
+        "Parameters",
+    )
 )
-Params.Tillage = _StructModule(_loader.get(0xAA49811A4E3E2C59).as_struct(), "Tillage")
-Params.Irrigation = _StructModule(
+Params.Tillage = _ParamsStructModule._TillageStructModule(
+    _loader.get(0xAA49811A4E3E2C59).as_struct(),
+    "Tillage",
+)
+Params.Irrigation = _ParamsStructModule._IrrigationStructModule(
     _loader.get(0xD90939A58E404FF8).as_struct(),
     "Irrigation",
 )
-Params.Irrigation.Parameters = _StructModule(
-    Params.Irrigation.schema.fields["params"].schema,
-    "Parameters",
+Params.Irrigation.Parameters = (
+    _ParamsStructModule._IrrigationStructModule._ParametersStructModule(
+        Params.Irrigation.schema.fields["params"].schema,
+        "Parameters",
+    )
 )
-Params.SaveState = _StructModule(
+Params.SaveState = _ParamsStructModule._SaveStateStructModule(
     _loader.get(0xDD84803FC87AC648).as_struct(),
     "SaveState",
 )
-Service = _InterfaceModule(_loader.get(0xBFDA1920AFF38C07).as_interface(), "Service")
+Service = _ServiceInterfaceModule(
+    _loader.get(0xBFDA1920AFF38C07).as_interface(),
+    "Service",
+)

@@ -5,7 +5,19 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.persistence.persistence_capnp.types.modules import (
+    _AddressStructModule,
+    _GatewayInterfaceModule,
+    _GatewayRegistrableInterfaceModule,
+    _HeartbeatInterfaceModule,
+    _HostPortResolverInterfaceModule,
+    _PersistentInterfaceModule,
+    _RestorerInterfaceModule,
+    _SturdyRefStructModule,
+    _VatIdStructModule,
+    _VatPathStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -35,6 +47,9 @@ _SCHEMA_NODES = [
     "ECdQBgb/spBGcHX3yrAAES8D/58d0Lb6kY2qAAABM6oUXRkxFcoBETEXAAARPUcRaQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6SG9zdFBvcnRSZXNvbHZlci5SZWdpc3RyYXIAAFEEAQH/Dw1G/2KPAb8AEQF6/1JlZ2lzdGVyAD9QYXJhbXNRBAMFAAD/Dw1G/2KPAb8BuYv5M2aB/PoREUoAAhEJB/9yZWdpc3RlcgAAAEABUAEB",  # persistence/persistence.capnp:HostPortResolver.Registrar
     "EGVQBgb/Dw1G/2KPAb8AUTkBAf+ykEZwdffKsAAFBAcAADMrFZMXMRVCAhE1BwAAMTEfAQAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpIb3N0UG9ydFJlc29sdmVyLlJlZ2lzdHJhci5SZWdpc3RlclBhcmFtcwBQAQFRFAMEAAAEAQAAEX1iAABRfAMBUYgCAREBARQBAQAAEYUqAABRgAMBUYwCAQECFAECAAARiSoAAFGEAwFRkAIBEQMCFAEDAAARjTIAAFGIAwFRlAIBEQQDFAEEAAARkXIAAFGQAwFRnAIB/2Jhc2U2NFZhAAd0SWQBDAACAQwAAQ9ob3N0AQwAAgEMAAEPcG9ydAEHAAIBBwABH2FsaWFzAQwAAgEMAAH/aWRlbnRpdHkAH1Byb29mAQ0AAgENAAE=",  # persistence/persistence.capnp:HostPortResolver.Registrar.RegisterParams
     "EDlQBgb/uYv5M2aB/PoAUTkBAQAABQEHAAExFVICAAERMXcAAf9wZXJzaXN0ZQhuY2UvcGVyc2lzdGVuY2UuY2FwbnA6SG9zdFBvcnRSZXNvbHZlci5SZWdpc3RyYXIucmVnaXN0ZXIkUmVzdWx0AXNRCAMEAAAEAQAAESlSAABRKAMBUTQCAQEBFAEBAAARMbIAAFE0AwFRQAIB/2hlYXJ0YmVhAAF0ARH/OspH0fq9s58AAAEBEQAB/3NlY3NIZWFyAXRiZWF0SW50H2VydmFsAQgAAgEIAAE=",  # persistence/persistence.capnp:HostPortResolver.Registrar.register$Results
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
     "ECVQBgb/M7ssD2+W+OYAES8BAAAFAQcAATEV8gEAAREpPwAB/3BlcnNpc3RlBm5jZS9wZXJzaXN0ZW5jZS5jYXBucDpIb3N0UG9ydFJlc29sdmVyLnJlc29sdmUkUB9hcmFtc1EEAwQAAAQBAAARDRoAAFEIAwFRFAIBA2lkAQwAAgEMAAE=",  # persistence/persistence.capnp:HostPortResolver.resolve$Params
     "EDRQBgb/jAsijVFfGPwAUS8BAQAABQEHAAExFfoBAAERKXcAAf9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6SG9zdFBvcnRSZXNvbHZlci5yZXNvbHZlJFI/ZXN1bHRzUQgDBAAABAEAABEpKgAAUSQDAVEwAgEBARQBAQAAES0qAABRKAMBUTQCAQ9ob3N0AQwAAgEMAAEPcG9ydAEHAAIBBwAB",  # persistence/persistence.capnp:HostPortResolver.resolve$Results
     "EChQBgb/7ScvYAosnI8AER4D/yZrX0fT/l6FAAABMwoanh4xFTIBESUXAAARMUcRXScAAP9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6R2EfdGV3YXlRBAEB/6p/6XldxjKiABEBWv9SZWdSZXN1bAADdHNRBAMFAAD/q6tErykVjMcBqn/peV3GMqIREUoAAhEJB/9yZWdpc3RlcgAAAEABUQgBAf/VSJxZy9GvsgAAAP88LtknhCG2nwAAAA==",  # persistence/persistence.capnp:Gateway
@@ -43,7 +58,6 @@ _SCHEMA_NODES = [
     "ECNQBgb/jWA33y8iU4IAER4D/yZrX0fT/l6FAAABM6Ae6R8xFYoBES0HAAARKUcRWQcAAP9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6R2F0ZXdheVJlZ2lzdHJhYmxlAABQAQFRBAMFAAD/RJ230nhdTLYBtvDueoawuPcREZoAAhENB/9zdHVyZHlSZQFmQXRHYXRldwNheUABUAEB",  # persistence/persistence.capnp:GatewayRegistrable
     "EDhQBgb/RJ230nhdTLYAETEBAAAFAgcAATEVWgIAARExdwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpHYXRld2F5UmVnaXN0cmFibGUuc3R1cmR5UmVmQXRHYXRld2F5JFBhcmEDbXNRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFSAABRMAMBUTwCAf9nYXRld2F5UwABUgEQ/03egx0naG2IAAABARAAAf9nYXRld2F5SQABZAEMAAIBDAAB",  # persistence/persistence.capnp:GatewayRegistrable.sturdyRefAtGateway$Params
     "EChQBgb/tvDueoawuPcAETEBAAAFAQcAATEVYgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpHYXRld2F5UmVnaXN0cmFibGUuc3R1cmR5UmVmQXRHYXRld2F5JFJlc3UHbHRzUQQDBAAABAEAABENggAAUQwDAVEYAgH/c2VsZkF0R2EBdGV3YXlTUgABEP9N3oMdJ2htiAAAAQEQAAE=",  # persistence/persistence.capnp:GatewayRegistrable.sturdyRefAtGateway$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
 ]
 
 # Load schemas and build module structure
@@ -58,58 +72,72 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-VatId = _StructModule(_loader.get(0xE10A5D74D58BD18D).as_struct(), "VatId")
-Address = _StructModule(_loader.get(0xFB47810671A05B0D).as_struct(), "Address")
-VatPath = _StructModule(_loader.get(0xD9ECCDF2DBC48087).as_struct(), "VatPath")
-SturdyRef = _StructModule(_loader.get(0x886D68271D83DE4D).as_struct(), "SturdyRef")
-SturdyRef.Owner = _StructModule(_loader.get(0xFDD799ED60C87723).as_struct(), "Owner")
-SturdyRef.Token = _StructModule(
+VatId = _VatIdStructModule(_loader.get(0xE10A5D74D58BD18D).as_struct(), "VatId")
+Address = _AddressStructModule(_loader.get(0xFB47810671A05B0D).as_struct(), "Address")
+VatPath = _VatPathStructModule(_loader.get(0xD9ECCDF2DBC48087).as_struct(), "VatPath")
+SturdyRef = _SturdyRefStructModule(
+    _loader.get(0x886D68271D83DE4D).as_struct(),
+    "SturdyRef",
+)
+SturdyRef.Owner = _SturdyRefStructModule._OwnerStructModule(
+    _loader.get(0xFDD799ED60C87723).as_struct(),
+    "Owner",
+)
+SturdyRef.Token = _SturdyRefStructModule._TokenStructModule(
     SturdyRef.schema.fields["localRef"].schema,
     "Token",
 )
-Heartbeat = _InterfaceModule(
+Heartbeat = _HeartbeatInterfaceModule(
     _loader.get(0x9FB3BDFAD147CA3A).as_interface(),
     "Heartbeat",
 )
-Persistent = _InterfaceModule(
+Persistent = _PersistentInterfaceModule(
     _loader.get(0xC1A7DAA0DC36CB65).as_interface(),
     "Persistent",
 )
-Persistent.SaveParams = _StructModule(
-    Persistent.schema.methods["save"].param_type,
+Persistent.SaveParams = _PersistentInterfaceModule._SaveParamsStructModule(
+    _loader.get(0xD5E0AAC4225E0343).as_struct(),
     "SaveParams",
 )
-Persistent.SaveResults = _StructModule(
-    Persistent.schema.methods["save"].result_type,
+Persistent.SaveResults = _PersistentInterfaceModule._SaveResultsStructModule(
+    _loader.get(0xDC5BD1EF982CEC13).as_struct(),
     "SaveResults",
 )
-Persistent.ReleaseSturdyRef = _InterfaceModule(
-    _loader.get(0x8F700F81169F2E52).as_interface(),
-    "ReleaseSturdyRef",
+Persistent.ReleaseSturdyRef = (
+    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule(
+        _loader.get(0x8F700F81169F2E52).as_interface(),
+        "ReleaseSturdyRef",
+    )
 )
-Restorer = _InterfaceModule(_loader.get(0x9FB6218427D92E3C).as_interface(), "Restorer")
-Restorer.RestoreParams = _StructModule(
-    Restorer.schema.methods["restore"].param_type,
+Restorer = _RestorerInterfaceModule(
+    _loader.get(0x9FB6218427D92E3C).as_interface(),
+    "Restorer",
+)
+Restorer.RestoreParams = _RestorerInterfaceModule._RestoreParamsStructModule(
+    _loader.get(0xC541E5764A37D73A).as_struct(),
     "RestoreParams",
 )
-HostPortResolver = _InterfaceModule(
+HostPortResolver = _HostPortResolverInterfaceModule(
     _loader.get(0xAA8D91FAB6D01D9F).as_interface(),
     "HostPortResolver",
 )
-HostPortResolver.Registrar = _InterfaceModule(
+HostPortResolver.Registrar = _HostPortResolverInterfaceModule._RegistrarInterfaceModule(
     _loader.get(0xB0CAF775704690B2).as_interface(),
     "Registrar",
 )
-HostPortResolver.Registrar.RegisterParams = _StructModule(
+HostPortResolver.Registrar.RegisterParams = _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule(
     HostPortResolver.Registrar.schema.methods["register"].param_type,
     "RegisterParams",
 )
-Gateway = _InterfaceModule(_loader.get(0x8F9C2C0A602F27ED).as_interface(), "Gateway")
-Gateway.RegResults = _StructModule(
+Gateway = _GatewayInterfaceModule(
+    _loader.get(0x8F9C2C0A602F27ED).as_interface(),
+    "Gateway",
+)
+Gateway.RegResults = _GatewayInterfaceModule._RegResultsStructModule(
     Gateway.schema.methods["register"].result_type,
     "RegResults",
 )
-GatewayRegistrable = _InterfaceModule(
+GatewayRegistrable = _GatewayRegistrableInterfaceModule(
     _loader.get(0x8253222FDF37608D).as_interface(),
     "GatewayRegistrable",
 )

@@ -1,17 +1,54 @@
 """Client result helper types for `storage.capnp`."""
 
-from .._all import AddentryResult as AddentryResult
-from .._all import ClearResult as ClearResult
-from .._all import ContainerwithidResult as ContainerwithidResult
-from .._all import DownloadentriesResult as DownloadentriesResult
-from .._all import ExportResult as ExportResult
-from .._all import GetentryResult as GetentryResult
-from .._all import GetkeyResult as GetkeyResult
-from .._all import GetvalueResult as GetvalueResult
-from .._all import ImportcontainerResult as ImportcontainerResult
-from .._all import ListcontainersResult as ListcontainersResult
-from .._all import ListentriesResult as ListentriesResult
-from .._all import NewcontainerResult as NewcontainerResult
-from .._all import RemovecontainerResult as RemovecontainerResult
-from .._all import RemoveentryResult as RemoveentryResult
-from .._all import SetvalueResult as SetvalueResult
+from collections.abc import Awaitable
+from typing import Protocol
+
+from mas.schema.storage.storage_capnp.types import clients as clients
+from mas.schema.storage.storage_capnp.types import readers as readers
+
+class GetkeyResult(Awaitable[GetkeyResult], Protocol):
+    key: str
+
+class GetvalueResult(Awaitable[GetvalueResult], Protocol):
+    value: readers.ValueReader
+    isUnset: bool
+
+class SetvalueResult(Awaitable[SetvalueResult], Protocol):
+    success: bool
+
+class ExportResult(Awaitable[ExportResult], Protocol):
+    json: str
+
+class DownloadentriesResult(Awaitable[DownloadentriesResult], Protocol):
+    entries: readers.PairListReader
+
+class ListentriesResult(Awaitable[ListentriesResult], Protocol):
+    entries: readers.KeyAndEntryListReader
+
+class GetentryResult(Awaitable[GetentryResult], Protocol):
+    entry: clients.EntryClient
+
+class RemoveentryResult(Awaitable[RemoveentryResult], Protocol):
+    success: bool
+
+class ClearResult(Awaitable[ClearResult], Protocol):
+    success: bool
+
+class AddentryResult(Awaitable[AddentryResult], Protocol):
+    entry: clients.EntryClient
+    success: bool
+
+class NewcontainerResult(Awaitable[NewcontainerResult], Protocol):
+    container: clients.ContainerClient
+
+class ContainerwithidResult(Awaitable[ContainerwithidResult], Protocol):
+    container: clients.ContainerClient
+
+class ListcontainersResult(Awaitable[ListcontainersResult], Protocol):
+    containers: readers.InfoAndContainerListReader
+
+class RemovecontainerResult(Awaitable[RemovecontainerResult], Protocol):
+    success: bool
+
+class ImportcontainerResult(Awaitable[ImportcontainerResult], Protocol):
+    container: clients.ContainerClient

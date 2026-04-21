@@ -1,4 +1,31 @@
 """Enum helper aliases for `soil.capnp`."""
 
-from ._all import PropertyNameEnum as PropertyNameEnum
-from ._all import STypeEnum as STypeEnum
+from typing import Literal
+
+type PropertyNameEnum = (
+    int
+    | Literal[
+        "soilType",
+        "sand",
+        "clay",
+        "silt",
+        "pH",
+        "sceleton",
+        "organicCarbon",
+        "organicMatter",
+        "bulkDensity",
+        "rawDensity",
+        "fieldCapacity",
+        "permanentWiltingPoint",
+        "saturation",
+        "soilMoisture",
+        "soilWaterConductivityCoefficient",
+        "ammonium",
+        "nitrate",
+        "cnRatio",
+        "inGroundwater",
+        "impenetrable",
+    ]
+)
+
+type STypeEnum = int | Literal["unknown", "ka5"]

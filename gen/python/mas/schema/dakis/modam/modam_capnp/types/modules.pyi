@@ -1,39 +1,137 @@
 """Module helper types for `modam.capnp`."""
 
 from collections.abc import Awaitable
-from typing import override
+from typing import Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
+    _InterfaceMethod,
     _InterfaceModule,
+    _InterfaceSchema,
+    _StructSchema,
+    _StructSchemaField,
 )
 
-from . import _all as _all
+from mas.schema.dakis.modam.modam_capnp.types import clients as clients
+from mas.schema.dakis.modam.modam_capnp.types import contexts as contexts
+from mas.schema.dakis.modam.modam_capnp.types import schemas as schemas
+from mas.schema.dakis.modam.modam_capnp.types.results import tuples as results_tuples
 
 class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
+    class _ModamWrapperServiceSchema(_InterfaceSchema):
+        class _ModamWrapperServiceInterfaceModuleRunAemModelParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["input"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelParamSchema._Fields: ...
+
+        class _ModamWrapperServiceInterfaceModuleRunAemModelResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["output"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelResultSchema._Fields: ...
+
+        class _ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema(
+            _StructSchema,
+        ):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["input"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema._Fields: ...
+
+        class _ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema(
+            _StructSchema,
+        ):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["output"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["runAemModel"],
+            ) -> _InterfaceMethod[
+                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelParamSchema,
+                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["runFieldModel"],
+            ) -> _InterfaceMethod[
+                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema,
+                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(
+            self,
+        ) -> (
+            _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._Methods
+        ): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._ModamWrapperServiceSchema: ...
     @override
     def _new_client(
         self,
         server: _DynamicCapabilityServer,
-    ) -> _all.ModamWrapperServiceClient: ...
+    ) -> clients.ModamWrapperServiceClient: ...
     class Server(_DynamicCapabilityServer):
         def runAemModel(
             self,
             input: str,
-            _context: _all.RunaemmodelCallContext,
+            _context: contexts.RunaemmodelCallContext,
             **kwargs: object,
-        ) -> Awaitable[str | _all.RunaemmodelResultTuple | None]: ...
+        ) -> Awaitable[str | results_tuples.RunaemmodelResultTuple | None]: ...
         def runAemModel_context(
             self,
-            context: _all.RunaemmodelCallContext,
+            context: contexts.RunaemmodelCallContext,
         ) -> Awaitable[None]: ...
         def runFieldModel(
             self,
             input: str,
-            _context: _all.RunfieldmodelCallContext,
+            _context: contexts.RunfieldmodelCallContext,
             **kwargs: object,
-        ) -> Awaitable[str | _all.RunfieldmodelResultTuple | None]: ...
+        ) -> Awaitable[str | results_tuples.RunfieldmodelResultTuple | None]: ...
         def runFieldModel_context(
             self,
-            context: _all.RunfieldmodelCallContext,
+            context: contexts.RunfieldmodelCallContext,
         ) -> Awaitable[None]: ...

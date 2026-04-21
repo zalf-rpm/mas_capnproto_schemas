@@ -1,10 +1,23 @@
 """Server helper types for `persistence.capnp`."""
 
-from ._all import GatewayRegistrableServer as GatewayRegistrableServer
-from ._all import GatewayServer as GatewayServer
-from ._all import HeartbeatServer as HeartbeatServer
-from ._all import HostPortResolverServer as HostPortResolverServer
-from ._all import PersistentServer as PersistentServer
-from ._all import RegistrarServer as RegistrarServer
-from ._all import ReleaseSturdyRefServer as ReleaseSturdyRefServer
-from ._all import RestorerServer as RestorerServer
+from mas.schema.persistence.persistence_capnp.types import modules as modules
+
+GatewayRegistrableServer = modules._GatewayRegistrableInterfaceModule.Server
+
+GatewayServer = modules._GatewayInterfaceModule.Server
+
+HeartbeatServer = modules._HeartbeatInterfaceModule.Server
+
+HostPortResolverServer = modules._HostPortResolverInterfaceModule.Server
+
+PersistentServer = modules._PersistentInterfaceModule.Server
+
+RegistrarServer = (
+    modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule.Server
+)
+
+ReleaseSturdyRefServer = (
+    modules._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule.Server
+)
+
+RestorerServer = modules._RestorerInterfaceModule.Server

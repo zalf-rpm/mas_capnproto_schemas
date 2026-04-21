@@ -8,24 +8,58 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumSchema,
+    _InterfaceMethod,
     _InterfaceModule,
+    _InterfaceSchema,
+    _ListSchema,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+from mas.schema.grid.grid_capnp.types import builders as builders
+from mas.schema.grid.grid_capnp.types import clients as clients
+from mas.schema.grid.grid_capnp.types import contexts as contexts
+from mas.schema.grid.grid_capnp.types import enums as enums
+from mas.schema.grid.grid_capnp.types import readers as readers
+from mas.schema.grid.grid_capnp.types import schemas as schemas
+from mas.schema.grid.grid_capnp.types import servers as servers
+from mas.schema.grid.grid_capnp.types.results import tuples as results_tuples
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
-
-from . import _all as _all
 
 class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
     class _ValueStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _ValueSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["f"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["i"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["ui"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["no"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._ValueStructModule._ValueSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridValueSchema: ...
         @override
         def new_message(
             self,
@@ -36,7 +70,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             ui: int | None = None,
             no: bool | None = None,
             **kwargs: object,
-        ) -> _all.ValueBuilder: ...
+        ) -> builders.ValueBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -44,7 +78,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.ValueReader]: ...
+        ) -> AbstractContextManager[readers.ValueReader]: ...
         @overload
         def from_bytes(
             self,
@@ -53,7 +87,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.ValueReader]: ...
+        ) -> AbstractContextManager[readers.ValueReader]: ...
         @overload
         def from_bytes(
             self,
@@ -62,7 +96,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.ValueBuilder]: ...
+        ) -> AbstractContextManager[builders.ValueBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -76,20 +110,40 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ValueReader: ...
+        ) -> readers.ValueReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ValueReader: ...
+        ) -> readers.ValueReader: ...
 
     Value: _ValueStructModule
     class _ResolutionStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _ResolutionSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["meter"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["degree"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _GridInterfaceModule._ResolutionStructModule._ResolutionSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridResolutionSchema: ...
         @override
         def new_message(
             self,
@@ -98,7 +152,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             meter: int | None = None,
             degree: float | None = None,
             **kwargs: object,
-        ) -> _all.ResolutionBuilder: ...
+        ) -> builders.ResolutionBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -106,7 +160,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.ResolutionReader]: ...
+        ) -> AbstractContextManager[readers.ResolutionReader]: ...
         @overload
         def from_bytes(
             self,
@@ -115,7 +169,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.ResolutionReader]: ...
+        ) -> AbstractContextManager[readers.ResolutionReader]: ...
         @overload
         def from_bytes(
             self,
@@ -124,7 +178,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.ResolutionBuilder]: ...
+        ) -> AbstractContextManager[builders.ResolutionBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -138,20 +192,38 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ResolutionReader: ...
+        ) -> readers.ResolutionReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ResolutionReader: ...
+        ) -> readers.ResolutionReader: ...
 
     Resolution: _ResolutionStructModule
     class _RowColStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _RowColSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["row"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["col"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._RowColStructModule._RowColSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridRowColSchema: ...
         @override
         def new_message(
             self,
@@ -160,7 +232,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             row: int | None = None,
             col: int | None = None,
             **kwargs: object,
-        ) -> _all.RowColBuilder: ...
+        ) -> builders.RowColBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -168,7 +240,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.RowColReader]: ...
+        ) -> AbstractContextManager[readers.RowColReader]: ...
         @overload
         def from_bytes(
             self,
@@ -177,7 +249,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.RowColReader]: ...
+        ) -> AbstractContextManager[readers.RowColReader]: ...
         @overload
         def from_bytes(
             self,
@@ -186,7 +258,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.RowColBuilder]: ...
+        ) -> AbstractContextManager[builders.RowColBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -200,31 +272,72 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.RowColReader: ...
+        ) -> readers.RowColReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.RowColReader: ...
+        ) -> readers.RowColReader: ...
 
     RowCol: _RowColStructModule
     class _AggregationPartStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _AggregationPartSchema(_StructSchema):
+            class _ValueField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridValueSchema: ...
+
+            class _RowColField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["value"],
+                ) -> _GridInterfaceModule._AggregationPartStructModule._AggregationPartSchema._ValueField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["rowCol"],
+                ) -> _GridInterfaceModule._AggregationPartStructModule._AggregationPartSchema._RowColField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["areaFrac"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["iValue"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._AggregationPartStructModule._AggregationPartSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridAggregationPartSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            value: _all.ValueBuilder | dict[str, Any] | None = None,
-            rowCol: _all.RowColBuilder | dict[str, Any] | None = None,
+            value: builders.ValueBuilder | dict[str, Any] | None = None,
+            rowCol: builders.RowColBuilder | dict[str, Any] | None = None,
             areaFrac: float | None = None,
             iValue: float | None = None,
             **kwargs: object,
-        ) -> _all.AggregationPartBuilder: ...
+        ) -> builders.AggregationPartBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -232,7 +345,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.AggregationPartReader]: ...
+        ) -> AbstractContextManager[readers.AggregationPartReader]: ...
         @overload
         def from_bytes(
             self,
@@ -241,7 +354,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.AggregationPartReader]: ...
+        ) -> AbstractContextManager[readers.AggregationPartReader]: ...
         @overload
         def from_bytes(
             self,
@@ -250,7 +363,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.AggregationPartBuilder]: ...
+        ) -> AbstractContextManager[builders.AggregationPartBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -264,30 +377,74 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AggregationPartReader: ...
+        ) -> readers.AggregationPartReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AggregationPartReader: ...
+        ) -> readers.AggregationPartReader: ...
 
     AggregationPart: _AggregationPartStructModule
     class _LocationStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _LocationSchema(_StructSchema):
+            class _LatLonCoordField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _RowColField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _ValueField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridValueSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["latLonCoord"],
+                ) -> _GridInterfaceModule._LocationStructModule._LocationSchema._LatLonCoordField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["rowCol"],
+                ) -> _GridInterfaceModule._LocationStructModule._LocationSchema._RowColField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["value"],
+                ) -> _GridInterfaceModule._LocationStructModule._LocationSchema._ValueField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._LocationStructModule._LocationSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridLocationSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             latLonCoord: LatLonCoordBuilder | dict[str, Any] | None = None,
-            rowCol: _all.RowColBuilder | dict[str, Any] | None = None,
-            value: _all.ValueBuilder | dict[str, Any] | None = None,
+            rowCol: builders.RowColBuilder | dict[str, Any] | None = None,
+            value: builders.ValueBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.LocationBuilder: ...
+        ) -> builders.LocationBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -295,7 +452,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.LocationReader]: ...
+        ) -> AbstractContextManager[readers.LocationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -304,7 +461,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.LocationReader]: ...
+        ) -> AbstractContextManager[readers.LocationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -313,7 +470,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.LocationBuilder]: ...
+        ) -> AbstractContextManager[builders.LocationBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -327,44 +484,709 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.LocationReader: ...
+        ) -> readers.LocationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.LocationReader: ...
+        ) -> readers.LocationReader: ...
 
     Location: _LocationStructModule
     class _CallbackInterfaceModule(_InterfaceModule):
+        class _CallbackSchema(_InterfaceSchema):
+            class _CallbackInterfaceModuleSendCellsParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["maxCount"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsParamSchema._Fields: ...
+
+            class _CallbackInterfaceModuleSendCellsResultSchema(_StructSchema):
+                class _LocationsField(_StructSchemaField):
+                    class _Schema(_ListSchema):
+                        @property
+                        @override
+                        def elementType(self) -> schemas._GridLocationSchema: ...
+
+                    @property
+                    @override
+                    def schema(
+                        self,
+                    ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema._LocationsField._Schema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["locations"],
+                    ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema._LocationsField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema._Fields: ...
+
+            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sendCells"],
+                ) -> _InterfaceMethod[
+                    _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsParamSchema,
+                    _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema,
+                ]: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: str,
+                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> (
+                _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._Methods
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._GridCallbackSchema: ...
         @override
         def _new_client(
             self,
             server: _DynamicCapabilityServer,
-        ) -> _all.CallbackClient: ...
+        ) -> clients.CallbackClient: ...
         class Server(_DynamicCapabilityServer):
             def sendCells(
                 self,
                 maxCount: int,
-                _context: _all.SendcellsCallContext,
+                _context: contexts.SendcellsCallContext,
                 **kwargs: object,
             ) -> Awaitable[
-                _all.LocationListBuilder
-                | _all.LocationListReader
+                builders.LocationListBuilder
+                | readers.LocationListReader
                 | Sequence[Any]
-                | _all.SendcellsResultTuple
+                | results_tuples.SendcellsResultTuple
                 | None
             ]: ...
             def sendCells_context(
                 self,
-                context: _all.SendcellsCallContext,
+                context: contexts.SendcellsCallContext,
             ) -> Awaitable[None]: ...
 
     Callback: _CallbackInterfaceModule
     type CallbackServer = _GridInterfaceModule._CallbackInterfaceModule.Server
+
+    class _GridSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
+            class _SealForField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sealFor"],
+                ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveParamSchema._SealForField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveParamSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveResultSchema(_StructSchema):
+            class _SturdyRefField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _UnsaveSRField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sturdyRef"],
+                ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema._SturdyRefField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["unsaveSR"],
+                ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema._UnsaveSRField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
+
+        class _GridInterfaceModuleClosestValueAtParamSchema(_StructSchema):
+            class _LatlonCoordField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _ResolutionField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridResolutionSchema: ...
+
+            class _AggField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["latlonCoord"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema._LatlonCoordField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["ignoreNoData"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["resolution"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema._ResolutionField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["agg"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema._AggField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["returnRowCols"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["includeAggParts"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema._Fields: ...
+
+        class _GridInterfaceModuleClosestValueAtResultSchema(_StructSchema):
+            class _ValField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridValueSchema: ...
+
+            class _TlField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _BrField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _AggPartsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._GridAggregationPartSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._AggPartsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["val"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._ValField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["tl"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._TlField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["br"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._BrField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["aggParts"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._AggPartsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._Fields: ...
+
+        class _GridInterfaceModuleResolutionParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionParamSchema._Fields: ...
+
+        class _GridInterfaceModuleResolutionResultSchema(_StructSchema):
+            class _ResField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridResolutionSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["res"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema._ResField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema._Fields: ...
+
+        class _GridInterfaceModuleDimensionParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionParamSchema._Fields: ...
+
+        class _GridInterfaceModuleDimensionResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["rows"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["cols"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionResultSchema._Fields: ...
+
+        class _GridInterfaceModuleNoDataValueParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueParamSchema._Fields: ...
+
+        class _GridInterfaceModuleNoDataValueResultSchema(_StructSchema):
+            class _NodataField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridValueSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nodata"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema._NodataField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema._Fields: ...
+
+        class _GridInterfaceModuleValueAtParamSchema(_StructSchema):
+            class _ResolutionField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridResolutionSchema: ...
+
+            class _AggField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["row"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["col"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["resolution"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema._ResolutionField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["agg"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema._AggField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["includeAggParts"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema._Fields: ...
+
+        class _GridInterfaceModuleValueAtResultSchema(_StructSchema):
+            class _ValField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridValueSchema: ...
+
+            class _AggPartsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._GridAggregationPartSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema._AggPartsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["val"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema._ValField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["aggParts"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema._AggPartsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema._Fields: ...
+
+        class _GridInterfaceModuleLatLonBoundsParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["useCellCenter"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsParamSchema._Fields: ...
+
+        class _GridInterfaceModuleLatLonBoundsResultSchema(_StructSchema):
+            class _TlField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _TrField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _BrField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _BlField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["tl"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._TlField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["tr"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._TrField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["br"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._BrField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["bl"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._BlField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._Fields: ...
+
+        class _GridInterfaceModuleStreamCellsParamSchema(_StructSchema):
+            class _TopLeftField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _BottomRightField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridRowColSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["topLeft"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema._TopLeftField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["bottomRight"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema._BottomRightField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema._Fields: ...
+
+        class _GridInterfaceModuleStreamCellsResultSchema(_StructSchema):
+            class _CallbackField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._GridCallbackSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["callback"],
+                ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema._CallbackField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema._Fields: ...
+
+        class _GridInterfaceModuleUnitParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitParamSchema._Fields: ...
+
+        class _GridInterfaceModuleUnitResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["unit"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["save"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveParamSchema,
+                _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["closestValueAt"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["resolution"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["dimension"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["noDataValue"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["valueAt"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["latLonBounds"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["streamCells"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["unit"],
+            ) -> _InterfaceMethod[
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitParamSchema,
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(self) -> _GridInterfaceModule._GridSchema._Methods: ...
+
+    @property
     @override
-    def _new_client(self, server: _DynamicCapabilityServer) -> _all.GridClient: ...
+    def schema(self) -> schemas._GridSchema: ...
+    @override
+    def _new_client(self, server: _DynamicCapabilityServer) -> clients.GridClient: ...
     class Server(
         _IdentifiableInterfaceModule.Server,
         _PersistentInterfaceModule.Server,
@@ -373,99 +1195,102 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             self,
             latlonCoord: LatLonCoordReader,
             ignoreNoData: bool,
-            resolution: _all.ResolutionReader,
-            agg: _all.AggregationEnum,
+            resolution: readers.ResolutionReader,
+            agg: enums.AggregationEnum,
             returnRowCols: bool,
             includeAggParts: bool,
-            _context: _all.ClosestvalueatCallContext,
+            _context: contexts.ClosestvalueatCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.ClosestvalueatResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.ClosestvalueatResultTuple | None]: ...
         def closestValueAt_context(
             self,
-            context: _all.ClosestvalueatCallContext,
+            context: contexts.ClosestvalueatCallContext,
         ) -> Awaitable[None]: ...
         def resolution(
             self,
-            _context: _all.ResolutionCallContext,
+            _context: contexts.ResolutionCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.ResolutionBuilder
-            | _all.ResolutionReader
+            builders.ResolutionBuilder
+            | readers.ResolutionReader
             | dict[str, Any]
-            | _all.ResolutionResultTuple
+            | results_tuples.ResolutionResultTuple
             | None
         ]: ...
         def resolution_context(
             self,
-            context: _all.ResolutionCallContext,
+            context: contexts.ResolutionCallContext,
         ) -> Awaitable[None]: ...
         def dimension(
             self,
-            _context: _all.DimensionCallContext,
+            _context: contexts.DimensionCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.DimensionResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.DimensionResultTuple | None]: ...
         def dimension_context(
             self,
-            context: _all.DimensionCallContext,
+            context: contexts.DimensionCallContext,
         ) -> Awaitable[None]: ...
         def noDataValue(
             self,
-            _context: _all.NodatavalueCallContext,
+            _context: contexts.NodatavalueCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.ValueBuilder
-            | _all.ValueReader
+            builders.ValueBuilder
+            | readers.ValueReader
             | dict[str, Any]
-            | _all.NodatavalueResultTuple
+            | results_tuples.NodatavalueResultTuple
             | None
         ]: ...
         def noDataValue_context(
             self,
-            context: _all.NodatavalueCallContext,
+            context: contexts.NodatavalueCallContext,
         ) -> Awaitable[None]: ...
         def valueAt(
             self,
             row: int,
             col: int,
-            resolution: _all.ResolutionReader,
-            agg: _all.AggregationEnum,
+            resolution: readers.ResolutionReader,
+            agg: enums.AggregationEnum,
             includeAggParts: bool,
-            _context: _all.ValueatCallContext,
+            _context: contexts.ValueatCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.ValueatResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.ValueatResultTuple | None]: ...
         def valueAt_context(
             self,
-            context: _all.ValueatCallContext,
+            context: contexts.ValueatCallContext,
         ) -> Awaitable[None]: ...
         def latLonBounds(
             self,
             useCellCenter: bool,
-            _context: _all.LatlonboundsCallContext,
+            _context: contexts.LatlonboundsCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.LatlonboundsResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.LatlonboundsResultTuple | None]: ...
         def latLonBounds_context(
             self,
-            context: _all.LatlonboundsCallContext,
+            context: contexts.LatlonboundsCallContext,
         ) -> Awaitable[None]: ...
         def streamCells(
             self,
-            topLeft: _all.RowColReader,
-            bottomRight: _all.RowColReader,
-            _context: _all.StreamcellsCallContext,
+            topLeft: readers.RowColReader,
+            bottomRight: readers.RowColReader,
+            _context: contexts.StreamcellsCallContext,
             **kwargs: object,
         ) -> Awaitable[
             _GridInterfaceModule._CallbackInterfaceModule.Server
-            | _all.CallbackClient
-            | _all.StreamcellsResultTuple
+            | clients.CallbackClient
+            | results_tuples.StreamcellsResultTuple
             | None
         ]: ...
         def streamCells_context(
             self,
-            context: _all.StreamcellsCallContext,
+            context: contexts.StreamcellsCallContext,
         ) -> Awaitable[None]: ...
         def unit(
             self,
-            _context: _all.UnitCallContext,
+            _context: contexts.UnitCallContext,
             **kwargs: object,
-        ) -> Awaitable[str | _all.UnitResultTuple | None]: ...
-        def unit_context(self, context: _all.UnitCallContext) -> Awaitable[None]: ...
+        ) -> Awaitable[str | results_tuples.UnitResultTuple | None]: ...
+        def unit_context(
+            self,
+            context: contexts.UnitCallContext,
+        ) -> Awaitable[None]: ...

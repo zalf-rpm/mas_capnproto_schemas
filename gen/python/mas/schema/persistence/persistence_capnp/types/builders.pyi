@@ -1,14 +1,289 @@
 """Builder helper types for `persistence.capnp`."""
 
-from ._all import AddressBuilder as AddressBuilder
-from ._all import AddressIp6Builder as AddressIp6Builder
-from ._all import OwnerBuilder as OwnerBuilder
-from ._all import RegisterParamsBuilder as RegisterParamsBuilder
-from ._all import RegResultsBuilder as RegResultsBuilder
-from ._all import RestoreParamsBuilder as RestoreParamsBuilder
-from ._all import SaveParamsBuilder as SaveParamsBuilder
-from ._all import SaveResultsBuilder as SaveResultsBuilder
-from ._all import SturdyRefBuilder as SturdyRefBuilder
-from ._all import TokenBuilder as TokenBuilder
-from ._all import VatIdBuilder as VatIdBuilder
-from ._all import VatPathBuilder as VatPathBuilder
+from typing import Any, Literal, overload, override
+
+from capnp.lib.capnp import (
+    _DynamicStructBuilder,
+)
+
+from mas.schema.persistence.persistence_capnp.types import clients as clients
+from mas.schema.persistence.persistence_capnp.types import modules as modules
+from mas.schema.persistence.persistence_capnp.types import readers as readers
+
+class VatIdBuilder(_DynamicStructBuilder):
+    @property
+    def publicKey0(self) -> int: ...
+    @publicKey0.setter
+    def publicKey0(self, value: int) -> None: ...
+    @property
+    def publicKey1(self) -> int: ...
+    @publicKey1.setter
+    def publicKey1(self, value: int) -> None: ...
+    @property
+    def publicKey2(self) -> int: ...
+    @publicKey2.setter
+    def publicKey2(self, value: int) -> None: ...
+    @property
+    def publicKey3(self) -> int: ...
+    @publicKey3.setter
+    def publicKey3(self, value: int) -> None: ...
+    @override
+    def as_reader(self) -> readers.VatIdReader: ...
+
+class AddressIp6Builder(_DynamicStructBuilder):
+    @property
+    def lower64(self) -> int: ...
+    @lower64.setter
+    def lower64(self, value: int) -> None: ...
+    @property
+    def upper64(self) -> int: ...
+    @upper64.setter
+    def upper64(self, value: int) -> None: ...
+    @override
+    def as_reader(self) -> readers.AddressIp6Reader: ...
+
+class AddressBuilder(_DynamicStructBuilder):
+    @property
+    def ip6(self) -> AddressIp6Builder: ...
+    @ip6.setter
+    def ip6(
+        self,
+        value: AddressIp6Builder | readers.AddressIp6Reader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def port(self) -> int: ...
+    @port.setter
+    def port(self, value: int) -> None: ...
+    @property
+    def host(self) -> str: ...
+    @host.setter
+    def host(self, value: str) -> None: ...
+    @override
+    def which(self) -> Literal["ip6", "host"]: ...
+    @override
+    def init(
+        self,
+        field: Literal["ip6"],
+        size: int | None = None,
+    ) -> AddressIp6Builder: ...
+    @override
+    def as_reader(self) -> readers.AddressReader: ...
+
+class VatPathBuilder(_DynamicStructBuilder):
+    @property
+    def id(self) -> VatIdBuilder: ...
+    @id.setter
+    def id(
+        self,
+        value: VatIdBuilder | readers.VatIdReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def address(self) -> AddressBuilder: ...
+    @address.setter
+    def address(
+        self,
+        value: AddressBuilder | readers.AddressReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    @overload
+    def init(self, field: Literal["id"], size: int | None = None) -> VatIdBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["address"],
+        size: int | None = None,
+    ) -> AddressBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+    @override
+    def as_reader(self) -> readers.VatPathReader: ...
+
+class OwnerBuilder(_DynamicStructBuilder):
+    @property
+    def guid(self) -> str: ...
+    @guid.setter
+    def guid(self, value: str) -> None: ...
+    @override
+    def as_reader(self) -> readers.OwnerReader: ...
+
+class TokenBuilder(_DynamicStructBuilder):
+    @property
+    def text(self) -> str: ...
+    @text.setter
+    def text(self, value: str) -> None: ...
+    @property
+    def data(self) -> bytes: ...
+    @data.setter
+    def data(self, value: bytes) -> None: ...
+    @override
+    def which(self) -> Literal["text", "data"]: ...
+    @override
+    def as_reader(self) -> readers.TokenReader: ...
+
+class SturdyRefBuilder(_DynamicStructBuilder):
+    @property
+    def vat(self) -> VatPathBuilder: ...
+    @vat.setter
+    def vat(
+        self,
+        value: VatPathBuilder | readers.VatPathReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def localRef(self) -> TokenBuilder: ...
+    @localRef.setter
+    def localRef(
+        self,
+        value: TokenBuilder | readers.TokenReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    @overload
+    def init(
+        self,
+        field: Literal["vat"],
+        size: int | None = None,
+    ) -> VatPathBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["localRef"],
+        size: int | None = None,
+    ) -> TokenBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+    @override
+    def as_reader(self) -> readers.SturdyRefReader: ...
+
+class SaveParamsBuilder(_DynamicStructBuilder):
+    @property
+    def sealFor(self) -> OwnerBuilder: ...
+    @sealFor.setter
+    def sealFor(
+        self,
+        value: OwnerBuilder | readers.OwnerReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    def init(
+        self,
+        field: Literal["sealFor"],
+        size: int | None = None,
+    ) -> OwnerBuilder: ...
+    @override
+    def as_reader(self) -> readers.SaveParamsReader: ...
+
+class SaveResultsBuilder(_DynamicStructBuilder):
+    @property
+    def sturdyRef(self) -> SturdyRefBuilder: ...
+    @sturdyRef.setter
+    def sturdyRef(
+        self,
+        value: SturdyRefBuilder | readers.SturdyRefReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def unsaveSR(self) -> SturdyRefBuilder: ...
+    @unsaveSR.setter
+    def unsaveSR(
+        self,
+        value: SturdyRefBuilder | readers.SturdyRefReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    @overload
+    def init(
+        self,
+        field: Literal["sturdyRef"],
+        size: int | None = None,
+    ) -> SturdyRefBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["unsaveSR"],
+        size: int | None = None,
+    ) -> SturdyRefBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+    @override
+    def as_reader(self) -> readers.SaveResultsReader: ...
+
+class RestoreParamsBuilder(_DynamicStructBuilder):
+    @property
+    def localRef(self) -> TokenBuilder: ...
+    @localRef.setter
+    def localRef(
+        self,
+        value: TokenBuilder | readers.TokenReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def sealedBy(self) -> OwnerBuilder: ...
+    @sealedBy.setter
+    def sealedBy(
+        self,
+        value: OwnerBuilder | readers.OwnerReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    @overload
+    def init(
+        self,
+        field: Literal["localRef"],
+        size: int | None = None,
+    ) -> TokenBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["sealedBy"],
+        size: int | None = None,
+    ) -> OwnerBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+    @override
+    def as_reader(self) -> readers.RestoreParamsReader: ...
+
+class RegisterParamsBuilder(_DynamicStructBuilder):
+    @property
+    def base64VatId(self) -> str: ...
+    @base64VatId.setter
+    def base64VatId(self, value: str) -> None: ...
+    @property
+    def host(self) -> str: ...
+    @host.setter
+    def host(self, value: str) -> None: ...
+    @property
+    def port(self) -> int: ...
+    @port.setter
+    def port(self, value: int) -> None: ...
+    @property
+    def alias(self) -> str: ...
+    @alias.setter
+    def alias(self, value: str) -> None: ...
+    @property
+    def identityProof(self) -> bytes: ...
+    @identityProof.setter
+    def identityProof(self, value: bytes) -> None: ...
+    @override
+    def as_reader(self) -> readers.RegisterParamsReader: ...
+
+class RegResultsBuilder(_DynamicStructBuilder):
+    @property
+    def sturdyRef(self) -> SturdyRefBuilder: ...
+    @sturdyRef.setter
+    def sturdyRef(
+        self,
+        value: SturdyRefBuilder | readers.SturdyRefReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def heartbeat(self) -> clients.HeartbeatClient: ...
+    @heartbeat.setter
+    def heartbeat(
+        self,
+        value: clients.HeartbeatClient | modules._HeartbeatInterfaceModule.Server,
+    ) -> None: ...
+    @property
+    def secsHeartbeatInterval(self) -> int: ...
+    @secsHeartbeatInterval.setter
+    def secsHeartbeatInterval(self, value: int) -> None: ...
+    @override
+    def init(
+        self,
+        field: Literal["sturdyRef"],
+        size: int | None = None,
+    ) -> SturdyRefBuilder: ...
+    @override
+    def as_reader(self) -> readers.RegResultsReader: ...

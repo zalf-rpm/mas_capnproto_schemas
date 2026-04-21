@@ -5,7 +5,10 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.model.weberest.web_berest_data_import_capnp.types.modules import (
+    _DWLABImportInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -29,7 +32,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-DWLABImport = _InterfaceModule(
+DWLABImport = _DWLABImportInterfaceModule(
     _loader.get(0xA1A4AD9D143EAA6F).as_interface(),
     "DWLABImport",
 )

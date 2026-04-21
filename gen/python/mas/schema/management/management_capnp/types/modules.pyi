@@ -8,7 +8,13 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumSchema,
+    _InterfaceMethod,
+    _InterfaceSchema,
+    _ListSchema,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
@@ -16,12 +22,20 @@ from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceM
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.crop.crop_capnp.types.clients import CropClient
 from mas.schema.crop.crop_capnp.types.modules import _CropInterfaceModule
+from mas.schema.management.management_capnp.types import builders as builders
+from mas.schema.management.management_capnp.types import clients as clients
+from mas.schema.management.management_capnp.types import common as common
+from mas.schema.management.management_capnp.types import contexts as contexts
+from mas.schema.management.management_capnp.types import enums as enums
+from mas.schema.management.management_capnp.types import readers as readers
+from mas.schema.management.management_capnp.types import schemas as schemas
+from mas.schema.management.management_capnp.types.results import (
+    tuples as results_tuples,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
 from mas.schema.registry.registry_capnp.types.modules import _RegistryInterfaceModule
-
-from . import _all as _all
 
 class _EventStructModule(_StructModule):
     class _ExternalTypeEnumModule:
@@ -48,15 +62,53 @@ class _EventStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _TypeSchema(_StructSchema):
+            class _ExternalField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _InternalField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["external"],
+                ) -> (
+                    _EventStructModule._TypeStructModule._TypeSchema._ExternalField
+                ): ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["internal"],
+                ) -> (
+                    _EventStructModule._TypeStructModule._TypeSchema._InternalField
+                ): ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _EventStructModule._TypeStructModule._TypeSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventTypeSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            external: _all.EventExternalTypeEnum | None = None,
-            internal: _all.EventPhenoStageEnum | None = None,
+            external: enums.EventExternalTypeEnum | None = None,
+            internal: enums.EventPhenoStageEnum | None = None,
             **kwargs: object,
-        ) -> _all.TypeBuilder: ...
+        ) -> builders.TypeBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -64,7 +116,7 @@ class _EventStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.TypeReader]: ...
+        ) -> AbstractContextManager[readers.TypeReader]: ...
         @overload
         def from_bytes(
             self,
@@ -73,7 +125,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.TypeReader]: ...
+        ) -> AbstractContextManager[readers.TypeReader]: ...
         @overload
         def from_bytes(
             self,
@@ -82,7 +134,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.TypeBuilder]: ...
+        ) -> AbstractContextManager[builders.TypeBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -96,20 +148,46 @@ class _EventStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.TypeReader: ...
+        ) -> readers.TypeReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.TypeReader: ...
+        ) -> readers.TypeReader: ...
 
     Type: _TypeStructModule
     class _EventAtStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _EventAtSchema(_StructSchema):
+            class _DateField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["date"],
+                ) -> (
+                    _EventStructModule._EventAtStructModule._EventAtSchema._DateField
+                ): ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _EventStructModule._EventAtStructModule._EventAtSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventEventAtSchema: ...
         @override
         def new_message(
             self,
@@ -117,7 +195,7 @@ class _EventStructModule(_StructModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             date: DateBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.EventAtBuilder: ...
+        ) -> builders.EventAtBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -125,7 +203,7 @@ class _EventStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.EventAtReader]: ...
+        ) -> AbstractContextManager[readers.EventAtReader]: ...
         @overload
         def from_bytes(
             self,
@@ -134,7 +212,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.EventAtReader]: ...
+        ) -> AbstractContextManager[readers.EventAtReader]: ...
         @overload
         def from_bytes(
             self,
@@ -143,7 +221,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.EventAtBuilder]: ...
+        ) -> AbstractContextManager[builders.EventAtBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -157,20 +235,56 @@ class _EventStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventAtReader: ...
+        ) -> readers.EventAtReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventAtReader: ...
+        ) -> readers.EventAtReader: ...
 
     EventAt: _EventAtStructModule
     class _EventBetweenStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _EventBetweenSchema(_StructSchema):
+            class _EarliestField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _LatestField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["earliest"],
+                ) -> _EventStructModule._EventBetweenStructModule._EventBetweenSchema._EarliestField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["latest"],
+                ) -> _EventStructModule._EventBetweenStructModule._EventBetweenSchema._LatestField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _EventStructModule._EventBetweenStructModule._EventBetweenSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventEventBetweenSchema: ...
         @override
         def new_message(
             self,
@@ -179,7 +293,7 @@ class _EventStructModule(_StructModule):
             earliest: DateBuilder | dict[str, Any] | None = None,
             latest: DateBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.EventBetweenBuilder: ...
+        ) -> builders.EventBetweenBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -187,7 +301,7 @@ class _EventStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.EventBetweenReader]: ...
+        ) -> AbstractContextManager[readers.EventBetweenReader]: ...
         @overload
         def from_bytes(
             self,
@@ -196,7 +310,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.EventBetweenReader]: ...
+        ) -> AbstractContextManager[readers.EventBetweenReader]: ...
         @overload
         def from_bytes(
             self,
@@ -205,7 +319,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.EventBetweenBuilder]: ...
+        ) -> AbstractContextManager[builders.EventBetweenBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -219,29 +333,57 @@ class _EventStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventBetweenReader: ...
+        ) -> readers.EventBetweenReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventBetweenReader: ...
+        ) -> readers.EventBetweenReader: ...
 
     EventBetween: _EventBetweenStructModule
     class _EventAfterStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _EventAfterSchema(_StructSchema):
+            class _EventField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._EventTypeSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["event"],
+                ) -> _EventStructModule._EventAfterStructModule._EventAfterSchema._EventField: ...
+                @overload
+                def __getitem__(self, key: Literal["days"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _EventStructModule._EventAfterStructModule._EventAfterSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventEventAfterSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            event: _all.TypeBuilder | dict[str, Any] | None = None,
+            event: builders.TypeBuilder | dict[str, Any] | None = None,
             days: int | None = None,
             **kwargs: object,
-        ) -> _all.EventAfterBuilder: ...
+        ) -> builders.EventAfterBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -249,7 +391,7 @@ class _EventStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.EventAfterReader]: ...
+        ) -> AbstractContextManager[readers.EventAfterReader]: ...
         @overload
         def from_bytes(
             self,
@@ -258,7 +400,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.EventAfterReader]: ...
+        ) -> AbstractContextManager[readers.EventAfterReader]: ...
         @overload
         def from_bytes(
             self,
@@ -267,7 +409,7 @@ class _EventStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.EventAfterBuilder]: ...
+        ) -> AbstractContextManager[builders.EventAfterBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -281,33 +423,102 @@ class _EventStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventAfterReader: ...
+        ) -> readers.EventAfterReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.EventAfterReader: ...
+        ) -> readers.EventAfterReader: ...
 
     EventAfter: _EventAfterStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _EventSchema(_StructSchema):
+        class _TypeField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _EnumSchema: ...
+
+        class _InfoField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _StructSchema: ...
+
+        class _AtField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _StructSchema: ...
+
+        class _BetweenField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _StructSchema: ...
+
+        class _AfterField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _StructSchema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["type"],
+            ) -> _EventStructModule._EventSchema._TypeField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _EventStructModule._EventSchema._InfoField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["at"],
+            ) -> _EventStructModule._EventSchema._AtField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["between"],
+            ) -> _EventStructModule._EventSchema._BetweenField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["after"],
+            ) -> _EventStructModule._EventSchema._AfterField: ...
+            @overload
+            def __getitem__(self, key: Literal["params"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["runAtStartOfDay"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _EventStructModule._EventSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._EventSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        type: _all.EventExternalTypeEnum | None = None,
+        type: enums.EventExternalTypeEnum | None = None,
         info: IdInformationBuilder | dict[str, Any] | None = None,
-        at: _all.EventAtBuilder | dict[str, Any] | None = None,
-        between: _all.EventBetweenBuilder | dict[str, Any] | None = None,
-        after: _all.EventAfterBuilder | dict[str, Any] | None = None,
-        params: _all.AnyPointer | None = None,
+        at: builders.EventAtBuilder | dict[str, Any] | None = None,
+        between: builders.EventBetweenBuilder | dict[str, Any] | None = None,
+        after: builders.EventAfterBuilder | dict[str, Any] | None = None,
+        params: common.AnyPointer | None = None,
         runAtStartOfDay: bool | None = None,
         **kwargs: object,
-    ) -> _all.EventBuilder: ...
+    ) -> builders.EventBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -315,7 +526,7 @@ class _EventStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.EventReader]: ...
+    ) -> AbstractContextManager[readers.EventReader]: ...
     @overload
     def from_bytes(
         self,
@@ -324,7 +535,7 @@ class _EventStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.EventReader]: ...
+    ) -> AbstractContextManager[readers.EventReader]: ...
     @overload
     def from_bytes(
         self,
@@ -333,7 +544,7 @@ class _EventStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.EventBuilder]: ...
+    ) -> AbstractContextManager[builders.EventBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -347,51 +558,242 @@ class _EventStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.EventReader: ...
+    ) -> readers.EventReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.EventReader: ...
+    ) -> readers.EventReader: ...
 
 class _FertilizerInterfaceModule(
     _IdentifiableInterfaceModule,
     _PersistentInterfaceModule,
 ):
+    class _FertilizerSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
+            class _SealForField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sealFor"],
+                ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveParamSchema._SealForField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveParamSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveResultSchema(_StructSchema):
+            class _SturdyRefField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _UnsaveSRField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sturdyRef"],
+                ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema._SturdyRefField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["unsaveSR"],
+                ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema._UnsaveSRField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
+
+        class _FertilizerInterfaceModuleNutrientsParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsParamSchema._Fields: ...
+
+        class _FertilizerInterfaceModuleNutrientsResultSchema(_StructSchema):
+            class _NutrientsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._NutrientSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema._NutrientsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nutrients"],
+                ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema._NutrientsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema._Fields: ...
+
+        class _FertilizerInterfaceModuleParametersParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersParamSchema._Fields: ...
+
+        class _FertilizerInterfaceModuleParametersResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["params"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["save"],
+            ) -> _InterfaceMethod[
+                _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveParamSchema,
+                _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["nutrients"],
+            ) -> _InterfaceMethod[
+                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsParamSchema,
+                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["parameters"],
+            ) -> _InterfaceMethod[
+                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersParamSchema,
+                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(
+            self,
+        ) -> _FertilizerInterfaceModule._FertilizerSchema._Methods: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._FertilizerSchema: ...
     @override
     def _new_client(
         self,
         server: _DynamicCapabilityServer,
-    ) -> _all.FertilizerClient: ...
+    ) -> clients.FertilizerClient: ...
     class Server(
         _IdentifiableInterfaceModule.Server,
         _PersistentInterfaceModule.Server,
     ):
         def nutrients(
             self,
-            _context: _all.NutrientsCallContext,
+            _context: contexts.NutrientsCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.NutrientListBuilder
-            | _all.NutrientListReader
+            builders.NutrientListBuilder
+            | readers.NutrientListReader
             | Sequence[Any]
-            | _all.NutrientsResultTuple
+            | results_tuples.NutrientsResultTuple
             | None
         ]: ...
         def nutrients_context(
             self,
-            context: _all.NutrientsCallContext,
+            context: contexts.NutrientsCallContext,
         ) -> Awaitable[None]: ...
         def parameters(
             self,
-            _context: _all.ParametersCallContext,
+            _context: contexts.ParametersCallContext,
             **kwargs: object,
-        ) -> Awaitable[_all.AnyPointer | _all.ParametersResultTuple | None]: ...
+        ) -> Awaitable[
+            common.AnyPointer | results_tuples.ParametersResultTuple | None
+        ]: ...
         def parameters_context(
             self,
-            context: _all.ParametersCallContext,
+            context: contexts.ParametersCallContext,
         ) -> Awaitable[None]: ...
 
 class _NutrientStructModule(_StructModule):
@@ -418,16 +820,50 @@ class _NutrientStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _NutrientSchema(_StructSchema):
+        class _NutrientField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _EnumSchema: ...
+
+        class _UnitField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _EnumSchema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["nutrient"],
+            ) -> _NutrientStructModule._NutrientSchema._NutrientField: ...
+            @overload
+            def __getitem__(self, key: Literal["value"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["unit"],
+            ) -> _NutrientStructModule._NutrientSchema._UnitField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _NutrientStructModule._NutrientSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._NutrientSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        nutrient: _all.NutrientNameEnum | None = None,
+        nutrient: enums.NutrientNameEnum | None = None,
         value: float | None = None,
-        unit: _all.NutrientUnitEnum | None = None,
+        unit: enums.NutrientUnitEnum | None = None,
         **kwargs: object,
-    ) -> _all.NutrientBuilder: ...
+    ) -> builders.NutrientBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -435,7 +871,7 @@ class _NutrientStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.NutrientReader]: ...
+    ) -> AbstractContextManager[readers.NutrientReader]: ...
     @overload
     def from_bytes(
         self,
@@ -444,7 +880,7 @@ class _NutrientStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.NutrientReader]: ...
+    ) -> AbstractContextManager[readers.NutrientReader]: ...
     @overload
     def from_bytes(
         self,
@@ -453,7 +889,7 @@ class _NutrientStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.NutrientBuilder]: ...
+    ) -> AbstractContextManager[builders.NutrientBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -467,20 +903,56 @@ class _NutrientStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.NutrientReader: ...
+    ) -> readers.NutrientReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.NutrientReader: ...
+    ) -> readers.NutrientReader: ...
 
 class _ParamsStructModule(_StructModule):
     class _SowingStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _SowingSchema(_StructSchema):
+            class _CropField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _InterfaceSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cultivar"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["plantDensity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["crop"],
+                ) -> (
+                    _ParamsStructModule._SowingStructModule._SowingSchema._CropField
+                ): ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._SowingStructModule._SowingSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsSowingSchema: ...
         @override
         def new_message(
             self,
@@ -490,7 +962,7 @@ class _ParamsStructModule(_StructModule):
             plantDensity: int | None = None,
             crop: CropClient | _CropInterfaceModule.Server | None = None,
             **kwargs: object,
-        ) -> _all.SowingBuilder: ...
+        ) -> builders.SowingBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -498,7 +970,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.SowingReader]: ...
+        ) -> AbstractContextManager[readers.SowingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -507,7 +979,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.SowingReader]: ...
+        ) -> AbstractContextManager[readers.SowingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -516,7 +988,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.SowingBuilder]: ...
+        ) -> AbstractContextManager[builders.SowingBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -530,14 +1002,14 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SowingReader: ...
+        ) -> readers.SowingReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SowingReader: ...
+        ) -> readers.SowingReader: ...
 
     Sowing: _SowingStructModule
     class _AutomaticSowingStructModule(_StructModule):
@@ -545,6 +1017,35 @@ class _ParamsStructModule(_StructModule):
             class Reader(_DynamicStructReader): ...
             class Builder(_DynamicStructBuilder): ...
 
+            class _AvgSoilTempSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["soilDepthForAveraging"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["daysInSoilTempWindow"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["sowingIfAboveAvgSoilTemp"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule._AvgSoilTempSchema._Fields: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsAutomaticSowingAvgSoilTempSchema: ...
             @override
             def new_message(
                 self,
@@ -554,7 +1055,7 @@ class _ParamsStructModule(_StructModule):
                 daysInSoilTempWindow: int | None = None,
                 sowingIfAboveAvgSoilTemp: float | None = None,
                 **kwargs: object,
-            ) -> _all.AvgSoilTempBuilder: ...
+            ) -> builders.AvgSoilTempBuilder: ...
             @override
             @overload
             def from_bytes(
@@ -562,7 +1063,7 @@ class _ParamsStructModule(_StructModule):
                 buf: bytes,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> AbstractContextManager[_all.AvgSoilTempReader]: ...
+            ) -> AbstractContextManager[readers.AvgSoilTempReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -571,7 +1072,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[False],
-            ) -> AbstractContextManager[_all.AvgSoilTempReader]: ...
+            ) -> AbstractContextManager[readers.AvgSoilTempReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -580,7 +1081,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
-            ) -> AbstractContextManager[_all.AvgSoilTempBuilder]: ...
+            ) -> AbstractContextManager[builders.AvgSoilTempBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
@@ -594,19 +1095,93 @@ class _ParamsStructModule(_StructModule):
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.AvgSoilTempReader: ...
+            ) -> readers.AvgSoilTempReader: ...
             @override
             def read_packed(
                 self,
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.AvgSoilTempReader: ...
+            ) -> readers.AvgSoilTempReader: ...
 
         AvgSoilTemp: _AvgSoilTempStructModule
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _AutomaticSowingSchema(_StructSchema):
+            class _AvgSoilTempField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ParamsAutomaticSowingAvgSoilTempSchema: ...
+
+            class _SowingField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ParamsSowingSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["minTempThreshold"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["daysInTempWindow"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["minPercentASW"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["maxPercentASW"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["max3dayPrecipSum"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["maxCurrentDayPrecipSum"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["tempSumAboveBaseTemp"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["baseTemp"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["avgSoilTemp"],
+                ) -> _ParamsStructModule._AutomaticSowingStructModule._AutomaticSowingSchema._AvgSoilTempField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["sowing"],
+                ) -> _ParamsStructModule._AutomaticSowingStructModule._AutomaticSowingSchema._SowingField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._AutomaticSowingStructModule._AutomaticSowingSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsAutomaticSowingSchema: ...
         @override
         def new_message(
             self,
@@ -620,10 +1195,10 @@ class _ParamsStructModule(_StructModule):
             maxCurrentDayPrecipSum: float | None = None,
             tempSumAboveBaseTemp: float | None = None,
             baseTemp: float | None = None,
-            avgSoilTemp: _all.AvgSoilTempBuilder | dict[str, Any] | None = None,
-            sowing: _all.SowingBuilder | dict[str, Any] | None = None,
+            avgSoilTemp: builders.AvgSoilTempBuilder | dict[str, Any] | None = None,
+            sowing: builders.SowingBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.AutomaticSowingBuilder: ...
+        ) -> builders.AutomaticSowingBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -631,7 +1206,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.AutomaticSowingReader]: ...
+        ) -> AbstractContextManager[readers.AutomaticSowingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -640,7 +1215,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.AutomaticSowingReader]: ...
+        ) -> AbstractContextManager[readers.AutomaticSowingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -649,7 +1224,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.AutomaticSowingBuilder]: ...
+        ) -> AbstractContextManager[builders.AutomaticSowingBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -663,14 +1238,14 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AutomaticSowingReader: ...
+        ) -> readers.AutomaticSowingReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AutomaticSowingReader: ...
+        ) -> readers.AutomaticSowingReader: ...
 
     AutomaticSowing: _AutomaticSowingStructModule
     class _HarvestStructModule(_StructModule):
@@ -683,6 +1258,55 @@ class _ParamsStructModule(_StructModule):
             class Reader(_DynamicStructReader): ...
             class Builder(_DynamicStructBuilder): ...
 
+            class _OptCarbonMgmtDataSchema(_StructSchema):
+                class _CropUsageField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> _EnumSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["optCarbonConservation"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["cropImpactOnHumusBalance"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["cropUsage"],
+                    ) -> _ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule._OptCarbonMgmtDataSchema._CropUsageField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["residueHeq"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["organicFertilizerHeq"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["maxResidueRecoverFraction"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule._OptCarbonMgmtDataSchema._Fields: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsHarvestOptCarbonMgmtDataSchema: ...
             @override
             def new_message(
                 self,
@@ -690,12 +1314,12 @@ class _ParamsStructModule(_StructModule):
                 allocate_seg_callable: Callable[[int], bytearray] | None = None,
                 optCarbonConservation: bool | None = None,
                 cropImpactOnHumusBalance: float | None = None,
-                cropUsage: _all.ParamsHarvestCropUsageEnum | None = None,
+                cropUsage: enums.ParamsHarvestCropUsageEnum | None = None,
                 residueHeq: float | None = None,
                 organicFertilizerHeq: float | None = None,
                 maxResidueRecoverFraction: float | None = None,
                 **kwargs: object,
-            ) -> _all.OptCarbonMgmtDataBuilder: ...
+            ) -> builders.OptCarbonMgmtDataBuilder: ...
             @override
             @overload
             def from_bytes(
@@ -703,7 +1327,7 @@ class _ParamsStructModule(_StructModule):
                 buf: bytes,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> AbstractContextManager[_all.OptCarbonMgmtDataReader]: ...
+            ) -> AbstractContextManager[readers.OptCarbonMgmtDataReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -712,7 +1336,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[False],
-            ) -> AbstractContextManager[_all.OptCarbonMgmtDataReader]: ...
+            ) -> AbstractContextManager[readers.OptCarbonMgmtDataReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -721,7 +1345,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
-            ) -> AbstractContextManager[_all.OptCarbonMgmtDataBuilder]: ...
+            ) -> AbstractContextManager[builders.OptCarbonMgmtDataBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
@@ -735,30 +1359,59 @@ class _ParamsStructModule(_StructModule):
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.OptCarbonMgmtDataReader: ...
+            ) -> readers.OptCarbonMgmtDataReader: ...
             @override
             def read_packed(
                 self,
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.OptCarbonMgmtDataReader: ...
+            ) -> readers.OptCarbonMgmtDataReader: ...
 
         OptCarbonMgmtData: _OptCarbonMgmtDataStructModule
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _HarvestSchema(_StructSchema):
+            class _OptCarbMgmtDataField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ParamsHarvestOptCarbonMgmtDataSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["exported"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["optCarbMgmtData"],
+                ) -> _ParamsStructModule._HarvestStructModule._HarvestSchema._OptCarbMgmtDataField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._HarvestStructModule._HarvestSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsHarvestSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             exported: bool | None = None,
-            optCarbMgmtData: _all.OptCarbonMgmtDataBuilder
+            optCarbMgmtData: builders.OptCarbonMgmtDataBuilder
             | dict[str, Any]
             | None = None,
             **kwargs: object,
-        ) -> _all.HarvestBuilder: ...
+        ) -> builders.HarvestBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -766,7 +1419,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.HarvestReader]: ...
+        ) -> AbstractContextManager[readers.HarvestReader]: ...
         @overload
         def from_bytes(
             self,
@@ -775,7 +1428,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.HarvestReader]: ...
+        ) -> AbstractContextManager[readers.HarvestReader]: ...
         @overload
         def from_bytes(
             self,
@@ -784,7 +1437,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.HarvestBuilder]: ...
+        ) -> AbstractContextManager[builders.HarvestBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -798,20 +1451,74 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.HarvestReader: ...
+        ) -> readers.HarvestReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.HarvestReader: ...
+        ) -> readers.HarvestReader: ...
 
     Harvest: _HarvestStructModule
     class _AutomaticHarvestStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _AutomaticHarvestSchema(_StructSchema):
+            class _HarvestTimeField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _HarvestField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ParamsHarvestSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["minPercentASW"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["maxPercentASW"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["max3dayPrecipSum"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["maxCurrentDayPrecipSum"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["harvestTime"],
+                ) -> _ParamsStructModule._AutomaticHarvestStructModule._AutomaticHarvestSchema._HarvestTimeField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["harvest"],
+                ) -> _ParamsStructModule._AutomaticHarvestStructModule._AutomaticHarvestSchema._HarvestField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._AutomaticHarvestStructModule._AutomaticHarvestSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsAutomaticHarvestSchema: ...
         @override
         def new_message(
             self,
@@ -821,10 +1528,10 @@ class _ParamsStructModule(_StructModule):
             maxPercentASW: float | None = None,
             max3dayPrecipSum: float | None = None,
             maxCurrentDayPrecipSum: float | None = None,
-            harvestTime: _all.EventPhenoStageEnum | None = None,
-            harvest: _all.HarvestBuilder | dict[str, Any] | None = None,
+            harvestTime: enums.EventPhenoStageEnum | None = None,
+            harvest: builders.HarvestBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.AutomaticHarvestBuilder: ...
+        ) -> builders.AutomaticHarvestBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -832,7 +1539,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.AutomaticHarvestReader]: ...
+        ) -> AbstractContextManager[readers.AutomaticHarvestReader]: ...
         @overload
         def from_bytes(
             self,
@@ -841,7 +1548,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.AutomaticHarvestReader]: ...
+        ) -> AbstractContextManager[readers.AutomaticHarvestReader]: ...
         @overload
         def from_bytes(
             self,
@@ -850,7 +1557,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.AutomaticHarvestBuilder]: ...
+        ) -> AbstractContextManager[builders.AutomaticHarvestBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -864,14 +1571,14 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AutomaticHarvestReader: ...
+        ) -> readers.AutomaticHarvestReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.AutomaticHarvestReader: ...
+        ) -> readers.AutomaticHarvestReader: ...
 
     AutomaticHarvest: _AutomaticHarvestStructModule
     class _CuttingStructModule(_StructModule):
@@ -890,18 +1597,72 @@ class _ParamsStructModule(_StructModule):
             class Reader(_DynamicStructReader): ...
             class Builder(_DynamicStructBuilder): ...
 
+            class _SpecSchema(_StructSchema):
+                class _OrganField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> _EnumSchema: ...
+
+                class _UnitField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> _EnumSchema: ...
+
+                class _CutOrLeftField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> _EnumSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["organ"],
+                    ) -> _ParamsStructModule._CuttingStructModule._SpecStructModule._SpecSchema._OrganField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["value"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["unit"],
+                    ) -> _ParamsStructModule._CuttingStructModule._SpecStructModule._SpecSchema._UnitField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["cutOrLeft"],
+                    ) -> _ParamsStructModule._CuttingStructModule._SpecStructModule._SpecSchema._CutOrLeftField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["exportPercentage"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ParamsStructModule._CuttingStructModule._SpecStructModule._SpecSchema._Fields: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsCuttingSpecSchema: ...
             @override
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
                 allocate_seg_callable: Callable[[int], bytearray] | None = None,
-                organ: _all.PlantOrganEnum | None = None,
+                organ: enums.PlantOrganEnum | None = None,
                 value: float | None = None,
-                unit: _all.ParamsCuttingUnitEnum | None = None,
-                cutOrLeft: _all.ParamsCuttingCLEnum | None = None,
+                unit: enums.ParamsCuttingUnitEnum | None = None,
+                cutOrLeft: enums.ParamsCuttingCLEnum | None = None,
                 exportPercentage: float | None = None,
                 **kwargs: object,
-            ) -> _all.SpecBuilder: ...
+            ) -> builders.SpecBuilder: ...
             @override
             @overload
             def from_bytes(
@@ -909,7 +1670,7 @@ class _ParamsStructModule(_StructModule):
                 buf: bytes,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> AbstractContextManager[_all.SpecReader]: ...
+            ) -> AbstractContextManager[readers.SpecReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -918,7 +1679,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[False],
-            ) -> AbstractContextManager[_all.SpecReader]: ...
+            ) -> AbstractContextManager[readers.SpecReader]: ...
             @overload
             def from_bytes(
                 self,
@@ -927,7 +1688,7 @@ class _ParamsStructModule(_StructModule):
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
-            ) -> AbstractContextManager[_all.SpecBuilder]: ...
+            ) -> AbstractContextManager[builders.SpecBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
@@ -941,28 +1702,64 @@ class _ParamsStructModule(_StructModule):
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.SpecReader: ...
+            ) -> readers.SpecReader: ...
             @override
             def read_packed(
                 self,
                 file: IO[str] | IO[bytes],
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _all.SpecReader: ...
+            ) -> readers.SpecReader: ...
 
         Spec: _SpecStructModule
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _CuttingSchema(_StructSchema):
+            class _CuttingSpecField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._ParamsCuttingSpecSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _ParamsStructModule._CuttingStructModule._CuttingSchema._CuttingSpecField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cuttingSpec"],
+                ) -> _ParamsStructModule._CuttingStructModule._CuttingSchema._CuttingSpecField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cutMaxAssimilationRatePercentage"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._CuttingStructModule._CuttingSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsCuttingSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            cuttingSpec: _all.SpecListBuilder | dict[str, Any] | None = None,
+            cuttingSpec: builders.SpecListBuilder | dict[str, Any] | None = None,
             cutMaxAssimilationRatePercentage: float | None = None,
             **kwargs: object,
-        ) -> _all.CuttingBuilder: ...
+        ) -> builders.CuttingBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -970,7 +1767,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.CuttingReader]: ...
+        ) -> AbstractContextManager[readers.CuttingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -979,7 +1776,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.CuttingReader]: ...
+        ) -> AbstractContextManager[readers.CuttingReader]: ...
         @overload
         def from_bytes(
             self,
@@ -988,7 +1785,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.CuttingBuilder]: ...
+        ) -> AbstractContextManager[builders.CuttingBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1002,31 +1799,57 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CuttingReader: ...
+        ) -> readers.CuttingReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CuttingReader: ...
+        ) -> readers.CuttingReader: ...
 
     Cutting: _CuttingStructModule
     class _MineralFertilizationStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _MineralFertilizationSchema(_StructSchema):
+            class _FertilizerField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._FertilizerSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["fertilizer"],
+                ) -> _ParamsStructModule._MineralFertilizationStructModule._MineralFertilizationSchema._FertilizerField: ...
+                @overload
+                def __getitem__(self, key: Literal["amount"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._MineralFertilizationStructModule._MineralFertilizationSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsMineralFertilizationSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            fertilizer: _all.FertilizerClient
+            fertilizer: clients.FertilizerClient
             | _FertilizerInterfaceModule.Server
             | None = None,
             amount: float | None = None,
             **kwargs: object,
-        ) -> _all.MineralFertilizationBuilder: ...
+        ) -> builders.MineralFertilizationBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -1034,7 +1857,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.MineralFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.MineralFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1043,7 +1866,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.MineralFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.MineralFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1052,7 +1875,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.MineralFertilizationBuilder]: ...
+        ) -> AbstractContextManager[builders.MineralFertilizationBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1066,33 +1889,66 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.MineralFertilizationReader: ...
+        ) -> readers.MineralFertilizationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.MineralFertilizationReader: ...
+        ) -> readers.MineralFertilizationReader: ...
 
     MineralFertilization: _MineralFertilizationStructModule
     class _NDemandFertilizationStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _NDemandFertilizationSchema(_StructSchema):
+            class _FertilizerField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._FertilizerSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nDemand"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["fertilizer"],
+                ) -> _ParamsStructModule._NDemandFertilizationStructModule._NDemandFertilizationSchema._FertilizerField: ...
+                @overload
+                def __getitem__(self, key: Literal["depth"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["stage"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._NDemandFertilizationStructModule._NDemandFertilizationSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsNDemandFertilizationSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             nDemand: float | None = None,
-            fertilizer: _all.FertilizerClient
+            fertilizer: clients.FertilizerClient
             | _FertilizerInterfaceModule.Server
             | None = None,
             depth: float | None = None,
             stage: int | None = None,
             **kwargs: object,
-        ) -> _all.NDemandFertilizationBuilder: ...
+        ) -> builders.NDemandFertilizationBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -1100,7 +1956,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.NDemandFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.NDemandFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1109,7 +1965,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.NDemandFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.NDemandFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1118,7 +1974,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.NDemandFertilizationBuilder]: ...
+        ) -> AbstractContextManager[builders.NDemandFertilizationBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1132,32 +1988,63 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.NDemandFertilizationReader: ...
+        ) -> readers.NDemandFertilizationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.NDemandFertilizationReader: ...
+        ) -> readers.NDemandFertilizationReader: ...
 
     NDemandFertilization: _NDemandFertilizationStructModule
     class _OrganicFertilizationStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _OrganicFertilizationSchema(_StructSchema):
+            class _FertilizerField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._FertilizerSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["fertilizer"],
+                ) -> _ParamsStructModule._OrganicFertilizationStructModule._OrganicFertilizationSchema._FertilizerField: ...
+                @overload
+                def __getitem__(self, key: Literal["amount"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["incorporation"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._OrganicFertilizationStructModule._OrganicFertilizationSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsOrganicFertilizationSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            fertilizer: _all.FertilizerClient
+            fertilizer: clients.FertilizerClient
             | _FertilizerInterfaceModule.Server
             | None = None,
             amount: float | None = None,
             incorporation: bool | None = None,
             **kwargs: object,
-        ) -> _all.OrganicFertilizationBuilder: ...
+        ) -> builders.OrganicFertilizationBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -1165,7 +2052,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.OrganicFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.OrganicFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1174,7 +2061,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.OrganicFertilizationReader]: ...
+        ) -> AbstractContextManager[readers.OrganicFertilizationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1183,7 +2070,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.OrganicFertilizationBuilder]: ...
+        ) -> AbstractContextManager[builders.OrganicFertilizationBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1197,20 +2084,36 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.OrganicFertilizationReader: ...
+        ) -> readers.OrganicFertilizationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.OrganicFertilizationReader: ...
+        ) -> readers.OrganicFertilizationReader: ...
 
     OrganicFertilization: _OrganicFertilizationStructModule
     class _TillageStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _TillageSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["depth"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ParamsStructModule._TillageStructModule._TillageSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsTillageSchema: ...
         @override
         def new_message(
             self,
@@ -1218,7 +2121,7 @@ class _ParamsStructModule(_StructModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             depth: float | None = None,
             **kwargs: object,
-        ) -> _all.TillageBuilder: ...
+        ) -> builders.TillageBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -1226,7 +2129,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.TillageReader]: ...
+        ) -> AbstractContextManager[readers.TillageReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1235,7 +2138,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.TillageReader]: ...
+        ) -> AbstractContextManager[readers.TillageReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1244,7 +2147,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.TillageBuilder]: ...
+        ) -> AbstractContextManager[builders.TillageBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1258,31 +2161,66 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.TillageReader: ...
+        ) -> readers.TillageReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.TillageReader: ...
+        ) -> readers.TillageReader: ...
 
     Tillage: _TillageStructModule
     class _IrrigationStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _IrrigationSchema(_StructSchema):
+            class _NutrientConcentrationsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._NutrientSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _ParamsStructModule._IrrigationStructModule._IrrigationSchema._NutrientConcentrationsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["amount"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nutrientConcentrations"],
+                ) -> _ParamsStructModule._IrrigationStructModule._IrrigationSchema._NutrientConcentrationsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _ParamsStructModule._IrrigationStructModule._IrrigationSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ParamsIrrigationSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             amount: float | None = None,
-            nutrientConcentrations: _all.NutrientListBuilder
+            nutrientConcentrations: builders.NutrientListBuilder
             | dict[str, Any]
             | None = None,
             **kwargs: object,
-        ) -> _all.IrrigationBuilder: ...
+        ) -> builders.IrrigationBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -1290,7 +2228,7 @@ class _ParamsStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.IrrigationReader]: ...
+        ) -> AbstractContextManager[readers.IrrigationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1299,7 +2237,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.IrrigationReader]: ...
+        ) -> AbstractContextManager[readers.IrrigationReader]: ...
         @overload
         def from_bytes(
             self,
@@ -1308,7 +2246,7 @@ class _ParamsStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.IrrigationBuilder]: ...
+        ) -> AbstractContextManager[builders.IrrigationBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -1322,26 +2260,36 @@ class _ParamsStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.IrrigationReader: ...
+        ) -> readers.IrrigationReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.IrrigationReader: ...
+        ) -> readers.IrrigationReader: ...
 
     Irrigation: _IrrigationStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _ParamsSchema(_StructSchema):
+        class _Fields(dict[str, _StructSchemaField]): ...
+
+        @property
+        @override
+        def fields(self) -> _ParamsStructModule._ParamsSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._ParamsSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         **kwargs: object,
-    ) -> _all.ParamsBuilder: ...
+    ) -> builders.ParamsBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -1349,7 +2297,7 @@ class _ParamsStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.ParamsReader]: ...
+    ) -> AbstractContextManager[readers.ParamsReader]: ...
     @overload
     def from_bytes(
         self,
@@ -1358,7 +2306,7 @@ class _ParamsStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.ParamsReader]: ...
+    ) -> AbstractContextManager[readers.ParamsReader]: ...
     @overload
     def from_bytes(
         self,
@@ -1367,7 +2315,7 @@ class _ParamsStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.ParamsBuilder]: ...
+    ) -> AbstractContextManager[builders.ParamsBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -1381,41 +2329,342 @@ class _ParamsStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.ParamsReader: ...
+    ) -> readers.ParamsReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.ParamsReader: ...
+    ) -> readers.ParamsReader: ...
 
 class _FertilizerServiceInterfaceModule(_RegistryInterfaceModule):
+    class _FertilizerServiceSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _RegistryInterfaceModuleSupportedCategoriesParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesParamSchema._Fields: ...
+
+        class _RegistryInterfaceModuleSupportedCategoriesResultSchema(_StructSchema):
+            class _CatsField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> _StructSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema._CatsField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["cats"],
+                ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema._CatsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema._Fields: ...
+
+        class _RegistryInterfaceModuleCategoryInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoParamSchema._Fields: ...
+
+        class _RegistryInterfaceModuleCategoryInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoResultSchema._Fields: ...
+
+        class _RegistryInterfaceModuleEntriesParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["categoryId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesParamSchema._Fields: ...
+
+        class _RegistryInterfaceModuleEntriesResultSchema(_StructSchema):
+            class _EntriesField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> _StructSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema._EntriesField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["entries"],
+                ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema._EntriesField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["supportedCategories"],
+            ) -> _InterfaceMethod[
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesParamSchema,
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["categoryInfo"],
+            ) -> _InterfaceMethod[
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoParamSchema,
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["entries"],
+            ) -> _InterfaceMethod[
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesParamSchema,
+                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(
+            self,
+        ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._Methods: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._FertilizerServiceSchema: ...
     @override
     def _new_client(
         self,
         server: _DynamicCapabilityServer,
-    ) -> _all.FertilizerServiceClient: ...
+    ) -> clients.FertilizerServiceClient: ...
     class Server(_RegistryInterfaceModule.Server): ...
 
 class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
+    class _ServiceSchema(_InterfaceSchema):
+        class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["name"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["description"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _ServiceInterfaceModuleManagementAtParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["lat"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["lon"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema._Fields: ...
+
+        class _ServiceInterfaceModuleManagementAtResultSchema(_StructSchema):
+            class _MgmtField(_StructSchemaField):
+                class _Schema(_ListSchema):
+                    @property
+                    @override
+                    def elementType(self) -> schemas._EventSchema: ...
+
+                @property
+                @override
+                def schema(
+                    self,
+                ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema._MgmtField._Schema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["mgmt"],
+                ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema._MgmtField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema._Fields: ...
+
+        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["info"],
+            ) -> _InterfaceMethod[
+                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
+                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["managementAt"],
+            ) -> _InterfaceMethod[
+                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema,
+                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema,
+            ]: ...
+            @overload
+            def __getitem__(
+                self,
+                key: str,
+            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+
+        @property
+        @override
+        def methods(self) -> _ServiceInterfaceModule._ServiceSchema._Methods: ...
+
+    @property
     @override
-    def _new_client(self, server: _DynamicCapabilityServer) -> _all.ServiceClient: ...
+    def schema(self) -> schemas._ServiceSchema: ...
+    @override
+    def _new_client(
+        self,
+        server: _DynamicCapabilityServer,
+    ) -> clients.ServiceClient: ...
     class Server(_IdentifiableInterfaceModule.Server):
         def managementAt(
             self,
             lat: float,
             lon: float,
-            _context: _all.ManagementatCallContext,
+            _context: contexts.ManagementatCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            _all.EventListBuilder
-            | _all.EventListReader
+            builders.EventListBuilder
+            | readers.EventListReader
             | Sequence[Any]
-            | _all.ManagementatResultTuple
+            | results_tuples.ManagementatResultTuple
             | None
         ]: ...
         def managementAt_context(
             self,
-            context: _all.ManagementatCallContext,
+            context: contexts.ManagementatCallContext,
         ) -> Awaitable[None]: ...

@@ -1,5 +1,9 @@
 """Server helper types for `soil.capnp`."""
 
-from ._all import ProfileServer as ProfileServer
-from ._all import ServiceServer as ServiceServer
-from ._all import StreamServer as StreamServer
+from mas.schema.soil.soil_capnp.types import modules as modules
+
+ProfileServer = modules._ProfileInterfaceModule.Server
+
+ServiceServer = modules._ServiceInterfaceModule.Server
+
+StreamServer = modules._ServiceInterfaceModule._StreamInterfaceModule.Server

@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `fbp.capnp`."""
 
-from . import types as types
+from mas.schema.fbp.fbp_capnp import types as types
 
 IP: types.modules._IPStructModule
 IIP: types.modules._IIPStructModule
