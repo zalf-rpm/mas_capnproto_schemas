@@ -1,4 +1,7 @@
 """Server helper types for `crop.capnp`."""
 
-from ._all import CropServer as CropServer
-from ._all import ServiceServer as ServiceServer
+from mas.schema.crop.crop_capnp.types import modules as modules
+
+CropServer = modules._CropInterfaceModule.Server
+
+ServiceServer = modules._ServiceInterfaceModule.Server

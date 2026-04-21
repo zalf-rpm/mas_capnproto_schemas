@@ -1,18 +1,58 @@
 """Context helper types for `soil.capnp`."""
 
-from ._all import (
-    CheckavailableparametersCallContext as CheckavailableparametersCallContext,
-)
-from ._all import ClosestprofilesatCallContext as ClosestprofilesatCallContext
-from ._all import ClosestprofilesatParams as ClosestprofilesatParams
-from ._all import DataCallContext as DataCallContext
-from ._all import DataParams as DataParams
-from ._all import GeolocationCallContext as GeolocationCallContext
-from ._all import GeolocationParams as GeolocationParams
-from ._all import (
-    GetallavailableparametersCallContext as GetallavailableparametersCallContext,
-)
-from ._all import GetallavailableparametersParams as GetallavailableparametersParams
-from ._all import NextprofilesCallContext as NextprofilesCallContext
-from ._all import NextprofilesParams as NextprofilesParams
-from ._all import StreamallprofilesCallContext as StreamallprofilesCallContext
+from typing import Protocol
+
+from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
+from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+from mas.schema.soil.soil_capnp.types import builders as builders
+from mas.schema.soil.soil_capnp.types import readers as readers
+from mas.schema.soil.soil_capnp.types.results import server as results_server
+
+class DataParams(Protocol): ...
+
+class DataCallContext(Protocol):
+    params: DataParams
+    @property
+    def results(self) -> builders.ProfileDataBuilder: ...
+
+class GeolocationParams(Protocol): ...
+
+class GeolocationCallContext(Protocol):
+    params: GeolocationParams
+    @property
+    def results(self) -> LatLonCoordBuilder: ...
+
+class NextprofilesParams(Protocol):
+    maxCount: int
+
+class NextprofilesCallContext(Protocol):
+    params: NextprofilesParams
+    @property
+    def results(self) -> results_server.NextprofilesServerResult: ...
+
+class CheckavailableparametersCallContext(Protocol):
+    params: readers.QueryReader
+    @property
+    def results(self) -> builders.ResultBuilder: ...
+
+class GetallavailableparametersParams(Protocol):
+    onlyRawData: bool
+
+class GetallavailableparametersCallContext(Protocol):
+    params: GetallavailableparametersParams
+    @property
+    def results(self) -> results_server.GetallavailableparametersServerResult: ...
+
+class ClosestprofilesatParams(Protocol):
+    coord: LatLonCoordReader
+    query: readers.QueryReader
+
+class ClosestprofilesatCallContext(Protocol):
+    params: ClosestprofilesatParams
+    @property
+    def results(self) -> results_server.ClosestprofilesatServerResult: ...
+
+class StreamallprofilesCallContext(Protocol):
+    params: readers.QueryReader
+    @property
+    def results(self) -> results_server.StreamallprofilesServerResult: ...

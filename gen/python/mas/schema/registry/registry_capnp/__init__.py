@@ -5,7 +5,12 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.registry.registry_capnp.types.modules import (
+    _AdminInterfaceModule,
+    _RegistrarInterfaceModule,
+    _RegistryInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -13,13 +18,13 @@ capnp.remove_import_hook()
 _SCHEMA_NODES = [
     "EElQBgb/aYJ+nMPgG/4AARIAAxEVwhEdNxFJZwAC/3JlZ2lzdHJ5Ai9yZWdpc3RyeS5jYXBucABRDAEB/05XZnYj8wP1ABERMv+4MwZg0Ut7ygARDUr/6tHyNjz5rqsAEQ1SH0FkbWlu/1JlZ2lzdHJ5AAAA/1JlZ2lzdHJhAAFyURABAv8sX4C/nvnGuQBRKAIBQTwB/2z5sOP+o16MAFE4AgFBTAH/4Ct5IxB/qb4AUUgCAUFYAf+1RA4mAbYw4QBRVAIBQXwBAQwAABEBsv9tYXM6OnNjaAFlbWE6OnJlZx9pc3RyeQAAAQwAABEBov9tYXMuc2NoZQFtYS5yZWdpcwd0cnkAAAEMAAARAUr/cmVnaXN0cnkAAAEBDAAAMQHSAf9naXRodWIuYwZvbS96YWxmLXJwbS9tYXNfY2FwbnByb3RvX3NjaGVtYXMvZ2VuL2dvL3JlZ2lzdHIBeQAA",  # registry/registry.capnp
     "EE1QBgb/TldmdiPzA/UAERgD/2mCfpzD4Bv+AAABMz0C/wYRFfIRIQcAADEdRwER+RcAAP9yZWdpc3RyeQIvcmVnaXN0cnkuY2FwbnA6H0FkbWluUAEBURQDBQAA//aGhLH71BbbAbU1cnovgz29EZFiAAIRiQcBAf/W3oABjhu+1QEFj2wQA6GsqRF9egACEXUHAQL/w9tagAzVv44BX/TTfprXh9gRaWIAAhFhBwED/6Phfu5+saWWAbQNu1YG9pKgEVVyAAIRTQcBBP+1IYkUz/gs7gGt/X2r78pi/hFBSgACETkH/2FkZENhdGVnAAdvcnlAAf9yZW1vdmVDYQA/dGVnb3J5QAH/bW92ZU9iamUAB2N0c0AB/3JlbW92ZU9iAB9qZWN0c0AB/3JlZ2lzdHJ5AAAAQAFRBAEB/9VInFnL0a+yAAAA",  # registry/registry.capnp:Admin
-    "EDRQBgb/9oaEsfvUFtsAUR4BAQAABQEHAAExFYoBAAERJXcAAf9yZWdpc3RyeQUvcmVnaXN0cnkuY2FwbnA6QWRtaW4uYWRkQ2F0ZWdvcnkkUGFyYW1zAABRCAMEAAAEAQAAESlKAABRKAMBUTQCAQEBFAEBAQERMToAAFEsAwFROAIB/2NhdGVnb3J5AAAAARD/09oD/st+y9QAAAEBEAABP3Vwc2VydAEBAAIBAQAB",  # registry/registry.capnp:Admin.addCategory$Params
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
     "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
+    "EDRQBgb/9oaEsfvUFtsAUR4BAQAABQEHAAExFYoBAAERJXcAAf9yZWdpc3RyeQUvcmVnaXN0cnkuY2FwbnA6QWRtaW4uYWRkQ2F0ZWdvcnkkUGFyYW1zAABRCAMEAAAEAQAAESlKAABRKAMBUTQCAQEBFAEBAQERMToAAFEsAwFROAIB/2NhdGVnb3J5AAAAARD/09oD/st+y9QAAAEBEAABP3Vwc2VydAEBAAIBAQAB",  # registry/registry.capnp:Admin.addCategory$Params
     "ECRQBgb/tTVyei+DPb0AUR4BAQAABAcAATEVkgEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5hZGRDYXRlZ29yeSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # registry/registry.capnp:Admin.addCategory$Results
     "EDZQBgb/1t6AAY4bvtUAER4BAAAFAgcAATEVogEAAREldwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5yZW1vdmVDYXRlZ29yeSRQYXIHYW1zUQgDBAAABAEAABEpWgAAUSgDAVE0AgERAQEUAQEAABExwgAAUTQDAVFAAgH/Y2F0ZWdvcnkAA0lkAQwAAgEMAAH/bW92ZU9iamUCY3RzVG9DYXRlZ29yeUlkAAEMAAIBDAAB",  # registry/registry.capnp:Admin.removeCategory$Params
     "EClQBgb/BY9sEAOhrKkAER4BAAAFAQcAATEVqgEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5yZW1vdmVDYXRlZ29yeSRSZXMPdWx0c1EEAwQAAAQBAAARDXoAAFEMAwFRKAIB/3JlbW92ZWRPAD9iamVjdHMBDgABUAMBARH/1UicWcvRr7IAAAEBDgAB",  # registry/registry.capnp:Admin.removeCategory$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
     "EDhQBgb/w9tagAzVv44AER4BAAAFAgcAATEVigEAAREldwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5tb3ZlT2JqZWN0cyRQYXJhbXMAAFEIAwQAAAQBAAARKVIAAFEoAwFRRAIBEQEBFAEBAAARQUIAAFE8AwFRSAIB/29iamVjdElkAAFzAQ4AAVADAQEMAAIBDgABf3RvQ2F0SWQBDAACAQwAAQ==",  # registry/registry.capnp:Admin.moveObjects$Params
     "EClQBgb/X/TTfprXh9gAER4BAAAFAQcAATEVkgEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5tb3ZlT2JqZWN0cyRSZXN1bHQBc1EEAwQAAAQBAAARDXoAAFEMAwFRKAIB/21vdmVkT2JqAD9lY3RJZHMBDgABUAMBAQwAAgEOAAE=",  # registry/registry.capnp:Admin.moveObjects$Results
     "EClQBgb/o+F+7n6xpZYAER4BAAAFAQcAATEVmgEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpBZG1pbi5yZW1vdmVPYmplY3RzJFBhcmEDbXNRBAMEAAAEAQAAEQ1SAABRDAMBUSgCAf9vYmplY3RJZAABcwEOAAFQAwEBDAACAQ4AAQ==",  # registry/registry.capnp:Admin.removeObjects$Params
@@ -64,25 +69,30 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Admin = _InterfaceModule(_loader.get(0xF503F3237666574E).as_interface(), "Admin")
-Registry = _InterfaceModule(_loader.get(0xCA7B4BD1600633B8).as_interface(), "Registry")
-Registry.Entry = _StructModule(
-    Registry.schema.methods["entries"].result_type.fields["entries"].schema.elementType,
+Admin = _AdminInterfaceModule(_loader.get(0xF503F3237666574E).as_interface(), "Admin")
+Registry = _RegistryInterfaceModule(
+    _loader.get(0xCA7B4BD1600633B8).as_interface(),
+    "Registry",
+)
+Registry.Entry = _RegistryInterfaceModule._EntryStructModule(
+    _loader.get(0xC17987510CF7AC13).as_struct(),
     "Entry",
 )
-Registrar = _InterfaceModule(
+Registrar = _RegistrarInterfaceModule(
     _loader.get(0xABAEF93C36F2D1EA).as_interface(),
     "Registrar",
 )
-Registrar.CrossDomainRestore = _StructModule(
-    Registrar.schema.methods["register"].param_type.fields["xDomain"].schema,
-    "CrossDomainRestore",
+Registrar.CrossDomainRestore = (
+    _RegistrarInterfaceModule._CrossDomainRestoreStructModule(
+        Registrar.schema.methods["register"].param_type.fields["xDomain"].schema,
+        "CrossDomainRestore",
+    )
 )
-Registrar.RegParams = _StructModule(
+Registrar.RegParams = _RegistrarInterfaceModule._RegParamsStructModule(
     Registrar.schema.methods["register"].param_type,
     "RegParams",
 )
-Registrar.Unregister = _InterfaceModule(
+Registrar.Unregister = _RegistrarInterfaceModule._UnregisterInterfaceModule(
     Registrar.schema.methods["register"].result_type.fields["unreg"].schema,
     "Unregister",
 )

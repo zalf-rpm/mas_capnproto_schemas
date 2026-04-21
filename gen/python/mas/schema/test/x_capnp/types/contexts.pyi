@@ -1,8 +1,27 @@
 """Context helper types for `x.capnp`."""
 
-from ._all import XMCallContext as XMCallContext
-from ._all import XMParams as XMParams
-from ._all import YMCallContext as YMCallContext
-from ._all import YMParams as YMParams
-from ._all import ZMCallContext as ZMCallContext
-from ._all import ZMParams as ZMParams
+from typing import Protocol
+
+from mas.schema.test.x_capnp.types.results import server as results_server
+
+class XMParams(Protocol):
+    i: int
+
+class XMCallContext(Protocol):
+    params: XMParams
+    @property
+    def results(self) -> results_server.XMServerResult: ...
+
+class YMParams(Protocol):
+    hello: str
+
+class YMCallContext(Protocol):
+    params: YMParams
+
+class ZMParams(Protocol):
+    n: int
+
+class ZMCallContext(Protocol):
+    params: ZMParams
+    @property
+    def results(self) -> results_server.ZMServerResult: ...

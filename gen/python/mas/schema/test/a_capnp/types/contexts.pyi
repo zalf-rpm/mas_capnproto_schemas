@@ -1,4 +1,13 @@
 """Context helper types for `a.capnp`."""
 
-from ._all import MethodCallContext as MethodCallContext
-from ._all import MethodParams as MethodParams
+from typing import Protocol
+
+from mas.schema.test.a_capnp.types.results import server as results_server
+
+class MethodParams(Protocol):
+    param: str
+
+class MethodCallContext(Protocol):
+    params: MethodParams
+    @property
+    def results(self) -> results_server.MethodServerResult: ...

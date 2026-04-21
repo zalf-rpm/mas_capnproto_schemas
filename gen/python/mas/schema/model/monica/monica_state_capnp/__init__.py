@@ -5,7 +5,24 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.model.monica.monica_state_capnp.types.modules import (
+    _AOMPropertiesStructModule,
+    _CropModuleStateStructModule,
+    _CropStateStructModule,
+    _FrostModuleStateStructModule,
+    _ICDataStructModule,
+    _MaybeBoolStructModule,
+    _MonicaModelStateStructModule,
+    _RuntimeStateStructModule,
+    _SnowModuleStateStructModule,
+    _SoilColumnStateStructModule,
+    _SoilLayerStateStructModule,
+    _SoilMoistureModuleStateStructModule,
+    _SoilOrganicModuleStateStructModule,
+    _SoilTemperatureModuleStateStructModule,
+    _SoilTransportModuleStateStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -74,62 +91,70 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-MaybeBool = _StructModule(_loader.get(0xD8AF9210839BC071).as_struct(), "MaybeBool")
-RuntimeState = _StructModule(
+MaybeBool = _MaybeBoolStructModule(
+    _loader.get(0xD8AF9210839BC071).as_struct(),
+    "MaybeBool",
+)
+RuntimeState = _RuntimeStateStructModule(
     _loader.get(0xD599D06DC405571A).as_struct(),
     "RuntimeState",
 )
-CropState = _StructModule(_loader.get(0x8B008567C93F7C7D).as_struct(), "CropState")
-AOMProperties = _StructModule(
+CropState = _CropStateStructModule(
+    _loader.get(0x8B008567C93F7C7D).as_struct(),
+    "CropState",
+)
+AOMProperties = _AOMPropertiesStructModule(
     _loader.get(0xE3512E62DF901C18).as_struct(),
     "AOMProperties",
 )
-SoilColumnState = _StructModule(
+SoilColumnState = _SoilColumnStateStructModule(
     _loader.get(0xEF3E4198D3E35596).as_struct(),
     "SoilColumnState",
 )
-SoilColumnState.DelayedNMinApplicationParams = _StructModule(
-    SoilColumnState.schema.fields["delayedNMinApplications"].schema.elementType,
-    "DelayedNMinApplicationParams",
+SoilColumnState.DelayedNMinApplicationParams = (
+    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule(
+        SoilColumnState.schema.fields["delayedNMinApplications"].schema.elementType,
+        "DelayedNMinApplicationParams",
+    )
 )
-SoilLayerState = _StructModule(
+SoilLayerState = _SoilLayerStateStructModule(
     _loader.get(0xDD1E0C7C94DC4211).as_struct(),
     "SoilLayerState",
 )
-MonicaModelState = _StructModule(
+MonicaModelState = _MonicaModelStateStructModule(
     _loader.get(0xAB56969492D293B3).as_struct(),
     "MonicaModelState",
 )
-MonicaModelState.ACDToValue = _StructModule(
+MonicaModelState.ACDToValue = _MonicaModelStateStructModule._ACDToValueStructModule(
     MonicaModelState.schema.fields["climateData"].schema.elementType.elementType,
     "ACDToValue",
 )
-CropModuleState = _StructModule(
+CropModuleState = _CropModuleStateStructModule(
     _loader.get(0x811D54AC7DEBC21E).as_struct(),
     "CropModuleState",
 )
-SnowModuleState = _StructModule(
+SnowModuleState = _SnowModuleStateStructModule(
     _loader.get(0xA4DA01D10B3B6ACD).as_struct(),
     "SnowModuleState",
 )
-FrostModuleState = _StructModule(
+FrostModuleState = _FrostModuleStateStructModule(
     _loader.get(0xB4F16EA3144D85A6).as_struct(),
     "FrostModuleState",
 )
-SoilMoistureModuleState = _StructModule(
+SoilMoistureModuleState = _SoilMoistureModuleStateStructModule(
     _loader.get(0xCD05962719BF7EC8).as_struct(),
     "SoilMoistureModuleState",
 )
-SoilOrganicModuleState = _StructModule(
+SoilOrganicModuleState = _SoilOrganicModuleStateStructModule(
     _loader.get(0xD594E64F6B5F461D).as_struct(),
     "SoilOrganicModuleState",
 )
-SoilTemperatureModuleState = _StructModule(
+SoilTemperatureModuleState = _SoilTemperatureModuleStateStructModule(
     _loader.get(0xBD3E199EB9B03758).as_struct(),
     "SoilTemperatureModuleState",
 )
-SoilTransportModuleState = _StructModule(
+SoilTransportModuleState = _SoilTransportModuleStateStructModule(
     _loader.get(0xB1760F65E652E737).as_struct(),
     "SoilTransportModuleState",
 )
-ICData = _StructModule(_loader.get(0xF03D8FD1BBE75519).as_struct(), "ICData")
+ICData = _ICDataStructModule(_loader.get(0xF03D8FD1BBE75519).as_struct(), "ICData")

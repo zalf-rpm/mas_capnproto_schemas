@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `soil.capnp`."""
 
-from . import types as types
+from mas.schema.soil.soil_capnp import types as types
 
 class _STypeEnumModule:
     unknown: int

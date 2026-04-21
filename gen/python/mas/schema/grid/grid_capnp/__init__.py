@@ -5,7 +5,9 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.grid.grid_capnp.types.modules import _GridInterfaceModule
 
 capnp.remove_import_hook()
 
@@ -23,6 +25,22 @@ _SCHEMA_NODES = [
     "EB9QBgb/01XLgIJROdYAERUD/8bjYZaycynkAAABM7cPZxARFfIRIQcAABEdRxFJBwAA/2dyaWQvZ3JpAmQuY2FwbnA6R3JpZC5DYWwfbGJhY2tQAQFRBAMFAAD/u/Zoj3HHsOkBeSWLWW5vU44REVIAAhEJB/9zZW5kQ2VsbAABc0ABUAEB",  # grid/grid.capnp:Grid.Callback
     "ECRQBgb/u/Zoj3HHsOkAUR4BAQAABAcAATEVegEAAREhPwAB/2dyaWQvZ3JpBGQuY2FwbnA6R3JpZC5DYWxsYmFjay5zZW5kQ2VsbHMkP1BhcmFtc1EEAwQAAAQBAAARDUoAAFEMAwFRGAIB/21heENvdW50AAAAAQUAAgEFAAE=",  # grid/grid.capnp:Grid.Callback.sendCells$Params
     "EChQBgb/eSWLWW5vU44AER4BAAAFAQcAATEVggEAAREhPwAB/2dyaWQvZ3JpBWQuY2FwbnA6R3JpZC5DYWxsYmFjay5zZW5kQ2VsbHMkUmVzdWx0cwBRBAMEAAAEAQAAEQ1SAABRDAMBUSgCAf9sb2NhdGlvbgABcwEOAAFQAwEBEP9kjfGeG89ctQAAAQEOAAE=",  # grid/grid.capnp:Grid.Callback.sendCells$Results
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "ECRQBgb/I3fIYO2Z1/0AESgB/03egx0naG2IAAUBBwAAM0EJMQoxFXIBESkHAAARJT8AAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmLh9Pd25lclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence/persistence.capnp:SturdyRef.Owner
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "EDlQBgb/Td6DHSdobYgAER4B/yZrX0fT/l6FAAUCBwAAM54IXAsxFUIBESUnAAAROXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmAFEIAQH/I3fIYO2Z1/0AEQky/4i0EX+0K0H6ABEFMh9Pd25lch9Ub2tlblEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFROAIBB3ZhdAEQ/4eAxNvyzezZAAABARAAAf9sb2NhbFJlZgAAAAEQ/4i0EX+0K0H6AAABARAAAQ==",  # persistence/persistence.capnp:SturdyRef
+    "EDNQBgb/iLQRf7QrQfoAUSgBAf9N3oMdJ2htiABFAQcCAAAzuwpaCzEVcgERKQcAABEldwAB/3BlcnNpc3RlBG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpTdHVyZHlSZWYuH1Rva2VuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence/persistence.capnp:SturdyRef.Token
+    "EDJQBgb/h4DE2/LN7NkAER4B/yZrX0fT/l6FAAUCBwAAM78HnAgxFTIBESUHAAARIXcAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEfdFBhdGhQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAQNpZAEQ/43Ri9V0XQrhAAABARAAAX9hZGRyZXNzARD/DVugcQaBR/sAAAEBEAAB",  # persistence/persistence.capnp:VatPath
+    "EFRQBgb/jdGL1XRdCuEAUR4BBP8ma19H0/5ehQAEBwAAM9QBDwMxFSIBESUHAAARIecAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEHdElkUAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpWgAAUWgDAVF0AgERAgIUAQIAABFxWgAAUXADAVF8AgERAwMUAQMAABF5WgAAUXgDAVGEAgH/cHVibGljS2UAA3kwAQkAAgEJAAH/cHVibGljS2UAA3kxAQkAAgEJAAH/cHVibGljS2UAA3kyAQkAAgEJAAH/cHVibGljS2UAA3kzAQkAAgEJAAE=",  # persistence/persistence.capnp:VatId
+    "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
+    "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EHNQBgb/mgcMYRxvfusAURUBAQAABQIHAAExFVoBAAExIVcBAAH/Z3JpZC9ncmkEZC5jYXBucDpHcmlkLmNsb3Nlc3RWYWx1ZUF0JFBhcmEDbXNRGAMEAAAEAQAAEZliAABRmAMBUaQCAQEBFAEBAQERoWoAAFGgAwFRrAIBEQIBFAECAAARqVoAAFGoAwFRtAIBEQMBFAEDAQERsSIAAFGsAwFRuAIBEQQBFAEEAQERtXIAAFG0AwFRwAIBEQUCFAEFAQERvYIAAFG8AwFRyAIB/2xhdGxvbkNvAAdvcmQBEP/7j8w5MPzx7AAAAQEQAAH/aWdub3JlTm8AD0RhdGEBAQACBQEBAAH/cmVzb2x1dGkAA29uARD/e1fnJ937tqkAAAEBEAABB2FnZwEP/wGzpmd33OylAAABAQ8AAf9yZXR1cm5SbwAfd0NvbHMBAQACAQEAAf9pbmNsdWRlQQFnZ1BhcnRzAAEBAAIBAQAB",  # grid/grid.capnp:Grid.closestValueAt$Params
     "EFVQBgb/sEA1g2MCvagAERUBAAAFBAcAATEVYgEAAREh5wAB/2dyaWQvZ3JpBGQuY2FwbnA6R3JpZC5jbG9zZXN0VmFsdWVBdCRSZXN1B2x0c1EQAwQAAAQBAAARYSIAAFFcAwFRaAIBEQEBFAEBAAARZRoAAFFgAwFRbAIBEQICFAECAAARaRoAAFFkAwFRcAIBEQMDFAEDAAARbUoAAFFsAwFRiAIBB3ZhbAEQ/9DZc+X6DS7+AAABARAAAQN0bAEQ//8GYghd2OK5AAABARAAAQNicgEQ//8GYghd2OK5AAABARAAAf9hZ2dQYXJ0cwAAAAEOAAFQAwEBEP8dOjPvF0ZErAAAAQEOAAE=",  # grid/grid.capnp:Grid.closestValueAt$Results
     "EBJQBgb/6y0efrncnvcAERUBAAAEBwABMRU6AQAE/2dyaWQvZ3JpA2QuY2FwbnA6R3JpZC5yZXNvbHV0aW9uJD9QYXJhbXM=",  # grid/grid.capnp:Grid.resolution$Params
@@ -39,8 +57,6 @@ _SCHEMA_NODES = [
     "ECRQBgb/0uuneCvVjZsAERUBAAAFAQcAATEVSgEAAREhPwAB/2dyaWQvZ3JpBGQuY2FwbnA6R3JpZC5zdHJlYW1DZWxscyRSZXN1bHRzAABRBAMEAAAEAQAAEQ1KAABRDAMBURgCAf9jYWxsYmFjawAAAAER/9NVy4CCUTnWAAABAREAAQ==",  # grid/grid.capnp:Grid.streamCells$Results
     "EBJQBgb/SGdqu2hDTrsAERUBAAAEBwABMRUKAQAE/2dyaWQvZ3JpA2QuY2FwbnA6R3JpZC51bml0JFBhcmFtcwAA",  # grid/grid.capnp:Grid.unit$Params
     "ECJQBgb/+8SfvW3ncNEAERUBAAAFAQcAATEVEgEAAREdPwAB/2dyaWQvZ3JpA2QuY2FwbnA6R3JpZC51bml0JFJlc3VsdAFzUQQDBAAABAEAABENKgAAUQgDAVEUAgEPdW5pdAEMAAIBDAAB",  # grid/grid.capnp:Grid.unit$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
 ]
 
 # Load schemas and build module structure
@@ -56,26 +72,26 @@ for _schema_b64 in _SCHEMA_NODES:
 # Build module structure inline
 
 Aggregation = _EnumModule(_loader.get(0xA5ECDC7767A6B301).as_enum(), "Aggregation")
-Grid = _InterfaceModule(_loader.get(0xE42973B29661E3C6).as_interface(), "Grid")
-Grid.Value = _StructModule(
+Grid = _GridInterfaceModule(_loader.get(0xE42973B29661E3C6).as_interface(), "Grid")
+Grid.Value = _GridInterfaceModule._ValueStructModule(
     Grid.schema.methods["closestValueAt"].result_type.fields["val"].schema,
     "Value",
 )
-Grid.Resolution = _StructModule(
+Grid.Resolution = _GridInterfaceModule._ResolutionStructModule(
     Grid.schema.methods["closestValueAt"].param_type.fields["resolution"].schema,
     "Resolution",
 )
-Grid.RowCol = _StructModule(
+Grid.RowCol = _GridInterfaceModule._RowColStructModule(
     Grid.schema.methods["closestValueAt"].result_type.fields["tl"].schema,
     "RowCol",
 )
-Grid.AggregationPart = _StructModule(
+Grid.AggregationPart = _GridInterfaceModule._AggregationPartStructModule(
     Grid.schema.methods["closestValueAt"]
     .result_type.fields["aggParts"]
     .schema.elementType,
     "AggregationPart",
 )
-Grid.Location = _StructModule(
+Grid.Location = _GridInterfaceModule._LocationStructModule(
     Grid.schema.methods["streamCells"]
     .result_type.fields["callback"]
     .schema.methods["sendCells"]
@@ -83,7 +99,7 @@ Grid.Location = _StructModule(
     .schema.elementType,
     "Location",
 )
-Grid.Callback = _InterfaceModule(
+Grid.Callback = _GridInterfaceModule._CallbackInterfaceModule(
     Grid.schema.methods["streamCells"].result_type.fields["callback"].schema,
     "Callback",
 )

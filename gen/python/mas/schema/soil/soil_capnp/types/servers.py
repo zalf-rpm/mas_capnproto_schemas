@@ -1,5 +1,7 @@
 """Runtime placeholder module for server helpers of `soil.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from .. import Profile, Service
 
 ProfileServer = Profile.Server

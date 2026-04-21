@@ -7,16 +7,60 @@ from typing import IO, Any, Literal, overload, override
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _ListSchema,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
-from . import _all as _all
+from mas.schema.soil.soil_params_capnp.types import builders as builders
+from mas.schema.soil.soil_params_capnp.types import readers as readers
+from mas.schema.soil.soil_params_capnp.types import schemas as schemas
 
 class _SoilCharacteristicDataStructModule(_StructModule):
     class _DataStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _DataSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["soilType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["soilRawDensity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["airCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["fieldCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nFieldCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _SoilCharacteristicDataStructModule._DataStructModule._DataSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._SoilCharacteristicDataDataSchema: ...
         @override
         def new_message(
             self,
@@ -28,7 +72,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
             fieldCapacity: int | None = None,
             nFieldCapacity: int | None = None,
             **kwargs: object,
-        ) -> _all.SoilCharacteristicDataDataBuilder: ...
+        ) -> builders.SoilCharacteristicDataDataBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -36,7 +80,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.SoilCharacteristicDataDataReader]: ...
+        ) -> AbstractContextManager[readers.SoilCharacteristicDataDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -45,7 +89,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.SoilCharacteristicDataDataReader]: ...
+        ) -> AbstractContextManager[readers.SoilCharacteristicDataDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -54,7 +98,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.SoilCharacteristicDataDataBuilder]: ...
+        ) -> AbstractContextManager[builders.SoilCharacteristicDataDataBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -68,27 +112,60 @@ class _SoilCharacteristicDataStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SoilCharacteristicDataDataReader: ...
+        ) -> readers.SoilCharacteristicDataDataReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SoilCharacteristicDataDataReader: ...
+        ) -> readers.SoilCharacteristicDataDataReader: ...
 
     Data: _DataStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _SoilCharacteristicDataSchema(_StructSchema):
+        class _ListField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._SoilCharacteristicDataDataSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _SoilCharacteristicDataStructModule._SoilCharacteristicDataSchema._ListField._Schema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["list"],
+            ) -> _SoilCharacteristicDataStructModule._SoilCharacteristicDataSchema._ListField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(
+            self,
+        ) -> (
+            _SoilCharacteristicDataStructModule._SoilCharacteristicDataSchema._Fields
+        ): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._SoilCharacteristicDataSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: _all.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
-    ) -> _all.SoilCharacteristicDataBuilder: ...
+    ) -> builders.SoilCharacteristicDataBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -96,7 +173,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.SoilCharacteristicDataReader]: ...
+    ) -> AbstractContextManager[readers.SoilCharacteristicDataReader]: ...
     @overload
     def from_bytes(
         self,
@@ -105,7 +182,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.SoilCharacteristicDataReader]: ...
+    ) -> AbstractContextManager[readers.SoilCharacteristicDataReader]: ...
     @overload
     def from_bytes(
         self,
@@ -114,7 +191,7 @@ class _SoilCharacteristicDataStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.SoilCharacteristicDataBuilder]: ...
+    ) -> AbstractContextManager[builders.SoilCharacteristicDataBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -128,20 +205,59 @@ class _SoilCharacteristicDataStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SoilCharacteristicDataReader: ...
+    ) -> readers.SoilCharacteristicDataReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SoilCharacteristicDataReader: ...
+    ) -> readers.SoilCharacteristicDataReader: ...
 
 class _SoilCharacteristicModifierStructModule(_StructModule):
     class _DataStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _DataSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["soilType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["organicMatter"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["airCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["fieldCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["nFieldCapacity"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _SoilCharacteristicModifierStructModule._DataStructModule._DataSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._SoilCharacteristicModifierDataSchema: ...
         @override
         def new_message(
             self,
@@ -153,7 +269,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
             fieldCapacity: int | None = None,
             nFieldCapacity: int | None = None,
             **kwargs: object,
-        ) -> _all.SoilCharacteristicModifierDataBuilder: ...
+        ) -> builders.SoilCharacteristicModifierDataBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -161,7 +277,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.SoilCharacteristicModifierDataReader]: ...
+        ) -> AbstractContextManager[readers.SoilCharacteristicModifierDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -170,7 +286,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.SoilCharacteristicModifierDataReader]: ...
+        ) -> AbstractContextManager[readers.SoilCharacteristicModifierDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -179,7 +295,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.SoilCharacteristicModifierDataBuilder]: ...
+        ) -> AbstractContextManager[builders.SoilCharacteristicModifierDataBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -193,27 +309,60 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SoilCharacteristicModifierDataReader: ...
+        ) -> readers.SoilCharacteristicModifierDataReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.SoilCharacteristicModifierDataReader: ...
+        ) -> readers.SoilCharacteristicModifierDataReader: ...
 
     Data: _DataStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _SoilCharacteristicModifierSchema(_StructSchema):
+        class _ListField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(
+                    self,
+                ) -> schemas._SoilCharacteristicModifierDataSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _SoilCharacteristicModifierStructModule._SoilCharacteristicModifierSchema._ListField._Schema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["list"],
+            ) -> _SoilCharacteristicModifierStructModule._SoilCharacteristicModifierSchema._ListField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(
+            self,
+        ) -> _SoilCharacteristicModifierStructModule._SoilCharacteristicModifierSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._SoilCharacteristicModifierSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: _all.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
-    ) -> _all.SoilCharacteristicModifierBuilder: ...
+    ) -> builders.SoilCharacteristicModifierBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -221,7 +370,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.SoilCharacteristicModifierReader]: ...
+    ) -> AbstractContextManager[readers.SoilCharacteristicModifierReader]: ...
     @overload
     def from_bytes(
         self,
@@ -230,7 +379,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.SoilCharacteristicModifierReader]: ...
+    ) -> AbstractContextManager[readers.SoilCharacteristicModifierReader]: ...
     @overload
     def from_bytes(
         self,
@@ -239,7 +388,7 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.SoilCharacteristicModifierBuilder]: ...
+    ) -> AbstractContextManager[builders.SoilCharacteristicModifierBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -253,20 +402,48 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SoilCharacteristicModifierReader: ...
+    ) -> readers.SoilCharacteristicModifierReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SoilCharacteristicModifierReader: ...
+    ) -> readers.SoilCharacteristicModifierReader: ...
 
 class _CapillaryRiseRateStructModule(_StructModule):
     class _DataStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _DataSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["soilType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["distance"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: Literal["rate"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _CapillaryRiseRateStructModule._DataStructModule._DataSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._CapillaryRiseRateDataSchema: ...
         @override
         def new_message(
             self,
@@ -276,7 +453,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
             distance: int | None = None,
             rate: float | None = None,
             **kwargs: object,
-        ) -> _all.CapillaryRiseRateDataBuilder: ...
+        ) -> builders.CapillaryRiseRateDataBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -284,7 +461,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.CapillaryRiseRateDataReader]: ...
+        ) -> AbstractContextManager[readers.CapillaryRiseRateDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -293,7 +470,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.CapillaryRiseRateDataReader]: ...
+        ) -> AbstractContextManager[readers.CapillaryRiseRateDataReader]: ...
         @overload
         def from_bytes(
             self,
@@ -302,7 +479,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.CapillaryRiseRateDataBuilder]: ...
+        ) -> AbstractContextManager[builders.CapillaryRiseRateDataBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -316,27 +493,58 @@ class _CapillaryRiseRateStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CapillaryRiseRateDataReader: ...
+        ) -> readers.CapillaryRiseRateDataReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.CapillaryRiseRateDataReader: ...
+        ) -> readers.CapillaryRiseRateDataReader: ...
 
     Data: _DataStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _CapillaryRiseRateSchema(_StructSchema):
+        class _ListField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._CapillaryRiseRateDataSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _CapillaryRiseRateStructModule._CapillaryRiseRateSchema._ListField._Schema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["list"],
+            ) -> _CapillaryRiseRateStructModule._CapillaryRiseRateSchema._ListField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(
+            self,
+        ) -> _CapillaryRiseRateStructModule._CapillaryRiseRateSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._CapillaryRiseRateSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: _all.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
-    ) -> _all.CapillaryRiseRateBuilder: ...
+    ) -> builders.CapillaryRiseRateBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -344,7 +552,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.CapillaryRiseRateReader]: ...
+    ) -> AbstractContextManager[readers.CapillaryRiseRateReader]: ...
     @overload
     def from_bytes(
         self,
@@ -353,7 +561,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.CapillaryRiseRateReader]: ...
+    ) -> AbstractContextManager[readers.CapillaryRiseRateReader]: ...
     @overload
     def from_bytes(
         self,
@@ -362,7 +570,7 @@ class _CapillaryRiseRateStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.CapillaryRiseRateBuilder]: ...
+    ) -> AbstractContextManager[builders.CapillaryRiseRateBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -376,11 +584,11 @@ class _CapillaryRiseRateStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.CapillaryRiseRateReader: ...
+    ) -> readers.CapillaryRiseRateReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.CapillaryRiseRateReader: ...
+    ) -> readers.CapillaryRiseRateReader: ...

@@ -1,33 +1,100 @@
 """Client result helper types for `fbp.capnp`."""
 
-from .._all import ChannelCloseResult as ChannelCloseResult
-from .._all import ConfigentriesResult as ConfigentriesResult
-from .._all import ConnectinportResult as ConnectinportResult
-from .._all import ConnectoutportResult as ConnectoutportResult
-from .._all import EndpointsResult as EndpointsResult
-from .._all import InportsResult as InportsResult
-from .._all import OutportsResult as OutportsResult
-from .._all import ProcessFactoryCreateResult as ProcessFactoryCreateResult
-from .._all import ProcessStartResult as ProcessStartResult
-from .._all import ProcessStopResult as ProcessStopResult
-from .._all import ReaderCloseResult as ReaderCloseResult
-from .._all import ReaderResult as ReaderResult
-from .._all import ReadifmsgResult as ReadifmsgResult
-from .._all import ReadResult as ReadResult
-from .._all import RegisterstatscallbackResult as RegisterstatscallbackResult
-from .._all import RunnableFactoryCreateResult as RunnableFactoryCreateResult
-from .._all import RunnableStartResult as RunnableStartResult
-from .._all import RunnableStopResult as RunnableStopResult
-from .._all import SetautoclosesemanticsResult as SetautoclosesemanticsResult
-from .._all import SetbuffersizeResult as SetbuffersizeResult
-from .._all import SetconfigentryResult as SetconfigentryResult
-from .._all import StartChannelsServiceStartResult as StartChannelsServiceStartResult
-from .._all import StatechangedResult as StatechangedResult
-from .._all import StateResult as StateResult
-from .._all import StatusResult as StatusResult
-from .._all import StoppedResult as StoppedResult
-from .._all import UnregResult as UnregResult
-from .._all import WriteifspaceResult as WriteifspaceResult
-from .._all import WriterCloseResult as WriterCloseResult
-from .._all import WriteResult as WriteResult
-from .._all import WriterResult as WriterResult
+from collections.abc import Awaitable
+from typing import Literal, Protocol
+
+from capnp.lib.capnp import (
+    _DynamicObjectReader,
+)
+
+from mas.schema.fbp.fbp_capnp.types import clients as clients
+from mas.schema.fbp.fbp_capnp.types import enums as enums
+from mas.schema.fbp.fbp_capnp.types import readers as readers
+from mas.schema.service.service_capnp.types.clients import StoppableClient
+
+class ReadResult(Awaitable[ReadResult], Protocol):
+    value: _DynamicObjectReader
+    done: None
+    noMsg: None
+    def which(self) -> Literal["value", "done", "noMsg"]: ...
+
+class ReaderCloseResult(Awaitable[None], Protocol): ...
+
+class ReadifmsgResult(Awaitable[ReadifmsgResult], Protocol):
+    value: _DynamicObjectReader
+    done: None
+    noMsg: None
+    def which(self) -> Literal["value", "done", "noMsg"]: ...
+
+class WriteResult(Awaitable[None], Protocol): ...
+class WriterCloseResult(Awaitable[None], Protocol): ...
+
+class WriteifspaceResult(Awaitable[WriteifspaceResult], Protocol):
+    success: bool
+
+class UnregResult(Awaitable[UnregResult], Protocol):
+    success: bool
+
+class StatusResult(Awaitable[None], Protocol): ...
+class SetbuffersizeResult(Awaitable[None], Protocol): ...
+
+class ReaderResult(Awaitable[ReaderResult], Protocol):
+    r: clients.ReaderClient
+
+class WriterResult(Awaitable[WriterResult], Protocol):
+    w: clients.WriterClient
+
+class EndpointsResult(Awaitable[EndpointsResult], Protocol):
+    r: clients.ReaderClient
+    w: clients.WriterClient
+
+class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
+class ChannelCloseResult(Awaitable[None], Protocol): ...
+
+class RegisterstatscallbackResult(Awaitable[RegisterstatscallbackResult], Protocol):
+    unregisterCallback: clients.UnregisterClient
+
+class StartChannelsServiceStartResult(
+    Awaitable[StartChannelsServiceStartResult],
+    Protocol,
+):
+    startupInfos: readers.StartupInfoListReader
+    stop: StoppableClient
+
+class RunnableFactoryCreateResult(Awaitable[RunnableFactoryCreateResult], Protocol):
+    out: clients.RunnableClient
+
+class StoppedResult(Awaitable[None], Protocol): ...
+
+class RunnableStartResult(Awaitable[RunnableStartResult], Protocol):
+    success: bool
+
+class RunnableStopResult(Awaitable[RunnableStopResult], Protocol):
+    success: bool
+
+class ProcessFactoryCreateResult(Awaitable[ProcessFactoryCreateResult], Protocol):
+    out: clients.ProcessClient
+
+class StatechangedResult(Awaitable[None], Protocol): ...
+
+class InportsResult(Awaitable[InportsResult], Protocol):
+    ports: readers.PortListReader
+
+class ConnectinportResult(Awaitable[ConnectinportResult], Protocol):
+    connected: bool
+
+class OutportsResult(Awaitable[OutportsResult], Protocol):
+    ports: readers.PortListReader
+
+class ConnectoutportResult(Awaitable[ConnectoutportResult], Protocol):
+    connected: bool
+
+class ConfigentriesResult(Awaitable[ConfigentriesResult], Protocol):
+    config: readers.ConfigEntryListReader
+
+class ProcessStartResult(Awaitable[None], Protocol): ...
+class ProcessStopResult(Awaitable[None], Protocol): ...
+class SetconfigentryResult(Awaitable[None], Protocol): ...
+
+class StateResult(Awaitable[StateResult], Protocol):
+    currentState: enums.ProcessStateEnum

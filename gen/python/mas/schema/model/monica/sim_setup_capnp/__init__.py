@@ -5,7 +5,8 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.model.monica.sim_setup_capnp.types.modules import _SetupStructModule
 
 capnp.remove_import_hook()
 
@@ -27,4 +28,4 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Setup = _StructModule(_loader.get(0xA4B1A2AD9A77FDC7).as_struct(), "Setup")
+Setup = _SetupStructModule(_loader.get(0xA4B1A2AD9A77FDC7).as_struct(), "Setup")

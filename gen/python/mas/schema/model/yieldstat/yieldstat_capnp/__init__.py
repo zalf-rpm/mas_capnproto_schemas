@@ -5,7 +5,13 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.model.yieldstat.yieldstat_capnp.types.modules import (
+    _OutputStructModule,
+    _RestInputStructModule,
+    _ResultStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -33,14 +39,17 @@ for _schema_b64 in _SCHEMA_NODES:
 # Build module structure inline
 
 ResultId = _EnumModule(_loader.get(0xCFE218C48D227E0D).as_enum(), "ResultId")
-RestInput = _StructModule(_loader.get(0xA47F8D65869200AF).as_struct(), "RestInput")
-Result = _StructModule(_loader.get(0x8DB55634A0E7D054).as_struct(), "Result")
-Result.ResultToValue = _StructModule(
+RestInput = _RestInputStructModule(
+    _loader.get(0xA47F8D65869200AF).as_struct(),
+    "RestInput",
+)
+Result = _ResultStructModule(_loader.get(0x8DB55634A0E7D054).as_struct(), "Result")
+Result.ResultToValue = _ResultStructModule._ResultToValueStructModule(
     Result.schema.fields["values"].schema.elementType,
     "ResultToValue",
 )
-Output = _StructModule(_loader.get(0x932A681F81B4BE19).as_struct(), "Output")
-Output.YearToResult = _StructModule(
+Output = _OutputStructModule(_loader.get(0x932A681F81B4BE19).as_struct(), "Output")
+Output.YearToResult = _OutputStructModule._YearToResultStructModule(
     Output.schema.fields["results"].schema.elementType,
     "YearToResult",
 )

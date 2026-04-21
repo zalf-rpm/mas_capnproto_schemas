@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `management.capnp`."""
 
-from . import types as types
+from mas.schema.management.management_capnp import types as types
 
 class _EventTypeEnumModule:
     sowing: int
@@ -26,6 +26,7 @@ class _PlantOrganEnumModule:
 
 Event: types.modules._EventStructModule
 Nutrient: types.modules._NutrientStructModule
+
 Fertilizer: types.modules._FertilizerInterfaceModule
 Params: types.modules._ParamsStructModule
 FertilizerService: types.modules._FertilizerServiceInterfaceModule

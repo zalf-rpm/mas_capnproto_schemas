@@ -5,7 +5,10 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.cluster.cluster_admin_service_capnp.types.modules import (
+    _ClusterStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -17,6 +20,9 @@ _SCHEMA_NODES = [
     "EBdQBgb/o673qTKJt+EAETcBAAAEBwABMRVKAgAE/2NsdXN0ZXIvCGNsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLlVucmVnaXN0ZXIudW5yZWdpc3RlciRQYXJhbXMAAA==",  # cluster/cluster_admin_service.capnp:Cluster.Unregister.unregister$Params
     "ECdQBgb/jzNPcfNuqbsAUTcBAQAABAcAATEVUgIAARExPwAB/2NsdXN0ZXIvCGNsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLlVucmVnaXN0ZXIudW5yZWdpc3RlciRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # cluster/cluster_admin_service.capnp:Cluster.Unregister.unregister$Results
     "EDFQBgb/zjP2ZYwnJL8AESwD/30O8tZWXUj3AAABMwgC8wMxFcIBES0HAAARKYcRiRcAAP9jbHVzdGVyLwZjbHVzdGVyX2FkbWluX3NlcnZpY2UuY2FwbnA6Q2x1c3Rlci5BZG1pbk1hc3RlcgBQAQFRCAMFAAD/EOZNb+5UO5QB3uOx4oFPQ+cRMeoAAhExBwEB/47Mpmtlm2agAY8AxKcBzr7UESWCAAIRHQf/cmVnaXN0ZXICTW9kZWxJbnN0YW5jZUZhYw90b3J5QAH/YXZhaWxhYmwBZU1vZGVscwBAAVEEAQH/1UicWcvRr7IAAAA=",  # cluster/cluster_admin_service.capnp:Cluster.AdminMaster
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EEJQBgb/09oD/st+y9QAERQB/8mKqHWnyfGZAAUDBwAAMzwBnwExFRIBESUHAAARIa8AAf9jb21tb24vYwNvbW1vbi5jYXBucDpJZEluZm9ybWF0aW8BblABAVEMAwQAAAQBAAARRRoAAFFAAwFRTAIBEQEBFAEBAAARSSoAAFFEAwFRUAIBEQICFAECAAARTWIAAFFMAwFRWAIBA2lkAQwAAgEMAAEPbmFtZQEMAAIBDAAB/2Rlc2NyaXB0AAdpb24BDAACAQwAAQ==",  # common/common.capnp:IdInformation
     "EDpQBgb/EOZNb+5UO5QAETgBAAAFAgcAATEV4gIAARE5dwAB/2NsdXN0ZXIvCmNsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLkFkbWluTWFzdGVyLnJlZ2lzdGVyTW9kZWxJbnN0YW5jZUZhY3RvcnkkUGFyB2Ftc1EIAwQAAAQBAAARKUoAAFEoAwFRNAIBEQEBFAEBAAARMUoAAFEwAwFRPAIB/2FNb2RlbElkAAAAAQwAAgEMAAH/YUZhY3RvcnkAAAABEf++Dp+PmVmZ/QAAAQERAAE=",  # cluster/cluster_admin_service.capnp:Cluster.AdminMaster.registerModelInstanceFactory$Params
     "EGxQBgb/vg6fj5lZmf0AESwD/30O8tZWXUj3AAABM9QKihAxFQoCETUHAAAxMccBE3UBFwAA/2NsdXN0ZXIvB2NsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLk1vZGVsSW5zdGFuY2VGYWN0b3J5AABQAQFRHAMFAQL/dBLx0mQS+IsBHIRfUdyxaPQR0WIAAhHJBwED/wTi1+Kig12YAZOhDefd9qy8Eb1qAAIRtQcBBP8Ww1fPUYJdiwFcmU0dxlMQqBGp8gACEakHAQX/IXa2mPnDpP4BGTBn9aF5+boRnYoAAhGZBwEB/9h0xPsr6rbkAdrmA+dAWs/jEY1CAAIRgQcAAP/EAcGHRB2kvgEIX27BpLKPyhF1sgACEXEHAQb/fbzizHg/itgB/VwsRvD7zeURZYoAAhFhB/9uZXdJbnN0YQAHbmNlQAH/bmV3SW5zdGEAD25jZXNAAf9uZXdDbG91ZAJWaWFabXFQaXBlbGluZVByH294aWVzQAH/bmV3Q2xvdWQBVmlhUHJveHkAAEABf21vZGVsSWRAAf9yZWdpc3RlcgFNb2RlbElucx90YW5jZUAB/3Jlc3RvcmVTAXR1cmR5UmVmAABAAVEEAQH/1UicWcvRr7IAAAA=",  # cluster/cluster_admin_service.capnp:Cluster.ModelInstanceFactory
     "EBhQBgb/dBLx0mQS+IsAEUEBAAAEBwABMRWiAgAE/2NsdXN0ZXIvCWNsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLk1vZGVsSW5zdGFuY2VGYWN0b3J5Lm5ld0luc3RhbmNlJFBhcgdhbXM=",  # cluster/cluster_admin_service.capnp:Cluster.ModelInstanceFactory.newInstance$Params
@@ -56,7 +62,6 @@ _SCHEMA_NODES = [
     "EDhQBgb/6Z0RKjAL0LQAUTQBAQAABQEHAAExFYICAAERMXcAAf9jbHVzdGVyLwljbHVzdGVyX2FkbWluX3NlcnZpY2UuY2FwbnA6Q2x1c3Rlci5SdW50aW1lLnJlc2VydmVOdW1iZXJPZkNvcmVzJFBhcmFtcwBRCAMEAAAEAQAAESlqAABRKAMBUTQCAQEBFAEBAAARMUoAAFEwAwFRPAIB/3Jlc2VydmVDAA9vcmVzAQMAAgEDAAH/YU1vZGVsSWQAAAABDAACAQwAAQ==",  # cluster/cluster_admin_service.capnp:Cluster.Runtime.reserveNumberOfCores$Params
     "EClQBgb/u0xi6ozd2LwAUTQBAQAABAcAATEVigIAARE1PwAB/2NsdXN0ZXIvCWNsdXN0ZXJfYWRtaW5fc2VydmljZS5jYXBucDpDbHVzdGVyLlJ1bnRpbWUucmVzZXJ2ZU51bWJlck9mQ29yZXMkUmVzdWx0cwAAUQQDBAAABAEAABENcgAAUQwDAVEYAgH/cmVzZXJ2ZWQAH0NvcmVzAQMAAgEDAAE=",  # cluster/cluster_admin_service.capnp:Cluster.Runtime.reserveNumberOfCores$Results
     "EDZQBgb/ZCrMvqJLA8kAESwB/30O8tZWXUj3AAUCBwAAM4YJ0AkxFQoCETUHAAARMXcAAf9jbHVzdGVyLwdjbHVzdGVyX2FkbWluX3NlcnZpY2UuY2FwbnA6Q2x1c3Rlci5abXFQaXBlbGluZUFkZHJlc3NlcwAAUAEBUQgDBAAABAEAABEpMgAAUSQDAVEwAgERAQEUAQEAABEtOgAAUSgDAVE0AgEfaW5wdXQBDAACAQwAAT9vdXRwdXQBDAACAQwAAQ==",  # cluster/cluster_admin_service.capnp:Cluster.ZmqPipelineAddresses
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
 ]
 
 # Load schemas and build module structure
@@ -71,32 +76,34 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Cluster = _StructModule(_loader.get(0xF7485D56D6F20E7D).as_struct(), "Cluster")
-Cluster.Unregister = _InterfaceModule(
+Cluster = _ClusterStructModule(_loader.get(0xF7485D56D6F20E7D).as_struct(), "Cluster")
+Cluster.Unregister = _ClusterStructModule._UnregisterInterfaceModule(
     _loader.get(0xE8B1F7A192651BBE).as_interface(),
     "Unregister",
 )
-Cluster.AdminMaster = _InterfaceModule(
+Cluster.AdminMaster = _ClusterStructModule._AdminMasterInterfaceModule(
     _loader.get(0xBF24278C65F633CE).as_interface(),
     "AdminMaster",
 )
-Cluster.UserMaster = _InterfaceModule(
+Cluster.UserMaster = _ClusterStructModule._UserMasterInterfaceModule(
     _loader.get(0xEC42C6DF28354B60).as_interface(),
     "UserMaster",
 )
-Cluster.Runtime = _InterfaceModule(
+Cluster.Runtime = _ClusterStructModule._RuntimeInterfaceModule(
     _loader.get(0xF849848FEA5C4776).as_interface(),
     "Runtime",
 )
-Cluster.ZmqPipelineAddresses = _StructModule(
+Cluster.ZmqPipelineAddresses = _ClusterStructModule._ZmqPipelineAddressesStructModule(
     _loader.get(0xC9034BA2BECC2A64).as_struct(),
     "ZmqPipelineAddresses",
 )
-Cluster.ValueHolder = _InterfaceModule(
+Cluster.ValueHolder = _ClusterStructModule._ValueHolderInterfaceModule(
     _loader.get(0xD6ACF080DCF2B4C8).as_interface(),
     "ValueHolder",
 )
-Cluster.ModelInstanceFactory = _InterfaceModule(
-    _loader.get(0xFD9959998F9F0EBE).as_interface(),
-    "ModelInstanceFactory",
+Cluster.ModelInstanceFactory = (
+    _ClusterStructModule._ModelInstanceFactoryInterfaceModule(
+        _loader.get(0xFD9959998F9F0EBE).as_interface(),
+        "ModelInstanceFactory",
+    )
 )

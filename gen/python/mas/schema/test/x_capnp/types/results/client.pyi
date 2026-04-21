@@ -1,5 +1,12 @@
 """Client result helper types for `x.capnp`."""
 
-from .._all import XMResult as XMResult
-from .._all import YMResult as YMResult
-from .._all import ZMResult as ZMResult
+from collections.abc import Awaitable
+from typing import Protocol
+
+class XMResult(Awaitable[XMResult], Protocol):
+    t: str
+
+class YMResult(Awaitable[None], Protocol): ...
+
+class ZMResult(Awaitable[ZMResult], Protocol):
+    r: float

@@ -1,3 +1,8 @@
 """Result tuple helper types for `web_berest_data_import.capnp`."""
 
-from .._all import ImportdataResultTuple as ImportdataResultTuple
+from typing import NamedTuple
+
+class ImportdataResultTuple(NamedTuple):
+    id: str
+    successA: bool
+    successB: bool

@@ -5,7 +5,12 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+
+from mas.schema.soil.soil_params_capnp.types.modules import (
+    _CapillaryRiseRateStructModule,
+    _SoilCharacteristicDataStructModule,
+    _SoilCharacteristicModifierStructModule,
+)
 
 capnp.remove_import_hook()
 
@@ -32,27 +37,29 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-SoilCharacteristicData = _StructModule(
+SoilCharacteristicData = _SoilCharacteristicDataStructModule(
     _loader.get(0xFC682227304E2281).as_struct(),
     "SoilCharacteristicData",
 )
-SoilCharacteristicData.Data = _StructModule(
+SoilCharacteristicData.Data = _SoilCharacteristicDataStructModule._DataStructModule(
     SoilCharacteristicData.schema.fields["list"].schema.elementType,
     "Data",
 )
-SoilCharacteristicModifier = _StructModule(
+SoilCharacteristicModifier = _SoilCharacteristicModifierStructModule(
     _loader.get(0xE4EB0A9BB0E5BB53).as_struct(),
     "SoilCharacteristicModifier",
 )
-SoilCharacteristicModifier.Data = _StructModule(
-    SoilCharacteristicModifier.schema.fields["list"].schema.elementType,
-    "Data",
+SoilCharacteristicModifier.Data = (
+    _SoilCharacteristicModifierStructModule._DataStructModule(
+        SoilCharacteristicModifier.schema.fields["list"].schema.elementType,
+        "Data",
+    )
 )
-CapillaryRiseRate = _StructModule(
+CapillaryRiseRate = _CapillaryRiseRateStructModule(
     _loader.get(0x9B169BC96BB3D24B).as_struct(),
     "CapillaryRiseRate",
 )
-CapillaryRiseRate.Data = _StructModule(
+CapillaryRiseRate.Data = _CapillaryRiseRateStructModule._DataStructModule(
     CapillaryRiseRate.schema.fields["list"].schema.elementType,
     "Data",
 )

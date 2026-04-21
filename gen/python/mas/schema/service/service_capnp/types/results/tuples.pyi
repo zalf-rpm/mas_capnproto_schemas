@@ -1,7 +1,37 @@
 """Result tuple helper types for `service.capnp`."""
 
-from .._all import FactoryCreateResultTuple as FactoryCreateResultTuple
-from .._all import IdentitiesResultTuple as IdentitiesResultTuple
-from .._all import ServiceinterfacenamesResultTuple as ServiceinterfacenamesResultTuple
-from .._all import SimpleFactoryCreateResultTuple as SimpleFactoryCreateResultTuple
-from .._all import StoppableStopResultTuple as StoppableStopResultTuple
+from collections.abc import Sequence
+from typing import Any, NamedTuple
+
+from mas.schema.service.service_capnp.types import builders as builders
+from mas.schema.service.service_capnp.types import common as common
+from mas.schema.service.service_capnp.types import readers as readers
+
+class IdentitiesResultTuple(NamedTuple):
+    infos: (
+        builders.IdInformationListBuilder
+        | readers.IdInformationListReader
+        | Sequence[Any]
+    )
+
+class SimpleFactoryCreateResultTuple(NamedTuple):
+    caps: (
+        builders.IdentifiableClientListBuilder
+        | readers.IdentifiableClientListReader
+        | Sequence[Any]
+    )
+
+class FactoryCreateResultTuple(NamedTuple):
+    adminCap: common.Capability
+    serviceCaps: (
+        builders.IdentifiableClientListBuilder
+        | readers.IdentifiableClientListReader
+        | Sequence[Any]
+    )
+    error: str
+
+class ServiceinterfacenamesResultTuple(NamedTuple):
+    names: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+
+class StoppableStopResultTuple(NamedTuple):
+    success: bool

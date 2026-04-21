@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `web_berest_data_import.capnp`."""
 
-from . import types as types
+from mas.schema.model.weberest.web_berest_data_import_capnp import types as types
 
 DWLABImport: types.modules._DWLABImportInterfaceModule
 

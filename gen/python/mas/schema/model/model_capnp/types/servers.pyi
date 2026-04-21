@@ -1,7 +1,15 @@
 """Server helper types for `model.capnp`."""
 
-from ._all import ClimateInstanceServer as ClimateInstanceServer
-from ._all import EnvInstanceProxyServer as EnvInstanceProxyServer
-from ._all import EnvInstanceServer as EnvInstanceServer
-from ._all import InstanceFactoryServer as InstanceFactoryServer
-from ._all import UnregisterServer as UnregisterServer
+from mas.schema.model.model_capnp.types import modules as modules
+
+ClimateInstanceServer = modules._ClimateInstanceInterfaceModule.Server
+
+EnvInstanceProxyServer = modules._EnvInstanceProxyInterfaceModule.Server
+
+EnvInstanceServer = modules._EnvInstanceInterfaceModule.Server
+
+InstanceFactoryServer = modules._InstanceFactoryInterfaceModule.Server
+
+UnregisterServer = (
+    modules._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule.Server
+)

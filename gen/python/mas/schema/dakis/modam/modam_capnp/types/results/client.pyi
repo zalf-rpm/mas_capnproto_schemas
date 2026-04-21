@@ -1,4 +1,10 @@
 """Client result helper types for `modam.capnp`."""
 
-from .._all import RunaemmodelResult as RunaemmodelResult
-from .._all import RunfieldmodelResult as RunfieldmodelResult
+from collections.abc import Awaitable
+from typing import Protocol
+
+class RunaemmodelResult(Awaitable[RunaemmodelResult], Protocol):
+    output: str
+
+class RunfieldmodelResult(Awaitable[RunfieldmodelResult], Protocol):
+    output: str

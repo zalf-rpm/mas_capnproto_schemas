@@ -1,5 +1,7 @@
 """Runtime placeholder module for server helpers of `model.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from .. import ClimateInstance, EnvInstance, EnvInstanceProxy, InstanceFactory
 
 ClimateInstanceServer = ClimateInstance.Server

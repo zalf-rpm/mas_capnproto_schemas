@@ -5,7 +5,16 @@ import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
+from capnp.lib.capnp import _EnumModule
+
+from mas.schema.management.management_capnp.types.modules import (
+    _EventStructModule,
+    _FertilizerInterfaceModule,
+    _FertilizerServiceInterfaceModule,
+    _NutrientStructModule,
+    _ParamsStructModule,
+    _ServiceInterfaceModule,
+)
 
 capnp.remove_import_hook()
 
@@ -26,6 +35,21 @@ _SCHEMA_NODES = [
     "EDtQBgb/F8k0I4F8JJ0AERwB/z5r6jz1OgqzAAQHAAAzgwg4FDEVGgERJacAA/9tYW5hZ2VtZQNudC9tYW5hZ2VtZW50LmNhcG5wOlBhcmEDbXNRKAEB/+ipyTs/Fc6AABFJOv+06nx+mUTPzwARRYL/74lCsFvl1O4AEUVC/9FsgQ80fqPjABFBiv8dQ0PdLV/H/gARRUL/Idkle+ow2tMAEUGq/3P11GesdTOVABFFqv/NsrAP+3aM6QARSar/VDVg+I6EpYgAEU1C/zz0PzYWuP6HABFJWj9Tb3dpbmf/QXV0b21hdGkEY1Nvd2luZwBIYXJ2ZXN0AEF1dG9tYXRpY0hhcnZlc3QAAH9DdXR0aW5n/01pbmVyYWxGAWVydGlsaXphD3Rpb27/TkRlbWFuZEYBZXJ0aWxpemEPdGlvbv9PcmdhbmljRgFlcnRpbGl6YQ90aW9uf1RpbGxhZ2X/SXJyaWdhdGkAA29u",  # management/management.capnp:Params
     "EERQBgb/6KnJOz8VzoAAUSMBAf8XyTQjgXwknQAFAgcAADOVCKUJMRVSAREpBwAAESWvAAH/bWFuYWdlbWUEbnQvbWFuYWdlbWVudC5jYXBucDpQYXJhbXMuU293aW4BZ1ABAVEMAwQAAAQBAAARRUoAAFFEAwFRUAIBAQEUAQEBARFNagAAUUwDAVFYAgERAgEUAQIAABFVKgAAUVADAVFcAgH/Y3VsdGl2YXIAAAABDAACAQwAAf9wbGFudERlbgAPc2l0eQEHAAIBBwABD2Nyb3ABEf+EXL8ko5eN6AAAAQERAAE=",  # management/management.capnp:Params.Sowing
     "EDdQBgb/hFy/JKOXjegAERAD/3L5nZbhJIr5AAABM+cBQQMRFaoRHQcAABEZxxGZJwAA/2Nyb3AvY3JvAXAuY2FwbnA6D0Nyb3BQAQFRDAMFAQL/W448dA4BbsgBhlRRLXL8+uQRUVoAAhFJBwEB/3pRtN8X8W7yAbqUJKW7BDe/ET1KAAIRNQcAAP+0MDEqMhzd9AFIZN7uXomqtBEpQgACER0H/3BhcmFtZXRlAANyc0AB/2N1bHRpdmFyAAAAQAF/c3BlY2llc0ABUQgBAf/VSJxZy9GvsgAAAP9lyzbcoNqnwQAAAA==",  # crop/crop.capnp:Crop
+    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
+    "EBNQBgb/sd5JHs+hip0AESEBAAAEBwABMRVqAQAE/2NvbW1vbi9jBG9tbW9uLmNhcG5wOklkZW50aWZpYWJsZS5pbmZvJFBhD3JhbXM=",  # common/common.capnp:Identifiable.info$Params
+    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
+    "ECVQBgb/QwNeIsSq4NUAESkB/2XLNtyg2qfBAAUBBwAAM+UMlQ4xFaIBES0HAAARKT8AAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUGFyB2Ftc1ABAVEEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3NlYWxGb3IBEP8jd8hg7ZnX/QAAAQEQAAE=",  # persistence/persistence.capnp:Persistent.SaveParams
+    "ECRQBgb/I3fIYO2Z1/0AESgB/03egx0naG2IAAUBBwAAM0EJMQoxFXIBESkHAAARJT8AAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmLh9Pd25lclABAVEEAwQAAAQBAAARDSoAAFEIAwFRFAIBD2d1aWQBDAACAQwAAQ==",  # persistence/persistence.capnp:SturdyRef.Owner
+    "EDZQBgb/E+wsmO/RW9wAESkB/2XLNtyg2qfBAAUCBwAAM5gOwRAxFaoBES0HAAARKXcAAf9wZXJzaXN0ZQVuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5TYXZlUmVzD3VsdHNQAQFRCAMEAAAEAQAAESlSAABRKAMBUTQCAREBARQBAQAAETFKAABRMAMBUTwCAf9zdHVyZHlSZQABZgEQ/03egx0naG2IAAABARAAAf91bnNhdmVTUgAAAAEQ/03egx0naG2IAAABARAAAQ==",  # persistence/persistence.capnp:Persistent.SaveResults
+    "EDlQBgb/Td6DHSdobYgAER4B/yZrX0fT/l6FAAUCBwAAM54IXAsxFUIBESUnAAAROXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6U3R1cmR5UmVmAFEIAQH/I3fIYO2Z1/0AEQky/4i0EX+0K0H6ABEFMh9Pd25lch9Ub2tlblEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLUoAAFEsAwFROAIBB3ZhdAEQ/4eAxNvyzezZAAABARAAAf9sb2NhbFJlZgAAAAEQ/4i0EX+0K0H6AAABARAAAQ==",  # persistence/persistence.capnp:SturdyRef
+    "EDNQBgb/iLQRf7QrQfoAUSgBAf9N3oMdJ2htiABFAQcCAAAzuwpaCzEVcgERKQcAABEldwAB/3BlcnNpc3RlBG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpTdHVyZHlSZWYuH1Rva2VuUAEBUQgDBAz//wQBAAARKSoAAFEkAwFRMAIBDQH+/xQBAQAAES0qAABRKAMBUTQCAQ90ZXh0AQwAAgEMAAEPZGF0YQENAAIBDQAB",  # persistence/persistence.capnp:SturdyRef.Token
+    "EDJQBgb/h4DE2/LN7NkAER4B/yZrX0fT/l6FAAUCBwAAM78HnAgxFTIBESUHAAARIXcAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEfdFBhdGhQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES1CAABRKAMBUTQCAQNpZAEQ/43Ri9V0XQrhAAABARAAAX9hZGRyZXNzARD/DVugcQaBR/sAAAEBEAAB",  # persistence/persistence.capnp:VatPath
+    "EFRQBgb/jdGL1XRdCuEAUR4BBP8ma19H0/5ehQAEBwAAM9QBDwMxFSIBESUHAAARIecAAf9wZXJzaXN0ZQNuY2UvcGVyc2lzdGVuY2UuY2FwbnA6VmEHdElkUAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpWgAAUWgDAVF0AgERAgIUAQIAABFxWgAAUXADAVF8AgERAwMUAQMAABF5WgAAUXgDAVGEAgH/cHVibGljS2UAA3kwAQkAAgEJAAH/cHVibGljS2UAA3kxAQkAAgEJAAH/cHVibGljS2UAA3kyAQkAAgEJAAH/cHVibGljS2UAA3kzAQkAAgEJAAE=",  # persistence/persistence.capnp:VatId
+    "EDpQBgb/DVugcQaBR/sAUR4BA/8ma19H0/5ehQBFAQcCAQkzEQO9BzEVMgERJQcAABEhrwAB/3BlcnNpc3RlA25jZS9wZXJzaXN0ZW5jZS5jYXBucDpBZB9kcmVzc1ABAVEMAwQM//8BAf9piokoBF2yjwARRSIAAhECCBQBAgAAES0qAABRKAMBUTQCAQ0B/v8UAQMAABExKgAAUSwDAVE4AgEHaXA2D3BvcnQBBwACAQcAAQ9ob3N0AQwAAgEMAAE=",  # persistence/persistence.capnp:Address
+    "EDJQBgb/aYqJKARdso8AUSYBA/8NW6BxBoFH+wAVAQcBAAExFVIBAAERIXcAAf9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6QWRkcmVzcy5pcAE2UQgDBAAABAEAABEpQgAAUSQDAVEwAgERAQEUAQEAABEtQgAAUSgDAVE0AgF/bG93ZXI2NAEJAAIBCQABf3VwcGVyNjQBCQACAQkAAQ==",  # persistence/persistence.capnp:Address.ip6
+    "ECxQBgb/Ui6fFoEPcI8AESkD/2XLNtyg2qfBAAABM8UQIRExFdIBETEHAAARLUcRfQcAAP9wZXJzaXN0ZQZuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudC5SZWxlYXNlU3R1cmR5UmUBZlABAVEEAwUAAP8VfIDZIIzbpAFT6BAk424tkxERQhERHwABES0Hf3JlbGVhc2VRBAEC//GNLxcSYLnCAFEEAgFBFAEBDAAAEQFS/3JlbGVhc2VTAAFSAABAAVABAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef
+    "EBdQBgb/FXyA2SCM26QAEToBAAAEBwABMRVKAgAE/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRQYXJhbXMAAA==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Params
+    "ECdQBgb/U+gQJONuLZMAUToBAQAABAcAATEVUgIAARExPwAB/3BlcnNpc3RlCG5jZS9wZXJzaXN0ZW5jZS5jYXBucDpQZXJzaXN0ZW50LlJlbGVhc2VTdHVyZHlSZWYucmVsZWFzZSRSZXN1bHQBc1EEAwQAAAQBAAARDUIAAFEIAwFRFAIBf3N1Y2Nlc3MBAQACAQEAAQ==",  # persistence/persistence.capnp:Persistent.ReleaseSturdyRef.release$Results
     "EBJQBgb/W448dA4BbsgAERUBAAAEBwABMRU6AQAE/2Nyb3AvY3JvA3AuY2FwbnA6Q3JvcC5wYXJhbWV0ZXJzJD9QYXJhbXM=",  # crop/crop.capnp:Crop.parameters$Params
     "ECJQBgb/hlRRLXL8+uQAERUBAAAFAQcAATEVQgEAAREdPwAB/2Nyb3AvY3JvBHAuY2FwbnA6Q3JvcC5wYXJhbWV0ZXJzJFJlc3VsdHMAUQQDBAAABAEAABENOgAAUQgDAVEUAgE/cGFyYW1zARIAAgESAAE=",  # crop/crop.capnp:Crop.parameters$Results
     "EBJQBgb/elG03xfxbvIAERUBAAAEBwABMRUqAQAE/2Nyb3AvY3JvA3AuY2FwbnA6Q3JvcC5jdWx0aXZhciRQYQ9yYW1z",  # crop/crop.capnp:Crop.cultivar$Params
@@ -56,12 +80,16 @@ _SCHEMA_NODES = [
     "ECRQBgb/VDVg+I6EpYgAUSMBAf8XyTQjgXwknQAEBwAAM1YThxMxFVoBESkHAAARJT8AAf9tYW5hZ2VtZQRudC9tYW5hZ2VtZW50LmNhcG5wOlBhcmFtcy5UaWxsYQNnZVABAVEEAwQAAAQBAQERDTIAAFEIAwFRFAIBH2RlcHRoAQsAAgEL/zMzMzMzM9M/AAAA",  # management/management.capnp:Params.Tillage
     "EDlQBgb/PPQ/Nha4/ocAUSMBAf8XyTQjgXwknQAFAQcAADOLEzYUMRVyAREpBwAAESV3AAH/bWFuYWdlbWUEbnQvbWFuYWdlbWVudC5jYXBucDpQYXJhbXMuSXJyaWcfYXRpb25QAQFRCAMEAAAEAQAAESk6AABRJAMBUTACAQEBFAEBAAARLboAAFEwAwFRTAIBP2Ftb3VudAELAAIBCwAB/251dHJpZW50AUNvbmNlbnRyP2F0aW9ucwEOAAFQAwEBEP8+pHrhMkP+qgAAAQEOAAE=",  # management/management.capnp:Params.Irrigation
     "EBhQBgb/BX4JDa6ut7sAERwD/z5r6jz1OgqzAAABM1YY4xgxFXIBESkHAAARJQcRJRcAAP9tYW5hZ2VtZQRudC9tYW5hZ2VtZW50LmNhcG5wOkZlcnRpbGl6ZXJTZR9ydmljZVABAVADBVEEAQH/uDMGYNFLe8oAAAA=",  # management/management.capnp:FertilizerService
+    "EDtQBgb/uDMGYNFLe8oAERgD/2mCfpzD4Bv+AAABMwEHtAoxFQoBESUXAAARLccRsRcAAP9yZWdpc3RyeQMvcmVnaXN0cnkuY2FwbnA6UmVnaXN0cnkAAFEEAQH/E6z3DFGHecEAEQEyH0VudHJ5UQwDBQAA/5vCNF7m5kmcAbAwc4G1YL+yEVGiAAIRTQcBAf+dvEiy4YMSiQHT2gP+y37L1BFBagACETkHAQL/+sVRYXFT/J8BTQaGtG716uQRLUIAAhEhB/9zdXBwb3J0ZQFkQ2F0ZWdvcgdpZXNAAf9jYXRlZ29yeQAPSW5mb0ABf2VudHJpZXNAAVEEAQH/1UicWcvRr7IAAAA=",  # registry/registry.capnp:Registry
+    "EFFQBgb/E6z3DFGHecEAESEB/7gzBmDRS3vKAAUEBwAAM8sIBAoxFToBESUHAAARIecAAf9yZWdpc3RyeQMvcmVnaXN0cnkuY2FwbnA6UmVnaXN0cnk/LkVudHJ5UAEBURADBAAABAEAABFhWgAAUWADAVFsAgERAQEUAQEAABFpIgAAUWQDAVFwAgERAgIUAQIAABFtKgAAUWgDAVF0AgERAwMUAQMAABFxGgAAUWwDAVF4AgH/Y2F0ZWdvcnkAA0lkAQwAAgEMAAEHcmVmARH/1UicWcvRr7IAAAEBEQABD25hbWUBDAACAQwAAQNpZAEMAAIBDAAB",  # registry/registry.capnp:Registry.Entry
+    "EBVQBgb/m8I0XubmSZwAESEBAAAEBwABMRXiAQAE/3JlZ2lzdHJ5Bi9yZWdpc3RyeS5jYXBucDpSZWdpc3RyeS5zdXBwb3J0ZWRDYXRlZ29yaWVzJFBhcgdhbXM=",  # registry/registry.capnp:Registry.supportedCategories$Params
+    "EClQBgb/sDBzgbVgv7IAESEBAAAFAQcAATEV6gEAAREpPwAB/3JlZ2lzdHJ5Bi9yZWdpc3RyeS5jYXBucDpSZWdpc3RyeS5zdXBwb3J0ZWRDYXRlZ29yaWVzJFJlcw91bHRzUQQDBAAABAEAABENKgAAUQgDAVEkAgEPY2F0cwEOAAFQAwEBEP/T2gP+y37L1AAAAQEOAAE=",  # registry/registry.capnp:Registry.supportedCategories$Results
+    "ECVQBgb/nbxIsuGDEokAESEBAAAFAQcAATEVqgEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpSZWdpc3RyeS5jYXRlZ29yeUluZm8kUGEPcmFtc1EEAwQAAAQBAAARDVoAAFEMAwFRGAIB/2NhdGVnb3J5AANJZAEMAAIBDAAB",  # registry/registry.capnp:Registry.categoryInfo$Params
+    "ECRQBgb/+sVRYXFT/J8AESEBAAAFAQcAATEVggEAAREhPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpSZWdpc3RyeS5lbnRyaWVzJFBhcmFtcwBRBAMEAAAEAQAAEQ1aAABRDAMBURgCAf9jYXRlZ29yeQADSWQBDAACAQwAAQ==",  # registry/registry.capnp:Registry.entries$Params
+    "EChQBgb/TQaGtG716uQAESEBAAAFAQcAATEVigEAARElPwAB/3JlZ2lzdHJ5BS9yZWdpc3RyeS5jYXBucDpSZWdpc3RyeS5lbnRyaWVzJFJlc3VsdHMAAFEEAwQAAAQBAAARDUIAAFEIAwFRJAIBf2VudHJpZXMBDgABUAMBARD/E6z3DFGHecEAAAEBDgAB",  # registry/registry.capnp:Registry.entries$Results
     "ECJQBgb/2fbXtym3dsgAERwD/z5r6jz1OgqzAAABM+QYkxkxFSIBESUHAAARIUcRTRcAAP9tYW5hZ2VtZQNudC9tYW5hZ2VtZW50LmNhcG5wOlNlcnYHaWNlUAEBUQQDBQAA//uPzDkw/PHsAVGxfTaNdKfMERFqAAIRCQf/bWFuYWdlbWUAD250QXRAAVEEAQH/1UicWcvRr7IAAAA=",  # management/management.capnp:Service
     "EDFQBgb/+4/MOTD88ewAUQ4BAv8k/Md5IFSQkAAEBwAAMxADfwMRFdIRIQcAABEddwAB/2dlby9nZW8uAmNhcG5wOkxhdExvbkNvb3IBZFABAVEIAwQAAAQBAAARKSIAAFEkAwFRMAIBEQEBFAEBAAARLSIAAFEoAwFRNAIBB2xhdAELAAIBCwABB2xvbgELAAIBCwAB",  # geo/geo.capnp:LatLonCoord
     "EClQBgb/UbF9No10p8wAESQBAAAFAQcAATEVygEAAREpPwAB/21hbmFnZW1lBm50L21hbmFnZW1lbnQuY2FwbnA6U2VydmljZS5tYW5hZ2VtZW50QXQkUmVzdWx0cwAAUQQDBAAABAEAABENKgAAUQgDAVEkAgEPbWdtdAEOAAFQAwEBEP9CyJpn/e1dnAAAAQEOAAE=",  # management/management.capnp:Service.managementAt$Results
-    "EB9QBgb/1UicWcvRr7IAERQD/8mKqHWnyfGZAAABM6EBEgIxFQoBESUHAAARIUcRSQcAAP9jb21tb24vYwNvbW1vbi5jYXBucDpJZGVudGlmaWFibGUAAFABAVEEAwUAAP+x3kkez6GKnQHT2gP+y37L1BERKgACEQUHD2luZm9AAVABAQ==",  # common/common.capnp:Identifiable
-    "EC1QBgb/Zcs23KDap8EAER4D/yZrX0fT/l6FAAABM4sLIxExFUoBESk3AAARWUcRgQcAAP9wZXJzaXN0ZQRuY2UvcGVyc2lzdGVuY2UuY2FwbnA6UGVyc2lzdGVudAAAUQwBAf9DA14ixKrg1QAREVr/E+wsmO/RW9wAERFi/1IunxaBD3CPABERiv9TYXZlUGFyYQADbXP/U2F2ZVJlc3UAB2x0c/9SZWxlYXNlUwF0dXJkeVJlZgAAUQQDBQAA/0MDXiLEquDVARPsLJjv0VvcEREqAAIRBQcPc2F2ZUABUAEB",  # persistence/persistence.capnp:Persistent
-    "EDtQBgb/uDMGYNFLe8oAERgD/2mCfpzD4Bv+AAABMwEHtAoxFQoBESUXAAARLccRsRcAAP9yZWdpc3RyeQMvcmVnaXN0cnkuY2FwbnA6UmVnaXN0cnkAAFEEAQH/E6z3DFGHecEAEQEyH0VudHJ5UQwDBQAA/5vCNF7m5kmcAbAwc4G1YL+yEVGiAAIRTQcBAf+dvEiy4YMSiQHT2gP+y37L1BFBagACETkHAQL/+sVRYXFT/J8BTQaGtG716uQRLUIAAhEhB/9zdXBwb3J0ZQFkQ2F0ZWdvcgdpZXNAAf9jYXRlZ29yeQAPSW5mb0ABf2VudHJpZXNAAVEEAQH/1UicWcvRr7IAAAA=",  # registry/registry.capnp:Registry
 ]
 
 # Load schemas and build module structure
@@ -78,37 +106,53 @@ for _schema_b64 in _SCHEMA_NODES:
 
 EventType = _EnumModule(_loader.get(0x82A74595175B71A3).as_enum(), "EventType")
 PlantOrgan = _EnumModule(_loader.get(0xC2D50914B83D42DE).as_enum(), "PlantOrgan")
-Event = _StructModule(_loader.get(0x9C5DEDFD679AC842).as_struct(), "Event")
+Event = _EventStructModule(_loader.get(0x9C5DEDFD679AC842).as_struct(), "Event")
 Event.ExternalType = _EnumModule(
     Event.schema.fields["type"].schema,
     "ExternalType",
 )
 Event.PhenoStage = _EnumModule(_loader.get(0x8FA09457BC1BFC34).as_enum(), "PhenoStage")
-Event.Type = _StructModule(_loader.get(0xE1ED73D59C8CE359).as_struct(), "Type")
-Params = _StructModule(_loader.get(0x9D247C812334C917).as_struct(), "Params")
-Params.Sowing = _StructModule(_loader.get(0x80CE153F3BC9A9E8).as_struct(), "Sowing")
-Params.AutomaticSowing = _StructModule(
+Event.Type = _EventStructModule._TypeStructModule(
+    _loader.get(0xE1ED73D59C8CE359).as_struct(),
+    "Type",
+)
+Params = _ParamsStructModule(_loader.get(0x9D247C812334C917).as_struct(), "Params")
+Params.Sowing = _ParamsStructModule._SowingStructModule(
+    _loader.get(0x80CE153F3BC9A9E8).as_struct(),
+    "Sowing",
+)
+Params.AutomaticSowing = _ParamsStructModule._AutomaticSowingStructModule(
     _loader.get(0xCFCF44997E7CEAB4).as_struct(),
     "AutomaticSowing",
 )
-Params.AutomaticSowing.AvgSoilTemp = _StructModule(
-    Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
-    "AvgSoilTemp",
+Params.AutomaticSowing.AvgSoilTemp = (
+    _ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule(
+        Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
+        "AvgSoilTemp",
+    )
 )
-Params.Harvest = _StructModule(_loader.get(0xEED4E55BB04289EF).as_struct(), "Harvest")
+Params.Harvest = _ParamsStructModule._HarvestStructModule(
+    _loader.get(0xEED4E55BB04289EF).as_struct(),
+    "Harvest",
+)
 Params.Harvest.CropUsage = _EnumModule(
     Params.Harvest.schema.fields["optCarbMgmtData"].schema.fields["cropUsage"].schema,
     "CropUsage",
 )
-Params.Harvest.OptCarbonMgmtData = _StructModule(
-    Params.Harvest.schema.fields["optCarbMgmtData"].schema,
-    "OptCarbonMgmtData",
+Params.Harvest.OptCarbonMgmtData = (
+    _ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule(
+        Params.Harvest.schema.fields["optCarbMgmtData"].schema,
+        "OptCarbonMgmtData",
+    )
 )
-Params.AutomaticHarvest = _StructModule(
+Params.AutomaticHarvest = _ParamsStructModule._AutomaticHarvestStructModule(
     _loader.get(0xE3A37E340F816CD1).as_struct(),
     "AutomaticHarvest",
 )
-Params.Cutting = _StructModule(_loader.get(0xFEC75F2DDD43431D).as_struct(), "Cutting")
+Params.Cutting = _ParamsStructModule._CuttingStructModule(
+    _loader.get(0xFEC75F2DDD43431D).as_struct(),
+    "Cutting",
+)
 Params.Cutting.CL = _EnumModule(
     Params.Cutting.schema.fields["cuttingSpec"]
     .schema.elementType.fields["cutOrLeft"]
@@ -121,28 +165,34 @@ Params.Cutting.Unit = _EnumModule(
     .schema,
     "Unit",
 )
-Params.Cutting.Spec = _StructModule(
+Params.Cutting.Spec = _ParamsStructModule._CuttingStructModule._SpecStructModule(
     Params.Cutting.schema.fields["cuttingSpec"].schema.elementType,
     "Spec",
 )
-Params.MineralFertilization = _StructModule(
+Params.MineralFertilization = _ParamsStructModule._MineralFertilizationStructModule(
     _loader.get(0xD3DA30EA7B25D921).as_struct(),
     "MineralFertilization",
 )
-Params.NDemandFertilization = _StructModule(
+Params.NDemandFertilization = _ParamsStructModule._NDemandFertilizationStructModule(
     _loader.get(0x953375AC67D4F573).as_struct(),
     "NDemandFertilization",
 )
-Params.OrganicFertilization = _StructModule(
+Params.OrganicFertilization = _ParamsStructModule._OrganicFertilizationStructModule(
     _loader.get(0xE98C76FB0FB0B2CD).as_struct(),
     "OrganicFertilization",
 )
-Params.Tillage = _StructModule(_loader.get(0x88A5848EF8603554).as_struct(), "Tillage")
-Params.Irrigation = _StructModule(
+Params.Tillage = _ParamsStructModule._TillageStructModule(
+    _loader.get(0x88A5848EF8603554).as_struct(),
+    "Tillage",
+)
+Params.Irrigation = _ParamsStructModule._IrrigationStructModule(
     _loader.get(0x87FEB816363FF43C).as_struct(),
     "Irrigation",
 )
-Nutrient = _StructModule(_loader.get(0xAAFE4332E17AA43E).as_struct(), "Nutrient")
+Nutrient = _NutrientStructModule(
+    _loader.get(0xAAFE4332E17AA43E).as_struct(),
+    "Nutrient",
+)
 Nutrient.Name = _EnumModule(
     Nutrient.schema.fields["nutrient"].schema,
     "Name",
@@ -151,12 +201,15 @@ Nutrient.Unit = _EnumModule(
     Nutrient.schema.fields["unit"].schema,
     "Unit",
 )
-Fertilizer = _InterfaceModule(
+Fertilizer = _FertilizerInterfaceModule(
     _loader.get(0x8C4CB8D60AE5AEC7).as_interface(),
     "Fertilizer",
 )
-FertilizerService = _InterfaceModule(
+FertilizerService = _FertilizerServiceInterfaceModule(
     _loader.get(0xBBB7AEAE0D097E05).as_interface(),
     "FertilizerService",
 )
-Service = _InterfaceModule(_loader.get(0xC876B729B7D7F6D9).as_interface(), "Service")
+Service = _ServiceInterfaceModule(
+    _loader.get(0xC876B729B7D7F6D9).as_interface(),
+    "Service",
+)

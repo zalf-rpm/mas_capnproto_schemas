@@ -7,15 +7,72 @@ from typing import IO, Any, Literal, overload, override
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumSchema,
+    _ListSchema,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
-from . import _all as _all
+from mas.schema.model.yieldstat.yieldstat_capnp.types import builders as builders
+from mas.schema.model.yieldstat.yieldstat_capnp.types import enums as enums
+from mas.schema.model.yieldstat.yieldstat_capnp.types import readers as readers
+from mas.schema.model.yieldstat.yieldstat_capnp.types import schemas as schemas
 
 class _RestInputStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _RestInputSchema(_StructSchema):
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["useDevTrend"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["useCO2Increase"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["dgm"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["hft"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["nft"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["sft"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["slope"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["steino"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["az"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["klz"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["stt"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["germanFederalStates"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["getDryYearWaterNeed"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _RestInputStructModule._RestInputSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._RestInputSchema: ...
     @override
     def new_message(
         self,
@@ -35,7 +92,7 @@ class _RestInputStructModule(_StructModule):
         germanFederalStates: int | None = None,
         getDryYearWaterNeed: bool | None = None,
         **kwargs: object,
-    ) -> _all.RestInputBuilder: ...
+    ) -> builders.RestInputBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -43,7 +100,7 @@ class _RestInputStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.RestInputReader]: ...
+    ) -> AbstractContextManager[readers.RestInputReader]: ...
     @overload
     def from_bytes(
         self,
@@ -52,7 +109,7 @@ class _RestInputStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.RestInputReader]: ...
+    ) -> AbstractContextManager[readers.RestInputReader]: ...
     @overload
     def from_bytes(
         self,
@@ -61,7 +118,7 @@ class _RestInputStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.RestInputBuilder]: ...
+    ) -> AbstractContextManager[builders.RestInputBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -75,29 +132,55 @@ class _RestInputStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.RestInputReader: ...
+    ) -> readers.RestInputReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.RestInputReader: ...
+    ) -> readers.RestInputReader: ...
 
 class _ResultStructModule(_StructModule):
     class _ResultToValueStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _ResultToValueSchema(_StructSchema):
+            class _IdField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _EnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["id"],
+                ) -> _ResultStructModule._ResultToValueStructModule._ResultToValueSchema._IdField: ...
+                @overload
+                def __getitem__(self, key: Literal["value"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ResultStructModule._ResultToValueStructModule._ResultToValueSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ResultResultToValueSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            id: _all.ResultIdEnum | None = None,
+            id: enums.ResultIdEnum | None = None,
             value: float | None = None,
             **kwargs: object,
-        ) -> _all.ResultToValueBuilder: ...
+        ) -> builders.ResultToValueBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -105,7 +188,7 @@ class _ResultStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.ResultToValueReader]: ...
+        ) -> AbstractContextManager[readers.ResultToValueReader]: ...
         @overload
         def from_bytes(
             self,
@@ -114,7 +197,7 @@ class _ResultStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.ResultToValueReader]: ...
+        ) -> AbstractContextManager[readers.ResultToValueReader]: ...
         @overload
         def from_bytes(
             self,
@@ -123,7 +206,7 @@ class _ResultStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.ResultToValueBuilder]: ...
+        ) -> AbstractContextManager[builders.ResultToValueBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -137,19 +220,52 @@ class _ResultStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ResultToValueReader: ...
+        ) -> readers.ResultToValueReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.ResultToValueReader: ...
+        ) -> readers.ResultToValueReader: ...
 
     ResultToValue: _ResultToValueStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _ResultSchema(_StructSchema):
+        class _ValuesField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._ResultResultToValueSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _ResultStructModule._ResultSchema._ValuesField._Schema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(self, key: Literal["cultivar"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["isNoData"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["values"],
+            ) -> _ResultStructModule._ResultSchema._ValuesField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _ResultStructModule._ResultSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._ResultSchema: ...
     @override
     def new_message(
         self,
@@ -157,9 +273,9 @@ class _ResultStructModule(_StructModule):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         cultivar: str | None = None,
         isNoData: bool | None = None,
-        values: _all.ResultToValueListBuilder | dict[str, Any] | None = None,
+        values: builders.ResultToValueListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
-    ) -> _all.ResultBuilder: ...
+    ) -> builders.ResultBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -167,7 +283,7 @@ class _ResultStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.ResultReader]: ...
+    ) -> AbstractContextManager[readers.ResultReader]: ...
     @overload
     def from_bytes(
         self,
@@ -176,7 +292,7 @@ class _ResultStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.ResultReader]: ...
+    ) -> AbstractContextManager[readers.ResultReader]: ...
     @overload
     def from_bytes(
         self,
@@ -185,7 +301,7 @@ class _ResultStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.ResultBuilder]: ...
+    ) -> AbstractContextManager[builders.ResultBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -199,29 +315,55 @@ class _ResultStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.ResultReader: ...
+    ) -> readers.ResultReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.ResultReader: ...
+    ) -> readers.ResultReader: ...
 
 class _OutputStructModule(_StructModule):
     class _YearToResultStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
+        class _YearToResultSchema(_StructSchema):
+            class _ResultField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ResultSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["year"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["result"],
+                ) -> _OutputStructModule._YearToResultStructModule._YearToResultSchema._ResultField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _OutputStructModule._YearToResultStructModule._YearToResultSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._OutputYearToResultSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             year: int | None = None,
-            result: _all.ResultBuilder | dict[str, Any] | None = None,
+            result: builders.ResultBuilder | dict[str, Any] | None = None,
             **kwargs: object,
-        ) -> _all.YearToResultBuilder: ...
+        ) -> builders.YearToResultBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -229,7 +371,7 @@ class _OutputStructModule(_StructModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[_all.YearToResultReader]: ...
+        ) -> AbstractContextManager[readers.YearToResultReader]: ...
         @overload
         def from_bytes(
             self,
@@ -238,7 +380,7 @@ class _OutputStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[_all.YearToResultReader]: ...
+        ) -> AbstractContextManager[readers.YearToResultReader]: ...
         @overload
         def from_bytes(
             self,
@@ -247,7 +389,7 @@ class _OutputStructModule(_StructModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[_all.YearToResultBuilder]: ...
+        ) -> AbstractContextManager[builders.YearToResultBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -261,19 +403,54 @@ class _OutputStructModule(_StructModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.YearToResultReader: ...
+        ) -> readers.YearToResultReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _all.YearToResultReader: ...
+        ) -> readers.YearToResultReader: ...
 
     YearToResult: _YearToResultStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _OutputSchema(_StructSchema):
+        class _ResultsField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._OutputYearToResultSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _OutputStructModule._OutputSchema._ResultsField._Schema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(self, key: Literal["id"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["runFailed"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["reason"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["results"],
+            ) -> _OutputStructModule._OutputSchema._ResultsField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _OutputStructModule._OutputSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._OutputSchema: ...
     @override
     def new_message(
         self,
@@ -282,9 +459,9 @@ class _OutputStructModule(_StructModule):
         id: str | None = None,
         runFailed: bool | None = None,
         reason: str | None = None,
-        results: _all.YearToResultListBuilder | dict[str, Any] | None = None,
+        results: builders.YearToResultListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
-    ) -> _all.OutputBuilder: ...
+    ) -> builders.OutputBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -292,7 +469,7 @@ class _OutputStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.OutputReader]: ...
+    ) -> AbstractContextManager[readers.OutputReader]: ...
     @overload
     def from_bytes(
         self,
@@ -301,7 +478,7 @@ class _OutputStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.OutputReader]: ...
+    ) -> AbstractContextManager[readers.OutputReader]: ...
     @overload
     def from_bytes(
         self,
@@ -310,7 +487,7 @@ class _OutputStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.OutputBuilder]: ...
+    ) -> AbstractContextManager[builders.OutputBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -324,11 +501,11 @@ class _OutputStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.OutputReader: ...
+    ) -> readers.OutputReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.OutputReader: ...
+    ) -> readers.OutputReader: ...

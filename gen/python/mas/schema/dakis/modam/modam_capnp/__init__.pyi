@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `modam.capnp`."""
 
-from . import types as types
+from mas.schema.dakis.modam.modam_capnp import types as types
 
 ModamWrapperService: types.modules._ModamWrapperServiceInterfaceModule
 

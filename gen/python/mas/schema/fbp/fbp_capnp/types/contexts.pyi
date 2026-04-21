@@ -1,62 +1,211 @@
 """Context helper types for `fbp.capnp`."""
 
-from ._all import ChannelCloseCallContext as ChannelCloseCallContext
-from ._all import ChannelCloseParams as ChannelCloseParams
-from ._all import ConfigentriesCallContext as ConfigentriesCallContext
-from ._all import ConfigentriesParams as ConfigentriesParams
-from ._all import ConnectinportCallContext as ConnectinportCallContext
-from ._all import ConnectinportParams as ConnectinportParams
-from ._all import ConnectoutportCallContext as ConnectoutportCallContext
-from ._all import ConnectoutportParams as ConnectoutportParams
-from ._all import EndpointsCallContext as EndpointsCallContext
-from ._all import EndpointsParams as EndpointsParams
-from ._all import InportsCallContext as InportsCallContext
-from ._all import InportsParams as InportsParams
-from ._all import OutportsCallContext as OutportsCallContext
-from ._all import OutportsParams as OutportsParams
-from ._all import ProcessFactoryCreateCallContext as ProcessFactoryCreateCallContext
-from ._all import ProcessFactoryCreateParams as ProcessFactoryCreateParams
-from ._all import ProcessStartCallContext as ProcessStartCallContext
-from ._all import ProcessStartParams as ProcessStartParams
-from ._all import ProcessStopCallContext as ProcessStopCallContext
-from ._all import ProcessStopParams as ProcessStopParams
-from ._all import ReadCallContext as ReadCallContext
-from ._all import ReaderCallContext as ReaderCallContext
-from ._all import ReaderCloseCallContext as ReaderCloseCallContext
-from ._all import ReaderCloseParams as ReaderCloseParams
-from ._all import ReaderParams as ReaderParams
-from ._all import ReadifmsgCallContext as ReadifmsgCallContext
-from ._all import ReadifmsgParams as ReadifmsgParams
-from ._all import ReadParams as ReadParams
-from ._all import RegisterstatscallbackCallContext as RegisterstatscallbackCallContext
-from ._all import RegisterstatscallbackParams as RegisterstatscallbackParams
-from ._all import RunnableFactoryCreateCallContext as RunnableFactoryCreateCallContext
-from ._all import RunnableFactoryCreateParams as RunnableFactoryCreateParams
-from ._all import RunnableStartCallContext as RunnableStartCallContext
-from ._all import RunnableStartParams as RunnableStartParams
-from ._all import RunnableStopCallContext as RunnableStopCallContext
-from ._all import RunnableStopParams as RunnableStopParams
-from ._all import SetautoclosesemanticsCallContext as SetautoclosesemanticsCallContext
-from ._all import SetautoclosesemanticsParams as SetautoclosesemanticsParams
-from ._all import SetbuffersizeCallContext as SetbuffersizeCallContext
-from ._all import SetbuffersizeParams as SetbuffersizeParams
-from ._all import SetconfigentryCallContext as SetconfigentryCallContext
-from ._all import (
-    StartChannelsServiceStartCallContext as StartChannelsServiceStartCallContext,
-)
-from ._all import StateCallContext as StateCallContext
-from ._all import StatechangedCallContext as StatechangedCallContext
-from ._all import StatechangedParams as StatechangedParams
-from ._all import StateParams as StateParams
-from ._all import StatusCallContext as StatusCallContext
-from ._all import StatusParams as StatusParams
-from ._all import StoppedCallContext as StoppedCallContext
-from ._all import StoppedParams as StoppedParams
-from ._all import UnregCallContext as UnregCallContext
-from ._all import UnregParams as UnregParams
-from ._all import WriteCallContext as WriteCallContext
-from ._all import WriteifspaceCallContext as WriteifspaceCallContext
-from ._all import WriterCallContext as WriterCallContext
-from ._all import WriterCloseCallContext as WriterCloseCallContext
-from ._all import WriterCloseParams as WriterCloseParams
-from ._all import WriterParams as WriterParams
+from typing import Protocol
+
+from mas.schema.fbp.fbp_capnp.types import builders as builders
+from mas.schema.fbp.fbp_capnp.types import clients as clients
+from mas.schema.fbp.fbp_capnp.types import enums as enums
+from mas.schema.fbp.fbp_capnp.types import readers as readers
+from mas.schema.fbp.fbp_capnp.types.results import server as results_server
+from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
+
+class ReadParams(Protocol): ...
+
+class ReadCallContext(Protocol):
+    params: ReadParams
+    @property
+    def results(self) -> builders.MsgBuilder: ...
+
+class ReaderCloseParams(Protocol): ...
+
+class ReaderCloseCallContext(Protocol):
+    params: ReaderCloseParams
+
+class ReadifmsgParams(Protocol): ...
+
+class ReadifmsgCallContext(Protocol):
+    params: ReadifmsgParams
+    @property
+    def results(self) -> builders.MsgBuilder: ...
+
+class WriteCallContext(Protocol):
+    params: readers.MsgReader
+
+class WriterCloseParams(Protocol): ...
+
+class WriterCloseCallContext(Protocol):
+    params: WriterCloseParams
+
+class WriteifspaceCallContext(Protocol):
+    params: readers.MsgReader
+    @property
+    def results(self) -> results_server.WriteifspaceServerResult: ...
+
+class UnregParams(Protocol): ...
+
+class UnregCallContext(Protocol):
+    params: UnregParams
+    @property
+    def results(self) -> results_server.UnregServerResult: ...
+
+class StatusParams(Protocol):
+    stats: readers.StatsReader
+
+class StatusCallContext(Protocol):
+    params: StatusParams
+
+class SetbuffersizeParams(Protocol):
+    size: int
+
+class SetbuffersizeCallContext(Protocol):
+    params: SetbuffersizeParams
+
+class ReaderParams(Protocol): ...
+
+class ReaderCallContext(Protocol):
+    params: ReaderParams
+    @property
+    def results(self) -> results_server.ReaderServerResult: ...
+
+class WriterParams(Protocol): ...
+
+class WriterCallContext(Protocol):
+    params: WriterParams
+    @property
+    def results(self) -> results_server.WriterServerResult: ...
+
+class EndpointsParams(Protocol): ...
+
+class EndpointsCallContext(Protocol):
+    params: EndpointsParams
+    @property
+    def results(self) -> results_server.EndpointsServerResult: ...
+
+class SetautoclosesemanticsParams(Protocol):
+    cs: enums.ChannelCloseSemanticsEnum
+
+class SetautoclosesemanticsCallContext(Protocol):
+    params: SetautoclosesemanticsParams
+
+class ChannelCloseParams(Protocol):
+    waitForEmptyBuffer: bool
+
+class ChannelCloseCallContext(Protocol):
+    params: ChannelCloseParams
+
+class RegisterstatscallbackParams(Protocol):
+    callback: clients.StatsCallbackClient
+    updateIntervalInMs: int
+
+class RegisterstatscallbackCallContext(Protocol):
+    params: RegisterstatscallbackParams
+    @property
+    def results(self) -> results_server.RegisterstatscallbackServerResult: ...
+
+class StartChannelsServiceStartCallContext(Protocol):
+    params: readers.ParamsReader
+    @property
+    def results(self) -> results_server.StartChannelsServiceStartServerResult: ...
+
+class RunnableFactoryCreateParams(Protocol): ...
+
+class RunnableFactoryCreateCallContext(Protocol):
+    params: RunnableFactoryCreateParams
+    @property
+    def results(self) -> results_server.RunnableFactoryCreateServerResult: ...
+
+class StoppedParams(Protocol): ...
+
+class StoppedCallContext(Protocol):
+    params: StoppedParams
+
+class RunnableStartParams(Protocol):
+    portInfosReaderSr: SturdyRefReader
+    name: str
+    stoppedCb: clients.StoppedCallbackClient
+
+class RunnableStartCallContext(Protocol):
+    params: RunnableStartParams
+    @property
+    def results(self) -> results_server.RunnableStartServerResult: ...
+
+class RunnableStopParams(Protocol): ...
+
+class RunnableStopCallContext(Protocol):
+    params: RunnableStopParams
+    @property
+    def results(self) -> results_server.RunnableStopServerResult: ...
+
+class ProcessFactoryCreateParams(Protocol): ...
+
+class ProcessFactoryCreateCallContext(Protocol):
+    params: ProcessFactoryCreateParams
+    @property
+    def results(self) -> results_server.ProcessFactoryCreateServerResult: ...
+
+class StatechangedParams(Protocol):
+    old: enums.ProcessStateEnum
+    new: enums.ProcessStateEnum
+
+class StatechangedCallContext(Protocol):
+    params: StatechangedParams
+
+class InportsParams(Protocol): ...
+
+class InportsCallContext(Protocol):
+    params: InportsParams
+    @property
+    def results(self) -> results_server.InportsServerResult: ...
+
+class ConnectinportParams(Protocol):
+    name: str
+    sturdyRef: SturdyRefReader
+
+class ConnectinportCallContext(Protocol):
+    params: ConnectinportParams
+    @property
+    def results(self) -> results_server.ConnectinportServerResult: ...
+
+class OutportsParams(Protocol): ...
+
+class OutportsCallContext(Protocol):
+    params: OutportsParams
+    @property
+    def results(self) -> results_server.OutportsServerResult: ...
+
+class ConnectoutportParams(Protocol):
+    name: str
+    sturdyRef: SturdyRefReader
+
+class ConnectoutportCallContext(Protocol):
+    params: ConnectoutportParams
+    @property
+    def results(self) -> results_server.ConnectoutportServerResult: ...
+
+class ConfigentriesParams(Protocol): ...
+
+class ConfigentriesCallContext(Protocol):
+    params: ConfigentriesParams
+    @property
+    def results(self) -> results_server.ConfigentriesServerResult: ...
+
+class ProcessStartParams(Protocol): ...
+
+class ProcessStartCallContext(Protocol):
+    params: ProcessStartParams
+
+class ProcessStopParams(Protocol): ...
+
+class ProcessStopCallContext(Protocol):
+    params: ProcessStopParams
+
+class SetconfigentryCallContext(Protocol):
+    params: readers.ConfigEntryReader
+
+class StateParams(Protocol):
+    transitionCallback: clients.StateTransitionClient
+
+class StateCallContext(Protocol):
+    params: StateParams
+    @property
+    def results(self) -> results_server.StateServerResult: ...

@@ -1,32 +1,122 @@
 """Context helper types for `storage.capnp`."""
 
-from ._all import AddentryCallContext as AddentryCallContext
-from ._all import AddentryParams as AddentryParams
-from ._all import ClearCallContext as ClearCallContext
-from ._all import ClearParams as ClearParams
-from ._all import ContainerwithidCallContext as ContainerwithidCallContext
-from ._all import ContainerwithidParams as ContainerwithidParams
-from ._all import DownloadentriesCallContext as DownloadentriesCallContext
-from ._all import DownloadentriesParams as DownloadentriesParams
-from ._all import ExportCallContext as ExportCallContext
-from ._all import ExportParams as ExportParams
-from ._all import GetentryCallContext as GetentryCallContext
-from ._all import GetentryParams as GetentryParams
-from ._all import GetkeyCallContext as GetkeyCallContext
-from ._all import GetkeyParams as GetkeyParams
-from ._all import GetvalueCallContext as GetvalueCallContext
-from ._all import GetvalueParams as GetvalueParams
-from ._all import ImportcontainerCallContext as ImportcontainerCallContext
-from ._all import ImportcontainerParams as ImportcontainerParams
-from ._all import ListcontainersCallContext as ListcontainersCallContext
-from ._all import ListcontainersParams as ListcontainersParams
-from ._all import ListentriesCallContext as ListentriesCallContext
-from ._all import ListentriesParams as ListentriesParams
-from ._all import NewcontainerCallContext as NewcontainerCallContext
-from ._all import NewcontainerParams as NewcontainerParams
-from ._all import RemovecontainerCallContext as RemovecontainerCallContext
-from ._all import RemovecontainerParams as RemovecontainerParams
-from ._all import RemoveentryCallContext as RemoveentryCallContext
-from ._all import RemoveentryParams as RemoveentryParams
-from ._all import SetvalueCallContext as SetvalueCallContext
-from ._all import SetvalueParams as SetvalueParams
+from typing import Protocol
+
+from mas.schema.storage.storage_capnp.types import readers as readers
+from mas.schema.storage.storage_capnp.types.results import server as results_server
+
+class GetkeyParams(Protocol): ...
+
+class GetkeyCallContext(Protocol):
+    params: GetkeyParams
+    @property
+    def results(self) -> results_server.GetkeyServerResult: ...
+
+class GetvalueParams(Protocol): ...
+
+class GetvalueCallContext(Protocol):
+    params: GetvalueParams
+    @property
+    def results(self) -> results_server.GetvalueServerResult: ...
+
+class SetvalueParams(Protocol):
+    value: readers.ValueReader
+
+class SetvalueCallContext(Protocol):
+    params: SetvalueParams
+    @property
+    def results(self) -> results_server.SetvalueServerResult: ...
+
+class ExportParams(Protocol): ...
+
+class ExportCallContext(Protocol):
+    params: ExportParams
+    @property
+    def results(self) -> results_server.ExportServerResult: ...
+
+class DownloadentriesParams(Protocol): ...
+
+class DownloadentriesCallContext(Protocol):
+    params: DownloadentriesParams
+    @property
+    def results(self) -> results_server.DownloadentriesServerResult: ...
+
+class ListentriesParams(Protocol): ...
+
+class ListentriesCallContext(Protocol):
+    params: ListentriesParams
+    @property
+    def results(self) -> results_server.ListentriesServerResult: ...
+
+class GetentryParams(Protocol):
+    key: str
+
+class GetentryCallContext(Protocol):
+    params: GetentryParams
+    @property
+    def results(self) -> results_server.GetentryServerResult: ...
+
+class RemoveentryParams(Protocol):
+    key: str
+
+class RemoveentryCallContext(Protocol):
+    params: RemoveentryParams
+    @property
+    def results(self) -> results_server.RemoveentryServerResult: ...
+
+class ClearParams(Protocol): ...
+
+class ClearCallContext(Protocol):
+    params: ClearParams
+    @property
+    def results(self) -> results_server.ClearServerResult: ...
+
+class AddentryParams(Protocol):
+    key: str
+    value: readers.ValueReader
+    replaceExisting: bool
+
+class AddentryCallContext(Protocol):
+    params: AddentryParams
+    @property
+    def results(self) -> results_server.AddentryServerResult: ...
+
+class NewcontainerParams(Protocol):
+    name: str
+    description: str
+
+class NewcontainerCallContext(Protocol):
+    params: NewcontainerParams
+    @property
+    def results(self) -> results_server.NewcontainerServerResult: ...
+
+class ContainerwithidParams(Protocol):
+    id: str
+
+class ContainerwithidCallContext(Protocol):
+    params: ContainerwithidParams
+    @property
+    def results(self) -> results_server.ContainerwithidServerResult: ...
+
+class ListcontainersParams(Protocol): ...
+
+class ListcontainersCallContext(Protocol):
+    params: ListcontainersParams
+    @property
+    def results(self) -> results_server.ListcontainersServerResult: ...
+
+class RemovecontainerParams(Protocol):
+    id: str
+
+class RemovecontainerCallContext(Protocol):
+    params: RemovecontainerParams
+    @property
+    def results(self) -> results_server.RemovecontainerServerResult: ...
+
+class ImportcontainerParams(Protocol):
+    json: str
+
+class ImportcontainerCallContext(Protocol):
+    params: ImportcontainerParams
+    @property
+    def results(self) -> results_server.ImportcontainerServerResult: ...

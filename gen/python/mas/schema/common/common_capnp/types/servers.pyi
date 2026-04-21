@@ -1,7 +1,13 @@
 """Server helper types for `common.capnp`."""
 
-from ._all import FactoryServer as FactoryServer
-from ._all import HolderServer as HolderServer
-from ._all import IdentifiableHolderServer as IdentifiableHolderServer
-from ._all import IdentifiableServer as IdentifiableServer
-from ._all import IOFactoryServer as IOFactoryServer
+from mas.schema.common.common_capnp.types import modules as modules
+
+FactoryServer = modules._FactoryInterfaceModule.Server
+
+HolderServer = modules._HolderInterfaceModule.Server
+
+IOFactoryServer = modules._IOFactoryInterfaceModule.Server
+
+IdentifiableHolderServer = modules._IdentifiableHolderInterfaceModule.Server
+
+IdentifiableServer = modules._IdentifiableInterfaceModule.Server

@@ -1,7 +1,13 @@
 """Result helper modules for `cluster_admin_service.capnp`."""
 
-from . import client as client
-from . import server as server
-from . import tuples as tuples
+from mas.schema.cluster.cluster_admin_service_capnp.types.results import (
+    client as client,
+)
+from mas.schema.cluster.cluster_admin_service_capnp.types.results import (
+    server as server,
+)
+from mas.schema.cluster.cluster_admin_service_capnp.types.results import (
+    tuples as tuples,
+)
 
 __all__ = ["client", "server", "tuples"]

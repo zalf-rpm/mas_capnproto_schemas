@@ -1,6 +1,6 @@
 """This is an automatically generated stub for `model.capnp`."""
 
-from . import types as types
+from mas.schema.model.model_capnp import types as types
 
 XYResult: types.modules._XYResultStructModule
 Stat: types.modules._StatStructModule

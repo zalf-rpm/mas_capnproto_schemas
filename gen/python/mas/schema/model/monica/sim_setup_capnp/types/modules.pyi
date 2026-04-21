@@ -8,14 +8,122 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
     _StructModule,
+    _StructSchema,
+    _StructSchemaField,
 )
 
-from . import _all as _all
+from mas.schema.model.monica.sim_setup_capnp.types import builders as builders
+from mas.schema.model.monica.sim_setup_capnp.types import readers as readers
+from mas.schema.model.monica.sim_setup_capnp.types import schemas as schemas
 
 class _SetupStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
+    class _SetupSchema(_StructSchema):
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(self, key: Literal["runId"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["sowingTime"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["harvestTime"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["cropId"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["simJson"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["cropJson"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["siteJson"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["startDate"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["endDate"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["groundwaterLevel"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["impenetrableLayer"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["elevation"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["slope"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["latitude"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["landcover"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["fertilization"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["nitrogenResponseOn"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["irrigation"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["waterDeficitResponseOn"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["emergenceMoistureControlOn"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["emergenceFloodingControlOn"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["leafExtensionModifier"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["co2"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["o3"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["fieldConditionModifier"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["stageTemperatureSum"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["useVernalisationFix"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["comment"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _SetupStructModule._SetupSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._SetupSchema: ...
     @override
     def new_message(
         self,
@@ -50,7 +158,7 @@ class _SetupStructModule(_StructModule):
         useVernalisationFix: bool | None = None,
         comment: str | None = None,
         **kwargs: object,
-    ) -> _all.SetupBuilder: ...
+    ) -> builders.SetupBuilder: ...
     @override
     @overload
     def from_bytes(
@@ -58,7 +166,7 @@ class _SetupStructModule(_StructModule):
         buf: bytes,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> AbstractContextManager[_all.SetupReader]: ...
+    ) -> AbstractContextManager[readers.SetupReader]: ...
     @overload
     def from_bytes(
         self,
@@ -67,7 +175,7 @@ class _SetupStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[False],
-    ) -> AbstractContextManager[_all.SetupReader]: ...
+    ) -> AbstractContextManager[readers.SetupReader]: ...
     @overload
     def from_bytes(
         self,
@@ -76,7 +184,7 @@ class _SetupStructModule(_StructModule):
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
-    ) -> AbstractContextManager[_all.SetupBuilder]: ...
+    ) -> AbstractContextManager[builders.SetupBuilder]: ...
     @override
     def from_bytes_packed(
         self,
@@ -90,11 +198,11 @@ class _SetupStructModule(_StructModule):
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SetupReader: ...
+    ) -> readers.SetupReader: ...
     @override
     def read_packed(
         self,
         file: IO[str] | IO[bytes],
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _all.SetupReader: ...
+    ) -> readers.SetupReader: ...

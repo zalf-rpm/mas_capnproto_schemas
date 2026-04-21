@@ -1,5 +1,9 @@
 """Server helper types for `management.capnp`."""
 
-from ._all import FertilizerServer as FertilizerServer
-from ._all import FertilizerServiceServer as FertilizerServiceServer
-from ._all import ServiceServer as ServiceServer
+from mas.schema.management.management_capnp.types import modules as modules
+
+FertilizerServer = modules._FertilizerInterfaceModule.Server
+
+FertilizerServiceServer = modules._FertilizerServiceInterfaceModule.Server
+
+ServiceServer = modules._ServiceInterfaceModule.Server

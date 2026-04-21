@@ -1,1 +1,3 @@
 """Runtime placeholder module for request helpers of `config.capnp`."""
+
+# pyright: reportUnusedClass=none

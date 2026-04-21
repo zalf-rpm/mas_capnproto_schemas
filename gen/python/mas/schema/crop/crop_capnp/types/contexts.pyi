@@ -1,8 +1,26 @@
 """Context helper types for `crop.capnp`."""
 
-from ._all import CultivarCallContext as CultivarCallContext
-from ._all import CultivarParams as CultivarParams
-from ._all import ParametersCallContext as ParametersCallContext
-from ._all import ParametersParams as ParametersParams
-from ._all import SpeciesCallContext as SpeciesCallContext
-from ._all import SpeciesParams as SpeciesParams
+from typing import Protocol
+
+from mas.schema.crop.crop_capnp.types.results import server as results_server
+
+class ParametersParams(Protocol): ...
+
+class ParametersCallContext(Protocol):
+    params: ParametersParams
+    @property
+    def results(self) -> results_server.ParametersServerResult: ...
+
+class CultivarParams(Protocol): ...
+
+class CultivarCallContext(Protocol):
+    params: CultivarParams
+    @property
+    def results(self) -> results_server.CultivarServerResult: ...
+
+class SpeciesParams(Protocol): ...
+
+class SpeciesCallContext(Protocol):
+    params: SpeciesParams
+    @property
+    def results(self) -> results_server.SpeciesServerResult: ...

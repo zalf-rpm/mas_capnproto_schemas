@@ -1,3 +1,5 @@
 """Enum helper aliases for `model.capnp`."""
 
-from ._all import StatTypeEnum as StatTypeEnum
+from typing import Literal
+
+type StatTypeEnum = int | Literal["min", "max", "sd", "avg", "median"]

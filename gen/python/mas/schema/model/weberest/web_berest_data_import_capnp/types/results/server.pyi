@@ -1,3 +1,19 @@
 """Server result helper types for `web_berest_data_import.capnp`."""
 
-from .._all import ImportdataServerResult as ImportdataServerResult
+from capnp.lib.capnp import (
+    _DynamicStructBuilder,
+)
+
+class ImportdataServerResult(_DynamicStructBuilder):
+    @property
+    def id(self) -> str: ...
+    @id.setter
+    def id(self, value: str) -> None: ...
+    @property
+    def successA(self) -> bool: ...
+    @successA.setter
+    def successA(self, value: bool) -> None: ...
+    @property
+    def successB(self) -> bool: ...
+    @successB.setter
+    def successB(self, value: bool) -> None: ...

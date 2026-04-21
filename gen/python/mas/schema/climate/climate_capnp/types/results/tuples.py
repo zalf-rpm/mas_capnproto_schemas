@@ -1,5 +1,7 @@
 """Runtime placeholder module for result tuple helpers of `climate.capnp`."""
 
+# pyright: reportUnusedClass=none
+
 from typing import NamedTuple
 
 

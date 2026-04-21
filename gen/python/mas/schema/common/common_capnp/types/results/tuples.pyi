@@ -1,6 +1,19 @@
 """Result tuple helper types for `common.capnp`."""
 
-from .._all import CreateResultTuple as CreateResultTuple
-from .._all import InfoResultTuple as InfoResultTuple
-from .._all import ProduceResultTuple as ProduceResultTuple
-from .._all import ValueResultTuple as ValueResultTuple
+from typing import NamedTuple
+
+from mas.schema.common.common_capnp.types import common as common
+
+class InfoResultTuple(NamedTuple):
+    id: str
+    name: str
+    description: str
+
+class CreateResultTuple(NamedTuple):
+    out: common.AnyPointer
+
+class ProduceResultTuple(NamedTuple):
+    out: common.AnyPointer
+
+class ValueResultTuple(NamedTuple):
+    value: common.AnyPointer
