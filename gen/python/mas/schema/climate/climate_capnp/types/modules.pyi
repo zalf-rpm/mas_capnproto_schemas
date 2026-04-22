@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -27,15 +28,88 @@ from mas.schema.climate.climate_capnp.types import readers as readers
 from mas.schema.climate.climate_capnp.types import schemas as schemas
 from mas.schema.climate.climate_capnp.types import servers as servers
 from mas.schema.climate.climate_capnp.types.results import tuples as results_tuples
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.date_capnp.types import (
+    schemas as _mas_schema_common_date_capnp_schemas,
+)
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.common.date_capnp.types.readers import DateReader
+from mas.schema.geo.geo_capnp.types import schemas as _mas_schema_geo_geo_capnp_schemas
 from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
+
+class _GCMEnumModule(_EnumModule):
+    cccmaCanEsm2: int
+    ichecEcEarth: int
+    ipslIpslCm5AMr: int
+    mirocMiroc5: int
+    mpiMMpiEsmLr: int
+    gfdlEsm4: int
+    ipslCm6aLr: int
+    mpiEsm12Hr: int
+    mriEsm20: int
+    ukesm10Ll: int
+    gswp3W5E5: int
+    mohcHadGem2Es: int
+
+    class _GCMSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._GCMEnumSchema: ...
+
+class _RCMEnumModule(_EnumModule):
+    clmcomCclm4817: int
+    gericsRemo2015: int
+    knmiRacmo22E: int
+    smhiRca4: int
+    clmcomBtuCclm4817: int
+    mpiCscRemo2009: int
+    uhohWrf361H: int
+
+    class _RCMSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._RCMEnumSchema: ...
+
+class _SSPEnumModule(_EnumModule):
+    ssp1: int
+    ssp2: int
+    ssp3: int
+    ssp4: int
+    ssp5: int
+
+    class _SSPSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._SSPEnumSchema: ...
+
+class _RCPEnumModule(_EnumModule):
+    rcp19: int
+    rcp26: int
+    rcp34: int
+    rcp45: int
+    rcp60: int
+    rcp70: int
+    rcp85: int
+
+    class _RCPSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._RCPEnumSchema: ...
 
 class _EnsembleMemberStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
@@ -139,7 +213,11 @@ class _MetadataStructModule(_StructModule):
                     class _Schema(_ListSchema):
                         @property
                         @override
-                        def elementType(self) -> _StructSchema: ...
+                        def elementType(
+                            self,
+                        ) -> (
+                            _mas_schema_common_common_capnp_schemas._IdInformationSchema
+                        ): ...
 
                     @property
                     @override
@@ -183,7 +261,11 @@ class _MetadataStructModule(_StructModule):
                     class _Schema(_ListSchema):
                         @property
                         @override
-                        def elementType(self) -> _StructSchema: ...
+                        def elementType(
+                            self,
+                        ) -> (
+                            _mas_schema_common_common_capnp_schemas._IdInformationSchema
+                        ): ...
 
                     @property
                     @override
@@ -286,7 +368,9 @@ class _MetadataStructModule(_StructModule):
             class _DateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -385,22 +469,22 @@ class _MetadataStructModule(_StructModule):
             class _GcmField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._GCMEnumSchema: ...
 
             class _RcmField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._RCMEnumSchema: ...
 
             class _RcpField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._RCPEnumSchema: ...
 
             class _SspField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._SSPEnumSchema: ...
 
             class _EnsMemField(_StructSchemaField):
                 @property
@@ -410,12 +494,16 @@ class _MetadataStructModule(_StructModule):
             class _StartField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _EndField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -629,7 +717,9 @@ class _MetadataStructModule(_StructModule):
                     class _Schema(_ListSchema):
                         @property
                         @override
-                        def elementType(self) -> _StructSchema: ...
+                        def elementType(
+                            self,
+                        ) -> _mas_schema_common_common_capnp_schemas._PairSchema: ...
 
                     @property
                     @override
@@ -956,7 +1046,9 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -977,12 +1069,20 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1055,7 +1155,9 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _LatlonField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1357,9 +1459,15 @@ class _TimeSeriesInterfaceModule(
     _IdentifiableInterfaceModule,
     _PersistentInterfaceModule,
 ):
-    class _ResolutionEnumModule:
+    class _ResolutionEnumModule(_EnumModule):
         daily: int
         hourly: int
+
+        class _ResolutionSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._TimeSeriesResolutionEnumSchema: ...
 
     Resolution: _ResolutionEnumModule
     @override
@@ -1486,6 +1594,33 @@ class _TimeSeriesInterfaceModule(
             context: contexts.LocationCallContext,
         ) -> Awaitable[None]: ...
 
+class _ElementEnumModule(_EnumModule):
+    tmin: int
+    tavg: int
+    tmax: int
+    precip: int
+    globrad: int
+    wind: int
+    sunhours: int
+    cloudamount: int
+    relhumid: int
+    airpress: int
+    vaporpress: int
+    co2: int
+    o3: int
+    et0: int
+    dewpointTemp: int
+    specificHumidity: int
+    snowfallFlux: int
+    surfaceDownwellingLongwaveRadiation: int
+    potET: int
+
+    class _ElementSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._ElementEnumSchema: ...
+
 class _LocationStructModule(_StructModule):
     class _KVStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
@@ -1574,12 +1709,16 @@ class _LocationStructModule(_StructModule):
         class _IdField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
         class _LatlonField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
         class _TimeSeriesField(_StructSchemaField):
             @property
@@ -1809,7 +1948,7 @@ class _TimeSeriesDataStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _EnumSchema: ...
+                def elementType(self) -> schemas._ElementEnumSchema: ...
 
             @property
             @override
@@ -1822,17 +1961,17 @@ class _TimeSeriesDataStructModule(_StructModule):
         class _StartDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _EndDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _ResolutionField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._TimeSeriesResolutionEnumSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1973,7 +2112,9 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1994,12 +2135,20 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2204,7 +2353,9 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_common_common_capnp_schemas._PairSchema: ...
 
                 @property
                 @override
@@ -2435,9 +2586,15 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[None]: ...
 
 class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
-    class _AlterTypeEnumModule:
+    class _AlterTypeEnumModule(_EnumModule):
         add: int
         mul: int
+
+        class _AlterTypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._AlterTimeSeriesWrapperAlterTypeEnumSchema: ...
 
     AlterType: _AlterTypeEnumModule
     class _AlteredStructModule(_StructModule):
@@ -2448,12 +2605,14 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _ElementField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ElementEnumSchema: ...
 
             class _TypeField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(
+                    self,
+                ) -> schemas._AlterTimeSeriesWrapperAlterTypeEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2574,7 +2733,9 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2595,12 +2756,20 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2635,7 +2804,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _ResolutionField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._TimeSeriesResolutionEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2665,12 +2834,16 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _StartDateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _EndDateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2706,7 +2879,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._ElementEnumSchema: ...
 
                 @property
                 @override
@@ -2807,12 +2980,16 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _StartField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _EndField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2860,7 +3037,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._ElementEnumSchema: ...
 
                 @property
                 @override
@@ -2964,12 +3141,16 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _IdField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
             class _LatlonField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _TimeSeriesField(_StructSchemaField):
                 @property
@@ -3151,7 +3332,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             class _AlteredElementField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ElementEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

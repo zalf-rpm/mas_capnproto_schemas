@@ -7,6 +7,7 @@ from typing import IO, Any, Literal, overload, override
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _ListSchema,
     _StructModule,
@@ -18,6 +19,20 @@ from mas.schema.model.yieldstat.yieldstat_capnp.types import builders as builder
 from mas.schema.model.yieldstat.yieldstat_capnp.types import enums as enums
 from mas.schema.model.yieldstat.yieldstat_capnp.types import readers as readers
 from mas.schema.model.yieldstat.yieldstat_capnp.types import schemas as schemas
+
+class _ResultIdEnumModule(_EnumModule):
+    primaryYield: int
+    dryMatter: int
+    carbonInAboveGroundBiomass: int
+    sumFertilizer: int
+    sumIrrigation: int
+    primaryYieldCU: int
+
+    class _ResultIdSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._ResultIdEnumSchema: ...
 
 class _RestInputStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
@@ -150,7 +165,7 @@ class _ResultStructModule(_StructModule):
             class _IdField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ResultIdEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

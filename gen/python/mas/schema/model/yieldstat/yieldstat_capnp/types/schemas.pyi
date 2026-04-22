@@ -10,6 +10,8 @@ type _OutputYearToResultSchema = (
 
 type _RestInputSchema = modules._RestInputStructModule._RestInputSchema
 
+type _ResultIdEnumSchema = modules._ResultIdEnumModule._ResultIdSchema
+
 type _ResultResultToValueSchema = (
     modules._ResultStructModule._ResultToValueStructModule._ResultToValueSchema
 )

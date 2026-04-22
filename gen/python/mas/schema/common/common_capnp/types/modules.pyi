@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -130,12 +131,18 @@ class _IdentifiableInterfaceModule(_InterfaceModule):
         ) -> Awaitable[None]: ...
 
 class _StructuredTextStructModule(_StructModule):
-    class _TypeEnumModule:
+    class _TypeEnumModule(_EnumModule):
         unstructured: int
         json: int
         xml: int
         toml: int
         sturdyRef: int
+
+        class _TypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._StructuredTextTypeEnumSchema: ...
 
     Type: _TypeEnumModule
     class _StructuredTextStructureStructModule(_StructModule):
@@ -236,7 +243,7 @@ class _StructuredTextStructModule(_StructModule):
         class _TypeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._StructuredTextTypeEnumSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload

@@ -2,6 +2,8 @@
 
 from mas.schema.grid.grid_capnp.types import modules as modules
 
+type _AggregationEnumSchema = modules._AggregationEnumModule._AggregationSchema
+
 type _GridAggregationPartSchema = (
     modules._GridInterfaceModule._AggregationPartStructModule._AggregationPartSchema
 )

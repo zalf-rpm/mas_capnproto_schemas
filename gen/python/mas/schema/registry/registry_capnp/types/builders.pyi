@@ -8,7 +8,9 @@ from capnp.lib.capnp import (
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
-from mas.schema.persistence.persistence_capnp.types.builders import VatIdBuilder
+from mas.schema.persistence.persistence_capnp.types.builders import (
+    VatIdBuilder,
+)
 from mas.schema.persistence.persistence_capnp.types.clients import RestorerClient
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _RestorerInterfaceModule,

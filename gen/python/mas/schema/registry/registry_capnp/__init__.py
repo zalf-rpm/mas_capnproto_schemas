@@ -1,16 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `registry.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.registry.registry_capnp.types.modules import (
-    _AdminInterfaceModule,
-    _RegistrarInterfaceModule,
-    _RegistryInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -69,30 +66,31 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Admin = _AdminInterfaceModule(_loader.get(0xF503F3237666574E).as_interface(), "Admin")
-Registry = _RegistryInterfaceModule(
+Admin = _InterfaceModule(
+    _loader.get(0xF503F3237666574E).as_interface(),
+    "Admin",
+)
+Registry = _InterfaceModule(
     _loader.get(0xCA7B4BD1600633B8).as_interface(),
     "Registry",
 )
-Registry.Entry = _RegistryInterfaceModule._EntryStructModule(
+Registry.Entry = _StructModule(
     _loader.get(0xC17987510CF7AC13).as_struct(),
     "Entry",
 )
-Registrar = _RegistrarInterfaceModule(
+Registrar = _InterfaceModule(
     _loader.get(0xABAEF93C36F2D1EA).as_interface(),
     "Registrar",
 )
-Registrar.CrossDomainRestore = (
-    _RegistrarInterfaceModule._CrossDomainRestoreStructModule(
-        Registrar.schema.methods["register"].param_type.fields["xDomain"].schema,
-        "CrossDomainRestore",
-    )
+Registrar.CrossDomainRestore = _StructModule(
+    Registrar.schema.methods["register"].param_type.fields["xDomain"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "CrossDomainRestore",
 )
-Registrar.RegParams = _RegistrarInterfaceModule._RegParamsStructModule(
-    Registrar.schema.methods["register"].param_type,
+Registrar.RegParams = _StructModule(
+    Registrar.schema.methods["register"].param_type,  # pyright: ignore[reportUnknownArgumentType]
     "RegParams",
 )
-Registrar.Unregister = _RegistrarInterfaceModule._UnregisterInterfaceModule(
-    Registrar.schema.methods["register"].result_type.fields["unreg"].schema,
+Registrar.Unregister = _InterfaceModule(
+    Registrar.schema.methods["register"].result_type.fields["unreg"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Unregister",
 )

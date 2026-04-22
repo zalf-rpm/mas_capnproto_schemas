@@ -7,6 +7,7 @@ from typing import IO, Any, Literal, overload, override
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _ListSchema,
     _StructModule,
@@ -14,8 +15,17 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.climate.climate_capnp.types import (
+    schemas as _mas_schema_climate_climate_capnp_schemas,
+)
 from mas.schema.climate.climate_capnp.types.enums import RCPEnum
+from mas.schema.common.date_capnp.types import (
+    schemas as _mas_schema_common_date_capnp_schemas,
+)
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.model.monica.monica_management_capnp.types import (
+    schemas as _mas_schema_model_monica_monica_management_capnp_schemas,
+)
 from mas.schema.model.monica.monica_management_capnp.types.modules import (
     _ParamsStructModule,
 )
@@ -1057,7 +1067,9 @@ class _CropResidueParametersStructModule(_StructModule):
         class _ParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_management_capnp_schemas._ParamsOrganicFertilizationOrganicMatterParametersSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1242,9 +1254,17 @@ class _CropSpecStructModule(_StructModule):
     ) -> readers.CropSpecReader: ...
 
 class _AutomaticHarvestParametersStructModule(_StructModule):
-    class _HarvestTimeEnumModule:
+    class _HarvestTimeEnumModule(_EnumModule):
         maturity: int
         unknown: int
+
+        class _HarvestTimeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(
+            self,
+        ) -> schemas._AutomaticHarvestParametersHarvestTimeEnumSchema: ...
 
     HarvestTime: _HarvestTimeEnumModule
     class Reader(_DynamicStructReader): ...
@@ -1254,7 +1274,9 @@ class _AutomaticHarvestParametersStructModule(_StructModule):
         class _HarvestTimeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(
+                self,
+            ) -> schemas._AutomaticHarvestParametersHarvestTimeEnumSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1680,7 +1702,9 @@ class _AutomaticIrrigationParametersStructModule(_StructModule):
         class _ParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_management_capnp_schemas._ParamsIrrigationParametersSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -2026,7 +2050,9 @@ class _EnvironmentParametersStructModule(_StructModule):
         class _RcpField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_climate_climate_capnp_schemas._RCPEnumSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -2173,7 +2199,9 @@ class _MeasuredGroundwaterTableInformationStructModule(_StructModule):
             class _DateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2363,12 +2391,12 @@ class _SimulationParametersStructModule(_StructModule):
         class _StartDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _EndDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _AutoIrrigationParamsField(_StructSchemaField):
             @property
@@ -2378,7 +2406,9 @@ class _SimulationParametersStructModule(_StructModule):
         class _NMinFertiliserPartitionField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_management_capnp_schemas._ParamsMineralFertilizationParametersSchema: ...
 
         class _NMinApplicationParamsField(_StructSchemaField):
             @property

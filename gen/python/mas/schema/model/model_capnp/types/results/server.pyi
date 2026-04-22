@@ -8,9 +8,7 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
-from mas.schema.common.common_capnp.types.modules import (
-    _IdentifiableInterfaceModule,
-)
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.model.model_capnp.types import builders as builders
 from mas.schema.model.model_capnp.types import clients as clients
 from mas.schema.model.model_capnp.types import common as common

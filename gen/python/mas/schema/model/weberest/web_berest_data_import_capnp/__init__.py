@@ -1,14 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `web_berest_data_import.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.model.weberest.web_berest_data_import_capnp.types.modules import (
-    _DWLABImportInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule
 
 capnp.remove_import_hook()
 
@@ -32,7 +31,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-DWLABImport = _DWLABImportInterfaceModule(
+DWLABImport = _InterfaceModule(
     _loader.get(0xA1A4AD9D143EAA6F).as_interface(),
     "DWLABImport",
 )

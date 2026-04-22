@@ -2,11 +2,7 @@
 
 from mas.schema.geo.geo_capnp import types as types
 
-class _CoordTypeEnumModule:
-    gk: int
-    utm: int
-    latlon: int
-
+CoordType: types.modules._CoordTypeEnumModule
 EPSG: types.modules._EPSGStructModule
 UTMCoord: types.modules._UTMCoordStructModule
 LatLonCoord: types.modules._LatLonCoordStructModule
@@ -19,6 +15,7 @@ RectBounds: types.modules._RectBoundsStructModule
 __all__ = [
     "EPSG",
     "Coord",
+    "CoordType",
     "GKCoord",
     "LatLonCoord",
     "Point2D",

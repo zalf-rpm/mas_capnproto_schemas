@@ -1,12 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `sim_setup.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.model.monica.sim_setup_capnp.types.modules import _SetupStructModule
+from capnp.lib.capnp import _StructModule
 
 capnp.remove_import_hook()
 
@@ -28,4 +29,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Setup = _SetupStructModule(_loader.get(0xA4B1A2AD9A77FDC7).as_struct(), "Setup")
+Setup = _StructModule(
+    _loader.get(0xA4B1A2AD9A77FDC7).as_struct(),
+    "Setup",
+)

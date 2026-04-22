@@ -13,9 +13,18 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.common.date_capnp.types import (
+    schemas as _mas_schema_common_date_capnp_schemas,
+)
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.model.monica.monica_management_capnp.types import (
+    schemas as _mas_schema_model_monica_monica_management_capnp_schemas,
+)
 from mas.schema.model.monica.monica_management_capnp.types.modules import (
     _ParamsStructModule,
+)
+from mas.schema.model.monica.monica_params_capnp.types import (
+    schemas as _mas_schema_model_monica_monica_params_capnp_schemas,
 )
 from mas.schema.model.monica.monica_params_capnp.types.builders import (
     AutomaticHarvestParametersBuilder,
@@ -224,7 +233,9 @@ class _CropModuleStateStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _StructSchema: ...
+                def elementType(
+                    self,
+                ) -> _mas_schema_model_monica_monica_params_capnp_schemas._YieldComponentSchema: ...
 
             @property
             @override
@@ -236,7 +247,9 @@ class _CropModuleStateStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _StructSchema: ...
+                def elementType(
+                    self,
+                ) -> _mas_schema_model_monica_monica_params_capnp_schemas._YieldComponentSchema: ...
 
             @property
             @override
@@ -248,7 +261,9 @@ class _CropModuleStateStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _StructSchema: ...
+                def elementType(
+                    self,
+                ) -> _mas_schema_model_monica_monica_params_capnp_schemas._YieldComponentSchema: ...
 
             @property
             @override
@@ -361,37 +376,57 @@ class _CropModuleStateStructModule(_StructModule):
         class _GuentherEmissionsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> (
+                _mas_schema_model_monica_monica_params_capnp_schemas._VocEmissionsSchema
+            ): ...
 
         class _JjvEmissionsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> (
+                _mas_schema_model_monica_monica_params_capnp_schemas._VocEmissionsSchema
+            ): ...
 
         class _VocSpeciesField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._VocSpeciesDataSchema: ...
 
         class _CropPhotosynthesisResultsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> (
+                _mas_schema_model_monica_monica_params_capnp_schemas._VocCPDataSchema
+            ): ...
 
         class _SpeciesParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SpeciesParametersSchema: ...
 
         class _CultivarParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CultivarParametersSchema: ...
 
         class _ResidueParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropResidueParametersSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -2087,7 +2122,9 @@ class _SoilLayerStateStructModule(_StructModule):
         class _SpsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SoilParametersSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -2232,7 +2269,9 @@ class _SoilColumnStateStructModule(_StructModule):
             class _FpField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_model_monica_monica_management_capnp_schemas._ParamsMineralFertilizationParametersSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2356,7 +2395,9 @@ class _SoilColumnStateStructModule(_StructModule):
         class _VfTopDressingPartitionField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_management_capnp_schemas._ParamsMineralFertilizationParametersSchema: ...
 
         class _CropModuleField(_StructSchemaField):
             @property
@@ -2569,7 +2610,9 @@ class _SoilTemperatureModuleStateStructModule(_StructModule):
         class _ModuleParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SoilTemperatureModuleParametersSchema: ...
 
         class _SoilColumnVtGroundLayerField(_StructSchemaField):
             @property
@@ -3157,7 +3200,9 @@ class _SoilMoistureModuleStateStructModule(_StructModule):
         class _ModuleParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SoilMoistureModuleParametersSchema: ...
 
         class _AvailableWaterField(_StructSchemaField):
             @property
@@ -3721,7 +3766,9 @@ class _SoilOrganicModuleStateStructModule(_StructModule):
         class _ModuleParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SoilOrganicModuleParametersSchema: ...
 
         class _ActAmmoniaOxidationRateField(_StructSchemaField):
             @property
@@ -4157,7 +4204,9 @@ class _SoilTransportModuleStateStructModule(_StructModule):
         class _ModuleParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SoilTransportModuleParametersSchema: ...
 
         class _ConvectionField(_StructSchemaField):
             @property
@@ -4479,27 +4528,37 @@ class _MonicaModelStateStructModule(_StructModule):
         class _SitePsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SiteParametersSchema: ...
 
         class _EnvPsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._EnvironmentParametersSchema: ...
 
         class _CropPsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropModuleParametersSchema: ...
 
         class _SimPsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._SimulationParametersSchema: ...
 
         class _GroundwaterInformationField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._MeasuredGroundwaterTableInformationSchema: ...
 
         class _SoilColumnField(_StructSchemaField):
             @property
@@ -4534,7 +4593,7 @@ class _MonicaModelStateStructModule(_StructModule):
         class _CurrentStepDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _ClimateDataField(_StructSchemaField):
             class _Schema(_ListSchema):
@@ -4955,17 +5014,19 @@ class _CropStateStructModule(_StructModule):
         class _AutomaticHarvestParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._AutomaticHarvestParametersSchema: ...
 
         class _SeedDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _HarvestDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _IsWinterCropField(_StructSchemaField):
             @property
@@ -4981,7 +5042,9 @@ class _CropStateStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _StructSchema: ...
+                def elementType(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             @property
             @override
@@ -4992,17 +5055,23 @@ class _CropStateStructModule(_StructModule):
         class _CropParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropParametersSchema: ...
 
         class _PerennialCropParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropParametersSchema: ...
 
         class _ResidueParamsField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropResidueParametersSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload

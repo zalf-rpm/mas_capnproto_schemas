@@ -4,6 +4,8 @@ from mas.schema.geo.geo_capnp.types import modules as modules
 
 type _CoordSchema = modules._CoordStructModule._CoordSchema
 
+type _CoordTypeEnumSchema = modules._CoordTypeEnumModule._CoordTypeSchema
+
 type _EPSGSchema = modules._EPSGStructModule._EPSGSchema
 
 type _GKCoordSchema = modules._GKCoordStructModule._GKCoordSchema

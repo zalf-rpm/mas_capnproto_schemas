@@ -2,6 +2,8 @@
 
 from mas.schema.model.monica.monica_params_capnp.types import modules as modules
 
+type _AutomaticHarvestParametersHarvestTimeEnumSchema = modules._AutomaticHarvestParametersStructModule._HarvestTimeEnumModule._HarvestTimeSchema
+
 type _AutomaticHarvestParametersSchema = (
     modules._AutomaticHarvestParametersStructModule._AutomaticHarvestParametersSchema
 )

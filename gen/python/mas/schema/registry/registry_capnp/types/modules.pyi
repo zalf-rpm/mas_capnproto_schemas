@@ -17,9 +17,15 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.builders import VatIdBuilder
 from mas.schema.persistence.persistence_capnp.types.clients import RestorerClient
 from mas.schema.persistence.persistence_capnp.types.modules import (
@@ -68,7 +74,9 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             class _CategoryField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -576,7 +584,9 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             class _VatIdField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._VatIdSchema: ...
 
             class _RestorerField(_StructSchemaField):
                 @property
@@ -922,7 +932,11 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             class _ReregSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

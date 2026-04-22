@@ -1,18 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `monica_management.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.model.monica.monica_management_capnp.types.modules import (
-    _EventStructModule,
-    _ILRDatesStructModule,
-    _ParamsStructModule,
-    _ServiceInterfaceModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -95,46 +90,59 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-ILRDates = _ILRDatesStructModule(
+ILRDates = _StructModule(
     _loader.get(0xA1F99F32EEA02590).as_struct(),
     "ILRDates",
 )
-EventType = _EnumModule(_loader.get(0xD0290DAF8DE9F2B0).as_enum(), "EventType")
-PlantOrgan = _EnumModule(_loader.get(0xB33447204CDF022C).as_enum(), "PlantOrgan")
-Event = _EventStructModule(_loader.get(0xCF672AB379467704).as_struct(), "Event")
+EventType = _EnumModule(
+    _loader.get(0xD0290DAF8DE9F2B0).as_enum(),
+    "EventType",
+)
+PlantOrgan = _EnumModule(
+    _loader.get(0xB33447204CDF022C).as_enum(),
+    "PlantOrgan",
+)
+Event = _StructModule(
+    _loader.get(0xCF672AB379467704).as_struct(),
+    "Event",
+)
 Event.ExternalType = _EnumModule(
     Event.schema.fields["type"].schema,
     "ExternalType",
 )
-Event.PhenoStage = _EnumModule(_loader.get(0xB2BF3A5557791BC1).as_enum(), "PhenoStage")
-Event.Type = _EventStructModule._TypeStructModule(
+Event.PhenoStage = _EnumModule(
+    _loader.get(0xB2BF3A5557791BC1).as_enum(),
+    "PhenoStage",
+)
+Event.Type = _StructModule(
     _loader.get(0xB91010C363E568A4).as_struct(),
     "Type",
 )
-Params = _ParamsStructModule(_loader.get(0xCB20E21466098705).as_struct(), "Params")
-Params.DailyWeather = _ParamsStructModule._DailyWeatherStructModule(
+Params = _StructModule(
+    _loader.get(0xCB20E21466098705).as_struct(),
+    "Params",
+)
+Params.DailyWeather = _StructModule(
     _loader.get(0xA332CFE9735A304C).as_struct(),
     "DailyWeather",
 )
-Params.DailyWeather.KV = _ParamsStructModule._DailyWeatherStructModule._KVStructModule(
+Params.DailyWeather.KV = _StructModule(
     Params.DailyWeather.schema.fields["data"].schema.elementType,
     "KV",
 )
-Params.Sowing = _ParamsStructModule._SowingStructModule(
+Params.Sowing = _StructModule(
     _loader.get(0xC6880D1C13EC14DC).as_struct(),
     "Sowing",
 )
-Params.AutomaticSowing = _ParamsStructModule._AutomaticSowingStructModule(
+Params.AutomaticSowing = _StructModule(
     _loader.get(0xD1BFC1C9617D9453).as_struct(),
     "AutomaticSowing",
 )
-Params.AutomaticSowing.AvgSoilTemp = (
-    _ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule(
-        Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
-        "AvgSoilTemp",
-    )
+Params.AutomaticSowing.AvgSoilTemp = _StructModule(
+    Params.AutomaticSowing.schema.fields["avgSoilTemp"].schema,
+    "AvgSoilTemp",
 )
-Params.Harvest = _ParamsStructModule._HarvestStructModule(
+Params.Harvest = _StructModule(
     _loader.get(0x8FEB941D70F2A468).as_struct(),
     "Harvest",
 )
@@ -142,17 +150,15 @@ Params.Harvest.CropUsage = _EnumModule(
     Params.Harvest.schema.fields["optCarbMgmtData"].schema.fields["cropUsage"].schema,
     "CropUsage",
 )
-Params.Harvest.OptCarbonMgmtData = (
-    _ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule(
-        Params.Harvest.schema.fields["optCarbMgmtData"].schema,
-        "OptCarbonMgmtData",
-    )
+Params.Harvest.OptCarbonMgmtData = _StructModule(
+    Params.Harvest.schema.fields["optCarbMgmtData"].schema,
+    "OptCarbonMgmtData",
 )
-Params.AutomaticHarvest = _ParamsStructModule._AutomaticHarvestStructModule(
+Params.AutomaticHarvest = _StructModule(
     _loader.get(0xF805D22FABB80702).as_struct(),
     "AutomaticHarvest",
 )
-Params.Cutting = _ParamsStructModule._CuttingStructModule(
+Params.Cutting = _StructModule(
     _loader.get(0x8460DAC6ABFF7ED9).as_struct(),
     "Cutting",
 )
@@ -168,57 +174,51 @@ Params.Cutting.Unit = _EnumModule(
     .schema,
     "Unit",
 )
-Params.Cutting.Spec = _ParamsStructModule._CuttingStructModule._SpecStructModule(
+Params.Cutting.Spec = _StructModule(
     Params.Cutting.schema.fields["cuttingSpec"].schema.elementType,
     "Spec",
 )
-Params.MineralFertilization = _ParamsStructModule._MineralFertilizationStructModule(
+Params.MineralFertilization = _StructModule(
     _loader.get(0xA363D226E178DEBD).as_struct(),
     "MineralFertilization",
 )
-Params.MineralFertilization.Parameters = (
-    _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule(
-        Params.MineralFertilization.schema.fields["partition"].schema,
-        "Parameters",
-    )
+Params.MineralFertilization.Parameters = _StructModule(
+    Params.MineralFertilization.schema.fields["partition"].schema,
+    "Parameters",
 )
-Params.NDemandFertilization = _ParamsStructModule._NDemandFertilizationStructModule(
+Params.NDemandFertilization = _StructModule(
     _loader.get(0xC7C14E92E0CD461C).as_struct(),
     "NDemandFertilization",
 )
-Params.OrganicFertilization = _ParamsStructModule._OrganicFertilizationStructModule(
+Params.OrganicFertilization = _StructModule(
     _loader.get(0xB492838C7FED50B0).as_struct(),
     "OrganicFertilization",
 )
-Params.OrganicFertilization.OrganicMatterParameters = _ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule(
+Params.OrganicFertilization.OrganicMatterParameters = _StructModule(
     Params.OrganicFertilization.schema.fields["params"].schema.fields["params"].schema,
     "OrganicMatterParameters",
 )
-Params.OrganicFertilization.Parameters = (
-    _ParamsStructModule._OrganicFertilizationStructModule._ParametersStructModule(
-        Params.OrganicFertilization.schema.fields["params"].schema,
-        "Parameters",
-    )
+Params.OrganicFertilization.Parameters = _StructModule(
+    Params.OrganicFertilization.schema.fields["params"].schema,
+    "Parameters",
 )
-Params.Tillage = _ParamsStructModule._TillageStructModule(
+Params.Tillage = _StructModule(
     _loader.get(0xAA49811A4E3E2C59).as_struct(),
     "Tillage",
 )
-Params.Irrigation = _ParamsStructModule._IrrigationStructModule(
+Params.Irrigation = _StructModule(
     _loader.get(0xD90939A58E404FF8).as_struct(),
     "Irrigation",
 )
-Params.Irrigation.Parameters = (
-    _ParamsStructModule._IrrigationStructModule._ParametersStructModule(
-        Params.Irrigation.schema.fields["params"].schema,
-        "Parameters",
-    )
+Params.Irrigation.Parameters = _StructModule(
+    Params.Irrigation.schema.fields["params"].schema,
+    "Parameters",
 )
-Params.SaveState = _ParamsStructModule._SaveStateStructModule(
+Params.SaveState = _StructModule(
     _loader.get(0xDD84803FC87AC648).as_struct(),
     "SaveState",
 )
-Service = _ServiceInterfaceModule(
+Service = _InterfaceModule(
     _loader.get(0xBFDA1920AFF38C07).as_interface(),
     "Service",
 )

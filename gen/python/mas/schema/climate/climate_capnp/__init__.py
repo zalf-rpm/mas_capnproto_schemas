@@ -1,25 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `climate.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.climate.climate_capnp.types.modules import (
-    _AlterTimeSeriesWrapperFactoryInterfaceModule,
-    _AlterTimeSeriesWrapperInterfaceModule,
-    _CSVTimeSeriesFactoryInterfaceModule,
-    _DatasetInterfaceModule,
-    _EnsembleMemberStructModule,
-    _LocationStructModule,
-    _MetadataStructModule,
-    _MetaPlusDataStructModule,
-    _ServiceInterfaceModule,
-    _TimeSeriesDataStructModule,
-    _TimeSeriesInterfaceModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -137,60 +125,73 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-GCM = _EnumModule(_loader.get(0xCE396869EEDE9F10).as_enum(), "GCM")
-RCM = _EnumModule(_loader.get(0x8671DEC53083E351).as_enum(), "RCM")
-SSP = _EnumModule(_loader.get(0xD3780AE416347AEE).as_enum(), "SSP")
-RCP = _EnumModule(_loader.get(0x8EF30778310C94CC).as_enum(), "RCP")
-EnsembleMember = _EnsembleMemberStructModule(
+GCM = _EnumModule(
+    _loader.get(0xCE396869EEDE9F10).as_enum(),
+    "GCM",
+)
+RCM = _EnumModule(
+    _loader.get(0x8671DEC53083E351).as_enum(),
+    "RCM",
+)
+SSP = _EnumModule(
+    _loader.get(0xD3780AE416347AEE).as_enum(),
+    "SSP",
+)
+RCP = _EnumModule(
+    _loader.get(0x8EF30778310C94CC).as_enum(),
+    "RCP",
+)
+EnsembleMember = _StructModule(
     _loader.get(0xC8CAACD1CD5DA434).as_struct(),
     "EnsembleMember",
 )
-Metadata = _MetadataStructModule(
+Metadata = _StructModule(
     _loader.get(0xFB36D2E966556DB0).as_struct(),
     "Metadata",
 )
-Metadata.Supported = _MetadataStructModule._SupportedInterfaceModule(
+Metadata.Supported = _InterfaceModule(
     _loader.get(0xAB06444B30722E01).as_interface(),
     "Supported",
 )
-Metadata.Value = _MetadataStructModule._ValueStructModule(
+Metadata.Value = _StructModule(
     _loader.get(0xC48E24C968A234DB).as_struct(),
     "Value",
 )
-Metadata.Entry = _MetadataStructModule._EntryStructModule(
+Metadata.Entry = _StructModule(
     Metadata.schema.fields["entries"].schema.elementType,
     "Entry",
 )
-Metadata.Information = _MetadataStructModule._InformationInterfaceModule(
+Metadata.Information = _InterfaceModule(
     Metadata.schema.fields["info"].schema,
     "Information",
 )
-Dataset = _DatasetInterfaceModule(
+Dataset = _InterfaceModule(
     _loader.get(0xF635FDD1F05960F0).as_interface(),
     "Dataset",
 )
-Dataset.GetLocationsCallback = (
-    _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule(
-        Dataset.schema.methods["streamLocations"]
-        .result_type.fields["locationsCallback"]
-        .schema,
-        "GetLocationsCallback",
-    )
+Dataset.GetLocationsCallback = _InterfaceModule(
+    Dataset.schema.methods["streamLocations"]
+    .result_type.fields["locationsCallback"]
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
+    "GetLocationsCallback",
 )
-MetaPlusData = _MetaPlusDataStructModule(
+MetaPlusData = _StructModule(
     _loader.get(0xD7A67FEC5F22E5A0).as_struct(),
     "MetaPlusData",
 )
-Element = _EnumModule(_loader.get(0xE35760B4DB5AB564).as_enum(), "Element")
-Location = _LocationStructModule(
+Element = _EnumModule(
+    _loader.get(0xE35760B4DB5AB564).as_enum(),
+    "Element",
+)
+Location = _StructModule(
     _loader.get(0x85BA7385F313FE19).as_struct(),
     "Location",
 )
-Location.KV = _LocationStructModule._KVStructModule(
+Location.KV = _StructModule(
     Location.schema.fields["customData"].schema.elementType,
     "KV",
 )
-TimeSeries = _TimeSeriesInterfaceModule(
+TimeSeries = _InterfaceModule(
     _loader.get(0xA7769F40FE6E6DE8).as_interface(),
     "TimeSeries",
 )
@@ -198,46 +199,40 @@ TimeSeries.Resolution = _EnumModule(
     _loader.get(0xB466CACF63EC03C2).as_enum(),
     "Resolution",
 )
-TimeSeriesData = _TimeSeriesDataStructModule(
+TimeSeriesData = _StructModule(
     _loader.get(0xF1C1CCF59BC6964F).as_struct(),
     "TimeSeriesData",
 )
-Service = _ServiceInterfaceModule(
+Service = _InterfaceModule(
     _loader.get(0xFE7D08D4352B0C5F).as_interface(),
     "Service",
 )
-CSVTimeSeriesFactory = _CSVTimeSeriesFactoryInterfaceModule(
+CSVTimeSeriesFactory = _InterfaceModule(
     _loader.get(0xA418C26CC59929D9).as_interface(),
     "CSVTimeSeriesFactory",
 )
-CSVTimeSeriesFactory.CSVConfig = (
-    _CSVTimeSeriesFactoryInterfaceModule._CSVConfigStructModule(
-        CSVTimeSeriesFactory.schema.methods["create"]
-        .param_type.fields["config"]
-        .schema,
-        "CSVConfig",
-    )
+CSVTimeSeriesFactory.CSVConfig = _StructModule(
+    CSVTimeSeriesFactory.schema.methods["create"].param_type.fields["config"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "CSVConfig",
 )
-AlterTimeSeriesWrapper = _AlterTimeSeriesWrapperInterfaceModule(
+AlterTimeSeriesWrapper = _InterfaceModule(
     _loader.get(0xE1F480EF979784B2).as_interface(),
     "AlterTimeSeriesWrapper",
 )
-AlterTimeSeriesWrapper.Altered = (
-    _AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule(
-        AlterTimeSeriesWrapper.schema.methods["alteredElements"]
-        .result_type.fields["list"]
-        .schema.elementType,
-        "Altered",
-    )
+AlterTimeSeriesWrapper.Altered = _StructModule(
+    AlterTimeSeriesWrapper.schema.methods["alteredElements"]
+    .result_type.fields["list"]
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
+    "Altered",
 )
 AlterTimeSeriesWrapper.AlterType = _EnumModule(
     AlterTimeSeriesWrapper.schema.methods["alteredElements"]
     .result_type.fields["list"]
     .schema.elementType.fields["type"]
-    .schema,
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
     "AlterType",
 )
-AlterTimeSeriesWrapperFactory = _AlterTimeSeriesWrapperFactoryInterfaceModule(
+AlterTimeSeriesWrapperFactory = _InterfaceModule(
     _loader.get(0xC5F12DF0A2A52744).as_interface(),
     "AlterTimeSeriesWrapperFactory",
 )

@@ -7,7 +7,9 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
-from mas.schema.persistence.persistence_capnp.types.builders import SturdyRefBuilder
+from mas.schema.persistence.persistence_capnp.types.builders import (
+    SturdyRefBuilder,
+)
 from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import clients as clients

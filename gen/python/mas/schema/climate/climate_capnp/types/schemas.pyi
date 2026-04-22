@@ -2,6 +2,10 @@
 
 from mas.schema.climate.climate_capnp.types import modules as modules
 
+type _AlterTimeSeriesWrapperAlterTypeEnumSchema = (
+    modules._AlterTimeSeriesWrapperInterfaceModule._AlterTypeEnumModule._AlterTypeSchema
+)
+
 type _AlterTimeSeriesWrapperAlteredSchema = (
     modules._AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule._AlteredSchema
 )
@@ -24,7 +28,11 @@ type _DatasetGetLocationsCallbackSchema = modules._DatasetInterfaceModule._GetLo
 
 type _DatasetSchema = modules._DatasetInterfaceModule._DatasetSchema
 
+type _ElementEnumSchema = modules._ElementEnumModule._ElementSchema
+
 type _EnsembleMemberSchema = modules._EnsembleMemberStructModule._EnsembleMemberSchema
+
+type _GCMEnumSchema = modules._GCMEnumModule._GCMSchema
 
 type _LocationKVSchema = modules._LocationStructModule._KVStructModule._KVSchema
 
@@ -50,6 +58,16 @@ type _MetadataValueSchema = (
     modules._MetadataStructModule._ValueStructModule._ValueSchema
 )
 
+type _RCMEnumSchema = modules._RCMEnumModule._RCMSchema
+
+type _RCPEnumSchema = modules._RCPEnumModule._RCPSchema
+
+type _SSPEnumSchema = modules._SSPEnumModule._SSPSchema
+
 type _ServiceSchema = modules._ServiceInterfaceModule._ServiceSchema
 
 type _TimeSeriesDataSchema = modules._TimeSeriesDataStructModule._TimeSeriesDataSchema
+
+type _TimeSeriesResolutionEnumSchema = (
+    modules._TimeSeriesInterfaceModule._ResolutionEnumModule._ResolutionSchema
+)
