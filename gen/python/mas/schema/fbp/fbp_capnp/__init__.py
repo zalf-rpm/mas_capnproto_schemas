@@ -1,22 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `fbp.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.fbp.fbp_capnp.types.modules import (
-    _ChannelInterfaceModule,
-    _ComponentStructModule,
-    _IIPStructModule,
-    _IPStructModule,
-    _PortInfosStructModule,
-    _ProcessInterfaceModule,
-    _RunnableInterfaceModule,
-    _StartChannelsServiceInterfaceModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -150,8 +141,11 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-IP = _IPStructModule(_loader.get(0xAF0A1DC4709A5CCF).as_struct(), "IP")
-IP.KV = _IPStructModule._KVStructModule(
+IP = _StructModule(
+    _loader.get(0xAF0A1DC4709A5CCF).as_struct(),
+    "IP",
+)
+IP.KV = _StructModule(
     IP.schema.fields["attributes"].schema.elementType,
     "KV",
 )
@@ -159,73 +153,70 @@ IP.Type = _EnumModule(
     IP.schema.fields["type"].schema,
     "Type",
 )
-IIP = _IIPStructModule(_loader.get(0xF3705FB36D44A21F).as_struct(), "IIP")
-Channel = _ChannelInterfaceModule(
+IIP = _StructModule(
+    _loader.get(0xF3705FB36D44A21F).as_struct(),
+    "IIP",
+)
+Channel = _InterfaceModule(
     _loader.get(0x9C62C32B2FF2B1E8).as_interface(),
     "Channel",
 )
 Channel.CloseSemantics = _EnumModule(
-    Channel.schema.methods["setAutoCloseSemantics"].param_type.fields["cs"].schema,
+    Channel.schema.methods["setAutoCloseSemantics"].param_type.fields["cs"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "CloseSemantics",
 )
-Channel.Msg = _ChannelInterfaceModule._MsgStructModule(
+Channel.Msg = _StructModule(
     Channel.schema.methods["reader"]
     .result_type.fields["r"]
     .schema.methods["read"]
-    .result_type,
+    .result_type,  # pyright: ignore[reportUnknownArgumentType]
     "Msg",
 )
-Channel.StartupInfo = _ChannelInterfaceModule._StartupInfoStructModule(
+Channel.StartupInfo = _StructModule(
     _loader.get(0xE3D7A3237F175028).as_struct(),
     "StartupInfo",
 )
-Channel.Reader = _ChannelInterfaceModule._ReaderInterfaceModule(
-    Channel.schema.methods["reader"].result_type.fields["r"].schema,
+Channel.Reader = _InterfaceModule(
+    Channel.schema.methods["reader"].result_type.fields["r"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Reader",
 )
-Channel.Writer = _ChannelInterfaceModule._WriterInterfaceModule(
-    Channel.schema.methods["writer"].result_type.fields["w"].schema,
+Channel.Writer = _InterfaceModule(
+    Channel.schema.methods["writer"].result_type.fields["w"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Writer",
 )
-Channel.StatsCallback = _ChannelInterfaceModule._StatsCallbackInterfaceModule(
+Channel.StatsCallback = _InterfaceModule(
     Channel.schema.methods["registerStatsCallback"]
     .param_type.fields["callback"]
-    .schema,
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
     "StatsCallback",
 )
-Channel.StatsCallback.Stats = (
-    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule(
-        Channel.StatsCallback.schema.methods["status"]
-        .param_type.fields["stats"]
-        .schema,
-        "Stats",
-    )
+Channel.StatsCallback.Stats = _StructModule(
+    Channel.StatsCallback.schema.methods["status"].param_type.fields["stats"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Stats",
 )
-Channel.StatsCallback.Unregister = (
-    _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule(
-        Channel.schema.methods["registerStatsCallback"]
-        .result_type.fields["unregisterCallback"]
-        .schema,
-        "Unregister",
-    )
+Channel.StatsCallback.Unregister = _InterfaceModule(
+    Channel.schema.methods["registerStatsCallback"]
+    .result_type.fields["unregisterCallback"]
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Unregister",
 )
-StartChannelsService = _StartChannelsServiceInterfaceModule(
+StartChannelsService = _InterfaceModule(
     _loader.get(0xD0CD6D829B810229).as_interface(),
     "StartChannelsService",
 )
-StartChannelsService.Params = _StartChannelsServiceInterfaceModule._ParamsStructModule(
-    StartChannelsService.schema.methods["start"].param_type,
+StartChannelsService.Params = _StructModule(
+    StartChannelsService.schema.methods["start"].param_type,  # pyright: ignore[reportUnknownArgumentType]
     "Params",
 )
-PortInfos = _PortInfosStructModule(
+PortInfos = _StructModule(
     _loader.get(0xECE0EFA9A922D4A8).as_struct(),
     "PortInfos",
 )
-PortInfos.NameAndSR = _PortInfosStructModule._NameAndSRStructModule(
+PortInfos.NameAndSR = _StructModule(
     PortInfos.schema.fields["inPorts"].schema.elementType,
     "NameAndSR",
 )
-Component = _ComponentStructModule(
+Component = _StructModule(
     _loader.get(0xD717FF7D6815A6B0).as_struct(),
     "Component",
 )
@@ -233,7 +224,7 @@ Component.ComponentType = _EnumModule(
     Component.schema.fields["type"].schema,
     "ComponentType",
 )
-Component.Port = _ComponentStructModule._PortStructModule(
+Component.Port = _StructModule(
     Component.schema.fields["inPorts"].schema.elementType,
     "Port",
 )
@@ -241,30 +232,30 @@ Component.Port.PortType = _EnumModule(
     Component.Port.schema.fields["type"].schema,
     "PortType",
 )
-Runnable = _RunnableInterfaceModule(
+Runnable = _InterfaceModule(
     _loader.get(0xBDE616D300754FF0).as_interface(),
     "Runnable",
 )
-Runnable.Factory = _RunnableInterfaceModule._FactoryInterfaceModule(
+Runnable.Factory = _InterfaceModule(
     _loader.get(0xF5694DB406AA9975).as_interface(),
     "Factory",
 )
-Runnable.StoppedCallback = _RunnableInterfaceModule._StoppedCallbackInterfaceModule(
-    Runnable.schema.methods["start"].param_type.fields["stoppedCb"].schema,
+Runnable.StoppedCallback = _InterfaceModule(
+    Runnable.schema.methods["start"].param_type.fields["stoppedCb"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "StoppedCallback",
 )
-Process = _ProcessInterfaceModule(
+Process = _InterfaceModule(
     _loader.get(0xBBAD56943A039783).as_interface(),
     "Process",
 )
-Process.Factory = _ProcessInterfaceModule._FactoryInterfaceModule(
+Process.Factory = _InterfaceModule(
     _loader.get(0xB01652AB8F1AC0D3).as_interface(),
     "Factory",
 )
-Process.ConfigEntry = _ProcessInterfaceModule._ConfigEntryStructModule(
+Process.ConfigEntry = _StructModule(
     Process.schema.methods["configEntries"]
     .result_type.fields["config"]
-    .schema.elementType,
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
     "ConfigEntry",
 )
 Process.State = _EnumModule(
@@ -272,10 +263,10 @@ Process.State = _EnumModule(
     .param_type.fields["transitionCallback"]
     .schema.methods["stateChanged"]
     .param_type.fields["old"]
-    .schema,
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
     "State",
 )
-Process.StateTransition = _ProcessInterfaceModule._StateTransitionInterfaceModule(
-    Process.schema.methods["state"].param_type.fields["transitionCallback"].schema,
+Process.StateTransition = _InterfaceModule(
+    Process.schema.methods["state"].param_type.fields["transitionCallback"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "StateTransition",
 )

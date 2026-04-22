@@ -1,17 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `service.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.service.service_capnp.types.modules import (
-    _AdminInterfaceModule,
-    _FactoryInterfaceModule,
-    _SimpleFactoryInterfaceModule,
-    _StoppableInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -58,24 +54,27 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Admin = _AdminInterfaceModule(_loader.get(0xFEC1F88B198DF649).as_interface(), "Admin")
-SimpleFactory = _SimpleFactoryInterfaceModule(
+Admin = _InterfaceModule(
+    _loader.get(0xFEC1F88B198DF649).as_interface(),
+    "Admin",
+)
+SimpleFactory = _InterfaceModule(
     _loader.get(0xABA5829222C213CB).as_interface(),
     "SimpleFactory",
 )
-Factory = _FactoryInterfaceModule(
+Factory = _InterfaceModule(
     _loader.get(0x8AB0ECB99C269C7F).as_interface(),
     "Factory",
 )
-Factory.CreateParams = _FactoryInterfaceModule._CreateParamsStructModule(
-    Factory.schema.methods["create"].param_type,
+Factory.CreateParams = _StructModule(
+    Factory.schema.methods["create"].param_type,  # pyright: ignore[reportUnknownArgumentType]
     "CreateParams",
 )
-Factory.AccessInfo = _FactoryInterfaceModule._AccessInfoStructModule(
-    Factory.schema.methods["create"].result_type,
+Factory.AccessInfo = _StructModule(
+    Factory.schema.methods["create"].result_type,  # pyright: ignore[reportUnknownArgumentType]
     "AccessInfo",
 )
-Stoppable = _StoppableInterfaceModule(
+Stoppable = _InterfaceModule(
     _loader.get(0xCD5F6458232E9276).as_interface(),
     "Stoppable",
 )

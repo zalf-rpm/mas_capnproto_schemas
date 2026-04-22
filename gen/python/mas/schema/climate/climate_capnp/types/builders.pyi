@@ -13,7 +13,9 @@ from mas.schema.climate.climate_capnp.types import enums as enums
 from mas.schema.climate.climate_capnp.types import lists as lists
 from mas.schema.climate.climate_capnp.types import modules as modules
 from mas.schema.climate.climate_capnp.types import readers as readers
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+)
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.common.date_capnp.types.readers import DateReader

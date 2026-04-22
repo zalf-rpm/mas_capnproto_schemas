@@ -7,6 +7,8 @@ from typing import IO, Any, Literal, overload, override
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
+    _EnumSchema,
     _StructModule,
     _StructSchema,
     _StructSchemaField,
@@ -16,6 +18,17 @@ from mas.schema.geo.geo_capnp.types import builders as builders
 from mas.schema.geo.geo_capnp.types import common as common
 from mas.schema.geo.geo_capnp.types import readers as readers
 from mas.schema.geo.geo_capnp.types import schemas as schemas
+
+class _CoordTypeEnumModule(_EnumModule):
+    gk: int
+    utm: int
+    latlon: int
+
+    class _CoordTypeSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._CoordTypeEnumSchema: ...
 
 class _EPSGStructModule(_StructModule):
     wgs84: int

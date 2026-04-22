@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -19,7 +20,11 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.geo.geo_capnp.types import schemas as _mas_schema_geo_geo_capnp_schemas
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
@@ -32,6 +37,44 @@ from mas.schema.soil.soil_capnp.types import schemas as schemas
 from mas.schema.soil.soil_capnp.types import servers as servers
 from mas.schema.soil.soil_capnp.types.results import tuples as results_tuples
 
+class _STypeEnumModule(_EnumModule):
+    unknown: int
+    ka5: int
+
+    class _STypeSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._STypeEnumSchema: ...
+
+class _PropertyNameEnumModule(_EnumModule):
+    soilType: int
+    sand: int
+    clay: int
+    silt: int
+    pH: int
+    sceleton: int
+    organicCarbon: int
+    organicMatter: int
+    bulkDensity: int
+    rawDensity: int
+    fieldCapacity: int
+    permanentWiltingPoint: int
+    saturation: int
+    soilMoisture: int
+    soilWaterConductivityCoefficient: int
+    ammonium: int
+    nitrate: int
+    cnRatio: int
+    inGroundwater: int
+    impenetrable: int
+
+    class _PropertyNameSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._PropertyNameEnumSchema: ...
+
 class _LayerStructModule(_StructModule):
     class _PropertyStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
@@ -41,7 +84,7 @@ class _LayerStructModule(_StructModule):
             class _NameField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._PropertyNameEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -242,7 +285,7 @@ class _QueryStructModule(_StructModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -254,7 +297,7 @@ class _QueryStructModule(_StructModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -362,7 +405,7 @@ class _QueryStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _EnumSchema: ...
+                def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
             @property
             @override
@@ -374,7 +417,7 @@ class _QueryStructModule(_StructModule):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _EnumSchema: ...
+                def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
             @property
             @override
@@ -596,7 +639,9 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -617,12 +662,20 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -917,7 +970,9 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -938,12 +993,20 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -970,7 +1033,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -982,7 +1045,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1022,7 +1085,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1034,7 +1097,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1089,7 +1152,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1101,7 +1164,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1133,7 +1196,9 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _CoordField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _QueryField(_StructSchemaField):
                 @property
@@ -1193,7 +1258,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override
@@ -1205,7 +1270,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _EnumSchema: ...
+                    def elementType(self) -> schemas._PropertyNameEnumSchema: ...
 
                 @property
                 @override

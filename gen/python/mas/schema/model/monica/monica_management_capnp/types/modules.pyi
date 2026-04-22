@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceSchema,
@@ -17,10 +18,22 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.climate.climate_capnp.types import (
+    schemas as _mas_schema_climate_climate_capnp_schemas,
+)
 from mas.schema.climate.climate_capnp.types.enums import ElementEnum
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.date_capnp.types import (
+    schemas as _mas_schema_common_date_capnp_schemas,
+)
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.crop.crop_capnp.types import (
+    schemas as _mas_schema_crop_crop_capnp_schemas,
+)
 from mas.schema.crop.crop_capnp.types.clients import CropClient
 from mas.schema.crop.crop_capnp.types.modules import _CropInterfaceModule
 from mas.schema.model.monica.monica_management_capnp.types import builders as builders
@@ -42,27 +55,27 @@ class _ILRDatesStructModule(_StructModule):
         class _SowingField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _EarliestSowingField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _LatestSowingField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _HarvestField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _LatestHarvestField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -160,8 +173,42 @@ class _ILRDatesStructModule(_StructModule):
         nesting_limit: int | None = None,
     ) -> readers.ILRDatesReader: ...
 
+class _EventTypeEnumModule(_EnumModule):
+    sowing: int
+    automaticSowing: int
+    harvest: int
+    automaticHarvest: int
+    irrigation: int
+    tillage: int
+    organicFertilization: int
+    mineralFertilization: int
+    nDemandFertilization: int
+    cutting: int
+    setValue: int
+    saveState: int
+
+    class _EventTypeSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._EventTypeEnumSchema: ...
+
+class _PlantOrganEnumModule(_EnumModule):
+    root: int
+    leaf: int
+    shoot: int
+    fruit: int
+    strukt: int
+    sugar: int
+
+    class _PlantOrganSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._PlantOrganEnumSchema: ...
+
 class _EventStructModule(_StructModule):
-    class _ExternalTypeEnumModule:
+    class _ExternalTypeEnumModule(_EnumModule):
         sowing: int
         automaticSowing: int
         harvest: int
@@ -176,12 +223,24 @@ class _EventStructModule(_StructModule):
         saveState: int
         weather: int
 
+        class _ExternalTypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventExternalTypeEnumSchema: ...
+
     ExternalType: _ExternalTypeEnumModule
-    class _PhenoStageEnumModule:
+    class _PhenoStageEnumModule(_EnumModule):
         emergence: int
         flowering: int
         anthesis: int
         maturity: int
+
+        class _PhenoStageSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._EventPhenoStageEnumSchema: ...
 
     PhenoStage: _PhenoStageEnumModule
     class _TypeStructModule(_StructModule):
@@ -192,12 +251,12 @@ class _EventStructModule(_StructModule):
             class _ExternalField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._EventExternalTypeEnumSchema: ...
 
             class _InternalField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._EventPhenoStageEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -292,7 +351,9 @@ class _EventStructModule(_StructModule):
             class _DateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -379,12 +440,16 @@ class _EventStructModule(_StructModule):
             class _EarliestField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _LatestField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -566,12 +631,14 @@ class _EventStructModule(_StructModule):
         class _TypeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._EventExternalTypeEnumSchema: ...
 
         class _InfoField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
         class _AtField(_StructSchemaField):
             @property
@@ -703,7 +770,11 @@ class _ParamsStructModule(_StructModule):
                 class _KeyField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(
+                        self,
+                    ) -> (
+                        _mas_schema_climate_climate_capnp_schemas._ElementEnumSchema
+                    ): ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -885,7 +956,7 @@ class _ParamsStructModule(_StructModule):
             class _CropField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _InterfaceSchema: ...
+                def schema(self) -> _mas_schema_crop_crop_capnp_schemas._CropSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1213,9 +1284,15 @@ class _ParamsStructModule(_StructModule):
 
     AutomaticSowing: _AutomaticSowingStructModule
     class _HarvestStructModule(_StructModule):
-        class _CropUsageEnumModule:
+        class _CropUsageEnumModule(_EnumModule):
             greenManure: int
             biomassProduction: int
+
+            class _CropUsageSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsHarvestCropUsageEnumSchema: ...
 
         CropUsage: _CropUsageEnumModule
         class _OptCarbonMgmtDataStructModule(_StructModule):
@@ -1226,7 +1303,7 @@ class _ParamsStructModule(_StructModule):
                 class _CropUsageField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._ParamsHarvestCropUsageEnumSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -1433,7 +1510,7 @@ class _ParamsStructModule(_StructModule):
             class _HarvestTimeField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._EventPhenoStageEnumSchema: ...
 
             class _HarvestField(_StructSchemaField):
                 @property
@@ -1546,15 +1623,27 @@ class _ParamsStructModule(_StructModule):
 
     AutomaticHarvest: _AutomaticHarvestStructModule
     class _CuttingStructModule(_StructModule):
-        class _CLEnumModule:
+        class _CLEnumModule(_EnumModule):
             cut: int
             left: int
 
+            class _CLSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsCuttingCLEnumSchema: ...
+
         CL: _CLEnumModule
-        class _UnitEnumModule:
+        class _UnitEnumModule(_EnumModule):
             percentage: int
             biomass: int
             lai: int
+
+            class _UnitSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ParamsCuttingUnitEnumSchema: ...
 
         Unit: _UnitEnumModule
         class _SpecStructModule(_StructModule):
@@ -1565,17 +1654,17 @@ class _ParamsStructModule(_StructModule):
                 class _OrganField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._PlantOrganEnumSchema: ...
 
                 class _UnitField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._ParamsCuttingUnitEnumSchema: ...
 
                 class _CutOrLeftField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._ParamsCuttingCLEnumSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload

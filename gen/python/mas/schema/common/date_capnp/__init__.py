@@ -1,12 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `date.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.common.date_capnp.types.modules import _DateStructModule
+from capnp.lib.capnp import _StructModule
 
 capnp.remove_import_hook()
 
@@ -28,4 +29,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Date = _DateStructModule(_loader.get(0x97E6FEAC0322118D).as_struct(), "Date")
+Date = _StructModule(
+    _loader.get(0x97E6FEAC0322118D).as_struct(),
+    "Date",
+)

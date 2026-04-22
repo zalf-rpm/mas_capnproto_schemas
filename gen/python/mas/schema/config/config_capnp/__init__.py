@@ -1,12 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `config.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.config.config_capnp.types.modules import _ServiceInterfaceModule
+from capnp.lib.capnp import _InterfaceModule
 
 capnp.remove_import_hook()
 
@@ -30,7 +31,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Service = _ServiceInterfaceModule(
+Service = _InterfaceModule(
     _loader.get(0x860D660620AEFCDA).as_interface(),
     "Service",
 )

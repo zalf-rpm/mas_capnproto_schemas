@@ -16,10 +16,16 @@ from capnp.lib.capnp import (
 
 from mas.schema.climate.climate_capnp.types.clients import TimeSeriesClient
 from mas.schema.climate.climate_capnp.types.modules import _TimeSeriesInterfaceModule
+from mas.schema.common.date_capnp.types import (
+    schemas as _mas_schema_common_date_capnp_schemas,
+)
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.data.field_exp_data_capnp.types import builders as builders
 from mas.schema.data.field_exp_data_capnp.types import readers as readers
 from mas.schema.data.field_exp_data_capnp.types import schemas as schemas
+from mas.schema.soil.soil_capnp.types import (
+    schemas as _mas_schema_soil_soil_capnp_schemas,
+)
 from mas.schema.soil.soil_capnp.types.clients import ProfileClient
 from mas.schema.soil.soil_capnp.types.modules import _ProfileInterfaceModule
 
@@ -188,7 +194,7 @@ class _SoilMetadataStructModule(_StructModule):
         class _ProfileField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _InterfaceSchema: ...
+            def schema(self) -> _mas_schema_soil_soil_capnp_schemas._ProfileSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -757,7 +763,7 @@ class _ResidueStructModule(_StructModule):
         class _InitialMeasureDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -887,7 +893,7 @@ class _InitialConditionsLayerStructModule(_StructModule):
         class _DateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1033,12 +1039,12 @@ class _PlantingEventStructModule(_StructModule):
         class _PlantingDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _AverageEmergenceDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1182,7 +1188,7 @@ class _HarvestEventStructModule(_StructModule):
         class _DateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1294,7 +1300,7 @@ class _IrrigationEventStructModule(_StructModule):
         class _DateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1411,7 +1417,7 @@ class _FertilizerEventStructModule(_StructModule):
         class _DateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1543,7 +1549,7 @@ class _EnvironmentModificationStructModule(_StructModule):
         class _DateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -1665,12 +1671,12 @@ class _TreatmentStructModule(_StructModule):
         class _SimulationStartDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _SimulationEndDateField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(self) -> _mas_schema_common_date_capnp_schemas._DateSchema: ...
 
         class _PlotsField(_StructSchemaField):
             class _Schema(_ListSchema):

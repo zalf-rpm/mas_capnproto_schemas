@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -19,6 +20,7 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.geo.geo_capnp.types import schemas as _mas_schema_geo_geo_capnp_schemas
 from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
 from mas.schema.grid.grid_capnp.types import builders as builders
@@ -29,9 +31,36 @@ from mas.schema.grid.grid_capnp.types import readers as readers
 from mas.schema.grid.grid_capnp.types import schemas as schemas
 from mas.schema.grid.grid_capnp.types import servers as servers
 from mas.schema.grid.grid_capnp.types.results import tuples as results_tuples
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
+
+class _AggregationEnumModule(_EnumModule):
+    none: int
+    wAvg: int
+    wMedian: int
+    min: int
+    max: int
+    sum: int
+    iAvg: int
+    iMedian: int
+    avg: int
+    median: int
+    wSum: int
+    iSum: int
+    wMin: int
+    iMin: int
+    wMax: int
+    iMax: int
+
+    class _AggregationSchema(_EnumSchema): ...
+
+    @property
+    @override
+    def schema(self) -> schemas._AggregationEnumSchema: ...
 
 class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
     class _ValueStructModule(_StructModule):
@@ -395,7 +424,9 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _LatLonCoordField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _RowColField(_StructSchemaField):
                 @property
@@ -626,7 +657,9 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -647,12 +680,20 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -678,7 +719,9 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _LatlonCoordField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _ResolutionField(_StructSchemaField):
                 @property
@@ -688,7 +731,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _AggField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._AggregationEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -881,7 +924,7 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _AggField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._AggregationEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -970,22 +1013,30 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _TlField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _TrField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _BrField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _BlField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_geo_geo_capnp_schemas._LatLonCoordSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

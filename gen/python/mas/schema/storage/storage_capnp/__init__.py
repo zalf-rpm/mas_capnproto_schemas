@@ -1,12 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `storage.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.storage.storage_capnp.types.modules import _StoreInterfaceModule
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -81,39 +82,38 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Store = _StoreInterfaceModule(_loader.get(0xE69F958AA2386F06).as_interface(), "Store")
-Store.Container = _StoreInterfaceModule._ContainerInterfaceModule(
-    Store.schema.methods["newContainer"].result_type.fields["container"].schema,
+Store = _InterfaceModule(
+    _loader.get(0xE69F958AA2386F06).as_interface(),
+    "Store",
+)
+Store.Container = _InterfaceModule(
+    Store.schema.methods["newContainer"].result_type.fields["container"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Container",
 )
-Store.Container.Entry = (
-    _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule(
-        Store.Container.schema.methods["listEntries"]
-        .result_type.fields["entries"]
-        .schema.elementType.fields["entry"]
-        .schema,
-        "Entry",
-    )
+Store.Container.Entry = _InterfaceModule(
+    Store.Container.schema.methods["listEntries"]
+    .result_type.fields["entries"]
+    .schema.elementType.fields["entry"]
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Entry",
 )
-Store.Container.Entry.Value = _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule(
-    Store.Container.Entry.schema.methods["getValue"].result_type.fields["value"].schema,
+Store.Container.Entry.Value = _StructModule(
+    Store.Container.Entry.schema.methods["getValue"].result_type.fields["value"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Value",
 )
-Store.Container.KeyAndEntry = (
-    _StoreInterfaceModule._ContainerInterfaceModule._KeyAndEntryStructModule(
-        Store.Container.schema.methods["listEntries"]
-        .result_type.fields["entries"]
-        .schema.elementType,
-        "KeyAndEntry",
-    )
+Store.Container.KeyAndEntry = _StructModule(
+    Store.Container.schema.methods["listEntries"]
+    .result_type.fields["entries"]
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
+    "KeyAndEntry",
 )
-Store.InfoAndContainer = _StoreInterfaceModule._InfoAndContainerStructModule(
+Store.InfoAndContainer = _StructModule(
     Store.schema.methods["listContainers"]
     .result_type.fields["containers"]
-    .schema.elementType,
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
     "InfoAndContainer",
 )
-Store.ImportExportData = _StoreInterfaceModule._ImportExportDataStructModule(
+Store.ImportExportData = _StructModule(
     _loader.get(0x847D262CEFD2F142).as_struct(),
     "ImportExportData",
 )

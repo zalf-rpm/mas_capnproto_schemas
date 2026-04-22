@@ -1,27 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `field_exp_data.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.data.field_exp_data_capnp.types.modules import (
-    _CultivarStructModule,
-    _EnvironmentModificationStructModule,
-    _ExperimentDescriptionStructModule,
-    _FertilizerEventStructModule,
-    _FieldStructModule,
-    _HarvestEventStructModule,
-    _InitialConditionsLayerStructModule,
-    _IrrigationEventStructModule,
-    _PlantingEventStructModule,
-    _PlotStructModule,
-    _ResidueStructModule,
-    _SoilMetadataStructModule,
-    _TreatmentStructModule,
-    _WeatherStationStructModule,
-)
+from capnp.lib.capnp import _StructModule
 
 capnp.remove_import_hook()
 
@@ -124,50 +110,59 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-WeatherStation = _WeatherStationStructModule(
+WeatherStation = _StructModule(
     _loader.get(0xBFA2D703516408B8).as_struct(),
     "WeatherStation",
 )
-SoilMetadata = _SoilMetadataStructModule(
+SoilMetadata = _StructModule(
     _loader.get(0x86836F1366E5F73F).as_struct(),
     "SoilMetadata",
 )
-Field = _FieldStructModule(_loader.get(0xC158BD732092CDE5).as_struct(), "Field")
-ExperimentDescription = _ExperimentDescriptionStructModule(
+Field = _StructModule(
+    _loader.get(0xC158BD732092CDE5).as_struct(),
+    "Field",
+)
+ExperimentDescription = _StructModule(
     _loader.get(0x9D795A72A27F67D7).as_struct(),
     "ExperimentDescription",
 )
-Treatment = _TreatmentStructModule(
+Treatment = _StructModule(
     _loader.get(0xFF1381363C7ABD06).as_struct(),
     "Treatment",
 )
-Cultivar = _CultivarStructModule(
+Cultivar = _StructModule(
     _loader.get(0xAB7EA2BFA7965AF8).as_struct(),
     "Cultivar",
 )
-Plot = _PlotStructModule(_loader.get(0xA7A2210FB1E289F2).as_struct(), "Plot")
-InitialConditionsLayer = _InitialConditionsLayerStructModule(
+Plot = _StructModule(
+    _loader.get(0xA7A2210FB1E289F2).as_struct(),
+    "Plot",
+)
+InitialConditionsLayer = _StructModule(
     _loader.get(0xD1C0BC9F5B332A6E).as_struct(),
     "InitialConditionsLayer",
 )
-PlantingEvent = _PlantingEventStructModule(
+PlantingEvent = _StructModule(
     _loader.get(0xF6B17C769768D8FF).as_struct(),
     "PlantingEvent",
 )
-HarvestEvent = _HarvestEventStructModule(
+HarvestEvent = _StructModule(
     _loader.get(0x97EB30DBCF87911A).as_struct(),
     "HarvestEvent",
 )
-IrrigationEvent = _IrrigationEventStructModule(
+IrrigationEvent = _StructModule(
     _loader.get(0xCF2547B626594655).as_struct(),
     "IrrigationEvent",
 )
-FertilizerEvent = _FertilizerEventStructModule(
+FertilizerEvent = _StructModule(
     _loader.get(0xA5DF81BAE928E6DA).as_struct(),
     "FertilizerEvent",
 )
-Residue = _ResidueStructModule(_loader.get(0xE82432F4EF15A586).as_struct(), "Residue")
-EnvironmentModification = _EnvironmentModificationStructModule(
+Residue = _StructModule(
+    _loader.get(0xE82432F4EF15A586).as_struct(),
+    "Residue",
+)
+EnvironmentModification = _StructModule(
     _loader.get(0xB52867725B843050).as_struct(),
     "EnvironmentModification",
 )

@@ -1,14 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `cluster_admin_service.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.cluster.cluster_admin_service_capnp.types.modules import (
-    _ClusterStructModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -76,34 +75,35 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Cluster = _ClusterStructModule(_loader.get(0xF7485D56D6F20E7D).as_struct(), "Cluster")
-Cluster.Unregister = _ClusterStructModule._UnregisterInterfaceModule(
+Cluster = _StructModule(
+    _loader.get(0xF7485D56D6F20E7D).as_struct(),
+    "Cluster",
+)
+Cluster.Unregister = _InterfaceModule(
     _loader.get(0xE8B1F7A192651BBE).as_interface(),
     "Unregister",
 )
-Cluster.AdminMaster = _ClusterStructModule._AdminMasterInterfaceModule(
+Cluster.AdminMaster = _InterfaceModule(
     _loader.get(0xBF24278C65F633CE).as_interface(),
     "AdminMaster",
 )
-Cluster.UserMaster = _ClusterStructModule._UserMasterInterfaceModule(
+Cluster.UserMaster = _InterfaceModule(
     _loader.get(0xEC42C6DF28354B60).as_interface(),
     "UserMaster",
 )
-Cluster.Runtime = _ClusterStructModule._RuntimeInterfaceModule(
+Cluster.Runtime = _InterfaceModule(
     _loader.get(0xF849848FEA5C4776).as_interface(),
     "Runtime",
 )
-Cluster.ZmqPipelineAddresses = _ClusterStructModule._ZmqPipelineAddressesStructModule(
+Cluster.ZmqPipelineAddresses = _StructModule(
     _loader.get(0xC9034BA2BECC2A64).as_struct(),
     "ZmqPipelineAddresses",
 )
-Cluster.ValueHolder = _ClusterStructModule._ValueHolderInterfaceModule(
+Cluster.ValueHolder = _InterfaceModule(
     _loader.get(0xD6ACF080DCF2B4C8).as_interface(),
     "ValueHolder",
 )
-Cluster.ModelInstanceFactory = (
-    _ClusterStructModule._ModelInstanceFactoryInterfaceModule(
-        _loader.get(0xFD9959998F9F0EBE).as_interface(),
-        "ModelInstanceFactory",
-    )
+Cluster.ModelInstanceFactory = _InterfaceModule(
+    _loader.get(0xFD9959998F9F0EBE).as_interface(),
+    "ModelInstanceFactory",
 )

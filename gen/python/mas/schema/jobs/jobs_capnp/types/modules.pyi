@@ -23,6 +23,9 @@ from mas.schema.jobs.jobs_capnp.types import contexts as contexts
 from mas.schema.jobs.jobs_capnp.types import readers as readers
 from mas.schema.jobs.jobs_capnp.types import schemas as schemas
 from mas.schema.jobs.jobs_capnp.types.results import tuples as results_tuples
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
@@ -142,7 +145,9 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -163,12 +168,20 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

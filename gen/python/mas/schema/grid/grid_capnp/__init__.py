@@ -1,13 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `grid.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.grid.grid_capnp.types.modules import _GridInterfaceModule
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -71,35 +71,41 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Aggregation = _EnumModule(_loader.get(0xA5ECDC7767A6B301).as_enum(), "Aggregation")
-Grid = _GridInterfaceModule(_loader.get(0xE42973B29661E3C6).as_interface(), "Grid")
-Grid.Value = _GridInterfaceModule._ValueStructModule(
-    Grid.schema.methods["closestValueAt"].result_type.fields["val"].schema,
+Aggregation = _EnumModule(
+    _loader.get(0xA5ECDC7767A6B301).as_enum(),
+    "Aggregation",
+)
+Grid = _InterfaceModule(
+    _loader.get(0xE42973B29661E3C6).as_interface(),
+    "Grid",
+)
+Grid.Value = _StructModule(
+    Grid.schema.methods["closestValueAt"].result_type.fields["val"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Value",
 )
-Grid.Resolution = _GridInterfaceModule._ResolutionStructModule(
-    Grid.schema.methods["closestValueAt"].param_type.fields["resolution"].schema,
+Grid.Resolution = _StructModule(
+    Grid.schema.methods["closestValueAt"].param_type.fields["resolution"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Resolution",
 )
-Grid.RowCol = _GridInterfaceModule._RowColStructModule(
-    Grid.schema.methods["closestValueAt"].result_type.fields["tl"].schema,
+Grid.RowCol = _StructModule(
+    Grid.schema.methods["closestValueAt"].result_type.fields["tl"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "RowCol",
 )
-Grid.AggregationPart = _GridInterfaceModule._AggregationPartStructModule(
+Grid.AggregationPart = _StructModule(
     Grid.schema.methods["closestValueAt"]
     .result_type.fields["aggParts"]
-    .schema.elementType,
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
     "AggregationPart",
 )
-Grid.Location = _GridInterfaceModule._LocationStructModule(
+Grid.Location = _StructModule(
     Grid.schema.methods["streamCells"]
     .result_type.fields["callback"]
     .schema.methods["sendCells"]
     .result_type.fields["locations"]
-    .schema.elementType,
+    .schema.elementType,  # pyright: ignore[reportUnknownArgumentType]
     "Location",
 )
-Grid.Callback = _GridInterfaceModule._CallbackInterfaceModule(
-    Grid.schema.methods["streamCells"].result_type.fields["callback"].schema,
+Grid.Callback = _InterfaceModule(
+    Grid.schema.methods["streamCells"].result_type.fields["callback"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Callback",
 )

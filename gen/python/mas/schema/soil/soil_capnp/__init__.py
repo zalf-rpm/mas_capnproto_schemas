@@ -1,19 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `soil.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.soil.soil_capnp.types.modules import (
-    _LayerStructModule,
-    _ProfileDataStructModule,
-    _ProfileInterfaceModule,
-    _QueryStructModule,
-    _ServiceInterfaceModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -70,33 +64,45 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-SType = _EnumModule(_loader.get(0xC2E4A3C8FF61B40A).as_enum(), "SType")
-PropertyName = _EnumModule(_loader.get(0x9E391AE1C6CD2567).as_enum(), "PropertyName")
-Layer = _LayerStructModule(_loader.get(0x984640F05B3ADA4F).as_struct(), "Layer")
-Layer.Property = _LayerStructModule._PropertyStructModule(
+SType = _EnumModule(
+    _loader.get(0xC2E4A3C8FF61B40A).as_enum(),
+    "SType",
+)
+PropertyName = _EnumModule(
+    _loader.get(0x9E391AE1C6CD2567).as_enum(),
+    "PropertyName",
+)
+Layer = _StructModule(
+    _loader.get(0x984640F05B3ADA4F).as_struct(),
+    "Layer",
+)
+Layer.Property = _StructModule(
     Layer.schema.fields["properties"].schema.elementType,
     "Property",
 )
-Query = _QueryStructModule(_loader.get(0xBD4065087E22CA0D).as_struct(), "Query")
-Query.Result = _QueryStructModule._ResultStructModule(
+Query = _StructModule(
+    _loader.get(0xBD4065087E22CA0D).as_struct(),
+    "Query",
+)
+Query.Result = _StructModule(
     _loader.get(0xBF4E1B07AD88943F).as_struct(),
     "Result",
 )
-ProfileData = _ProfileDataStructModule(
+ProfileData = _StructModule(
     _loader.get(0xDF4BBF1C883A8790).as_struct(),
     "ProfileData",
 )
-Profile = _ProfileInterfaceModule(
+Profile = _InterfaceModule(
     _loader.get(0xFF67C2A593419C29).as_interface(),
     "Profile",
 )
-Service = _ServiceInterfaceModule(
+Service = _InterfaceModule(
     _loader.get(0xA09AA71427DC64E1).as_interface(),
     "Service",
 )
-Service.Stream = _ServiceInterfaceModule._StreamInterfaceModule(
+Service.Stream = _InterfaceModule(
     Service.schema.methods["streamAllProfiles"]
     .result_type.fields["allProfiles"]
-    .schema,
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
     "Stream",
 )

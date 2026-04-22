@@ -1,23 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `common.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.common.common_capnp.types.modules import (
-    _FactoryInterfaceModule,
-    _HolderInterfaceModule,
-    _IdentifiableHolderInterfaceModule,
-    _IdentifiableInterfaceModule,
-    _IdInformationStructModule,
-    _IOFactoryInterfaceModule,
-    _PairStructModule,
-    _StructuredTextStructModule,
-    _ValueStructModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -56,15 +46,15 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-IdInformation = _IdInformationStructModule(
+IdInformation = _StructModule(
     _loader.get(0xD4CB7ECBFE03DAD3).as_struct(),
     "IdInformation",
 )
-Identifiable = _IdentifiableInterfaceModule(
+Identifiable = _InterfaceModule(
     _loader.get(0xB2AFD1CB599C48D5).as_interface(),
     "Identifiable",
 )
-StructuredText = _StructuredTextStructModule(
+StructuredText = _StructModule(
     _loader.get(0xED6C098B67CAD454).as_struct(),
     "StructuredText",
 )
@@ -72,21 +62,27 @@ StructuredText.Type = _EnumModule(
     StructuredText.schema.fields["type"].schema,
     "Type",
 )
-Value = _ValueStructModule(_loader.get(0xE17592335373B246).as_struct(), "Value")
-Factory = _FactoryInterfaceModule(
+Value = _StructModule(
+    _loader.get(0xE17592335373B246).as_struct(),
+    "Value",
+)
+Factory = _InterfaceModule(
     _loader.get(0xA869F50B8C586ED9).as_interface(),
     "Factory",
 )
-IOFactory = _IOFactoryInterfaceModule(
+IOFactory = _InterfaceModule(
     _loader.get(0x9771E5B5C6A27B68).as_interface(),
     "IOFactory",
 )
-Pair = _PairStructModule(_loader.get(0xB9D4864725174733).as_struct(), "Pair")
-Holder = _HolderInterfaceModule(
+Pair = _StructModule(
+    _loader.get(0xB9D4864725174733).as_struct(),
+    "Pair",
+)
+Holder = _InterfaceModule(
     _loader.get(0xC83045CCBB0B6AC5).as_interface(),
     "Holder",
 )
-IdentifiableHolder = _IdentifiableHolderInterfaceModule(
+IdentifiableHolder = _InterfaceModule(
     _loader.get(0xEE543D7C305D56F6).as_interface(),
     "IdentifiableHolder",
 )

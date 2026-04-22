@@ -1,14 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `modam.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.dakis.modam.modam_capnp.types.modules import (
-    _ModamWrapperServiceInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule
 
 capnp.remove_import_hook()
 
@@ -34,7 +33,7 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-ModamWrapperService = _ModamWrapperServiceInterfaceModule(
+ModamWrapperService = _InterfaceModule(
     _loader.get(0xDB3FB36057ABC378).as_interface(),
     "ModamWrapperService",
 )
