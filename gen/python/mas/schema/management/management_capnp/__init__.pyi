@@ -2,28 +2,8 @@
 
 from mas.schema.management.management_capnp import types as types
 
-class _EventTypeEnumModule:
-    sowing: int
-    automaticSowing: int
-    harvest: int
-    automaticHarvest: int
-    irrigation: int
-    tillage: int
-    organicFertilization: int
-    mineralFertilization: int
-    nDemandFertilization: int
-    cutting: int
-    setValue: int
-    saveState: int
-
-class _PlantOrganEnumModule:
-    root: int
-    leaf: int
-    shoot: int
-    fruit: int
-    strukt: int
-    sugar: int
-
+EventType: types.modules._EventTypeEnumModule
+PlantOrgan: types.modules._PlantOrganEnumModule
 Event: types.modules._EventStructModule
 Nutrient: types.modules._NutrientStructModule
 
@@ -34,10 +14,12 @@ Service: types.modules._ServiceInterfaceModule
 
 __all__ = [
     "Event",
+    "EventType",
     "Fertilizer",
     "FertilizerService",
     "Nutrient",
     "Params",
+    "PlantOrgan",
     "Service",
     "types",
 ]

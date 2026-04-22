@@ -1,16 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `soil_params.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.soil.soil_params_capnp.types.modules import (
-    _CapillaryRiseRateStructModule,
-    _SoilCharacteristicDataStructModule,
-    _SoilCharacteristicModifierStructModule,
-)
+from capnp.lib.capnp import _StructModule
 
 capnp.remove_import_hook()
 
@@ -37,29 +34,27 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-SoilCharacteristicData = _SoilCharacteristicDataStructModule(
+SoilCharacteristicData = _StructModule(
     _loader.get(0xFC682227304E2281).as_struct(),
     "SoilCharacteristicData",
 )
-SoilCharacteristicData.Data = _SoilCharacteristicDataStructModule._DataStructModule(
+SoilCharacteristicData.Data = _StructModule(
     SoilCharacteristicData.schema.fields["list"].schema.elementType,
     "Data",
 )
-SoilCharacteristicModifier = _SoilCharacteristicModifierStructModule(
+SoilCharacteristicModifier = _StructModule(
     _loader.get(0xE4EB0A9BB0E5BB53).as_struct(),
     "SoilCharacteristicModifier",
 )
-SoilCharacteristicModifier.Data = (
-    _SoilCharacteristicModifierStructModule._DataStructModule(
-        SoilCharacteristicModifier.schema.fields["list"].schema.elementType,
-        "Data",
-    )
+SoilCharacteristicModifier.Data = _StructModule(
+    SoilCharacteristicModifier.schema.fields["list"].schema.elementType,
+    "Data",
 )
-CapillaryRiseRate = _CapillaryRiseRateStructModule(
+CapillaryRiseRate = _StructModule(
     _loader.get(0x9B169BC96BB3D24B).as_struct(),
     "CapillaryRiseRate",
 )
-CapillaryRiseRate.Data = _CapillaryRiseRateStructModule._DataStructModule(
+CapillaryRiseRate.Data = _StructModule(
     CapillaryRiseRate.schema.fields["list"].schema.elementType,
     "Data",
 )

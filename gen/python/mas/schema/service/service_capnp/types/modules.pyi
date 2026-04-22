@@ -17,6 +17,9 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.service.service_capnp.types import builders as builders
@@ -133,7 +136,11 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> (
+                        _mas_schema_common_common_capnp_schemas._IdInformationSchema
+                    ): ...
 
                 @property
                 @override
@@ -160,7 +167,9 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             class _NewInfoField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -440,7 +449,9 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_common_common_capnp_schemas._PairSchema: ...
 
                 @property
                 @override
@@ -676,7 +687,9 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_common_common_capnp_schemas._PairSchema: ...
 
                 @property
                 @override

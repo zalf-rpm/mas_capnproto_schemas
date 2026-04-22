@@ -1,28 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `monica_state.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.model.monica.monica_state_capnp.types.modules import (
-    _AOMPropertiesStructModule,
-    _CropModuleStateStructModule,
-    _CropStateStructModule,
-    _FrostModuleStateStructModule,
-    _ICDataStructModule,
-    _MaybeBoolStructModule,
-    _MonicaModelStateStructModule,
-    _RuntimeStateStructModule,
-    _SnowModuleStateStructModule,
-    _SoilColumnStateStructModule,
-    _SoilLayerStateStructModule,
-    _SoilMoistureModuleStateStructModule,
-    _SoilOrganicModuleStateStructModule,
-    _SoilTemperatureModuleStateStructModule,
-    _SoilTransportModuleStateStructModule,
-)
+from capnp.lib.capnp import _StructModule
 
 capnp.remove_import_hook()
 
@@ -91,70 +76,71 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-MaybeBool = _MaybeBoolStructModule(
+MaybeBool = _StructModule(
     _loader.get(0xD8AF9210839BC071).as_struct(),
     "MaybeBool",
 )
-RuntimeState = _RuntimeStateStructModule(
+RuntimeState = _StructModule(
     _loader.get(0xD599D06DC405571A).as_struct(),
     "RuntimeState",
 )
-CropState = _CropStateStructModule(
+CropState = _StructModule(
     _loader.get(0x8B008567C93F7C7D).as_struct(),
     "CropState",
 )
-AOMProperties = _AOMPropertiesStructModule(
+AOMProperties = _StructModule(
     _loader.get(0xE3512E62DF901C18).as_struct(),
     "AOMProperties",
 )
-SoilColumnState = _SoilColumnStateStructModule(
+SoilColumnState = _StructModule(
     _loader.get(0xEF3E4198D3E35596).as_struct(),
     "SoilColumnState",
 )
-SoilColumnState.DelayedNMinApplicationParams = (
-    _SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule(
-        SoilColumnState.schema.fields["delayedNMinApplications"].schema.elementType,
-        "DelayedNMinApplicationParams",
-    )
+SoilColumnState.DelayedNMinApplicationParams = _StructModule(
+    SoilColumnState.schema.fields["delayedNMinApplications"].schema.elementType,
+    "DelayedNMinApplicationParams",
 )
-SoilLayerState = _SoilLayerStateStructModule(
+SoilLayerState = _StructModule(
     _loader.get(0xDD1E0C7C94DC4211).as_struct(),
     "SoilLayerState",
 )
-MonicaModelState = _MonicaModelStateStructModule(
+MonicaModelState = _StructModule(
     _loader.get(0xAB56969492D293B3).as_struct(),
     "MonicaModelState",
 )
-MonicaModelState.ACDToValue = _MonicaModelStateStructModule._ACDToValueStructModule(
+MonicaModelState.ACDToValue = _StructModule(
     MonicaModelState.schema.fields["climateData"].schema.elementType.elementType,
     "ACDToValue",
 )
-CropModuleState = _CropModuleStateStructModule(
+CropModuleState = _StructModule(
     _loader.get(0x811D54AC7DEBC21E).as_struct(),
     "CropModuleState",
 )
-SnowModuleState = _SnowModuleStateStructModule(
+SnowModuleState = _StructModule(
     _loader.get(0xA4DA01D10B3B6ACD).as_struct(),
     "SnowModuleState",
 )
-FrostModuleState = _FrostModuleStateStructModule(
+FrostModuleState = _StructModule(
     _loader.get(0xB4F16EA3144D85A6).as_struct(),
     "FrostModuleState",
 )
-SoilMoistureModuleState = _SoilMoistureModuleStateStructModule(
+SoilMoistureModuleState = _StructModule(
     _loader.get(0xCD05962719BF7EC8).as_struct(),
     "SoilMoistureModuleState",
 )
-SoilOrganicModuleState = _SoilOrganicModuleStateStructModule(
+SoilOrganicModuleState = _StructModule(
     _loader.get(0xD594E64F6B5F461D).as_struct(),
     "SoilOrganicModuleState",
 )
-SoilTemperatureModuleState = _SoilTemperatureModuleStateStructModule(
+SoilTemperatureModuleState = _StructModule(
     _loader.get(0xBD3E199EB9B03758).as_struct(),
     "SoilTemperatureModuleState",
 )
-SoilTransportModuleState = _SoilTransportModuleStateStructModule(
+SoilTransportModuleState = _StructModule(
     _loader.get(0xB1760F65E652E737).as_struct(),
     "SoilTransportModuleState",
 )
-ICData = _ICDataStructModule(_loader.get(0xF03D8FD1BBE75519).as_struct(), "ICData")
+ICData = _StructModule(
+    _loader.get(0xF03D8FD1BBE75519).as_struct(),
+    "ICData",
+)

@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -18,6 +19,9 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.builders import (
     IdInformationBuilder,
     StructuredTextBuilder,
@@ -36,6 +40,9 @@ from mas.schema.fbp.fbp_capnp.types import readers as readers
 from mas.schema.fbp.fbp_capnp.types import schemas as schemas
 from mas.schema.fbp.fbp_capnp.types import servers as servers
 from mas.schema.fbp.fbp_capnp.types.results import tuples as results_tuples
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.builders import SturdyRefBuilder
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _GatewayRegistrableInterfaceModule,
@@ -125,10 +132,16 @@ class _IPStructModule(_StructModule):
         ) -> readers.KVReader: ...
 
     KV: _KVStructModule
-    class _TypeEnumModule:
+    class _TypeEnumModule(_EnumModule):
         standard: int
         openBracket: int
         closeBracket: int
+
+        class _TypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._IPTypeEnumSchema: ...
 
     Type: _TypeEnumModule
     class Reader(_DynamicStructReader): ...
@@ -150,7 +163,7 @@ class _IPStructModule(_StructModule):
         class _TypeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._IPTypeEnumSchema: ...
 
         class _Fields(dict[str, _StructSchemaField]):
             @overload
@@ -308,9 +321,15 @@ class _IIPStructModule(_StructModule):
     ) -> readers.IIPReader: ...
 
 class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
-    class _CloseSemanticsEnumModule:
+    class _CloseSemanticsEnumModule(_EnumModule):
         fbp: int
         no: int
+
+        class _CloseSemanticsSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ChannelCloseSemanticsEnumSchema: ...
 
     CloseSemantics: _CloseSemanticsEnumModule
     class _MsgStructModule(_StructModule):
@@ -437,7 +456,9 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _SealForField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -458,12 +479,16 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _SturdyRefField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 class _UnsaveSRField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -711,7 +736,9 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _SealForField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -732,12 +759,16 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _SturdyRefField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 class _UnsaveSRField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _StructSchema: ...
+                    def schema(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -949,18 +980,24 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _CloseSemanticsField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ChannelCloseSemanticsEnumSchema: ...
 
             class _ChannelSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _ReaderSRsField(_StructSchemaField):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 @property
                 @override
@@ -972,7 +1009,9 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 @property
                 @override
@@ -1422,7 +1461,9 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1443,12 +1484,20 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1596,7 +1645,7 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             class _CsField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ChannelCloseSemanticsEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2185,13 +2234,19 @@ class _PortInfosStructModule(_StructModule):
             class _SrField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _SrsField(_StructSchemaField):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema: ...
 
                 @property
                 @override
@@ -2612,7 +2667,11 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
             class _PortInfosReaderSrField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _StoppedCbField(_StructSchemaField):
                 @property
@@ -2881,7 +2940,9 @@ class _ProcessInterfaceModule(
             class _ValField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._ValueSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2961,10 +3022,16 @@ class _ProcessInterfaceModule(
         ) -> readers.ConfigEntryReader: ...
 
     ConfigEntry: _ConfigEntryStructModule
-    class _StateEnumModule:
+    class _StateEnumModule(_EnumModule):
         started: int
         stopped: int
         canceled: int
+
+        class _StateSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessStateEnumSchema: ...
 
     State: _StateEnumModule
     class _StateTransitionInterfaceModule(_InterfaceModule):
@@ -2973,12 +3040,12 @@ class _ProcessInterfaceModule(
                 class _OldField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._ProcessStateEnumSchema: ...
 
                 class _NewField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> _EnumSchema: ...
+                    def schema(self) -> schemas._ProcessStateEnumSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -3094,7 +3161,11 @@ class _ProcessInterfaceModule(
             class _GatewaySRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3122,7 +3193,11 @@ class _ProcessInterfaceModule(
             class _SelfAtGatewaySRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3180,7 +3255,11 @@ class _ProcessInterfaceModule(
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3256,7 +3335,11 @@ class _ProcessInterfaceModule(
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3368,7 +3451,9 @@ class _ProcessInterfaceModule(
             class _ValField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._ValueSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3421,7 +3506,7 @@ class _ProcessInterfaceModule(
             class _CurrentStateField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ProcessStateEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3659,18 +3744,30 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[None]: ...
 
 class _ComponentStructModule(_StructModule):
-    class _ComponentTypeEnumModule:
+    class _ComponentTypeEnumModule(_EnumModule):
         standard: int
         iip: int
         subflow: int
         view: int
         process: int
 
+        class _ComponentTypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ComponentComponentTypeEnumSchema: ...
+
     ComponentType: _ComponentTypeEnumModule
     class _PortStructModule(_StructModule):
-        class _PortTypeEnumModule:
+        class _PortTypeEnumModule(_EnumModule):
             standard: int
             array: int
+
+            class _PortTypeSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ComponentPortPortTypeEnumSchema: ...
 
         PortType: _PortTypeEnumModule
         class Reader(_DynamicStructReader): ...
@@ -3680,7 +3777,7 @@ class _ComponentStructModule(_StructModule):
             class _TypeField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _EnumSchema: ...
+                def schema(self) -> schemas._ComponentPortPortTypeEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3881,12 +3978,14 @@ class _ComponentStructModule(_StructModule):
         class _InfoField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
         class _TypeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._ComponentComponentTypeEnumSchema: ...
 
         class _InPortsField(_StructSchemaField):
             class _Schema(_ListSchema):
@@ -3915,7 +4014,9 @@ class _ComponentStructModule(_StructModule):
         class _DefaultConfigField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _StructSchema: ...
+            def schema(
+                self,
+            ) -> _mas_schema_common_common_capnp_schemas._StructuredTextSchema: ...
 
         class _FactoryField(_StructSchemaField):
             @property

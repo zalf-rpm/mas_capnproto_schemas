@@ -9,9 +9,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.common.common_capnp.types.builders import ValueBuilder
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
-from mas.schema.common.common_capnp.types.readers import (
-    ValueReader,
-)
+from mas.schema.common.common_capnp.types.readers import ValueReader
 from mas.schema.fbp.fbp_capnp.types import builders as builders
 from mas.schema.fbp.fbp_capnp.types import common as common
 from mas.schema.fbp.fbp_capnp.types import enums as enums

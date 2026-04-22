@@ -18,4 +18,8 @@ type _StructuredTextSchema = modules._StructuredTextStructModule._StructuredText
 
 type _StructuredTextStructuredTextStructureSchema = modules._StructuredTextStructModule._StructuredTextStructureStructModule._StructuredTextStructureSchema
 
+type _StructuredTextTypeEnumSchema = (
+    modules._StructuredTextStructModule._TypeEnumModule._TypeSchema
+)
+
 type _ValueSchema = modules._ValueStructModule._ValueSchema

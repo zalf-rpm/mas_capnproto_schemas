@@ -1,15 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `crop.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.crop.crop_capnp.types.modules import (
-    _CropInterfaceModule,
-    _ServiceInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule
 
 capnp.remove_import_hook()
 
@@ -61,8 +59,11 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Crop = _CropInterfaceModule(_loader.get(0xE88D97A324BF5C84).as_interface(), "Crop")
-Service = _ServiceInterfaceModule(
+Crop = _InterfaceModule(
+    _loader.get(0xE88D97A324BF5C84).as_interface(),
+    "Crop",
+)
+Service = _InterfaceModule(
     _loader.get(0x8DDCC2B6C0386BC4).as_interface(),
     "Service",
 )

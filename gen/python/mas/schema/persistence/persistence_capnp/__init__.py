@@ -1,23 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `persistence.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.persistence.persistence_capnp.types.modules import (
-    _AddressStructModule,
-    _GatewayInterfaceModule,
-    _GatewayRegistrableInterfaceModule,
-    _HeartbeatInterfaceModule,
-    _HostPortResolverInterfaceModule,
-    _PersistentInterfaceModule,
-    _RestorerInterfaceModule,
-    _SturdyRefStructModule,
-    _VatIdStructModule,
-    _VatPathStructModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -72,72 +62,79 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-VatId = _VatIdStructModule(_loader.get(0xE10A5D74D58BD18D).as_struct(), "VatId")
-Address = _AddressStructModule(_loader.get(0xFB47810671A05B0D).as_struct(), "Address")
-VatPath = _VatPathStructModule(_loader.get(0xD9ECCDF2DBC48087).as_struct(), "VatPath")
-SturdyRef = _SturdyRefStructModule(
+VatId = _StructModule(
+    _loader.get(0xE10A5D74D58BD18D).as_struct(),
+    "VatId",
+)
+Address = _StructModule(
+    _loader.get(0xFB47810671A05B0D).as_struct(),
+    "Address",
+)
+VatPath = _StructModule(
+    _loader.get(0xD9ECCDF2DBC48087).as_struct(),
+    "VatPath",
+)
+SturdyRef = _StructModule(
     _loader.get(0x886D68271D83DE4D).as_struct(),
     "SturdyRef",
 )
-SturdyRef.Owner = _SturdyRefStructModule._OwnerStructModule(
+SturdyRef.Owner = _StructModule(
     _loader.get(0xFDD799ED60C87723).as_struct(),
     "Owner",
 )
-SturdyRef.Token = _SturdyRefStructModule._TokenStructModule(
+SturdyRef.Token = _StructModule(
     SturdyRef.schema.fields["localRef"].schema,
     "Token",
 )
-Heartbeat = _HeartbeatInterfaceModule(
+Heartbeat = _InterfaceModule(
     _loader.get(0x9FB3BDFAD147CA3A).as_interface(),
     "Heartbeat",
 )
-Persistent = _PersistentInterfaceModule(
+Persistent = _InterfaceModule(
     _loader.get(0xC1A7DAA0DC36CB65).as_interface(),
     "Persistent",
 )
-Persistent.SaveParams = _PersistentInterfaceModule._SaveParamsStructModule(
+Persistent.SaveParams = _StructModule(
     _loader.get(0xD5E0AAC4225E0343).as_struct(),
     "SaveParams",
 )
-Persistent.SaveResults = _PersistentInterfaceModule._SaveResultsStructModule(
+Persistent.SaveResults = _StructModule(
     _loader.get(0xDC5BD1EF982CEC13).as_struct(),
     "SaveResults",
 )
-Persistent.ReleaseSturdyRef = (
-    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule(
-        _loader.get(0x8F700F81169F2E52).as_interface(),
-        "ReleaseSturdyRef",
-    )
+Persistent.ReleaseSturdyRef = _InterfaceModule(
+    _loader.get(0x8F700F81169F2E52).as_interface(),
+    "ReleaseSturdyRef",
 )
-Restorer = _RestorerInterfaceModule(
+Restorer = _InterfaceModule(
     _loader.get(0x9FB6218427D92E3C).as_interface(),
     "Restorer",
 )
-Restorer.RestoreParams = _RestorerInterfaceModule._RestoreParamsStructModule(
+Restorer.RestoreParams = _StructModule(
     _loader.get(0xC541E5764A37D73A).as_struct(),
     "RestoreParams",
 )
-HostPortResolver = _HostPortResolverInterfaceModule(
+HostPortResolver = _InterfaceModule(
     _loader.get(0xAA8D91FAB6D01D9F).as_interface(),
     "HostPortResolver",
 )
-HostPortResolver.Registrar = _HostPortResolverInterfaceModule._RegistrarInterfaceModule(
+HostPortResolver.Registrar = _InterfaceModule(
     _loader.get(0xB0CAF775704690B2).as_interface(),
     "Registrar",
 )
-HostPortResolver.Registrar.RegisterParams = _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule(
-    HostPortResolver.Registrar.schema.methods["register"].param_type,
+HostPortResolver.Registrar.RegisterParams = _StructModule(
+    HostPortResolver.Registrar.schema.methods["register"].param_type,  # pyright: ignore[reportUnknownArgumentType]
     "RegisterParams",
 )
-Gateway = _GatewayInterfaceModule(
+Gateway = _InterfaceModule(
     _loader.get(0x8F9C2C0A602F27ED).as_interface(),
     "Gateway",
 )
-Gateway.RegResults = _GatewayInterfaceModule._RegResultsStructModule(
-    Gateway.schema.methods["register"].result_type,
+Gateway.RegResults = _StructModule(
+    Gateway.schema.methods["register"].result_type,  # pyright: ignore[reportUnknownArgumentType]
     "RegResults",
 )
-GatewayRegistrable = _GatewayRegistrableInterfaceModule(
+GatewayRegistrable = _InterfaceModule(
     _loader.get(0x8253222FDF37608D).as_interface(),
     "GatewayRegistrable",
 )

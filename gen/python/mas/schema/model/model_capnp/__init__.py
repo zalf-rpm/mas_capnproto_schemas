@@ -1,22 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `model.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-from capnp.lib.capnp import _EnumModule
-
-from mas.schema.model.model_capnp.types.modules import (
-    _ClimateInstanceInterfaceModule,
-    _EnvInstanceInterfaceModule,
-    _EnvInstanceProxyInterfaceModule,
-    _EnvStructModule,
-    _InstanceFactoryInterfaceModule,
-    _StatStructModule,
-    _XYPlusResultStructModule,
-    _XYResultStructModule,
-)
+from capnp.lib.capnp import _EnumModule, _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -136,41 +127,45 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-XYResult = _XYResultStructModule(
+XYResult = _StructModule(
     _loader.get(0x851D47C6CCDECF08).as_struct(),
     "XYResult",
 )
-Stat = _StatStructModule(_loader.get(0xA6BE2E805EA10A68).as_struct(), "Stat")
+Stat = _StructModule(
+    _loader.get(0xA6BE2E805EA10A68).as_struct(),
+    "Stat",
+)
 Stat.Type = _EnumModule(
     Stat.schema.fields["type"].schema,
     "Type",
 )
-XYPlusResult = _XYPlusResultStructModule(
+XYPlusResult = _StructModule(
     _loader.get(0x8F86B66260D02D1D).as_struct(),
     "XYPlusResult",
 )
-ClimateInstance = _ClimateInstanceInterfaceModule(
+ClimateInstance = _InterfaceModule(
     _loader.get(0xDFCFEB783C4948FC).as_interface(),
     "ClimateInstance",
 )
-Env = _EnvStructModule(_loader.get(0xB7FC866EF1127F7C).as_struct(), "Env")
-EnvInstance = _EnvInstanceInterfaceModule(
+Env = _StructModule(
+    _loader.get(0xB7FC866EF1127F7C).as_struct(),
+    "Env",
+)
+EnvInstance = _InterfaceModule(
     _loader.get(0xA5FEEDAFA5EC5C4A).as_interface(),
     "EnvInstance",
 )
-EnvInstanceProxy = _EnvInstanceProxyInterfaceModule(
+EnvInstanceProxy = _InterfaceModule(
     _loader.get(0x87CBEBFC1164A24A).as_interface(),
     "EnvInstanceProxy",
 )
-EnvInstanceProxy.Unregister = (
-    _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule(
-        EnvInstanceProxy.schema.methods["registerEnvInstance"]
-        .result_type.fields["unregister"]
-        .schema,
-        "Unregister",
-    )
+EnvInstanceProxy.Unregister = _InterfaceModule(
+    EnvInstanceProxy.schema.methods["registerEnvInstance"]
+    .result_type.fields["unregister"]
+    .schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Unregister",
 )
-InstanceFactory = _InstanceFactoryInterfaceModule(
+InstanceFactory = _InterfaceModule(
     _loader.get(0xCE552EEF738A45EA).as_interface(),
     "InstanceFactory",
 )

@@ -1,15 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `jobs.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.jobs.jobs_capnp.types.modules import (
-    _JobStructModule,
-    _ServiceInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -50,8 +48,11 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-Job = _JobStructModule(_loader.get(0xA05B60B71CA38848).as_struct(), "Job")
-Service = _ServiceInterfaceModule(
+Job = _StructModule(
+    _loader.get(0xA05B60B71CA38848).as_struct(),
+    "Job",
+)
+Service = _InterfaceModule(
     _loader.get(0xB8745454D013CBF0).as_interface(),
     "Service",
 )

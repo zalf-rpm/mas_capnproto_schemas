@@ -1,17 +1,13 @@
-# pyright: reportAttributeAccessIssue=false, reportArgumentType=false
+# pyright: reportAttributeAccessIssue=false, reportArgumentType=false, reportUnknownMemberType=false
 """This is an automatically generated stub for `x.capnp`."""
+
+from __future__ import annotations
 
 import base64
 
 import capnp
 import schema_capnp
-
-from mas.schema.test.x_capnp.types.modules import (
-    _SStructModule,
-    _XInterfaceModule,
-    _YInterfaceModule,
-    _ZInterfaceModule,
-)
+from capnp.lib.capnp import _InterfaceModule, _StructModule
 
 capnp.remove_import_hook()
 
@@ -42,7 +38,19 @@ for _schema_b64 in _SCHEMA_NODES:
 
 # Build module structure inline
 
-S = _SStructModule(_loader.get(0xD227EF68DE0BC647).as_struct(), "S")
-X = _XInterfaceModule(_loader.get(0xDCF28E81FA4DE615).as_interface(), "X")
-Y = _YInterfaceModule(_loader.get(0xAC121E5AA82CA6BD).as_interface(), "Y")
-Z = _ZInterfaceModule(_loader.get(0xC64526206425C2AB).as_interface(), "Z")
+S = _StructModule(
+    _loader.get(0xD227EF68DE0BC647).as_struct(),
+    "S",
+)
+X = _InterfaceModule(
+    _loader.get(0xDCF28E81FA4DE615).as_interface(),
+    "X",
+)
+Y = _InterfaceModule(
+    _loader.get(0xAC121E5AA82CA6BD).as_interface(),
+    "Y",
+)
+Z = _InterfaceModule(
+    _loader.get(0xC64526206425C2AB).as_interface(),
+    "Z",
+)

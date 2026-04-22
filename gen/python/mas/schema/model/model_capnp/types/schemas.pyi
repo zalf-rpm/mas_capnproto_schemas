@@ -20,6 +20,8 @@ type _InstanceFactorySchema = (
 
 type _StatSchema = modules._StatStructModule._StatSchema
 
+type _StatTypeEnumSchema = modules._StatStructModule._TypeEnumModule._TypeSchema
+
 type _XYPlusResultSchema = modules._XYPlusResultStructModule._XYPlusResultSchema
 
 type _XYResultSchema = modules._XYResultStructModule._XYResultSchema

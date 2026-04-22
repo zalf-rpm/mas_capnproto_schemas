@@ -2,70 +2,14 @@
 
 from mas.schema.climate.climate_capnp import types as types
 
-class _GCMEnumModule:
-    cccmaCanEsm2: int
-    ichecEcEarth: int
-    ipslIpslCm5AMr: int
-    mirocMiroc5: int
-    mpiMMpiEsmLr: int
-    gfdlEsm4: int
-    ipslCm6aLr: int
-    mpiEsm12Hr: int
-    mriEsm20: int
-    ukesm10Ll: int
-    gswp3W5E5: int
-    mohcHadGem2Es: int
-
-class _RCMEnumModule:
-    clmcomCclm4817: int
-    gericsRemo2015: int
-    knmiRacmo22E: int
-    smhiRca4: int
-    clmcomBtuCclm4817: int
-    mpiCscRemo2009: int
-    uhohWrf361H: int
-
-class _SSPEnumModule:
-    ssp1: int
-    ssp2: int
-    ssp3: int
-    ssp4: int
-    ssp5: int
-
-class _RCPEnumModule:
-    rcp19: int
-    rcp26: int
-    rcp34: int
-    rcp45: int
-    rcp60: int
-    rcp70: int
-    rcp85: int
-
+GCM: types.modules._GCMEnumModule
+RCM: types.modules._RCMEnumModule
+SSP: types.modules._SSPEnumModule
+RCP: types.modules._RCPEnumModule
 EnsembleMember: types.modules._EnsembleMemberStructModule
 
 Metadata: types.modules._MetadataStructModule
-
-class _ElementEnumModule:
-    tmin: int
-    tavg: int
-    tmax: int
-    precip: int
-    globrad: int
-    wind: int
-    sunhours: int
-    cloudamount: int
-    relhumid: int
-    airpress: int
-    vaporpress: int
-    co2: int
-    o3: int
-    et0: int
-    dewpointTemp: int
-    specificHumidity: int
-    snowfallFlux: int
-    surfaceDownwellingLongwaveRadiation: int
-    potET: int
-
+Element: types.modules._ElementEnumModule
 TimeSeries: types.modules._TimeSeriesInterfaceModule
 Location: types.modules._LocationStructModule
 
@@ -80,10 +24,15 @@ AlterTimeSeriesWrapperFactory: (
 )
 
 __all__ = [
+    "GCM",
+    "RCM",
+    "RCP",
+    "SSP",
     "AlterTimeSeriesWrapper",
     "AlterTimeSeriesWrapperFactory",
     "CSVTimeSeriesFactory",
     "Dataset",
+    "Element",
     "EnsembleMember",
     "Location",
     "MetaPlusData",

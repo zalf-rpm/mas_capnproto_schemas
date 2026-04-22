@@ -12,9 +12,13 @@ type _ProfileDataSchema = modules._ProfileDataStructModule._ProfileDataSchema
 
 type _ProfileSchema = modules._ProfileInterfaceModule._ProfileSchema
 
+type _PropertyNameEnumSchema = modules._PropertyNameEnumModule._PropertyNameSchema
+
 type _QueryResultSchema = modules._QueryStructModule._ResultStructModule._ResultSchema
 
 type _QuerySchema = modules._QueryStructModule._QuerySchema
+
+type _STypeEnumSchema = modules._STypeEnumModule._STypeSchema
 
 type _ServiceSchema = modules._ServiceInterfaceModule._ServiceSchema
 

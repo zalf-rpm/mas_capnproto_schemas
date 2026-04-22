@@ -8,6 +8,7 @@ from capnp.lib.capnp import (
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
+    _EnumModule,
     _EnumSchema,
     _InterfaceMethod,
     _InterfaceModule,
@@ -22,6 +23,9 @@ from mas.schema.climate.climate_capnp.types.clients import TimeSeriesClient
 from mas.schema.climate.climate_capnp.types.modules import _TimeSeriesInterfaceModule
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.management.management_capnp.types import (
+    schemas as _mas_schema_management_management_capnp_schemas,
+)
 from mas.schema.model.model_capnp.types import builders as builders
 from mas.schema.model.model_capnp.types import clients as clients
 from mas.schema.model.model_capnp.types import common as common
@@ -31,10 +35,16 @@ from mas.schema.model.model_capnp.types import readers as readers
 from mas.schema.model.model_capnp.types import schemas as schemas
 from mas.schema.model.model_capnp.types import servers as servers
 from mas.schema.model.model_capnp.types.results import tuples as results_tuples
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
 )
 from mas.schema.service.service_capnp.types.modules import _StoppableInterfaceModule
+from mas.schema.soil.soil_capnp.types import (
+    schemas as _mas_schema_soil_soil_capnp_schemas,
+)
 from mas.schema.soil.soil_capnp.types.clients import ProfileClient
 from mas.schema.soil.soil_capnp.types.modules import _ProfileInterfaceModule
 
@@ -132,12 +142,18 @@ class _XYResultStructModule(_StructModule):
     ) -> readers.XYResultReader: ...
 
 class _StatStructModule(_StructModule):
-    class _TypeEnumModule:
+    class _TypeEnumModule(_EnumModule):
         min: int
         max: int
         sd: int
         avg: int
         median: int
+
+        class _TypeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._StatTypeEnumSchema: ...
 
     Type: _TypeEnumModule
     class Reader(_DynamicStructReader): ...
@@ -147,7 +163,7 @@ class _StatStructModule(_StructModule):
         class _TypeField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _EnumSchema: ...
+            def schema(self) -> schemas._StatTypeEnumSchema: ...
 
         class _VsField(_StructSchemaField):
             @property
@@ -546,13 +562,15 @@ class _EnvStructModule(_StructModule):
         class _SoilProfileField(_StructSchemaField):
             @property
             @override
-            def schema(self) -> _InterfaceSchema: ...
+            def schema(self) -> _mas_schema_soil_soil_capnp_schemas._ProfileSchema: ...
 
         class _MgmtEventsField(_StructSchemaField):
             class _Schema(_ListSchema):
                 @property
                 @override
-                def elementType(self) -> _StructSchema: ...
+                def elementType(
+                    self,
+                ) -> _mas_schema_management_management_capnp_schemas._EventSchema: ...
 
             @property
             @override
@@ -782,7 +800,9 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -803,12 +823,20 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload

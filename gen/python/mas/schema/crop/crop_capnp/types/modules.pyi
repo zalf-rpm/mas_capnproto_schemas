@@ -12,6 +12,9 @@ from capnp.lib.capnp import (
     _StructSchemaField,
 )
 
+from mas.schema.common.common_capnp.types import (
+    schemas as _mas_schema_common_common_capnp_schemas,
+)
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
@@ -20,8 +23,14 @@ from mas.schema.crop.crop_capnp.types import common as common
 from mas.schema.crop.crop_capnp.types import contexts as contexts
 from mas.schema.crop.crop_capnp.types import schemas as schemas
 from mas.schema.crop.crop_capnp.types.results import tuples as results_tuples
+from mas.schema.persistence.persistence_capnp.types import (
+    schemas as _mas_schema_persistence_persistence_capnp_schemas,
+)
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _PersistentInterfaceModule,
+)
+from mas.schema.registry.registry_capnp.types import (
+    schemas as _mas_schema_registry_registry_capnp_schemas,
 )
 from mas.schema.registry.registry_capnp.types.modules import _RegistryInterfaceModule
 
@@ -60,7 +69,9 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _SealForField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_persistence_persistence_capnp_schemas._SturdyRefOwnerSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -81,12 +92,20 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _SturdyRefField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _UnsaveSRField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> (
+                    _mas_schema_persistence_persistence_capnp_schemas._SturdyRefSchema
+                ): ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -143,7 +162,9 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _InfoField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -173,7 +194,9 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             class _InfoField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> _StructSchema: ...
+                def schema(
+                    self,
+                ) -> _mas_schema_common_common_capnp_schemas._IdInformationSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -337,7 +360,11 @@ class _ServiceInterfaceModule(_RegistryInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> (
+                        _mas_schema_common_common_capnp_schemas._IdInformationSchema
+                    ): ...
 
                 @property
                 @override
@@ -417,7 +444,11 @@ class _ServiceInterfaceModule(_RegistryInterfaceModule):
                 class _Schema(_ListSchema):
                     @property
                     @override
-                    def elementType(self) -> _StructSchema: ...
+                    def elementType(
+                        self,
+                    ) -> (
+                        _mas_schema_registry_registry_capnp_schemas._RegistryEntrySchema
+                    ): ...
 
                 @property
                 @override

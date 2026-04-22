@@ -2,6 +2,10 @@
 
 from mas.schema.fbp.fbp_capnp.types import modules as modules
 
+type _ChannelCloseSemanticsEnumSchema = (
+    modules._ChannelInterfaceModule._CloseSemanticsEnumModule._CloseSemanticsSchema
+)
+
 type _ChannelMsgSchema = modules._ChannelInterfaceModule._MsgStructModule._MsgSchema
 
 type _ChannelReaderSchema = (
@@ -30,6 +34,14 @@ type _ComponentComponentFactorySchema = (
     modules._ComponentStructModule._ComponentFactoryStructModule._ComponentFactorySchema
 )
 
+type _ComponentComponentTypeEnumSchema = (
+    modules._ComponentStructModule._ComponentTypeEnumModule._ComponentTypeSchema
+)
+
+type _ComponentPortPortTypeEnumSchema = (
+    modules._ComponentStructModule._PortStructModule._PortTypeEnumModule._PortTypeSchema
+)
+
 type _ComponentPortSchema = modules._ComponentStructModule._PortStructModule._PortSchema
 
 type _ComponentSchema = modules._ComponentStructModule._ComponentSchema
@@ -39,6 +51,8 @@ type _IIPSchema = modules._IIPStructModule._IIPSchema
 type _IPKVSchema = modules._IPStructModule._KVStructModule._KVSchema
 
 type _IPSchema = modules._IPStructModule._IPSchema
+
+type _IPTypeEnumSchema = modules._IPStructModule._TypeEnumModule._TypeSchema
 
 type _PortInfosNameAndSRSchema = (
     modules._PortInfosStructModule._NameAndSRStructModule._NameAndSRSchema
@@ -55,6 +69,10 @@ type _ProcessFactorySchema = (
 )
 
 type _ProcessSchema = modules._ProcessInterfaceModule._ProcessSchema
+
+type _ProcessStateEnumSchema = (
+    modules._ProcessInterfaceModule._StateEnumModule._StateSchema
+)
 
 type _ProcessStateTransitionSchema = modules._ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema
 

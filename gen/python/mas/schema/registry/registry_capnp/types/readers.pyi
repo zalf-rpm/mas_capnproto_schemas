@@ -9,7 +9,9 @@ from capnp.lib.capnp import (
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.persistence.persistence_capnp.types.clients import RestorerClient
-from mas.schema.persistence.persistence_capnp.types.readers import VatIdReader
+from mas.schema.persistence.persistence_capnp.types.readers import (
+    VatIdReader,
+)
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import lists as lists
 
