@@ -238,3 +238,13 @@ struct EnvironmentModification {
   valueCO2      @2 :Int16 = -1; # EMCO2 [ppm] environment modification CO2
   notes         @3 :Text;       # EM_NOTES [text] environment modification notes
 }
+
+struct MixedType {
+  soilProfile @0 :Soil.Profile;
+  soil        @1 :Common.StructuredText;
+  plot        @2 :Common.StructuredText;
+  timeseries  @3 :Climate.TimeSeries;
+  treatment   @4 :Common.StructuredText;
+  experiment  @5 :Common.StructuredText;
+}
+
