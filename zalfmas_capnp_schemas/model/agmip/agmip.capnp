@@ -22,3 +22,4 @@ struct FieldExperimentDataTemplate {
   treatment   @4 :Common.StructuredText;
   experiment  @5 :Common.StructuredText;
 }
+
