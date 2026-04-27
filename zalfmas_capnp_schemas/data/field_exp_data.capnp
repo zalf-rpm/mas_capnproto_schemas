@@ -12,6 +12,7 @@ $Go.import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/data");
 
 using TimeSeries = import "/climate/climate.capnp".TimeSeries;
 using Date = import "/common/date.capnp".Date;
+using StructuredText = import "/common/common.capnp".StructuredText;
 using SoilProfile = import "/soil/soil.capnp".Profile;
 
 struct WeatherStation {
@@ -241,10 +242,10 @@ struct EnvironmentModification {
 
 struct MixedType {
   soilProfile @0 :SoilProfile;
-  soil        @1 :Common.StructuredText;
-  plot        @2 :Common.StructuredText;
+  soil        @1 :StructuredText;
+  plot        @2 :StructuredText;
   timeseries  @3 :TimeSeries;
-  treatment   @4 :Common.StructuredText;
-  experiment  @5 :Common.StructuredText;
+  treatment   @4 :StructuredText;
+  experiment  @5 :StructuredText;
 }
 
