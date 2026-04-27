@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.58](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.57...v0.1.58) (2026-04-27)
+
+
+### Features
+
+* recompile capnp schemas ([#47](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/47)) ([85865b0](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/85865b01271883be4df20781ba2d652eb27cd911))
+
+
+### Bug Fixes
+
+* fix:  ([342a920](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/342a9208e0c73139e7ff4dbd11ff8850f92f4935))
+
 ## [0.1.57](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.56...v0.1.57) (2026-04-10)
 
 
