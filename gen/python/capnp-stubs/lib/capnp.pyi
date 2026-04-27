@@ -1783,6 +1783,11 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: field_exp_data_capnp._MixedTypeStructModule,
+    ) -> field_exp_data_capnp.MixedTypeReader: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_struct(
+        self,
         schema: field_exp_data_capnp._PlantingEventStructModule,
     ) -> field_exp_data_capnp.PlantingEventReader: ...  # type: ignore[reportOverlappingOverload]
     @overload

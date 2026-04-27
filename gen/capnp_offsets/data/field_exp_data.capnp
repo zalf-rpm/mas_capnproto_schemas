@@ -215,3 +215,11 @@ struct EnvironmentModification @0xb52867725b843050 {  # 8 bytes, 5 ptrs
   valueCO2 @2 :Int16 = -1;  # bits[0, 16)
   notes @3 :Text;  # ptr[2]
 }
+struct MixedType @0xa23434cc8f8d6a77 {  # 0 bytes, 6 ptrs
+  soilProfile @0 :import "/soil/soil.capnp".Profile;  # ptr[0]
+  soil @1 :import "/common/common.capnp".StructuredText;  # ptr[1]
+  plot @2 :import "/common/common.capnp".StructuredText;  # ptr[2]
+  timeseries @3 :import "/climate/climate.capnp".TimeSeries;  # ptr[3]
+  treatment @4 :import "/common/common.capnp".StructuredText;  # ptr[4]
+  experiment @5 :import "/common/common.capnp".StructuredText;  # ptr[5]
+}
