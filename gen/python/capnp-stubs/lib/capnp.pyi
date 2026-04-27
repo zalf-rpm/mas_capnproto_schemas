@@ -28,6 +28,7 @@ from mas.schema.grid import grid_capnp
 from mas.schema.jobs import jobs_capnp
 from mas.schema.management import management_capnp
 from mas.schema.model import model_capnp
+from mas.schema.model.agmip import agmip_capnp
 from mas.schema.model.monica import (
     monica_management_capnp,
     monica_params_capnp,
@@ -1374,6 +1375,11 @@ class _DynamicObjectReader:
         self,
         schema: management_capnp._ParamsStructModule._TillageStructModule,
     ) -> management_capnp.TillageReader: ...  # type: ignore[reportOverlappingOverload]
+    @overload
+    def as_struct(
+        self,
+        schema: agmip_capnp._FieldExperimentDataTemplateStructModule,
+    ) -> agmip_capnp.FieldExperimentDataTemplateReader: ...  # type: ignore[reportOverlappingOverload]
     @overload
     def as_struct(
         self,
