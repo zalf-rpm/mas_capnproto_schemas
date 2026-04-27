@@ -39,7 +39,8 @@
     "model/monica/monica_params.capnp",
     "model/monica/monica_state.capnp",
     "model/monica/soil_params.capnp",
-    "model/monica/sim_setup.capnp"
+    "model/monica/sim_setup.capnp",
+    "model/agmip/agmip.capnp"
   ],
   "presets": {
     "common": ["common/common.capnp", "common/date.capnp"],
