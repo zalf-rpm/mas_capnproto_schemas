@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.59](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.58...v0.1.59) (2026-04-27)
+
+
+### Features
+
+* added temp mixed type for testing ([e0927e3](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/e0927e34869fffe61c534b084f3c48a1414187fb))
+* recompile capnp schemas ([#49](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/49)) ([a611be8](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/a611be88ddef3eddbcdbc6bc0deeb2622a3ac7f6))
+
+
+### Bug Fixes
+
+* fixed type references ([d9306d6](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/d9306d6d0fc8bc9b23e90caab4a7b733baf315be))
+* fixed type references ([2930b18](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/2930b183710c7e82e3aeee1f9990cdffd0390792))
+
 ## [0.1.58](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.57...v0.1.58) (2026-04-27)
 
 
