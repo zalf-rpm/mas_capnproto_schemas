@@ -16,6 +16,7 @@
 #endif
 
 #include <climate/climate.capnp.h>
+#include <common/common.capnp.h>
 #include <common/date.capnp.h>
 #include <soil/soil.capnp.h>
 
@@ -38,6 +39,7 @@ CAPNP_DECLARE_SCHEMA(cf2547b626594655);
 CAPNP_DECLARE_SCHEMA(a5df81bae928e6da);
 CAPNP_DECLARE_SCHEMA(e82432f4ef15a586);
 CAPNP_DECLARE_SCHEMA(b52867725b843050);
+CAPNP_DECLARE_SCHEMA(a23434cc8f8d6a77);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -250,6 +252,21 @@ struct EnvironmentModification {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(b52867725b843050, 1, 5)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct MixedType {
+  MixedType() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a23434cc8f8d6a77, 0, 6)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2754,6 +2771,151 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::common::Date::Pipeline getDate();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class MixedType::Reader {
+public:
+  typedef MixedType Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSoilProfile() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::soil::Profile::Client getSoilProfile() const;
+#endif  // !CAPNP_LITE
+
+  inline bool hasSoil() const;
+  inline  ::mas::schema::common::StructuredText::Reader getSoil() const;
+
+  inline bool hasPlot() const;
+  inline  ::mas::schema::common::StructuredText::Reader getPlot() const;
+
+  inline bool hasTimeseries() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::climate::TimeSeries::Client getTimeseries() const;
+#endif  // !CAPNP_LITE
+
+  inline bool hasTreatment() const;
+  inline  ::mas::schema::common::StructuredText::Reader getTreatment() const;
+
+  inline bool hasExperiment() const;
+  inline  ::mas::schema::common::StructuredText::Reader getExperiment() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class MixedType::Builder {
+public:
+  typedef MixedType Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSoilProfile();
+#if !CAPNP_LITE
+  inline  ::mas::schema::soil::Profile::Client getSoilProfile();
+  inline void setSoilProfile( ::mas::schema::soil::Profile::Client&& value);
+  inline void setSoilProfile( ::mas::schema::soil::Profile::Client& value);
+  inline void adoptSoilProfile(::capnp::Orphan< ::mas::schema::soil::Profile>&& value);
+  inline ::capnp::Orphan< ::mas::schema::soil::Profile> disownSoilProfile();
+#endif  // !CAPNP_LITE
+
+  inline bool hasSoil();
+  inline  ::mas::schema::common::StructuredText::Builder getSoil();
+  inline void setSoil( ::mas::schema::common::StructuredText::Reader value);
+  inline  ::mas::schema::common::StructuredText::Builder initSoil();
+  inline void adoptSoil(::capnp::Orphan< ::mas::schema::common::StructuredText>&& value);
+  inline ::capnp::Orphan< ::mas::schema::common::StructuredText> disownSoil();
+
+  inline bool hasPlot();
+  inline  ::mas::schema::common::StructuredText::Builder getPlot();
+  inline void setPlot( ::mas::schema::common::StructuredText::Reader value);
+  inline  ::mas::schema::common::StructuredText::Builder initPlot();
+  inline void adoptPlot(::capnp::Orphan< ::mas::schema::common::StructuredText>&& value);
+  inline ::capnp::Orphan< ::mas::schema::common::StructuredText> disownPlot();
+
+  inline bool hasTimeseries();
+#if !CAPNP_LITE
+  inline  ::mas::schema::climate::TimeSeries::Client getTimeseries();
+  inline void setTimeseries( ::mas::schema::climate::TimeSeries::Client&& value);
+  inline void setTimeseries( ::mas::schema::climate::TimeSeries::Client& value);
+  inline void adoptTimeseries(::capnp::Orphan< ::mas::schema::climate::TimeSeries>&& value);
+  inline ::capnp::Orphan< ::mas::schema::climate::TimeSeries> disownTimeseries();
+#endif  // !CAPNP_LITE
+
+  inline bool hasTreatment();
+  inline  ::mas::schema::common::StructuredText::Builder getTreatment();
+  inline void setTreatment( ::mas::schema::common::StructuredText::Reader value);
+  inline  ::mas::schema::common::StructuredText::Builder initTreatment();
+  inline void adoptTreatment(::capnp::Orphan< ::mas::schema::common::StructuredText>&& value);
+  inline ::capnp::Orphan< ::mas::schema::common::StructuredText> disownTreatment();
+
+  inline bool hasExperiment();
+  inline  ::mas::schema::common::StructuredText::Builder getExperiment();
+  inline void setExperiment( ::mas::schema::common::StructuredText::Reader value);
+  inline  ::mas::schema::common::StructuredText::Builder initExperiment();
+  inline void adoptExperiment(::capnp::Orphan< ::mas::schema::common::StructuredText>&& value);
+  inline ::capnp::Orphan< ::mas::schema::common::StructuredText> disownExperiment();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class MixedType::Pipeline {
+public:
+  typedef MixedType Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::soil::Profile::Client getSoilProfile();
+  inline  ::mas::schema::common::StructuredText::Pipeline getSoil();
+  inline  ::mas::schema::common::StructuredText::Pipeline getPlot();
+  inline  ::mas::schema::climate::TimeSeries::Client getTimeseries();
+  inline  ::mas::schema::common::StructuredText::Pipeline getTreatment();
+  inline  ::mas::schema::common::StructuredText::Pipeline getExperiment();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -7689,6 +7851,240 @@ inline void EnvironmentModification::Builder::adoptTreatmentId(
 inline ::capnp::Orphan< ::capnp::Text> EnvironmentModification::Builder::disownTreatmentId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool MixedType::Reader::hasSoilProfile() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasSoilProfile() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::soil::Profile::Client MixedType::Reader::getSoilProfile() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::soil::Profile::Client MixedType::Builder::getSoilProfile() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::soil::Profile::Client MixedType::Pipeline::getSoilProfile() {
+  return  ::mas::schema::soil::Profile::Client(_typeless.getPointerField(0).asCap());
+}
+inline void MixedType::Builder::setSoilProfile( ::mas::schema::soil::Profile::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void MixedType::Builder::setSoilProfile( ::mas::schema::soil::Profile::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void MixedType::Builder::adoptSoilProfile(
+    ::capnp::Orphan< ::mas::schema::soil::Profile>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::soil::Profile> MixedType::Builder::disownSoilProfile() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::soil::Profile>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+inline bool MixedType::Reader::hasSoil() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasSoil() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::StructuredText::Reader MixedType::Reader::getSoil() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::getSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::StructuredText::Pipeline MixedType::Pipeline::getSoil() {
+  return  ::mas::schema::common::StructuredText::Pipeline(_typeless.getPointerField(1));
+}
+#endif  // !CAPNP_LITE
+inline void MixedType::Builder::setSoil( ::mas::schema::common::StructuredText::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::initSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void MixedType::Builder::adoptSoil(
+    ::capnp::Orphan< ::mas::schema::common::StructuredText>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::StructuredText> MixedType::Builder::disownSoil() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool MixedType::Reader::hasPlot() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasPlot() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::StructuredText::Reader MixedType::Reader::getPlot() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::getPlot() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::StructuredText::Pipeline MixedType::Pipeline::getPlot() {
+  return  ::mas::schema::common::StructuredText::Pipeline(_typeless.getPointerField(2));
+}
+#endif  // !CAPNP_LITE
+inline void MixedType::Builder::setPlot( ::mas::schema::common::StructuredText::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::initPlot() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline void MixedType::Builder::adoptPlot(
+    ::capnp::Orphan< ::mas::schema::common::StructuredText>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::StructuredText> MixedType::Builder::disownPlot() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline bool MixedType::Reader::hasTimeseries() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasTimeseries() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::climate::TimeSeries::Client MixedType::Reader::getTimeseries() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::climate::TimeSeries::Client MixedType::Builder::getTimeseries() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::climate::TimeSeries::Client MixedType::Pipeline::getTimeseries() {
+  return  ::mas::schema::climate::TimeSeries::Client(_typeless.getPointerField(3).asCap());
+}
+inline void MixedType::Builder::setTimeseries( ::mas::schema::climate::TimeSeries::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void MixedType::Builder::setTimeseries( ::mas::schema::climate::TimeSeries::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), cap);
+}
+inline void MixedType::Builder::adoptTimeseries(
+    ::capnp::Orphan< ::mas::schema::climate::TimeSeries>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::climate::TimeSeries> MixedType::Builder::disownTimeseries() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::climate::TimeSeries>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+inline bool MixedType::Reader::hasTreatment() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasTreatment() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::StructuredText::Reader MixedType::Reader::getTreatment() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::getTreatment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::StructuredText::Pipeline MixedType::Pipeline::getTreatment() {
+  return  ::mas::schema::common::StructuredText::Pipeline(_typeless.getPointerField(4));
+}
+#endif  // !CAPNP_LITE
+inline void MixedType::Builder::setTreatment( ::mas::schema::common::StructuredText::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::initTreatment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void MixedType::Builder::adoptTreatment(
+    ::capnp::Orphan< ::mas::schema::common::StructuredText>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::StructuredText> MixedType::Builder::disownTreatment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool MixedType::Reader::hasExperiment() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool MixedType::Builder::hasExperiment() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::common::StructuredText::Reader MixedType::Reader::getExperiment() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::getExperiment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::common::StructuredText::Pipeline MixedType::Pipeline::getExperiment() {
+  return  ::mas::schema::common::StructuredText::Pipeline(_typeless.getPointerField(5));
+}
+#endif  // !CAPNP_LITE
+inline void MixedType::Builder::setExperiment( ::mas::schema::common::StructuredText::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::common::StructuredText::Builder MixedType::Builder::initExperiment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void MixedType::Builder::adoptExperiment(
+    ::capnp::Orphan< ::mas::schema::common::StructuredText>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::common::StructuredText> MixedType::Builder::disownExperiment() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::common::StructuredText>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
 }  // namespace
