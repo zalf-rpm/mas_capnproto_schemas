@@ -240,10 +240,10 @@ struct EnvironmentModification {
 }
 
 struct MixedType {
-  soilProfile @0 :Soil.Profile;
+  soilProfile @0 :SoilProfile;
   soil        @1 :Common.StructuredText;
   plot        @2 :Common.StructuredText;
-  timeseries  @3 :Climate.TimeSeries;
+  timeseries  @3 :TimeSeries;
   treatment   @4 :Common.StructuredText;
   experiment  @5 :Common.StructuredText;
 }
