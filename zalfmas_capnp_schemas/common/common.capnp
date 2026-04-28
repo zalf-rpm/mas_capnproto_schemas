@@ -78,6 +78,7 @@ struct Value {
     ld    @27   :List(Data);
     lcap  @28   :List(Capability);
     lpair @29   :List(Pair);
+    lv    @30   :List(Value);
   }
 }
 
