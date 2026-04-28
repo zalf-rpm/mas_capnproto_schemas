@@ -2963,6 +2963,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _ServiceInterfaceModuleManagementAtParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -3006,28 +3018,31 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleManagementAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["managementAt"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

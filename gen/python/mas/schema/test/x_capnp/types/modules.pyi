@@ -51,20 +51,26 @@ class _XInterfaceModule(_InterfaceModule):
                 self,
             ) -> _XInterfaceModule._XSchema._XInterfaceModuleMResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _XInterfaceModuleMMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _XInterfaceModule._XSchema._XInterfaceModuleMParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _XInterfaceModule._XSchema._XInterfaceModuleMResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["m"],
-            ) -> _InterfaceMethod[
-                _XInterfaceModule._XSchema._XInterfaceModuleMParamSchema,
-                _XInterfaceModule._XSchema._XInterfaceModuleMResultSchema,
-            ]: ...
+            ) -> _XInterfaceModule._XSchema._XInterfaceModuleMMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -190,20 +196,26 @@ class _YInterfaceModule(_InterfaceModule):
                 self,
             ) -> _YInterfaceModule._YSchema._YInterfaceModuleMResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _YInterfaceModuleMMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _YInterfaceModule._YSchema._YInterfaceModuleMParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _YInterfaceModule._YSchema._YInterfaceModuleMResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["m"],
-            ) -> _InterfaceMethod[
-                _YInterfaceModule._YSchema._YInterfaceModuleMParamSchema,
-                _YInterfaceModule._YSchema._YInterfaceModuleMResultSchema,
-            ]: ...
+            ) -> _YInterfaceModule._YSchema._YInterfaceModuleMMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -251,20 +263,26 @@ class _ZInterfaceModule(_InterfaceModule):
                 self,
             ) -> _ZInterfaceModule._ZSchema._ZInterfaceModuleMResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ZInterfaceModuleMMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ZInterfaceModule._ZSchema._ZInterfaceModuleMParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ZInterfaceModule._ZSchema._ZInterfaceModuleMResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["m"],
-            ) -> _InterfaceMethod[
-                _ZInterfaceModule._ZSchema._ZInterfaceModuleMParamSchema,
-                _ZInterfaceModule._ZSchema._ZInterfaceModuleMResultSchema,
-            ]: ...
+            ) -> _ZInterfaceModule._ZSchema._ZInterfaceModuleMMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

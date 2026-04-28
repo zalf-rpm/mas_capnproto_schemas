@@ -45,6 +45,18 @@ class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
                 self,
             ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelResultSchema._Fields: ...
 
+        class _ModamWrapperServiceInterfaceModuleRunAemModelMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelResultSchema: ...
+
         class _ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema(
             _StructSchema,
         ):
@@ -75,28 +87,31 @@ class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
                 self,
             ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ModamWrapperServiceInterfaceModuleRunFieldModelMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["runAemModel"],
-            ) -> _InterfaceMethod[
-                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelParamSchema,
-                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelResultSchema,
-            ]: ...
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunAemModelMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["runFieldModel"],
-            ) -> _InterfaceMethod[
-                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelParamSchema,
-                _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelResultSchema,
-            ]: ...
+            ) -> _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._ModamWrapperServiceInterfaceModuleRunFieldModelMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

@@ -571,20 +571,26 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                     self,
                 ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _CallbackInterfaceModuleSendCellsMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["sendCells"],
-                ) -> _InterfaceMethod[
-                    _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsParamSchema,
-                    _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsResultSchema,
-                ]: ...
+                ) -> _GridInterfaceModule._CallbackInterfaceModule._CallbackSchema._CallbackInterfaceModuleSendCellsMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -653,6 +659,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -714,6 +732,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             def fields(
                 self,
             ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema: ...
 
         class _GridInterfaceModuleClosestValueAtParamSchema(_StructSchema):
             class _LatlonCoordField(_StructSchemaField):
@@ -831,6 +861,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema._Fields: ...
 
+        class _GridInterfaceModuleClosestValueAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema: ...
+
         class _GridInterfaceModuleResolutionParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -861,6 +903,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema._Fields: ...
 
+        class _GridInterfaceModuleResolutionMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema: ...
+
         class _GridInterfaceModuleDimensionParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -884,6 +938,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             def fields(
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionResultSchema._Fields: ...
+
+        class _GridInterfaceModuleDimensionMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionResultSchema: ...
 
         class _GridInterfaceModuleNoDataValueParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -914,6 +980,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             def fields(
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema._Fields: ...
+
+        class _GridInterfaceModuleNoDataValueMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema: ...
 
         class _GridInterfaceModuleValueAtParamSchema(_StructSchema):
             class _ResolutionField(_StructSchemaField):
@@ -993,6 +1071,22 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema._Fields: ...
 
+        class _GridInterfaceModuleValueAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema
+            ): ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema
+            ): ...
+
         class _GridInterfaceModuleLatLonBoundsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1068,6 +1162,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema._Fields: ...
 
+        class _GridInterfaceModuleLatLonBoundsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema: ...
+
         class _GridInterfaceModuleStreamCellsParamSchema(_StructSchema):
             class _TopLeftField(_StructSchemaField):
                 @property
@@ -1120,6 +1226,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema._Fields: ...
 
+        class _GridInterfaceModuleStreamCellsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema: ...
+
         class _GridInterfaceModuleUnitParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1142,92 +1260,89 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
                 self,
             ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _GridInterfaceModuleUnitMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitParamSchema
+            ): ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitResultSchema
+            ): ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._IdentifiableInterfaceModuleInfoMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveParamSchema,
-                _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._PersistentInterfaceModuleSaveMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["closestValueAt"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtResultSchema,
-            ]: ...
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleClosestValueAtMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["resolution"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleResolutionMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["dimension"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleDimensionMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["noDataValue"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleNoDataValueMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["valueAt"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtResultSchema,
-            ]: ...
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleValueAtMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["latLonBounds"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleLatLonBoundsMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["streamCells"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsResultSchema,
-            ]: ...
+            ) -> (
+                _GridInterfaceModule._GridSchema._GridInterfaceModuleStreamCellsMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["unit"],
-            ) -> _InterfaceMethod[
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitParamSchema,
-                _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitResultSchema,
-            ]: ...
+            ) -> _GridInterfaceModule._GridSchema._GridInterfaceModuleUnitMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

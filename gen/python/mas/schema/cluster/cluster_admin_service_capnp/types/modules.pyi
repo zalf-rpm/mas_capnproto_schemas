@@ -57,20 +57,26 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _UnregisterInterfaceModuleUnregisterMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["unregister"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema,
-                    _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -133,6 +139,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _AdminMasterInterfaceModuleRegisterModelInstanceFactoryParamSchema(
                 _StructSchema,
             ):
@@ -184,6 +202,20 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryResultSchema._Fields: ...
 
+            class _AdminMasterInterfaceModuleRegisterModelInstanceFactoryMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryResultSchema: ...
+
             class _AdminMasterInterfaceModuleAvailableModelsParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -223,36 +255,36 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _AdminMasterInterfaceModuleAvailableModelsMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["registerModelInstanceFactory"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryParamSchema,
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleRegisterModelInstanceFactoryMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["availableModels"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsParamSchema,
-                    _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._AdminMasterInterfaceModuleAvailableModelsMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -335,6 +367,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _ModelInstanceFactoryInterfaceModuleNewInstanceParamSchema(
                 _StructSchema,
             ):
@@ -368,6 +412,20 @@ class _ClusterStructModule(_StructModule):
                 def fields(
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceResultSchema._Fields: ...
+
+            class _ModelInstanceFactoryInterfaceModuleNewInstanceMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceResultSchema: ...
 
             class _ModelInstanceFactoryInterfaceModuleNewInstancesParamSchema(
                 _StructSchema,
@@ -410,6 +468,20 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesResultSchema._Fields: ...
 
+            class _ModelInstanceFactoryInterfaceModuleNewInstancesMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesResultSchema: ...
+
             class _ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesParamSchema(
                 _StructSchema,
             ):
@@ -450,6 +522,20 @@ class _ClusterStructModule(_StructModule):
                 def fields(
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesResultSchema._Fields: ...
+
+            class _ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesResultSchema: ...
 
             class _ModelInstanceFactoryInterfaceModuleNewCloudViaProxyParamSchema(
                 _StructSchema,
@@ -492,6 +578,20 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyResultSchema._Fields: ...
 
+            class _ModelInstanceFactoryInterfaceModuleNewCloudViaProxyMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyResultSchema: ...
+
             class _ModelInstanceFactoryInterfaceModuleModelIdParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -515,6 +615,18 @@ class _ClusterStructModule(_StructModule):
                 def fields(
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdResultSchema._Fields: ...
+
+            class _ModelInstanceFactoryInterfaceModuleModelIdMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdResultSchema: ...
 
             class _ModelInstanceFactoryInterfaceModuleRegisterModelInstanceParamSchema(
                 _StructSchema,
@@ -562,6 +674,20 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceResultSchema._Fields: ...
 
+            class _ModelInstanceFactoryInterfaceModuleRegisterModelInstanceMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceResultSchema: ...
+
             class _ModelInstanceFactoryInterfaceModuleRestoreSturdyRefParamSchema(
                 _StructSchema,
             ):
@@ -603,76 +729,63 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _ModelInstanceFactoryInterfaceModuleRestoreSturdyRefMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["newInstance"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstanceMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["newInstances"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewInstancesMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["newCloudViaZmqPipelineProxies"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaZmqPipelineProxiesMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["newCloudViaProxy"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleNewCloudViaProxyMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["modelId"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleModelIdMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["registerModelInstance"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRegisterModelInstanceMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["restoreSturdyRef"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefParamSchema,
-                    _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._ModelInstanceFactoryInterfaceModuleRestoreSturdyRefMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -816,6 +929,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueResultSchema._Fields: ...
 
+            class _ValueHolderInterfaceModuleValueMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueResultSchema: ...
+
             class _ValueHolderInterfaceModuleReleaseParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -834,28 +959,31 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _ValueHolderInterfaceModuleReleaseMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["value"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueParamSchema,
-                    _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleValueMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["release"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseParamSchema,
-                    _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._ValueHolderInterfaceModuleReleaseMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -935,6 +1063,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _UserMasterInterfaceModuleAvailableModelsParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -974,28 +1114,31 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _UserMasterInterfaceModuleAvailableModelsMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["availableModels"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsParamSchema,
-                    _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._UserMasterInterfaceModuleAvailableModelsMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1064,6 +1207,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _RuntimeInterfaceModuleRegisterModelInstanceFactoryParamSchema(
                 _StructSchema,
             ):
@@ -1115,6 +1270,20 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryResultSchema._Fields: ...
 
+            class _RuntimeInterfaceModuleRegisterModelInstanceFactoryMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryResultSchema: ...
+
             class _RuntimeInterfaceModuleAvailableModelsParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1154,6 +1323,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsResultSchema._Fields: ...
 
+            class _RuntimeInterfaceModuleAvailableModelsMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsResultSchema: ...
+
             class _RuntimeInterfaceModuleNumberOfCoresParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1179,6 +1360,18 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresResultSchema._Fields: ...
 
+            class _RuntimeInterfaceModuleNumberOfCoresMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresResultSchema: ...
+
             class _RuntimeInterfaceModuleFreeNumberOfCoresParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1203,6 +1396,18 @@ class _ClusterStructModule(_StructModule):
                 def fields(
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresResultSchema._Fields: ...
+
+            class _RuntimeInterfaceModuleFreeNumberOfCoresMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresResultSchema: ...
 
             class _RuntimeInterfaceModuleReserveNumberOfCoresParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
@@ -1243,60 +1448,51 @@ class _ClusterStructModule(_StructModule):
                     self,
                 ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _RuntimeInterfaceModuleReserveNumberOfCoresMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["registerModelInstanceFactory"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleRegisterModelInstanceFactoryMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["availableModels"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleAvailableModelsMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["numberOfCores"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleNumberOfCoresMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["freeNumberOfCores"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleFreeNumberOfCoresMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["reserveNumberOfCores"],
-                ) -> _InterfaceMethod[
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresParamSchema,
-                    _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresResultSchema,
-                ]: ...
+                ) -> _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._RuntimeInterfaceModuleReserveNumberOfCoresMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override

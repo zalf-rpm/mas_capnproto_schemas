@@ -28,6 +28,8 @@ type _IrrigationEventSchema = (
     modules._IrrigationEventStructModule._IrrigationEventSchema
 )
 
+type _MixedTypeSchema = modules._MixedTypeStructModule._MixedTypeSchema
+
 type _PlantingEventSchema = modules._PlantingEventStructModule._PlantingEventSchema
 
 type _PlotSchema = modules._PlotStructModule._PlotSchema

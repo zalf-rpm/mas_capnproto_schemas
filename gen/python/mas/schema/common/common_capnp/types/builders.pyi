@@ -256,6 +256,13 @@ class ValueBuilder(_DynamicStructBuilder):
         self,
         value: PairListBuilder | readers.PairListReader | dict[str, Any],
     ) -> None: ...
+    @property
+    def lv(self) -> ValueListBuilder: ...
+    @lv.setter
+    def lv(
+        self,
+        value: ValueListBuilder | readers.ValueListReader | dict[str, Any],
+    ) -> None: ...
     @override
     def which(
         self,
@@ -290,6 +297,7 @@ class ValueBuilder(_DynamicStructBuilder):
         "ld",
         "lcap",
         "lpair",
+        "lv",
     ]: ...
     @override
     @overload
@@ -383,6 +391,12 @@ class ValueBuilder(_DynamicStructBuilder):
         size: int | None = None,
     ) -> PairListBuilder: ...
     @overload
+    def init(
+        self,
+        field: Literal["lv"],
+        size: int | None = None,
+    ) -> ValueListBuilder: ...
+    @overload
     def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.ValueReader: ...
@@ -416,3 +430,5 @@ type Uint32ListBuilder = lists._Uint32List.Builder
 type Uint64ListBuilder = lists._Uint64List.Builder
 
 type Uint8ListBuilder = lists._Uint8List.Builder
+
+type ValueListBuilder = lists._ValueList.Builder

@@ -240,6 +240,18 @@ class _MetadataStructModule(_StructModule):
                     self,
                 ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesResultSchema._Fields: ...
 
+            class _SupportedInterfaceModuleCategoriesMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesResultSchema: ...
+
             class _SupportedInterfaceModuleSupportedValuesParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -288,28 +300,31 @@ class _MetadataStructModule(_StructModule):
                     self,
                 ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _SupportedInterfaceModuleSupportedValuesMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["categories"],
-                ) -> _InterfaceMethod[
-                    _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesParamSchema,
-                    _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesResultSchema,
-                ]: ...
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleCategoriesMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["supportedValues"],
-                ) -> _InterfaceMethod[
-                    _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesParamSchema,
-                    _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesResultSchema,
-                ]: ...
+                ) -> _MetadataStructModule._SupportedInterfaceModule._SupportedSchema._SupportedInterfaceModuleSupportedValuesMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -703,6 +718,18 @@ class _MetadataStructModule(_StructModule):
                     self,
                 ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneResultSchema._Fields: ...
 
+            class _InformationInterfaceModuleForOneMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneResultSchema: ...
+
             class _InformationInterfaceModuleForAllParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -742,28 +769,31 @@ class _MetadataStructModule(_StructModule):
                     self,
                 ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _InformationInterfaceModuleForAllMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["forOne"],
-                ) -> _InterfaceMethod[
-                    _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneParamSchema,
-                    _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneResultSchema,
-                ]: ...
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForOneMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["forAll"],
-                ) -> _InterfaceMethod[
-                    _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllParamSchema,
-                    _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllResultSchema,
-                ]: ...
+                ) -> _MetadataStructModule._InformationInterfaceModule._InformationSchema._InformationInterfaceModuleForAllMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -960,20 +990,28 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _GetLocationsCallbackInterfaceModuleNextLocationsMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["nextLocations"],
-                ) -> _InterfaceMethod[
-                    _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsParamSchema,
-                    _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsResultSchema,
-                ]: ...
+                ) -> _DatasetInterfaceModule._GetLocationsCallbackInterfaceModule._GetLocationsCallbackSchema._GetLocationsCallbackInterfaceModuleNextLocationsMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1042,6 +1080,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -1104,6 +1154,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _DatasetInterfaceModuleMetadataParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1151,6 +1213,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataResultSchema._Fields: ...
 
+        class _DatasetInterfaceModuleMetadataMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataResultSchema: ...
+
         class _DatasetInterfaceModuleClosestTimeSeriesAtParamSchema(_StructSchema):
             class _LatlonField(_StructSchemaField):
                 @property
@@ -1195,6 +1269,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtResultSchema._Fields: ...
 
+        class _DatasetInterfaceModuleClosestTimeSeriesAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtResultSchema: ...
+
         class _DatasetInterfaceModuleTimeSeriesAtParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1231,6 +1317,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtResultSchema._Fields: ...
+
+        class _DatasetInterfaceModuleTimeSeriesAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtResultSchema: ...
 
         class _DatasetInterfaceModuleLocationsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -1269,6 +1367,18 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsResultSchema._Fields: ...
 
+        class _DatasetInterfaceModuleLocationsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsResultSchema: ...
+
         class _DatasetInterfaceModuleStreamLocationsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1306,68 +1416,56 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _DatasetInterfaceModuleStreamLocationsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["metadata"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleMetadataMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["closestTimeSeriesAt"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleClosestTimeSeriesAtMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["timeSeriesAt"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleTimeSeriesAtMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["locations"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleLocationsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["streamLocations"],
-            ) -> _InterfaceMethod[
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsParamSchema,
-                _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsResultSchema,
-            ]: ...
+            ) -> _DatasetInterfaceModule._DatasetSchema._DatasetInterfaceModuleStreamLocationsMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2108,6 +2206,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -2170,6 +2280,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _ServiceInterfaceModuleGetAvailableDatasetsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2206,6 +2328,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsResultSchema._Fields: ...
+
+        class _ServiceInterfaceModuleGetAvailableDatasetsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsResultSchema: ...
 
         class _ServiceInterfaceModuleGetDatasetsForParamSchema(_StructSchema):
             class _TemplateField(_StructSchemaField):
@@ -2256,44 +2390,41 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleGetDatasetsForMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["getAvailableDatasets"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAvailableDatasetsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["getDatasetsFor"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetDatasetsForMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2484,6 +2615,18 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _CSVTimeSeriesFactoryInterfaceModuleCreateParamSchema(_StructSchema):
             class _ConfigField(_StructSchemaField):
                 @property
@@ -2533,28 +2676,31 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _CSVTimeSeriesFactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["create"],
-            ) -> _InterfaceMethod[
-                _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateParamSchema,
-                _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateResultSchema,
-            ]: ...
+            ) -> _CSVTimeSeriesFactoryInterfaceModule._CSVTimeSeriesFactorySchema._CSVTimeSeriesFactoryInterfaceModuleCreateMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2729,6 +2875,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -2791,6 +2949,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _TimeSeriesInterfaceModuleResolutionParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2820,6 +2990,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionResultSchema._Fields: ...
+
+        class _TimeSeriesInterfaceModuleResolutionMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionResultSchema: ...
 
         class _TimeSeriesInterfaceModuleRangeParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -2865,6 +3047,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeResultSchema._Fields: ...
 
+        class _TimeSeriesInterfaceModuleRangeMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeResultSchema: ...
+
         class _TimeSeriesInterfaceModuleHeaderParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2901,6 +3095,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderResultSchema._Fields: ...
+
+        class _TimeSeriesInterfaceModuleHeaderMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderResultSchema: ...
 
         class _TimeSeriesInterfaceModuleDataParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -2939,6 +3145,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataResultSchema._Fields: ...
 
+        class _TimeSeriesInterfaceModuleDataMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataResultSchema: ...
+
         class _TimeSeriesInterfaceModuleDataTParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2975,6 +3193,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTResultSchema._Fields: ...
+
+        class _TimeSeriesInterfaceModuleDataTMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTResultSchema: ...
 
         class _TimeSeriesInterfaceModuleSubrangeParamSchema(_StructSchema):
             class _StartField(_StructSchemaField):
@@ -3032,6 +3262,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeResultSchema._Fields: ...
 
+        class _TimeSeriesInterfaceModuleSubrangeMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeResultSchema: ...
+
         class _TimeSeriesInterfaceModuleSubheaderParamSchema(_StructSchema):
             class _ElementsField(_StructSchemaField):
                 class _Schema(_ListSchema):
@@ -3081,6 +3323,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderResultSchema._Fields: ...
 
+        class _TimeSeriesInterfaceModuleSubheaderMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderResultSchema: ...
+
         class _TimeSeriesInterfaceModuleMetadataParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3127,6 +3381,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataResultSchema._Fields: ...
+
+        class _TimeSeriesInterfaceModuleMetadataMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataResultSchema: ...
 
         class _TimeSeriesInterfaceModuleLocationParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -3204,6 +3470,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationResultSchema._Fields: ...
 
+        class _TimeSeriesInterfaceModuleLocationMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationResultSchema: ...
+
         class _AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesParamSchema(
             _StructSchema,
         ):
@@ -3237,6 +3515,20 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesResultSchema._Fields: ...
+
+        class _AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesMethod(
+            _InterfaceMethod,
+        ):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesResultSchema: ...
 
         class _AlterTimeSeriesWrapperInterfaceModuleAlteredElementsParamSchema(
             _StructSchema,
@@ -3280,6 +3572,20 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsResultSchema._Fields: ...
+
+        class _AlterTimeSeriesWrapperInterfaceModuleAlteredElementsMethod(
+            _InterfaceMethod,
+        ):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsResultSchema: ...
 
         class _AlterTimeSeriesWrapperInterfaceModuleAlterParamSchema(_StructSchema):
             class _DescField(_StructSchemaField):
@@ -3328,6 +3634,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterResultSchema._Fields: ...
 
+        class _AlterTimeSeriesWrapperInterfaceModuleAlterMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterResultSchema: ...
+
         class _AlterTimeSeriesWrapperInterfaceModuleRemoveParamSchema(_StructSchema):
             class _AlteredElementField(_StructSchemaField):
                 @property
@@ -3357,6 +3675,18 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
             def fields(
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveResultSchema._Fields: ...
+
+        class _AlterTimeSeriesWrapperInterfaceModuleRemoveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveResultSchema: ...
 
         class _AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesParamSchema(
             _StructSchema,
@@ -3392,140 +3722,103 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
                 self,
             ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesMethod(
+            _InterfaceMethod,
+        ):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["resolution"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleResolutionMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["range"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleRangeMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["header"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleHeaderMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["data"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["dataT"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleDataTMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["subrange"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubrangeMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["subheader"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleSubheaderMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["metadata"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleMetadataMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["location"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._TimeSeriesInterfaceModuleLocationMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["wrappedTimeSeries"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleWrappedTimeSeriesMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["alteredElements"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlteredElementsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["alter"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleAlterMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["remove"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleRemoveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["replaceWrappedTimeSeries"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesParamSchema,
-                _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperInterfaceModule._AlterTimeSeriesWrapperSchema._AlterTimeSeriesWrapperInterfaceModuleReplaceWrappedTimeSeriesMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -3639,6 +3932,18 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
                 self,
             ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _AlterTimeSeriesWrapperFactoryInterfaceModuleWrapParamSchema(
             _StructSchema,
         ):
@@ -3685,28 +3990,31 @@ class _AlterTimeSeriesWrapperFactoryInterfaceModule(_IdentifiableInterfaceModule
                 self,
             ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _AlterTimeSeriesWrapperFactoryInterfaceModuleWrapMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["wrap"],
-            ) -> _InterfaceMethod[
-                _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapParamSchema,
-                _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapResultSchema,
-            ]: ...
+            ) -> _AlterTimeSeriesWrapperFactoryInterfaceModule._AlterTimeSeriesWrapperFactorySchema._AlterTimeSeriesWrapperFactoryInterfaceModuleWrapMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

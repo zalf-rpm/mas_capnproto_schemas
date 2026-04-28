@@ -141,6 +141,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -203,6 +215,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _ServiceInterfaceModuleNextJobParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -233,36 +257,36 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleNextJobMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["nextJob"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextJobMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

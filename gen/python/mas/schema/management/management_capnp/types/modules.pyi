@@ -671,6 +671,18 @@ class _FertilizerInterfaceModule(
                 self,
             ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -733,6 +745,18 @@ class _FertilizerInterfaceModule(
                 self,
             ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _FertilizerInterfaceModuleNutrientsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -770,6 +794,18 @@ class _FertilizerInterfaceModule(
                 self,
             ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema._Fields: ...
 
+        class _FertilizerInterfaceModuleNutrientsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema: ...
+
         class _FertilizerInterfaceModuleParametersParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -792,44 +828,41 @@ class _FertilizerInterfaceModule(
                 self,
             ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _FertilizerInterfaceModuleParametersMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveParamSchema,
-                _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["nutrients"],
-            ) -> _InterfaceMethod[
-                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsParamSchema,
-                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsResultSchema,
-            ]: ...
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleNutrientsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["parameters"],
-            ) -> _InterfaceMethod[
-                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersParamSchema,
-                _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersResultSchema,
-            ]: ...
+            ) -> _FertilizerInterfaceModule._FertilizerSchema._FertilizerInterfaceModuleParametersMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2479,6 +2512,18 @@ class _FertilizerServiceInterfaceModule(_RegistryInterfaceModule):
                 self,
             ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _RegistryInterfaceModuleSupportedCategoriesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2520,6 +2565,18 @@ class _FertilizerServiceInterfaceModule(_RegistryInterfaceModule):
                 self,
             ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema._Fields: ...
 
+        class _RegistryInterfaceModuleSupportedCategoriesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema: ...
+
         class _RegistryInterfaceModuleCategoryInfoParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2555,6 +2612,18 @@ class _FertilizerServiceInterfaceModule(_RegistryInterfaceModule):
             def fields(
                 self,
             ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoResultSchema._Fields: ...
+
+        class _RegistryInterfaceModuleCategoryInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoResultSchema: ...
 
         class _RegistryInterfaceModuleEntriesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -2604,44 +2673,41 @@ class _FertilizerServiceInterfaceModule(_RegistryInterfaceModule):
                 self,
             ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _RegistryInterfaceModuleEntriesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["supportedCategories"],
-            ) -> _InterfaceMethod[
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesParamSchema,
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesResultSchema,
-            ]: ...
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleSupportedCategoriesMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["categoryInfo"],
-            ) -> _InterfaceMethod[
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoParamSchema,
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoResultSchema,
-            ]: ...
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleCategoryInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["entries"],
-            ) -> _InterfaceMethod[
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesParamSchema,
-                _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesResultSchema,
-            ]: ...
+            ) -> _FertilizerServiceInterfaceModule._FertilizerServiceSchema._RegistryInterfaceModuleEntriesMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2690,6 +2756,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _ServiceInterfaceModuleManagementAtParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -2733,28 +2811,31 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleManagementAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["managementAt"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleManagementAtMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
