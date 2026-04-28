@@ -494,6 +494,16 @@ class _ValueStructModule(_StructModule):
                 self,
             ) -> _ValueStructModule._ValueSchema._LpairField._Schema: ...
 
+        class _LvField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._ValueSchema: ...
+
+            @property
+            @override
+            def schema(self) -> _ValueStructModule._ValueSchema._LvField._Schema: ...
+
         class _Fields(dict[str, _StructSchemaField]):
             @overload
             def __getitem__(self, key: Literal["f64"]) -> _StructSchemaField: ...
@@ -601,6 +611,11 @@ class _ValueStructModule(_StructModule):
                 key: Literal["lpair"],
             ) -> _ValueStructModule._ValueSchema._LpairField: ...
             @overload
+            def __getitem__(
+                self,
+                key: Literal["lv"],
+            ) -> _ValueStructModule._ValueSchema._LvField: ...
+            @overload
             def __getitem__(self, key: str) -> _StructSchemaField: ...
 
         @property
@@ -645,6 +660,7 @@ class _ValueStructModule(_StructModule):
         ld: builders.DataListBuilder | dict[str, Any] | None = None,
         lcap: builders.AnyPointerListBuilder | dict[str, Any] | None = None,
         lpair: builders.PairListBuilder | dict[str, Any] | None = None,
+        lv: builders.ValueListBuilder | dict[str, Any] | None = None,
         **kwargs: object,
     ) -> builders.ValueBuilder: ...
     @override
@@ -726,6 +742,18 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _FactoryInterfaceModuleCreateParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -748,28 +776,31 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _FactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["create"],
-            ) -> _InterfaceMethod[
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema,
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema,
-            ]: ...
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -825,6 +856,18 @@ class _IOFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _IOFactoryInterfaceModuleProduceParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -851,28 +894,31 @@ class _IOFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _IOFactoryInterfaceModuleProduceMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["produce"],
-            ) -> _InterfaceMethod[
-                _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceParamSchema,
-                _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceResultSchema,
-            ]: ...
+            ) -> _IOFactoryInterfaceModule._IOFactorySchema._IOFactoryInterfaceModuleProduceMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -948,6 +994,18 @@ class _IdentifiableHolderInterfaceModule(
                 self,
             ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _HolderInterfaceModuleValueParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -970,28 +1028,31 @@ class _IdentifiableHolderInterfaceModule(
                 self,
             ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _HolderInterfaceModuleValueMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["value"],
-            ) -> _InterfaceMethod[
-                _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueParamSchema,
-                _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueResultSchema,
-            ]: ...
+            ) -> _IdentifiableHolderInterfaceModule._IdentifiableHolderSchema._HolderInterfaceModuleValueMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

@@ -49,20 +49,26 @@ class _AInterfaceModule(_InterfaceModule):
                 _AInterfaceModule._ASchema._AInterfaceModuleMethodResultSchema._Fields
             ): ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _AInterfaceModuleMethodMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AInterfaceModule._ASchema._AInterfaceModuleMethodParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AInterfaceModule._ASchema._AInterfaceModuleMethodResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["method"],
-            ) -> _InterfaceMethod[
-                _AInterfaceModule._ASchema._AInterfaceModuleMethodParamSchema,
-                _AInterfaceModule._ASchema._AInterfaceModuleMethodResultSchema,
-            ]: ...
+            ) -> _AInterfaceModule._ASchema._AInterfaceModuleMethodMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

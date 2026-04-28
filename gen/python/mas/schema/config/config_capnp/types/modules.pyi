@@ -46,20 +46,26 @@ class _ServiceInterfaceModule(_InterfaceModule):
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleNextConfigMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["nextConfig"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleNextConfigMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

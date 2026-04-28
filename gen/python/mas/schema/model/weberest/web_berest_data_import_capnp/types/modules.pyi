@@ -67,20 +67,26 @@ class _DWLABImportInterfaceModule(_InterfaceModule):
                 self,
             ) -> _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _DWLABImportInterfaceModuleImportDataMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["importData"],
-            ) -> _InterfaceMethod[
-                _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataParamSchema,
-                _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataResultSchema,
-            ]: ...
+            ) -> _DWLABImportInterfaceModule._DWLABImportSchema._DWLABImportInterfaceModuleImportDataMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

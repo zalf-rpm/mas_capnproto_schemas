@@ -39,7 +39,9 @@ def is_preserved_output(
     relative_path = path.relative_to(output_dir)
     for preserved_output in config.preserved_outputs.get(lang, []):
         preserved_path = Path(preserved_output)
-        if relative_path == preserved_path or relative_path.is_relative_to(preserved_path):
+        if relative_path == preserved_path or relative_path.is_relative_to(
+            preserved_path
+        ):
             return True
     return False
 
@@ -61,7 +63,9 @@ def prune_empty_parents(
     """Remove empty parent directories up to the language output root."""
     current = path.parent
     while current != output_dir and current.exists():
-        if is_preserved_output(current, output_dir, lang, config) or any(current.iterdir()):
+        if is_preserved_output(current, output_dir, lang, config) or any(
+            current.iterdir()
+        ):
             break
         current.rmdir()
         current = current.parent
@@ -76,7 +80,9 @@ def remove_python_cache_entries(output_dir: Path) -> None:
         pyc_file.unlink(missing_ok=True)
 
 
-def schema_relative_path(schema: str, schema_dir: Path, use_relative_paths: bool) -> Path:
+def schema_relative_path(
+    schema: str, schema_dir: Path, use_relative_paths: bool
+) -> Path:
     """Normalize a schema path to a path relative to the schema root."""
     schema_path = Path(schema)
     if not use_relative_paths:
@@ -139,8 +145,12 @@ def prepare_output_dir(
         print(f"Cleaning stale generated files in {output_dir}")
         schema_dir = Path(config.paths.schemas_dir)
         for schema in schemas:
-            relative_schema = schema_relative_path(schema, schema_dir, use_relative_paths)
-            for generated_path in generated_paths_for_schema(relative_schema, lang, output_dir):
+            relative_schema = schema_relative_path(
+                schema, schema_dir, use_relative_paths
+            )
+            for generated_path in generated_paths_for_schema(
+                relative_schema, lang, output_dir
+            ):
                 if generated_path.exists():
                     remove_path(generated_path)
                     prune_empty_parents(generated_path, output_dir, lang, config)

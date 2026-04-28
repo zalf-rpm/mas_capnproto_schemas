@@ -61,6 +61,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _AdminInterfaceModuleHeartbeatParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -78,6 +90,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleHeartbeatMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatResultSchema: ...
 
         class _AdminInterfaceModuleSetTimeoutParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -104,6 +128,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutResultSchema._Fields: ...
 
+        class _AdminInterfaceModuleSetTimeoutMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutResultSchema: ...
+
         class _AdminInterfaceModuleStopParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -121,6 +157,22 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleStopMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopParamSchema
+            ): ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopResultSchema
+            ): ...
 
         class _AdminInterfaceModuleIdentitiesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -163,6 +215,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesResultSchema._Fields: ...
 
+        class _AdminInterfaceModuleIdentitiesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesResultSchema: ...
+
         class _AdminInterfaceModuleUpdateIdentityParamSchema(_StructSchema):
             class _NewInfoField(_StructSchemaField):
                 @property
@@ -197,60 +261,57 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _AdminInterfaceModuleUpdateIdentityMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["heartbeat"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatResultSchema,
-            ]: ...
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleHeartbeatMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["setTimeout"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutResultSchema,
-            ]: ...
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleSetTimeoutMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["stop"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleStopMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["identities"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesResultSchema,
-            ]: ...
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleIdentitiesMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["updateIdentity"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleUpdateIdentityMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -348,6 +409,18 @@ class _SimpleFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _SimpleFactoryInterfaceModuleCreateParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -385,28 +458,31 @@ class _SimpleFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _SimpleFactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["create"],
-            ) -> _InterfaceMethod[
-                _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateParamSchema,
-                _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateResultSchema,
-            ]: ...
+            ) -> _SimpleFactoryInterfaceModule._SimpleFactorySchema._SimpleFactoryInterfaceModuleCreateMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -682,6 +758,18 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _FactoryInterfaceModuleCreateParamSchema(_StructSchema):
             class _InterfaceNameToRegistrySRField(_StructSchemaField):
                 class _Schema(_ListSchema):
@@ -757,6 +845,18 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema._Fields: ...
 
+        class _FactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema: ...
+
         class _FactoryInterfaceModuleServiceInterfaceNamesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -787,36 +887,36 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _FactoryInterfaceModuleServiceInterfaceNamesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["create"],
-            ) -> _InterfaceMethod[
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema,
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema,
-            ]: ...
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["serviceInterfaceNames"],
-            ) -> _InterfaceMethod[
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesParamSchema,
-                _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesResultSchema,
-            ]: ...
+            ) -> _FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleServiceInterfaceNamesMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

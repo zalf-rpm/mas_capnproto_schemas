@@ -166,4 +166,7 @@ EnvironmentModification = _StructModule(
     _loader.get(0xB52867725B843050).as_struct(),
     "EnvironmentModification",
 )
-MixedType = _StructModule(_loader.get(0xA23434CC8F8D6A77).as_struct(), "MixedType")
+MixedType = _StructModule(
+    _loader.get(0xA23434CC8F8D6A77).as_struct(),
+    "MixedType",
+)

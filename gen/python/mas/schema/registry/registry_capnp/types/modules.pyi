@@ -70,6 +70,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _AdminInterfaceModuleAddCategoryParamSchema(_StructSchema):
             class _CategoryField(_StructSchemaField):
                 @property
@@ -110,6 +122,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleAddCategoryMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryResultSchema: ...
 
         class _AdminInterfaceModuleRemoveCategoryParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -160,6 +184,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema._Fields: ...
 
+        class _AdminInterfaceModuleRemoveCategoryMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema: ...
+
         class _AdminInterfaceModuleMoveObjectsParamSchema(_StructSchema):
             class _ObjectIdsField(_StructSchemaField):
                 @property
@@ -206,6 +242,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema._Fields: ...
+
+        class _AdminInterfaceModuleMoveObjectsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema: ...
 
         class _AdminInterfaceModuleRemoveObjectsParamSchema(_StructSchema):
             class _ObjectIdsField(_StructSchemaField):
@@ -256,6 +304,18 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema._Fields: ...
 
+        class _AdminInterfaceModuleRemoveObjectsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema: ...
+
         class _AdminInterfaceModuleRegistryParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -286,60 +346,53 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _AdminInterfaceModuleRegistryMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["addCategory"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleAddCategoryMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["removeCategory"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveCategoryMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["moveObjects"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleMoveObjectsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["removeObjects"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsResultSchema,
-            ]: ...
+            ) -> _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRemoveObjectsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["registry"],
-            ) -> _InterfaceMethod[
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryParamSchema,
-                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryResultSchema,
-            ]: ...
+            ) -> (
+                _AdminInterfaceModule._AdminSchema._AdminInterfaceModuleRegistryMethod
+            ): ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -809,20 +862,26 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
                     self,
                 ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _UnregisterInterfaceModuleUnregisterMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["unregister"],
-                ) -> _InterfaceMethod[
-                    _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema,
-                    _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema,
-                ]: ...
+                ) -> _RegistrarInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -881,6 +940,18 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
 
         class _RegistrarInterfaceModuleRegisterParamSchema(_StructSchema):
             class _CapField(_StructSchemaField):
@@ -958,28 +1029,31 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _RegistrarInterfaceModuleRegisterMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["register"],
-            ) -> _InterfaceMethod[
-                _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema,
-                _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema,
-            ]: ...
+            ) -> _RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

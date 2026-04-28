@@ -399,6 +399,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                         self,
                     ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyResultSchema._Fields: ...
 
+                class _EntryInterfaceModuleGetKeyMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyResultSchema: ...
+
                 class _EntryInterfaceModuleGetValueParamSchema(_StructSchema):
                     class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -433,6 +445,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     def fields(
                         self,
                     ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueResultSchema._Fields: ...
+
+                class _EntryInterfaceModuleGetValueMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueResultSchema: ...
 
                 class _EntryInterfaceModuleSetValueParamSchema(_StructSchema):
                     class _ValueField(_StructSchemaField):
@@ -471,38 +495,36 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                         self,
                     ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueResultSchema._Fields: ...
 
-                class _Methods(
-                    dict[str, _InterfaceMethod[_StructSchema, _StructSchema]],
-                ):
+                class _EntryInterfaceModuleSetValueMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueResultSchema: ...
+
+                class _Methods(dict[str, _InterfaceMethod]):
                     @overload
                     def __getitem__(
                         self,
                         key: Literal["getKey"],
-                    ) -> _InterfaceMethod[
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyParamSchema,
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyResultSchema,
-                    ]: ...
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetKeyMethod: ...
                     @overload
                     def __getitem__(
                         self,
                         key: Literal["getValue"],
-                    ) -> _InterfaceMethod[
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueParamSchema,
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueResultSchema,
-                    ]: ...
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleGetValueMethod: ...
                     @overload
                     def __getitem__(
                         self,
                         key: Literal["setValue"],
-                    ) -> _InterfaceMethod[
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueParamSchema,
-                        _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueResultSchema,
-                    ]: ...
+                    ) -> _StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._EntrySchema._EntryInterfaceModuleSetValueMethod: ...
                     @overload
-                    def __getitem__(
-                        self,
-                        key: str,
-                    ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                    def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
                 @property
                 @override
@@ -679,6 +701,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
                 class _SealForField(_StructSchemaField):
                     @property
@@ -737,6 +771,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+            class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
             class _ContainerInterfaceModuleExportParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -761,6 +807,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 def fields(
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportResultSchema._Fields: ...
+
+            class _ContainerInterfaceModuleExportMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportResultSchema: ...
 
             class _ContainerInterfaceModuleDownloadEntriesParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
@@ -801,6 +859,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesResultSchema._Fields: ...
 
+            class _ContainerInterfaceModuleDownloadEntriesMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesResultSchema: ...
+
             class _ContainerInterfaceModuleListEntriesParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -840,6 +910,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesResultSchema._Fields: ...
 
+            class _ContainerInterfaceModuleListEntriesMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesResultSchema: ...
+
             class _ContainerInterfaceModuleGetEntryParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -877,6 +959,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryResultSchema._Fields: ...
 
+            class _ContainerInterfaceModuleGetEntryMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryResultSchema: ...
+
             class _ContainerInterfaceModuleRemoveEntryParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -909,6 +1003,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryResultSchema._Fields: ...
 
+            class _ContainerInterfaceModuleRemoveEntryMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryResultSchema: ...
+
             class _ContainerInterfaceModuleClearParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -933,6 +1039,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 def fields(
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearResultSchema._Fields: ...
+
+            class _ContainerInterfaceModuleClearMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearResultSchema: ...
 
             class _ContainerInterfaceModuleAddEntryParamSchema(_StructSchema):
                 class _ValueField(_StructSchemaField):
@@ -991,84 +1109,66 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     self,
                 ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _ContainerInterfaceModuleAddEntryMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["save"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._PersistentInterfaceModuleSaveMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["export"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleExportMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["downloadEntries"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleDownloadEntriesMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["listEntries"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleListEntriesMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["getEntry"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleGetEntryMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["removeEntry"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleRemoveEntryMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["clear"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleClearMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["addEntry"],
-                ) -> _InterfaceMethod[
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryParamSchema,
-                    _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryResultSchema,
-                ]: ...
+                ) -> _StoreInterfaceModule._ContainerInterfaceModule._ContainerSchema._ContainerInterfaceModuleAddEntryMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1418,6 +1518,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -1480,6 +1592,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _StoreInterfaceModuleNewContainerParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1519,6 +1643,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerResultSchema._Fields: ...
 
+        class _StoreInterfaceModuleNewContainerMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerResultSchema: ...
+
         class _StoreInterfaceModuleContainerWithIdParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1552,6 +1688,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def fields(
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdResultSchema._Fields: ...
+
+        class _StoreInterfaceModuleContainerWithIdMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdResultSchema: ...
 
         class _StoreInterfaceModuleListContainersParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -1590,6 +1738,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersResultSchema._Fields: ...
 
+        class _StoreInterfaceModuleListContainersMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersResultSchema: ...
+
         class _StoreInterfaceModuleRemoveContainerParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1618,6 +1778,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             def fields(
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerResultSchema._Fields: ...
+
+        class _StoreInterfaceModuleRemoveContainerMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerResultSchema: ...
 
         class _StoreInterfaceModuleImportContainerParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -1653,68 +1825,58 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                 self,
             ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _StoreInterfaceModuleImportContainerMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveParamSchema,
-                _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> (
+                _StoreInterfaceModule._StoreSchema._PersistentInterfaceModuleSaveMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["newContainer"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerParamSchema,
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleNewContainerMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["containerWithId"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdParamSchema,
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleContainerWithIdMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["listContainers"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersParamSchema,
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleListContainersMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["removeContainer"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerParamSchema,
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleRemoveContainerMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["importContainer"],
-            ) -> _InterfaceMethod[
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerParamSchema,
-                _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerResultSchema,
-            ]: ...
+            ) -> _StoreInterfaceModule._StoreSchema._StoreInterfaceModuleImportContainerMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

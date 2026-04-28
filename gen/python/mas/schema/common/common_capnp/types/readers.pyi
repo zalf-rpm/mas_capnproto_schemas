@@ -131,6 +131,8 @@ class ValueReader(_DynamicStructReader):
     def lcap(self) -> AnyPointerListReader: ...
     @property
     def lpair(self) -> PairListReader: ...
+    @property
+    def lv(self) -> ValueListReader: ...
     @override
     def which(
         self,
@@ -165,6 +167,7 @@ class ValueReader(_DynamicStructReader):
         "ld",
         "lcap",
         "lpair",
+        "lv",
     ]: ...
     @override
     def as_builder(
@@ -202,3 +205,5 @@ type Uint32ListReader = lists._Uint32List.Reader
 type Uint64ListReader = lists._Uint64List.Reader
 
 type Uint8ListReader = lists._Uint8List.Reader
+
+type ValueListReader = lists._ValueList.Reader

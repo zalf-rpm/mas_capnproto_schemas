@@ -379,6 +379,18 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _ClimateInstanceInterfaceModuleRunParamSchema(_StructSchema):
             class _TimeSeriesField(_StructSchemaField):
                 @property
@@ -420,6 +432,18 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunResultSchema._Fields: ...
+
+        class _ClimateInstanceInterfaceModuleRunMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunResultSchema: ...
 
         class _ClimateInstanceInterfaceModuleRunSetParamSchema(_StructSchema):
             class _DatasetField(_StructSchemaField):
@@ -470,36 +494,36 @@ class _ClimateInstanceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ClimateInstanceInterfaceModuleRunSetMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["run"],
-            ) -> _InterfaceMethod[
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunParamSchema,
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunResultSchema,
-            ]: ...
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["runSet"],
-            ) -> _InterfaceMethod[
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetParamSchema,
-                _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetResultSchema,
-            ]: ...
+            ) -> _ClimateInstanceInterfaceModule._ClimateInstanceSchema._ClimateInstanceInterfaceModuleRunSetMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -721,20 +745,26 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
                     self,
                 ) -> _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _UnregisterInterfaceModuleUnregisterMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["unregister"],
-                ) -> _InterfaceMethod[
-                    _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterParamSchema,
-                    _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterResultSchema,
-                ]: ...
+                ) -> _EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregisterMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -795,6 +825,18 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             def fields(
                 self,
             ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
 
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
@@ -858,6 +900,18 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
                 self,
             ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _StoppableInterfaceModuleStopParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -882,6 +936,18 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             def fields(
                 self,
             ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopResultSchema._Fields: ...
+
+        class _StoppableInterfaceModuleStopMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopResultSchema: ...
 
         class _EnvInstanceInterfaceModuleRunParamSchema(_StructSchema):
             class _EnvField(_StructSchemaField):
@@ -916,6 +982,18 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
             def fields(
                 self,
             ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunResultSchema._Fields: ...
+
+        class _EnvInstanceInterfaceModuleRunMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunResultSchema: ...
 
         class _EnvInstanceProxyInterfaceModuleRegisterEnvInstanceParamSchema(
             _StructSchema,
@@ -963,52 +1041,48 @@ class _EnvInstanceProxyInterfaceModule(_EnvInstanceInterfaceModule):
                 self,
             ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _EnvInstanceProxyInterfaceModuleRegisterEnvInstanceMethod(
+            _InterfaceMethod,
+        ):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveParamSchema,
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["stop"],
-            ) -> _InterfaceMethod[
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopParamSchema,
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopResultSchema,
-            ]: ...
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._StoppableInterfaceModuleStopMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["run"],
-            ) -> _InterfaceMethod[
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunParamSchema,
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunResultSchema,
-            ]: ...
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceInterfaceModuleRunMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["registerEnvInstance"],
-            ) -> _InterfaceMethod[
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceParamSchema,
-                _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceResultSchema,
-            ]: ...
+            ) -> _EnvInstanceProxyInterfaceModule._EnvInstanceProxySchema._EnvInstanceProxyInterfaceModuleRegisterEnvInstanceMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -1072,6 +1146,18 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _InstanceFactoryInterfaceModuleModelInfoParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1100,6 +1186,18 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoResultSchema._Fields: ...
+
+        class _InstanceFactoryInterfaceModuleModelInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoResultSchema: ...
 
         class _InstanceFactoryInterfaceModuleNewInstanceParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -1130,6 +1228,18 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
             def fields(
                 self,
             ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceResultSchema._Fields: ...
+
+        class _InstanceFactoryInterfaceModuleNewInstanceMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceResultSchema: ...
 
         class _InstanceFactoryInterfaceModuleNewInstancesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -1175,44 +1285,41 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _InstanceFactoryInterfaceModuleNewInstancesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["modelInfo"],
-            ) -> _InterfaceMethod[
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoParamSchema,
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoResultSchema,
-            ]: ...
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleModelInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["newInstance"],
-            ) -> _InterfaceMethod[
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceParamSchema,
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceResultSchema,
-            ]: ...
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstanceMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["newInstances"],
-            ) -> _InterfaceMethod[
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesParamSchema,
-                _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesResultSchema,
-            ]: ...
+            ) -> _InstanceFactoryInterfaceModule._InstanceFactorySchema._InstanceFactoryInterfaceModuleNewInstancesMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

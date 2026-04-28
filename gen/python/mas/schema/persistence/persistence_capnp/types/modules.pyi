@@ -650,20 +650,26 @@ class _HeartbeatInterfaceModule(_InterfaceModule):
                 self,
             ) -> _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _HeartbeatInterfaceModuleBeatMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["beat"],
-            ) -> _InterfaceMethod[
-                _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatParamSchema,
-                _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatResultSchema,
-            ]: ...
+            ) -> _HeartbeatInterfaceModule._HeartbeatSchema._HeartbeatInterfaceModuleBeatMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -897,20 +903,26 @@ class _PersistentInterfaceModule(_InterfaceModule):
                     self,
                 ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _ReleaseSturdyRefInterfaceModuleReleaseMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["release"],
-                ) -> _InterfaceMethod[
-                    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseParamSchema,
-                    _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseResultSchema,
-                ]: ...
+                ) -> _PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule._ReleaseSturdyRefSchema._ReleaseSturdyRefInterfaceModuleReleaseMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1250,20 +1262,26 @@ class _HostPortResolverInterfaceModule(
                     self,
                 ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _RegistrarInterfaceModuleRegisterMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["register"],
-                ) -> _InterfaceMethod[
-                    _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterParamSchema,
-                    _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterResultSchema,
-                ]: ...
+                ) -> _HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegistrarSchema._RegistrarInterfaceModuleRegisterMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1330,6 +1348,18 @@ class _HostPortResolverInterfaceModule(
                 self,
             ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _RestorerInterfaceModuleRestoreParamSchema(_StructSchema):
             class _LocalRefField(_StructSchemaField):
                 @property
@@ -1374,6 +1404,18 @@ class _HostPortResolverInterfaceModule(
                 self,
             ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreResultSchema._Fields: ...
 
+        class _RestorerInterfaceModuleRestoreMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreResultSchema: ...
+
         class _HostPortResolverInterfaceModuleResolveParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1402,36 +1444,36 @@ class _HostPortResolverInterfaceModule(
                 self,
             ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _HostPortResolverInterfaceModuleResolveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["restore"],
-            ) -> _InterfaceMethod[
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreParamSchema,
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreResultSchema,
-            ]: ...
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._RestorerInterfaceModuleRestoreMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["resolve"],
-            ) -> _InterfaceMethod[
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveParamSchema,
-                _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveResultSchema,
-            ]: ...
+            ) -> _HostPortResolverInterfaceModule._HostPortResolverSchema._HostPortResolverInterfaceModuleResolveMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -1595,6 +1637,18 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
                 self,
             ) -> _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _RestorerInterfaceModuleRestoreParamSchema(_StructSchema):
             class _LocalRefField(_StructSchemaField):
                 @property
@@ -1638,6 +1692,18 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
             def fields(
                 self,
             ) -> _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreResultSchema._Fields: ...
+
+        class _RestorerInterfaceModuleRestoreMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreResultSchema: ...
 
         class _GatewayInterfaceModuleRegisterParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -1693,36 +1759,36 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
                 self,
             ) -> _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _GatewayInterfaceModuleRegisterMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _GatewayInterfaceModule._GatewaySchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["restore"],
-            ) -> _InterfaceMethod[
-                _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreParamSchema,
-                _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreResultSchema,
-            ]: ...
+            ) -> _GatewayInterfaceModule._GatewaySchema._RestorerInterfaceModuleRestoreMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["register"],
-            ) -> _InterfaceMethod[
-                _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterParamSchema,
-                _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterResultSchema,
-            ]: ...
+            ) -> _GatewayInterfaceModule._GatewaySchema._GatewayInterfaceModuleRegisterMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

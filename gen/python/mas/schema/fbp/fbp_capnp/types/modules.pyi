@@ -452,6 +452,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
                 class _SealForField(_StructSchemaField):
                     @property
@@ -510,6 +522,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+            class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
             class _ReaderInterfaceModuleReadParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -545,6 +569,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadResultSchema._Fields: ...
 
+            class _ReaderInterfaceModuleReadMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadResultSchema: ...
+
             class _ReaderInterfaceModuleCloseParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -562,6 +598,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 def fields(
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseResultSchema._Fields: ...
+
+            class _ReaderInterfaceModuleCloseMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseResultSchema: ...
 
             class _ReaderInterfaceModuleReadIfMsgParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
@@ -598,52 +646,46 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _ReaderInterfaceModuleReadIfMsgMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["save"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveParamSchema,
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._PersistentInterfaceModuleSaveMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["read"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadParamSchema,
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["close"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseParamSchema,
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleCloseMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["readIfMsg"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgParamSchema,
-                    _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -732,6 +774,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
                 class _SealForField(_StructSchemaField):
                     @property
@@ -790,6 +844,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+            class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
             class _WriterInterfaceModuleWriteParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -825,6 +891,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteResultSchema._Fields: ...
 
+            class _WriterInterfaceModuleWriteMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteResultSchema: ...
+
             class _WriterInterfaceModuleCloseParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -842,6 +920,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 def fields(
                     self,
                 ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseResultSchema._Fields: ...
+
+            class _WriterInterfaceModuleCloseMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseResultSchema: ...
 
             class _WriterInterfaceModuleWriteIfSpaceParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]):
@@ -885,52 +975,46 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _WriterInterfaceModuleWriteIfSpaceMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["save"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveParamSchema,
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._PersistentInterfaceModuleSaveMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["write"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteParamSchema,
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["close"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseParamSchema,
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleCloseMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["writeIfSpace"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceParamSchema,
-                    _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._WriterInterfaceModuleWriteIfSpaceMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1305,22 +1389,26 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                         self,
                     ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregResultSchema._Fields: ...
 
-                class _Methods(
-                    dict[str, _InterfaceMethod[_StructSchema, _StructSchema]],
-                ):
+                class _UnregisterInterfaceModuleUnregMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregResultSchema: ...
+
+                class _Methods(dict[str, _InterfaceMethod]):
                     @overload
                     def __getitem__(
                         self,
                         key: Literal["unreg"],
-                    ) -> _InterfaceMethod[
-                        _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregParamSchema,
-                        _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregResultSchema,
-                    ]: ...
+                    ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregMethod: ...
                     @overload
-                    def __getitem__(
-                        self,
-                        key: str,
-                    ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                    def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
                 @property
                 @override
@@ -1381,20 +1469,26 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _StatsCallbackInterfaceModuleStatusMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["status"],
-                ) -> _InterfaceMethod[
-                    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusParamSchema,
-                    _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusResultSchema,
-                ]: ...
+                ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._StatsCallbackInterfaceModuleStatusMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -1456,6 +1550,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
+
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
 
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
@@ -1519,6 +1625,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _ChannelInterfaceModuleSetBufferSizeParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1540,6 +1658,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleSetBufferSizeMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeResultSchema: ...
 
         class _ChannelInterfaceModuleReaderParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -1571,6 +1701,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderResultSchema._Fields: ...
 
+        class _ChannelInterfaceModuleReaderMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderResultSchema: ...
+
         class _ChannelInterfaceModuleWriterParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -1600,6 +1742,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleWriterMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterResultSchema: ...
 
         class _ChannelInterfaceModuleEndpointsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
@@ -1641,6 +1795,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsResultSchema._Fields: ...
 
+        class _ChannelInterfaceModuleEndpointsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsResultSchema: ...
+
         class _ChannelInterfaceModuleSetAutoCloseSemanticsParamSchema(_StructSchema):
             class _CsField(_StructSchemaField):
                 @property
@@ -1671,6 +1837,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsResultSchema._Fields: ...
 
+        class _ChannelInterfaceModuleSetAutoCloseSemanticsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsResultSchema: ...
+
         class _ChannelInterfaceModuleCloseParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -1695,6 +1873,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleCloseMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseResultSchema: ...
 
         class _ChannelInterfaceModuleRegisterStatsCallbackParamSchema(_StructSchema):
             class _CallbackField(_StructSchemaField):
@@ -1743,84 +1933,66 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ChannelInterfaceModuleRegisterStatsCallbackMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["setBufferSize"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetBufferSizeMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["reader"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleReaderMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["writer"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleWriterMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["endpoints"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleEndpointsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["setAutoCloseSemantics"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleSetAutoCloseSemanticsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["close"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleCloseMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["registerStatsCallback"],
-            ) -> _InterfaceMethod[
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackParamSchema,
-                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackResultSchema,
-            ]: ...
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2077,6 +2249,18 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _StartChannelsServiceInterfaceModuleStartParamSchema(_StructSchema):
             class _ReaderSrtsField(_StructSchemaField):
                 @property
@@ -2168,28 +2352,31 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _StartChannelsServiceInterfaceModuleStartMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["start"],
-            ) -> _InterfaceMethod[
-                _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartParamSchema,
-                _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartResultSchema,
-            ]: ...
+            ) -> _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._StartChannelsServiceInterfaceModuleStartMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2481,6 +2668,18 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                     self,
                 ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _FactoryInterfaceModuleCreateParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2511,28 +2710,31 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                     self,
                 ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _FactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["create"],
-                ) -> _InterfaceMethod[
-                    _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema,
-                    _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema,
-                ]: ...
+                ) -> _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -2588,20 +2790,26 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                     self,
                 ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _StoppedCallbackInterfaceModuleStoppedMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["stopped"],
-                ) -> _InterfaceMethod[
-                    _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedParamSchema,
-                    _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedResultSchema,
-                ]: ...
+                ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._StoppedCallbackInterfaceModuleStoppedMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -2663,6 +2871,18 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _RunnableInterfaceModuleStartParamSchema(_StructSchema):
             class _PortInfosReaderSrField(_StructSchemaField):
                 @property
@@ -2716,6 +2936,18 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartResultSchema._Fields: ...
 
+        class _RunnableInterfaceModuleStartMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartResultSchema: ...
+
         class _RunnableInterfaceModuleStopParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2741,36 +2973,36 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _RunnableInterfaceModuleStopMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _RunnableInterfaceModule._RunnableSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["start"],
-            ) -> _InterfaceMethod[
-                _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartParamSchema,
-                _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartResultSchema,
-            ]: ...
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStartMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["stop"],
-            ) -> _InterfaceMethod[
-                _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopParamSchema,
-                _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopResultSchema,
-            ]: ...
+            ) -> _RunnableInterfaceModule._RunnableSchema._RunnableInterfaceModuleStopMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -2845,6 +3077,18 @@ class _ProcessInterfaceModule(
                     self,
                 ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+            class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
             class _FactoryInterfaceModuleCreateParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -2875,28 +3119,31 @@ class _ProcessInterfaceModule(
                     self,
                 ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _FactoryInterfaceModuleCreateMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _InterfaceMethod[
-                    _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoParamSchema,
-                    _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoResultSchema,
-                ]: ...
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._IdentifiableInterfaceModuleInfoMethod: ...
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["create"],
-                ) -> _InterfaceMethod[
-                    _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateParamSchema,
-                    _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateResultSchema,
-                ]: ...
+                ) -> _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._FactoryInterfaceModuleCreateMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -3078,20 +3325,26 @@ class _ProcessInterfaceModule(
                     self,
                 ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _StateTransitionInterfaceModuleStateChangedMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["stateChanged"],
-                ) -> _InterfaceMethod[
-                    _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedParamSchema,
-                    _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedResultSchema,
-                ]: ...
+                ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._StateTransitionInterfaceModuleStateChangedMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -3155,6 +3408,18 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _GatewayRegistrableInterfaceModuleSturdyRefAtGatewayParamSchema(
             _StructSchema,
         ):
@@ -3214,6 +3479,20 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayResultSchema._Fields: ...
 
+        class _GatewayRegistrableInterfaceModuleSturdyRefAtGatewayMethod(
+            _InterfaceMethod,
+        ):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayResultSchema: ...
+
         class _ProcessInterfaceModuleInPortsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3250,6 +3529,18 @@ class _ProcessInterfaceModule(
             def fields(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleInPortsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsResultSchema: ...
 
         class _ProcessInterfaceModuleConnectInPortParamSchema(_StructSchema):
             class _SturdyRefField(_StructSchemaField):
@@ -3294,6 +3585,18 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortResultSchema._Fields: ...
 
+        class _ProcessInterfaceModuleConnectInPortMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortResultSchema: ...
+
         class _ProcessInterfaceModuleOutPortsParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3330,6 +3633,18 @@ class _ProcessInterfaceModule(
             def fields(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleOutPortsMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsResultSchema: ...
 
         class _ProcessInterfaceModuleConnectOutPortParamSchema(_StructSchema):
             class _SturdyRefField(_StructSchemaField):
@@ -3374,6 +3689,18 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortResultSchema._Fields: ...
 
+        class _ProcessInterfaceModuleConnectOutPortMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortResultSchema: ...
+
         class _ProcessInterfaceModuleConfigEntriesParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3411,6 +3738,18 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesResultSchema._Fields: ...
 
+        class _ProcessInterfaceModuleConfigEntriesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesResultSchema: ...
+
         class _ProcessInterfaceModuleStartParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3429,6 +3768,18 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartResultSchema._Fields: ...
 
+        class _ProcessInterfaceModuleStartMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartResultSchema: ...
+
         class _ProcessInterfaceModuleStopParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -3446,6 +3797,18 @@ class _ProcessInterfaceModule(
             def fields(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleStopMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopResultSchema: ...
 
         class _ProcessInterfaceModuleSetConfigEntryParamSchema(_StructSchema):
             class _ValField(_StructSchemaField):
@@ -3480,6 +3843,18 @@ class _ProcessInterfaceModule(
             def fields(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleSetConfigEntryMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryResultSchema: ...
 
         class _ProcessInterfaceModuleStateParamSchema(_StructSchema):
             class _TransitionCallbackField(_StructSchemaField):
@@ -3523,100 +3898,78 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ProcessInterfaceModuleStateMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["sturdyRefAtGateway"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._GatewayRegistrableInterfaceModuleSturdyRefAtGatewayMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["inPorts"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleInPortsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["connectInPort"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["outPorts"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleOutPortsMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["connectOutPort"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["configEntries"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConfigEntriesMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["start"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["stop"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopResultSchema,
-            ]: ...
+            ) -> (
+                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["setConfigEntry"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleSetConfigEntryMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["state"],
-            ) -> _InterfaceMethod[
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateParamSchema,
-                _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema,
-            ]: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override

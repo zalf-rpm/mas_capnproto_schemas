@@ -635,6 +635,18 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -697,6 +709,18 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
 
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveResultSchema: ...
+
         class _ProfileInterfaceModuleDataParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -739,6 +763,18 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataResultSchema._Fields: ...
 
+        class _ProfileInterfaceModuleDataMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataResultSchema: ...
+
         class _ProfileInterfaceModuleGeoLocationParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
@@ -763,44 +799,43 @@ class _ProfileInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ProfileInterfaceModuleGeoLocationMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ProfileInterfaceModule._ProfileSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveParamSchema,
-                _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _ProfileInterfaceModule._ProfileSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["data"],
-            ) -> _InterfaceMethod[
-                _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataParamSchema,
-                _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataResultSchema,
-            ]: ...
+            ) -> (
+                _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleDataMethod
+            ): ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["geoLocation"],
-            ) -> _InterfaceMethod[
-                _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationParamSchema,
-                _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationResultSchema,
-            ]: ...
+            ) -> _ProfileInterfaceModule._ProfileSchema._ProfileInterfaceModuleGeoLocationMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
@@ -884,20 +919,26 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesResultSchema._Fields: ...
 
-            class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+            class _StreamInterfaceModuleNextProfilesMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["nextProfiles"],
-                ) -> _InterfaceMethod[
-                    _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesParamSchema,
-                    _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesResultSchema,
-                ]: ...
+                ) -> _ServiceInterfaceModule._StreamInterfaceModule._StreamSchema._StreamInterfaceModuleNextProfilesMethod: ...
                 @overload
-                def __getitem__(
-                    self,
-                    key: str,
-                ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
             @property
             @override
@@ -966,6 +1007,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema._Fields: ...
 
+        class _IdentifiableInterfaceModuleInfoMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema: ...
+
         class _PersistentInterfaceModuleSaveParamSchema(_StructSchema):
             class _SealForField(_StructSchemaField):
                 @property
@@ -1027,6 +1080,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema._Fields: ...
+
+        class _PersistentInterfaceModuleSaveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema: ...
 
         class _ServiceInterfaceModuleCheckAvailableParametersParamSchema(_StructSchema):
             class _MandatoryField(_StructSchemaField):
@@ -1127,6 +1192,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersResultSchema._Fields: ...
 
+        class _ServiceInterfaceModuleCheckAvailableParametersMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersResultSchema: ...
+
         class _ServiceInterfaceModuleGetAllAvailableParametersParamSchema(
             _StructSchema,
         ):
@@ -1192,6 +1269,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersResultSchema._Fields: ...
 
+        class _ServiceInterfaceModuleGetAllAvailableParametersMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersResultSchema: ...
+
         class _ServiceInterfaceModuleClosestProfilesAtParamSchema(_StructSchema):
             class _CoordField(_StructSchemaField):
                 @property
@@ -1252,6 +1341,18 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def fields(
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtResultSchema._Fields: ...
+
+        class _ServiceInterfaceModuleClosestProfilesAtMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtResultSchema: ...
 
         class _ServiceInterfaceModuleStreamAllProfilesParamSchema(_StructSchema):
             class _MandatoryField(_StructSchemaField):
@@ -1324,60 +1425,51 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesResultSchema._Fields: ...
 
-        class _Methods(dict[str, _InterfaceMethod[_StructSchema, _StructSchema]]):
+        class _ServiceInterfaceModuleStreamAllProfilesMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesResultSchema: ...
+
+        class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
                 self,
                 key: Literal["info"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._IdentifiableInterfaceModuleInfoMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["save"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._PersistentInterfaceModuleSaveMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["checkAvailableParameters"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleCheckAvailableParametersMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["getAllAvailableParameters"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleGetAllAvailableParametersMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["closestProfilesAt"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleClosestProfilesAtMethod: ...
             @overload
             def __getitem__(
                 self,
                 key: Literal["streamAllProfiles"],
-            ) -> _InterfaceMethod[
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesParamSchema,
-                _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesResultSchema,
-            ]: ...
+            ) -> _ServiceInterfaceModule._ServiceSchema._ServiceInterfaceModuleStreamAllProfilesMethod: ...
             @overload
-            def __getitem__(
-                self,
-                key: str,
-            ) -> _InterfaceMethod[_StructSchema, _StructSchema]: ...
+            def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
         @property
         @override
