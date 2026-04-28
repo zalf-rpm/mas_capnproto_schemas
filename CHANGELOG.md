@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.60](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.59...v0.1.60) (2026-04-28)
+
+
+### Features
+
+* added list of values for heterogeneous lists ([1a38550](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/1a3855002cf57e397134e0dbc40be16da33b2873))
+* recompile capnp schemas ([#51](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/51)) ([effea0f](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/effea0fa5dc7c95e1644d4d34dfc12c921ab2ff5))
+
 ## [0.1.59](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.58...v0.1.59) (2026-04-27)
 
 
