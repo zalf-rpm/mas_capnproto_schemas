@@ -179,6 +179,7 @@ struct Value {
     LD,
     LCAP,
     LPAIR,
+    LV,
   };
 
   struct _capnpPrivate {
@@ -966,6 +967,10 @@ public:
   inline bool hasLpair() const;
   inline  ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>::Reader getLpair() const;
 
+  inline bool isLv() const;
+  inline bool hasLv() const;
+  inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Reader getLv() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -1204,6 +1209,14 @@ public:
   inline  ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>::Builder initLpair(unsigned int size);
   inline void adoptLpair(::capnp::Orphan< ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>>&& value);
   inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>> disownLpair();
+
+  inline bool isLv();
+  inline bool hasLv();
+  inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Builder getLv();
+  inline void setLv( ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Builder initLv(unsigned int size);
+  inline void adoptLv(::capnp::Orphan< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>> disownLv();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -3820,6 +3833,60 @@ inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Pair< ::capnp::Any
   KJ_IREQUIRE((which() == Value::LPAIR),
               "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Pair< ::capnp::AnyPointer,  ::capnp::AnyPointer>,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Value::Reader::isLv() const {
+  return which() == Value::LV;
+}
+inline bool Value::Builder::isLv() {
+  return which() == Value::LV;
+}
+inline bool Value::Reader::hasLv() const {
+  if (which() != Value::LV) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Value::Builder::hasLv() {
+  if (which() != Value::LV) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Reader Value::Reader::getLv() const {
+  KJ_IREQUIRE((which() == Value::LV),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Builder Value::Builder::getLv() {
+  KJ_IREQUIRE((which() == Value::LV),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Value::Builder::setLv( ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Reader value) {
+  _builder.setDataField<Value::Which>(
+      ::capnp::bounded<4>() * ::capnp::ELEMENTS, Value::LV);
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>::Builder Value::Builder::initLv(unsigned int size) {
+  _builder.setDataField<Value::Which>(
+      ::capnp::bounded<4>() * ::capnp::ELEMENTS, Value::LV);
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Value::Builder::adoptLv(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>&& value) {
+  _builder.setDataField<Value::Which>(
+      ::capnp::bounded<4>() * ::capnp::ELEMENTS, Value::LV);
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>> Value::Builder::disownLv() {
+  KJ_IREQUIRE((which() == Value::LV),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::common::Value,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 

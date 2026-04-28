@@ -63,6 +63,7 @@ struct Value @0xe17592335373b246 {  # 16 bytes, 1 ptrs
     ld @27 :List(Data);  # ptr[0], union tag = 27
     lcap @28 :List(Capability);  # ptr[0], union tag = 28
     lpair @29 :List(Pair);  # ptr[0], union tag = 29
+    lv @30 :List(Value);  # ptr[0], union tag = 30
   }
 }
 interface Factory @0xa869f50b8c586ed9 (Output) superclasses(Identifiable) {
