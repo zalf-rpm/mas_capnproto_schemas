@@ -2,6 +2,10 @@
 
 from typing import Protocol
 
+from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
+)
+
 from mas.schema.cluster.cluster_admin_service_capnp.types import clients as clients
 from mas.schema.cluster.cluster_admin_service_capnp.types import common as common
 from mas.schema.cluster.cluster_admin_service_capnp.types import modules as modules
@@ -37,7 +41,10 @@ class ModelidRequest(Protocol):
     def send(self) -> results_client.ModelidResult: ...
 
 class RegistermodelinstanceRequest(Protocol):
-    instance: common.AnyPointer
+    @property
+    def instance(self) -> _DynamicObjectBuilder: ...
+    @instance.setter
+    def instance(self, value: common.Capability) -> None: ...
     registrationToken: str
     def send(self) -> results_client.RegistermodelinstanceResult: ...
 

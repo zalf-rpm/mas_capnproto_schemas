@@ -3,6 +3,10 @@
 from collections.abc import Sequence
 from typing import Any, Literal, Protocol, overload
 
+from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
+)
+
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.service.service_capnp.types import builders as builders
 from mas.schema.service.service_capnp.types import common as common
@@ -39,7 +43,10 @@ class FactoryCreateRequest(Protocol):
     interfaceNameToRegistrySR: (
         builders.PairListBuilder | readers.PairListReader | Sequence[Any]
     )
-    msgPayload: common.AnyPointer
+    @property
+    def msgPayload(self) -> _DynamicObjectBuilder: ...
+    @msgPayload.setter
+    def msgPayload(self, value: common.AnyPointer) -> None: ...
     @overload
     def init(
         self,

@@ -3,7 +3,7 @@
 from typing import override
 
 from capnp.lib.capnp import (
-    _DynamicObjectReader,
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -12,7 +12,7 @@ from mas.schema.jobs.jobs_capnp.types import readers as readers
 
 class JobBuilder(_DynamicStructBuilder):
     @property
-    def data(self) -> _DynamicObjectReader: ...
+    def data(self) -> _DynamicObjectBuilder: ...
     @data.setter
     def data(self, value: common.AnyPointer) -> None: ...
     @property

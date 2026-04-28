@@ -2,8 +2,11 @@
 
 from typing import Protocol
 
+from capnp.lib.capnp import (
+    _DynamicObjectReader,
+)
+
 from mas.schema.cluster.cluster_admin_service_capnp.types import clients as clients
-from mas.schema.cluster.cluster_admin_service_capnp.types import common as common
 from mas.schema.cluster.cluster_admin_service_capnp.types.results import (
     server as results_server,
 )
@@ -66,7 +69,7 @@ class ModelidCallContext(Protocol):
     def results(self) -> results_server.ModelidServerResult: ...
 
 class RegistermodelinstanceParams(Protocol):
-    instance: common.AnyPointer
+    instance: _DynamicObjectReader
     registrationToken: str
 
 class RegistermodelinstanceCallContext(Protocol):

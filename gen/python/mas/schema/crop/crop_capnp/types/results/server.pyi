@@ -3,6 +3,7 @@
 from typing import Any, Literal, overload
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -12,7 +13,7 @@ from mas.schema.crop.crop_capnp.types import common as common
 
 class ParametersServerResult(_DynamicStructBuilder):
     @property
-    def params(self) -> common.AnyPointer: ...
+    def params(self) -> _DynamicObjectBuilder: ...
     @params.setter
     def params(self, value: common.AnyPointer) -> None: ...
 

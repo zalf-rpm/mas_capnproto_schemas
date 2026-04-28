@@ -6,6 +6,7 @@ from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _EnumModule,
@@ -935,7 +936,7 @@ class _IOFactoryInterfaceModule(_IdentifiableInterfaceModule):
     class Server(_IdentifiableInterfaceModule.Server):
         def produce(
             self,
-            in_: common.AnyPointer,
+            in_: _DynamicObjectReader,
             _context: contexts.ProduceCallContext,
             **kwargs: object,
         ) -> Awaitable[

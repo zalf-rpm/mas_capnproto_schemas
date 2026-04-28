@@ -6,6 +6,7 @@ from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceMethod,
@@ -935,7 +936,7 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
             self,
             timeoutSeconds: int,
             interfaceNameToRegistrySR: readers.PairListReader,
-            msgPayload: common.AnyPointer,
+            msgPayload: _DynamicObjectReader,
             _context: contexts.FactoryCreateCallContext,
             **kwargs: object,
         ) -> Awaitable[results_tuples.FactoryCreateResultTuple | None]: ...

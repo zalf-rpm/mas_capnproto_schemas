@@ -3,7 +3,7 @@
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
-    _DynamicObjectReader,
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -158,11 +158,11 @@ class CoordBuilder(_DynamicStructBuilder):
 
 class RectBoundsBuilder(_DynamicStructBuilder):
     @property
-    def tl(self) -> _DynamicObjectReader: ...
+    def tl(self) -> _DynamicObjectBuilder: ...
     @tl.setter
     def tl(self, value: common.AnyPointer) -> None: ...
     @property
-    def br(self) -> _DynamicObjectReader: ...
+    def br(self) -> _DynamicObjectBuilder: ...
     @br.setter
     def br(self, value: common.AnyPointer) -> None: ...
     @override

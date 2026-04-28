@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from typing import Any, Literal, overload
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -21,7 +22,7 @@ class UnregisterServerResult(_DynamicStructBuilder):
 
 class ValueServerResult(_DynamicStructBuilder):
     @property
-    def val(self) -> common.AnyPointer: ...
+    def val(self) -> _DynamicObjectBuilder: ...
     @val.setter
     def val(self, value: common.AnyPointer) -> None: ...
 

@@ -1,6 +1,7 @@
 """Server result helper types for `config.capnp`."""
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -8,7 +9,7 @@ from mas.schema.config.config_capnp.types import common as common
 
 class NextconfigServerResult(_DynamicStructBuilder):
     @property
-    def config(self) -> common.AnyPointer: ...
+    def config(self) -> _DynamicObjectBuilder: ...
     @config.setter
     def config(self, value: common.AnyPointer) -> None: ...
     @property

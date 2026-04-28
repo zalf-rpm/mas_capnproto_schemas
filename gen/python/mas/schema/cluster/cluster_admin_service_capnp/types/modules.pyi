@@ -6,6 +6,7 @@ from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceMethod,
@@ -872,7 +873,7 @@ class _ClusterStructModule(_StructModule):
             ) -> Awaitable[None]: ...
             def registerModelInstance(
                 self,
-                instance: common.AnyPointer,
+                instance: _DynamicObjectReader,
                 registrationToken: str,
                 _context: contexts.RegistermodelinstanceCallContext,
                 **kwargs: object,

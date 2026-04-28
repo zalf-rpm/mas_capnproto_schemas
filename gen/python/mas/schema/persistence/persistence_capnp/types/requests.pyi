@@ -2,6 +2,10 @@
 
 from typing import Any, Literal, Protocol, overload
 
+from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
+)
+
 from mas.schema.persistence.persistence_capnp.types import builders as builders
 from mas.schema.persistence.persistence_capnp.types import common as common
 from mas.schema.persistence.persistence_capnp.types.results import (
@@ -46,7 +50,10 @@ class ResolveRequest(Protocol):
     def send(self) -> results_client.ResolveResult: ...
 
 class GatewayRegisterRequest(Protocol):
-    cap: common.AnyPointer
+    @property
+    def cap(self) -> _DynamicObjectBuilder: ...
+    @cap.setter
+    def cap(self, value: common.Capability) -> None: ...
     secretSeed: str
     def send(self) -> results_client.GatewayRegisterResult: ...
 

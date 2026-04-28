@@ -3,6 +3,7 @@
 from typing import Any, Literal, overload
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -20,7 +21,7 @@ class ReleaseServerResult(_DynamicStructBuilder):
 
 class RestoreServerResult(_DynamicStructBuilder):
     @property
-    def cap(self) -> common.Capability: ...
+    def cap(self) -> _DynamicObjectBuilder: ...
     @cap.setter
     def cap(self, value: common.Capability) -> None: ...
 
