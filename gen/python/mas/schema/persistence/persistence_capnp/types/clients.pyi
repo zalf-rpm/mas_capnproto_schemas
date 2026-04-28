@@ -79,12 +79,12 @@ class HostPortResolverClient(IdentifiableClient, RestorerClient):
 class GatewayClient(IdentifiableClient, RestorerClient):
     def register(
         self,
-        cap: common.AnyPointer | None = None,
+        cap: common.Capability | None = None,
         secretSeed: str | None = None,
     ) -> results_client.GatewayRegisterResult: ...
     def register_request(
         self,
-        cap: common.AnyPointer | None = None,
+        cap: common.Capability | None = None,
         secretSeed: str | None = None,
     ) -> requests.GatewayRegisterRequest: ...
 

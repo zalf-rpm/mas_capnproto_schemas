@@ -3,6 +3,10 @@
 from collections.abc import Sequence
 from typing import Any, Literal, Protocol, overload
 
+from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
+)
+
 from mas.schema.common.common_capnp.types.builders import ValueBuilder
 from mas.schema.fbp.fbp_capnp.types import builders as builders
 from mas.schema.fbp.fbp_capnp.types import clients as clients
@@ -23,7 +27,10 @@ class ReadifmsgRequest(Protocol):
     def send(self) -> results_client.ReadifmsgResult: ...
 
 class WriteRequest(Protocol):
-    value: common.AnyPointer
+    @property
+    def value(self) -> _DynamicObjectBuilder: ...
+    @value.setter
+    def value(self, value: common.AnyPointer) -> None: ...
     done: None
     noMsg: None
     def send(self) -> results_client.WriteResult: ...
@@ -32,7 +39,10 @@ class WriterCloseRequest(Protocol):
     def send(self) -> results_client.WriterCloseResult: ...
 
 class WriteifspaceRequest(Protocol):
-    value: common.AnyPointer
+    @property
+    def value(self) -> _DynamicObjectBuilder: ...
+    @value.setter
+    def value(self, value: common.AnyPointer) -> None: ...
     done: None
     noMsg: None
     def send(self) -> results_client.WriteifspaceResult: ...

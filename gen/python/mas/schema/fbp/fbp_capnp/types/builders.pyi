@@ -4,7 +4,6 @@ from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicObjectBuilder,
-    _DynamicObjectReader,
     _DynamicStructBuilder,
 )
 
@@ -78,7 +77,7 @@ class IIPBuilder(_DynamicStructBuilder):
 
 class MsgBuilder(_DynamicStructBuilder):
     @property
-    def value(self) -> _DynamicObjectReader: ...
+    def value(self) -> _DynamicObjectBuilder: ...
     @value.setter
     def value(self, value: common.AnyPointer) -> None: ...
     @property

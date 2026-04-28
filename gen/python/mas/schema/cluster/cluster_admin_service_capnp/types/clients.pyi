@@ -39,7 +39,7 @@ class ModelInstanceFactoryClient(IdentifiableClient):
     def modelId(self) -> results_client.ModelidResult: ...
     def registerModelInstance(
         self,
-        instance: common.AnyPointer | None = None,
+        instance: common.Capability | None = None,
         registrationToken: str | None = None,
     ) -> results_client.RegistermodelinstanceResult: ...
     def restoreSturdyRef(
@@ -62,7 +62,7 @@ class ModelInstanceFactoryClient(IdentifiableClient):
     def modelId_request(self) -> requests.ModelidRequest: ...
     def registerModelInstance_request(
         self,
-        instance: common.AnyPointer | None = None,
+        instance: common.Capability | None = None,
         registrationToken: str | None = None,
     ) -> requests.RegistermodelinstanceRequest: ...
     def restoreSturdyRef_request(

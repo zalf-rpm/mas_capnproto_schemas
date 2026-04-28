@@ -24,3 +24,11 @@ type AnyPointer = (
     | _DynamicObjectReader
     | _DynamicObjectBuilder
 )
+
+# Type alias for Capability parameters
+type Capability = (
+    _DynamicCapabilityClient
+    | _DynamicCapabilityServer
+    | _DynamicObjectReader
+    | _DynamicObjectBuilder
+)

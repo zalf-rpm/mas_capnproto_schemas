@@ -3,7 +3,7 @@
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
-    _DynamicObjectReader,
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -105,7 +105,7 @@ class XYPlusResultBuilder(_DynamicStructBuilder):
 
 class EnvBuilder(_DynamicStructBuilder):
     @property
-    def rest(self) -> _DynamicObjectReader: ...
+    def rest(self) -> _DynamicObjectBuilder: ...
     @rest.setter
     def rest(self, value: common.AnyPointer) -> None: ...
     @property

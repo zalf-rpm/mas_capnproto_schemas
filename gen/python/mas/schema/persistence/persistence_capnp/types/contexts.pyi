@@ -2,8 +2,11 @@
 
 from typing import Protocol
 
+from capnp.lib.capnp import (
+    _DynamicObjectReader,
+)
+
 from mas.schema.persistence.persistence_capnp.types import builders as builders
-from mas.schema.persistence.persistence_capnp.types import common as common
 from mas.schema.persistence.persistence_capnp.types import readers as readers
 from mas.schema.persistence.persistence_capnp.types.results import (
     server as results_server,
@@ -45,7 +48,7 @@ class ResolveCallContext(Protocol):
     def results(self) -> results_server.ResolveServerResult: ...
 
 class GatewayRegisterParams(Protocol):
-    cap: common.AnyPointer
+    cap: _DynamicObjectReader
     secretSeed: str
 
 class GatewayRegisterCallContext(Protocol):

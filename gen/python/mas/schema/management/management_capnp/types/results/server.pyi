@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from typing import Any, Literal, overload
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -32,7 +33,7 @@ class NutrientsServerResult(_DynamicStructBuilder):
 
 class ParametersServerResult(_DynamicStructBuilder):
     @property
-    def params(self) -> common.AnyPointer: ...
+    def params(self) -> _DynamicObjectBuilder: ...
     @params.setter
     def params(self, value: common.AnyPointer) -> None: ...
 

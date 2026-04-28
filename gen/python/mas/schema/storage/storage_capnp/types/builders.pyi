@@ -3,6 +3,7 @@
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -159,7 +160,7 @@ class ValueBuilder(_DynamicStructBuilder):
         value: DataListBuilder | readers.DataListReader | dict[str, Any],
     ) -> None: ...
     @property
-    def anyValue(self) -> _DynamicStructBuilder: ...
+    def anyValue(self) -> _DynamicObjectBuilder: ...
     @anyValue.setter
     def anyValue(self, value: common.AnyStruct | dict[str, Any]) -> None: ...
     @override

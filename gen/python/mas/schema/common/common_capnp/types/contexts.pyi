@@ -2,8 +2,11 @@
 
 from typing import Protocol
 
+from capnp.lib.capnp import (
+    _DynamicObjectReader,
+)
+
 from mas.schema.common.common_capnp.types import builders as builders
-from mas.schema.common.common_capnp.types import common as common
 from mas.schema.common.common_capnp.types.results import server as results_server
 
 class InfoParams(Protocol): ...
@@ -21,7 +24,7 @@ class CreateCallContext(Protocol):
     def results(self) -> results_server.CreateServerResult: ...
 
 class ProduceParams(Protocol):
-    in_: common.AnyPointer
+    in_: _DynamicObjectReader
 
 class ProduceCallContext(Protocol):
     params: ProduceParams

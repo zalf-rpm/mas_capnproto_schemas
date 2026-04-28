@@ -3,7 +3,7 @@
 from typing import Any, Literal, override
 
 from capnp.lib.capnp import (
-    _DynamicObjectReader,
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -24,7 +24,7 @@ class CreateParamsBuilder(_DynamicStructBuilder):
         value: PairListBuilder | readers.PairListReader | dict[str, Any],
     ) -> None: ...
     @property
-    def msgPayload(self) -> _DynamicObjectReader: ...
+    def msgPayload(self) -> _DynamicObjectBuilder: ...
     @msgPayload.setter
     def msgPayload(self, value: common.AnyPointer) -> None: ...
     @override
@@ -38,7 +38,7 @@ class CreateParamsBuilder(_DynamicStructBuilder):
 
 class AccessInfoBuilder(_DynamicStructBuilder):
     @property
-    def adminCap(self) -> _DynamicObjectReader: ...
+    def adminCap(self) -> _DynamicObjectBuilder: ...
     @adminCap.setter
     def adminCap(self, value: common.Capability) -> None: ...
     @property

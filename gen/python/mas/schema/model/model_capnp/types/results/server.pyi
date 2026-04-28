@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from typing import Any, Literal, overload
 
 from capnp.lib.capnp import (
+    _DynamicObjectBuilder,
     _DynamicStructBuilder,
 )
 
@@ -53,7 +54,7 @@ class RunsetServerResult(_DynamicStructBuilder):
 
 class EnvInstanceRunServerResult(_DynamicStructBuilder):
     @property
-    def result(self) -> common.AnyPointer: ...
+    def result(self) -> _DynamicObjectBuilder: ...
     @result.setter
     def result(self, value: common.AnyPointer) -> None: ...
 

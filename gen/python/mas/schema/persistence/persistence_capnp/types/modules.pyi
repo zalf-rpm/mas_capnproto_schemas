@@ -6,6 +6,7 @@ from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
+    _DynamicObjectReader,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceMethod,
@@ -1805,7 +1806,7 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
     class Server(_IdentifiableInterfaceModule.Server, _RestorerInterfaceModule.Server):
         def register(
             self,
-            cap: common.AnyPointer,
+            cap: _DynamicObjectReader,
             secretSeed: str,
             _context: contexts.GatewayRegisterCallContext,
             **kwargs: object,
