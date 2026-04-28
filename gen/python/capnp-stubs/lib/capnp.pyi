@@ -2655,6 +2655,386 @@ class _DynamicObjectBuilder:
     AnyPointer can be initialized or cast to different pointer types.
     """
 
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceProxyClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: model_capnp.types.modules._EnvInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.EnvInstanceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._DatasetInterfaceModule,
+    ) -> climate_capnp.types.clients.DatasetClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._ServiceInterfaceModule,
+    ) -> climate_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._TimeSeriesInterfaceModule,
+    ) -> climate_capnp.types.clients.TimeSeriesClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: common_capnp.types.modules._IdentifiableHolderInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableHolderClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: crop_capnp.types.modules._CropInterfaceModule,
+    ) -> crop_capnp.types.clients.CropClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule,
+    ) -> fbp_capnp.types.clients.ReaderClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._WriterInterfaceModule,
+    ) -> fbp_capnp.types.clients.WriterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule,
+    ) -> grid_capnp.types.clients.GridClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: jobs_capnp.types.modules._ServiceInterfaceModule,
+    ) -> jobs_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: management_capnp.types.modules._FertilizerInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._GatewayInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule,
+    ) -> persistence_capnp.types.clients.HostPortResolverClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: soil_capnp.types.modules._ProfileInterfaceModule,
+    ) -> soil_capnp.types.clients.ProfileClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: soil_capnp.types.modules._ServiceInterfaceModule,
+    ) -> soil_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule,
+    ) -> storage_capnp.types.clients.StoreClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule,
+    ) -> storage_capnp.types.clients.ContainerClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.AlterTimeSeriesWrapperFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._CSVTimeSeriesFactoryInterfaceModule,
+    ) -> climate_capnp.types.clients.CSVTimeSeriesFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._AdminMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.AdminMasterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ModelInstanceFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._RuntimeInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.RuntimeClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UserMasterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UserMasterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: common_capnp.types.modules._FactoryInterfaceModule,
+    ) -> common_capnp.types.clients.FactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: common_capnp.types.modules._IOFactoryInterfaceModule,
+    ) -> common_capnp.types.clients.IOFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: crop_capnp.types.modules._ServiceInterfaceModule,
+    ) -> crop_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._FactoryInterfaceModule,
+    ) -> fbp_capnp.types.clients.RunnableFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule,
+    ) -> fbp_capnp.types.clients.StartChannelsServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: management_capnp.types.modules._FertilizerServiceInterfaceModule,
+    ) -> management_capnp.types.clients.FertilizerServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> management_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: model_capnp.types.modules._ClimateInstanceInterfaceModule,
+    ) -> model_capnp.types.clients.ClimateInstanceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: model_capnp.types.modules._InstanceFactoryInterfaceModule,
+    ) -> model_capnp.types.clients.InstanceFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: monica_management_capnp.types.modules._ServiceInterfaceModule,
+    ) -> monica_management_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: registry_capnp.types.modules._AdminInterfaceModule,
+    ) -> registry_capnp.types.clients.AdminClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistrarClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: registry_capnp.types.modules._RegistryInterfaceModule,
+    ) -> registry_capnp.types.clients.RegistryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: service_capnp.types.modules._AdminInterfaceModule,
+    ) -> service_capnp.types.clients.AdminClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: service_capnp.types.modules._FactoryInterfaceModule,
+    ) -> service_capnp.types.clients.FactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: service_capnp.types.modules._SimpleFactoryInterfaceModule,
+    ) -> service_capnp.types.clients.SimpleFactoryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._DatasetInterfaceModule._GetLocationsCallbackInterfaceModule,
+    ) -> climate_capnp.types.clients.GetLocationsCallbackClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._MetadataStructModule._InformationInterfaceModule,
+    ) -> climate_capnp.types.clients.InformationClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: climate_capnp.types.modules._MetadataStructModule._SupportedInterfaceModule,
+    ) -> climate_capnp.types.clients.SupportedClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._UnregisterInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.UnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ValueHolderInterfaceModule,
+    ) -> cluster_admin_service_capnp.types.clients.ValueHolderClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: common_capnp.types.modules._HolderInterfaceModule,
+    ) -> common_capnp.types.clients.HolderClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: common_capnp.types.modules._IdentifiableInterfaceModule,
+    ) -> common_capnp.types.clients.IdentifiableClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: config_capnp.types.modules._ServiceInterfaceModule,
+    ) -> config_capnp.types.clients.ServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: modam_capnp.types.modules._ModamWrapperServiceInterfaceModule,
+    ) -> modam_capnp.types.clients.ModamWrapperServiceClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.UnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._StateTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.StateTransitionClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._RunnableInterfaceModule._StoppedCallbackInterfaceModule,
+    ) -> fbp_capnp.types.clients.StoppedCallbackClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._CallbackInterfaceModule,
+    ) -> grid_capnp.types.clients.CallbackClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: model_capnp.types.modules._EnvInstanceProxyInterfaceModule._UnregisterInterfaceModule,
+    ) -> model_capnp.types.clients.UnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: web_berest_data_import_capnp.types.modules._DWLABImportInterfaceModule,
+    ) -> web_berest_data_import_capnp.types.clients.DWLABImportClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._GatewayRegistrableInterfaceModule,
+    ) -> persistence_capnp.types.clients.GatewayRegistrableClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._HeartbeatInterfaceModule,
+    ) -> persistence_capnp.types.clients.HeartbeatClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule,
+    ) -> persistence_capnp.types.clients.RegistrarClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule,
+    ) -> persistence_capnp.types.clients.PersistentClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._ReleaseSturdyRefInterfaceModule,
+    ) -> persistence_capnp.types.clients.ReleaseSturdyRefClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: persistence_capnp.types.modules._RestorerInterfaceModule,
+    ) -> persistence_capnp.types.clients.RestorerClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._UnregisterInterfaceModule,
+    ) -> registry_capnp.types.clients.UnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: service_capnp.types.modules._StoppableInterfaceModule,
+    ) -> service_capnp.types.clients.StoppableClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: soil_capnp.types.modules._ServiceInterfaceModule._StreamInterfaceModule,
+    ) -> soil_capnp.types.clients.StreamClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule,
+    ) -> storage_capnp.types.clients.EntryClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: a_capnp.types.modules._AInterfaceModule,
+    ) -> a_capnp.types.clients.AClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._XInterfaceModule,
+    ) -> x_capnp.types.clients.XClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._YInterfaceModule,
+    ) -> x_capnp.types.clients.YClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: x_capnp.types.modules._ZInterfaceModule,
+    ) -> x_capnp.types.clients.ZClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: _InterfaceSchema | _InterfaceModule,
+    ) -> _DynamicCapabilityClient: ...
     def as_interface(self, schema: _InterfaceSchema | _InterfaceModule) -> Any:
         """Cast this AnyPointer to an interface capability.
 
@@ -2670,7 +3050,552 @@ class _DynamicObjectBuilder:
             iface = anyptr.as_interface(MyInterface.schema)  # Returns MyInterface
 
         """
-
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_management_capnp.types.lists._EventList],
+    ) -> monica_management_capnp.types.builders.EventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_management_capnp.types.lists._KVList],
+    ) -> monica_management_capnp.types.builders.KVListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_management_capnp.types.lists._SpecList],
+    ) -> monica_management_capnp.types.builders.SpecListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._BoolList],
+    ) -> monica_params_capnp.types.builders.BoolListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._DateToValueList],
+    ) -> monica_params_capnp.types.builders.DateToValueListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._Float64List],
+    ) -> monica_params_capnp.types.builders.Float64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._Float64ListList],
+    ) -> monica_params_capnp.types.builders.Float64ListListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._SoilParametersList],
+    ) -> monica_params_capnp.types.builders.SoilParametersListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._SpeciesIdToEmissionList],
+    ) -> monica_params_capnp.types.builders.SpeciesIdToEmissionListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._YearToValueList],
+    ) -> monica_params_capnp.types.builders.YearToValueListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_params_capnp.types.lists._YieldComponentList],
+    ) -> monica_params_capnp.types.builders.YieldComponentListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._ACDToValueList],
+    ) -> monica_state_capnp.types.builders.ACDToValueListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._ACDToValueListList],
+    ) -> monica_state_capnp.types.builders.ACDToValueListListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._AOMPropertiesList],
+    ) -> monica_state_capnp.types.builders.AOMPropertiesListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._BoolList],
+    ) -> monica_state_capnp.types.builders.BoolListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._DateList],
+    ) -> monica_state_capnp.types.builders.DateListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._DelayedNMinApplicationParamsList],
+    ) -> monica_state_capnp.types.builders.DelayedNMinApplicationParamsListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._Float64List],
+    ) -> monica_state_capnp.types.builders.Float64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._Float64ListList],
+    ) -> monica_state_capnp.types.builders.Float64ListListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._SoilLayerStateList],
+    ) -> monica_state_capnp.types.builders.SoilLayerStateListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._TextList],
+    ) -> monica_state_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[monica_state_capnp.types.lists._YieldComponentList],
+    ) -> monica_state_capnp.types.builders.YieldComponentListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[yieldstat_capnp.types.lists._ResultToValueList],
+    ) -> yieldstat_capnp.types.builders.ResultToValueListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[yieldstat_capnp.types.lists._YearToResultList],
+    ) -> yieldstat_capnp.types.builders.YearToResultListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._AlteredList],
+    ) -> climate_capnp.types.builders.AlteredListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._DatasetClientList],
+    ) -> climate_capnp.types.builders.DatasetClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._ElementEnumList],
+    ) -> climate_capnp.types.builders.ElementEnumListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._EntryList],
+    ) -> climate_capnp.types.builders.EntryListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._Float32List],
+    ) -> climate_capnp.types.builders.Float32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._Float32ListList],
+    ) -> climate_capnp.types.builders.Float32ListListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._IdInformationList],
+    ) -> climate_capnp.types.builders.IdInformationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._KVList],
+    ) -> climate_capnp.types.builders.KVListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._LocationList],
+    ) -> climate_capnp.types.builders.LocationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._MetaPlusDataList],
+    ) -> climate_capnp.types.builders.MetaPlusDataListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[climate_capnp.types.lists._PairList],
+    ) -> climate_capnp.types.builders.PairListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[
+            cluster_admin_service_capnp.types.lists._ModelInstanceFactoryClientList
+        ],
+    ) -> (
+        cluster_admin_service_capnp.types.builders.ModelInstanceFactoryClientListBuilder
+    ): ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._AnyPointerList],
+    ) -> common_capnp.types.builders.AnyPointerListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._BoolList],
+    ) -> common_capnp.types.builders.BoolListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._DataList],
+    ) -> common_capnp.types.builders.DataListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Float32List],
+    ) -> common_capnp.types.builders.Float32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Float64List],
+    ) -> common_capnp.types.builders.Float64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Int16List],
+    ) -> common_capnp.types.builders.Int16ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Int32List],
+    ) -> common_capnp.types.builders.Int32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Int64List],
+    ) -> common_capnp.types.builders.Int64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Int8List],
+    ) -> common_capnp.types.builders.Int8ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._PairList],
+    ) -> common_capnp.types.builders.PairListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._TextList],
+    ) -> common_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Uint16List],
+    ) -> common_capnp.types.builders.Uint16ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Uint32List],
+    ) -> common_capnp.types.builders.Uint32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Uint64List],
+    ) -> common_capnp.types.builders.Uint64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._Uint8List],
+    ) -> common_capnp.types.builders.Uint8ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[common_capnp.types.lists._ValueList],
+    ) -> common_capnp.types.builders.ValueListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._EnvironmentModificationList],
+    ) -> field_exp_data_capnp.types.builders.EnvironmentModificationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._FertilizerEventList],
+    ) -> field_exp_data_capnp.types.builders.FertilizerEventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._HarvestEventList],
+    ) -> field_exp_data_capnp.types.builders.HarvestEventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._InitialConditionsLayerList],
+    ) -> field_exp_data_capnp.types.builders.InitialConditionsLayerListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._IrrigationEventList],
+    ) -> field_exp_data_capnp.types.builders.IrrigationEventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._PlantingEventList],
+    ) -> field_exp_data_capnp.types.builders.PlantingEventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._PlotList],
+    ) -> field_exp_data_capnp.types.builders.PlotListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[field_exp_data_capnp.types.lists._TreatmentList],
+    ) -> field_exp_data_capnp.types.builders.TreatmentListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._ConfigEntryList],
+    ) -> fbp_capnp.types.builders.ConfigEntryListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._KVList],
+    ) -> fbp_capnp.types.builders.KVListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._NameAndSRList],
+    ) -> fbp_capnp.types.builders.NameAndSRListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._PortList],
+    ) -> fbp_capnp.types.builders.PortListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._ReaderClientList],
+    ) -> fbp_capnp.types.builders.ReaderClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._StartupInfoList],
+    ) -> fbp_capnp.types.builders.StartupInfoListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._SturdyRefList],
+    ) -> fbp_capnp.types.builders.SturdyRefListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._TextList],
+    ) -> fbp_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[fbp_capnp.types.lists._WriterClientList],
+    ) -> fbp_capnp.types.builders.WriterClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[grid_capnp.types.lists._AggregationPartList],
+    ) -> grid_capnp.types.builders.AggregationPartListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[grid_capnp.types.lists._LocationList],
+    ) -> grid_capnp.types.builders.LocationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[management_capnp.types.lists._EventList],
+    ) -> management_capnp.types.builders.EventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[management_capnp.types.lists._NutrientList],
+    ) -> management_capnp.types.builders.NutrientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[management_capnp.types.lists._SpecList],
+    ) -> management_capnp.types.builders.SpecListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[model_capnp.types.lists._EventList],
+    ) -> model_capnp.types.builders.EventListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[model_capnp.types.lists._Float64List],
+    ) -> model_capnp.types.builders.Float64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[model_capnp.types.lists._IdentifiableClientList],
+    ) -> model_capnp.types.builders.IdentifiableClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[model_capnp.types.lists._StatList],
+    ) -> model_capnp.types.builders.StatListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[model_capnp.types.lists._TimeSeriesClientList],
+    ) -> model_capnp.types.builders.TimeSeriesClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[registry_capnp.types.lists._EntryList],
+    ) -> registry_capnp.types.builders.EntryListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[registry_capnp.types.lists._IdInformationList],
+    ) -> registry_capnp.types.builders.IdInformationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[registry_capnp.types.lists._IdentifiableClientList],
+    ) -> registry_capnp.types.builders.IdentifiableClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[registry_capnp.types.lists._TextList],
+    ) -> registry_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[service_capnp.types.lists._IdInformationList],
+    ) -> service_capnp.types.builders.IdInformationListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[service_capnp.types.lists._IdentifiableClientList],
+    ) -> service_capnp.types.builders.IdentifiableClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[service_capnp.types.lists._PairList],
+    ) -> service_capnp.types.builders.PairListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[service_capnp.types.lists._TextList],
+    ) -> service_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[soil_capnp.types.lists._LayerList],
+    ) -> soil_capnp.types.builders.LayerListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[soil_capnp.types.lists._ProfileClientList],
+    ) -> soil_capnp.types.builders.ProfileClientListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[soil_capnp.types.lists._PropertyList],
+    ) -> soil_capnp.types.builders.PropertyListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[soil_capnp.types.lists._PropertyNameEnumList],
+    ) -> soil_capnp.types.builders.PropertyNameEnumListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[soil_params_capnp.types.lists._DataList],
+    ) -> soil_params_capnp.types.builders.DataListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._BoolList],
+    ) -> storage_capnp.types.builders.BoolListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._DataList],
+    ) -> storage_capnp.types.builders.DataListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Float32List],
+    ) -> storage_capnp.types.builders.Float32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Float64List],
+    ) -> storage_capnp.types.builders.Float64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._InfoAndContainerList],
+    ) -> storage_capnp.types.builders.InfoAndContainerListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Int16List],
+    ) -> storage_capnp.types.builders.Int16ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Int32List],
+    ) -> storage_capnp.types.builders.Int32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Int64List],
+    ) -> storage_capnp.types.builders.Int64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Int8List],
+    ) -> storage_capnp.types.builders.Int8ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._KeyAndEntryList],
+    ) -> storage_capnp.types.builders.KeyAndEntryListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._PairList],
+    ) -> storage_capnp.types.builders.PairListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._TextList],
+    ) -> storage_capnp.types.builders.TextListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Uint16List],
+    ) -> storage_capnp.types.builders.Uint16ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Uint32List],
+    ) -> storage_capnp.types.builders.Uint32ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Uint64List],
+    ) -> storage_capnp.types.builders.Uint64ListBuilder: ...
+    @overload
+    def as_list(
+        self,
+        schema: type[storage_capnp.types.lists._Uint8List],
+    ) -> storage_capnp.types.builders.Uint8ListBuilder: ...
+    @overload
+    def as_list(self, schema: _ListSchema) -> _DynamicListBuilder: ...
     def as_list(self, schema: _ListSchema) -> Any:
         """Cast this AnyPointer to a list.
 
@@ -2689,7 +3614,1023 @@ class _DynamicObjectBuilder:
             A reader for this AnyPointer.
 
         """
-
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
+    ) -> monica_management_capnp.types.builders.AvgSoilTempBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._CuttingStructModule._SpecStructModule,
+    ) -> monica_management_capnp.types.builders.SpecBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._DailyWeatherStructModule._KVStructModule,
+    ) -> monica_management_capnp.types.builders.KVBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
+    ) -> monica_management_capnp.types.builders.OptCarbonMgmtDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._IrrigationStructModule._ParametersStructModule,
+    ) -> monica_management_capnp.types.builders.ParamsIrrigationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule,
+    ) -> monica_management_capnp.types.builders.ParamsMineralFertilizationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule,
+    ) -> monica_management_capnp.types.builders.OrganicMatterParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule._ParametersStructModule,
+    ) -> monica_management_capnp.types.builders.ParamsOrganicFertilizationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._EmissionsStructModule._SpeciesIdToEmissionStructModule,
+    ) -> monica_params_capnp.types.builders.SpeciesIdToEmissionBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._EntryInterfaceModule._ValueStructModule,
+    ) -> storage_capnp.types.builders.ValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
+    ) -> fbp_capnp.types.builders.StatsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
+    ) -> management_capnp.types.builders.AvgSoilTempBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._CuttingStructModule._SpecStructModule,
+    ) -> management_capnp.types.builders.SpecBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._HarvestStructModule._OptCarbonMgmtDataStructModule,
+    ) -> management_capnp.types.builders.OptCarbonMgmtDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._EventStructModule._EventAfterStructModule,
+    ) -> monica_management_capnp.types.builders.EventAfterBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._EventStructModule._EventAtStructModule,
+    ) -> monica_management_capnp.types.builders.EventAtBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._EventStructModule._EventBetweenStructModule,
+    ) -> monica_management_capnp.types.builders.EventBetweenBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._EventStructModule._TypeStructModule,
+    ) -> monica_management_capnp.types.builders.TypeBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticHarvestStructModule,
+    ) -> monica_management_capnp.types.builders.AutomaticHarvestBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule,
+    ) -> monica_management_capnp.types.builders.AutomaticSowingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._CuttingStructModule,
+    ) -> monica_management_capnp.types.builders.CuttingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._DailyWeatherStructModule,
+    ) -> monica_management_capnp.types.builders.DailyWeatherBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._HarvestStructModule,
+    ) -> monica_management_capnp.types.builders.HarvestBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._IrrigationStructModule,
+    ) -> monica_management_capnp.types.builders.IrrigationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule,
+    ) -> monica_management_capnp.types.builders.MineralFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._NDemandFertilizationStructModule,
+    ) -> monica_management_capnp.types.builders.NDemandFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule,
+    ) -> monica_management_capnp.types.builders.OrganicFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._SaveStateStructModule,
+    ) -> monica_management_capnp.types.builders.SaveStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._SowingStructModule,
+    ) -> monica_management_capnp.types.builders.SowingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule._TillageStructModule,
+    ) -> monica_management_capnp.types.builders.TillageBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._EnvironmentParametersStructModule._YearToValueStructModule,
+    ) -> monica_params_capnp.types.builders.YearToValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._MeasuredGroundwaterTableInformationStructModule._DateToValueStructModule,
+    ) -> monica_params_capnp.types.builders.DateToValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._CPDataStructModule,
+    ) -> monica_params_capnp.types.builders.CPDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._EmissionsStructModule,
+    ) -> monica_params_capnp.types.builders.EmissionsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._EnzymeActivityTStructModule,
+    ) -> monica_params_capnp.types.builders.EnzymeActivityTBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._FoliageTStructModule,
+    ) -> monica_params_capnp.types.builders.FoliageTBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._LeafEmissionTStructModule,
+    ) -> monica_params_capnp.types.builders.LeafEmissionTBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._LeafEmissionsStructModule,
+    ) -> monica_params_capnp.types.builders.LeafEmissionsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._MicroClimateDataStructModule,
+    ) -> monica_params_capnp.types.builders.MicroClimateDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._PhotosynthTStructModule,
+    ) -> monica_params_capnp.types.builders.PhotosynthTBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule._SpeciesDataStructModule,
+    ) -> monica_params_capnp.types.builders.SpeciesDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._MonicaModelStateStructModule._ACDToValueStructModule,
+    ) -> monica_state_capnp.types.builders.ACDToValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilColumnStateStructModule._DelayedNMinApplicationParamsStructModule,
+    ) -> monica_state_capnp.types.builders.DelayedNMinApplicationParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: yieldstat_capnp.types.modules._OutputStructModule._YearToResultStructModule,
+    ) -> yieldstat_capnp.types.builders.YearToResultBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: yieldstat_capnp.types.modules._ResultStructModule._ResultToValueStructModule,
+    ) -> yieldstat_capnp.types.builders.ResultToValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._HostPortResolverInterfaceModule._RegistrarInterfaceModule._RegisterParamsStructModule,
+    ) -> persistence_capnp.types.builders.RegisterParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ContainerInterfaceModule._KeyAndEntryStructModule,
+    ) -> storage_capnp.types.builders.KeyAndEntryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._AlterTimeSeriesWrapperInterfaceModule._AlteredStructModule,
+    ) -> climate_capnp.types.builders.AlteredBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._CSVTimeSeriesFactoryInterfaceModule._CSVConfigStructModule,
+    ) -> climate_capnp.types.builders.CSVConfigBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._LocationStructModule._KVStructModule,
+    ) -> climate_capnp.types.builders.KVBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._MetadataStructModule._EntryStructModule,
+    ) -> climate_capnp.types.builders.EntryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._MetadataStructModule._ValueStructModule,
+    ) -> climate_capnp.types.builders.ValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule._ZmqPipelineAddressesStructModule,
+    ) -> cluster_admin_service_capnp.types.builders.ZmqPipelineAddressesBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._StructuredTextStructModule._StructuredTextStructureStructModule,
+    ) -> common_capnp.types.builders.StructuredTextStructureBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._MsgStructModule,
+    ) -> fbp_capnp.types.builders.MsgBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._StartupInfoStructModule,
+    ) -> fbp_capnp.types.builders.StartupInfoBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ComponentStructModule._ComponentFactoryStructModule,
+    ) -> fbp_capnp.types.builders.ComponentFactoryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ComponentStructModule._PortStructModule,
+    ) -> fbp_capnp.types.builders.PortBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IPStructModule._KVStructModule,
+    ) -> fbp_capnp.types.builders.KVBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._PortInfosStructModule._NameAndSRStructModule,
+    ) -> fbp_capnp.types.builders.NameAndSRBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ConfigEntryStructModule,
+    ) -> fbp_capnp.types.builders.ConfigEntryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule._ParamsStructModule,
+    ) -> fbp_capnp.types.builders.ParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._AggregationPartStructModule,
+    ) -> grid_capnp.types.builders.AggregationPartBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._LocationStructModule,
+    ) -> grid_capnp.types.builders.LocationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._ResolutionStructModule,
+    ) -> grid_capnp.types.builders.ResolutionBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._RowColStructModule,
+    ) -> grid_capnp.types.builders.RowColBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: grid_capnp.types.modules._GridInterfaceModule._ValueStructModule,
+    ) -> grid_capnp.types.builders.ValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._EventStructModule._EventAfterStructModule,
+    ) -> management_capnp.types.builders.EventAfterBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._EventStructModule._EventAtStructModule,
+    ) -> management_capnp.types.builders.EventAtBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._EventStructModule._EventBetweenStructModule,
+    ) -> management_capnp.types.builders.EventBetweenBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._EventStructModule._TypeStructModule,
+    ) -> management_capnp.types.builders.TypeBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticHarvestStructModule,
+    ) -> management_capnp.types.builders.AutomaticHarvestBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule,
+    ) -> management_capnp.types.builders.AutomaticSowingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._CuttingStructModule,
+    ) -> management_capnp.types.builders.CuttingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._HarvestStructModule,
+    ) -> management_capnp.types.builders.HarvestBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._IrrigationStructModule,
+    ) -> management_capnp.types.builders.IrrigationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._MineralFertilizationStructModule,
+    ) -> management_capnp.types.builders.MineralFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._NDemandFertilizationStructModule,
+    ) -> management_capnp.types.builders.NDemandFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._OrganicFertilizationStructModule,
+    ) -> management_capnp.types.builders.OrganicFertilizationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._SowingStructModule,
+    ) -> management_capnp.types.builders.SowingBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule._TillageStructModule,
+    ) -> management_capnp.types.builders.TillageBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: agmip_capnp.types.modules._FieldExperimentDataTemplateStructModule,
+    ) -> agmip_capnp.types.builders.FieldExperimentDataTemplateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._EventStructModule,
+    ) -> monica_management_capnp.types.builders.EventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ILRDatesStructModule,
+    ) -> monica_management_capnp.types.builders.ILRDatesBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_management_capnp.types.modules._ParamsStructModule,
+    ) -> monica_management_capnp.types.builders.ParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._AutomaticHarvestParametersStructModule,
+    ) -> monica_params_capnp.types.builders.AutomaticHarvestParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._AutomaticIrrigationParametersStructModule,
+    ) -> monica_params_capnp.types.builders.AutomaticIrrigationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._CropModuleParametersStructModule,
+    ) -> monica_params_capnp.types.builders.CropModuleParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._CropParametersStructModule,
+    ) -> monica_params_capnp.types.builders.CropParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._CropResidueParametersStructModule,
+    ) -> monica_params_capnp.types.builders.CropResidueParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._CropSpecStructModule,
+    ) -> monica_params_capnp.types.builders.CropSpecBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._CultivarParametersStructModule,
+    ) -> monica_params_capnp.types.builders.CultivarParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._EnvironmentParametersStructModule,
+    ) -> monica_params_capnp.types.builders.EnvironmentParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._MeasuredGroundwaterTableInformationStructModule,
+    ) -> (
+        monica_params_capnp.types.builders.MeasuredGroundwaterTableInformationBuilder
+    ): ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._NMinApplicationParametersStructModule,
+    ) -> monica_params_capnp.types.builders.NMinApplicationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._NMinCropParametersStructModule,
+    ) -> monica_params_capnp.types.builders.NMinCropParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SimulationParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SimulationParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SiteParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SiteParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SoilMoistureModuleParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SoilMoistureModuleParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SoilOrganicModuleParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SoilOrganicModuleParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SoilParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SoilParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SoilTemperatureModuleParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SoilTemperatureModuleParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SoilTransportModuleParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SoilTransportModuleParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SpeciesParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SpeciesParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._SticsParametersStructModule,
+    ) -> monica_params_capnp.types.builders.SticsParametersBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._VocStructModule,
+    ) -> monica_params_capnp.types.builders.VocBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_params_capnp.types.modules._YieldComponentStructModule,
+    ) -> monica_params_capnp.types.builders.YieldComponentBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._AOMPropertiesStructModule,
+    ) -> monica_state_capnp.types.builders.AOMPropertiesBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._CropModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.CropModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._CropStateStructModule,
+    ) -> monica_state_capnp.types.builders.CropStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._FrostModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.FrostModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._ICDataStructModule,
+    ) -> monica_state_capnp.types.builders.ICDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._MaybeBoolStructModule,
+    ) -> monica_state_capnp.types.builders.MaybeBoolBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._MonicaModelStateStructModule,
+    ) -> monica_state_capnp.types.builders.MonicaModelStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._RuntimeStateStructModule,
+    ) -> monica_state_capnp.types.builders.RuntimeStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SnowModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.SnowModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilColumnStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilColumnStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilLayerStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilLayerStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilMoistureModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilMoistureModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilOrganicModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilOrganicModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilTemperatureModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilTemperatureModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: monica_state_capnp.types.modules._SoilTransportModuleStateStructModule,
+    ) -> monica_state_capnp.types.builders.SoilTransportModuleStateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: sim_setup_capnp.types.modules._SetupStructModule,
+    ) -> sim_setup_capnp.types.builders.SetupBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: yieldstat_capnp.types.modules._OutputStructModule,
+    ) -> yieldstat_capnp.types.builders.OutputBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: yieldstat_capnp.types.modules._RestInputStructModule,
+    ) -> yieldstat_capnp.types.builders.RestInputBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: yieldstat_capnp.types.modules._ResultStructModule,
+    ) -> yieldstat_capnp.types.builders.ResultBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._AddressStructModule._AddressIp6StructModule,
+    ) -> persistence_capnp.types.builders.AddressIp6Builder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._GatewayInterfaceModule._RegResultsStructModule,
+    ) -> persistence_capnp.types.builders.RegResultsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._SaveParamsStructModule,
+    ) -> persistence_capnp.types.builders.SaveParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._PersistentInterfaceModule._SaveResultsStructModule,
+    ) -> persistence_capnp.types.builders.SaveResultsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._RestorerInterfaceModule._RestoreParamsStructModule,
+    ) -> persistence_capnp.types.builders.RestoreParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._SturdyRefStructModule._OwnerStructModule,
+    ) -> persistence_capnp.types.builders.OwnerBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._SturdyRefStructModule._TokenStructModule,
+    ) -> persistence_capnp.types.builders.TokenBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._CrossDomainRestoreStructModule,
+    ) -> registry_capnp.types.builders.CrossDomainRestoreBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: registry_capnp.types.modules._RegistrarInterfaceModule._RegParamsStructModule,
+    ) -> registry_capnp.types.builders.RegParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: registry_capnp.types.modules._RegistryInterfaceModule._EntryStructModule,
+    ) -> registry_capnp.types.builders.EntryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: service_capnp.types.modules._FactoryInterfaceModule._AccessInfoStructModule,
+    ) -> service_capnp.types.builders.AccessInfoBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: service_capnp.types.modules._FactoryInterfaceModule._CreateParamsStructModule,
+    ) -> service_capnp.types.builders.CreateParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_capnp.types.modules._LayerStructModule._PropertyStructModule,
+    ) -> soil_capnp.types.builders.PropertyBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_capnp.types.modules._QueryStructModule._ResultStructModule,
+    ) -> soil_capnp.types.builders.ResultBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._CapillaryRiseRateStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.builders.CapillaryRiseRateDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._SoilCharacteristicDataStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.builders.SoilCharacteristicDataDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._SoilCharacteristicModifierStructModule._DataStructModule,
+    ) -> soil_params_capnp.types.builders.SoilCharacteristicModifierDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._ImportExportDataStructModule,
+    ) -> storage_capnp.types.builders.ImportExportDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: storage_capnp.types.modules._StoreInterfaceModule._InfoAndContainerStructModule,
+    ) -> storage_capnp.types.builders.InfoAndContainerBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._EnsembleMemberStructModule,
+    ) -> climate_capnp.types.builders.EnsembleMemberBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._LocationStructModule,
+    ) -> climate_capnp.types.builders.LocationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._MetaPlusDataStructModule,
+    ) -> climate_capnp.types.builders.MetaPlusDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._MetadataStructModule,
+    ) -> climate_capnp.types.builders.MetadataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: climate_capnp.types.modules._TimeSeriesDataStructModule,
+    ) -> climate_capnp.types.builders.TimeSeriesDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: cluster_admin_service_capnp.types.modules._ClusterStructModule,
+    ) -> cluster_admin_service_capnp.types.builders.ClusterBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._IdInformationStructModule,
+    ) -> common_capnp.types.builders.IdInformationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._PairStructModule,
+    ) -> common_capnp.types.builders.PairBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._StructuredTextStructModule,
+    ) -> common_capnp.types.builders.StructuredTextBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._ValueStructModule,
+    ) -> common_capnp.types.builders.ValueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: date_capnp.types.modules._DateStructModule,
+    ) -> date_capnp.types.builders.DateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._CultivarStructModule,
+    ) -> field_exp_data_capnp.types.builders.CultivarBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._EnvironmentModificationStructModule,
+    ) -> field_exp_data_capnp.types.builders.EnvironmentModificationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._ExperimentDescriptionStructModule,
+    ) -> field_exp_data_capnp.types.builders.ExperimentDescriptionBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._FertilizerEventStructModule,
+    ) -> field_exp_data_capnp.types.builders.FertilizerEventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._FieldStructModule,
+    ) -> field_exp_data_capnp.types.builders.FieldBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._HarvestEventStructModule,
+    ) -> field_exp_data_capnp.types.builders.HarvestEventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._InitialConditionsLayerStructModule,
+    ) -> field_exp_data_capnp.types.builders.InitialConditionsLayerBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._IrrigationEventStructModule,
+    ) -> field_exp_data_capnp.types.builders.IrrigationEventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._MixedTypeStructModule,
+    ) -> field_exp_data_capnp.types.builders.MixedTypeBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._PlantingEventStructModule,
+    ) -> field_exp_data_capnp.types.builders.PlantingEventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._PlotStructModule,
+    ) -> field_exp_data_capnp.types.builders.PlotBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._ResidueStructModule,
+    ) -> field_exp_data_capnp.types.builders.ResidueBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._SoilMetadataStructModule,
+    ) -> field_exp_data_capnp.types.builders.SoilMetadataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._TreatmentStructModule,
+    ) -> field_exp_data_capnp.types.builders.TreatmentBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: field_exp_data_capnp.types.modules._WeatherStationStructModule,
+    ) -> field_exp_data_capnp.types.builders.WeatherStationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ComponentStructModule,
+    ) -> fbp_capnp.types.builders.ComponentBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IIPStructModule,
+    ) -> fbp_capnp.types.builders.IIPBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IPStructModule,
+    ) -> fbp_capnp.types.builders.IPBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._PortInfosStructModule,
+    ) -> fbp_capnp.types.builders.PortInfosBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._CoordStructModule,
+    ) -> geo_capnp.types.builders.CoordBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._EPSGStructModule,
+    ) -> geo_capnp.types.builders.EPSGBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._GKCoordStructModule,
+    ) -> geo_capnp.types.builders.GKCoordBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._LatLonCoordStructModule,
+    ) -> geo_capnp.types.builders.LatLonCoordBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._Point2DStructModule,
+    ) -> geo_capnp.types.builders.Point2DBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._RectBoundsStructModule,
+    ) -> geo_capnp.types.builders.RectBoundsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._RowColStructModule,
+    ) -> geo_capnp.types.builders.RowColBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: geo_capnp.types.modules._UTMCoordStructModule,
+    ) -> geo_capnp.types.builders.UTMCoordBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: jobs_capnp.types.modules._JobStructModule,
+    ) -> jobs_capnp.types.builders.JobBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._EventStructModule,
+    ) -> management_capnp.types.builders.EventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._NutrientStructModule,
+    ) -> management_capnp.types.builders.NutrientBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: management_capnp.types.modules._ParamsStructModule,
+    ) -> management_capnp.types.builders.ParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: model_capnp.types.modules._EnvStructModule,
+    ) -> model_capnp.types.builders.EnvBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: model_capnp.types.modules._StatStructModule,
+    ) -> model_capnp.types.builders.StatBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: model_capnp.types.modules._XYPlusResultStructModule,
+    ) -> model_capnp.types.builders.XYPlusResultBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: model_capnp.types.modules._XYResultStructModule,
+    ) -> model_capnp.types.builders.XYResultBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._AddressStructModule,
+    ) -> persistence_capnp.types.builders.AddressBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._SturdyRefStructModule,
+    ) -> persistence_capnp.types.builders.SturdyRefBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._VatIdStructModule,
+    ) -> persistence_capnp.types.builders.VatIdBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: persistence_capnp.types.modules._VatPathStructModule,
+    ) -> persistence_capnp.types.builders.VatPathBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_capnp.types.modules._LayerStructModule,
+    ) -> soil_capnp.types.builders.LayerBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_capnp.types.modules._ProfileDataStructModule,
+    ) -> soil_capnp.types.builders.ProfileDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_capnp.types.modules._QueryStructModule,
+    ) -> soil_capnp.types.builders.QueryBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._CapillaryRiseRateStructModule,
+    ) -> soil_params_capnp.types.builders.CapillaryRiseRateBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._SoilCharacteristicDataStructModule,
+    ) -> soil_params_capnp.types.builders.SoilCharacteristicDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: soil_params_capnp.types.modules._SoilCharacteristicModifierStructModule,
+    ) -> soil_params_capnp.types.builders.SoilCharacteristicModifierBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: x_capnp.types.modules._SStructModule,
+    ) -> x_capnp.types.builders.SBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: _StructSchema | _StructModule,
+    ) -> _DynamicStructBuilder: ...
     def as_struct(self, schema: _StructSchema | _StructModule) -> _DynamicStructBuilder:
         """Cast this AnyPointer to a struct builder.
 
