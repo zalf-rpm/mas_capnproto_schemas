@@ -465,6 +465,7 @@ namespace Mas.Schema.Common
             Ld = 27,
             Lcap = 28,
             Lpair = 29,
+            Lv = 30,
             undefined = 65535,
         }
 
@@ -563,6 +564,11 @@ namespace Mas.Schema.Common
                 case WHICH.Lpair:
                     Lpair = reader.Lpair?.ToReadOnlyList(_ =>
                         CapnpSerializable.Create<Mas.Schema.Common.Pair<object, object>>(_)
+                    );
+                    break;
+                case WHICH.Lv:
+                    Lv = reader.Lv?.ToReadOnlyList(_ =>
+                        CapnpSerializable.Create<Mas.Schema.Common.Value>(_)
                     );
                     break;
             }
@@ -672,6 +678,9 @@ namespace Mas.Schema.Common
                     case WHICH.Lpair:
                         _content = null;
                         break;
+                    case WHICH.Lv:
+                        _content = null;
+                        break;
                 }
             }
         }
@@ -770,6 +779,9 @@ namespace Mas.Schema.Common
                     break;
                 case WHICH.Lpair:
                     writer.Lpair.Init(Lpair, (_s1, _v1) => _v1?.serialize(_s1));
+                    break;
+                case WHICH.Lv:
+                    writer.Lv.Init(Lv, (_s1, _v1) => _v1?.serialize(_s1));
                     break;
             }
         }
@@ -1084,6 +1096,16 @@ namespace Mas.Schema.Common
             }
         }
 
+        public IReadOnlyList<Mas.Schema.Common.Value> Lv
+        {
+            get => _which == WHICH.Lv ? (IReadOnlyList<Mas.Schema.Common.Value>)_content : null;
+            set
+            {
+                _which = WHICH.Lv;
+                _content = value;
+            }
+        }
+
         public struct READER
         {
             readonly DeserializerState ctx;
@@ -1163,6 +1185,11 @@ namespace Mas.Schema.Common
                     ? ctx.ReadList(0).Cast(Mas.Schema.Common.Pair<object, object>.READER.create)
                     : default;
             public bool HasLpair => ctx.IsStructFieldNonNull(0);
+            public IReadOnlyList<Mas.Schema.Common.Value.READER> Lv =>
+                which == WHICH.Lv
+                    ? ctx.ReadList(0).Cast(Mas.Schema.Common.Value.READER.create)
+                    : default;
+            public bool HasLv => ctx.IsStructFieldNonNull(0);
         }
 
         public class WRITER : SerializerState
@@ -1368,6 +1395,14 @@ namespace Mas.Schema.Common
                         ? BuildPointer<
                             ListOfStructsSerializer<Mas.Schema.Common.Pair<object, object>.WRITER>
                         >(0)
+                        : default;
+                set => Link(0, value);
+            }
+            public ListOfStructsSerializer<Mas.Schema.Common.Value.WRITER> Lv
+            {
+                get =>
+                    which == WHICH.Lv
+                        ? BuildPointer<ListOfStructsSerializer<Mas.Schema.Common.Value.WRITER>>(0)
                         : default;
                 set => Link(0, value);
             }

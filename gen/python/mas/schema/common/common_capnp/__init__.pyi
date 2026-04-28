@@ -770,6 +770,31 @@ class _PairList:
         @override
         def init(self, index: int, size: int | None = None) -> PairBuilder: ...
 
+class _ValueList:
+    class Reader(_DynamicListReader):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ValueReader: ...
+        @override
+        def __iter__(self) -> Iterator[ValueReader]: ...
+
+    class Builder(_DynamicListBuilder):
+        @override
+        def __len__(self) -> int: ...
+        @override
+        def __getitem__(self, key: int) -> ValueBuilder: ...
+        @override
+        def __setitem__(
+            self,
+            key: int,
+            value: ValueReader | ValueBuilder | dict[str, Any],
+        ) -> None: ...
+        @override
+        def __iter__(self) -> Iterator[ValueBuilder]: ...
+        @override
+        def init(self, index: int, size: int | None = None) -> ValueBuilder: ...
+
 class _ValueStructModule(_StructModule):
     class Reader(_DynamicStructReader):
         @property
@@ -832,6 +857,8 @@ class _ValueStructModule(_StructModule):
         def lcap(self) -> AnyPointerListReader: ...
         @property
         def lpair(self) -> PairListReader: ...
+        @property
+        def lv(self) -> ValueListReader: ...
         @override
         def which(
             self,
@@ -866,6 +893,7 @@ class _ValueStructModule(_StructModule):
             "ld",
             "lcap",
             "lpair",
+            "lv",
         ]: ...
         @override
         def as_builder(
@@ -1040,6 +1068,13 @@ class _ValueStructModule(_StructModule):
             self,
             value: PairListBuilder | PairListReader | dict[str, Any],
         ) -> None: ...
+        @property
+        def lv(self) -> ValueListBuilder: ...
+        @lv.setter
+        def lv(
+            self,
+            value: ValueListBuilder | ValueListReader | dict[str, Any],
+        ) -> None: ...
         @override
         def which(
             self,
@@ -1074,6 +1109,7 @@ class _ValueStructModule(_StructModule):
             "ld",
             "lcap",
             "lpair",
+            "lv",
         ]: ...
         @override
         @overload
@@ -1167,6 +1203,12 @@ class _ValueStructModule(_StructModule):
             size: int | None = None,
         ) -> PairListBuilder: ...
         @overload
+        def init(
+            self,
+            field: Literal["lv"],
+            size: int | None = None,
+        ) -> ValueListBuilder: ...
+        @overload
         def init(self, field: str, size: int | None = None) -> Any: ...
         @override
         def as_reader(self) -> ValueReader: ...
@@ -1206,6 +1248,7 @@ class _ValueStructModule(_StructModule):
         ld: DataListBuilder | dict[str, Any] | None = None,
         lcap: AnyPointerListBuilder | dict[str, Any] | None = None,
         lpair: PairListBuilder | dict[str, Any] | None = None,
+        lv: ValueListBuilder | dict[str, Any] | None = None,
         **kwargs: Any,
     ) -> ValueBuilder: ...
     @override
@@ -1490,5 +1533,7 @@ type Uint64ListReader = _Uint64List.Reader
 type Uint8ListBuilder = _Uint8List.Builder
 type Uint8ListReader = _Uint8List.Reader
 type ValueBuilder = _ValueStructModule.Builder
+type ValueListBuilder = _ValueList.Builder
+type ValueListReader = _ValueList.Reader
 type ValueReader = _ValueStructModule.Reader
 type ValueResult = _HolderInterfaceModule.HolderClient.ValueResult
