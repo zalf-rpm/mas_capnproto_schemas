@@ -5,6 +5,7 @@
     <Version>0.0.1</Version>
     <PackageTags>Capnproto;ZALF;MAS;Schemas</PackageTags>
     <Description>ZALF MAS Cap'n Proto schemas</Description>
+    <NoWarn>$(NoWarn);CS8981</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
