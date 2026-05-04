@@ -6019,11 +6019,12 @@ namespace Mas.Schema.Fbp
         ]
         public enum State : ushort
         {
+            idle,
             starting,
             running,
             stopping,
-            stopped,
             failed,
+            closed,
         }
 
         [

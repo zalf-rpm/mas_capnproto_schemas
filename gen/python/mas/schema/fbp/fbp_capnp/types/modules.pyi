@@ -3356,11 +3356,12 @@ class _ProcessInterfaceModule(
 
     StopMode: _StopModeEnumModule
     class _StateEnumModule(_EnumModule):
+        idle: int
         starting: int
         running: int
         stopping: int
-        stopped: int
         failed: int
+        closed: int
 
         class _StateSchema(_EnumSchema): ...
 
