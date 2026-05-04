@@ -143,6 +143,13 @@ class ProcessFactoryCreateCallContext(Protocol):
     @property
     def results(self) -> results_server.ProcessFactoryCreateServerResult: ...
 
+class DisconnectParams(Protocol): ...
+
+class DisconnectCallContext(Protocol):
+    params: DisconnectParams
+    @property
+    def results(self) -> results_server.DisconnectServerResult: ...
+
 class StatechangedParams(Protocol):
     old: enums.ProcessStateEnum
     new: enums.ProcessStateEnum

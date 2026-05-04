@@ -74,17 +74,28 @@ class RunnableStopResultTuple(NamedTuple):
 class ProcessFactoryCreateResultTuple(NamedTuple):
     out: modules._ProcessInterfaceModule.Server | clients.ProcessClient
 
+class DisconnectResultTuple(NamedTuple):
+    disconnected: bool
+
 class InportsResultTuple(NamedTuple):
     ports: builders.PortListBuilder | readers.PortListReader | Sequence[Any]
 
 class ConnectinportResultTuple(NamedTuple):
     connected: bool
+    disconnect: (
+        modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient
+    )
 
 class OutportsResultTuple(NamedTuple):
     ports: builders.PortListBuilder | readers.PortListReader | Sequence[Any]
 
 class ConnectoutportResultTuple(NamedTuple):
     connected: bool
+    disconnect: (
+        modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient
+    )
 
 class ConfigentriesResultTuple(NamedTuple):
     config: (

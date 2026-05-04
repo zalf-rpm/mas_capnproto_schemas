@@ -158,6 +158,12 @@ class ProcessFactoryCreateServerResult(_DynamicStructBuilder):
         value: modules._ProcessInterfaceModule.Server | clients.ProcessClient,
     ) -> None: ...
 
+class DisconnectServerResult(_DynamicStructBuilder):
+    @property
+    def disconnected(self) -> bool: ...
+    @disconnected.setter
+    def disconnected(self, value: bool) -> None: ...
+
 class InportsServerResult(_DynamicStructBuilder):
     @property
     def ports(self) -> builders.PortListBuilder: ...
@@ -180,6 +186,19 @@ class ConnectinportServerResult(_DynamicStructBuilder):
     def connected(self) -> bool: ...
     @connected.setter
     def connected(self, value: bool) -> None: ...
+    @property
+    def disconnect(
+        self,
+    ) -> (
+        modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient
+    ): ...
+    @disconnect.setter
+    def disconnect(
+        self,
+        value: modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient,
+    ) -> None: ...
 
 class OutportsServerResult(_DynamicStructBuilder):
     @property
@@ -203,6 +222,19 @@ class ConnectoutportServerResult(_DynamicStructBuilder):
     def connected(self) -> bool: ...
     @connected.setter
     def connected(self, value: bool) -> None: ...
+    @property
+    def disconnect(
+        self,
+    ) -> (
+        modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient
+    ): ...
+    @disconnect.setter
+    def disconnect(
+        self,
+        value: modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+        | clients.DisconnectClient,
+    ) -> None: ...
 
 class ConfigentriesServerResult(_DynamicStructBuilder):
     @property

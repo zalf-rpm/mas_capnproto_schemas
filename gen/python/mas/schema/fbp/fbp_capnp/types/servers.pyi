@@ -4,6 +4,8 @@ from mas.schema.fbp.fbp_capnp.types import modules as modules
 
 ChannelServer = modules._ChannelInterfaceModule.Server
 
+DisconnectServer = modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server
+
 FactoryServer = modules._ProcessInterfaceModule._FactoryInterfaceModule.Server
 
 ProcessServer = modules._ProcessInterfaceModule.Server

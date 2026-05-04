@@ -112,6 +112,9 @@ CAPNP_DECLARE_SCHEMA(bbad56943a039783);
 CAPNP_DECLARE_SCHEMA(b01652ab8f1ac0d3);
 CAPNP_DECLARE_SCHEMA(d97b10297d574590);
 CAPNP_DECLARE_SCHEMA(8c00219c9e2715f2);
+CAPNP_DECLARE_SCHEMA(de2d0ec08e014964);
+CAPNP_DECLARE_SCHEMA(f09f329e745b3f44);
+CAPNP_DECLARE_SCHEMA(dbd176cc139de1eb);
 CAPNP_DECLARE_SCHEMA(a8d0bdfb4ddda7b3);
 CAPNP_DECLARE_SCHEMA(a1895f2d928a5fcd);
 enum class StopMode_a1895f2d928a5fcd: uint16_t {
@@ -1242,6 +1245,7 @@ struct Process {
 #endif  // !CAPNP_LITE
 
   struct Factory;
+  struct Disconnect;
   struct ConfigEntry;
   typedef ::capnp::schemas::StopMode_a1895f2d928a5fcd StopMode;
 
@@ -1317,6 +1321,55 @@ struct Process::Factory::CreateResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(8c00219c9e2715f2, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::Disconnect {
+  Disconnect() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct DisconnectParams;
+  struct DisconnectResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(de2d0ec08e014964)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Process::Disconnect::DisconnectParams {
+  DisconnectParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(f09f329e745b3f44, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::Disconnect::DisconnectResults {
+  DisconnectResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(dbd176cc139de1eb, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1440,7 +1493,7 @@ struct Process::ConnectInPortResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9f2e15f17d6894cd, 1, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(9f2e15f17d6894cd, 1, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1500,7 +1553,7 @@ struct Process::ConnectOutPortResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(b364ef5d2a7d582d, 1, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(b364ef5d2a7d582d, 1, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -6923,6 +6976,206 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+class Process::Disconnect::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef Disconnect Calls;
+  typedef Disconnect Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Process::Disconnect::DisconnectParams,  ::mas::schema::fbp::Process::Disconnect::DisconnectResults> disconnectRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Process::Disconnect::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef Disconnect Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Process::Disconnect::DisconnectParams DisconnectParams;
+  typedef  ::mas::schema::fbp::Process::Disconnect::DisconnectResults DisconnectResults;
+  typedef ::capnp::CallContext<DisconnectParams, DisconnectResults> DisconnectContext;
+  virtual ::kj::Promise<void> disconnect(DisconnectContext context);
+
+  inline  ::mas::schema::fbp::Process::Disconnect::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Process::Disconnect>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Process::Disconnect::DisconnectParams::Reader {
+public:
+  typedef DisconnectParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::Disconnect::DisconnectParams::Builder {
+public:
+  typedef DisconnectParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::Disconnect::DisconnectParams::Pipeline {
+public:
+  typedef DisconnectParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::Disconnect::DisconnectResults::Reader {
+public:
+  typedef DisconnectResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool getDisconnected() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::Disconnect::DisconnectResults::Builder {
+public:
+  typedef DisconnectResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool getDisconnected();
+  inline void setDisconnected(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::Disconnect::DisconnectResults::Pipeline {
+public:
+  typedef DisconnectResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 class Process::ConfigEntry::Reader {
 public:
   typedef ConfigEntry Reads;
@@ -7483,6 +7736,11 @@ public:
 
   inline bool getConnected() const;
 
+  inline bool hasDisconnect() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect() const;
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -7514,6 +7772,15 @@ public:
   inline bool getConnected();
   inline void setConnected(bool value);
 
+  inline bool hasDisconnect();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect();
+  inline void setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client&& value);
+  inline void setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client& value);
+  inline void adoptDisconnect(::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect> disownDisconnect();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -7532,6 +7799,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -7803,6 +8071,11 @@ public:
 
   inline bool getConnected() const;
 
+  inline bool hasDisconnect() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect() const;
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -7834,6 +8107,15 @@ public:
   inline bool getConnected();
   inline void setConnected(bool value);
 
+  inline bool hasDisconnect();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect();
+  inline void setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client&& value);
+  inline void setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client& value);
+  inline void adoptDisconnect(::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect> disownDisconnect();
+#endif  // !CAPNP_LITE
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -7852,6 +8134,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::fbp::Process::Disconnect::Client getDisconnect();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -12605,6 +12888,44 @@ inline ::capnp::Orphan< ::mas::schema::fbp::Process> Process::Factory::CreateRes
 }
 #endif  // !CAPNP_LITE
 
+#if !CAPNP_LITE
+inline Process::Disconnect::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Process::Disconnect::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Process::Disconnect::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Process::Disconnect::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Process::Disconnect::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Process::Disconnect::Client& Process::Disconnect::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Process::Disconnect::Client& Process::Disconnect::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Process::Disconnect::DisconnectResults::Reader::getDisconnected() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Process::Disconnect::DisconnectResults::Builder::getDisconnected() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::Disconnect::DisconnectResults::Builder::setDisconnected(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
 inline bool Process::ConfigEntry::Reader::hasName() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -12851,6 +13172,45 @@ inline void Process::ConnectInPortResults::Builder::setConnected(bool value) {
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
+inline bool Process::ConnectInPortResults::Reader::hasDisconnect() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ConnectInPortResults::Builder::hasDisconnect() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectInPortResults::Reader::getDisconnect() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectInPortResults::Builder::getDisconnect() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectInPortResults::Pipeline::getDisconnect() {
+  return  ::mas::schema::fbp::Process::Disconnect::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Process::ConnectInPortResults::Builder::setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Process::ConnectInPortResults::Builder::setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Process::ConnectInPortResults::Builder::adoptDisconnect(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect> Process::ConnectInPortResults::Builder::disownDisconnect() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
 inline bool Process::OutPortsResults::Reader::hasPorts() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -12971,6 +13331,45 @@ inline void Process::ConnectOutPortResults::Builder::setConnected(bool value) {
   _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
+
+inline bool Process::ConnectOutPortResults::Reader::hasDisconnect() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ConnectOutPortResults::Builder::hasDisconnect() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectOutPortResults::Reader::getDisconnect() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectOutPortResults::Builder::getDisconnect() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Disconnect::Client Process::ConnectOutPortResults::Pipeline::getDisconnect() {
+  return  ::mas::schema::fbp::Process::Disconnect::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Process::ConnectOutPortResults::Builder::setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Process::ConnectOutPortResults::Builder::setDisconnect( ::mas::schema::fbp::Process::Disconnect::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Process::ConnectOutPortResults::Builder::adoptDisconnect(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::Disconnect> Process::ConnectOutPortResults::Builder::disownDisconnect() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::Disconnect>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
 
 inline bool Process::ConfigEntriesResults::Reader::hasConfig() const {
   return !_reader.getPointerField(

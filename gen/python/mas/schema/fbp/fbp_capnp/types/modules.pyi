@@ -3179,6 +3179,81 @@ class _ProcessInterfaceModule(
 
     Factory: _FactoryInterfaceModule
     type FactoryServer = _ProcessInterfaceModule._FactoryInterfaceModule.Server
+    class _DisconnectInterfaceModule(_InterfaceModule):
+        class _DisconnectSchema(_InterfaceSchema):
+            class _DisconnectInterfaceModuleDisconnectParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._DisconnectInterfaceModuleDisconnectParamSchema._Fields: ...
+
+            class _DisconnectInterfaceModuleDisconnectResultSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["disconnected"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._DisconnectInterfaceModuleDisconnectResultSchema._Fields: ...
+
+            class _DisconnectInterfaceModuleDisconnectMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._DisconnectInterfaceModuleDisconnectParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._DisconnectInterfaceModuleDisconnectResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["disconnect"],
+                ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._DisconnectInterfaceModuleDisconnectMethod: ...
+                @overload
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._Methods: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessDisconnectSchema: ...
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> clients.DisconnectClient: ...
+        class Server(_DynamicCapabilityServer):
+            def disconnect(
+                self,
+                _context: contexts.DisconnectCallContext,
+                **kwargs: object,
+            ) -> Awaitable[bool | results_tuples.DisconnectResultTuple | None]: ...
+            def disconnect_context(
+                self,
+                context: contexts.DisconnectCallContext,
+            ) -> Awaitable[None]: ...
+
+    Disconnect: _DisconnectInterfaceModule
+    type DisconnectServer = _ProcessInterfaceModule._DisconnectInterfaceModule.Server
     class _ConfigEntryStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
@@ -3583,12 +3658,22 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortParamSchema._Fields: ...
 
         class _ProcessInterfaceModuleConnectInPortResultSchema(_StructSchema):
+            class _DisconnectField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessDisconnectSchema: ...
+
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["connected"],
                 ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["disconnect"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectInPortResultSchema._DisconnectField: ...
                 @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -3687,12 +3772,22 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortParamSchema._Fields: ...
 
         class _ProcessInterfaceModuleConnectOutPortResultSchema(_StructSchema):
+            class _DisconnectField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessDisconnectSchema: ...
+
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["connected"],
                 ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["disconnect"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleConnectOutPortResultSchema._DisconnectField: ...
                 @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -4033,7 +4128,7 @@ class _ProcessInterfaceModule(
             sturdyRef: SturdyRefReader,
             _context: contexts.ConnectinportCallContext,
             **kwargs: object,
-        ) -> Awaitable[bool | results_tuples.ConnectinportResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.ConnectinportResultTuple | None]: ...
         def connectInPort_context(
             self,
             context: contexts.ConnectinportCallContext,
@@ -4059,7 +4154,7 @@ class _ProcessInterfaceModule(
             sturdyRef: SturdyRefReader,
             _context: contexts.ConnectoutportCallContext,
             **kwargs: object,
-        ) -> Awaitable[bool | results_tuples.ConnectoutportResultTuple | None]: ...
+        ) -> Awaitable[results_tuples.ConnectoutportResultTuple | None]: ...
         def connectOutPort_context(
             self,
             context: contexts.ConnectoutportCallContext,
