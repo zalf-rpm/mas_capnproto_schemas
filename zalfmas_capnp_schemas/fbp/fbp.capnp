@@ -301,11 +301,12 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # stop process
 
   enum State {
-    starting @0; # runtime accepted start, setup still in progress
-    running  @1; # actively processing or waiting for input
-    stopping @2; # stop requested, shutdown not finished yet
-    stopped  @3; # fully stopped
-    failed   @4; # terminal error
+    idle     @0; # reachable and startable, but no active run task
+    starting @1; # runtime accepted start, setup still in progress
+    running  @2; # actively processing or waiting for input
+    stopping @3; # stop requested, shutdown not finished yet
+    failed   @4; # last run ended unexpectedly
+    closed   @5; # process capability is shutting down or no longer valid to use
   }
 
   interface StateTransition {

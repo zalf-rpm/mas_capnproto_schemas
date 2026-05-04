@@ -165,11 +165,12 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
     hard @1;
   }
   enum State @0xe67044233be769a5 {
-    starting @0;
-    running @1;
-    stopping @2;
-    stopped @3;
+    idle @0;
+    starting @1;
+    running @2;
+    stopping @3;
     failed @4;
+    closed @5;
   }
   interface StateTransition @0x9c8fa975665cfafa {
     stateChanged @0 (old :State, new :State) -> ();
