@@ -194,7 +194,8 @@ class ProcessStartParams(Protocol): ...
 class ProcessStartCallContext(Protocol):
     params: ProcessStartParams
 
-class ProcessStopParams(Protocol): ...
+class ProcessStopParams(Protocol):
+    mode: enums.ProcessStopModeEnum
 
 class ProcessStopCallContext(Protocol):
     params: ProcessStopParams

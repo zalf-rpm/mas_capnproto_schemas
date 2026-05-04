@@ -148,7 +148,7 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   configEntries @4 () -> (config :List(ConfigEntry));
   setConfigEntry @7 ConfigEntry -> ();
   start @5 () -> ();
-  stop @6 () -> ();
+  stop @6 (mode :StopMode) -> ();
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :Process);
@@ -157,10 +157,16 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
     name @0 :Text;  # ptr[0]
     val @1 :import "/common/common.capnp".Value;  # ptr[1]
   }
+  enum StopMode @0xa1895f2d928a5fcd {
+    soft @0;
+    hard @1;
+  }
   enum State @0xe67044233be769a5 {
-    started @0;
-    stopped @1;
-    canceled @2;
+    starting @0;
+    running @1;
+    stopping @2;
+    stopped @3;
+    failed @4;
   }
   interface StateTransition @0x9c8fa975665cfafa {
     stateChanged @0 (old :State, new :State) -> ();

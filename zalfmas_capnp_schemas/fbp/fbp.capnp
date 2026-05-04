@@ -284,15 +284,22 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # set configuration value
 
   start @5 ();
-  # start process
+  # accept start request and begin execution asynchronously
 
-  stop @6 ();
+  enum StopMode {
+    soft @0;
+    hard @1;
+  }
+
+  stop @6 (mode :StopMode = soft);
   # stop process
 
   enum State {
-    started   @0; # process is running
-    stopped   @1; # process is not running
-    canceled  @2; # stop requested but still running
+    starting @0; # runtime accepted start, setup still in progress
+    running  @1; # actively processing or waiting for input
+    stopping @2; # stop requested, shutdown not finished yet
+    stopped  @3; # fully stopped
+    failed   @4; # terminal error
   }
 
   interface StateTransition {
@@ -302,4 +309,5 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   # return current state of process and
   # optionally ask for notifications if there's a state transition
+  # callbacks emit only the states defined in State
 }

@@ -3269,10 +3269,23 @@ class _ProcessInterfaceModule(
         ) -> readers.ConfigEntryReader: ...
 
     ConfigEntry: _ConfigEntryStructModule
+    class _StopModeEnumModule(_EnumModule):
+        soft: int
+        hard: int
+
+        class _StopModeSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
+
+    StopMode: _StopModeEnumModule
     class _StateEnumModule(_EnumModule):
-        started: int
+        starting: int
+        running: int
+        stopping: int
         stopped: int
-        canceled: int
+        failed: int
 
         class _StateSchema(_EnumSchema): ...
 
@@ -3781,7 +3794,19 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartResultSchema: ...
 
         class _ProcessInterfaceModuleStopParamSchema(_StructSchema):
-            class _Fields(dict[str, _StructSchemaField]): ...
+            class _ModeField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["mode"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopParamSchema._ModeField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
             @override
@@ -4065,6 +4090,7 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[None]: ...
         def stop(
             self,
+            mode: enums.ProcessStopModeEnum,
             _context: contexts.ProcessStopCallContext,
             **kwargs: object,
         ) -> Awaitable[None]: ...

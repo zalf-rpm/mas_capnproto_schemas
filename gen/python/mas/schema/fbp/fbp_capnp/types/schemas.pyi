@@ -76,6 +76,10 @@ type _ProcessStateEnumSchema = (
 
 type _ProcessStateTransitionSchema = modules._ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema
 
+type _ProcessStopModeEnumSchema = (
+    modules._ProcessInterfaceModule._StopModeEnumModule._StopModeSchema
+)
+
 type _RunnableFactorySchema = (
     modules._RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema
 )

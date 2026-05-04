@@ -12,4 +12,8 @@ type ComponentPortPortTypeEnum = int | Literal["standard", "array"]
 
 type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
 
-type ProcessStateEnum = int | Literal["started", "stopped", "canceled"]
+type ProcessStateEnum = (
+    int | Literal["starting", "running", "stopping", "stopped", "failed"]
+)
+
+type ProcessStopModeEnum = int | Literal["soft", "hard"]

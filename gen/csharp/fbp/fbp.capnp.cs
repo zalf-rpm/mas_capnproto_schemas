@@ -4990,7 +4990,10 @@ namespace Mas.Schema.Fbp
             CancellationToken cancellationToken_ = default
         );
         Task Start(CancellationToken cancellationToken_ = default);
-        Task Stop(CancellationToken cancellationToken_ = default);
+        Task Stop(
+            Mas.Schema.Fbp.Process.StopMode mode,
+            CancellationToken cancellationToken_ = default
+        );
         Task SetConfigEntry(
             Mas.Schema.Fbp.Process.ConfigEntry arg_,
             CancellationToken cancellationToken_ = default
@@ -5152,10 +5155,13 @@ namespace Mas.Schema.Fbp
             }
         }
 
-        public async Task Stop(CancellationToken cancellationToken_ = default)
+        public async Task Stop(
+            Mas.Schema.Fbp.Process.StopMode mode,
+            CancellationToken cancellationToken_ = default
+        )
         {
             var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_Stop.WRITER>();
-            var arg_ = new Mas.Schema.Fbp.Process.Params_Stop() { };
+            var arg_ = new Mas.Schema.Fbp.Process.Params_Stop() { Mode = mode };
             arg_?.serialize(in_);
             using (
                 var d_ = await Call(
@@ -5437,7 +5443,8 @@ namespace Mas.Schema.Fbp
         {
             using (d_)
             {
-                await Impl.Stop(cancellationToken_);
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Params_Stop>(d_);
+                await Impl.Stop(in_.Mode, cancellationToken_);
                 var s_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Stop.WRITER>();
                 return s_;
             }
@@ -5787,13 +5794,25 @@ namespace Mas.Schema.Fbp
 
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa1895f2d928a5fcdUL)
+        ]
+        public enum StopMode : ushort
+        {
+            soft,
+            hard,
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0xe67044233be769a5UL)
         ]
         public enum State : ushort
         {
-            started,
+            starting,
+            running,
+            stopping,
             stopped,
-            canceled,
+            failed,
         }
 
         [
@@ -6740,10 +6759,14 @@ namespace Mas.Schema.Fbp
             void ICapnpSerializable.Deserialize(DeserializerState arg_)
             {
                 var reader = READER.create(arg_);
+                Mode = reader.Mode;
                 applyDefaults();
             }
 
-            public void serialize(WRITER writer) { }
+            public void serialize(WRITER writer)
+            {
+                writer.Mode = Mode;
+            }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
             {
@@ -6751,6 +6774,9 @@ namespace Mas.Schema.Fbp
             }
 
             public void applyDefaults() { }
+
+            public Mas.Schema.Fbp.Process.StopMode Mode { get; set; } =
+                Mas.Schema.Fbp.Process.StopMode.soft;
 
             public struct READER
             {
@@ -6766,13 +6792,22 @@ namespace Mas.Schema.Fbp
                 public static implicit operator DeserializerState(READER reader) => reader.ctx;
 
                 public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public Mas.Schema.Fbp.Process.StopMode Mode =>
+                    (Mas.Schema.Fbp.Process.StopMode)ctx.ReadDataUShort(0UL, (ushort)0);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 0);
+                    this.SetStruct(1, 0);
+                }
+
+                public Mas.Schema.Fbp.Process.StopMode Mode
+                {
+                    get => (Mas.Schema.Fbp.Process.StopMode)this.ReadDataUShort(0UL, (ushort)0);
+                    set => this.WriteData(0UL, (ushort)value, (ushort)0);
                 }
             }
         }
