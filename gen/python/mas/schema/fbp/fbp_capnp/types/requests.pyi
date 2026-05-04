@@ -136,6 +136,9 @@ class RunnableStopRequest(Protocol):
 class ProcessFactoryCreateRequest(Protocol):
     def send(self) -> results_client.ProcessFactoryCreateResult: ...
 
+class DisconnectRequest(Protocol):
+    def send(self) -> results_client.DisconnectResult: ...
+
 class StatechangedRequest(Protocol):
     old: enums.ProcessStateEnum
     new: enums.ProcessStateEnum

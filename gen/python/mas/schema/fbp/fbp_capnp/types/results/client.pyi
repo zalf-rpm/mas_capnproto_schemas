@@ -75,6 +75,9 @@ class RunnableStopResult(Awaitable[RunnableStopResult], Protocol):
 class ProcessFactoryCreateResult(Awaitable[ProcessFactoryCreateResult], Protocol):
     out: clients.ProcessClient
 
+class DisconnectResult(Awaitable[DisconnectResult], Protocol):
+    disconnected: bool
+
 class StatechangedResult(Awaitable[None], Protocol): ...
 
 class InportsResult(Awaitable[InportsResult], Protocol):
@@ -82,12 +85,14 @@ class InportsResult(Awaitable[InportsResult], Protocol):
 
 class ConnectinportResult(Awaitable[ConnectinportResult], Protocol):
     connected: bool
+    disconnect: clients.DisconnectClient
 
 class OutportsResult(Awaitable[OutportsResult], Protocol):
     ports: readers.PortListReader
 
 class ConnectoutportResult(Awaitable[ConnectoutportResult], Protocol):
     connected: bool
+    disconnect: clients.DisconnectClient
 
 class ConfigentriesResult(Awaitable[ConfigentriesResult], Protocol):
     config: readers.ConfigEntryListReader

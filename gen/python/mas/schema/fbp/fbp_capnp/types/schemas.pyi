@@ -64,6 +64,10 @@ type _ProcessConfigEntrySchema = (
     modules._ProcessInterfaceModule._ConfigEntryStructModule._ConfigEntrySchema
 )
 
+type _ProcessDisconnectSchema = (
+    modules._ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema
+)
+
 type _ProcessFactorySchema = (
     modules._ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema
 )

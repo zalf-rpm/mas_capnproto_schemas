@@ -48,10 +48,12 @@ class ConfigentriesResultTuple(NamedTuple):
 
 class ConnectinportResultTuple(NamedTuple):
     connected: object
+    disconnect: object
 
 
 class ConnectoutportResultTuple(NamedTuple):
     connected: object
+    disconnect: object
 
 
 class InportsResultTuple(NamedTuple):
@@ -64,6 +66,10 @@ class OutportsResultTuple(NamedTuple):
 
 class StateResultTuple(NamedTuple):
     currentState: object
+
+
+class DisconnectResultTuple(NamedTuple):
+    disconnected: object
 
 
 class ProcessFactoryCreateResultTuple(NamedTuple):
@@ -91,6 +97,7 @@ __all__ = [
     "ConfigentriesResultTuple",
     "ConnectinportResultTuple",
     "ConnectoutportResultTuple",
+    "DisconnectResultTuple",
     "EndpointsResultTuple",
     "InportsResultTuple",
     "OutportsResultTuple",

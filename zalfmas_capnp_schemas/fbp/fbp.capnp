@@ -260,16 +260,22 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
     create @0 () -> (out :Process);
   }
 
+  interface Disconnect {
+    # disconnect a port connection created by connectInPort or connectOutPort
+
+    disconnect @0 () -> (disconnected :Bool);
+  }
+
   inPorts @0 () -> (ports :List(Component.Port));
   # input ports available on the process
 
-  connectInPort @1 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool);
+  connectInPort @1 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool, disconnect :Disconnect);
   # connect named input port via given sturdyRef
 
   outPorts @2 () -> (ports :List(Component.Port));
   # output ports available on the process
 
-  connectOutPort @3 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool);
+  connectOutPort @3 (name :Text, sturdyRef :SturdyRef) -> (connected :Bool, disconnect :Disconnect);
   # connect named output port via given sturdyRef
 
   struct ConfigEntry {

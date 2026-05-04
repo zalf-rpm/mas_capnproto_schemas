@@ -142,9 +142,9 @@ interface Runnable @0xbde616d300754ff0 superclasses(import "/common/common.capnp
 }
 interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".GatewayRegistrable) {
   inPorts @0 () -> (ports :List(Component.Port));
-  connectInPort @1 (name :Text, sturdyRef :import "/persistence/persistence.capnp".SturdyRef) -> (connected :Bool);
+  connectInPort @1 (name :Text, sturdyRef :import "/persistence/persistence.capnp".SturdyRef) -> (connected :Bool, disconnect :Disconnect);
   outPorts @2 () -> (ports :List(Component.Port));
-  connectOutPort @3 (name :Text, sturdyRef :import "/persistence/persistence.capnp".SturdyRef) -> (connected :Bool);
+  connectOutPort @3 (name :Text, sturdyRef :import "/persistence/persistence.capnp".SturdyRef) -> (connected :Bool, disconnect :Disconnect);
   configEntries @4 () -> (config :List(ConfigEntry));
   setConfigEntry @7 ConfigEntry -> ();
   start @5 () -> ();
@@ -152,6 +152,9 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :Process);
+  }
+  interface Disconnect @0xde2d0ec08e014964 {
+    disconnect @0 () -> (disconnected :Bool);
   }
   struct ConfigEntry @0xa8d0bdfb4ddda7b3 {  # 0 bytes, 2 ptrs
     name @0 :Text;  # ptr[0]
