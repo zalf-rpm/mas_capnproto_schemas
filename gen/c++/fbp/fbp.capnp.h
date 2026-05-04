@@ -113,11 +113,19 @@ CAPNP_DECLARE_SCHEMA(b01652ab8f1ac0d3);
 CAPNP_DECLARE_SCHEMA(d97b10297d574590);
 CAPNP_DECLARE_SCHEMA(8c00219c9e2715f2);
 CAPNP_DECLARE_SCHEMA(a8d0bdfb4ddda7b3);
+CAPNP_DECLARE_SCHEMA(a1895f2d928a5fcd);
+enum class StopMode_a1895f2d928a5fcd: uint16_t {
+  SOFT,
+  HARD,
+};
+CAPNP_DECLARE_ENUM(StopMode, a1895f2d928a5fcd);
 CAPNP_DECLARE_SCHEMA(e67044233be769a5);
 enum class State_e67044233be769a5: uint16_t {
-  STARTED,
+  STARTING,
+  RUNNING,
+  STOPPING,
   STOPPED,
-  CANCELED,
+  FAILED,
 };
 CAPNP_DECLARE_ENUM(State, e67044233be769a5);
 CAPNP_DECLARE_SCHEMA(9c8fa975665cfafa);
@@ -1235,6 +1243,8 @@ struct Process {
 
   struct Factory;
   struct ConfigEntry;
+  typedef ::capnp::schemas::StopMode_a1895f2d928a5fcd StopMode;
+
   typedef ::capnp::schemas::State_e67044233be769a5 State;
 
   struct StateTransition;
@@ -1565,7 +1575,7 @@ struct Process::StopParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(d35bbb909ba0c554, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(d35bbb909ba0c554, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -8161,6 +8171,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  inline  ::mas::schema::fbp::Process::StopMode getMode() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -8188,6 +8200,9 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::Process::StopMode getMode();
+  inline void setMode( ::mas::schema::fbp::Process::StopMode value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -12989,6 +13004,20 @@ inline void Process::ConfigEntriesResults::Builder::adoptConfig(
 inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Process::ConfigEntry,  ::capnp::Kind::STRUCT>> Process::ConfigEntriesResults::Builder::disownConfig() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::Process::ConfigEntry,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline  ::mas::schema::fbp::Process::StopMode Process::StopParams::Reader::getMode() const {
+  return _reader.getDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::Process::StopMode Process::StopParams::Builder::getMode() {
+  return _builder.getDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::StopParams::Builder::setMode( ::mas::schema::fbp::Process::StopMode value) {
+  _builder.setDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
 inline bool Process::StateParams::Reader::hasTransitionCallback() const {

@@ -172,6 +172,7 @@ class ProcessStartRequest(Protocol):
     def send(self) -> results_client.ProcessStartResult: ...
 
 class ProcessStopRequest(Protocol):
+    mode: enums.ProcessStopModeEnum
     def send(self) -> results_client.ProcessStopResult: ...
 
 class SetconfigentryRequest(Protocol):
