@@ -193,3 +193,7 @@ class StateRequest(Protocol):
         | modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
     )
     def send(self) -> results_client.StateResult: ...
+
+class ProcessCloseRequest(Protocol):
+    mode: enums.ProcessStopModeEnum
+    def send(self) -> results_client.ProcessCloseResult: ...

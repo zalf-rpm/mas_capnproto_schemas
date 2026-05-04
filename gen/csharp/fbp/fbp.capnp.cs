@@ -5002,6 +5002,10 @@ namespace Mas.Schema.Fbp
             Mas.Schema.Fbp.Process.IStateTransition transitionCallback,
             CancellationToken cancellationToken_ = default
         );
+        Task<bool> Close(
+            Mas.Schema.Fbp.Process.StopMode mode,
+            CancellationToken cancellationToken_ = default
+        );
     }
 
     [
@@ -5240,6 +5244,29 @@ namespace Mas.Schema.Fbp
             }
         }
 
+        public async Task<bool> Close(
+            Mas.Schema.Fbp.Process.StopMode mode,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Params_Close.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Process.Params_Close() { Mode = mode };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    13523560450691929987UL,
+                    9,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Result_Close>(d_);
+                return (r_.Closed);
+            }
+        }
+
         public async Task<Mas.Schema.Persistence.SturdyRef> SturdyRefAtGateway(
             Mas.Schema.Persistence.SturdyRef gatewaySR,
             string gatewayId,
@@ -5313,7 +5340,8 @@ namespace Mas.Schema.Fbp
                 Start,
                 Stop,
                 SetConfigEntry,
-                State
+                State,
+                Close
             );
         }
 
@@ -5501,6 +5529,28 @@ namespace Mas.Schema.Fbp
                         {
                             CurrentState = currentState,
                         };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> Close(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Process.Params_Close>(d_);
+                return Impatient.MaybeTailCall(
+                    Impl.Close(in_.Mode, cancellationToken_),
+                    closed =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.Result_Close.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Process.Result_Close { Closed = closed };
                         r_.serialize(s_);
                         return s_;
                     }
@@ -7262,6 +7312,132 @@ namespace Mas.Schema.Fbp
                 {
                     get => (Mas.Schema.Fbp.Process.State)this.ReadDataUShort(0UL, (ushort)0);
                     set => this.WriteData(0UL, (ushort)value, (ushort)0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x821d7719d781c29fUL)
+        ]
+        public class Params_Close : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x821d7719d781c29fUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Mode = reader.Mode;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Mode = Mode;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public Mas.Schema.Fbp.Process.StopMode Mode { get; set; } =
+                Mas.Schema.Fbp.Process.StopMode.hard;
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public Mas.Schema.Fbp.Process.StopMode Mode =>
+                    (Mas.Schema.Fbp.Process.StopMode)ctx.ReadDataUShort(0UL, (ushort)1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public Mas.Schema.Fbp.Process.StopMode Mode
+                {
+                    get => (Mas.Schema.Fbp.Process.StopMode)this.ReadDataUShort(0UL, (ushort)1);
+                    set => this.WriteData(0UL, (ushort)value, (ushort)1);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa3faa670a0d208a1UL)
+        ]
+        public class Result_Close : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa3faa670a0d208a1UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Closed = reader.Closed;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Closed = Closed;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public bool Closed { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bool Closed => ctx.ReadDataBool(0UL, false);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public bool Closed
+                {
+                    get => this.ReadDataBool(0UL, false);
+                    set => this.WriteData(0UL, value, false);
                 }
             }
         }

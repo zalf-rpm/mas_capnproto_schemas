@@ -64,6 +64,10 @@ class OutportsResultTuple(NamedTuple):
     ports: object
 
 
+class ProcessCloseResultTuple(NamedTuple):
+    closed: object
+
+
 class StateResultTuple(NamedTuple):
     currentState: object
 
@@ -101,6 +105,7 @@ __all__ = [
     "EndpointsResultTuple",
     "InportsResultTuple",
     "OutportsResultTuple",
+    "ProcessCloseResultTuple",
     "ProcessFactoryCreateResultTuple",
     "ReadResultTuple",
     "ReaderResultTuple",

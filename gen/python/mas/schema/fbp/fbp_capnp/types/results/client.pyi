@@ -103,3 +103,6 @@ class SetconfigentryResult(Awaitable[None], Protocol): ...
 
 class StateResult(Awaitable[StateResult], Protocol):
     currentState: enums.ProcessStateEnum
+
+class ProcessCloseResult(Awaitable[ProcessCloseResult], Protocol):
+    closed: bool
