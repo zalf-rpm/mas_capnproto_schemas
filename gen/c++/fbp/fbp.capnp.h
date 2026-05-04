@@ -112,16 +112,17 @@ CAPNP_DECLARE_SCHEMA(bbad56943a039783);
 CAPNP_DECLARE_SCHEMA(b01652ab8f1ac0d3);
 CAPNP_DECLARE_SCHEMA(d97b10297d574590);
 CAPNP_DECLARE_SCHEMA(8c00219c9e2715f2);
+CAPNP_DECLARE_SCHEMA(e6869481a867614f);
+CAPNP_DECLARE_SCHEMA(d22c53e2c8415b68);
+CAPNP_DECLARE_SCHEMA(c2f8b43290ab088e);
+CAPNP_DECLARE_SCHEMA(f8e015fb5c588376);
+CAPNP_DECLARE_SCHEMA(b651c8ec91561001);
+CAPNP_DECLARE_SCHEMA(bc45f93776cacae5);
+CAPNP_DECLARE_SCHEMA(d1c27f6b4a1bb8a3);
 CAPNP_DECLARE_SCHEMA(de2d0ec08e014964);
 CAPNP_DECLARE_SCHEMA(f09f329e745b3f44);
 CAPNP_DECLARE_SCHEMA(dbd176cc139de1eb);
 CAPNP_DECLARE_SCHEMA(a8d0bdfb4ddda7b3);
-CAPNP_DECLARE_SCHEMA(a1895f2d928a5fcd);
-enum class StopMode_a1895f2d928a5fcd: uint16_t {
-  SOFT,
-  HARD,
-};
-CAPNP_DECLARE_ENUM(StopMode, a1895f2d928a5fcd);
 CAPNP_DECLARE_SCHEMA(e67044233be769a5);
 enum class State_e67044233be769a5: uint16_t {
   IDLE,
@@ -152,8 +153,6 @@ CAPNP_DECLARE_SCHEMA(ee5188311583039d);
 CAPNP_DECLARE_SCHEMA(c8608732b07a57dd);
 CAPNP_DECLARE_SCHEMA(b6f9c7723a43c20a);
 CAPNP_DECLARE_SCHEMA(d83c7bb8305387ce);
-CAPNP_DECLARE_SCHEMA(821d7719d781c29f);
-CAPNP_DECLARE_SCHEMA(a3faa670a0d208a1);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -1248,10 +1247,9 @@ struct Process {
 #endif  // !CAPNP_LITE
 
   struct Factory;
+  struct ProcessHandle;
   struct Disconnect;
   struct ConfigEntry;
-  typedef ::capnp::schemas::StopMode_a1895f2d928a5fcd StopMode;
-
   typedef ::capnp::schemas::State_e67044233be769a5 State;
 
   struct StateTransition;
@@ -1272,8 +1270,6 @@ struct Process {
   struct SetConfigEntryResults;
   struct StateParams;
   struct StateResults;
-  struct CloseParams;
-  struct CloseResults;
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
@@ -1326,6 +1322,119 @@ struct Process::Factory::CreateResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(8c00219c9e2715f2, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle {
+  ProcessHandle() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct ProcessParams;
+  struct ProcessResults;
+  struct CloseParams;
+  struct CloseResults;
+  struct AliveParams;
+  struct AliveResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(e6869481a867614f)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Process::ProcessHandle::ProcessParams {
+  ProcessParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d22c53e2c8415b68, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle::ProcessResults {
+  ProcessResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(c2f8b43290ab088e, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle::CloseParams {
+  CloseParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(f8e015fb5c588376, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle::CloseResults {
+  CloseResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(b651c8ec91561001, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle::AliveParams {
+  AliveParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(bc45f93776cacae5, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ProcessHandle::AliveResults {
+  AliveResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d1c27f6b4a1bb8a3, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1618,7 +1727,7 @@ struct Process::StartResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(f563b2171ed5b332, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(f563b2171ed5b332, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1633,7 +1742,7 @@ struct Process::StopParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(d35bbb909ba0c554, 1, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(d35bbb909ba0c554, 0, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1648,7 +1757,7 @@ struct Process::StopResults {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(ee5188311583039d, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(ee5188311583039d, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1694,36 +1803,6 @@ struct Process::StateResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(d83c7bb8305387ce, 1, 0)
-    #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
-    #endif  // !CAPNP_LITE
-  };
-};
-
-struct Process::CloseParams {
-  CloseParams() = delete;
-
-  class Reader;
-  class Builder;
-  class Pipeline;
-
-  struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(821d7719d781c29f, 1, 0)
-    #if !CAPNP_LITE
-    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
-    #endif  // !CAPNP_LITE
-  };
-};
-
-struct Process::CloseResults {
-  CloseResults() = delete;
-
-  class Reader;
-  class Builder;
-  class Pipeline;
-
-  struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(a3faa670a0d208a1, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -6734,8 +6813,6 @@ public:
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
   ::capnp::Request< ::mas::schema::fbp::Process::StateParams,  ::mas::schema::fbp::Process::StateResults> stateRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
-  ::capnp::Request< ::mas::schema::fbp::Process::CloseParams,  ::mas::schema::fbp::Process::CloseResults> closeRequest(
-      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
@@ -6789,10 +6866,6 @@ protected:
   typedef  ::mas::schema::fbp::Process::StateResults StateResults;
   typedef ::capnp::CallContext<StateParams, StateResults> StateContext;
   virtual ::kj::Promise<void> state(StateContext context);
-  typedef  ::mas::schema::fbp::Process::CloseParams CloseParams;
-  typedef  ::mas::schema::fbp::Process::CloseResults CloseResults;
-  typedef ::capnp::CallContext<CloseParams, CloseResults> CloseContext;
-  virtual ::kj::Promise<void> close(CloseContext context);
 
   inline  ::mas::schema::fbp::Process::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
@@ -6950,7 +7023,7 @@ public:
 
   inline bool hasOut() const;
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Process::Client getOut() const;
+  inline  ::mas::schema::fbp::Process::ProcessHandle::Client getOut() const;
 #endif  // !CAPNP_LITE
 
 private:
@@ -6983,11 +7056,11 @@ public:
 
   inline bool hasOut();
 #if !CAPNP_LITE
-  inline  ::mas::schema::fbp::Process::Client getOut();
-  inline void setOut( ::mas::schema::fbp::Process::Client&& value);
-  inline void setOut( ::mas::schema::fbp::Process::Client& value);
-  inline void adoptOut(::capnp::Orphan< ::mas::schema::fbp::Process>&& value);
-  inline ::capnp::Orphan< ::mas::schema::fbp::Process> disownOut();
+  inline  ::mas::schema::fbp::Process::ProcessHandle::Client getOut();
+  inline void setOut( ::mas::schema::fbp::Process::ProcessHandle::Client&& value);
+  inline void setOut( ::mas::schema::fbp::Process::ProcessHandle::Client& value);
+  inline void adoptOut(::capnp::Orphan< ::mas::schema::fbp::Process::ProcessHandle>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ProcessHandle> disownOut();
 #endif  // !CAPNP_LITE
 
 private:
@@ -7008,7 +7081,523 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::fbp::Process::Client getOut();
+  inline  ::mas::schema::fbp::Process::ProcessHandle::Client getOut();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef ProcessHandle Calls;
+  typedef ProcessHandle Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Process::ProcessHandle::ProcessParams,  ::mas::schema::fbp::Process::ProcessHandle::ProcessResults> processRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+  ::capnp::Request< ::mas::schema::fbp::Process::ProcessHandle::CloseParams,  ::mas::schema::fbp::Process::ProcessHandle::CloseResults> closeRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+  ::capnp::Request< ::mas::schema::fbp::Process::ProcessHandle::AliveParams,  ::mas::schema::fbp::Process::ProcessHandle::AliveResults> aliveRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Process::ProcessHandle::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef ProcessHandle Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::ProcessParams ProcessParams;
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::ProcessResults ProcessResults;
+  typedef ::capnp::CallContext<ProcessParams, ProcessResults> ProcessContext;
+  virtual ::kj::Promise<void> process(ProcessContext context);
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::CloseParams CloseParams;
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::CloseResults CloseResults;
+  typedef ::capnp::CallContext<CloseParams, CloseResults> CloseContext;
+  virtual ::kj::Promise<void> close(CloseContext context);
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::AliveParams AliveParams;
+  typedef  ::mas::schema::fbp::Process::ProcessHandle::AliveResults AliveResults;
+  typedef ::capnp::CallContext<AliveParams, AliveResults> AliveContext;
+  virtual ::kj::Promise<void> alive(AliveContext context);
+
+  inline  ::mas::schema::fbp::Process::ProcessHandle::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Process::ProcessHandle>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::ProcessParams::Reader {
+public:
+  typedef ProcessParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::ProcessParams::Builder {
+public:
+  typedef ProcessParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::ProcessParams::Pipeline {
+public:
+  typedef ProcessParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::ProcessResults::Reader {
+public:
+  typedef ProcessResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasProcess() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Client getProcess() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::ProcessResults::Builder {
+public:
+  typedef ProcessResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasProcess();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::Client getProcess();
+  inline void setProcess( ::mas::schema::fbp::Process::Client&& value);
+  inline void setProcess( ::mas::schema::fbp::Process::Client& value);
+  inline void adoptProcess(::capnp::Orphan< ::mas::schema::fbp::Process>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process> disownProcess();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::ProcessResults::Pipeline {
+public:
+  typedef ProcessResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Process::Client getProcess();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::CloseParams::Reader {
+public:
+  typedef CloseParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::CloseParams::Builder {
+public:
+  typedef CloseParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::CloseParams::Pipeline {
+public:
+  typedef CloseParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::CloseResults::Reader {
+public:
+  typedef CloseResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool getClosed() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::CloseResults::Builder {
+public:
+  typedef CloseResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool getClosed();
+  inline void setClosed(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::CloseResults::Pipeline {
+public:
+  typedef CloseResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::AliveParams::Reader {
+public:
+  typedef AliveParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::AliveParams::Builder {
+public:
+  typedef AliveParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::AliveParams::Pipeline {
+public:
+  typedef AliveParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ProcessHandle::AliveResults::Reader {
+public:
+  typedef AliveResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool getAlive() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ProcessHandle::AliveResults::Builder {
+public:
+  typedef AliveResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool getAlive();
+  inline void setAlive(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ProcessHandle::AliveResults::Pipeline {
+public:
+  typedef AliveResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -8424,6 +9013,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  inline bool getStarted() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -8451,6 +9042,9 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  inline bool getStarted();
+  inline void setStarted(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -8495,8 +9089,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline  ::mas::schema::fbp::Process::StopMode getMode() const;
-
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -8524,9 +9116,6 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
-
-  inline  ::mas::schema::fbp::Process::StopMode getMode();
-  inline void setMode( ::mas::schema::fbp::Process::StopMode value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -8571,6 +9160,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  inline bool getStopped() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -8598,6 +9189,9 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  inline bool getStopped();
+  inline void setStopped(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -8845,158 +9439,6 @@ private:
 class Process::StateResults::Pipeline {
 public:
   typedef StateResults Pipelines;
-
-  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
-  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
-      : _typeless(kj::mv(typeless)) {}
-
-private:
-  ::capnp::AnyPointer::Pipeline _typeless;
-  friend class ::capnp::PipelineHook;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-};
-#endif  // !CAPNP_LITE
-
-class Process::CloseParams::Reader {
-public:
-  typedef CloseParams Reads;
-
-  Reader() = default;
-  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
-
-  inline ::capnp::MessageSize totalSize() const {
-    return _reader.totalSize().asPublic();
-  }
-
-#if !CAPNP_LITE
-  inline ::kj::StringTree toString() const {
-    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
-  }
-#endif  // !CAPNP_LITE
-
-  inline  ::mas::schema::fbp::Process::StopMode getMode() const;
-
-private:
-  ::capnp::_::StructReader _reader;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::_::PointerHelpers;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::List;
-  friend class ::capnp::MessageBuilder;
-  friend class ::capnp::Orphanage;
-};
-
-class Process::CloseParams::Builder {
-public:
-  typedef CloseParams Builds;
-
-  Builder() = delete;  // Deleted to discourage incorrect usage.
-                       // You can explicitly initialize to nullptr instead.
-  inline Builder(decltype(nullptr)) {}
-  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
-  inline operator Reader() const { return Reader(_builder.asReader()); }
-  inline Reader asReader() const { return *this; }
-
-  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
-#if !CAPNP_LITE
-  inline ::kj::StringTree toString() const { return asReader().toString(); }
-#endif  // !CAPNP_LITE
-
-  inline  ::mas::schema::fbp::Process::StopMode getMode();
-  inline void setMode( ::mas::schema::fbp::Process::StopMode value);
-
-private:
-  ::capnp::_::StructBuilder _builder;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-  friend class ::capnp::Orphanage;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::_::PointerHelpers;
-};
-
-#if !CAPNP_LITE
-class Process::CloseParams::Pipeline {
-public:
-  typedef CloseParams Pipelines;
-
-  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
-  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
-      : _typeless(kj::mv(typeless)) {}
-
-private:
-  ::capnp::AnyPointer::Pipeline _typeless;
-  friend class ::capnp::PipelineHook;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-};
-#endif  // !CAPNP_LITE
-
-class Process::CloseResults::Reader {
-public:
-  typedef CloseResults Reads;
-
-  Reader() = default;
-  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
-
-  inline ::capnp::MessageSize totalSize() const {
-    return _reader.totalSize().asPublic();
-  }
-
-#if !CAPNP_LITE
-  inline ::kj::StringTree toString() const {
-    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
-  }
-#endif  // !CAPNP_LITE
-
-  inline bool getClosed() const;
-
-private:
-  ::capnp::_::StructReader _reader;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::_::PointerHelpers;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::List;
-  friend class ::capnp::MessageBuilder;
-  friend class ::capnp::Orphanage;
-};
-
-class Process::CloseResults::Builder {
-public:
-  typedef CloseResults Builds;
-
-  Builder() = delete;  // Deleted to discourage incorrect usage.
-                       // You can explicitly initialize to nullptr instead.
-  inline Builder(decltype(nullptr)) {}
-  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
-  inline operator Reader() const { return Reader(_builder.asReader()); }
-  inline Reader asReader() const { return *this; }
-
-  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
-#if !CAPNP_LITE
-  inline ::kj::StringTree toString() const { return asReader().toString(); }
-#endif  // !CAPNP_LITE
-
-  inline bool getClosed();
-  inline void setClosed(bool value);
-
-private:
-  ::capnp::_::StructBuilder _builder;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::ToDynamic_;
-  friend class ::capnp::Orphanage;
-  template <typename, ::capnp::Kind>
-  friend struct ::capnp::_::PointerHelpers;
-};
-
-#if !CAPNP_LITE
-class Process::CloseResults::Pipeline {
-public:
-  typedef CloseResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -13051,35 +13493,126 @@ inline bool Process::Factory::CreateResults::Builder::hasOut() {
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Reader::getOut() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_reader.getPointerField(
+inline  ::mas::schema::fbp::Process::ProcessHandle::Client Process::Factory::CreateResults::Reader::getOut() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Builder::getOut() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_builder.getPointerField(
+inline  ::mas::schema::fbp::Process::ProcessHandle::Client Process::Factory::CreateResults::Builder::getOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Process::Client Process::Factory::CreateResults::Pipeline::getOut() {
-  return  ::mas::schema::fbp::Process::Client(_typeless.getPointerField(0).asCap());
+inline  ::mas::schema::fbp::Process::ProcessHandle::Client Process::Factory::CreateResults::Pipeline::getOut() {
+  return  ::mas::schema::fbp::Process::ProcessHandle::Client(_typeless.getPointerField(0).asCap());
 }
-inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::Client&& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::ProcessHandle::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
 }
-inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::Client& cap) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+inline void Process::Factory::CreateResults::Builder::setOut( ::mas::schema::fbp::Process::ProcessHandle::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
 }
 inline void Process::Factory::CreateResults::Builder::adoptOut(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::ProcessHandle>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::ProcessHandle> Process::Factory::CreateResults::Builder::disownOut() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ProcessHandle>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+inline Process::ProcessHandle::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Process::ProcessHandle::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Process::ProcessHandle::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Process::ProcessHandle::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Process::ProcessHandle::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Process::ProcessHandle::Client& Process::ProcessHandle::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Process::ProcessHandle::Client& Process::ProcessHandle::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Process::ProcessHandle::ProcessResults::Reader::hasProcess() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ProcessHandle::ProcessResults::Builder::hasProcess() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::Client Process::ProcessHandle::ProcessResults::Reader::getProcess() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Client Process::ProcessHandle::ProcessResults::Builder::getProcess() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::Client Process::ProcessHandle::ProcessResults::Pipeline::getProcess() {
+  return  ::mas::schema::fbp::Process::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Process::ProcessHandle::ProcessResults::Builder::setProcess( ::mas::schema::fbp::Process::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Process::ProcessHandle::ProcessResults::Builder::setProcess( ::mas::schema::fbp::Process::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Process::ProcessHandle::ProcessResults::Builder::adoptProcess(
     ::capnp::Orphan< ::mas::schema::fbp::Process>&& value) {
   ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::fbp::Process> Process::Factory::CreateResults::Builder::disownOut() {
+inline ::capnp::Orphan< ::mas::schema::fbp::Process> Process::ProcessHandle::ProcessResults::Builder::disownProcess() {
   return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #endif  // !CAPNP_LITE
+
+inline bool Process::ProcessHandle::CloseResults::Reader::getClosed() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Process::ProcessHandle::CloseResults::Builder::getClosed() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::ProcessHandle::CloseResults::Builder::setClosed(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Process::ProcessHandle::AliveResults::Reader::getAlive() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Process::ProcessHandle::AliveResults::Builder::getAlive() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::ProcessHandle::AliveResults::Builder::setAlive(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
 
 #if !CAPNP_LITE
 inline Process::Disconnect::Client::Client(decltype(nullptr))
@@ -13598,17 +14131,31 @@ inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::Process::ConfigEntry,
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline  ::mas::schema::fbp::Process::StopMode Process::StopParams::Reader::getMode() const {
-  return _reader.getDataField< ::mas::schema::fbp::Process::StopMode>(
+inline bool Process::StartResults::Reader::getStarted() const {
+  return _reader.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
 
-inline  ::mas::schema::fbp::Process::StopMode Process::StopParams::Builder::getMode() {
-  return _builder.getDataField< ::mas::schema::fbp::Process::StopMode>(
+inline bool Process::StartResults::Builder::getStarted() {
+  return _builder.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
-inline void Process::StopParams::Builder::setMode( ::mas::schema::fbp::Process::StopMode value) {
-  _builder.setDataField< ::mas::schema::fbp::Process::StopMode>(
+inline void Process::StartResults::Builder::setStarted(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Process::StopResults::Reader::getStopped() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Process::StopResults::Builder::getStopped() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::StopResults::Builder::setStopped(bool value) {
+  _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
@@ -13662,34 +14209,6 @@ inline  ::mas::schema::fbp::Process::State Process::StateResults::Builder::getCu
 }
 inline void Process::StateResults::Builder::setCurrentState( ::mas::schema::fbp::Process::State value) {
   _builder.setDataField< ::mas::schema::fbp::Process::State>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
-}
-
-inline  ::mas::schema::fbp::Process::StopMode Process::CloseParams::Reader::getMode() const {
-  return _reader.getDataField< ::mas::schema::fbp::Process::StopMode>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
-}
-
-inline  ::mas::schema::fbp::Process::StopMode Process::CloseParams::Builder::getMode() {
-  return _builder.getDataField< ::mas::schema::fbp::Process::StopMode>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
-}
-inline void Process::CloseParams::Builder::setMode( ::mas::schema::fbp::Process::StopMode value) {
-  _builder.setDataField< ::mas::schema::fbp::Process::StopMode>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value, 1u);
-}
-
-inline bool Process::CloseResults::Reader::getClosed() const {
-  return _reader.getDataField<bool>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-
-inline bool Process::CloseResults::Builder::getClosed() {
-  return _builder.getDataField<bool>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-inline void Process::CloseResults::Builder::setClosed(bool value) {
-  _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 

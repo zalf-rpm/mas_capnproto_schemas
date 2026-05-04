@@ -255,9 +255,22 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # bootstrap interface of a running process = instantiated component
 
   interface Factory extends(Common.Identifiable) {
-    # minimal interface to produce a Process instance
+    # minimal interface to produce a managed Process instance
 
-    create @0 () -> (out :Process);
+    create @0 () -> (out :ProcessHandle);
+  }
+
+  interface ProcessHandle {
+    # service-owned lifecycle handle for a Process instance
+
+    process @0 () -> (process :Process);
+    # return the Process capability used for component execution
+
+    close @1 () -> (closed :Bool);
+    # close logical process resources and terminate/reap the backing runtime if owned
+
+    alive @2 () -> (alive :Bool);
+    # true if the backing runtime is still alive
   }
 
   interface Disconnect {
@@ -289,17 +302,11 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   setConfigEntry @7 ConfigEntry;
   # set configuration value
 
-  start @5 ();
-  # accept start request and begin execution asynchronously
+  start @5 () -> (started :Bool);
+  # accept start request and begin execution asynchronously if idle
 
-  enum StopMode {
-    soft @0;
-    hard @1;
-  }
-
-  stop @6 (mode :StopMode = soft);
-  # stop process
-  close @9 (mode :StopMode = hard) -> (closed :Bool);
+  stop @6 () -> (stopped :Bool);
+  # request cooperative stop of the current run invocation; Process remains usable
 
   enum State {
     idle     @0; # reachable and startable, but no active run task

@@ -8,6 +8,10 @@ DisconnectServer = modules._ProcessInterfaceModule._DisconnectInterfaceModule.Se
 
 FactoryServer = modules._ProcessInterfaceModule._FactoryInterfaceModule.Server
 
+ProcessHandleServer = (
+    modules._ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+)
+
 ProcessServer = modules._ProcessInterfaceModule.Server
 
 ReaderServer = modules._ChannelInterfaceModule._ReaderInterfaceModule.Server

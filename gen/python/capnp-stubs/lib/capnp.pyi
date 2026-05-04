@@ -937,6 +937,11 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ProcessHandleInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessHandleClient: ...
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp.types.modules._ProcessInterfaceModule._StateTransitionInterfaceModule,
     ) -> fbp_capnp.types.clients.StateTransitionClient: ...
     @overload
@@ -2945,6 +2950,11 @@ class _DynamicObjectBuilder:
         self,
         schema: fbp_capnp.types.modules._ProcessInterfaceModule._DisconnectInterfaceModule,
     ) -> fbp_capnp.types.clients.DisconnectClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ProcessHandleInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessHandleClient: ...
     @overload
     def as_interface(
         self,
@@ -5377,6 +5387,11 @@ class _CapabilityClient:
         self,
         schema: fbp_capnp.types.modules._ProcessInterfaceModule._DisconnectInterfaceModule,
     ) -> fbp_capnp.types.clients.DisconnectClient: ...
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ProcessHandleInterfaceModule,
+    ) -> fbp_capnp.types.clients.ProcessHandleClient: ...
     @overload
     def cast_as(
         self,

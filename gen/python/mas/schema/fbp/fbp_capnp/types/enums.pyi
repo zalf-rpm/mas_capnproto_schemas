@@ -15,5 +15,3 @@ type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
 type ProcessStateEnum = (
     int | Literal["idle", "starting", "running", "stopping", "failed", "closed"]
 )
-
-type ProcessStopModeEnum = int | Literal["soft", "hard"]
