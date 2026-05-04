@@ -4031,6 +4031,52 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema: ...
 
+        class _ProcessInterfaceModuleCloseParamSchema(_StructSchema):
+            class _ModeField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["mode"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema._ModeField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema._Fields: ...
+
+        class _ProcessInterfaceModuleCloseResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["closed"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleCloseMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseResultSchema: ...
+
         class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
@@ -4089,6 +4135,11 @@ class _ProcessInterfaceModule(
                 self,
                 key: Literal["state"],
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["close"],
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseMethod: ...
             @overload
             def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -4216,6 +4267,16 @@ class _ProcessInterfaceModule(
         def state_context(
             self,
             context: contexts.StateCallContext,
+        ) -> Awaitable[None]: ...
+        def close(
+            self,
+            mode: enums.ProcessStopModeEnum,
+            _context: contexts.ProcessCloseCallContext,
+            **kwargs: object,
+        ) -> Awaitable[bool | results_tuples.ProcessCloseResultTuple | None]: ...
+        def close_context(
+            self,
+            context: contexts.ProcessCloseCallContext,
         ) -> Awaitable[None]: ...
 
 class _ComponentStructModule(_StructModule):

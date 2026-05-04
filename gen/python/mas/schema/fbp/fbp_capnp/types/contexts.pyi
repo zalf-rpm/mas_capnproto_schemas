@@ -217,3 +217,11 @@ class StateCallContext(Protocol):
     params: StateParams
     @property
     def results(self) -> results_server.StateServerResult: ...
+
+class ProcessCloseParams(Protocol):
+    mode: enums.ProcessStopModeEnum
+
+class ProcessCloseCallContext(Protocol):
+    params: ProcessCloseParams
+    @property
+    def results(self) -> results_server.ProcessCloseServerResult: ...

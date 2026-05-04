@@ -238,6 +238,10 @@ class ProcessClient(IdentifiableClient, GatewayRegistrableClient):
         | modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
         | None = None,
     ) -> results_client.StateResult: ...
+    def close(
+        self,
+        mode: enums.ProcessStopModeEnum | None = None,
+    ) -> results_client.ProcessCloseResult: ...
     def inPorts_request(self) -> requests.InportsRequest: ...
     def connectInPort_request(
         self,
@@ -267,3 +271,7 @@ class ProcessClient(IdentifiableClient, GatewayRegistrableClient):
         | modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
         | None = None,
     ) -> requests.StateRequest: ...
+    def close_request(
+        self,
+        mode: enums.ProcessStopModeEnum | None = None,
+    ) -> requests.ProcessCloseRequest: ...

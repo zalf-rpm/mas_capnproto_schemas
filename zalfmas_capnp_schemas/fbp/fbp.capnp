@@ -299,6 +299,7 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
 
   stop @6 (mode :StopMode = soft);
   # stop process
+  close @9 (mode :StopMode = hard) -> (closed :Bool);
 
   enum State {
     idle     @0; # reachable and startable, but no active run task
@@ -317,4 +318,5 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # return current state of process and
   # optionally ask for notifications if there's a state transition
   # callbacks emit only the states defined in State
+
 }

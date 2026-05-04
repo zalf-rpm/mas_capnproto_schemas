@@ -152,6 +152,8 @@ CAPNP_DECLARE_SCHEMA(ee5188311583039d);
 CAPNP_DECLARE_SCHEMA(c8608732b07a57dd);
 CAPNP_DECLARE_SCHEMA(b6f9c7723a43c20a);
 CAPNP_DECLARE_SCHEMA(d83c7bb8305387ce);
+CAPNP_DECLARE_SCHEMA(821d7719d781c29f);
+CAPNP_DECLARE_SCHEMA(a3faa670a0d208a1);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -1270,6 +1272,8 @@ struct Process {
   struct SetConfigEntryResults;
   struct StateParams;
   struct StateResults;
+  struct CloseParams;
+  struct CloseResults;
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
@@ -1690,6 +1694,36 @@ struct Process::StateResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(d83c7bb8305387ce, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::CloseParams {
+  CloseParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(821d7719d781c29f, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::CloseResults {
+  CloseResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a3faa670a0d208a1, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -6700,6 +6734,8 @@ public:
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
   ::capnp::Request< ::mas::schema::fbp::Process::StateParams,  ::mas::schema::fbp::Process::StateResults> stateRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+  ::capnp::Request< ::mas::schema::fbp::Process::CloseParams,  ::mas::schema::fbp::Process::CloseResults> closeRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
@@ -6753,6 +6789,10 @@ protected:
   typedef  ::mas::schema::fbp::Process::StateResults StateResults;
   typedef ::capnp::CallContext<StateParams, StateResults> StateContext;
   virtual ::kj::Promise<void> state(StateContext context);
+  typedef  ::mas::schema::fbp::Process::CloseParams CloseParams;
+  typedef  ::mas::schema::fbp::Process::CloseResults CloseResults;
+  typedef ::capnp::CallContext<CloseParams, CloseResults> CloseContext;
+  virtual ::kj::Promise<void> close(CloseContext context);
 
   inline  ::mas::schema::fbp::Process::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
@@ -8805,6 +8845,158 @@ private:
 class Process::StateResults::Pipeline {
 public:
   typedef StateResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::CloseParams::Reader {
+public:
+  typedef CloseParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::Process::StopMode getMode() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::CloseParams::Builder {
+public:
+  typedef CloseParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::Process::StopMode getMode();
+  inline void setMode( ::mas::schema::fbp::Process::StopMode value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::CloseParams::Pipeline {
+public:
+  typedef CloseParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::CloseResults::Reader {
+public:
+  typedef CloseResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool getClosed() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::CloseResults::Builder {
+public:
+  typedef CloseResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool getClosed();
+  inline void setClosed(bool value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::CloseResults::Pipeline {
+public:
+  typedef CloseResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -13470,6 +13662,34 @@ inline  ::mas::schema::fbp::Process::State Process::StateResults::Builder::getCu
 }
 inline void Process::StateResults::Builder::setCurrentState( ::mas::schema::fbp::Process::State value) {
   _builder.setDataField< ::mas::schema::fbp::Process::State>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline  ::mas::schema::fbp::Process::StopMode Process::CloseParams::Reader::getMode() const {
+  return _reader.getDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
+}
+
+inline  ::mas::schema::fbp::Process::StopMode Process::CloseParams::Builder::getMode() {
+  return _builder.getDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, 1u);
+}
+inline void Process::CloseParams::Builder::setMode( ::mas::schema::fbp::Process::StopMode value) {
+  _builder.setDataField< ::mas::schema::fbp::Process::StopMode>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value, 1u);
+}
+
+inline bool Process::CloseResults::Reader::getClosed() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool Process::CloseResults::Builder::getClosed() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::CloseResults::Builder::setClosed(bool value) {
+  _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 

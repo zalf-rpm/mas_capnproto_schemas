@@ -104,3 +104,6 @@ class ConfigentriesResultTuple(NamedTuple):
 
 class StateResultTuple(NamedTuple):
     currentState: enums.ProcessStateEnum
+
+class ProcessCloseResultTuple(NamedTuple):
+    closed: bool

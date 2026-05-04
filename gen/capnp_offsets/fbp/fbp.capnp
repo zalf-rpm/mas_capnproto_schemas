@@ -149,6 +149,7 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   setConfigEntry @7 ConfigEntry -> ();
   start @5 () -> ();
   stop @6 (mode :StopMode) -> ();
+  close @9 (mode :StopMode = hard) -> (closed :Bool);
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :Process);
