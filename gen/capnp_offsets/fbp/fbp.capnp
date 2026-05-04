@@ -147,12 +147,16 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   connectOutPort @3 (name :Text, sturdyRef :import "/persistence/persistence.capnp".SturdyRef) -> (connected :Bool, disconnect :Disconnect);
   configEntries @4 () -> (config :List(ConfigEntry));
   setConfigEntry @7 ConfigEntry -> ();
-  start @5 () -> ();
-  stop @6 (mode :StopMode) -> ();
-  close @9 (mode :StopMode = hard) -> (closed :Bool);
+  start @5 () -> (started :Bool);
+  stop @6 () -> (stopped :Bool);
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
-    create @0 () -> (out :Process);
+    create @0 () -> (out :ProcessHandle);
+  }
+  interface ProcessHandle @0xe6869481a867614f {
+    process @0 () -> (process :Process);
+    close @1 () -> (closed :Bool);
+    alive @2 () -> (alive :Bool);
   }
   interface Disconnect @0xde2d0ec08e014964 {
     disconnect @0 () -> (disconnected :Bool);
@@ -160,10 +164,6 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   struct ConfigEntry @0xa8d0bdfb4ddda7b3 {  # 0 bytes, 2 ptrs
     name @0 :Text;  # ptr[0]
     val @1 :import "/common/common.capnp".Value;  # ptr[1]
-  }
-  enum StopMode @0xa1895f2d928a5fcd {
-    soft @0;
-    hard @1;
   }
   enum State @0xe67044233be769a5 {
     idle @0;

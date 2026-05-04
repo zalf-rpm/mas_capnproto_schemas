@@ -133,6 +133,15 @@ class RunnableStartRequest(Protocol):
 class RunnableStopRequest(Protocol):
     def send(self) -> results_client.RunnableStopResult: ...
 
+class ProcessRequest(Protocol):
+    def send(self) -> results_client.ProcessResult: ...
+
+class ProcessHandleCloseRequest(Protocol):
+    def send(self) -> results_client.ProcessHandleCloseResult: ...
+
+class AliveRequest(Protocol):
+    def send(self) -> results_client.AliveResult: ...
+
 class ProcessFactoryCreateRequest(Protocol):
     def send(self) -> results_client.ProcessFactoryCreateResult: ...
 
@@ -175,7 +184,6 @@ class ProcessStartRequest(Protocol):
     def send(self) -> results_client.ProcessStartResult: ...
 
 class ProcessStopRequest(Protocol):
-    mode: enums.ProcessStopModeEnum
     def send(self) -> results_client.ProcessStopResult: ...
 
 class SetconfigentryRequest(Protocol):
@@ -193,7 +201,3 @@ class StateRequest(Protocol):
         | modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
     )
     def send(self) -> results_client.StateResult: ...
-
-class ProcessCloseRequest(Protocol):
-    mode: enums.ProcessStopModeEnum
-    def send(self) -> results_client.ProcessCloseResult: ...

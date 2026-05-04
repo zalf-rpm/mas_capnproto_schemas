@@ -64,8 +64,12 @@ class OutportsResultTuple(NamedTuple):
     ports: object
 
 
-class ProcessCloseResultTuple(NamedTuple):
-    closed: object
+class ProcessStartResultTuple(NamedTuple):
+    started: object
+
+
+class ProcessStopResultTuple(NamedTuple):
+    stopped: object
 
 
 class StateResultTuple(NamedTuple):
@@ -78,6 +82,18 @@ class DisconnectResultTuple(NamedTuple):
 
 class ProcessFactoryCreateResultTuple(NamedTuple):
     out: object
+
+
+class AliveResultTuple(NamedTuple):
+    alive: object
+
+
+class ProcessHandleCloseResultTuple(NamedTuple):
+    closed: object
+
+
+class ProcessResultTuple(NamedTuple):
+    process: object
 
 
 class RunnableStartResultTuple(NamedTuple):
@@ -98,6 +114,7 @@ class StartChannelsServiceStartResultTuple(NamedTuple):
 
 
 __all__ = [
+    "AliveResultTuple",
     "ConfigentriesResultTuple",
     "ConnectinportResultTuple",
     "ConnectoutportResultTuple",
@@ -105,8 +122,11 @@ __all__ = [
     "EndpointsResultTuple",
     "InportsResultTuple",
     "OutportsResultTuple",
-    "ProcessCloseResultTuple",
     "ProcessFactoryCreateResultTuple",
+    "ProcessHandleCloseResultTuple",
+    "ProcessResultTuple",
+    "ProcessStartResultTuple",
+    "ProcessStopResultTuple",
     "ReadResultTuple",
     "ReaderResultTuple",
     "ReadifmsgResultTuple",

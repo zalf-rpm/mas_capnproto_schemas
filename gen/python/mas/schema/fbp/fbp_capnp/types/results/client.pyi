@@ -72,8 +72,17 @@ class RunnableStartResult(Awaitable[RunnableStartResult], Protocol):
 class RunnableStopResult(Awaitable[RunnableStopResult], Protocol):
     success: bool
 
+class ProcessResult(Awaitable[ProcessResult], Protocol):
+    process: clients.ProcessClient
+
+class ProcessHandleCloseResult(Awaitable[ProcessHandleCloseResult], Protocol):
+    closed: bool
+
+class AliveResult(Awaitable[AliveResult], Protocol):
+    alive: bool
+
 class ProcessFactoryCreateResult(Awaitable[ProcessFactoryCreateResult], Protocol):
-    out: clients.ProcessClient
+    out: clients.ProcessHandleClient
 
 class DisconnectResult(Awaitable[DisconnectResult], Protocol):
     disconnected: bool
@@ -97,12 +106,13 @@ class ConnectoutportResult(Awaitable[ConnectoutportResult], Protocol):
 class ConfigentriesResult(Awaitable[ConfigentriesResult], Protocol):
     config: readers.ConfigEntryListReader
 
-class ProcessStartResult(Awaitable[None], Protocol): ...
-class ProcessStopResult(Awaitable[None], Protocol): ...
+class ProcessStartResult(Awaitable[ProcessStartResult], Protocol):
+    started: bool
+
+class ProcessStopResult(Awaitable[ProcessStopResult], Protocol):
+    stopped: bool
+
 class SetconfigentryResult(Awaitable[None], Protocol): ...
 
 class StateResult(Awaitable[StateResult], Protocol):
     currentState: enums.ProcessStateEnum
-
-class ProcessCloseResult(Awaitable[ProcessCloseResult], Protocol):
-    closed: bool

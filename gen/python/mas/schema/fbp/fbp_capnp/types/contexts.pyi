@@ -136,6 +136,27 @@ class RunnableStopCallContext(Protocol):
     @property
     def results(self) -> results_server.RunnableStopServerResult: ...
 
+class ProcessParams(Protocol): ...
+
+class ProcessCallContext(Protocol):
+    params: ProcessParams
+    @property
+    def results(self) -> results_server.ProcessServerResult: ...
+
+class ProcessHandleCloseParams(Protocol): ...
+
+class ProcessHandleCloseCallContext(Protocol):
+    params: ProcessHandleCloseParams
+    @property
+    def results(self) -> results_server.ProcessHandleCloseServerResult: ...
+
+class AliveParams(Protocol): ...
+
+class AliveCallContext(Protocol):
+    params: AliveParams
+    @property
+    def results(self) -> results_server.AliveServerResult: ...
+
 class ProcessFactoryCreateParams(Protocol): ...
 
 class ProcessFactoryCreateCallContext(Protocol):
@@ -200,12 +221,15 @@ class ProcessStartParams(Protocol): ...
 
 class ProcessStartCallContext(Protocol):
     params: ProcessStartParams
+    @property
+    def results(self) -> results_server.ProcessStartServerResult: ...
 
-class ProcessStopParams(Protocol):
-    mode: enums.ProcessStopModeEnum
+class ProcessStopParams(Protocol): ...
 
 class ProcessStopCallContext(Protocol):
     params: ProcessStopParams
+    @property
+    def results(self) -> results_server.ProcessStopServerResult: ...
 
 class SetconfigentryCallContext(Protocol):
     params: readers.ConfigEntryReader
@@ -217,11 +241,3 @@ class StateCallContext(Protocol):
     params: StateParams
     @property
     def results(self) -> results_server.StateServerResult: ...
-
-class ProcessCloseParams(Protocol):
-    mode: enums.ProcessStopModeEnum
-
-class ProcessCloseCallContext(Protocol):
-    params: ProcessCloseParams
-    @property
-    def results(self) -> results_server.ProcessCloseServerResult: ...

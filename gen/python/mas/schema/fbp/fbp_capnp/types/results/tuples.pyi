@@ -71,8 +71,20 @@ class RunnableStartResultTuple(NamedTuple):
 class RunnableStopResultTuple(NamedTuple):
     success: bool
 
+class ProcessResultTuple(NamedTuple):
+    process: modules._ProcessInterfaceModule.Server | clients.ProcessClient
+
+class ProcessHandleCloseResultTuple(NamedTuple):
+    closed: bool
+
+class AliveResultTuple(NamedTuple):
+    alive: bool
+
 class ProcessFactoryCreateResultTuple(NamedTuple):
-    out: modules._ProcessInterfaceModule.Server | clients.ProcessClient
+    out: (
+        modules._ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+        | clients.ProcessHandleClient
+    )
 
 class DisconnectResultTuple(NamedTuple):
     disconnected: bool
@@ -102,8 +114,11 @@ class ConfigentriesResultTuple(NamedTuple):
         builders.ConfigEntryListBuilder | readers.ConfigEntryListReader | Sequence[Any]
     )
 
+class ProcessStartResultTuple(NamedTuple):
+    started: bool
+
+class ProcessStopResultTuple(NamedTuple):
+    stopped: bool
+
 class StateResultTuple(NamedTuple):
     currentState: enums.ProcessStateEnum
-
-class ProcessCloseResultTuple(NamedTuple):
-    closed: bool

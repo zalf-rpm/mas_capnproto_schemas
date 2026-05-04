@@ -149,13 +149,42 @@ class RunnableStopServerResult(_DynamicStructBuilder):
     @success.setter
     def success(self, value: bool) -> None: ...
 
+class ProcessServerResult(_DynamicStructBuilder):
+    @property
+    def process(
+        self,
+    ) -> modules._ProcessInterfaceModule.Server | clients.ProcessClient: ...
+    @process.setter
+    def process(
+        self,
+        value: modules._ProcessInterfaceModule.Server | clients.ProcessClient,
+    ) -> None: ...
+
+class ProcessHandleCloseServerResult(_DynamicStructBuilder):
+    @property
+    def closed(self) -> bool: ...
+    @closed.setter
+    def closed(self, value: bool) -> None: ...
+
+class AliveServerResult(_DynamicStructBuilder):
+    @property
+    def alive(self) -> bool: ...
+    @alive.setter
+    def alive(self, value: bool) -> None: ...
+
 class ProcessFactoryCreateServerResult(_DynamicStructBuilder):
     @property
-    def out(self) -> modules._ProcessInterfaceModule.Server | clients.ProcessClient: ...
+    def out(
+        self,
+    ) -> (
+        modules._ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+        | clients.ProcessHandleClient
+    ): ...
     @out.setter
     def out(
         self,
-        value: modules._ProcessInterfaceModule.Server | clients.ProcessClient,
+        value: modules._ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+        | clients.ProcessHandleClient,
     ) -> None: ...
 
 class DisconnectServerResult(_DynamicStructBuilder):
@@ -255,14 +284,20 @@ class ConfigentriesServerResult(_DynamicStructBuilder):
     @overload
     def init(self, field: str, size: int | None = None) -> Any: ...
 
+class ProcessStartServerResult(_DynamicStructBuilder):
+    @property
+    def started(self) -> bool: ...
+    @started.setter
+    def started(self, value: bool) -> None: ...
+
+class ProcessStopServerResult(_DynamicStructBuilder):
+    @property
+    def stopped(self) -> bool: ...
+    @stopped.setter
+    def stopped(self, value: bool) -> None: ...
+
 class StateServerResult(_DynamicStructBuilder):
     @property
     def currentState(self) -> enums.ProcessStateEnum: ...
     @currentState.setter
     def currentState(self, value: enums.ProcessStateEnum) -> None: ...
-
-class ProcessCloseServerResult(_DynamicStructBuilder):
-    @property
-    def closed(self) -> bool: ...
-    @closed.setter
-    def closed(self, value: bool) -> None: ...

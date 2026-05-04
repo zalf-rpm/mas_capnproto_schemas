@@ -3102,7 +3102,7 @@ class _ProcessInterfaceModule(
                 class _OutField(_StructSchemaField):
                     @property
                     @override
-                    def schema(self) -> schemas._ProcessSchema: ...
+                    def schema(self) -> schemas._ProcessProcessHandleSchema: ...
 
                 class _Fields(dict[str, _StructSchemaField]):
                     @overload
@@ -3167,8 +3167,8 @@ class _ProcessInterfaceModule(
                 _context: contexts.ProcessFactoryCreateCallContext,
                 **kwargs: object,
             ) -> Awaitable[
-                _ProcessInterfaceModule.Server
-                | clients.ProcessClient
+                _ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+                | clients.ProcessHandleClient
                 | results_tuples.ProcessFactoryCreateResultTuple
                 | None
             ]: ...
@@ -3177,6 +3177,197 @@ class _ProcessInterfaceModule(
                 context: contexts.ProcessFactoryCreateCallContext,
             ) -> Awaitable[None]: ...
 
+    class _ProcessHandleInterfaceModule(_InterfaceModule):
+        class _ProcessHandleSchema(_InterfaceSchema):
+            class _ProcessHandleInterfaceModuleProcessParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessParamSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleProcessResultSchema(_StructSchema):
+                class _ProcessField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ProcessSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["process"],
+                    ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessResultSchema._ProcessField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessResultSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleProcessMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessResultSchema: ...
+
+            class _ProcessHandleInterfaceModuleCloseParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleCloseParamSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleCloseResultSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["closed"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleCloseResultSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleCloseMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleCloseParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleCloseResultSchema: ...
+
+            class _ProcessHandleInterfaceModuleAliveParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleAliveParamSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleAliveResultSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["alive"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleAliveResultSchema._Fields: ...
+
+            class _ProcessHandleInterfaceModuleAliveMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleAliveParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleAliveResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["process"],
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleProcessMethod: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["close"],
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleCloseMethod: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["alive"],
+                ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._ProcessHandleInterfaceModuleAliveMethod: ...
+                @overload
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._Methods: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessProcessHandleSchema: ...
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> clients.ProcessHandleClient: ...
+        class Server(_DynamicCapabilityServer):
+            def process(
+                self,
+                _context: contexts.ProcessCallContext,
+                **kwargs: object,
+            ) -> Awaitable[
+                _ProcessInterfaceModule.Server
+                | clients.ProcessClient
+                | results_tuples.ProcessResultTuple
+                | None
+            ]: ...
+            def process_context(
+                self,
+                context: contexts.ProcessCallContext,
+            ) -> Awaitable[None]: ...
+            def close(
+                self,
+                _context: contexts.ProcessHandleCloseCallContext,
+                **kwargs: object,
+            ) -> Awaitable[
+                bool | results_tuples.ProcessHandleCloseResultTuple | None
+            ]: ...
+            def close_context(
+                self,
+                context: contexts.ProcessHandleCloseCallContext,
+            ) -> Awaitable[None]: ...
+            def alive(
+                self,
+                _context: contexts.AliveCallContext,
+                **kwargs: object,
+            ) -> Awaitable[bool | results_tuples.AliveResultTuple | None]: ...
+            def alive_context(
+                self,
+                context: contexts.AliveCallContext,
+            ) -> Awaitable[None]: ...
+
+    ProcessHandle: _ProcessHandleInterfaceModule
+    type ProcessHandleServer = (
+        _ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
+    )
     Factory: _FactoryInterfaceModule
     type FactoryServer = _ProcessInterfaceModule._FactoryInterfaceModule.Server
     class _DisconnectInterfaceModule(_InterfaceModule):
@@ -3344,17 +3535,6 @@ class _ProcessInterfaceModule(
         ) -> readers.ConfigEntryReader: ...
 
     ConfigEntry: _ConfigEntryStructModule
-    class _StopModeEnumModule(_EnumModule):
-        soft: int
-        hard: int
-
-        class _StopModeSchema(_EnumSchema): ...
-
-        @property
-        @override
-        def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
-
-    StopMode: _StopModeEnumModule
     class _StateEnumModule(_EnumModule):
         idle: int
         starting: int
@@ -3869,7 +4049,14 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartParamSchema._Fields: ...
 
         class _ProcessInterfaceModuleStartResultSchema(_StructSchema):
-            class _Fields(dict[str, _StructSchemaField]): ...
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["started"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
             @override
@@ -3890,19 +4077,7 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStartResultSchema: ...
 
         class _ProcessInterfaceModuleStopParamSchema(_StructSchema):
-            class _ModeField(_StructSchemaField):
-                @property
-                @override
-                def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
-
-            class _Fields(dict[str, _StructSchemaField]):
-                @overload
-                def __getitem__(
-                    self,
-                    key: Literal["mode"],
-                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopParamSchema._ModeField: ...
-                @overload
-                def __getitem__(self, key: str) -> _StructSchemaField: ...
+            class _Fields(dict[str, _StructSchemaField]): ...
 
             @property
             @override
@@ -3911,7 +4086,14 @@ class _ProcessInterfaceModule(
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStopParamSchema._Fields: ...
 
         class _ProcessInterfaceModuleStopResultSchema(_StructSchema):
-            class _Fields(dict[str, _StructSchemaField]): ...
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["stopped"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
             @override
@@ -4031,52 +4213,6 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema: ...
 
-        class _ProcessInterfaceModuleCloseParamSchema(_StructSchema):
-            class _ModeField(_StructSchemaField):
-                @property
-                @override
-                def schema(self) -> schemas._ProcessStopModeEnumSchema: ...
-
-            class _Fields(dict[str, _StructSchemaField]):
-                @overload
-                def __getitem__(
-                    self,
-                    key: Literal["mode"],
-                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema._ModeField: ...
-                @overload
-                def __getitem__(self, key: str) -> _StructSchemaField: ...
-
-            @property
-            @override
-            def fields(
-                self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema._Fields: ...
-
-        class _ProcessInterfaceModuleCloseResultSchema(_StructSchema):
-            class _Fields(dict[str, _StructSchemaField]):
-                @overload
-                def __getitem__(self, key: Literal["closed"]) -> _StructSchemaField: ...
-                @overload
-                def __getitem__(self, key: str) -> _StructSchemaField: ...
-
-            @property
-            @override
-            def fields(
-                self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseResultSchema._Fields: ...
-
-        class _ProcessInterfaceModuleCloseMethod(_InterfaceMethod):
-            @property
-            @override
-            def param_type(
-                self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseParamSchema: ...
-            @property
-            @override
-            def result_type(
-                self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseResultSchema: ...
-
         class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
@@ -4135,11 +4271,6 @@ class _ProcessInterfaceModule(
                 self,
                 key: Literal["state"],
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateMethod: ...
-            @overload
-            def __getitem__(
-                self,
-                key: Literal["close"],
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleCloseMethod: ...
             @overload
             def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -4230,17 +4361,16 @@ class _ProcessInterfaceModule(
             self,
             _context: contexts.ProcessStartCallContext,
             **kwargs: object,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[bool | results_tuples.ProcessStartResultTuple | None]: ...
         def start_context(
             self,
             context: contexts.ProcessStartCallContext,
         ) -> Awaitable[None]: ...
         def stop(
             self,
-            mode: enums.ProcessStopModeEnum,
             _context: contexts.ProcessStopCallContext,
             **kwargs: object,
-        ) -> Awaitable[None]: ...
+        ) -> Awaitable[bool | results_tuples.ProcessStopResultTuple | None]: ...
         def stop_context(
             self,
             context: contexts.ProcessStopCallContext,
@@ -4267,16 +4397,6 @@ class _ProcessInterfaceModule(
         def state_context(
             self,
             context: contexts.StateCallContext,
-        ) -> Awaitable[None]: ...
-        def close(
-            self,
-            mode: enums.ProcessStopModeEnum,
-            _context: contexts.ProcessCloseCallContext,
-            **kwargs: object,
-        ) -> Awaitable[bool | results_tuples.ProcessCloseResultTuple | None]: ...
-        def close_context(
-            self,
-            context: contexts.ProcessCloseCallContext,
         ) -> Awaitable[None]: ...
 
 class _ComponentStructModule(_StructModule):
