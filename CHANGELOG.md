@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.61](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.60...v0.1.61) (2026-05-05)
+
+
+### Features
+
+* add close method to process ([74e66db](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/74e66db3aaf156205fc4251a5c349cd48e11e512))
+* add disconnect callback for process components ([9bdd9e8](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/9bdd9e8378ab2b67fcd4c30a15f50bcd26dcaea5))
+* get rid of _all and move everything to appropriate sub modules ([6fbbed2](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/6fbbed2581bb4f800cda0761f64994b24ac2d452))
+* modify some states for the process class ([8783f77](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/8783f77088c0bbfb4d38e9140af43b1db64d2a17))
+* simplify process and add process handle for proper termination ([3110c02](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/3110c02117706a6936e31cc7863852cc055aa0f7))
+* split types into modules to not pollute the top level ([f86c463](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/f86c4637e014229ea3e87bf0dc20e17d3cbe8946))
+
+
+### Bug Fixes
+
+* regenerate stubs with less runtime stuff ([a540e6d](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/a540e6dfaffba2bc3adf8b7d42b3dbaeca58520a))
+* some types on return types of methods ([1dd01cf](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/1dd01cfc56a768b70e3dadf421cfaa39173eb033))
+
 ## [0.1.60](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.59...v0.1.60) (2026-04-28)
 
 
