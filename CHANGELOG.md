@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.62](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.61...v0.1.62) (2026-05-07)
+
+
+### Bug Fixes
+
+* improve type accuracy of list types in various places ([0eaef2f](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/0eaef2fe0de201916f57c4e1ce58f33d7e8d5ff5))
+
 ## [0.1.61](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.60...v0.1.61) (2026-05-05)
 
 
