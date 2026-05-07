@@ -1,6 +1,6 @@
 """Module helper types for `soil_params.capnp`."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
@@ -163,7 +163,14 @@ class _SoilCharacteristicDataStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: builders.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            _SoilCharacteristicDataStructModule._DataStructModule.Reader
+            | _SoilCharacteristicDataStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.SoilCharacteristicDataBuilder: ...
     @override
@@ -360,7 +367,14 @@ class _SoilCharacteristicModifierStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: builders.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            _SoilCharacteristicModifierStructModule._DataStructModule.Reader
+            | _SoilCharacteristicModifierStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.SoilCharacteristicModifierBuilder: ...
     @override
@@ -542,7 +556,14 @@ class _CapillaryRiseRateStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        list: builders.DataListBuilder | dict[str, Any] | None = None,
+        list: builders.DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            _CapillaryRiseRateStructModule._DataStructModule.Reader
+            | _CapillaryRiseRateStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.CapillaryRiseRateBuilder: ...
     @override

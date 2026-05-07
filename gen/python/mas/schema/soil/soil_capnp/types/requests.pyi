@@ -5,6 +5,7 @@ from typing import Any, Literal, Protocol, overload
 
 from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
 from mas.schema.soil.soil_capnp.types import builders as builders
+from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import readers as readers
 from mas.schema.soil.soil_capnp.types.results import client as results_client
 
@@ -22,12 +23,12 @@ class CheckavailableparametersRequest(Protocol):
     mandatory: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     optional: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     onlyRawData: bool
     @overload
@@ -65,12 +66,12 @@ class StreamallprofilesRequest(Protocol):
     mandatory: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     optional: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     onlyRawData: bool
     @overload

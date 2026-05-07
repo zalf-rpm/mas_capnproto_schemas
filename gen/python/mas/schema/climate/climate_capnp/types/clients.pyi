@@ -62,7 +62,7 @@ class TimeSeriesClient(IdentifiableClient, PersistentClient):
         self,
         elements: builders.ElementEnumListBuilder
         | readers.ElementEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.ElementEnum]
         | None = None,
     ) -> results_client.SubheaderResult: ...
     def metadata(self) -> results_client.TimeSeriesMetadataResult: ...
@@ -81,7 +81,7 @@ class TimeSeriesClient(IdentifiableClient, PersistentClient):
         self,
         elements: builders.ElementEnumListBuilder
         | readers.ElementEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.ElementEnum]
         | None = None,
     ) -> requests.SubheaderRequest: ...
     def metadata_request(self) -> requests.TimeSeriesMetadataRequest: ...

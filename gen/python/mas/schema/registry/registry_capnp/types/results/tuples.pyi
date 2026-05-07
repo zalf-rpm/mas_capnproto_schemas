@@ -3,7 +3,13 @@
 from collections.abc import Sequence
 from typing import Any, NamedTuple
 
-from mas.schema.persistence.persistence_capnp.types.builders import SturdyRefBuilder
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.persistence.persistence_capnp.types.builders import (
+    SturdyRefBuilder,
+)
 from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import clients as clients
@@ -17,24 +23,24 @@ class RemovecategoryResultTuple(NamedTuple):
     removedObjects: (
         builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any]
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
     )
 
 class MoveobjectsResultTuple(NamedTuple):
-    movedObjectIds: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    movedObjectIds: builders.TextListBuilder | readers.TextListReader | Sequence[str]
 
 class RemoveobjectsResultTuple(NamedTuple):
     removedObjects: (
         builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any]
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
     )
 
 class SupportedcategoriesResultTuple(NamedTuple):
     cats: (
         builders.IdInformationListBuilder
         | readers.IdInformationListReader
-        | Sequence[Any]
+        | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]]
     )
 
 class CategoryinfoResultTuple(NamedTuple):
@@ -43,7 +49,11 @@ class CategoryinfoResultTuple(NamedTuple):
     description: str
 
 class EntriesResultTuple(NamedTuple):
-    entries: builders.EntryListBuilder | readers.EntryListReader | Sequence[Any]
+    entries: (
+        builders.EntryListBuilder
+        | readers.EntryListReader
+        | Sequence[readers.EntryReader | builders.EntryBuilder | dict[str, Any]]
+    )
 
 class RegistryResultTuple(NamedTuple):
     registry: modules._RegistryInterfaceModule.Server | clients.RegistryClient

@@ -20,10 +20,12 @@ from capnp.lib.capnp import (
 from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
-from mas.schema.common.common_capnp.types.modules import (
-    _IdentifiableInterfaceModule,
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
 )
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.persistence.persistence_capnp.types import (
     schemas as _mas_schema_persistence_persistence_capnp_schemas,
 )
@@ -270,55 +272,68 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
                     allocate_seg_callable: Callable[[int], bytearray] | None = None,
                     boolValue: bool | None = None,
                     boolListValue: builders.BoolListBuilder
-                    | dict[str, Any]
+                    | readers.BoolListReader
+                    | Sequence[bool]
                     | None = None,
                     int8Value: int | None = None,
                     int8ListValue: builders.Int8ListBuilder
-                    | dict[str, Any]
+                    | readers.Int8ListReader
+                    | Sequence[int]
                     | None = None,
                     int16Value: int | None = None,
                     int16ListValue: builders.Int16ListBuilder
-                    | dict[str, Any]
+                    | readers.Int16ListReader
+                    | Sequence[int]
                     | None = None,
                     int32Value: int | None = None,
                     int32ListValue: builders.Int32ListBuilder
-                    | dict[str, Any]
+                    | readers.Int32ListReader
+                    | Sequence[int]
                     | None = None,
                     int64Value: int | None = None,
                     int64ListValue: builders.Int64ListBuilder
-                    | dict[str, Any]
+                    | readers.Int64ListReader
+                    | Sequence[int]
                     | None = None,
                     uint8Value: int | None = None,
                     uint8ListValue: builders.Uint8ListBuilder
-                    | dict[str, Any]
+                    | readers.Uint8ListReader
+                    | Sequence[int]
                     | None = None,
                     uint16Value: int | None = None,
                     uint16ListValue: builders.Uint16ListBuilder
-                    | dict[str, Any]
+                    | readers.Uint16ListReader
+                    | Sequence[int]
                     | None = None,
                     uint32Value: int | None = None,
                     uint32ListValue: builders.Uint32ListBuilder
-                    | dict[str, Any]
+                    | readers.Uint32ListReader
+                    | Sequence[int]
                     | None = None,
                     uint64Value: int | None = None,
                     uint64ListValue: builders.Uint64ListBuilder
-                    | dict[str, Any]
+                    | readers.Uint64ListReader
+                    | Sequence[int]
                     | None = None,
                     float32Value: float | None = None,
                     float32ListValue: builders.Float32ListBuilder
-                    | dict[str, Any]
+                    | readers.Float32ListReader
+                    | Sequence[float]
                     | None = None,
                     float64Value: float | None = None,
                     float64ListValue: builders.Float64ListBuilder
-                    | dict[str, Any]
+                    | readers.Float64ListReader
+                    | Sequence[float]
                     | None = None,
                     textValue: str | None = None,
                     textListValue: builders.TextListBuilder
-                    | dict[str, Any]
+                    | readers.TextListReader
+                    | Sequence[str]
                     | None = None,
                     dataValue: bytes | None = None,
                     dataListValue: builders.DataListBuilder
-                    | dict[str, Any]
+                    | readers.DataListReader
+                    | Sequence[bytes]
                     | None = None,
                     anyValue: common.AnyStruct | dict[str, Any] | None = None,
                     **kwargs: object,
@@ -1204,7 +1219,7 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             ) -> Awaitable[
                 builders.PairListBuilder
                 | readers.PairListReader
-                | Sequence[Any]
+                | Sequence[PairReader | PairBuilder | dict[str, Any]]
                 | results_tuples.DownloadentriesResultTuple
                 | None
             ]: ...
@@ -1219,7 +1234,11 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             ) -> Awaitable[
                 builders.KeyAndEntryListBuilder
                 | readers.KeyAndEntryListReader
-                | Sequence[Any]
+                | Sequence[
+                    readers.KeyAndEntryReader
+                    | builders.KeyAndEntryBuilder
+                    | dict[str, Any]
+                ]
                 | results_tuples.ListentriesResultTuple
                 | None
             ]: ...
@@ -1433,9 +1452,18 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            info: IdInformationBuilder | dict[str, Any] | None = None,
-            entries: builders.PairListBuilder | dict[str, Any] | None = None,
-            isAnyValue: builders.BoolListBuilder | dict[str, Any] | None = None,
+            info: IdInformationBuilder
+            | IdInformationReader
+            | dict[str, Any]
+            | None = None,
+            entries: builders.PairListBuilder
+            | readers.PairListReader
+            | Sequence[PairReader | PairBuilder | dict[str, Any]]
+            | None = None,
+            isAnyValue: builders.BoolListBuilder
+            | readers.BoolListReader
+            | Sequence[bool]
+            | None = None,
             **kwargs: object,
         ) -> builders.ImportExportDataBuilder: ...
         @override
@@ -1929,7 +1957,11 @@ class _StoreInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMo
         ) -> Awaitable[
             builders.InfoAndContainerListBuilder
             | readers.InfoAndContainerListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.InfoAndContainerReader
+                | builders.InfoAndContainerBuilder
+                | dict[str, Any]
+            ]
             | results_tuples.ListcontainersResultTuple
             | None
         ]: ...

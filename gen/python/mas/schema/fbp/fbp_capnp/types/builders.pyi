@@ -1,5 +1,6 @@
 """Builder helper types for `fbp.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -48,7 +49,9 @@ class IPBuilder(_DynamicStructBuilder):
     @attributes.setter
     def attributes(
         self,
-        value: KVListBuilder | readers.KVListReader | dict[str, Any],
+        value: KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | KVBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def content(self) -> _DynamicObjectBuilder: ...
@@ -114,14 +117,18 @@ class StartupInfoBuilder(_DynamicStructBuilder):
     @readerSRs.setter
     def readerSRs(
         self,
-        value: SturdyRefListBuilder | readers.SturdyRefListReader | dict[str, Any],
+        value: SturdyRefListBuilder
+        | readers.SturdyRefListReader
+        | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def writerSRs(self) -> SturdyRefListBuilder: ...
     @writerSRs.setter
     def writerSRs(
         self,
-        value: SturdyRefListBuilder | readers.SturdyRefListReader | dict[str, Any],
+        value: SturdyRefListBuilder
+        | readers.SturdyRefListReader
+        | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def channel(self) -> clients.ChannelClient: ...
@@ -137,7 +144,10 @@ class StartupInfoBuilder(_DynamicStructBuilder):
         self,
         value: ReaderClientListBuilder
         | readers.ReaderClientListReader
-        | dict[str, Any],
+        | Sequence[
+            clients.ReaderClient
+            | modules._ChannelInterfaceModule._ReaderInterfaceModule.Server
+        ],
     ) -> None: ...
     @property
     def writers(self) -> WriterClientListBuilder: ...
@@ -146,7 +156,10 @@ class StartupInfoBuilder(_DynamicStructBuilder):
         self,
         value: WriterClientListBuilder
         | readers.WriterClientListReader
-        | dict[str, Any],
+        | Sequence[
+            clients.WriterClient
+            | modules._ChannelInterfaceModule._WriterInterfaceModule.Server
+        ],
     ) -> None: ...
     @override
     @overload
@@ -234,14 +247,14 @@ class ParamsBuilder(_DynamicStructBuilder):
     @readerSrts.setter
     def readerSrts(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def writerSrts(self) -> TextListBuilder: ...
     @writerSrts.setter
     def writerSrts(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def bufferSize(self) -> int: ...
@@ -282,7 +295,9 @@ class NameAndSRBuilder(_DynamicStructBuilder):
     @srs.setter
     def srs(
         self,
-        value: SturdyRefListBuilder | readers.SturdyRefListReader | dict[str, Any],
+        value: SturdyRefListBuilder
+        | readers.SturdyRefListReader
+        | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def which(self) -> Literal["sr", "srs"]: ...
@@ -310,14 +325,18 @@ class PortInfosBuilder(_DynamicStructBuilder):
     @inPorts.setter
     def inPorts(
         self,
-        value: NameAndSRListBuilder | readers.NameAndSRListReader | dict[str, Any],
+        value: NameAndSRListBuilder
+        | readers.NameAndSRListReader
+        | Sequence[readers.NameAndSRReader | NameAndSRBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def outPorts(self) -> NameAndSRListBuilder: ...
     @outPorts.setter
     def outPorts(
         self,
-        value: NameAndSRListBuilder | readers.NameAndSRListReader | dict[str, Any],
+        value: NameAndSRListBuilder
+        | readers.NameAndSRListReader
+        | Sequence[readers.NameAndSRReader | NameAndSRBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     @overload
@@ -414,14 +433,18 @@ class ComponentBuilder(_DynamicStructBuilder):
     @inPorts.setter
     def inPorts(
         self,
-        value: PortListBuilder | readers.PortListReader | dict[str, Any],
+        value: PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | PortBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def outPorts(self) -> PortListBuilder: ...
     @outPorts.setter
     def outPorts(
         self,
-        value: PortListBuilder | readers.PortListReader | dict[str, Any],
+        value: PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | PortBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def defaultConfig(self) -> StructuredTextBuilder: ...

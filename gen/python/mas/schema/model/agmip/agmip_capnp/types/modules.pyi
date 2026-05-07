@@ -19,6 +19,7 @@ from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
 from mas.schema.common.common_capnp.types.builders import StructuredTextBuilder
+from mas.schema.common.common_capnp.types.readers import StructuredTextReader
 from mas.schema.model.agmip.agmip_capnp.types import builders as builders
 from mas.schema.model.agmip.agmip_capnp.types import readers as readers
 from mas.schema.model.agmip.agmip_capnp.types import schemas as schemas
@@ -120,11 +121,23 @@ class _FieldExperimentDataTemplateStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         soilProfile: ProfileClient | _ProfileInterfaceModule.Server | None = None,
-        soil: StructuredTextBuilder | dict[str, Any] | None = None,
-        plot: StructuredTextBuilder | dict[str, Any] | None = None,
+        soil: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
+        plot: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
         timeseries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server | None = None,
-        treatment: StructuredTextBuilder | dict[str, Any] | None = None,
-        experiment: StructuredTextBuilder | dict[str, Any] | None = None,
+        treatment: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
+        experiment: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.FieldExperimentDataTemplateBuilder: ...
     @override

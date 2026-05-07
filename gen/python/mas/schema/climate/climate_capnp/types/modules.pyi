@@ -31,8 +31,12 @@ from mas.schema.climate.climate_capnp.types.results import tuples as results_tup
 from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.common.date_capnp.types import (
     schemas as _mas_schema_common_date_capnp_schemas,
 )
@@ -348,7 +352,7 @@ class _MetadataStructModule(_StructModule):
             ) -> Awaitable[
                 builders.IdInformationListBuilder
                 | readers.IdInformationListReader
-                | Sequence[Any]
+                | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]]
                 | results_tuples.CategoriesResultTuple
                 | None
             ]: ...
@@ -364,7 +368,7 @@ class _MetadataStructModule(_StructModule):
             ) -> Awaitable[
                 builders.IdInformationListBuilder
                 | readers.IdInformationListReader
-                | Sequence[Any]
+                | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]]
                 | results_tuples.SupportedvaluesResultTuple
                 | None
             ]: ...
@@ -424,7 +428,7 @@ class _MetadataStructModule(_StructModule):
             float: float | None = None,
             int: int | None = None,
             bool: bool | None = None,
-            date: DateBuilder | dict[str, Any] | None = None,
+            date: DateBuilder | DateReader | dict[str, Any] | None = None,
             **kwargs: object,
         ) -> builders.ValueBuilder: ...
         @override
@@ -614,10 +618,13 @@ class _MetadataStructModule(_StructModule):
             historical: None | None = None,
             rcp: enums.RCPEnum | None = None,
             ssp: enums.SSPEnum | None = None,
-            ensMem: builders.EnsembleMemberBuilder | dict[str, Any] | None = None,
+            ensMem: builders.EnsembleMemberBuilder
+            | readers.EnsembleMemberReader
+            | dict[str, Any]
+            | None = None,
             version: str | None = None,
-            start: DateBuilder | dict[str, Any] | None = None,
-            end: DateBuilder | dict[str, Any] | None = None,
+            start: DateBuilder | DateReader | dict[str, Any] | None = None,
+            end: DateBuilder | DateReader | dict[str, Any] | None = None,
             co2: float | None = None,
             picontrol: None | None = None,
             description: str | None = None,
@@ -827,7 +834,7 @@ class _MetadataStructModule(_StructModule):
             ) -> Awaitable[
                 builders.PairListBuilder
                 | readers.PairListReader
-                | Sequence[Any]
+                | Sequence[PairReader | PairBuilder | dict[str, Any]]
                 | results_tuples.ForallResultTuple
                 | None
             ]: ...
@@ -885,7 +892,10 @@ class _MetadataStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        entries: builders.EntryListBuilder | dict[str, Any] | None = None,
+        entries: builders.EntryListBuilder
+        | readers.EntryListReader
+        | Sequence[readers.EntryReader | builders.EntryBuilder | dict[str, Any]]
+        | None = None,
         info: clients.InformationClient
         | _MetadataStructModule._InformationInterfaceModule.Server
         | None = None,
@@ -1036,7 +1046,9 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             ) -> Awaitable[
                 builders.LocationListBuilder
                 | readers.LocationListReader
-                | Sequence[Any]
+                | Sequence[
+                    readers.LocationReader | builders.LocationBuilder | dict[str, Any]
+                ]
                 | results_tuples.NextlocationsResultTuple
                 | None
             ]: ...
@@ -1529,7 +1541,9 @@ class _DatasetInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> Awaitable[
             builders.LocationListBuilder
             | readers.LocationListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.LocationReader | builders.LocationBuilder | dict[str, Any]
+            ]
             | results_tuples.LocationsResultTuple
             | None
         ]: ...
@@ -1604,7 +1618,7 @@ class _TimeSeriesInterfaceModule(
         ) -> Awaitable[
             builders.ElementEnumListBuilder
             | readers.ElementEnumListReader
-            | Sequence[Any]
+            | Sequence[enums.ElementEnum]
             | results_tuples.HeaderResultTuple
             | None
         ]: ...
@@ -1619,7 +1633,11 @@ class _TimeSeriesInterfaceModule(
         ) -> Awaitable[
             builders.Float32ListListBuilder
             | readers.Float32ListListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.Float32ListReader
+                | builders.Float32ListBuilder
+                | Sequence[float]
+            ]
             | results_tuples.DataResultTuple
             | None
         ]: ...
@@ -1634,7 +1652,11 @@ class _TimeSeriesInterfaceModule(
         ) -> Awaitable[
             builders.Float32ListListBuilder
             | readers.Float32ListListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.Float32ListReader
+                | builders.Float32ListBuilder
+                | Sequence[float]
+            ]
             | results_tuples.DatatResultTuple
             | None
         ]: ...
@@ -1873,13 +1895,16 @@ class _LocationStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        id: IdInformationBuilder | dict[str, Any] | None = None,
+        id: IdInformationBuilder | IdInformationReader | dict[str, Any] | None = None,
         heightNN: float | None = None,
-        latlon: LatLonCoordBuilder | dict[str, Any] | None = None,
+        latlon: LatLonCoordBuilder | LatLonCoordReader | dict[str, Any] | None = None,
         timeSeries: clients.TimeSeriesClient
         | _TimeSeriesInterfaceModule.Server
         | None = None,
-        customData: builders.KVListBuilder | dict[str, Any] | None = None,
+        customData: builders.KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | builders.KVBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.LocationBuilder: ...
     @override
@@ -1971,7 +1996,10 @@ class _MetaPlusDataStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        meta: builders.MetadataBuilder | dict[str, Any] | None = None,
+        meta: builders.MetadataBuilder
+        | readers.MetadataReader
+        | dict[str, Any]
+        | None = None,
         data: clients.DatasetClient | _DatasetInterfaceModule.Server | None = None,
         **kwargs: object,
     ) -> builders.MetaPlusDataBuilder: ...
@@ -2119,11 +2147,19 @@ class _TimeSeriesDataStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        data: builders.Float32ListListBuilder | dict[str, Any] | None = None,
+        data: builders.Float32ListListBuilder
+        | readers.Float32ListListReader
+        | Sequence[
+            readers.Float32ListReader | builders.Float32ListBuilder | Sequence[float]
+        ]
+        | None = None,
         isTransposed: bool | None = None,
-        header: builders.ElementEnumListBuilder | dict[str, Any] | None = None,
-        startDate: DateBuilder | dict[str, Any] | None = None,
-        endDate: DateBuilder | dict[str, Any] | None = None,
+        header: builders.ElementEnumListBuilder
+        | readers.ElementEnumListReader
+        | Sequence[enums.ElementEnum]
+        | None = None,
+        startDate: DateBuilder | DateReader | dict[str, Any] | None = None,
+        endDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         resolution: enums.TimeSeriesResolutionEnum | None = None,
         **kwargs: object,
     ) -> builders.TimeSeriesDataBuilder: ...
@@ -2449,7 +2485,11 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> Awaitable[
             builders.MetaPlusDataListBuilder
             | readers.MetaPlusDataListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.MetaPlusDataReader
+                | builders.MetaPlusDataBuilder
+                | dict[str, Any]
+            ]
             | results_tuples.GetavailabledatasetsResultTuple
             | None
         ]: ...
@@ -2465,7 +2505,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> Awaitable[
             builders.DatasetClientListBuilder
             | readers.DatasetClientListReader
-            | Sequence[Any]
+            | Sequence[clients.DatasetClient | _DatasetInterfaceModule.Server]
             | results_tuples.GetdatasetsforResultTuple
             | None
         ]: ...
@@ -2530,7 +2570,10 @@ class _CSVTimeSeriesFactoryInterfaceModule(_IdentifiableInterfaceModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             sep: str | None = None,
-            headerMap: builders.PairListBuilder | dict[str, Any] | None = None,
+            headerMap: builders.PairListBuilder
+            | readers.PairListReader
+            | Sequence[PairReader | PairBuilder | dict[str, Any]]
+            | None = None,
             skipLinesToHeader: int | None = None,
             skipLinesFromHeaderToData: int | None = None,
             **kwargs: object,
@@ -3856,7 +3899,7 @@ class _AlterTimeSeriesWrapperInterfaceModule(_TimeSeriesInterfaceModule):
         ) -> Awaitable[
             builders.AlteredListBuilder
             | readers.AlteredListReader
-            | Sequence[Any]
+            | Sequence[readers.AlteredReader | builders.AlteredBuilder | dict[str, Any]]
             | results_tuples.AlteredelementsResultTuple
             | None
         ]: ...

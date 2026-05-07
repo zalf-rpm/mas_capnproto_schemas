@@ -1,5 +1,6 @@
 """Builder helper types for `monica_state.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -27,6 +28,7 @@ from mas.schema.model.monica.monica_params_capnp.types.builders import (
     SoilTemperatureModuleParametersBuilder,
     SoilTransportModuleParametersBuilder,
     SpeciesParametersBuilder,
+    YieldComponentBuilder,
 )
 from mas.schema.model.monica.monica_params_capnp.types.modules import _VocStructModule
 from mas.schema.model.monica.monica_params_capnp.types.readers import (
@@ -45,6 +47,7 @@ from mas.schema.model.monica.monica_params_capnp.types.readers import (
     SoilTemperatureModuleParametersReader,
     SoilTransportModuleParametersReader,
     SpeciesParametersReader,
+    YieldComponentReader,
 )
 from mas.schema.model.monica.monica_state_capnp.types import lists as lists
 from mas.schema.model.monica.monica_state_capnp.types import readers as readers
@@ -156,7 +159,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcAbovegroundOrgan.setter
     def pcAbovegroundOrgan(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def actualTranspiration(self) -> float: ...
@@ -167,7 +170,9 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcAssimilatePartitioningCoeff.setter
     def pcAssimilatePartitioningCoeff(
         self,
-        value: Float64ListListBuilder | readers.Float64ListListReader | dict[str, Any],
+        value: Float64ListListBuilder
+        | readers.Float64ListListReader
+        | Sequence[readers.Float64ListReader | Float64ListBuilder | Sequence[float]],
     ) -> None: ...
     @property
     def pcAssimilateReallocation(self) -> float: ...
@@ -190,14 +195,14 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcBaseDaylength.setter
     def pcBaseDaylength(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcBaseTemperature(self) -> Float64ListBuilder: ...
     @pcBaseTemperature.setter
     def pcBaseTemperature(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcBeginSensitivePhaseHeatStress(self) -> float: ...
@@ -232,7 +237,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcCriticalOxygenContent.setter
     def pcCriticalOxygenContent(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcCriticalTemperatureHeatStress(self) -> float: ...
@@ -283,14 +288,14 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @cropWaterUptake.setter
     def cropWaterUptake(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def currentTemperatureSum(self) -> Float64ListBuilder: ...
     @currentTemperatureSum.setter
     def currentTemperatureSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def currentTotalTemperatureSum(self) -> float: ...
@@ -313,7 +318,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcDaylengthRequirement.setter
     def pcDaylengthRequirement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def daysAfterBeginFlowering(self) -> int: ...
@@ -356,7 +361,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcDroughtStressThreshold.setter
     def pcDroughtStressThreshold(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcEmergenceFloodingControlOn(self) -> bool: ...
@@ -467,7 +472,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcInitialOrganBiomass.setter
     def pcInitialOrganBiomass(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcInitialRootingDepth(self) -> float: ...
@@ -490,14 +495,14 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @sunlitLeafAreaIndex.setter
     def sunlitLeafAreaIndex(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def shadedLeafAreaIndex(self) -> Float64ListBuilder: ...
     @shadedLeafAreaIndex.setter
     def shadedLeafAreaIndex(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcLowTemperatureExposure(self) -> float: ...
@@ -636,49 +641,49 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @nUptakeFromLayer.setter
     def nUptakeFromLayer(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcOptimumTemperature(self) -> Float64ListBuilder: ...
     @pcOptimumTemperature.setter
     def pcOptimumTemperature(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organBiomass(self) -> Float64ListBuilder: ...
     @organBiomass.setter
     def organBiomass(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organDeadBiomass(self) -> Float64ListBuilder: ...
     @organDeadBiomass.setter
     def organDeadBiomass(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organGreenBiomass(self) -> Float64ListBuilder: ...
     @organGreenBiomass.setter
     def organGreenBiomass(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organGrowthIncrement(self) -> Float64ListBuilder: ...
     @organGrowthIncrement.setter
     def organGrowthIncrement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcOrganGrowthRespiration(self) -> Float64ListBuilder: ...
     @pcOrganGrowthRespiration.setter
     def pcOrganGrowthRespiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcOrganIdsForPrimaryYield(self) -> YieldComponentListBuilder: ...
@@ -687,7 +692,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[YieldComponentReader | YieldComponentBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def pcOrganIdsForSecondaryYield(self) -> YieldComponentListBuilder: ...
@@ -696,7 +701,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[YieldComponentReader | YieldComponentBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def pcOrganIdsForCutting(self) -> YieldComponentListBuilder: ...
@@ -705,28 +710,30 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[YieldComponentReader | YieldComponentBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def pcOrganMaintenanceRespiration(self) -> Float64ListBuilder: ...
     @pcOrganMaintenanceRespiration.setter
     def pcOrganMaintenanceRespiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organSenescenceIncrement(self) -> Float64ListBuilder: ...
     @organSenescenceIncrement.setter
     def organSenescenceIncrement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcOrganSenescenceRate(self) -> Float64ListListBuilder: ...
     @pcOrganSenescenceRate.setter
     def pcOrganSenescenceRate(
         self,
-        value: Float64ListListBuilder | readers.Float64ListListReader | dict[str, Any],
+        value: Float64ListListBuilder
+        | readers.Float64ListListReader
+        | Sequence[readers.Float64ListReader | Float64ListBuilder | Sequence[float]],
     ) -> None: ...
     @property
     def overcastDayRadiation(self) -> float: ...
@@ -797,14 +804,14 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @rootDensity.setter
     def rootDensity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def rootDiameter(self) -> Float64ListBuilder: ...
     @rootDiameter.setter
     def rootDiameter(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcRootDistributionParam(self) -> float: ...
@@ -815,7 +822,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @rootEffectivity.setter
     def rootEffectivity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcRootFormFactor(self) -> float: ...
@@ -854,7 +861,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @vsSoilMineralNContent.setter
     def vsSoilMineralNContent(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilSpecificMaxRootingDepth(self) -> float: ...
@@ -869,7 +876,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcSpecificLeafArea.setter
     def pcSpecificLeafArea(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcSpecificRootLength(self) -> float: ...
@@ -892,21 +899,21 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcStageMaxRootNConcentration.setter
     def pcStageMaxRootNConcentration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcStageKcFactor(self) -> Float64ListBuilder: ...
     @pcStageKcFactor.setter
     def pcStageKcFactor(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcStageTemperatureSum(self) -> Float64ListBuilder: ...
     @pcStageTemperatureSum.setter
     def pcStageTemperatureSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def stomataResistance(self) -> float: ...
@@ -917,7 +924,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcStorageOrgan.setter
     def pcStorageOrgan(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def storageOrgan(self) -> int: ...
@@ -988,14 +995,14 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @transpiration.setter
     def transpiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def transpirationRedux(self) -> Float64ListBuilder: ...
     @transpirationRedux.setter
     def transpirationRedux(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def transpirationDeficit(self) -> float: ...
@@ -1014,7 +1021,7 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @pcVernalisationRequirement.setter
     def pcVernalisationRequirement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pcWaterDeficitResponseOn(self) -> bool: ...
@@ -1101,28 +1108,28 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     @rad24.setter
     def rad24(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def rad240(self) -> Float64ListBuilder: ...
     @rad240.setter
     def rad240(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def tfol24(self) -> Float64ListBuilder: ...
     @tfol24.setter
     def tfol24(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def tfol240(self) -> Float64ListBuilder: ...
     @tfol240.setter
     def tfol240(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def index24(self) -> int: ...
@@ -1611,7 +1618,7 @@ class SoilLayerStateBuilder(_DynamicStructBuilder):
         self,
         value: AOMPropertiesListBuilder
         | readers.AOMPropertiesListReader
-        | dict[str, Any],
+        | Sequence[readers.AOMPropertiesReader | AOMPropertiesBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def somSlow(self) -> float: ...
@@ -1752,7 +1759,11 @@ class SoilColumnStateBuilder(_DynamicStructBuilder):
         self,
         value: DelayedNMinApplicationParamsListBuilder
         | readers.DelayedNMinApplicationParamsListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.DelayedNMinApplicationParamsReader
+            | DelayedNMinApplicationParamsBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def pmCriticalMoistureDepth(self) -> float: ...
@@ -1765,7 +1776,9 @@ class SoilColumnStateBuilder(_DynamicStructBuilder):
         self,
         value: SoilLayerStateListBuilder
         | readers.SoilLayerStateListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.SoilLayerStateReader | SoilLayerStateBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @override
     @overload
@@ -1842,56 +1855,56 @@ class SoilTemperatureModuleStateBuilder(_DynamicStructBuilder):
     @vsSoilMoistureConst.setter
     def vsSoilMoistureConst(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilTemperature(self) -> Float64ListBuilder: ...
     @soilTemperature.setter
     def soilTemperature(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def v(self) -> Float64ListBuilder: ...
     @v.setter
     def v(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def volumeMatrix(self) -> Float64ListBuilder: ...
     @volumeMatrix.setter
     def volumeMatrix(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def volumeMatrixOld(self) -> Float64ListBuilder: ...
     @volumeMatrixOld.setter
     def volumeMatrixOld(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def b(self) -> Float64ListBuilder: ...
     @b.setter
     def b(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def matrixPrimaryDiagonal(self) -> Float64ListBuilder: ...
     @matrixPrimaryDiagonal.setter
     def matrixPrimaryDiagonal(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def matrixSecundaryDiagonal(self) -> Float64ListBuilder: ...
     @matrixSecundaryDiagonal.setter
     def matrixSecundaryDiagonal(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def heatFlow(self) -> float: ...
@@ -1902,21 +1915,21 @@ class SoilTemperatureModuleStateBuilder(_DynamicStructBuilder):
     @heatConductivity.setter
     def heatConductivity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def heatConductivityMean(self) -> Float64ListBuilder: ...
     @heatConductivityMean.setter
     def heatConductivityMean(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def heatCapacity(self) -> Float64ListBuilder: ...
     @heatCapacity.setter
     def heatCapacity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @override
     @overload
@@ -2038,7 +2051,7 @@ class FrostModuleStateBuilder(_DynamicStructBuilder):
     @lambdaRedux.setter
     def lambdaRedux(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def temperatureUnderSnow(self) -> float: ...
@@ -2208,7 +2221,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @availableWater.setter
     def availableWater(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def capillaryRise(self) -> float: ...
@@ -2219,42 +2232,42 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @capillaryRiseRate.setter
     def capillaryRiseRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def capillaryWater(self) -> Float64ListBuilder: ...
     @capillaryWater.setter
     def capillaryWater(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def capillaryWater70(self) -> Float64ListBuilder: ...
     @capillaryWater70.setter
     def capillaryWater70(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def evaporation(self) -> Float64ListBuilder: ...
     @evaporation.setter
     def evaporation(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def evapotranspiration(self) -> Float64ListBuilder: ...
     @evapotranspiration.setter
     def evapotranspiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def fieldCapacity(self) -> Float64ListBuilder: ...
     @fieldCapacity.setter
     def fieldCapacity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def fluxAtLowerBoundary(self) -> float: ...
@@ -2265,7 +2278,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @gravitationalWater.setter
     def gravitationalWater(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def grossPrecipitation(self) -> float: ...
@@ -2288,7 +2301,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @heatConductivity.setter
     def heatConductivity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def hydraulicConductivityRedux(self) -> float: ...
@@ -2311,7 +2324,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @lambda_.setter
     def lambda_(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def lambdaReduced(self) -> float: ...
@@ -2326,7 +2339,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @layerThickness.setter
     def layerThickness(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def pmLayerThickness(self) -> float: ...
@@ -2369,7 +2382,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @permanentWiltingPoint.setter
     def permanentWiltingPoint(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vcPercentageSoilCoverage(self) -> float: ...
@@ -2380,7 +2393,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @percolationRate.setter
     def percolationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vwPrecipitation(self) -> float: ...
@@ -2399,21 +2412,21 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @residualEvapotranspiration.setter
     def residualEvapotranspiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def saturatedHydraulicConductivity(self) -> Float64ListBuilder: ...
     @saturatedHydraulicConductivity.setter
     def saturatedHydraulicConductivity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilMoisture(self) -> Float64ListBuilder: ...
     @soilMoisture.setter
     def soilMoisture(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilMoisturecrit(self) -> float: ...
@@ -2428,7 +2441,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @soilPoreVolume.setter
     def soilPoreVolume(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vcStomataResistance(self) -> float: ...
@@ -2463,7 +2476,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @transpiration.setter
     def transpiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def transpirationDeficit(self) -> float: ...
@@ -2474,7 +2487,7 @@ class SoilMoistureModuleStateBuilder(_DynamicStructBuilder):
     @waterFlux.setter
     def waterFlux(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @override
     @overload
@@ -2653,70 +2666,70 @@ class SoilOrganicModuleStateBuilder(_DynamicStructBuilder):
     @actAmmoniaOxidationRate.setter
     def actAmmoniaOxidationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def actNitrificationRate(self) -> Float64ListBuilder: ...
     @actNitrificationRate.setter
     def actNitrificationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def actDenitrificationRate(self) -> Float64ListBuilder: ...
     @actDenitrificationRate.setter
     def actDenitrificationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomFastDeltaSum(self) -> Float64ListBuilder: ...
     @aomFastDeltaSum.setter
     def aomFastDeltaSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomFastInput(self) -> Float64ListBuilder: ...
     @aomFastInput.setter
     def aomFastInput(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomFastSum(self) -> Float64ListBuilder: ...
     @aomFastSum.setter
     def aomFastSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomSlowDeltaSum(self) -> Float64ListBuilder: ...
     @aomSlowDeltaSum.setter
     def aomSlowDeltaSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomSlowInput(self) -> Float64ListBuilder: ...
     @aomSlowInput.setter
     def aomSlowInput(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def aomSlowSum(self) -> Float64ListBuilder: ...
     @aomSlowSum.setter
     def aomSlowSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def cBalance(self) -> Float64ListBuilder: ...
     @cBalance.setter
     def cBalance(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def decomposerRespiration(self) -> float: ...
@@ -2731,7 +2744,7 @@ class SoilOrganicModuleStateBuilder(_DynamicStructBuilder):
     @inertSoilOrganicC.setter
     def inertSoilOrganicC(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def n2oProduced(self) -> float: ...
@@ -2762,7 +2775,7 @@ class SoilOrganicModuleStateBuilder(_DynamicStructBuilder):
     @netNMineralisationRate.setter
     def netNMineralisationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def totalNH3Volatilised(self) -> float: ...
@@ -2777,56 +2790,56 @@ class SoilOrganicModuleStateBuilder(_DynamicStructBuilder):
     @smbCO2EvolutionRate.setter
     def smbCO2EvolutionRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def smbFastDelta(self) -> Float64ListBuilder: ...
     @smbFastDelta.setter
     def smbFastDelta(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def smbSlowDelta(self) -> Float64ListBuilder: ...
     @smbSlowDelta.setter
     def smbSlowDelta(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
     @vsSoilMineralNContent.setter
     def vsSoilMineralNContent(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilOrganicC(self) -> Float64ListBuilder: ...
     @soilOrganicC.setter
     def soilOrganicC(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def somFastDelta(self) -> Float64ListBuilder: ...
     @somFastDelta.setter
     def somFastDelta(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def somFastInput(self) -> Float64ListBuilder: ...
     @somFastInput.setter
     def somFastInput(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def somSlowDelta(self) -> Float64ListBuilder: ...
     @somSlowDelta.setter
     def somSlowDelta(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def sumDenitrification(self) -> float: ...
@@ -2995,7 +3008,7 @@ class SoilTransportModuleStateBuilder(_DynamicStructBuilder):
     @convection.setter
     def convection(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def cropNUptake(self) -> float: ...
@@ -3006,21 +3019,21 @@ class SoilTransportModuleStateBuilder(_DynamicStructBuilder):
     @diffusionCoeff.setter
     def diffusionCoeff(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def dispersion(self) -> Float64ListBuilder: ...
     @dispersion.setter
     def dispersion(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def dispersionCoeff(self) -> Float64ListBuilder: ...
     @dispersionCoeff.setter
     def dispersionCoeff(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vsLeachingDepth(self) -> float: ...
@@ -3039,35 +3052,35 @@ class SoilTransportModuleStateBuilder(_DynamicStructBuilder):
     @vcNUptakeFromLayer.setter
     def vcNUptakeFromLayer(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def poreWaterVelocity(self) -> Float64ListBuilder: ...
     @poreWaterVelocity.setter
     def poreWaterVelocity(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vsSoilMineralNContent(self) -> Float64ListBuilder: ...
     @vsSoilMineralNContent.setter
     def vsSoilMineralNContent(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilNO3(self) -> Float64ListBuilder: ...
     @soilNO3.setter
     def soilNO3(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def soilNO3aq(self) -> Float64ListBuilder: ...
     @soilNO3aq.setter
     def soilNO3aq(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def timeStep(self) -> float: ...
@@ -3078,14 +3091,14 @@ class SoilTransportModuleStateBuilder(_DynamicStructBuilder):
     @totalDispersion.setter
     def totalDispersion(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def percolationRate(self) -> Float64ListBuilder: ...
     @percolationRate.setter
     def percolationRate(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @override
     @overload
@@ -3333,21 +3346,25 @@ class MonicaModelStateBuilder(_DynamicStructBuilder):
         self,
         value: ACDToValueListListBuilder
         | readers.ACDToValueListListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.ACDToValueListReader
+            | ACDToValueListBuilder
+            | Sequence[readers.ACDToValueReader | ACDToValueBuilder | dict[str, Any]]
+        ],
     ) -> None: ...
     @property
     def currentEvents(self) -> TextListBuilder: ...
     @currentEvents.setter
     def currentEvents(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def previousDaysEvents(self) -> TextListBuilder: ...
     @previousDaysEvents.setter
     def previousDaysEvents(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def clearCropUponNextDay(self) -> bool: ...
@@ -3529,7 +3546,9 @@ class CropStateBuilder(_DynamicStructBuilder):
     @cuttingDates.setter
     def cuttingDates(
         self,
-        value: DateListBuilder | readers.DateListReader | dict[str, Any],
+        value: DateListBuilder
+        | readers.DateListReader
+        | Sequence[DateReader | DateBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def cropParams(self) -> CropParametersBuilder: ...

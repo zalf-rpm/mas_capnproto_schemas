@@ -20,7 +20,7 @@ class NutrientsServerResult(_DynamicStructBuilder):
         self,
         value: builders.NutrientListBuilder
         | readers.NutrientListReader
-        | Sequence[Any],
+        | Sequence[readers.NutrientReader | builders.NutrientBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -43,7 +43,9 @@ class ManagementatServerResult(_DynamicStructBuilder):
     @mgmt.setter
     def mgmt(
         self,
-        value: builders.EventListBuilder | readers.EventListReader | Sequence[Any],
+        value: builders.EventListBuilder
+        | readers.EventListReader
+        | Sequence[readers.EventReader | builders.EventBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(

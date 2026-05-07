@@ -12,6 +12,7 @@ from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
 from mas.schema.persistence.persistence_capnp.types.clients import PersistentClient
 from mas.schema.soil.soil_capnp.types import builders as builders
+from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import readers as readers
 from mas.schema.soil.soil_capnp.types import requests as requests
 from mas.schema.soil.soil_capnp.types.results import client as results_client
@@ -37,11 +38,11 @@ class ServiceClient(IdentifiableClient, PersistentClient):
         self,
         mandatory: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         optional: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         onlyRawData: bool | None = None,
     ) -> results_client.CheckavailableparametersResult: ...
@@ -61,11 +62,11 @@ class ServiceClient(IdentifiableClient, PersistentClient):
         self,
         mandatory: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         optional: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         onlyRawData: bool | None = None,
     ) -> results_client.StreamallprofilesResult: ...
@@ -73,11 +74,11 @@ class ServiceClient(IdentifiableClient, PersistentClient):
         self,
         mandatory: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         optional: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         onlyRawData: bool | None = None,
     ) -> requests.CheckavailableparametersRequest: ...
@@ -94,11 +95,11 @@ class ServiceClient(IdentifiableClient, PersistentClient):
         self,
         mandatory: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         optional: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
         | None = None,
         onlyRawData: bool | None = None,
     ) -> requests.StreamallprofilesRequest: ...

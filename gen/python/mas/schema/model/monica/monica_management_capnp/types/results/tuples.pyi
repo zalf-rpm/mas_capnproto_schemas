@@ -7,4 +7,8 @@ from mas.schema.model.monica.monica_management_capnp.types import builders as bu
 from mas.schema.model.monica.monica_management_capnp.types import readers as readers
 
 class ManagementatResultTuple(NamedTuple):
-    mgmt: builders.EventListBuilder | readers.EventListReader | Sequence[Any]
+    mgmt: (
+        builders.EventListBuilder
+        | readers.EventListReader
+        | Sequence[readers.EventReader | builders.EventBuilder | dict[str, Any]]
+    )

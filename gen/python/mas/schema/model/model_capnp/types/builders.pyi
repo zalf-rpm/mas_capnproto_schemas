@@ -1,5 +1,6 @@
 """Builder helper types for `model.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -9,6 +10,8 @@ from capnp.lib.capnp import (
 
 from mas.schema.climate.climate_capnp.types.clients import TimeSeriesClient
 from mas.schema.climate.climate_capnp.types.modules import _TimeSeriesInterfaceModule
+from mas.schema.management.management_capnp.types.builders import EventBuilder
+from mas.schema.management.management_capnp.types.readers import EventReader
 from mas.schema.model.model_capnp.types import common as common
 from mas.schema.model.model_capnp.types import enums as enums
 from mas.schema.model.model_capnp.types import lists as lists
@@ -22,14 +25,14 @@ class XYResultBuilder(_DynamicStructBuilder):
     @xs.setter
     def xs(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def ys(self) -> Float64ListBuilder: ...
     @ys.setter
     def ys(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @override
     @overload
@@ -59,7 +62,7 @@ class StatBuilder(_DynamicStructBuilder):
     @vs.setter
     def vs(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @override
     def init(
@@ -83,7 +86,9 @@ class XYPlusResultBuilder(_DynamicStructBuilder):
     @stats.setter
     def stats(
         self,
-        value: StatListBuilder | readers.StatListReader | dict[str, Any],
+        value: StatListBuilder
+        | readers.StatListReader
+        | Sequence[readers.StatReader | StatBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     @overload
@@ -127,7 +132,9 @@ class EnvBuilder(_DynamicStructBuilder):
     @mgmtEvents.setter
     def mgmtEvents(
         self,
-        value: EventListBuilder | readers.EventListReader | dict[str, Any],
+        value: EventListBuilder
+        | readers.EventListReader
+        | Sequence[EventReader | EventBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(

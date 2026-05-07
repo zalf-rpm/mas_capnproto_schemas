@@ -1,6 +1,6 @@
 """Module helper types for `field_exp_data.capnp`."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
@@ -20,10 +20,12 @@ from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
 from mas.schema.common.common_capnp.types.builders import StructuredTextBuilder
+from mas.schema.common.common_capnp.types.readers import StructuredTextReader
 from mas.schema.common.date_capnp.types import (
     schemas as _mas_schema_common_date_capnp_schemas,
 )
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.data.field_exp_data_capnp.types import builders as builders
 from mas.schema.data.field_exp_data_capnp.types import readers as readers
 from mas.schema.data.field_exp_data_capnp.types import schemas as schemas
@@ -696,8 +698,14 @@ class _PlotStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         id: str | None = None,
-        cultivar: builders.CultivarBuilder | dict[str, Any] | None = None,
-        soil: builders.SoilMetadataBuilder | dict[str, Any] | None = None,
+        cultivar: builders.CultivarBuilder
+        | readers.CultivarReader
+        | dict[str, Any]
+        | None = None,
+        soil: builders.SoilMetadataBuilder
+        | readers.SoilMetadataReader
+        | dict[str, Any]
+        | None = None,
         blockNumber: int | None = None,
         plotNumber: int | None = None,
         replicateNumber: int | None = None,
@@ -830,7 +838,7 @@ class _ResidueStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        initialMeasureDate: DateBuilder | dict[str, Any] | None = None,
+        initialMeasureDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         incorporationDepth: int | None = None,
         percentIncorporated: float | None = None,
         prevCropCode: str | None = None,
@@ -974,7 +982,7 @@ class _InitialConditionsLayerStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        date: DateBuilder | dict[str, Any] | None = None,
+        date: DateBuilder | DateReader | dict[str, Any] | None = None,
         soilLayerTopDepthInCM: int | None = None,
         soilLayerBaseDepthInCM: int | None = None,
         waterConcentration: float | None = None,
@@ -1127,9 +1135,9 @@ class _PlantingEventStructModule(_StructModule):
         rowDirectionInArcDeg: float | None = None,
         plantingDepthInMM: int | None = None,
         plotLayout: str | None = None,
-        plantingDate: DateBuilder | dict[str, Any] | None = None,
+        plantingDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         plantPopulationAtPlantingInNoPerM2: int | None = None,
-        averageEmergenceDate: DateBuilder | dict[str, Any] | None = None,
+        averageEmergenceDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         averagePlantPopulationAtEmergenceInNoPerM2: int | None = None,
         notes: str | None = None,
         experimentId: str | None = None,
@@ -1239,7 +1247,7 @@ class _HarvestEventStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        date: DateBuilder | dict[str, Any] | None = None,
+        date: DateBuilder | DateReader | dict[str, Any] | None = None,
         harvestMethod: str | None = None,
         harvestArea: float | None = None,
         notes: str | None = None,
@@ -1355,7 +1363,7 @@ class _IrrigationEventStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        date: DateBuilder | dict[str, Any] | None = None,
+        date: DateBuilder | DateReader | dict[str, Any] | None = None,
         operation: str | None = None,
         applicationDepth: int | None = None,
         amount: int | None = None,
@@ -1485,7 +1493,7 @@ class _FertilizerEventStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        date: DateBuilder | dict[str, Any] | None = None,
+        date: DateBuilder | DateReader | dict[str, Any] | None = None,
         applicationMethod: str | None = None,
         applicationDepthInCM: int | None = None,
         material: str | None = None,
@@ -1596,7 +1604,7 @@ class _EnvironmentModificationStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        date: DateBuilder | dict[str, Any] | None = None,
+        date: DateBuilder | DateReader | dict[str, Any] | None = None,
         codeCO2: str | None = None,
         valueCO2: int | None = None,
         notes: str | None = None,
@@ -1935,14 +1943,20 @@ class _TreatmentStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         id: str | None = None,
-        field: builders.FieldBuilder | dict[str, Any] | None = None,
-        weatherStation: builders.WeatherStationBuilder | dict[str, Any] | None = None,
+        field: builders.FieldBuilder
+        | readers.FieldReader
+        | dict[str, Any]
+        | None = None,
+        weatherStation: builders.WeatherStationBuilder
+        | readers.WeatherStationReader
+        | dict[str, Any]
+        | None = None,
         weatherStationTimeseries: TimeSeriesClient
         | _TimeSeriesInterfaceModule.Server
         | None = None,
         name: str | None = None,
-        simulationStartDate: DateBuilder | dict[str, Any] | None = None,
-        simulationEndDate: DateBuilder | dict[str, Any] | None = None,
+        simulationStartDate: DateBuilder | DateReader | dict[str, Any] | None = None,
+        simulationEndDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         irrigationApplied: bool | None = None,
         fertilizerApplied: bool | None = None,
         irrigationLevel: int | None = None,
@@ -1953,23 +1967,57 @@ class _TreatmentStructModule(_StructModule):
         plantingDensityLevel: int | None = None,
         numberOfBlocksOrReplicates: int | None = None,
         notes: str | None = None,
-        plots: builders.PlotListBuilder | dict[str, Any] | None = None,
-        residue: builders.ResidueBuilder | dict[str, Any] | None = None,
-        initialConditionsLayers: builders.InitialConditionsLayerListBuilder
+        plots: builders.PlotListBuilder
+        | readers.PlotListReader
+        | Sequence[readers.PlotReader | builders.PlotBuilder | dict[str, Any]]
+        | None = None,
+        residue: builders.ResidueBuilder
+        | readers.ResidueReader
         | dict[str, Any]
+        | None = None,
+        initialConditionsLayers: builders.InitialConditionsLayerListBuilder
+        | readers.InitialConditionsLayerListReader
+        | Sequence[
+            readers.InitialConditionsLayerReader
+            | builders.InitialConditionsLayerBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         plantingEvents: builders.PlantingEventListBuilder
-        | dict[str, Any]
+        | readers.PlantingEventListReader
+        | Sequence[
+            readers.PlantingEventReader | builders.PlantingEventBuilder | dict[str, Any]
+        ]
         | None = None,
-        harvestEvents: builders.HarvestEventListBuilder | dict[str, Any] | None = None,
+        harvestEvents: builders.HarvestEventListBuilder
+        | readers.HarvestEventListReader
+        | Sequence[
+            readers.HarvestEventReader | builders.HarvestEventBuilder | dict[str, Any]
+        ]
+        | None = None,
         irrigationEvents: builders.IrrigationEventListBuilder
-        | dict[str, Any]
+        | readers.IrrigationEventListReader
+        | Sequence[
+            readers.IrrigationEventReader
+            | builders.IrrigationEventBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         fertilizerEvents: builders.FertilizerEventListBuilder
-        | dict[str, Any]
+        | readers.FertilizerEventListReader
+        | Sequence[
+            readers.FertilizerEventReader
+            | builders.FertilizerEventBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         environmentModifications: builders.EnvironmentModificationListBuilder
-        | dict[str, Any]
+        | readers.EnvironmentModificationListReader
+        | Sequence[
+            readers.EnvironmentModificationReader
+            | builders.EnvironmentModificationBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         experimentId: str | None = None,
         fieldId: str | None = None,
@@ -2151,7 +2199,10 @@ class _ExperimentDescriptionStructModule(_StructModule):
         plantingYear: int | None = None,
         harvestOperationYear: int | None = None,
         notes: str | None = None,
-        treatments: builders.TreatmentListBuilder | dict[str, Any] | None = None,
+        treatments: builders.TreatmentListBuilder
+        | readers.TreatmentListReader
+        | Sequence[readers.TreatmentReader | builders.TreatmentBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.ExperimentDescriptionBuilder: ...
     @override
@@ -2292,11 +2343,23 @@ class _MixedTypeStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         soilProfile: ProfileClient | _ProfileInterfaceModule.Server | None = None,
-        soil: StructuredTextBuilder | dict[str, Any] | None = None,
-        plot: StructuredTextBuilder | dict[str, Any] | None = None,
+        soil: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
+        plot: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
         timeseries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server | None = None,
-        treatment: StructuredTextBuilder | dict[str, Any] | None = None,
-        experiment: StructuredTextBuilder | dict[str, Any] | None = None,
+        treatment: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
+        experiment: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.MixedTypeBuilder: ...
     @override

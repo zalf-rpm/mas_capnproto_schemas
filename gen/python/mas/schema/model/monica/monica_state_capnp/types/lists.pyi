@@ -77,7 +77,7 @@ class _Float64ListList:
             key: int,
             value: readers.Float64ListReader
             | builders.Float64ListBuilder
-            | Sequence[Any],
+            | Sequence[float],
         ) -> None: ...
         @override
         def __iter__(self) -> Iterator[builders.Float64ListBuilder]: ...
@@ -269,7 +269,9 @@ class _ACDToValueListList:
             key: int,
             value: readers.ACDToValueListReader
             | builders.ACDToValueListBuilder
-            | Sequence[Any],
+            | Sequence[
+                readers.ACDToValueReader | builders.ACDToValueBuilder | dict[str, Any]
+            ],
         ) -> None: ...
         @override
         def __iter__(self) -> Iterator[builders.ACDToValueListBuilder]: ...

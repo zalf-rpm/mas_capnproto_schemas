@@ -145,7 +145,10 @@ class AdminMasterAvailablemodelsServerResult(_DynamicStructBuilder):
         self,
         value: builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any],
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -164,7 +167,10 @@ class UserMasterAvailablemodelsServerResult(_DynamicStructBuilder):
         self,
         value: builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any],
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -198,7 +204,10 @@ class RuntimeAvailablemodelsServerResult(_DynamicStructBuilder):
         self,
         value: builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any],
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ],
     ) -> None: ...
     @overload
     def init(

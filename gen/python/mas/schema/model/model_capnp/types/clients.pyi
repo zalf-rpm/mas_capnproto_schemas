@@ -27,7 +27,7 @@ class ClimateInstanceClient(IdentifiableClient):
         self,
         dataset: builders.TimeSeriesClientListBuilder
         | readers.TimeSeriesClientListReader
-        | Sequence[Any]
+        | Sequence[TimeSeriesClient | _TimeSeriesInterfaceModule.Server]
         | None = None,
     ) -> results_client.RunsetResult: ...
     def run_request(
@@ -38,7 +38,7 @@ class ClimateInstanceClient(IdentifiableClient):
         self,
         dataset: builders.TimeSeriesClientListBuilder
         | readers.TimeSeriesClientListReader
-        | Sequence[Any]
+        | Sequence[TimeSeriesClient | _TimeSeriesInterfaceModule.Server]
         | None = None,
     ) -> requests.RunsetRequest: ...
 

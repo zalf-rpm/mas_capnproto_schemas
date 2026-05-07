@@ -25,7 +25,7 @@ class RemovecategoryRequest(Protocol):
     def send(self) -> results_client.RemovecategoryResult: ...
 
 class MoveobjectsRequest(Protocol):
-    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[str]
     toCatId: str
     @overload
     def init(
@@ -38,7 +38,7 @@ class MoveobjectsRequest(Protocol):
     def send(self) -> results_client.MoveobjectsResult: ...
 
 class RemoveobjectsRequest(Protocol):
-    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    objectIds: builders.TextListBuilder | readers.TextListReader | Sequence[str]
     @overload
     def init(
         self,

@@ -9,6 +9,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.soil.soil_capnp.types import builders as builders
 from mas.schema.soil.soil_capnp.types import clients as clients
+from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import modules as modules
 from mas.schema.soil.soil_capnp.types import readers as readers
 
@@ -20,7 +21,7 @@ class NextprofilesServerResult(_DynamicStructBuilder):
         self,
         value: builders.ProfileClientListBuilder
         | readers.ProfileClientListReader
-        | Sequence[Any],
+        | Sequence[clients.ProfileClient | modules._ProfileInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(
@@ -39,7 +40,7 @@ class GetallavailableparametersServerResult(_DynamicStructBuilder):
         self,
         value: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @property
     def optional(self) -> builders.PropertyNameEnumListBuilder: ...
@@ -48,7 +49,7 @@ class GetallavailableparametersServerResult(_DynamicStructBuilder):
         self,
         value: builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @overload
     def init(
@@ -73,7 +74,7 @@ class ClosestprofilesatServerResult(_DynamicStructBuilder):
         self,
         value: builders.ProfileClientListBuilder
         | readers.ProfileClientListReader
-        | Sequence[Any],
+        | Sequence[clients.ProfileClient | modules._ProfileInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(

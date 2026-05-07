@@ -156,7 +156,7 @@ class _Float32ListList:
             key: int,
             value: readers.Float32ListReader
             | builders.Float32ListBuilder
-            | Sequence[Any],
+            | Sequence[float],
         ) -> None: ...
         @override
         def __iter__(self) -> Iterator[builders.Float32ListBuilder]: ...

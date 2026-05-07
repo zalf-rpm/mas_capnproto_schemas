@@ -222,7 +222,10 @@ class _LayerStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        properties: builders.PropertyListBuilder | dict[str, Any] | None = None,
+        properties: builders.PropertyListBuilder
+        | readers.PropertyListReader
+        | Sequence[readers.PropertyReader | builders.PropertyBuilder | dict[str, Any]]
+        | None = None,
         size: float | None = None,
         description: str | None = None,
         **kwargs: object,
@@ -341,10 +344,12 @@ class _QueryStructModule(_StructModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             failed: bool | None = None,
             mandatory: builders.PropertyNameEnumListBuilder
-            | dict[str, Any]
+            | readers.PropertyNameEnumListReader
+            | Sequence[enums.PropertyNameEnum]
             | None = None,
             optional: builders.PropertyNameEnumListBuilder
-            | dict[str, Any]
+            | readers.PropertyNameEnumListReader
+            | Sequence[enums.PropertyNameEnum]
             | None = None,
             **kwargs: object,
         ) -> builders.ResultBuilder: ...
@@ -456,8 +461,14 @@ class _QueryStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        mandatory: builders.PropertyNameEnumListBuilder | dict[str, Any] | None = None,
-        optional: builders.PropertyNameEnumListBuilder | dict[str, Any] | None = None,
+        mandatory: builders.PropertyNameEnumListBuilder
+        | readers.PropertyNameEnumListReader
+        | Sequence[enums.PropertyNameEnum]
+        | None = None,
+        optional: builders.PropertyNameEnumListBuilder
+        | readers.PropertyNameEnumListReader
+        | Sequence[enums.PropertyNameEnum]
+        | None = None,
         onlyRawData: bool | None = None,
         **kwargs: object,
     ) -> builders.QueryBuilder: ...
@@ -552,7 +563,10 @@ class _ProfileDataStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        layers: builders.LayerListBuilder | dict[str, Any] | None = None,
+        layers: builders.LayerListBuilder
+        | readers.LayerListReader
+        | Sequence[readers.LayerReader | builders.LayerBuilder | dict[str, Any]]
+        | None = None,
         percentageOfArea: float | None = None,
         **kwargs: object,
     ) -> builders.ProfileDataBuilder: ...
@@ -965,7 +979,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             ) -> Awaitable[
                 builders.ProfileClientListBuilder
                 | readers.ProfileClientListReader
-                | Sequence[Any]
+                | Sequence[clients.ProfileClient | _ProfileInterfaceModule.Server]
                 | results_tuples.NextprofilesResultTuple
                 | None
             ]: ...
@@ -1518,7 +1532,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         ) -> Awaitable[
             builders.ProfileClientListBuilder
             | readers.ProfileClientListReader
-            | Sequence[Any]
+            | Sequence[clients.ProfileClient | _ProfileInterfaceModule.Server]
             | results_tuples.ClosestprofilesatResultTuple
             | None
         ]: ...

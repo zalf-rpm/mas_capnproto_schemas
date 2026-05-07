@@ -19,7 +19,7 @@ class RunsetRequest(Protocol):
     dataset: (
         builders.TimeSeriesClientListBuilder
         | readers.TimeSeriesClientListReader
-        | Sequence[Any]
+        | Sequence[TimeSeriesClient | _TimeSeriesInterfaceModule.Server]
     )
     @overload
     def init(

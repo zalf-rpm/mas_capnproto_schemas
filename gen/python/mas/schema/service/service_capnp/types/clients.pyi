@@ -7,9 +7,12 @@ from capnp.lib.capnp import (
     _DynamicCapabilityClient,
 )
 
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
-from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.service.service_capnp.types import builders as builders
 from mas.schema.service.service_capnp.types import common as common
 from mas.schema.service.service_capnp.types import readers as readers
@@ -55,7 +58,7 @@ class FactoryClient(IdentifiableClient):
         timeoutSeconds: int | None = None,
         interfaceNameToRegistrySR: builders.PairListBuilder
         | readers.PairListReader
-        | Sequence[Any]
+        | Sequence[PairReader | PairBuilder | dict[str, Any]]
         | None = None,
         msgPayload: common.AnyPointer | None = None,
     ) -> results_client.FactoryCreateResult: ...
@@ -65,7 +68,7 @@ class FactoryClient(IdentifiableClient):
         timeoutSeconds: int | None = None,
         interfaceNameToRegistrySR: builders.PairListBuilder
         | readers.PairListReader
-        | Sequence[Any]
+        | Sequence[PairReader | PairBuilder | dict[str, Any]]
         | None = None,
         msgPayload: common.AnyPointer | None = None,
     ) -> requests.FactoryCreateRequest: ...

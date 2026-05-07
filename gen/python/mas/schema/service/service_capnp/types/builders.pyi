@@ -1,5 +1,6 @@
 """Builder helper types for `service.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, override
 
 from capnp.lib.capnp import (
@@ -7,6 +8,10 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
+from mas.schema.common.common_capnp.types.builders import PairBuilder
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import PairReader
 from mas.schema.service.service_capnp.types import common as common
 from mas.schema.service.service_capnp.types import lists as lists
 from mas.schema.service.service_capnp.types import readers as readers
@@ -21,7 +26,9 @@ class CreateParamsBuilder(_DynamicStructBuilder):
     @interfaceNameToRegistrySR.setter
     def interfaceNameToRegistrySR(
         self,
-        value: PairListBuilder | readers.PairListReader | dict[str, Any],
+        value: PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def msgPayload(self) -> _DynamicObjectBuilder: ...
@@ -48,7 +55,7 @@ class AccessInfoBuilder(_DynamicStructBuilder):
         self,
         value: IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | dict[str, Any],
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server],
     ) -> None: ...
     @property
     def error(self) -> str: ...

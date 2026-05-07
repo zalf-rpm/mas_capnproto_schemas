@@ -2,7 +2,7 @@
 
 from collections.abc import Awaitable, Callable, Sequence
 from contextlib import AbstractContextManager
-from typing import IO, Any, Literal, overload, override
+from typing import IO, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicCapabilityServer,
@@ -325,7 +325,10 @@ class _ClusterStructModule(_StructModule):
             ) -> Awaitable[
                 builders.ModelInstanceFactoryClientListBuilder
                 | readers.ModelInstanceFactoryClientListReader
-                | Sequence[Any]
+                | Sequence[
+                    clients.ModelInstanceFactoryClient
+                    | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+                ]
                 | results_tuples.AdminMasterAvailablemodelsResultTuple
                 | None
             ]: ...
@@ -1163,7 +1166,10 @@ class _ClusterStructModule(_StructModule):
             ) -> Awaitable[
                 builders.ModelInstanceFactoryClientListBuilder
                 | readers.ModelInstanceFactoryClientListReader
-                | Sequence[Any]
+                | Sequence[
+                    clients.ModelInstanceFactoryClient
+                    | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+                ]
                 | results_tuples.UserMasterAvailablemodelsResultTuple
                 | None
             ]: ...
@@ -1535,7 +1541,10 @@ class _ClusterStructModule(_StructModule):
             ) -> Awaitable[
                 builders.ModelInstanceFactoryClientListBuilder
                 | readers.ModelInstanceFactoryClientListReader
-                | Sequence[Any]
+                | Sequence[
+                    clients.ModelInstanceFactoryClient
+                    | _ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+                ]
                 | results_tuples.RuntimeAvailablemodelsResultTuple
                 | None
             ]: ...

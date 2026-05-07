@@ -1,5 +1,6 @@
 """Builder helper types for `management.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -372,7 +373,9 @@ class CuttingBuilder(_DynamicStructBuilder):
     @cuttingSpec.setter
     def cuttingSpec(
         self,
-        value: SpecListBuilder | readers.SpecListReader | dict[str, Any],
+        value: SpecListBuilder
+        | readers.SpecListReader
+        | Sequence[readers.SpecReader | SpecBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def cutMaxAssimilationRatePercentage(self) -> float: ...
@@ -478,7 +481,9 @@ class IrrigationBuilder(_DynamicStructBuilder):
     @nutrientConcentrations.setter
     def nutrientConcentrations(
         self,
-        value: NutrientListBuilder | readers.NutrientListReader | dict[str, Any],
+        value: NutrientListBuilder
+        | readers.NutrientListReader
+        | Sequence[readers.NutrientReader | NutrientBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(

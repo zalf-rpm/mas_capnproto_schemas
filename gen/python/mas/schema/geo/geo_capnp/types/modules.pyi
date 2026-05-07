@@ -573,11 +573,26 @@ class _CoordStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        gk: builders.GKCoordBuilder | dict[str, Any] | None = None,
-        latlon: builders.LatLonCoordBuilder | dict[str, Any] | None = None,
-        utm: builders.UTMCoordBuilder | dict[str, Any] | None = None,
-        p2D: builders.Point2DBuilder | dict[str, Any] | None = None,
-        rowcol: builders.RowColBuilder | dict[str, Any] | None = None,
+        gk: builders.GKCoordBuilder
+        | readers.GKCoordReader
+        | dict[str, Any]
+        | None = None,
+        latlon: builders.LatLonCoordBuilder
+        | readers.LatLonCoordReader
+        | dict[str, Any]
+        | None = None,
+        utm: builders.UTMCoordBuilder
+        | readers.UTMCoordReader
+        | dict[str, Any]
+        | None = None,
+        p2D: builders.Point2DBuilder
+        | readers.Point2DReader
+        | dict[str, Any]
+        | None = None,
+        rowcol: builders.RowColBuilder
+        | readers.RowColReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.CoordBuilder: ...
     @override

@@ -1,5 +1,6 @@
 """Builder helper types for `common.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -155,112 +156,118 @@ class ValueBuilder(_DynamicStructBuilder):
     @lf64.setter
     def lf64(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def lf32(self) -> Float32ListBuilder: ...
     @lf32.setter
     def lf32(
         self,
-        value: Float32ListBuilder | readers.Float32ListReader | dict[str, Any],
+        value: Float32ListBuilder | readers.Float32ListReader | Sequence[float],
     ) -> None: ...
     @property
     def li64(self) -> Int64ListBuilder: ...
     @li64.setter
     def li64(
         self,
-        value: Int64ListBuilder | readers.Int64ListReader | dict[str, Any],
+        value: Int64ListBuilder | readers.Int64ListReader | Sequence[int],
     ) -> None: ...
     @property
     def li32(self) -> Int32ListBuilder: ...
     @li32.setter
     def li32(
         self,
-        value: Int32ListBuilder | readers.Int32ListReader | dict[str, Any],
+        value: Int32ListBuilder | readers.Int32ListReader | Sequence[int],
     ) -> None: ...
     @property
     def li16(self) -> Int16ListBuilder: ...
     @li16.setter
     def li16(
         self,
-        value: Int16ListBuilder | readers.Int16ListReader | dict[str, Any],
+        value: Int16ListBuilder | readers.Int16ListReader | Sequence[int],
     ) -> None: ...
     @property
     def li8(self) -> Int8ListBuilder: ...
     @li8.setter
     def li8(
         self,
-        value: Int8ListBuilder | readers.Int8ListReader | dict[str, Any],
+        value: Int8ListBuilder | readers.Int8ListReader | Sequence[int],
     ) -> None: ...
     @property
     def lui64(self) -> Uint64ListBuilder: ...
     @lui64.setter
     def lui64(
         self,
-        value: Uint64ListBuilder | readers.Uint64ListReader | dict[str, Any],
+        value: Uint64ListBuilder | readers.Uint64ListReader | Sequence[int],
     ) -> None: ...
     @property
     def lui32(self) -> Uint32ListBuilder: ...
     @lui32.setter
     def lui32(
         self,
-        value: Uint32ListBuilder | readers.Uint32ListReader | dict[str, Any],
+        value: Uint32ListBuilder | readers.Uint32ListReader | Sequence[int],
     ) -> None: ...
     @property
     def lui16(self) -> Uint16ListBuilder: ...
     @lui16.setter
     def lui16(
         self,
-        value: Uint16ListBuilder | readers.Uint16ListReader | dict[str, Any],
+        value: Uint16ListBuilder | readers.Uint16ListReader | Sequence[int],
     ) -> None: ...
     @property
     def lui8(self) -> Uint8ListBuilder: ...
     @lui8.setter
     def lui8(
         self,
-        value: Uint8ListBuilder | readers.Uint8ListReader | dict[str, Any],
+        value: Uint8ListBuilder | readers.Uint8ListReader | Sequence[int],
     ) -> None: ...
     @property
     def lb(self) -> BoolListBuilder: ...
     @lb.setter
     def lb(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def lt(self) -> TextListBuilder: ...
     @lt.setter
     def lt(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def ld(self) -> DataListBuilder: ...
     @ld.setter
     def ld(
         self,
-        value: DataListBuilder | readers.DataListReader | dict[str, Any],
+        value: DataListBuilder | readers.DataListReader | Sequence[bytes],
     ) -> None: ...
     @property
     def lcap(self) -> AnyPointerListBuilder: ...
     @lcap.setter
     def lcap(
         self,
-        value: AnyPointerListBuilder | readers.AnyPointerListReader | dict[str, Any],
+        value: AnyPointerListBuilder
+        | readers.AnyPointerListReader
+        | Sequence[common.Capability],
     ) -> None: ...
     @property
     def lpair(self) -> PairListBuilder: ...
     @lpair.setter
     def lpair(
         self,
-        value: PairListBuilder | readers.PairListReader | dict[str, Any],
+        value: PairListBuilder
+        | readers.PairListReader
+        | Sequence[readers.PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def lv(self) -> ValueListBuilder: ...
     @lv.setter
     def lv(
         self,
-        value: ValueListBuilder | readers.ValueListReader | dict[str, Any],
+        value: ValueListBuilder
+        | readers.ValueListReader
+        | Sequence[readers.ValueReader | ValueBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def which(

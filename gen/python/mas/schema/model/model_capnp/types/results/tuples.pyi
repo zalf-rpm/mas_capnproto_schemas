@@ -41,5 +41,5 @@ class NewinstancesResultTuple(NamedTuple):
     instances: (
         builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any]
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
     )

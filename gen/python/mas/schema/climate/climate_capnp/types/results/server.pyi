@@ -12,6 +12,11 @@ from mas.schema.climate.climate_capnp.types import clients as clients
 from mas.schema.climate.climate_capnp.types import enums as enums
 from mas.schema.climate.climate_capnp.types import modules as modules
 from mas.schema.climate.climate_capnp.types import readers as readers
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.common.date_capnp.types.readers import DateReader
 
@@ -23,7 +28,7 @@ class CategoriesServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdInformationListBuilder
         | readers.IdInformationListReader
-        | Sequence[Any],
+        | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -42,7 +47,7 @@ class SupportedvaluesServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdInformationListBuilder
         | readers.IdInformationListReader
-        | Sequence[Any],
+        | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -59,7 +64,9 @@ class ForallServerResult(_DynamicStructBuilder):
     @all.setter
     def all(
         self,
-        value: builders.PairListBuilder | readers.PairListReader | Sequence[Any],
+        value: builders.PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -108,7 +115,7 @@ class HeaderServerResult(_DynamicStructBuilder):
         self,
         value: builders.ElementEnumListBuilder
         | readers.ElementEnumListReader
-        | Sequence[Any],
+        | Sequence[enums.ElementEnum],
     ) -> None: ...
     @overload
     def init(
@@ -127,7 +134,9 @@ class DataServerResult(_DynamicStructBuilder):
         self,
         value: builders.Float32ListListBuilder
         | readers.Float32ListListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.Float32ListReader | builders.Float32ListBuilder | Sequence[float]
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -146,7 +155,9 @@ class DatatServerResult(_DynamicStructBuilder):
         self,
         value: builders.Float32ListListBuilder
         | readers.Float32ListListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.Float32ListReader | builders.Float32ListBuilder | Sequence[float]
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -187,7 +198,7 @@ class NextlocationsServerResult(_DynamicStructBuilder):
         self,
         value: builders.LocationListBuilder
         | readers.LocationListReader
-        | Sequence[Any],
+        | Sequence[readers.LocationReader | builders.LocationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -228,7 +239,7 @@ class LocationsServerResult(_DynamicStructBuilder):
         self,
         value: builders.LocationListBuilder
         | readers.LocationListReader
-        | Sequence[Any],
+        | Sequence[readers.LocationReader | builders.LocationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -262,7 +273,9 @@ class GetavailabledatasetsServerResult(_DynamicStructBuilder):
         self,
         value: builders.MetaPlusDataListBuilder
         | readers.MetaPlusDataListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.MetaPlusDataReader | builders.MetaPlusDataBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -281,7 +294,7 @@ class GetdatasetsforServerResult(_DynamicStructBuilder):
         self,
         value: builders.DatasetClientListBuilder
         | readers.DatasetClientListReader
-        | Sequence[Any],
+        | Sequence[clients.DatasetClient | modules._DatasetInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(
@@ -324,7 +337,9 @@ class AlteredelementsServerResult(_DynamicStructBuilder):
     @list.setter
     def list(
         self,
-        value: builders.AlteredListBuilder | readers.AlteredListReader | Sequence[Any],
+        value: builders.AlteredListBuilder
+        | readers.AlteredListReader
+        | Sequence[readers.AlteredReader | builders.AlteredBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(

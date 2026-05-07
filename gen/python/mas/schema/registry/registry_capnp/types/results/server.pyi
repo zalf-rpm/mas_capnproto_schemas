@@ -7,6 +7,10 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.persistence.persistence_capnp.types.builders import (
     SturdyRefBuilder,
 )
@@ -30,7 +34,7 @@ class RemovecategoryServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any],
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(
@@ -47,7 +51,7 @@ class MoveobjectsServerResult(_DynamicStructBuilder):
     @movedObjectIds.setter
     def movedObjectIds(
         self,
-        value: builders.TextListBuilder | readers.TextListReader | Sequence[Any],
+        value: builders.TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @overload
     def init(
@@ -66,7 +70,7 @@ class RemoveobjectsServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any],
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(
@@ -85,7 +89,7 @@ class SupportedcategoriesServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdInformationListBuilder
         | readers.IdInformationListReader
-        | Sequence[Any],
+        | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -102,7 +106,9 @@ class EntriesServerResult(_DynamicStructBuilder):
     @entries.setter
     def entries(
         self,
-        value: builders.EntryListBuilder | readers.EntryListReader | Sequence[Any],
+        value: builders.EntryListBuilder
+        | readers.EntryListReader
+        | Sequence[readers.EntryReader | builders.EntryBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(

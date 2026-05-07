@@ -1,5 +1,6 @@
 """Builder helper types for `soil_params.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, override
 
 from capnp.lib.capnp import (
@@ -7,6 +8,7 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.soil.soil_params_capnp.types import lists as lists
+from mas.schema.soil.soil_params_capnp.types import modules as modules
 from mas.schema.soil.soil_params_capnp.types import readers as readers
 
 class SoilCharacteristicDataDataBuilder(_DynamicStructBuilder):
@@ -39,7 +41,13 @@ class SoilCharacteristicDataBuilder(_DynamicStructBuilder):
     @list.setter
     def list(
         self,
-        value: DataListBuilder | readers.DataListReader | dict[str, Any],
+        value: DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            modules._SoilCharacteristicDataStructModule._DataStructModule.Reader
+            | modules._SoilCharacteristicDataStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @override
     def init(
@@ -80,7 +88,13 @@ class SoilCharacteristicModifierBuilder(_DynamicStructBuilder):
     @list.setter
     def list(
         self,
-        value: DataListBuilder | readers.DataListReader | dict[str, Any],
+        value: DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            modules._SoilCharacteristicModifierStructModule._DataStructModule.Reader
+            | modules._SoilCharacteristicModifierStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @override
     def init(
@@ -113,7 +127,13 @@ class CapillaryRiseRateBuilder(_DynamicStructBuilder):
     @list.setter
     def list(
         self,
-        value: DataListBuilder | readers.DataListReader | dict[str, Any],
+        value: DataListBuilder
+        | readers.DataListReader
+        | Sequence[
+            modules._CapillaryRiseRateStructModule._DataStructModule.Reader
+            | modules._CapillaryRiseRateStructModule._DataStructModule.Builder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @override
     def init(

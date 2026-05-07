@@ -30,7 +30,11 @@ from mas.schema.common.common_capnp.types.builders import (
 from mas.schema.common.common_capnp.types.modules import (
     _IdentifiableInterfaceModule,
 )
-from mas.schema.common.common_capnp.types.readers import ValueReader
+from mas.schema.common.common_capnp.types.readers import (
+    IdInformationReader,
+    StructuredTextReader,
+    ValueReader,
+)
 from mas.schema.fbp.fbp_capnp.types import builders as builders
 from mas.schema.fbp.fbp_capnp.types import clients as clients
 from mas.schema.fbp.fbp_capnp.types import common as common
@@ -193,7 +197,10 @@ class _IPStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        attributes: builders.KVListBuilder | dict[str, Any] | None = None,
+        attributes: builders.KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | builders.KVBuilder | dict[str, Any]]
+        | None = None,
         content: common.AnyPointer | None = None,
         type: enums.IPTypeEnum | None = None,
         **kwargs: object,
@@ -1192,14 +1199,35 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             bufferSize: int | None = None,
             closeSemantics: enums.ChannelCloseSemanticsEnum | None = None,
-            channelSR: SturdyRefBuilder | dict[str, Any] | None = None,
-            readerSRs: builders.SturdyRefListBuilder | dict[str, Any] | None = None,
-            writerSRs: builders.SturdyRefListBuilder | dict[str, Any] | None = None,
+            channelSR: SturdyRefBuilder
+            | SturdyRefReader
+            | dict[str, Any]
+            | None = None,
+            readerSRs: builders.SturdyRefListBuilder
+            | readers.SturdyRefListReader
+            | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]]
+            | None = None,
+            writerSRs: builders.SturdyRefListBuilder
+            | readers.SturdyRefListReader
+            | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]]
+            | None = None,
             channel: clients.ChannelClient
             | _ChannelInterfaceModule.Server
             | None = None,
-            readers: builders.ReaderClientListBuilder | dict[str, Any] | None = None,
-            writers: builders.WriterClientListBuilder | dict[str, Any] | None = None,
+            readers: builders.ReaderClientListBuilder
+            | readers.ReaderClientListReader
+            | Sequence[
+                clients.ReaderClient
+                | _ChannelInterfaceModule._ReaderInterfaceModule.Server
+            ]
+            | None = None,
+            writers: builders.WriterClientListBuilder
+            | readers.WriterClientListReader
+            | Sequence[
+                clients.WriterClient
+                | _ChannelInterfaceModule._WriterInterfaceModule.Server
+            ]
+            | None = None,
             **kwargs: object,
         ) -> builders.StartupInfoBuilder: ...
         @override
@@ -2164,8 +2192,14 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
             noOfWriters: int | None = None,
-            readerSrts: builders.TextListBuilder | dict[str, Any] | None = None,
-            writerSrts: builders.TextListBuilder | dict[str, Any] | None = None,
+            readerSrts: builders.TextListBuilder
+            | readers.TextListReader
+            | Sequence[str]
+            | None = None,
+            writerSrts: builders.TextListBuilder
+            | readers.TextListReader
+            | Sequence[str]
+            | None = None,
             bufferSize: int | None = None,
             **kwargs: object,
         ) -> builders.ParamsBuilder: ...
@@ -2474,8 +2508,11 @@ class _PortInfosStructModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             name: str | None = None,
-            sr: SturdyRefBuilder | dict[str, Any] | None = None,
-            srs: builders.SturdyRefListBuilder | dict[str, Any] | None = None,
+            sr: SturdyRefBuilder | SturdyRefReader | dict[str, Any] | None = None,
+            srs: builders.SturdyRefListBuilder
+            | readers.SturdyRefListReader
+            | Sequence[SturdyRefReader | SturdyRefBuilder | dict[str, Any]]
+            | None = None,
             **kwargs: object,
         ) -> builders.NameAndSRBuilder: ...
         @override
@@ -2581,8 +2618,14 @@ class _PortInfosStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        inPorts: builders.NameAndSRListBuilder | dict[str, Any] | None = None,
-        outPorts: builders.NameAndSRListBuilder | dict[str, Any] | None = None,
+        inPorts: builders.NameAndSRListBuilder
+        | readers.NameAndSRListReader
+        | Sequence[readers.NameAndSRReader | builders.NameAndSRBuilder | dict[str, Any]]
+        | None = None,
+        outPorts: builders.NameAndSRListBuilder
+        | readers.NameAndSRListReader
+        | Sequence[readers.NameAndSRReader | builders.NameAndSRBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.PortInfosBuilder: ...
     @override
@@ -3483,7 +3526,7 @@ class _ProcessInterfaceModule(
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             name: str | None = None,
-            val: ValueBuilder | dict[str, Any] | None = None,
+            val: ValueBuilder | ValueReader | dict[str, Any] | None = None,
             **kwargs: object,
         ) -> builders.ConfigEntryBuilder: ...
         @override
@@ -4297,7 +4340,7 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[
             builders.PortListBuilder
             | readers.PortListReader
-            | Sequence[Any]
+            | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
             | results_tuples.InportsResultTuple
             | None
         ]: ...
@@ -4323,7 +4366,7 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[
             builders.PortListBuilder
             | readers.PortListReader
-            | Sequence[Any]
+            | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
             | results_tuples.OutportsResultTuple
             | None
         ]: ...
@@ -4349,7 +4392,9 @@ class _ProcessInterfaceModule(
         ) -> Awaitable[
             builders.ConfigEntryListBuilder
             | readers.ConfigEntryListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.ConfigEntryReader | builders.ConfigEntryBuilder | dict[str, Any]
+            ]
             | results_tuples.ConfigentriesResultTuple
             | None
         ]: ...
@@ -4725,12 +4770,24 @@ class _ComponentStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        info: IdInformationBuilder | dict[str, Any] | None = None,
+        info: IdInformationBuilder | IdInformationReader | dict[str, Any] | None = None,
         type: enums.ComponentComponentTypeEnum | None = None,
-        inPorts: builders.PortListBuilder | dict[str, Any] | None = None,
-        outPorts: builders.PortListBuilder | dict[str, Any] | None = None,
-        defaultConfig: StructuredTextBuilder | dict[str, Any] | None = None,
-        factory: builders.ComponentFactoryBuilder | dict[str, Any] | None = None,
+        inPorts: builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
+        | None = None,
+        outPorts: builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
+        | None = None,
+        defaultConfig: StructuredTextBuilder
+        | StructuredTextReader
+        | dict[str, Any]
+        | None = None,
+        factory: builders.ComponentFactoryBuilder
+        | readers.ComponentFactoryReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.ComponentBuilder: ...
     @override

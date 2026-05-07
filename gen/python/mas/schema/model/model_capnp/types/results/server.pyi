@@ -96,7 +96,7 @@ class NewinstancesServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any],
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(

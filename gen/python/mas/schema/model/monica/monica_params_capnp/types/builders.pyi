@@ -1,5 +1,6 @@
 """Builder helper types for `monica_params.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -102,63 +103,63 @@ class SpeciesParametersBuilder(_DynamicStructBuilder):
     @baseTemperature.setter
     def baseTemperature(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organMaintenanceRespiration(self) -> Float64ListBuilder: ...
     @organMaintenanceRespiration.setter
     def organMaintenanceRespiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def organGrowthRespiration(self) -> Float64ListBuilder: ...
     @organGrowthRespiration.setter
     def organGrowthRespiration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def stageMaxRootNConcentration(self) -> Float64ListBuilder: ...
     @stageMaxRootNConcentration.setter
     def stageMaxRootNConcentration(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def initialOrganBiomass(self) -> Float64ListBuilder: ...
     @initialOrganBiomass.setter
     def initialOrganBiomass(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def criticalOxygenContent(self) -> Float64ListBuilder: ...
     @criticalOxygenContent.setter
     def criticalOxygenContent(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def stageMobilFromStorageCoeff(self) -> Float64ListBuilder: ...
     @stageMobilFromStorageCoeff.setter
     def stageMobilFromStorageCoeff(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def abovegroundOrgan(self) -> BoolListBuilder: ...
     @abovegroundOrgan.setter
     def abovegroundOrgan(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def storageOrgan(self) -> BoolListBuilder: ...
     @storageOrgan.setter
     def storageOrgan(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def samplingDepth(self) -> float: ...
@@ -386,70 +387,74 @@ class CultivarParametersBuilder(_DynamicStructBuilder):
     @assimilatePartitioningCoeff.setter
     def assimilatePartitioningCoeff(
         self,
-        value: Float64ListListBuilder | readers.Float64ListListReader | dict[str, Any],
+        value: Float64ListListBuilder
+        | readers.Float64ListListReader
+        | Sequence[readers.Float64ListReader | Float64ListBuilder | Sequence[float]],
     ) -> None: ...
     @property
     def organSenescenceRate(self) -> Float64ListListBuilder: ...
     @organSenescenceRate.setter
     def organSenescenceRate(
         self,
-        value: Float64ListListBuilder | readers.Float64ListListReader | dict[str, Any],
+        value: Float64ListListBuilder
+        | readers.Float64ListListReader
+        | Sequence[readers.Float64ListReader | Float64ListBuilder | Sequence[float]],
     ) -> None: ...
     @property
     def baseDaylength(self) -> Float64ListBuilder: ...
     @baseDaylength.setter
     def baseDaylength(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def optimumTemperature(self) -> Float64ListBuilder: ...
     @optimumTemperature.setter
     def optimumTemperature(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def daylengthRequirement(self) -> Float64ListBuilder: ...
     @daylengthRequirement.setter
     def daylengthRequirement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def droughtStressThreshold(self) -> Float64ListBuilder: ...
     @droughtStressThreshold.setter
     def droughtStressThreshold(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def specificLeafArea(self) -> Float64ListBuilder: ...
     @specificLeafArea.setter
     def specificLeafArea(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def stageKcFactor(self) -> Float64ListBuilder: ...
     @stageKcFactor.setter
     def stageKcFactor(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def stageTemperatureSum(self) -> Float64ListBuilder: ...
     @stageTemperatureSum.setter
     def stageTemperatureSum(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def vernalisationRequirement(self) -> Float64ListBuilder: ...
     @vernalisationRequirement.setter
     def vernalisationRequirement(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def heatSumIrrigationStart(self) -> float: ...
@@ -498,7 +503,9 @@ class CultivarParametersBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.YieldComponentReader | YieldComponentBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def organIdsForSecondaryYield(self) -> YieldComponentListBuilder: ...
@@ -507,7 +514,9 @@ class CultivarParametersBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.YieldComponentReader | YieldComponentBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def organIdsForCutting(self) -> YieldComponentListBuilder: ...
@@ -516,7 +525,9 @@ class CultivarParametersBuilder(_DynamicStructBuilder):
         self,
         value: YieldComponentListBuilder
         | readers.YieldComponentListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.YieldComponentReader | YieldComponentBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def earlyRefLeafExp(self) -> float: ...
@@ -927,7 +938,9 @@ class SiteParametersBuilder(_DynamicStructBuilder):
         self,
         value: SoilParametersListBuilder
         | readers.SoilParametersListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.SoilParametersReader | SoilParametersBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @override
     def init(
@@ -964,7 +977,9 @@ class EnvironmentParametersBuilder(_DynamicStructBuilder):
     @atmosphericCO2s.setter
     def atmosphericCO2s(
         self,
-        value: YearToValueListBuilder | readers.YearToValueListReader | dict[str, Any],
+        value: YearToValueListBuilder
+        | readers.YearToValueListReader
+        | Sequence[readers.YearToValueReader | YearToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def atmosphericO3(self) -> float: ...
@@ -975,7 +990,9 @@ class EnvironmentParametersBuilder(_DynamicStructBuilder):
     @atmosphericO3s.setter
     def atmosphericO3s(
         self,
-        value: YearToValueListBuilder | readers.YearToValueListReader | dict[str, Any],
+        value: YearToValueListBuilder
+        | readers.YearToValueListReader
+        | Sequence[readers.YearToValueReader | YearToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def windSpeedHeight(self) -> float: ...
@@ -1047,7 +1064,9 @@ class MeasuredGroundwaterTableInformationBuilder(_DynamicStructBuilder):
     @groundwaterInfo.setter
     def groundwaterInfo(
         self,
-        value: DateToValueListBuilder | readers.DateToValueListReader | dict[str, Any],
+        value: DateToValueListBuilder
+        | readers.DateToValueListReader
+        | Sequence[readers.DateToValueReader | DateToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(
@@ -1799,7 +1818,11 @@ class EmissionsBuilder(_DynamicStructBuilder):
         self,
         value: SpeciesIdToEmissionListBuilder
         | readers.SpeciesIdToEmissionListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.SpeciesIdToEmissionReader
+            | SpeciesIdToEmissionBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def speciesIdToMonoterpeneEmission(self) -> SpeciesIdToEmissionListBuilder: ...
@@ -1808,7 +1831,11 @@ class EmissionsBuilder(_DynamicStructBuilder):
         self,
         value: SpeciesIdToEmissionListBuilder
         | readers.SpeciesIdToEmissionListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.SpeciesIdToEmissionReader
+            | SpeciesIdToEmissionBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def isopreneEmission(self) -> float: ...

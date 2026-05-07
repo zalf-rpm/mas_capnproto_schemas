@@ -1,5 +1,6 @@
 """Builder helper types for `field_exp_data.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -762,7 +763,9 @@ class TreatmentBuilder(_DynamicStructBuilder):
     @plots.setter
     def plots(
         self,
-        value: PlotListBuilder | readers.PlotListReader | dict[str, Any],
+        value: PlotListBuilder
+        | readers.PlotListReader
+        | Sequence[readers.PlotReader | PlotBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def residue(self) -> ResidueBuilder: ...
@@ -778,7 +781,11 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: InitialConditionsLayerListBuilder
         | readers.InitialConditionsLayerListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.InitialConditionsLayerReader
+            | InitialConditionsLayerBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def plantingEvents(self) -> PlantingEventListBuilder: ...
@@ -787,7 +794,7 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: PlantingEventListBuilder
         | readers.PlantingEventListReader
-        | dict[str, Any],
+        | Sequence[readers.PlantingEventReader | PlantingEventBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def harvestEvents(self) -> HarvestEventListBuilder: ...
@@ -796,7 +803,7 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: HarvestEventListBuilder
         | readers.HarvestEventListReader
-        | dict[str, Any],
+        | Sequence[readers.HarvestEventReader | HarvestEventBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def irrigationEvents(self) -> IrrigationEventListBuilder: ...
@@ -805,7 +812,9 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: IrrigationEventListBuilder
         | readers.IrrigationEventListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.IrrigationEventReader | IrrigationEventBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def fertilizerEvents(self) -> FertilizerEventListBuilder: ...
@@ -814,7 +823,9 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: FertilizerEventListBuilder
         | readers.FertilizerEventListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.FertilizerEventReader | FertilizerEventBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def environmentModifications(self) -> EnvironmentModificationListBuilder: ...
@@ -823,7 +834,11 @@ class TreatmentBuilder(_DynamicStructBuilder):
         self,
         value: EnvironmentModificationListBuilder
         | readers.EnvironmentModificationListReader
-        | dict[str, Any],
+        | Sequence[
+            readers.EnvironmentModificationReader
+            | EnvironmentModificationBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def experimentId(self) -> str: ...
@@ -993,7 +1008,9 @@ class ExperimentDescriptionBuilder(_DynamicStructBuilder):
     @treatments.setter
     def treatments(
         self,
-        value: TreatmentListBuilder | readers.TreatmentListReader | dict[str, Any],
+        value: TreatmentListBuilder
+        | readers.TreatmentListReader
+        | Sequence[readers.TreatmentReader | TreatmentBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(

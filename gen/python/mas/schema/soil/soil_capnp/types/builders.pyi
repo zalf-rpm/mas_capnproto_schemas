@@ -1,5 +1,6 @@
 """Builder helper types for `soil.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -42,7 +43,9 @@ class LayerBuilder(_DynamicStructBuilder):
     @properties.setter
     def properties(
         self,
-        value: PropertyListBuilder | readers.PropertyListReader | dict[str, Any],
+        value: PropertyListBuilder
+        | readers.PropertyListReader
+        | Sequence[readers.PropertyReader | PropertyBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def size(self) -> float: ...
@@ -73,7 +76,7 @@ class ResultBuilder(_DynamicStructBuilder):
         self,
         value: PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | dict[str, Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @property
     def optional(self) -> PropertyNameEnumListBuilder: ...
@@ -82,7 +85,7 @@ class ResultBuilder(_DynamicStructBuilder):
         self,
         value: PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | dict[str, Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @override
     @overload
@@ -110,7 +113,7 @@ class QueryBuilder(_DynamicStructBuilder):
         self,
         value: PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | dict[str, Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @property
     def optional(self) -> PropertyNameEnumListBuilder: ...
@@ -119,7 +122,7 @@ class QueryBuilder(_DynamicStructBuilder):
         self,
         value: PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | dict[str, Any],
+        | Sequence[enums.PropertyNameEnum],
     ) -> None: ...
     @property
     def onlyRawData(self) -> bool: ...
@@ -149,7 +152,9 @@ class ProfileDataBuilder(_DynamicStructBuilder):
     @layers.setter
     def layers(
         self,
-        value: LayerListBuilder | readers.LayerListReader | dict[str, Any],
+        value: LayerListBuilder
+        | readers.LayerListReader
+        | Sequence[readers.LayerReader | LayerBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def percentageOfArea(self) -> float: ...

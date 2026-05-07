@@ -1,5 +1,6 @@
 """Builder helper types for `monica_management.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -241,7 +242,9 @@ class DailyWeatherBuilder(_DynamicStructBuilder):
     @data.setter
     def data(
         self,
-        value: KVListBuilder | readers.KVListReader | dict[str, Any],
+        value: KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | KVBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(
@@ -467,7 +470,9 @@ class CuttingBuilder(_DynamicStructBuilder):
     @cuttingSpec.setter
     def cuttingSpec(
         self,
-        value: SpecListBuilder | readers.SpecListReader | dict[str, Any],
+        value: SpecListBuilder
+        | readers.SpecListReader
+        | Sequence[readers.SpecReader | SpecBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def cutMaxAssimilationRatePercentage(self) -> float: ...

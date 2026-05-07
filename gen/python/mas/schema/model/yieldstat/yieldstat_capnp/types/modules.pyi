@@ -1,6 +1,6 @@
 """Module helper types for `yieldstat.capnp`."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
@@ -288,7 +288,12 @@ class _ResultStructModule(_StructModule):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         cultivar: str | None = None,
         isNoData: bool | None = None,
-        values: builders.ResultToValueListBuilder | dict[str, Any] | None = None,
+        values: builders.ResultToValueListBuilder
+        | readers.ResultToValueListReader
+        | Sequence[
+            readers.ResultToValueReader | builders.ResultToValueBuilder | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.ResultBuilder: ...
     @override
@@ -376,7 +381,10 @@ class _OutputStructModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             year: int | None = None,
-            result: builders.ResultBuilder | dict[str, Any] | None = None,
+            result: builders.ResultBuilder
+            | readers.ResultReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.YearToResultBuilder: ...
         @override
@@ -474,7 +482,12 @@ class _OutputStructModule(_StructModule):
         id: str | None = None,
         runFailed: bool | None = None,
         reason: str | None = None,
-        results: builders.YearToResultListBuilder | dict[str, Any] | None = None,
+        results: builders.YearToResultListBuilder
+        | readers.YearToResultListReader
+        | Sequence[
+            readers.YearToResultReader | builders.YearToResultBuilder | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.OutputBuilder: ...
     @override

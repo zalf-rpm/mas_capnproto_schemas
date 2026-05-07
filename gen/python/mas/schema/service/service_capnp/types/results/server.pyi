@@ -7,6 +7,10 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.service.service_capnp.types import builders as builders
 from mas.schema.service.service_capnp.types import readers as readers
 
@@ -18,7 +22,7 @@ class IdentitiesServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdInformationListBuilder
         | readers.IdInformationListReader
-        | Sequence[Any],
+        | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -37,7 +41,7 @@ class SimpleFactoryCreateServerResult(_DynamicStructBuilder):
         self,
         value: builders.IdentifiableClientListBuilder
         | readers.IdentifiableClientListReader
-        | Sequence[Any],
+        | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server],
     ) -> None: ...
     @overload
     def init(
@@ -54,7 +58,7 @@ class ServiceinterfacenamesServerResult(_DynamicStructBuilder):
     @names.setter
     def names(
         self,
-        value: builders.TextListBuilder | readers.TextListReader | Sequence[Any],
+        value: builders.TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @overload
     def init(

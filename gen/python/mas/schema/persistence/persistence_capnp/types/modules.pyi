@@ -235,7 +235,10 @@ class _AddressStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        ip6: builders.AddressIp6Builder | dict[str, Any] | None = None,
+        ip6: builders.AddressIp6Builder
+        | readers.AddressIp6Reader
+        | dict[str, Any]
+        | None = None,
         port: int | None = None,
         host: str | None = None,
         **kwargs: object,
@@ -329,8 +332,11 @@ class _VatPathStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        id: builders.VatIdBuilder | dict[str, Any] | None = None,
-        address: builders.AddressBuilder | dict[str, Any] | None = None,
+        id: builders.VatIdBuilder | readers.VatIdReader | dict[str, Any] | None = None,
+        address: builders.AddressBuilder
+        | readers.AddressReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.VatPathBuilder: ...
     @override
@@ -579,8 +585,14 @@ class _SturdyRefStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        vat: builders.VatPathBuilder | dict[str, Any] | None = None,
-        localRef: builders.TokenBuilder | dict[str, Any] | None = None,
+        vat: builders.VatPathBuilder
+        | readers.VatPathReader
+        | dict[str, Any]
+        | None = None,
+        localRef: builders.TokenBuilder
+        | readers.TokenReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.SturdyRefBuilder: ...
     @override
@@ -729,7 +741,10 @@ class _PersistentInterfaceModule(_InterfaceModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            sealFor: builders.OwnerBuilder | dict[str, Any] | None = None,
+            sealFor: builders.OwnerBuilder
+            | readers.OwnerReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.SaveParamsBuilder: ...
         @override
@@ -824,8 +839,14 @@ class _PersistentInterfaceModule(_InterfaceModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            sturdyRef: builders.SturdyRefBuilder | dict[str, Any] | None = None,
-            unsaveSR: builders.SturdyRefBuilder | dict[str, Any] | None = None,
+            sturdyRef: builders.SturdyRefBuilder
+            | readers.SturdyRefReader
+            | dict[str, Any]
+            | None = None,
+            unsaveSR: builders.SturdyRefBuilder
+            | readers.SturdyRefReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.SaveResultsBuilder: ...
         @override
@@ -1015,8 +1036,14 @@ class _RestorerInterfaceModule(_InterfaceModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            localRef: builders.TokenBuilder | dict[str, Any] | None = None,
-            sealedBy: builders.OwnerBuilder | dict[str, Any] | None = None,
+            localRef: builders.TokenBuilder
+            | readers.TokenReader
+            | dict[str, Any]
+            | None = None,
+            sealedBy: builders.OwnerBuilder
+            | readers.OwnerReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.RestoreParamsBuilder: ...
         @override
@@ -1551,7 +1578,10 @@ class _GatewayInterfaceModule(_IdentifiableInterfaceModule, _RestorerInterfaceMo
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            sturdyRef: builders.SturdyRefBuilder | dict[str, Any] | None = None,
+            sturdyRef: builders.SturdyRefBuilder
+            | readers.SturdyRefReader
+            | dict[str, Any]
+            | None = None,
             heartbeat: clients.HeartbeatClient
             | _HeartbeatInterfaceModule.Server
             | None = None,

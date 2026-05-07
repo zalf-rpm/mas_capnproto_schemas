@@ -1,7 +1,7 @@
 """Result tuple helper types for `cluster_admin_service.capnp`."""
 
 from collections.abc import Sequence
-from typing import Any, NamedTuple
+from typing import NamedTuple
 
 from mas.schema.cluster.cluster_admin_service_capnp.types import builders as builders
 from mas.schema.cluster.cluster_admin_service_capnp.types import clients as clients
@@ -64,14 +64,20 @@ class AdminMasterAvailablemodelsResultTuple(NamedTuple):
     factories: (
         builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any]
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ]
     )
 
 class UserMasterAvailablemodelsResultTuple(NamedTuple):
     factories: (
         builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any]
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ]
     )
 
 class RuntimeRegistermodelinstancefactoryResultTuple(NamedTuple):
@@ -84,7 +90,10 @@ class RuntimeAvailablemodelsResultTuple(NamedTuple):
     factories: (
         builders.ModelInstanceFactoryClientListBuilder
         | readers.ModelInstanceFactoryClientListReader
-        | Sequence[Any]
+        | Sequence[
+            clients.ModelInstanceFactoryClient
+            | modules._ClusterStructModule._ModelInstanceFactoryInterfaceModule.Server
+        ]
     )
 
 class NumberofcoresResultTuple(NamedTuple):

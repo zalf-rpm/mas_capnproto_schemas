@@ -26,6 +26,8 @@ from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceM
 from mas.schema.management.management_capnp.types import (
     schemas as _mas_schema_management_management_capnp_schemas,
 )
+from mas.schema.management.management_capnp.types.builders import EventBuilder
+from mas.schema.management.management_capnp.types.readers import EventReader
 from mas.schema.model.model_capnp.types import builders as builders
 from mas.schema.model.model_capnp.types import clients as clients
 from mas.schema.model.model_capnp.types import common as common
@@ -89,8 +91,14 @@ class _XYResultStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        xs: builders.Float64ListBuilder | dict[str, Any] | None = None,
-        ys: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        xs: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
+        ys: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         **kwargs: object,
     ) -> builders.XYResultBuilder: ...
     @override
@@ -197,7 +205,10 @@ class _StatStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         type: enums.StatTypeEnum | None = None,
-        vs: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        vs: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         **kwargs: object,
     ) -> builders.StatBuilder: ...
     @override
@@ -296,8 +307,14 @@ class _XYPlusResultStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        xy: builders.XYResultBuilder | dict[str, Any] | None = None,
-        stats: builders.StatListBuilder | dict[str, Any] | None = None,
+        xy: builders.XYResultBuilder
+        | readers.XYResultReader
+        | dict[str, Any]
+        | None = None,
+        stats: builders.StatListBuilder
+        | readers.StatListReader
+        | Sequence[readers.StatReader | builders.StatBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.XYPlusResultBuilder: ...
     @override
@@ -638,7 +655,10 @@ class _EnvStructModule(_StructModule):
         rest: common.AnyPointer | None = None,
         timeSeries: TimeSeriesClient | _TimeSeriesInterfaceModule.Server | None = None,
         soilProfile: ProfileClient | _ProfileInterfaceModule.Server | None = None,
-        mgmtEvents: builders.EventListBuilder | dict[str, Any] | None = None,
+        mgmtEvents: builders.EventListBuilder
+        | readers.EventListReader
+        | Sequence[EventReader | EventBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.EnvBuilder: ...
     @override
@@ -1367,7 +1387,7 @@ class _InstanceFactoryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdentifiableClientListBuilder
             | readers.IdentifiableClientListReader
-            | Sequence[Any]
+            | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
             | results_tuples.NewinstancesResultTuple
             | None
         ]: ...

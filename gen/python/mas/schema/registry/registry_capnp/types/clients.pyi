@@ -54,7 +54,7 @@ class AdminClient(IdentifiableClient):
         self,
         objectIds: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         toCatId: str | None = None,
     ) -> results_client.MoveobjectsResult: ...
@@ -62,7 +62,7 @@ class AdminClient(IdentifiableClient):
         self,
         objectIds: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
     ) -> results_client.RemoveobjectsResult: ...
     def registry(self) -> results_client.RegistryResult: ...
@@ -80,7 +80,7 @@ class AdminClient(IdentifiableClient):
         self,
         objectIds: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         toCatId: str | None = None,
     ) -> requests.MoveobjectsRequest: ...
@@ -88,7 +88,7 @@ class AdminClient(IdentifiableClient):
         self,
         objectIds: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
     ) -> requests.RemoveobjectsRequest: ...
     def registry_request(self) -> requests.RegistryRequest: ...

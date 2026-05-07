@@ -5,11 +5,16 @@ from typing import Any, NamedTuple
 
 from mas.schema.soil.soil_capnp.types import builders as builders
 from mas.schema.soil.soil_capnp.types import clients as clients
+from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import modules as modules
 from mas.schema.soil.soil_capnp.types import readers as readers
 
 class DataResultTuple(NamedTuple):
-    layers: builders.LayerListBuilder | readers.LayerListReader | Sequence[Any]
+    layers: (
+        builders.LayerListBuilder
+        | readers.LayerListReader
+        | Sequence[readers.LayerReader | builders.LayerBuilder | dict[str, Any]]
+    )
     percentageOfArea: float
 
 class GeolocationResultTuple(NamedTuple):
@@ -20,7 +25,7 @@ class NextprofilesResultTuple(NamedTuple):
     profiles: (
         builders.ProfileClientListBuilder
         | readers.ProfileClientListReader
-        | Sequence[Any]
+        | Sequence[clients.ProfileClient | modules._ProfileInterfaceModule.Server]
     )
 
 class CheckavailableparametersResultTuple(NamedTuple):
@@ -28,31 +33,31 @@ class CheckavailableparametersResultTuple(NamedTuple):
     mandatory: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     optional: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
 
 class GetallavailableparametersResultTuple(NamedTuple):
     mandatory: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
     optional: (
         builders.PropertyNameEnumListBuilder
         | readers.PropertyNameEnumListReader
-        | Sequence[Any]
+        | Sequence[enums.PropertyNameEnum]
     )
 
 class ClosestprofilesatResultTuple(NamedTuple):
     profiles: (
         builders.ProfileClientListBuilder
         | readers.ProfileClientListReader
-        | Sequence[Any]
+        | Sequence[clients.ProfileClient | modules._ProfileInterfaceModule.Server]
     )
 
 class StreamallprofilesResultTuple(NamedTuple):

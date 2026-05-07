@@ -92,8 +92,8 @@ class StartChannelsServiceStartRequest(Protocol):
     noOfChannels: int
     noOfReaders: int
     noOfWriters: int
-    readerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
-    writerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[Any]
+    readerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[str]
+    writerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[str]
     bufferSize: int
     @overload
     def init(

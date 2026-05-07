@@ -58,7 +58,9 @@ class SubrangeRequest(Protocol):
 
 class SubheaderRequest(Protocol):
     elements: (
-        builders.ElementEnumListBuilder | readers.ElementEnumListReader | Sequence[Any]
+        builders.ElementEnumListBuilder
+        | readers.ElementEnumListReader
+        | Sequence[enums.ElementEnum]
     )
     @overload
     def init(

@@ -23,10 +23,12 @@ from mas.schema.common.common_capnp.types import (
 )
 from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
+from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.common.date_capnp.types import (
     schemas as _mas_schema_common_date_capnp_schemas,
 )
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.crop.crop_capnp.types import (
     schemas as _mas_schema_crop_crop_capnp_schemas,
 )
@@ -257,7 +259,7 @@ class _EventStructModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            date: DateBuilder | dict[str, Any] | None = None,
+            date: DateBuilder | DateReader | dict[str, Any] | None = None,
             **kwargs: object,
         ) -> builders.EventAtBuilder: ...
         @override
@@ -358,8 +360,8 @@ class _EventStructModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            earliest: DateBuilder | dict[str, Any] | None = None,
-            latest: DateBuilder | dict[str, Any] | None = None,
+            earliest: DateBuilder | DateReader | dict[str, Any] | None = None,
+            latest: DateBuilder | DateReader | dict[str, Any] | None = None,
             **kwargs: object,
         ) -> builders.EventBetweenBuilder: ...
         @override
@@ -448,7 +450,10 @@ class _EventStructModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            event: builders.TypeBuilder | dict[str, Any] | None = None,
+            event: builders.TypeBuilder
+            | readers.TypeReader
+            | dict[str, Any]
+            | None = None,
             days: int | None = None,
             **kwargs: object,
         ) -> builders.EventAfterBuilder: ...
@@ -581,10 +586,19 @@ class _EventStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         type: enums.EventExternalTypeEnum | None = None,
-        info: IdInformationBuilder | dict[str, Any] | None = None,
-        at: builders.EventAtBuilder | dict[str, Any] | None = None,
-        between: builders.EventBetweenBuilder | dict[str, Any] | None = None,
-        after: builders.EventAfterBuilder | dict[str, Any] | None = None,
+        info: IdInformationBuilder | IdInformationReader | dict[str, Any] | None = None,
+        at: builders.EventAtBuilder
+        | readers.EventAtReader
+        | dict[str, Any]
+        | None = None,
+        between: builders.EventBetweenBuilder
+        | readers.EventBetweenReader
+        | dict[str, Any]
+        | None = None,
+        after: builders.EventAfterBuilder
+        | readers.EventAfterReader
+        | dict[str, Any]
+        | None = None,
         params: common.AnyPointer | None = None,
         runAtStartOfDay: bool | None = None,
         **kwargs: object,
@@ -889,7 +903,9 @@ class _FertilizerInterfaceModule(
         ) -> Awaitable[
             builders.NutrientListBuilder
             | readers.NutrientListReader
-            | Sequence[Any]
+            | Sequence[
+                readers.NutrientReader | builders.NutrientBuilder | dict[str, Any]
+            ]
             | results_tuples.NutrientsResultTuple
             | None
         ]: ...
@@ -1320,8 +1336,14 @@ class _ParamsStructModule(_StructModule):
             maxCurrentDayPrecipSum: float | None = None,
             tempSumAboveBaseTemp: float | None = None,
             baseTemp: float | None = None,
-            avgSoilTemp: builders.AvgSoilTempBuilder | dict[str, Any] | None = None,
-            sowing: builders.SowingBuilder | dict[str, Any] | None = None,
+            avgSoilTemp: builders.AvgSoilTempBuilder
+            | readers.AvgSoilTempReader
+            | dict[str, Any]
+            | None = None,
+            sowing: builders.SowingBuilder
+            | readers.SowingReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.AutomaticSowingBuilder: ...
         @override
@@ -1539,6 +1561,7 @@ class _ParamsStructModule(_StructModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             exported: bool | None = None,
             optCarbMgmtData: builders.OptCarbonMgmtDataBuilder
+            | readers.OptCarbonMgmtDataReader
             | dict[str, Any]
             | None = None,
             **kwargs: object,
@@ -1660,7 +1683,10 @@ class _ParamsStructModule(_StructModule):
             max3dayPrecipSum: float | None = None,
             maxCurrentDayPrecipSum: float | None = None,
             harvestTime: enums.EventPhenoStageEnum | None = None,
-            harvest: builders.HarvestBuilder | dict[str, Any] | None = None,
+            harvest: builders.HarvestBuilder
+            | readers.HarvestReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.AutomaticHarvestBuilder: ...
         @override
@@ -1899,7 +1925,10 @@ class _ParamsStructModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            cuttingSpec: builders.SpecListBuilder | dict[str, Any] | None = None,
+            cuttingSpec: builders.SpecListBuilder
+            | readers.SpecListReader
+            | Sequence[readers.SpecReader | builders.SpecBuilder | dict[str, Any]]
+            | None = None,
             cutMaxAssimilationRatePercentage: float | None = None,
             **kwargs: object,
         ) -> builders.CuttingBuilder: ...
@@ -2360,7 +2389,10 @@ class _ParamsStructModule(_StructModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             amount: float | None = None,
             nutrientConcentrations: builders.NutrientListBuilder
-            | dict[str, Any]
+            | readers.NutrientListReader
+            | Sequence[
+                readers.NutrientReader | builders.NutrientBuilder | dict[str, Any]
+            ]
             | None = None,
             **kwargs: object,
         ) -> builders.IrrigationBuilder: ...
@@ -2859,7 +2891,7 @@ class _ServiceInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.EventListBuilder
             | readers.EventListReader
-            | Sequence[Any]
+            | Sequence[readers.EventReader | builders.EventBuilder | dict[str, Any]]
             | results_tuples.ManagementatResultTuple
             | None
         ]: ...

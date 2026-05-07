@@ -1,5 +1,6 @@
 """Builder helper types for `climate.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -15,8 +16,9 @@ from mas.schema.climate.climate_capnp.types import modules as modules
 from mas.schema.climate.climate_capnp.types import readers as readers
 from mas.schema.common.common_capnp.types.builders import (
     IdInformationBuilder,
+    PairBuilder,
 )
-from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.geo.geo_capnp.types.builders import LatLonCoordBuilder
@@ -161,7 +163,9 @@ class MetadataBuilder(_DynamicStructBuilder):
     @entries.setter
     def entries(
         self,
-        value: EntryListBuilder | readers.EntryListReader | dict[str, Any],
+        value: EntryListBuilder
+        | readers.EntryListReader
+        | Sequence[readers.EntryReader | EntryBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def info(self) -> clients.InformationClient: ...
@@ -223,7 +227,9 @@ class LocationBuilder(_DynamicStructBuilder):
     @customData.setter
     def customData(
         self,
-        value: KVListBuilder | readers.KVListReader | dict[str, Any],
+        value: KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | KVBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     @overload
@@ -279,7 +285,9 @@ class TimeSeriesDataBuilder(_DynamicStructBuilder):
     @data.setter
     def data(
         self,
-        value: Float32ListListBuilder | readers.Float32ListListReader | dict[str, Any],
+        value: Float32ListListBuilder
+        | readers.Float32ListListReader
+        | Sequence[readers.Float32ListReader | Float32ListBuilder | Sequence[float]],
     ) -> None: ...
     @property
     def isTransposed(self) -> bool: ...
@@ -290,7 +298,9 @@ class TimeSeriesDataBuilder(_DynamicStructBuilder):
     @header.setter
     def header(
         self,
-        value: ElementEnumListBuilder | readers.ElementEnumListReader | dict[str, Any],
+        value: ElementEnumListBuilder
+        | readers.ElementEnumListReader
+        | Sequence[enums.ElementEnum],
     ) -> None: ...
     @property
     def startDate(self) -> DateBuilder: ...
@@ -344,7 +354,9 @@ class CSVConfigBuilder(_DynamicStructBuilder):
     @headerMap.setter
     def headerMap(
         self,
-        value: PairListBuilder | readers.PairListReader | dict[str, Any],
+        value: PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def skipLinesToHeader(self) -> int: ...

@@ -20,6 +20,7 @@ from capnp.lib.capnp import (
 from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
+from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
@@ -31,6 +32,7 @@ from mas.schema.persistence.persistence_capnp.types.clients import RestorerClien
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _RestorerInterfaceModule,
 )
+from mas.schema.persistence.persistence_capnp.types.readers import VatIdReader
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import clients as clients
 from mas.schema.registry.registry_capnp.types import contexts as contexts
@@ -424,7 +426,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdentifiableClientListBuilder
             | readers.IdentifiableClientListReader
-            | Sequence[Any]
+            | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
             | results_tuples.RemovecategoryResultTuple
             | None
         ]: ...
@@ -441,7 +443,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.TextListBuilder
             | readers.TextListReader
-            | Sequence[Any]
+            | Sequence[str]
             | results_tuples.MoveobjectsResultTuple
             | None
         ]: ...
@@ -457,7 +459,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdentifiableClientListBuilder
             | readers.IdentifiableClientListReader
-            | Sequence[Any]
+            | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
             | results_tuples.RemoveobjectsResultTuple
             | None
         ]: ...
@@ -593,7 +595,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdInformationListBuilder
             | readers.IdInformationListReader
-            | Sequence[Any]
+            | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]]
             | results_tuples.SupportedcategoriesResultTuple
             | None
         ]: ...
@@ -619,7 +621,7 @@ class _RegistryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.EntryListBuilder
             | readers.EntryListReader
-            | Sequence[Any]
+            | Sequence[readers.EntryReader | builders.EntryBuilder | dict[str, Any]]
             | results_tuples.EntriesResultTuple
             | None
         ]: ...
@@ -674,7 +676,7 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            vatId: VatIdBuilder | dict[str, Any] | None = None,
+            vatId: VatIdBuilder | VatIdReader | dict[str, Any] | None = None,
             restorer: RestorerClient | _RestorerInterfaceModule.Server | None = None,
             **kwargs: object,
         ) -> builders.CrossDomainRestoreBuilder: ...
@@ -783,7 +785,10 @@ class _RegistrarInterfaceModule(_IdentifiableInterfaceModule):
             cap: IdentifiableClient | _IdentifiableInterfaceModule.Server | None = None,
             regName: str | None = None,
             categoryId: str | None = None,
-            xDomain: builders.CrossDomainRestoreBuilder | dict[str, Any] | None = None,
+            xDomain: builders.CrossDomainRestoreBuilder
+            | readers.CrossDomainRestoreReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.RegParamsBuilder: ...
         @override

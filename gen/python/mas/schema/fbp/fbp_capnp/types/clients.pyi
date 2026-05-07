@@ -132,11 +132,11 @@ class StartChannelsServiceClient(IdentifiableClient):
         noOfWriters: int | None = None,
         readerSrts: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         writerSrts: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         bufferSize: int | None = None,
     ) -> results_client.StartChannelsServiceStartResult: ...
@@ -148,11 +148,11 @@ class StartChannelsServiceClient(IdentifiableClient):
         noOfWriters: int | None = None,
         readerSrts: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         writerSrts: builders.TextListBuilder
         | readers.TextListReader
-        | Sequence[Any]
+        | Sequence[str]
         | None = None,
         bufferSize: int | None = None,
     ) -> requests.StartChannelsServiceStartRequest: ...

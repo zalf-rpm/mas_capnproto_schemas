@@ -361,8 +361,14 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            value: builders.ValueBuilder | dict[str, Any] | None = None,
-            rowCol: builders.RowColBuilder | dict[str, Any] | None = None,
+            value: builders.ValueBuilder
+            | readers.ValueReader
+            | dict[str, Any]
+            | None = None,
+            rowCol: builders.RowColBuilder
+            | readers.RowColReader
+            | dict[str, Any]
+            | None = None,
             areaFrac: float | None = None,
             iValue: float | None = None,
             **kwargs: object,
@@ -471,9 +477,18 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            latLonCoord: LatLonCoordBuilder | dict[str, Any] | None = None,
-            rowCol: builders.RowColBuilder | dict[str, Any] | None = None,
-            value: builders.ValueBuilder | dict[str, Any] | None = None,
+            latLonCoord: LatLonCoordBuilder
+            | LatLonCoordReader
+            | dict[str, Any]
+            | None = None,
+            rowCol: builders.RowColBuilder
+            | readers.RowColReader
+            | dict[str, Any]
+            | None = None,
+            value: builders.ValueBuilder
+            | readers.ValueReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.LocationBuilder: ...
         @override
@@ -617,7 +632,9 @@ class _GridInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
             ) -> Awaitable[
                 builders.LocationListBuilder
                 | readers.LocationListReader
-                | Sequence[Any]
+                | Sequence[
+                    readers.LocationReader | builders.LocationBuilder | dict[str, Any]
+                ]
                 | results_tuples.SendcellsResultTuple
                 | None
             ]: ...

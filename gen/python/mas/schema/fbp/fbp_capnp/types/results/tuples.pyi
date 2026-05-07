@@ -58,7 +58,11 @@ class RegisterstatscallbackResultTuple(NamedTuple):
 
 class StartChannelsServiceStartResultTuple(NamedTuple):
     startupInfos: (
-        builders.StartupInfoListBuilder | readers.StartupInfoListReader | Sequence[Any]
+        builders.StartupInfoListBuilder
+        | readers.StartupInfoListReader
+        | Sequence[
+            readers.StartupInfoReader | builders.StartupInfoBuilder | dict[str, Any]
+        ]
     )
     stop: _StoppableInterfaceModule.Server | StoppableClient
 
@@ -90,7 +94,11 @@ class DisconnectResultTuple(NamedTuple):
     disconnected: bool
 
 class InportsResultTuple(NamedTuple):
-    ports: builders.PortListBuilder | readers.PortListReader | Sequence[Any]
+    ports: (
+        builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
+    )
 
 class ConnectinportResultTuple(NamedTuple):
     connected: bool
@@ -100,7 +108,11 @@ class ConnectinportResultTuple(NamedTuple):
     )
 
 class OutportsResultTuple(NamedTuple):
-    ports: builders.PortListBuilder | readers.PortListReader | Sequence[Any]
+    ports: (
+        builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
+    )
 
 class ConnectoutportResultTuple(NamedTuple):
     connected: bool
@@ -111,7 +123,11 @@ class ConnectoutportResultTuple(NamedTuple):
 
 class ConfigentriesResultTuple(NamedTuple):
     config: (
-        builders.ConfigEntryListBuilder | readers.ConfigEntryListReader | Sequence[Any]
+        builders.ConfigEntryListBuilder
+        | readers.ConfigEntryListReader
+        | Sequence[
+            readers.ConfigEntryReader | builders.ConfigEntryBuilder | dict[str, Any]
+        ]
     )
 
 class ProcessStartResultTuple(NamedTuple):

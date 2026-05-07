@@ -108,7 +108,9 @@ class StartChannelsServiceStartServerResult(_DynamicStructBuilder):
         self,
         value: builders.StartupInfoListBuilder
         | readers.StartupInfoListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.StartupInfoReader | builders.StartupInfoBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @property
     def stop(self) -> _StoppableInterfaceModule.Server | StoppableClient: ...
@@ -199,7 +201,9 @@ class InportsServerResult(_DynamicStructBuilder):
     @ports.setter
     def ports(
         self,
-        value: builders.PortListBuilder | readers.PortListReader | Sequence[Any],
+        value: builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -235,7 +239,9 @@ class OutportsServerResult(_DynamicStructBuilder):
     @ports.setter
     def ports(
         self,
-        value: builders.PortListBuilder | readers.PortListReader | Sequence[Any],
+        value: builders.PortListBuilder
+        | readers.PortListReader
+        | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -273,7 +279,9 @@ class ConfigentriesServerResult(_DynamicStructBuilder):
         self,
         value: builders.ConfigEntryListBuilder
         | readers.ConfigEntryListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.ConfigEntryReader | builders.ConfigEntryBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(

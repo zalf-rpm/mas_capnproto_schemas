@@ -1,6 +1,6 @@
 """Module helper types for `monica_params.capnp`."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
@@ -23,6 +23,7 @@ from mas.schema.common.date_capnp.types import (
     schemas as _mas_schema_common_date_capnp_schemas,
 )
 from mas.schema.common.date_capnp.types.builders import DateBuilder
+from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.model.monica.monica_management_capnp.types import (
     schemas as _mas_schema_model_monica_monica_management_capnp_schemas,
 )
@@ -364,25 +365,42 @@ class _SpeciesParametersStructModule(_StructModule):
         developmentAccelerationByNitrogenStress: int | None = None,
         fieldConditionModifier: float | None = None,
         assimilateReallocation: float | None = None,
-        baseTemperature: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        baseTemperature: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         organMaintenanceRespiration: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
         organGrowthRespiration: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
         stageMaxRootNConcentration: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
-        initialOrganBiomass: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        initialOrganBiomass: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         criticalOxygenContent: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
         stageMobilFromStorageCoeff: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
-        abovegroundOrgan: builders.BoolListBuilder | dict[str, Any] | None = None,
-        storageOrgan: builders.BoolListBuilder | dict[str, Any] | None = None,
+        abovegroundOrgan: builders.BoolListBuilder
+        | readers.BoolListReader
+        | Sequence[bool]
+        | None = None,
+        storageOrgan: builders.BoolListBuilder
+        | readers.BoolListReader
+        | Sequence[bool]
+        | None = None,
         samplingDepth: float | None = None,
         targetNSamplingDepth: float | None = None,
         targetN30: float | None = None,
@@ -864,24 +882,48 @@ class _CultivarParametersStructModule(_StructModule):
         cropHeightP2: float | None = None,
         cropSpecificMaxRootingDepth: float | None = None,
         assimilatePartitioningCoeff: builders.Float64ListListBuilder
-        | dict[str, Any]
+        | readers.Float64ListListReader
+        | Sequence[
+            readers.Float64ListReader | builders.Float64ListBuilder | Sequence[float]
+        ]
         | None = None,
         organSenescenceRate: builders.Float64ListListBuilder
-        | dict[str, Any]
+        | readers.Float64ListListReader
+        | Sequence[
+            readers.Float64ListReader | builders.Float64ListBuilder | Sequence[float]
+        ]
         | None = None,
-        baseDaylength: builders.Float64ListBuilder | dict[str, Any] | None = None,
-        optimumTemperature: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        baseDaylength: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
+        optimumTemperature: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         daylengthRequirement: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
         droughtStressThreshold: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
-        specificLeafArea: builders.Float64ListBuilder | dict[str, Any] | None = None,
-        stageKcFactor: builders.Float64ListBuilder | dict[str, Any] | None = None,
-        stageTemperatureSum: builders.Float64ListBuilder | dict[str, Any] | None = None,
+        specificLeafArea: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
+        stageKcFactor: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
+        stageTemperatureSum: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
         vernalisationRequirement: builders.Float64ListBuilder
-        | dict[str, Any]
+        | readers.Float64ListReader
+        | Sequence[float]
         | None = None,
         heatSumIrrigationStart: float | None = None,
         heatSumIrrigationEnd: float | None = None,
@@ -894,13 +936,28 @@ class _CultivarParametersStructModule(_StructModule):
         respiratoryStress: float | None = None,
         latestHarvestDoy: int | None = None,
         organIdsForPrimaryYield: builders.YieldComponentListBuilder
-        | dict[str, Any]
+        | readers.YieldComponentListReader
+        | Sequence[
+            readers.YieldComponentReader
+            | builders.YieldComponentBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         organIdsForSecondaryYield: builders.YieldComponentListBuilder
-        | dict[str, Any]
+        | readers.YieldComponentListReader
+        | Sequence[
+            readers.YieldComponentReader
+            | builders.YieldComponentBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         organIdsForCutting: builders.YieldComponentListBuilder
-        | dict[str, Any]
+        | readers.YieldComponentListReader
+        | Sequence[
+            readers.YieldComponentReader
+            | builders.YieldComponentBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         earlyRefLeafExp: float | None = None,
         refLeafExp: float | None = None,
@@ -1005,8 +1062,12 @@ class _CropParametersStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        speciesParams: builders.SpeciesParametersBuilder | dict[str, Any] | None = None,
+        speciesParams: builders.SpeciesParametersBuilder
+        | readers.SpeciesParametersReader
+        | dict[str, Any]
+        | None = None,
         cultivarParams: builders.CultivarParametersBuilder
+        | readers.CultivarParametersReader
         | dict[str, Any]
         | None = None,
         **kwargs: object,
@@ -1104,6 +1165,7 @@ class _CropResidueParametersStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         params: _ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule.Builder
+        | _ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule.Reader
         | dict[str, Any]
         | None = None,
         species: str | None = None,
@@ -1199,8 +1261,12 @@ class _CropSpecStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        cropParams: builders.CropParametersBuilder | dict[str, Any] | None = None,
+        cropParams: builders.CropParametersBuilder
+        | readers.CropParametersReader
+        | dict[str, Any]
+        | None = None,
         residueParams: builders.CropResidueParametersBuilder
+        | readers.CropResidueParametersReader
         | dict[str, Any]
         | None = None,
         **kwargs: object,
@@ -1734,6 +1800,7 @@ class _AutomaticIrrigationParametersStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         params: _ParamsStructModule._IrrigationStructModule._ParametersStructModule.Builder
+        | _ParamsStructModule._IrrigationStructModule._ParametersStructModule.Reader
         | dict[str, Any]
         | None = None,
         amount: float | None = None,
@@ -1882,7 +1949,12 @@ class _SiteParametersStructModule(_StructModule):
         impenetrableLayerDepth: float | None = None,
         soilSpecificHumusBalanceCorrection: float | None = None,
         soilParameters: builders.SoilParametersListBuilder
-        | dict[str, Any]
+        | readers.SoilParametersListReader
+        | Sequence[
+            readers.SoilParametersReader
+            | builders.SoilParametersBuilder
+            | dict[str, Any]
+        ]
         | None = None,
         **kwargs: object,
     ) -> builders.SiteParametersBuilder: ...
@@ -2130,9 +2202,19 @@ class _EnvironmentParametersStructModule(_StructModule):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         albedo: float | None = None,
         atmosphericCO2: float | None = None,
-        atmosphericCO2s: builders.YearToValueListBuilder | dict[str, Any] | None = None,
+        atmosphericCO2s: builders.YearToValueListBuilder
+        | readers.YearToValueListReader
+        | Sequence[
+            readers.YearToValueReader | builders.YearToValueBuilder | dict[str, Any]
+        ]
+        | None = None,
         atmosphericO3: float | None = None,
-        atmosphericO3s: builders.YearToValueListBuilder | dict[str, Any] | None = None,
+        atmosphericO3s: builders.YearToValueListBuilder
+        | readers.YearToValueListReader
+        | Sequence[
+            readers.YearToValueReader | builders.YearToValueBuilder | dict[str, Any]
+        ]
+        | None = None,
         windSpeedHeight: float | None = None,
         leachingDepth: float | None = None,
         timeStep: float | None = None,
@@ -2230,7 +2312,7 @@ class _MeasuredGroundwaterTableInformationStructModule(_StructModule):
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            date: DateBuilder | dict[str, Any] | None = None,
+            date: DateBuilder | DateReader | dict[str, Any] | None = None,
             value: float | None = None,
             **kwargs: object,
         ) -> builders.DateToValueBuilder: ...
@@ -2330,7 +2412,12 @@ class _MeasuredGroundwaterTableInformationStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         groundwaterInformationAvailable: bool | None = None,
-        groundwaterInfo: builders.DateToValueListBuilder | dict[str, Any] | None = None,
+        groundwaterInfo: builders.DateToValueListBuilder
+        | readers.DateToValueListReader
+        | Sequence[
+            readers.DateToValueReader | builders.DateToValueBuilder | dict[str, Any]
+        ]
+        | None = None,
         **kwargs: object,
     ) -> builders.MeasuredGroundwaterTableInformationBuilder: ...
     @override
@@ -2523,8 +2610,8 @@ class _SimulationParametersStructModule(_StructModule):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        startDate: DateBuilder | dict[str, Any] | None = None,
-        endDate: DateBuilder | dict[str, Any] | None = None,
+        startDate: DateBuilder | DateReader | dict[str, Any] | None = None,
+        endDate: DateBuilder | DateReader | dict[str, Any] | None = None,
         nitrogenResponseOn: bool | None = None,
         waterDeficitResponseOn: bool | None = None,
         emergenceFloodingControlOn: bool | None = None,
@@ -2532,13 +2619,16 @@ class _SimulationParametersStructModule(_StructModule):
         frostKillOn: bool | None = None,
         useAutomaticIrrigation: bool | None = None,
         autoIrrigationParams: builders.AutomaticIrrigationParametersBuilder
+        | readers.AutomaticIrrigationParametersReader
         | dict[str, Any]
         | None = None,
         useNMinMineralFertilisingMethod: bool | None = None,
         nMinFertiliserPartition: _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder
+        | _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Reader
         | dict[str, Any]
         | None = None,
         nMinApplicationParams: builders.NMinApplicationParametersBuilder
+        | readers.NMinApplicationParametersReader
         | dict[str, Any]
         | None = None,
         useSecondaryYields: bool | None = None,
@@ -3467,7 +3557,10 @@ class _SoilOrganicModuleParametersStructModule(_StructModule):
         n2oProductionRate: float | None = None,
         inhibitorNH3: float | None = None,
         psMaxMineralisationDepth: float | None = None,
-        sticsParams: builders.SticsParametersBuilder | dict[str, Any] | None = None,
+        sticsParams: builders.SticsParametersBuilder
+        | readers.SticsParametersReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.SoilOrganicModuleParametersBuilder: ...
     @override
@@ -3913,10 +4006,20 @@ class _VocStructModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             speciesIdToIsopreneEmission: builders.SpeciesIdToEmissionListBuilder
-            | dict[str, Any]
+            | readers.SpeciesIdToEmissionListReader
+            | Sequence[
+                readers.SpeciesIdToEmissionReader
+                | builders.SpeciesIdToEmissionBuilder
+                | dict[str, Any]
+            ]
             | None = None,
             speciesIdToMonoterpeneEmission: builders.SpeciesIdToEmissionListBuilder
-            | dict[str, Any]
+            | readers.SpeciesIdToEmissionListReader
+            | Sequence[
+                readers.SpeciesIdToEmissionReader
+                | builders.SpeciesIdToEmissionBuilder
+                | dict[str, Any]
+            ]
             | None = None,
             isopreneEmission: float | None = None,
             monoterpeneEmission: float | None = None,
@@ -4675,9 +4778,18 @@ class _VocStructModule(_StructModule):
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             foliageLayer: int | None = None,
-            pho: builders.PhotosynthTBuilder | dict[str, Any] | None = None,
-            fol: builders.FoliageTBuilder | dict[str, Any] | None = None,
-            enzAct: builders.EnzymeActivityTBuilder | dict[str, Any] | None = None,
+            pho: builders.PhotosynthTBuilder
+            | readers.PhotosynthTReader
+            | dict[str, Any]
+            | None = None,
+            fol: builders.FoliageTBuilder
+            | readers.FoliageTReader
+            | dict[str, Any]
+            | None = None,
+            enzAct: builders.EnzymeActivityTBuilder
+            | readers.EnzymeActivityTReader
+            | dict[str, Any]
+            | None = None,
             **kwargs: object,
         ) -> builders.LeafEmissionTBuilder: ...
         @override

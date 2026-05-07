@@ -11,7 +11,11 @@ from mas.schema.grid.grid_capnp.types import modules as modules
 from mas.schema.grid.grid_capnp.types import readers as readers
 
 class SendcellsResultTuple(NamedTuple):
-    locations: builders.LocationListBuilder | readers.LocationListReader | Sequence[Any]
+    locations: (
+        builders.LocationListBuilder
+        | readers.LocationListReader
+        | Sequence[readers.LocationReader | builders.LocationBuilder | dict[str, Any]]
+    )
 
 class ClosestvalueatResultTuple(NamedTuple):
     val: builders.ValueBuilder | readers.ValueReader | dict[str, Any]
@@ -20,7 +24,11 @@ class ClosestvalueatResultTuple(NamedTuple):
     aggParts: (
         builders.AggregationPartListBuilder
         | readers.AggregationPartListReader
-        | Sequence[Any]
+        | Sequence[
+            readers.AggregationPartReader
+            | builders.AggregationPartBuilder
+            | dict[str, Any]
+        ]
     )
 
 class ResolutionResultTuple(NamedTuple):
@@ -38,7 +46,11 @@ class ValueatResultTuple(NamedTuple):
     aggParts: (
         builders.AggregationPartListBuilder
         | readers.AggregationPartListReader
-        | Sequence[Any]
+        | Sequence[
+            readers.AggregationPartReader
+            | builders.AggregationPartBuilder
+            | dict[str, Any]
+        ]
     )
 
 class LatlonboundsResultTuple(NamedTuple):

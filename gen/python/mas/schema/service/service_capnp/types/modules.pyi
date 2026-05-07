@@ -21,8 +21,13 @@ from capnp.lib.capnp import (
 from mas.schema.common.common_capnp.types import (
     schemas as _mas_schema_common_common_capnp_schemas,
 )
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
+from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
-from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.service.service_capnp.types import builders as builders
 from mas.schema.service.service_capnp.types import clients as clients
 from mas.schema.service.service_capnp.types import common as common
@@ -359,7 +364,7 @@ class _AdminInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdInformationListBuilder
             | readers.IdInformationListReader
-            | Sequence[Any]
+            | Sequence[IdInformationReader | IdInformationBuilder | dict[str, Any]]
             | results_tuples.IdentitiesResultTuple
             | None
         ]: ...
@@ -507,7 +512,7 @@ class _SimpleFactoryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.IdentifiableClientListBuilder
             | readers.IdentifiableClientListReader
-            | Sequence[Any]
+            | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
             | results_tuples.SimpleFactoryCreateResultTuple
             | None
         ]: ...
@@ -571,7 +576,8 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             timeoutSeconds: int | None = None,
             interfaceNameToRegistrySR: builders.PairListBuilder
-            | dict[str, Any]
+            | readers.PairListReader
+            | Sequence[PairReader | PairBuilder | dict[str, Any]]
             | None = None,
             msgPayload: common.AnyPointer | None = None,
             **kwargs: object,
@@ -674,7 +680,8 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
             adminCap: common.Capability | None = None,
             serviceCaps: builders.IdentifiableClientListBuilder
-            | dict[str, Any]
+            | readers.IdentifiableClientListReader
+            | Sequence[IdentifiableClient | _IdentifiableInterfaceModule.Server]
             | None = None,
             error: str | None = None,
             **kwargs: object,
@@ -951,7 +958,7 @@ class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
         ) -> Awaitable[
             builders.TextListBuilder
             | readers.TextListReader
-            | Sequence[Any]
+            | Sequence[str]
             | results_tuples.ServiceinterfacenamesResultTuple
             | None
         ]: ...

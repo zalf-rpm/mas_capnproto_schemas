@@ -3,6 +3,8 @@
 from collections.abc import Sequence
 from typing import Any, NamedTuple
 
+from mas.schema.common.common_capnp.types.builders import PairBuilder
+from mas.schema.common.common_capnp.types.readers import PairReader
 from mas.schema.storage.storage_capnp.types import builders as builders
 from mas.schema.storage.storage_capnp.types import clients as clients
 from mas.schema.storage.storage_capnp.types import modules as modules
@@ -22,11 +24,19 @@ class ExportResultTuple(NamedTuple):
     json: str
 
 class DownloadentriesResultTuple(NamedTuple):
-    entries: builders.PairListBuilder | readers.PairListReader | Sequence[Any]
+    entries: (
+        builders.PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]]
+    )
 
 class ListentriesResultTuple(NamedTuple):
     entries: (
-        builders.KeyAndEntryListBuilder | readers.KeyAndEntryListReader | Sequence[Any]
+        builders.KeyAndEntryListBuilder
+        | readers.KeyAndEntryListReader
+        | Sequence[
+            readers.KeyAndEntryReader | builders.KeyAndEntryBuilder | dict[str, Any]
+        ]
     )
 
 class GetentryResultTuple(NamedTuple):
@@ -64,7 +74,11 @@ class ListcontainersResultTuple(NamedTuple):
     containers: (
         builders.InfoAndContainerListBuilder
         | readers.InfoAndContainerListReader
-        | Sequence[Any]
+        | Sequence[
+            readers.InfoAndContainerReader
+            | builders.InfoAndContainerBuilder
+            | dict[str, Any]
+        ]
     )
 
 class RemovecontainerResultTuple(NamedTuple):

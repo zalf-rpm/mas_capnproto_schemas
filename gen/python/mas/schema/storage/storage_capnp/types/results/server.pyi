@@ -7,6 +7,8 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
+from mas.schema.common.common_capnp.types.builders import PairBuilder
+from mas.schema.common.common_capnp.types.readers import PairReader
 from mas.schema.storage.storage_capnp.types import builders as builders
 from mas.schema.storage.storage_capnp.types import clients as clients
 from mas.schema.storage.storage_capnp.types import modules as modules
@@ -57,7 +59,9 @@ class DownloadentriesServerResult(_DynamicStructBuilder):
     @entries.setter
     def entries(
         self,
-        value: builders.PairListBuilder | readers.PairListReader | Sequence[Any],
+        value: builders.PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -76,7 +80,9 @@ class ListentriesServerResult(_DynamicStructBuilder):
         self,
         value: builders.KeyAndEntryListBuilder
         | readers.KeyAndEntryListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.KeyAndEntryReader | builders.KeyAndEntryBuilder | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -171,7 +177,11 @@ class ListcontainersServerResult(_DynamicStructBuilder):
         self,
         value: builders.InfoAndContainerListBuilder
         | readers.InfoAndContainerListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.InfoAndContainerReader
+            | builders.InfoAndContainerBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(

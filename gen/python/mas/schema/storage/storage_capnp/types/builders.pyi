@@ -1,5 +1,6 @@
 """Builder helper types for `storage.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
@@ -7,8 +8,11 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
-from mas.schema.common.common_capnp.types.readers import IdInformationReader
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
+from mas.schema.common.common_capnp.types.readers import IdInformationReader, PairReader
 from mas.schema.storage.storage_capnp.types import clients as clients
 from mas.schema.storage.storage_capnp.types import common as common
 from mas.schema.storage.storage_capnp.types import lists as lists
@@ -25,7 +29,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @boolListValue.setter
     def boolListValue(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @property
     def int8Value(self) -> int: ...
@@ -36,7 +40,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @int8ListValue.setter
     def int8ListValue(
         self,
-        value: Int8ListBuilder | readers.Int8ListReader | dict[str, Any],
+        value: Int8ListBuilder | readers.Int8ListReader | Sequence[int],
     ) -> None: ...
     @property
     def int16Value(self) -> int: ...
@@ -47,7 +51,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @int16ListValue.setter
     def int16ListValue(
         self,
-        value: Int16ListBuilder | readers.Int16ListReader | dict[str, Any],
+        value: Int16ListBuilder | readers.Int16ListReader | Sequence[int],
     ) -> None: ...
     @property
     def int32Value(self) -> int: ...
@@ -58,7 +62,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @int32ListValue.setter
     def int32ListValue(
         self,
-        value: Int32ListBuilder | readers.Int32ListReader | dict[str, Any],
+        value: Int32ListBuilder | readers.Int32ListReader | Sequence[int],
     ) -> None: ...
     @property
     def int64Value(self) -> int: ...
@@ -69,7 +73,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @int64ListValue.setter
     def int64ListValue(
         self,
-        value: Int64ListBuilder | readers.Int64ListReader | dict[str, Any],
+        value: Int64ListBuilder | readers.Int64ListReader | Sequence[int],
     ) -> None: ...
     @property
     def uint8Value(self) -> int: ...
@@ -80,7 +84,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @uint8ListValue.setter
     def uint8ListValue(
         self,
-        value: Uint8ListBuilder | readers.Uint8ListReader | dict[str, Any],
+        value: Uint8ListBuilder | readers.Uint8ListReader | Sequence[int],
     ) -> None: ...
     @property
     def uint16Value(self) -> int: ...
@@ -91,7 +95,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @uint16ListValue.setter
     def uint16ListValue(
         self,
-        value: Uint16ListBuilder | readers.Uint16ListReader | dict[str, Any],
+        value: Uint16ListBuilder | readers.Uint16ListReader | Sequence[int],
     ) -> None: ...
     @property
     def uint32Value(self) -> int: ...
@@ -102,7 +106,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @uint32ListValue.setter
     def uint32ListValue(
         self,
-        value: Uint32ListBuilder | readers.Uint32ListReader | dict[str, Any],
+        value: Uint32ListBuilder | readers.Uint32ListReader | Sequence[int],
     ) -> None: ...
     @property
     def uint64Value(self) -> int: ...
@@ -113,7 +117,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @uint64ListValue.setter
     def uint64ListValue(
         self,
-        value: Uint64ListBuilder | readers.Uint64ListReader | dict[str, Any],
+        value: Uint64ListBuilder | readers.Uint64ListReader | Sequence[int],
     ) -> None: ...
     @property
     def float32Value(self) -> float: ...
@@ -124,7 +128,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @float32ListValue.setter
     def float32ListValue(
         self,
-        value: Float32ListBuilder | readers.Float32ListReader | dict[str, Any],
+        value: Float32ListBuilder | readers.Float32ListReader | Sequence[float],
     ) -> None: ...
     @property
     def float64Value(self) -> float: ...
@@ -135,7 +139,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @float64ListValue.setter
     def float64ListValue(
         self,
-        value: Float64ListBuilder | readers.Float64ListReader | dict[str, Any],
+        value: Float64ListBuilder | readers.Float64ListReader | Sequence[float],
     ) -> None: ...
     @property
     def textValue(self) -> str: ...
@@ -146,7 +150,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @textListValue.setter
     def textListValue(
         self,
-        value: TextListBuilder | readers.TextListReader | dict[str, Any],
+        value: TextListBuilder | readers.TextListReader | Sequence[str],
     ) -> None: ...
     @property
     def dataValue(self) -> bytes: ...
@@ -157,7 +161,7 @@ class ValueBuilder(_DynamicStructBuilder):
     @dataListValue.setter
     def dataListValue(
         self,
-        value: DataListBuilder | readers.DataListReader | dict[str, Any],
+        value: DataListBuilder | readers.DataListReader | Sequence[bytes],
     ) -> None: ...
     @property
     def anyValue(self) -> _DynamicObjectBuilder: ...
@@ -328,14 +332,16 @@ class ImportExportDataBuilder(_DynamicStructBuilder):
     @entries.setter
     def entries(
         self,
-        value: PairListBuilder | readers.PairListReader | dict[str, Any],
+        value: PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]],
     ) -> None: ...
     @property
     def isAnyValue(self) -> BoolListBuilder: ...
     @isAnyValue.setter
     def isAnyValue(
         self,
-        value: BoolListBuilder | readers.BoolListReader | dict[str, Any],
+        value: BoolListBuilder | readers.BoolListReader | Sequence[bool],
     ) -> None: ...
     @override
     @overload

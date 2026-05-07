@@ -8,10 +8,18 @@ from mas.schema.management.management_capnp.types import common as common
 from mas.schema.management.management_capnp.types import readers as readers
 
 class NutrientsResultTuple(NamedTuple):
-    nutrients: builders.NutrientListBuilder | readers.NutrientListReader | Sequence[Any]
+    nutrients: (
+        builders.NutrientListBuilder
+        | readers.NutrientListReader
+        | Sequence[readers.NutrientReader | builders.NutrientBuilder | dict[str, Any]]
+    )
 
 class ParametersResultTuple(NamedTuple):
     params: common.AnyPointer
 
 class ManagementatResultTuple(NamedTuple):
-    mgmt: builders.EventListBuilder | readers.EventListReader | Sequence[Any]
+    mgmt: (
+        builders.EventListBuilder
+        | readers.EventListReader
+        | Sequence[readers.EventReader | builders.EventBuilder | dict[str, Any]]
+    )

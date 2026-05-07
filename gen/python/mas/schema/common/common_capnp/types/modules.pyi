@@ -1,6 +1,6 @@
 """Module helper types for `common.capnp`."""
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
@@ -278,6 +278,7 @@ class _StructuredTextStructModule(_StructModule):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         value: str | None = None,
         structure: builders.StructuredTextStructureBuilder
+        | readers.StructuredTextStructureReader
         | dict[str, Any]
         | None = None,
         type: enums.StructuredTextTypeEnum | None = None,
@@ -646,22 +647,70 @@ class _ValueStructModule(_StructModule):
         d: bytes | None = None,
         p: common.AnyPointer | None = None,
         cap: common.Capability | None = None,
-        lf64: builders.Float64ListBuilder | dict[str, Any] | None = None,
-        lf32: builders.Float32ListBuilder | dict[str, Any] | None = None,
-        li64: builders.Int64ListBuilder | dict[str, Any] | None = None,
-        li32: builders.Int32ListBuilder | dict[str, Any] | None = None,
-        li16: builders.Int16ListBuilder | dict[str, Any] | None = None,
-        li8: builders.Int8ListBuilder | dict[str, Any] | None = None,
-        lui64: builders.Uint64ListBuilder | dict[str, Any] | None = None,
-        lui32: builders.Uint32ListBuilder | dict[str, Any] | None = None,
-        lui16: builders.Uint16ListBuilder | dict[str, Any] | None = None,
-        lui8: builders.Uint8ListBuilder | dict[str, Any] | None = None,
-        lb: builders.BoolListBuilder | dict[str, Any] | None = None,
-        lt: builders.TextListBuilder | dict[str, Any] | None = None,
-        ld: builders.DataListBuilder | dict[str, Any] | None = None,
-        lcap: builders.AnyPointerListBuilder | dict[str, Any] | None = None,
-        lpair: builders.PairListBuilder | dict[str, Any] | None = None,
-        lv: builders.ValueListBuilder | dict[str, Any] | None = None,
+        lf64: builders.Float64ListBuilder
+        | readers.Float64ListReader
+        | Sequence[float]
+        | None = None,
+        lf32: builders.Float32ListBuilder
+        | readers.Float32ListReader
+        | Sequence[float]
+        | None = None,
+        li64: builders.Int64ListBuilder
+        | readers.Int64ListReader
+        | Sequence[int]
+        | None = None,
+        li32: builders.Int32ListBuilder
+        | readers.Int32ListReader
+        | Sequence[int]
+        | None = None,
+        li16: builders.Int16ListBuilder
+        | readers.Int16ListReader
+        | Sequence[int]
+        | None = None,
+        li8: builders.Int8ListBuilder
+        | readers.Int8ListReader
+        | Sequence[int]
+        | None = None,
+        lui64: builders.Uint64ListBuilder
+        | readers.Uint64ListReader
+        | Sequence[int]
+        | None = None,
+        lui32: builders.Uint32ListBuilder
+        | readers.Uint32ListReader
+        | Sequence[int]
+        | None = None,
+        lui16: builders.Uint16ListBuilder
+        | readers.Uint16ListReader
+        | Sequence[int]
+        | None = None,
+        lui8: builders.Uint8ListBuilder
+        | readers.Uint8ListReader
+        | Sequence[int]
+        | None = None,
+        lb: builders.BoolListBuilder
+        | readers.BoolListReader
+        | Sequence[bool]
+        | None = None,
+        lt: builders.TextListBuilder
+        | readers.TextListReader
+        | Sequence[str]
+        | None = None,
+        ld: builders.DataListBuilder
+        | readers.DataListReader
+        | Sequence[bytes]
+        | None = None,
+        lcap: builders.AnyPointerListBuilder
+        | readers.AnyPointerListReader
+        | Sequence[common.Capability]
+        | None = None,
+        lpair: builders.PairListBuilder
+        | readers.PairListReader
+        | Sequence[readers.PairReader | builders.PairBuilder | dict[str, Any]]
+        | None = None,
+        lv: builders.ValueListBuilder
+        | readers.ValueListReader
+        | Sequence[readers.ValueReader | builders.ValueBuilder | dict[str, Any]]
+        | None = None,
         **kwargs: object,
     ) -> builders.ValueBuilder: ...
     @override

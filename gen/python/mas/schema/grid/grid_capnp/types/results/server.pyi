@@ -22,7 +22,7 @@ class SendcellsServerResult(_DynamicStructBuilder):
         self,
         value: builders.LocationListBuilder
         | readers.LocationListReader
-        | Sequence[Any],
+        | Sequence[readers.LocationReader | builders.LocationBuilder | dict[str, Any]],
     ) -> None: ...
     @overload
     def init(
@@ -62,7 +62,11 @@ class ClosestvalueatServerResult(_DynamicStructBuilder):
         self,
         value: builders.AggregationPartListBuilder
         | readers.AggregationPartListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.AggregationPartReader
+            | builders.AggregationPartBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(
@@ -150,7 +154,11 @@ class ValueatServerResult(_DynamicStructBuilder):
         self,
         value: builders.AggregationPartListBuilder
         | readers.AggregationPartListReader
-        | Sequence[Any],
+        | Sequence[
+            readers.AggregationPartReader
+            | builders.AggregationPartBuilder
+            | dict[str, Any]
+        ],
     ) -> None: ...
     @overload
     def init(

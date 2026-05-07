@@ -7,7 +7,11 @@ from capnp.lib.capnp import (
     _DynamicObjectBuilder,
 )
 
-from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
+from mas.schema.common.common_capnp.types.builders import (
+    IdInformationBuilder,
+    PairBuilder,
+)
+from mas.schema.common.common_capnp.types.readers import PairReader
 from mas.schema.service.service_capnp.types import builders as builders
 from mas.schema.service.service_capnp.types import common as common
 from mas.schema.service.service_capnp.types import readers as readers
@@ -41,7 +45,9 @@ class SimpleFactoryCreateRequest(Protocol):
 class FactoryCreateRequest(Protocol):
     timeoutSeconds: int
     interfaceNameToRegistrySR: (
-        builders.PairListBuilder | readers.PairListReader | Sequence[Any]
+        builders.PairListBuilder
+        | readers.PairListReader
+        | Sequence[PairReader | PairBuilder | dict[str, Any]]
     )
     @property
     def msgPayload(self) -> _DynamicObjectBuilder: ...

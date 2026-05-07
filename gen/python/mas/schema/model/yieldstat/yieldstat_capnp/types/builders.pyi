@@ -1,5 +1,6 @@
 """Builder helper types for `yieldstat.capnp`."""
 
+from collections.abc import Sequence
 from typing import Any, Literal, override
 
 from capnp.lib.capnp import (
@@ -94,7 +95,7 @@ class ResultBuilder(_DynamicStructBuilder):
         self,
         value: ResultToValueListBuilder
         | readers.ResultToValueListReader
-        | dict[str, Any],
+        | Sequence[readers.ResultToValueReader | ResultToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(
@@ -146,7 +147,7 @@ class OutputBuilder(_DynamicStructBuilder):
         self,
         value: YearToResultListBuilder
         | readers.YearToResultListReader
-        | dict[str, Any],
+        | Sequence[readers.YearToResultReader | YearToResultBuilder | dict[str, Any]],
     ) -> None: ...
     @override
     def init(
