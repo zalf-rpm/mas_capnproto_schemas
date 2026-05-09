@@ -321,9 +321,33 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
     stateChanged @0 (old :State, new :State);
   }
 
+  struct ErrorInfo {
+    hasError     @0 :Bool;
+    processId    @1 :Text;
+    processName  @2 :Text;
+    phase        @3 :Phase;
+    port         @4 :Text;
+    errorType    @5 :Text;
+    message      @6 :Text;
+    causeType    @7 :Text;
+    causeMessage @8 :Text;
+    traceback    @9 :List(Text);
+
+    enum Phase {
+      unknown @0;
+      config  @1;
+      read    @2;
+      run     @3;
+      write   @4;
+      close   @5;
+    }
+  }
+
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   # return current state of process and
   # optionally ask for notifications if there's a state transition
   # callbacks emit only the states defined in State
 
+  lastError @9 () -> (info :ErrorInfo);
+  # returns the last error information
 }

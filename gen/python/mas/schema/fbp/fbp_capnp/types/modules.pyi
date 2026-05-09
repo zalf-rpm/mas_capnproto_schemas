@@ -3689,6 +3689,167 @@ class _ProcessInterfaceModule(
     type StateTransitionServer = (
         _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
     )
+    class _ErrorInfoStructModule(_StructModule):
+        class _PhaseEnumModule(_EnumModule):
+            unknown: int
+            config: int
+            read: int
+            run: int
+            write: int
+            close: int
+
+            class _PhaseSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ProcessErrorInfoPhaseEnumSchema: ...
+
+        Phase: _PhaseEnumModule
+        class Reader(_DynamicStructReader): ...
+        class Builder(_DynamicStructBuilder): ...
+
+        class _ErrorInfoSchema(_StructSchema):
+            class _PhaseField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessErrorInfoPhaseEnumSchema: ...
+
+            class _TracebackField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _ListSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["hasError"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["processId"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["processName"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["phase"],
+                ) -> _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._PhaseField: ...
+                @overload
+                def __getitem__(self, key: Literal["port"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["errorType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["message"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["causeType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["causeMessage"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["traceback"],
+                ) -> _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._TracebackField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessErrorInfoSchema: ...
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            hasError: bool | None = None,
+            processId: str | None = None,
+            processName: str | None = None,
+            phase: enums.ProcessErrorInfoPhaseEnum | None = None,
+            port: str | None = None,
+            errorType: str | None = None,
+            message: str | None = None,
+            causeType: str | None = None,
+            causeMessage: str | None = None,
+            traceback: builders.TextListBuilder
+            | readers.TextListReader
+            | Sequence[str]
+            | None = None,
+            **kwargs: object,
+        ) -> builders.ErrorInfoBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[readers.ErrorInfoReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[readers.ErrorInfoReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ErrorInfoBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ErrorInfoReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ErrorInfoReader: ...
+
+    ErrorInfo: _ErrorInfoStructModule
 
     class _ProcessSchema(_InterfaceSchema):
         class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
@@ -4256,6 +4417,48 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema: ...
 
+        class _ProcessInterfaceModuleLastErrorParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorParamSchema._Fields: ...
+
+        class _ProcessInterfaceModuleLastErrorResultSchema(_StructSchema):
+            class _InfoField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessErrorInfoSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["info"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema._InfoField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleLastErrorMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema: ...
+
         class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
@@ -4314,6 +4517,11 @@ class _ProcessInterfaceModule(
                 self,
                 key: Literal["state"],
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["lastError"],
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorMethod: ...
             @overload
             def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -4442,6 +4650,21 @@ class _ProcessInterfaceModule(
         def state_context(
             self,
             context: contexts.StateCallContext,
+        ) -> Awaitable[None]: ...
+        def lastError(
+            self,
+            _context: contexts.LasterrorCallContext,
+            **kwargs: object,
+        ) -> Awaitable[
+            builders.ErrorInfoBuilder
+            | readers.ErrorInfoReader
+            | dict[str, Any]
+            | results_tuples.LasterrorResultTuple
+            | None
+        ]: ...
+        def lastError_context(
+            self,
+            context: contexts.LasterrorCallContext,
         ) -> Awaitable[None]: ...
 
 class _ComponentStructModule(_StructModule):

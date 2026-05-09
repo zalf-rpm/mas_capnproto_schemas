@@ -241,3 +241,10 @@ class StateCallContext(Protocol):
     params: StateParams
     @property
     def results(self) -> results_server.StateServerResult: ...
+
+class LasterrorParams(Protocol): ...
+
+class LasterrorCallContext(Protocol):
+    params: LasterrorParams
+    @property
+    def results(self) -> results_server.LasterrorServerResult: ...

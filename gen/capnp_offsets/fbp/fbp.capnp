@@ -150,6 +150,7 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   start @5 () -> (started :Bool);
   stop @6 () -> (stopped :Bool);
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
+  lastError @9 () -> (info :ErrorInfo);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :ProcessHandle);
   }
@@ -175,5 +176,25 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   }
   interface StateTransition @0x9c8fa975665cfafa {
     stateChanged @0 (old :State, new :State) -> ();
+  }
+  struct ErrorInfo @0xaeb3bbc09f2b6b0a {  # 8 bytes, 8 ptrs
+    hasError @0 :Bool;  # bits[0, 1)
+    processId @1 :Text;  # ptr[0]
+    processName @2 :Text;  # ptr[1]
+    phase @3 :Phase;  # bits[16, 32)
+    port @4 :Text;  # ptr[2]
+    errorType @5 :Text;  # ptr[3]
+    message @6 :Text;  # ptr[4]
+    causeType @7 :Text;  # ptr[5]
+    causeMessage @8 :Text;  # ptr[6]
+    traceback @9 :List(Text);  # ptr[7]
+    enum Phase @0xc41db6a21fa608e9 {
+      unknown @0;
+      config @1;
+      read @2;
+      run @3;
+      write @4;
+      close @5;
+    }
   }
 }

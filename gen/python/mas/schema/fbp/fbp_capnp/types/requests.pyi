@@ -201,3 +201,6 @@ class StateRequest(Protocol):
         | modules._ProcessInterfaceModule._StateTransitionInterfaceModule.Server
     )
     def send(self) -> results_client.StateResult: ...
+
+class LasterrorRequest(Protocol):
+    def send(self) -> results_client.LasterrorResult: ...

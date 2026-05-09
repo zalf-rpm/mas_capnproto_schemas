@@ -60,6 +60,10 @@ class InportsResultTuple(NamedTuple):
     ports: object
 
 
+class LasterrorResultTuple(NamedTuple):
+    info: object
+
+
 class OutportsResultTuple(NamedTuple):
     ports: object
 
@@ -121,6 +125,7 @@ __all__ = [
     "DisconnectResultTuple",
     "EndpointsResultTuple",
     "InportsResultTuple",
+    "LasterrorResultTuple",
     "OutportsResultTuple",
     "ProcessFactoryCreateResultTuple",
     "ProcessHandleCloseResultTuple",

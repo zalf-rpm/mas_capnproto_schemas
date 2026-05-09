@@ -309,3 +309,20 @@ class StateServerResult(_DynamicStructBuilder):
     def currentState(self) -> enums.ProcessStateEnum: ...
     @currentState.setter
     def currentState(self, value: enums.ProcessStateEnum) -> None: ...
+
+class LasterrorServerResult(_DynamicStructBuilder):
+    @property
+    def info(self) -> builders.ErrorInfoBuilder: ...
+    @info.setter
+    def info(
+        self,
+        value: builders.ErrorInfoBuilder | readers.ErrorInfoReader | dict[str, Any],
+    ) -> None: ...
+    @overload
+    def init(
+        self,
+        field: Literal["info"],
+        size: int | None = None,
+    ) -> builders.ErrorInfoBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...

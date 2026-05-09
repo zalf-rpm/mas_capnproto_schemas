@@ -68,6 +68,14 @@ type _ProcessDisconnectSchema = (
     modules._ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema
 )
 
+type _ProcessErrorInfoPhaseEnumSchema = (
+    modules._ProcessInterfaceModule._ErrorInfoStructModule._PhaseEnumModule._PhaseSchema
+)
+
+type _ProcessErrorInfoSchema = (
+    modules._ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema
+)
+
 type _ProcessFactorySchema = (
     modules._ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema
 )

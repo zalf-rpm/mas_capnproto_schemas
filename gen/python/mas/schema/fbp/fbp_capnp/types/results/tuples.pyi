@@ -138,3 +138,6 @@ class ProcessStopResultTuple(NamedTuple):
 
 class StateResultTuple(NamedTuple):
     currentState: enums.ProcessStateEnum
+
+class LasterrorResultTuple(NamedTuple):
+    info: builders.ErrorInfoBuilder | readers.ErrorInfoReader | dict[str, Any]
