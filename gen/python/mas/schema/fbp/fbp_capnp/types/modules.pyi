@@ -2172,6 +2172,11 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
                     key: Literal["bufferSize"],
                 ) -> _StructSchemaField: ...
                 @overload
+                def __getitem__(
+                    self,
+                    key: Literal["registerAtGateway"],
+                ) -> _StructSchemaField: ...
+                @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
@@ -2201,6 +2206,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             | Sequence[str]
             | None = None,
             bufferSize: int | None = None,
+            registerAtGateway: bool | None = None,
             **kwargs: object,
         ) -> builders.ParamsBuilder: ...
         @override
@@ -2340,6 +2346,11 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
                     key: Literal["bufferSize"],
                 ) -> _StructSchemaField: ...
                 @overload
+                def __getitem__(
+                    self,
+                    key: Literal["registerAtGateway"],
+                ) -> _StructSchemaField: ...
+                @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
@@ -2438,6 +2449,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             readerSrts: readers.TextListReader,
             writerSrts: readers.TextListReader,
             bufferSize: int,
+            registerAtGateway: bool,
             _context: contexts.StartChannelsServiceStartCallContext,
             **kwargs: object,
         ) -> Awaitable[results_tuples.StartChannelsServiceStartResultTuple | None]: ...
@@ -3689,6 +3701,208 @@ class _ProcessInterfaceModule(
     type StateTransitionServer = (
         _ProcessInterfaceModule._StateTransitionInterfaceModule.Server
     )
+    class _ActivityStateEnumModule(_EnumModule):
+        none: int
+        waitingInput: int
+        processing: int
+        waitingOutput: int
+        closing: int
+
+        class _ActivityStateSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessActivityStateEnumSchema: ...
+
+    ActivityState: _ActivityStateEnumModule
+    class _ActivityInfoStructModule(_StructModule):
+        class Reader(_DynamicStructReader): ...
+        class Builder(_DynamicStructBuilder): ...
+
+        class _ActivityInfoSchema(_StructSchema):
+            class _StateField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessActivityStateEnumSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["state"],
+                ) -> _ProcessInterfaceModule._ActivityInfoStructModule._ActivityInfoSchema._StateField: ...
+                @overload
+                def __getitem__(self, key: Literal["port"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ActivityInfoStructModule._ActivityInfoSchema._Fields: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessActivityInfoSchema: ...
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            state: enums.ProcessActivityStateEnum | None = None,
+            port: str | None = None,
+            **kwargs: object,
+        ) -> builders.ActivityInfoBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[readers.ActivityInfoReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[readers.ActivityInfoReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ActivityInfoBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ActivityInfoReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ActivityInfoReader: ...
+
+    ActivityInfo: _ActivityInfoStructModule
+    class _ActivityTransitionInterfaceModule(_InterfaceModule):
+        class _ActivityTransitionSchema(_InterfaceSchema):
+            class _ActivityTransitionInterfaceModuleActivityChangedParamSchema(
+                _StructSchema,
+            ):
+                class _OldField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ProcessActivityInfoSchema: ...
+
+                class _NewField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ProcessActivityInfoSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["old"],
+                    ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedParamSchema._OldField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["new"],
+                    ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedParamSchema._NewField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedParamSchema._Fields: ...
+
+            class _ActivityTransitionInterfaceModuleActivityChangedResultSchema(
+                _StructSchema,
+            ):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedResultSchema._Fields: ...
+
+            class _ActivityTransitionInterfaceModuleActivityChangedMethod(
+                _InterfaceMethod,
+            ):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["activityChanged"],
+                ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._ActivityTransitionInterfaceModuleActivityChangedMethod: ...
+                @overload
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._Methods: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ProcessActivityTransitionSchema: ...
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> clients.ActivityTransitionClient: ...
+        class Server(_DynamicCapabilityServer):
+            def activityChanged(
+                self,
+                old: readers.ActivityInfoReader,
+                new: readers.ActivityInfoReader,
+                _context: contexts.ActivitychangedCallContext,
+                **kwargs: object,
+            ) -> Awaitable[None]: ...
+            def activityChanged_context(
+                self,
+                context: contexts.ActivitychangedCallContext,
+            ) -> Awaitable[None]: ...
+
+    ActivityTransition: _ActivityTransitionInterfaceModule
+    type ActivityTransitionServer = (
+        _ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
+    )
     class _ErrorInfoStructModule(_StructModule):
         class _PhaseEnumModule(_EnumModule):
             unknown: int
@@ -4459,6 +4673,60 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema: ...
 
+        class _ProcessInterfaceModuleActivityParamSchema(_StructSchema):
+            class _TransitionCallbackField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessActivityTransitionSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["transitionCallback"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityParamSchema._TransitionCallbackField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityParamSchema._Fields: ...
+
+        class _ProcessInterfaceModuleActivityResultSchema(_StructSchema):
+            class _CurrentActivityField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessActivityInfoSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["currentActivity"],
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityResultSchema._CurrentActivityField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityResultSchema._Fields: ...
+
+        class _ProcessInterfaceModuleActivityMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityResultSchema: ...
+
         class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
@@ -4522,6 +4790,11 @@ class _ProcessInterfaceModule(
                 self,
                 key: Literal["lastError"],
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["activity"],
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleActivityMethod: ...
             @overload
             def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -4665,6 +4938,22 @@ class _ProcessInterfaceModule(
         def lastError_context(
             self,
             context: contexts.LasterrorCallContext,
+        ) -> Awaitable[None]: ...
+        def activity(
+            self,
+            transitionCallback: clients.ActivityTransitionClient,
+            _context: contexts.ActivityCallContext,
+            **kwargs: object,
+        ) -> Awaitable[
+            builders.ActivityInfoBuilder
+            | readers.ActivityInfoReader
+            | dict[str, Any]
+            | results_tuples.ActivityResultTuple
+            | None
+        ]: ...
+        def activity_context(
+            self,
+            context: contexts.ActivityCallContext,
         ) -> Awaitable[None]: ...
 
 class _ComponentStructModule(_StructModule):

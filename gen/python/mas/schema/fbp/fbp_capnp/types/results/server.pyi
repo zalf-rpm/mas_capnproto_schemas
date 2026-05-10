@@ -326,3 +326,22 @@ class LasterrorServerResult(_DynamicStructBuilder):
     ) -> builders.ErrorInfoBuilder: ...
     @overload
     def init(self, field: str, size: int | None = None) -> Any: ...
+
+class ActivityServerResult(_DynamicStructBuilder):
+    @property
+    def currentActivity(self) -> builders.ActivityInfoBuilder: ...
+    @currentActivity.setter
+    def currentActivity(
+        self,
+        value: builders.ActivityInfoBuilder
+        | readers.ActivityInfoReader
+        | dict[str, Any],
+    ) -> None: ...
+    @overload
+    def init(
+        self,
+        field: Literal["currentActivity"],
+        size: int | None = None,
+    ) -> builders.ActivityInfoBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...

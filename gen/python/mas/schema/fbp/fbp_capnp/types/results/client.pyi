@@ -88,6 +88,7 @@ class DisconnectResult(Awaitable[DisconnectResult], Protocol):
     disconnected: bool
 
 class StatechangedResult(Awaitable[None], Protocol): ...
+class ActivitychangedResult(Awaitable[None], Protocol): ...
 
 class InportsResult(Awaitable[InportsResult], Protocol):
     ports: readers.PortListReader
@@ -119,3 +120,6 @@ class StateResult(Awaitable[StateResult], Protocol):
 
 class LasterrorResult(Awaitable[LasterrorResult], Protocol):
     info: readers.ErrorInfoReader
+
+class ActivityResult(Awaitable[ActivityResult], Protocol):
+    currentActivity: readers.ActivityInfoReader

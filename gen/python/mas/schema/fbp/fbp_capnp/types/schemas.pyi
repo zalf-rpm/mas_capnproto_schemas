@@ -60,6 +60,16 @@ type _PortInfosNameAndSRSchema = (
 
 type _PortInfosSchema = modules._PortInfosStructModule._PortInfosSchema
 
+type _ProcessActivityInfoSchema = (
+    modules._ProcessInterfaceModule._ActivityInfoStructModule._ActivityInfoSchema
+)
+
+type _ProcessActivityStateEnumSchema = (
+    modules._ProcessInterfaceModule._ActivityStateEnumModule._ActivityStateSchema
+)
+
+type _ProcessActivityTransitionSchema = modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema
+
 type _ProcessConfigEntrySchema = (
     modules._ProcessInterfaceModule._ConfigEntryStructModule._ConfigEntrySchema
 )

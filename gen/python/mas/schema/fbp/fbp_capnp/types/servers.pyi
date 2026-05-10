@@ -2,6 +2,10 @@
 
 from mas.schema.fbp.fbp_capnp.types import modules as modules
 
+ActivityTransitionServer = (
+    modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
+)
+
 ChannelServer = modules._ChannelInterfaceModule.Server
 
 DisconnectServer = modules._ProcessInterfaceModule._DisconnectInterfaceModule.Server

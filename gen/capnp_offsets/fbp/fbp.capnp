@@ -78,7 +78,7 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
 }
 interface StartChannelsService @0xd0cd6d829b810229 superclasses(import "/common/common.capnp".Identifiable) {
   start @0 Params -> (startupInfos :List(Channel.StartupInfo), stop :import "/service/service.capnp".Stoppable);
-  struct Params @0x9576b9a98d58fba2 {  # 8 bytes, 3 ptrs
+  struct Params @0x9576b9a98d58fba2 {  # 16 bytes, 3 ptrs
     name @0 :Text;  # ptr[0]
     noOfChannels @1 :UInt16 = 1;  # bits[0, 16)
     noOfReaders @2 :UInt16 = 1;  # bits[16, 32)
@@ -86,6 +86,7 @@ interface StartChannelsService @0xd0cd6d829b810229 superclasses(import "/common/
     readerSrts @4 :List(Text);  # ptr[1]
     writerSrts @5 :List(Text);  # ptr[2]
     bufferSize @6 :UInt16 = 1;  # bits[48, 64)
+    registerAtGateway @7 :Bool;  # bits[64, 65)
   }
 }
 struct PortInfos @0xece0efa9a922d4a8 {  # 0 bytes, 2 ptrs
@@ -151,6 +152,7 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   stop @6 () -> (stopped :Bool);
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
   lastError @9 () -> (info :ErrorInfo);
+  activity @10 (transitionCallback :ActivityTransition) -> (currentActivity :ActivityInfo);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :ProcessHandle);
   }
@@ -176,6 +178,20 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   }
   interface StateTransition @0x9c8fa975665cfafa {
     stateChanged @0 (old :State, new :State) -> ();
+  }
+  enum ActivityState @0x8919f827236f0407 {
+    none @0;
+    waitingInput @1;
+    processing @2;
+    waitingOutput @3;
+    closing @4;
+  }
+  struct ActivityInfo @0xa04dcc23484983a6 {  # 8 bytes, 1 ptrs
+    state @0 :ActivityState;  # bits[0, 16)
+    port @1 :Text;  # ptr[0]
+  }
+  interface ActivityTransition @0xd14367d59e9147e9 {
+    activityChanged @0 (old :ActivityInfo, new :ActivityInfo) -> ();
   }
   struct ErrorInfo @0xaeb3bbc09f2b6b0a {  # 8 bytes, 8 ptrs
     hasError @0 :Bool;  # bits[0, 1)

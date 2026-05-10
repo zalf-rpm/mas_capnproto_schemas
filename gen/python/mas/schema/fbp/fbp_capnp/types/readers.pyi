@@ -132,6 +132,8 @@ class ParamsReader(_DynamicStructReader):
     def writerSrts(self) -> TextListReader: ...
     @property
     def bufferSize(self) -> int: ...
+    @property
+    def registerAtGateway(self) -> bool: ...
     @override
     def as_builder(
         self,
@@ -194,6 +196,18 @@ class ConfigEntryReader(_DynamicStructReader):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
     ) -> builders.ConfigEntryBuilder: ...
+
+class ActivityInfoReader(_DynamicStructReader):
+    @property
+    def state(self) -> enums.ProcessActivityStateEnum: ...
+    @property
+    def port(self) -> str: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.ActivityInfoBuilder: ...
 
 class ErrorInfoReader(_DynamicStructReader):
     @property

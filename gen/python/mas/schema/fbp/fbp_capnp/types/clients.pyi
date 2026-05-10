@@ -139,6 +139,7 @@ class StartChannelsServiceClient(IdentifiableClient):
         | Sequence[str]
         | None = None,
         bufferSize: int | None = None,
+        registerAtGateway: bool | None = None,
     ) -> results_client.StartChannelsServiceStartResult: ...
     def start_request(
         self,
@@ -155,6 +156,7 @@ class StartChannelsServiceClient(IdentifiableClient):
         | Sequence[str]
         | None = None,
         bufferSize: int | None = None,
+        registerAtGateway: bool | None = None,
     ) -> requests.StartChannelsServiceStartRequest: ...
 
 class RunnableFactoryClient(IdentifiableClient):
@@ -216,6 +218,24 @@ class StateTransitionClient(_DynamicCapabilityClient):
         new: enums.ProcessStateEnum | None = None,
     ) -> requests.StatechangedRequest: ...
 
+class ActivityTransitionClient(_DynamicCapabilityClient):
+    def activityChanged(
+        self,
+        old: builders.ActivityInfoBuilder
+        | readers.ActivityInfoReader
+        | dict[str, Any]
+        | None = None,
+        new: builders.ActivityInfoBuilder
+        | readers.ActivityInfoReader
+        | dict[str, Any]
+        | None = None,
+    ) -> results_client.ActivitychangedResult: ...
+    def activityChanged_request(
+        self,
+        old: builders.ActivityInfoBuilder | None = None,
+        new: builders.ActivityInfoBuilder | None = None,
+    ) -> requests.ActivitychangedRequest: ...
+
 class ProcessClient(IdentifiableClient, GatewayRegistrableClient):
     def inPorts(self) -> results_client.InportsResult: ...
     def connectInPort(
@@ -244,6 +264,12 @@ class ProcessClient(IdentifiableClient, GatewayRegistrableClient):
         | None = None,
     ) -> results_client.StateResult: ...
     def lastError(self) -> results_client.LasterrorResult: ...
+    def activity(
+        self,
+        transitionCallback: ActivityTransitionClient
+        | modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
+        | None = None,
+    ) -> results_client.ActivityResult: ...
     def inPorts_request(self) -> requests.InportsRequest: ...
     def connectInPort_request(
         self,
@@ -271,3 +297,9 @@ class ProcessClient(IdentifiableClient, GatewayRegistrableClient):
         | None = None,
     ) -> requests.StateRequest: ...
     def lastError_request(self) -> requests.LasterrorRequest: ...
+    def activity_request(
+        self,
+        transitionCallback: ActivityTransitionClient
+        | modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
+        | None = None,
+    ) -> requests.ActivityRequest: ...

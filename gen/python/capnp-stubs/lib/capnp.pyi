@@ -932,6 +932,11 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.ActivityTransitionClient: ...
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp.types.modules._ProcessInterfaceModule._DisconnectInterfaceModule,
     ) -> fbp_capnp.types.clients.DisconnectClient: ...
     @overload
@@ -1915,6 +1920,11 @@ class _DynamicObjectReader:
         self,
         schema: fbp_capnp.types.modules._PortInfosStructModule._NameAndSRStructModule,
     ) -> fbp_capnp.types.readers.NameAndSRReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ActivityInfoStructModule,
+    ) -> fbp_capnp.types.readers.ActivityInfoReader: ...
     @overload
     def as_struct(
         self,
@@ -2953,6 +2963,11 @@ class _DynamicObjectBuilder:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.ActivityTransitionClient: ...
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp.types.modules._ProcessInterfaceModule._DisconnectInterfaceModule,
     ) -> fbp_capnp.types.clients.DisconnectClient: ...
     @overload
@@ -3939,6 +3954,11 @@ class _DynamicObjectBuilder:
         self,
         schema: fbp_capnp.types.modules._PortInfosStructModule._NameAndSRStructModule,
     ) -> fbp_capnp.types.builders.NameAndSRBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ActivityInfoStructModule,
+    ) -> fbp_capnp.types.builders.ActivityInfoBuilder: ...
     @overload
     def as_struct(
         self,
@@ -5392,6 +5412,11 @@ class _CapabilityClient:
         self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
     ) -> fbp_capnp.types.clients.UnregisterClient: ...
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule,
+    ) -> fbp_capnp.types.clients.ActivityTransitionClient: ...
     @overload
     def cast_as(
         self,

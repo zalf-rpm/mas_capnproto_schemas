@@ -95,6 +95,7 @@ class StartChannelsServiceStartRequest(Protocol):
     readerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[str]
     writerSrts: builders.TextListBuilder | readers.TextListReader | Sequence[str]
     bufferSize: int
+    registerAtGateway: bool
     @overload
     def init(
         self,
@@ -153,6 +154,17 @@ class StatechangedRequest(Protocol):
     new: enums.ProcessStateEnum
     def send(self) -> results_client.StatechangedResult: ...
 
+class ActivitychangedRequest(Protocol):
+    old: builders.ActivityInfoBuilder
+    new: builders.ActivityInfoBuilder
+    @overload
+    def init(self, name: Literal["old"]) -> builders.ActivityInfoBuilder: ...
+    @overload
+    def init(self, name: Literal["new"]) -> builders.ActivityInfoBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.ActivitychangedResult: ...
+
 class InportsRequest(Protocol):
     def send(self) -> results_client.InportsResult: ...
 
@@ -204,3 +216,10 @@ class StateRequest(Protocol):
 
 class LasterrorRequest(Protocol):
     def send(self) -> results_client.LasterrorResult: ...
+
+class ActivityRequest(Protocol):
+    transitionCallback: (
+        clients.ActivityTransitionClient
+        | modules._ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
+    )
+    def send(self) -> results_client.ActivityResult: ...

@@ -136,6 +136,19 @@ CAPNP_DECLARE_ENUM(State, e67044233be769a5);
 CAPNP_DECLARE_SCHEMA(9c8fa975665cfafa);
 CAPNP_DECLARE_SCHEMA(f6196a1a97213420);
 CAPNP_DECLARE_SCHEMA(f0d589af3c8253af);
+CAPNP_DECLARE_SCHEMA(8919f827236f0407);
+enum class ActivityState_8919f827236f0407: uint16_t {
+  NONE,
+  WAITING_INPUT,
+  PROCESSING,
+  WAITING_OUTPUT,
+  CLOSING,
+};
+CAPNP_DECLARE_ENUM(ActivityState, 8919f827236f0407);
+CAPNP_DECLARE_SCHEMA(a04dcc23484983a6);
+CAPNP_DECLARE_SCHEMA(d14367d59e9147e9);
+CAPNP_DECLARE_SCHEMA(a3d8abb814bcf7d8);
+CAPNP_DECLARE_SCHEMA(9196131fddc17658);
 CAPNP_DECLARE_SCHEMA(aeb3bbc09f2b6b0a);
 CAPNP_DECLARE_SCHEMA(c41db6a21fa608e9);
 enum class Phase_c41db6a21fa608e9: uint16_t {
@@ -166,6 +179,8 @@ CAPNP_DECLARE_SCHEMA(b6f9c7723a43c20a);
 CAPNP_DECLARE_SCHEMA(d83c7bb8305387ce);
 CAPNP_DECLARE_SCHEMA(821d7719d781c29f);
 CAPNP_DECLARE_SCHEMA(a3faa670a0d208a1);
+CAPNP_DECLARE_SCHEMA(9b3b921c2d2e8888);
+CAPNP_DECLARE_SCHEMA(e8aa5530b3f918e0);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -957,7 +972,7 @@ struct StartChannelsService::Params {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9576b9a98d58fba2, 1, 3)
+    CAPNP_DECLARE_STRUCT_HEADER(9576b9a98d58fba2, 2, 3)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1266,6 +1281,10 @@ struct Process {
   typedef ::capnp::schemas::State_e67044233be769a5 State;
 
   struct StateTransition;
+  typedef ::capnp::schemas::ActivityState_8919f827236f0407 ActivityState;
+
+  struct ActivityInfo;
+  struct ActivityTransition;
   struct ErrorInfo;
   struct InPortsParams;
   struct InPortsResults;
@@ -1286,6 +1305,8 @@ struct Process {
   struct StateResults;
   struct LastErrorParams;
   struct LastErrorResults;
+  struct ActivityParams;
+  struct ActivityResults;
 
   #if !CAPNP_LITE
   struct _capnpPrivate {
@@ -1564,6 +1585,70 @@ struct Process::StateTransition::StateChangedResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(f0d589af3c8253af, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ActivityInfo {
+  ActivityInfo() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a04dcc23484983a6, 1, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ActivityTransition {
+  ActivityTransition() = delete;
+
+#if !CAPNP_LITE
+  class Client;
+  class Server;
+#endif  // !CAPNP_LITE
+
+  struct ActivityChangedParams;
+  struct ActivityChangedResults;
+
+  #if !CAPNP_LITE
+  struct _capnpPrivate {
+    CAPNP_DECLARE_INTERFACE_HEADER(d14367d59e9147e9)
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+  };
+  #endif  // !CAPNP_LITE
+};
+
+struct Process::ActivityTransition::ActivityChangedParams {
+  ActivityChangedParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a3d8abb814bcf7d8, 0, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ActivityTransition::ActivityChangedResults {
+  ActivityChangedResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(9196131fddc17658, 0, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1866,6 +1951,36 @@ struct Process::LastErrorResults {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(a3faa670a0d208a1, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ActivityParams {
+  ActivityParams() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(9b3b921c2d2e8888, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Process::ActivityResults {
+  ActivityResults() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(e8aa5530b3f918e0, 0, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -5314,6 +5429,8 @@ public:
 
   inline  ::uint16_t getBufferSize() const;
 
+  inline bool getRegisterAtGateway() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -5376,6 +5493,9 @@ public:
 
   inline  ::uint16_t getBufferSize();
   inline void setBufferSize( ::uint16_t value);
+
+  inline bool getRegisterAtGateway();
+  inline void setRegisterAtGateway(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -6878,6 +6998,8 @@ public:
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
   ::capnp::Request< ::mas::schema::fbp::Process::LastErrorParams,  ::mas::schema::fbp::Process::LastErrorResults> lastErrorRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+  ::capnp::Request< ::mas::schema::fbp::Process::ActivityParams,  ::mas::schema::fbp::Process::ActivityResults> activityRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
 
 protected:
   Client() = default;
@@ -6935,6 +7057,10 @@ protected:
   typedef  ::mas::schema::fbp::Process::LastErrorResults LastErrorResults;
   typedef ::capnp::CallContext<LastErrorParams, LastErrorResults> LastErrorContext;
   virtual ::kj::Promise<void> lastError(LastErrorContext context);
+  typedef  ::mas::schema::fbp::Process::ActivityParams ActivityParams;
+  typedef  ::mas::schema::fbp::Process::ActivityResults ActivityResults;
+  typedef ::capnp::CallContext<ActivityParams, ActivityResults> ActivityContext;
+  virtual ::kj::Promise<void> activity(ActivityContext context);
 
   inline  ::mas::schema::fbp::Process::Client thisCap() {
     return ::capnp::Capability::Server::thisCap()
@@ -8159,6 +8285,309 @@ private:
 class Process::StateTransition::StateChangedResults::Pipeline {
 public:
   typedef StateChangedResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ActivityInfo::Reader {
+public:
+  typedef ActivityInfo Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::Process::ActivityState getState() const;
+
+  inline bool hasPort() const;
+  inline  ::capnp::Text::Reader getPort() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ActivityInfo::Builder {
+public:
+  typedef ActivityInfo Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::Process::ActivityState getState();
+  inline void setState( ::mas::schema::fbp::Process::ActivityState value);
+
+  inline bool hasPort();
+  inline  ::capnp::Text::Builder getPort();
+  inline void setPort( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initPort(unsigned int size);
+  inline void adoptPort(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownPort();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ActivityInfo::Pipeline {
+public:
+  typedef ActivityInfo Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+#if !CAPNP_LITE
+class Process::ActivityTransition::Client
+    : public virtual ::capnp::Capability::Client {
+public:
+  typedef ActivityTransition Calls;
+  typedef ActivityTransition Reads;
+
+  Client(decltype(nullptr));
+  explicit Client(::kj::Own< ::capnp::ClientHook>&& hook);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Server*>()>>
+  Client(::kj::Own<_t>&& server);
+  template <typename _t, typename = ::kj::EnableIf< ::kj::canConvert<_t*, Client*>()>>
+  Client(::kj::Promise<_t>&& promise);
+  Client(::kj::Exception&& exception);
+  Client(Client&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client& other);
+  Client& operator=(Client&& other);
+
+  ::capnp::Request< ::mas::schema::fbp::Process::ActivityTransition::ActivityChangedParams,  ::mas::schema::fbp::Process::ActivityTransition::ActivityChangedResults> activityChangedRequest(
+      ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
+
+protected:
+  Client() = default;
+};
+
+class Process::ActivityTransition::Server
+    : public virtual ::capnp::Capability::Server {
+public:
+  typedef ActivityTransition Serves;
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+      uint64_t interfaceId, uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
+      override;
+
+protected:
+  typedef  ::mas::schema::fbp::Process::ActivityTransition::ActivityChangedParams ActivityChangedParams;
+  typedef  ::mas::schema::fbp::Process::ActivityTransition::ActivityChangedResults ActivityChangedResults;
+  typedef ::capnp::CallContext<ActivityChangedParams, ActivityChangedResults> ActivityChangedContext;
+  virtual ::kj::Promise<void> activityChanged(ActivityChangedContext context);
+
+  inline  ::mas::schema::fbp::Process::ActivityTransition::Client thisCap() {
+    return ::capnp::Capability::Server::thisCap()
+        .template castAs< ::mas::schema::fbp::Process::ActivityTransition>();
+  }
+
+  ::capnp::Capability::Server::DispatchCallResult dispatchCallInternal(
+      uint16_t methodId,
+      ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context);
+};
+#endif  // !CAPNP_LITE
+
+class Process::ActivityTransition::ActivityChangedParams::Reader {
+public:
+  typedef ActivityChangedParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOld() const;
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Reader getOld() const;
+
+  inline bool hasNew() const;
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Reader getNew() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ActivityTransition::ActivityChangedParams::Builder {
+public:
+  typedef ActivityChangedParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasOld();
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder getOld();
+  inline void setOld( ::mas::schema::fbp::Process::ActivityInfo::Reader value);
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder initOld();
+  inline void adoptOld(::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> disownOld();
+
+  inline bool hasNew();
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder getNew();
+  inline void setNew( ::mas::schema::fbp::Process::ActivityInfo::Reader value);
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder initNew();
+  inline void adoptNew(::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> disownNew();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ActivityTransition::ActivityChangedParams::Pipeline {
+public:
+  typedef ActivityChangedParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline getOld();
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline getNew();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ActivityTransition::ActivityChangedResults::Reader {
+public:
+  typedef ActivityChangedResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ActivityTransition::ActivityChangedResults::Builder {
+public:
+  typedef ActivityChangedResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ActivityTransition::ActivityChangedResults::Pipeline {
+public:
+  typedef ActivityChangedResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -9828,6 +10257,174 @@ public:
       : _typeless(kj::mv(typeless)) {}
 
   inline  ::mas::schema::fbp::Process::ErrorInfo::Pipeline getInfo();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ActivityParams::Reader {
+public:
+  typedef ActivityParams Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasTransitionCallback() const;
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::ActivityTransition::Client getTransitionCallback() const;
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ActivityParams::Builder {
+public:
+  typedef ActivityParams Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasTransitionCallback();
+#if !CAPNP_LITE
+  inline  ::mas::schema::fbp::Process::ActivityTransition::Client getTransitionCallback();
+  inline void setTransitionCallback( ::mas::schema::fbp::Process::ActivityTransition::Client&& value);
+  inline void setTransitionCallback( ::mas::schema::fbp::Process::ActivityTransition::Client& value);
+  inline void adoptTransitionCallback(::capnp::Orphan< ::mas::schema::fbp::Process::ActivityTransition>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityTransition> disownTransitionCallback();
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ActivityParams::Pipeline {
+public:
+  typedef ActivityParams Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Process::ActivityTransition::Client getTransitionCallback();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Process::ActivityResults::Reader {
+public:
+  typedef ActivityResults Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasCurrentActivity() const;
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Reader getCurrentActivity() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Process::ActivityResults::Builder {
+public:
+  typedef ActivityResults Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasCurrentActivity();
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder getCurrentActivity();
+  inline void setCurrentActivity( ::mas::schema::fbp::Process::ActivityInfo::Reader value);
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Builder initCurrentActivity();
+  inline void adoptCurrentActivity(::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> disownCurrentActivity();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Process::ActivityResults::Pipeline {
+public:
+  typedef ActivityResults Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline getCurrentActivity();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -12838,6 +13435,20 @@ inline void StartChannelsService::Params::Builder::setBufferSize( ::uint16_t val
       ::capnp::bounded<3>() * ::capnp::ELEMENTS, value, 1u);
 }
 
+inline bool StartChannelsService::Params::Reader::getRegisterAtGateway() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS);
+}
+
+inline bool StartChannelsService::Params::Builder::getRegisterAtGateway() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS);
+}
+inline void StartChannelsService::Params::Builder::setRegisterAtGateway(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<64>() * ::capnp::ELEMENTS, value);
+}
+
 inline bool StartChannelsService::StartResults::Reader::hasStartupInfos() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -14161,6 +14772,156 @@ inline void Process::StateTransition::StateChangedParams::Builder::setNew( ::mas
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
 }
 
+inline  ::mas::schema::fbp::Process::ActivityState Process::ActivityInfo::Reader::getState() const {
+  return _reader.getDataField< ::mas::schema::fbp::Process::ActivityState>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::Process::ActivityState Process::ActivityInfo::Builder::getState() {
+  return _builder.getDataField< ::mas::schema::fbp::Process::ActivityState>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Process::ActivityInfo::Builder::setState( ::mas::schema::fbp::Process::ActivityState value) {
+  _builder.setDataField< ::mas::schema::fbp::Process::ActivityState>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Process::ActivityInfo::Reader::hasPort() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ActivityInfo::Builder::hasPort() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Process::ActivityInfo::Reader::getPort() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Process::ActivityInfo::Builder::getPort() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Process::ActivityInfo::Builder::setPort( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Process::ActivityInfo::Builder::initPort(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Process::ActivityInfo::Builder::adoptPort(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Process::ActivityInfo::Builder::disownPort() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+#if !CAPNP_LITE
+inline Process::ActivityTransition::Client::Client(decltype(nullptr))
+    : ::capnp::Capability::Client(nullptr) {}
+inline Process::ActivityTransition::Client::Client(
+    ::kj::Own< ::capnp::ClientHook>&& hook)
+    : ::capnp::Capability::Client(::kj::mv(hook)) {}
+template <typename _t, typename>
+inline Process::ActivityTransition::Client::Client(::kj::Own<_t>&& server)
+    : ::capnp::Capability::Client(::kj::mv(server)) {}
+template <typename _t, typename>
+inline Process::ActivityTransition::Client::Client(::kj::Promise<_t>&& promise)
+    : ::capnp::Capability::Client(::kj::mv(promise)) {}
+inline Process::ActivityTransition::Client::Client(::kj::Exception&& exception)
+    : ::capnp::Capability::Client(::kj::mv(exception)) {}
+inline  ::mas::schema::fbp::Process::ActivityTransition::Client& Process::ActivityTransition::Client::operator=(Client& other) {
+  ::capnp::Capability::Client::operator=(other);
+  return *this;
+}
+inline  ::mas::schema::fbp::Process::ActivityTransition::Client& Process::ActivityTransition::Client::operator=(Client&& other) {
+  ::capnp::Capability::Client::operator=(kj::mv(other));
+  return *this;
+}
+
+#endif  // !CAPNP_LITE
+inline bool Process::ActivityTransition::ActivityChangedParams::Reader::hasOld() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ActivityTransition::ActivityChangedParams::Builder::hasOld() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Reader Process::ActivityTransition::ActivityChangedParams::Reader::getOld() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityTransition::ActivityChangedParams::Builder::getOld() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline Process::ActivityTransition::ActivityChangedParams::Pipeline::getOld() {
+  return  ::mas::schema::fbp::Process::ActivityInfo::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void Process::ActivityTransition::ActivityChangedParams::Builder::setOld( ::mas::schema::fbp::Process::ActivityInfo::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityTransition::ActivityChangedParams::Builder::initOld() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Process::ActivityTransition::ActivityChangedParams::Builder::adoptOld(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> Process::ActivityTransition::ActivityChangedParams::Builder::disownOld() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Process::ActivityTransition::ActivityChangedParams::Reader::hasNew() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ActivityTransition::ActivityChangedParams::Builder::hasNew() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Reader Process::ActivityTransition::ActivityChangedParams::Reader::getNew() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityTransition::ActivityChangedParams::Builder::getNew() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline Process::ActivityTransition::ActivityChangedParams::Pipeline::getNew() {
+  return  ::mas::schema::fbp::Process::ActivityInfo::Pipeline(_typeless.getPointerField(1));
+}
+#endif  // !CAPNP_LITE
+inline void Process::ActivityTransition::ActivityChangedParams::Builder::setNew( ::mas::schema::fbp::Process::ActivityInfo::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityTransition::ActivityChangedParams::Builder::initNew() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void Process::ActivityTransition::ActivityChangedParams::Builder::adoptNew(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> Process::ActivityTransition::ActivityChangedParams::Builder::disownNew() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
 inline bool Process::ErrorInfo::Reader::getHasError() const {
   return _reader.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
@@ -14936,6 +15697,84 @@ inline void Process::LastErrorResults::Builder::adoptInfo(
 }
 inline ::capnp::Orphan< ::mas::schema::fbp::Process::ErrorInfo> Process::LastErrorResults::Builder::disownInfo() {
   return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Process::ActivityParams::Reader::hasTransitionCallback() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ActivityParams::Builder::hasTransitionCallback() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::ActivityTransition::Client Process::ActivityParams::Reader::getTransitionCallback() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::ActivityTransition::Client Process::ActivityParams::Builder::getTransitionCallback() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::ActivityTransition::Client Process::ActivityParams::Pipeline::getTransitionCallback() {
+  return  ::mas::schema::fbp::Process::ActivityTransition::Client(_typeless.getPointerField(0).asCap());
+}
+inline void Process::ActivityParams::Builder::setTransitionCallback( ::mas::schema::fbp::Process::ActivityTransition::Client&& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(cap));
+}
+inline void Process::ActivityParams::Builder::setTransitionCallback( ::mas::schema::fbp::Process::ActivityTransition::Client& cap) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), cap);
+}
+inline void Process::ActivityParams::Builder::adoptTransitionCallback(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityTransition>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityTransition> Process::ActivityParams::Builder::disownTransitionCallback() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityTransition>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#endif  // !CAPNP_LITE
+
+inline bool Process::ActivityResults::Reader::hasCurrentActivity() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Process::ActivityResults::Builder::hasCurrentActivity() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Reader Process::ActivityResults::Reader::getCurrentActivity() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityResults::Builder::getCurrentActivity() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::Process::ActivityInfo::Pipeline Process::ActivityResults::Pipeline::getCurrentActivity() {
+  return  ::mas::schema::fbp::Process::ActivityInfo::Pipeline(_typeless.getPointerField(0));
+}
+#endif  // !CAPNP_LITE
+inline void Process::ActivityResults::Builder::setCurrentActivity( ::mas::schema::fbp::Process::ActivityInfo::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::Process::ActivityInfo::Builder Process::ActivityResults::Builder::initCurrentActivity() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Process::ActivityResults::Builder::adoptCurrentActivity(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> Process::ActivityResults::Builder::disownCurrentActivity() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ActivityInfo>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 

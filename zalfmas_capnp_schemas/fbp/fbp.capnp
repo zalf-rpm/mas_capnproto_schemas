@@ -163,6 +163,7 @@ interface StartChannelsService extends(Common.Identifiable) {
         readerSrts      @4 :List(Text); # fixed sturdy ref tokens per reader
         writerSrts      @5 :List(Text); # fixed sturdy ref tokens per writer
         bufferSize      @6 :UInt16 = 1; # how large is the buffer supposed to be
+        registerAtGateway @7 :Bool = false; # Whether to register the channel at the gateway
     }
     start @0 Params -> (startupInfos :List(Channel.StartupInfo), stop :Stoppable);
     # create one (or multiple with same properties) channel and return reader and writer sturdy refs to the channel(s)
@@ -321,6 +322,23 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
     stateChanged @0 (old :State, new :State);
   }
 
+  enum ActivityState {
+    none          @0; # no active run activity; usually lifecycle state is idle, failed, or closed
+    waitingInput  @1; # run task is blocked waiting for input
+    processing    @2; # run task is executing component logic
+    waitingOutput @3; # run task is blocked writing output
+    closing       @4; # run task is closing ports or other resources
+  }
+
+  struct ActivityInfo {
+    state @0 :ActivityState;
+    port  @1 :Text; # optional port name related to the activity, empty if not applicable
+  }
+
+  interface ActivityTransition {
+    activityChanged @0 (old :ActivityInfo, new :ActivityInfo);
+  }
+
   struct ErrorInfo {
     hasError     @0 :Bool;
     processId    @1 :Text;
@@ -350,4 +368,8 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
 
   lastError @9 () -> (info :ErrorInfo);
   # returns the last error information
+
+  activity @10 (transitionCallback :ActivityTransition) -> (currentActivity :ActivityInfo);
+  # return current process activity and
+  # optionally ask for notifications if there's an activity transition
 }

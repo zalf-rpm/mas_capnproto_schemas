@@ -178,6 +178,13 @@ class StatechangedParams(Protocol):
 class StatechangedCallContext(Protocol):
     params: StatechangedParams
 
+class ActivitychangedParams(Protocol):
+    old: readers.ActivityInfoReader
+    new: readers.ActivityInfoReader
+
+class ActivitychangedCallContext(Protocol):
+    params: ActivitychangedParams
+
 class InportsParams(Protocol): ...
 
 class InportsCallContext(Protocol):
@@ -248,3 +255,11 @@ class LasterrorCallContext(Protocol):
     params: LasterrorParams
     @property
     def results(self) -> results_server.LasterrorServerResult: ...
+
+class ActivityParams(Protocol):
+    transitionCallback: clients.ActivityTransitionClient
+
+class ActivityCallContext(Protocol):
+    params: ActivityParams
+    @property
+    def results(self) -> results_server.ActivityServerResult: ...

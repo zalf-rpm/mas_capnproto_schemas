@@ -12,6 +12,10 @@ type ComponentPortPortTypeEnum = int | Literal["standard", "array"]
 
 type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
 
+type ProcessActivityStateEnum = (
+    int | Literal["none", "waitingInput", "processing", "waitingOutput", "closing"]
+)
+
 type ProcessErrorInfoPhaseEnum = (
     int | Literal["unknown", "config", "read", "run", "write", "close"]
 )

@@ -42,6 +42,10 @@ class WriteifspaceResultTuple(NamedTuple):
     success: object
 
 
+class ActivityResultTuple(NamedTuple):
+    currentActivity: object
+
+
 class ConfigentriesResultTuple(NamedTuple):
     config: object
 
@@ -118,6 +122,7 @@ class StartChannelsServiceStartResultTuple(NamedTuple):
 
 
 __all__ = [
+    "ActivityResultTuple",
     "AliveResultTuple",
     "ConfigentriesResultTuple",
     "ConnectinportResultTuple",

@@ -141,3 +141,8 @@ class StateResultTuple(NamedTuple):
 
 class LasterrorResultTuple(NamedTuple):
     info: builders.ErrorInfoBuilder | readers.ErrorInfoReader | dict[str, Any]
+
+class ActivityResultTuple(NamedTuple):
+    currentActivity: (
+        builders.ActivityInfoBuilder | readers.ActivityInfoReader | dict[str, Any]
+    )
