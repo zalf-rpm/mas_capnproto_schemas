@@ -34,7 +34,51 @@ enum class Type_9eebc43e17b5974f: uint16_t {
   STURDY_REF,
 };
 CAPNP_DECLARE_ENUM(Type, 9eebc43e17b5974f);
-CAPNP_DECLARE_SCHEMA(e8cbf552b1c262cc);
+CAPNP_DECLARE_SCHEMA(a2b2bec826cd860b);
+CAPNP_DECLARE_SCHEMA(a1fb63f567498202);
+CAPNP_DECLARE_SCHEMA(eabea137ffa10c15);
+CAPNP_DECLARE_SCHEMA(c35c5dfa12865f7c);
+CAPNP_DECLARE_SCHEMA(db3c835eeaafc524);
+CAPNP_DECLARE_SCHEMA(b770f661310ffd5d);
+CAPNP_DECLARE_SCHEMA(f58d4413623395b8);
+CAPNP_DECLARE_SCHEMA(9b0f84052edbc30a);
+CAPNP_DECLARE_SCHEMA(a727e0d037e26c2d);
+CAPNP_DECLARE_SCHEMA(89904b7af536f230);
+CAPNP_DECLARE_SCHEMA(e2067bb8749f32f8);
+CAPNP_DECLARE_SCHEMA(bda515c77765b8c7);
+CAPNP_DECLARE_SCHEMA(fbecba511eb4d275);
+CAPNP_DECLARE_SCHEMA(b6356d9a0671045d);
+CAPNP_DECLARE_SCHEMA(a4fff2b2c27eb1aa);
+CAPNP_DECLARE_SCHEMA(f995d3ab16e271ee);
+CAPNP_DECLARE_SCHEMA(e67422806e9eecb5);
+CAPNP_DECLARE_SCHEMA(95cca6eb99e82455);
+CAPNP_DECLARE_SCHEMA(954d7d5f7e52aee7);
+CAPNP_DECLARE_SCHEMA(a3bb3ab5ca7f522a);
+CAPNP_DECLARE_SCHEMA(e437ea6ed9ab4e31);
+CAPNP_DECLARE_SCHEMA(9446d647f76db683);
+CAPNP_DECLARE_SCHEMA(fd19f3577d92b2e4);
+CAPNP_DECLARE_SCHEMA(878346a0cd2d946b);
+CAPNP_DECLARE_SCHEMA(aa69086cb639c01e);
+CAPNP_DECLARE_SCHEMA(8115df9f9ef5c669);
+CAPNP_DECLARE_SCHEMA(b56ca4f1a1ce62fc);
+CAPNP_DECLARE_SCHEMA(856fd18c6d9660fd);
+CAPNP_DECLARE_SCHEMA(b9582bae43a84ae4);
+CAPNP_DECLARE_SCHEMA(a3268f2a2adebfa1);
+CAPNP_DECLARE_SCHEMA(dff6ea723d278fd9);
+CAPNP_DECLARE_SCHEMA(83f67481e7528a12);
+CAPNP_DECLARE_SCHEMA(ffb7db5d8b8260c5);
+CAPNP_DECLARE_SCHEMA(93d7bda9c4270d55);
+CAPNP_DECLARE_SCHEMA(89128773fcfdfa42);
+CAPNP_DECLARE_SCHEMA(d45602e908076a86);
+CAPNP_DECLARE_SCHEMA(c5d6bde191c852d8);
+CAPNP_DECLARE_SCHEMA(e9034d1b15d7aaa9);
+CAPNP_DECLARE_SCHEMA(ce2ba2ab46a85910);
+CAPNP_DECLARE_SCHEMA(d43a69da0d30ee9d);
+CAPNP_DECLARE_SCHEMA(ca9f97fd5c5b0a1c);
+CAPNP_DECLARE_SCHEMA(fd19908e527bebe9);
+CAPNP_DECLARE_SCHEMA(a40fb95abdef8710);
+CAPNP_DECLARE_SCHEMA(f69a9b0bb16714de);
+CAPNP_DECLARE_SCHEMA(c7180e2ef517a317);
 CAPNP_DECLARE_SCHEMA(e17592335373b246);
 CAPNP_DECLARE_SCHEMA(a869f50b8c586ed9);
 CAPNP_DECLARE_SCHEMA(fd058bbd1f9508cd);
@@ -111,7 +155,6 @@ struct StructuredText {
   class Pipeline;
   typedef ::capnp::schemas::Type_9eebc43e17b5974f Type;
 
-  struct Structure;
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(ed6c098b67cad454, 1, 1)
@@ -121,21 +164,73 @@ struct StructuredText {
   };
 };
 
-struct StructuredText::Structure {
-  Structure() = delete;
+struct MimeTypes {
+  MimeTypes() = delete;
 
   class Reader;
   class Builder;
   class Pipeline;
-  enum Which: uint16_t {
-    NONE,
-    JSON,
-    XML,
-    TOML,
-  };
+  static const ::capnp::_::ConstText<10> TEXT_PLAIN;
+  static const ::capnp::_::ConstText<9> TEXT_HTML;
+  static const ::capnp::_::ConstText<8> TEXT_CSS;
+  static const ::capnp::_::ConstText<8> TEXT_CSV;
+  static const ::capnp::_::ConstText<15> TEXT_JAVASCRIPT;
+  static const ::capnp::_::ConstText<13> TEXT_MARKDOWN;
+  static const ::capnp::_::ConstText<8> TEXT_XML;
+  static const ::capnp::_::ConstText<16> APPLICATION_JSON;
+  static const ::capnp::_::ConstText<15> APPLICATION_XML;
+  static const ::capnp::_::ConstText<15> APPLICATION_PDF;
+  static const ::capnp::_::ConstText<15> APPLICATION_ZIP;
+  static const ::capnp::_::ConstText<16> APPLICATION_GZIP;
+  static const ::capnp::_::ConstText<24> APPLICATION_OCTET_STREAM;
+  static const ::capnp::_::ConstText<22> APPLICATION_JAVASCRIPT;
+  static const ::capnp::_::ConstText<33> APPLICATION_WWW_FORM_URLENCODED;
+  static const ::capnp::_::ConstText<19> MULTIPART_FORM_DATA;
+  static const ::capnp::_::ConstText<30> APPLICATION_VND_APACHE_PARQUET;
+  static const ::capnp::_::ConstText<9> IMAGE_PNG;
+  static const ::capnp::_::ConstText<10> IMAGE_JPEG;
+  static const ::capnp::_::ConstText<9> IMAGE_GIF;
+  static const ::capnp::_::ConstText<10> IMAGE_WEBP;
+  static const ::capnp::_::ConstText<13> IMAGE_SVG_XML;
+  static const ::capnp::_::ConstText<9> IMAGE_BMP;
+  static const ::capnp::_::ConstText<10> IMAGE_TIFF;
+  static const ::capnp::_::ConstText<12> IMAGE_X_ICON;
+  static const ::capnp::_::ConstText<31> IMAGE_TIFF_APPLICATION_GEOTIFF;
+  static const ::capnp::_::ConstText<56> IMAGE_TIFF_APPLICATION_GEOTIFF_CLOUD_OPTIMIZED;
+  static const ::capnp::_::ConstText<10> AUDIO_MPEG;
+  static const ::capnp::_::ConstText<9> AUDIO_MP4;
+  static const ::capnp::_::ConstText<9> AUDIO_OGG;
+  static const ::capnp::_::ConstText<9> AUDIO_WAV;
+  static const ::capnp::_::ConstText<10> AUDIO_WEBM;
+  static const ::capnp::_::ConstText<9> AUDIO_AAC;
+  static const ::capnp::_::ConstText<9> VIDEO_MP4;
+  static const ::capnp::_::ConstText<10> VIDEO_MPEG;
+  static const ::capnp::_::ConstText<9> VIDEO_OGG;
+  static const ::capnp::_::ConstText<10> VIDEO_WEBM;
+  static const ::capnp::_::ConstText<15> VIDEO_QUICKTIME;
+  static const ::capnp::_::ConstText<15> VIDEO_X_MS_VIDEO;
+  static const ::capnp::_::ConstText<8> FONT_TTF;
+  static const ::capnp::_::ConstText<8> FONT_OTF;
+  static const ::capnp::_::ConstText<9> FONT_WOFF;
+  static const ::capnp::_::ConstText<10> FONT_WOFF2;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(e8cbf552b1c262cc, 1, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(a2b2bec826cd860b, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Blob {
+  Blob() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(c7180e2ef517a317, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -663,8 +758,6 @@ public:
   inline bool hasValue() const;
   inline  ::capnp::Text::Reader getValue() const;
 
-  inline typename Structure::Reader getStructure() const;
-
   inline  ::mas::schema::common::StructuredText::Type getType() const;
 
 private:
@@ -702,9 +795,6 @@ public:
   inline void adoptValue(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownValue();
 
-  inline typename Structure::Builder getStructure();
-  inline typename Structure::Builder initStructure();
-
   inline  ::mas::schema::common::StructuredText::Type getType();
   inline void setType( ::mas::schema::common::StructuredText::Type value);
 
@@ -726,7 +816,6 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline typename Structure::Pipeline getStructure();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -735,9 +824,9 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class StructuredText::Structure::Reader {
+class MimeTypes::Reader {
 public:
-  typedef Structure Reads;
+  typedef MimeTypes Reads;
 
   Reader() = default;
   inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
@@ -752,19 +841,6 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline Which which() const;
-  inline bool isNone() const;
-  inline  ::capnp::Void getNone() const;
-
-  inline bool isJson() const;
-  inline  ::capnp::Void getJson() const;
-
-  inline bool isXml() const;
-  inline  ::capnp::Void getXml() const;
-
-  inline bool isToml() const;
-  inline  ::capnp::Void getToml() const;
-
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -777,9 +853,9 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class StructuredText::Structure::Builder {
+class MimeTypes::Builder {
 public:
-  typedef Structure Builds;
+  typedef MimeTypes Builds;
 
   Builder() = delete;  // Deleted to discourage incorrect usage.
                        // You can explicitly initialize to nullptr instead.
@@ -793,22 +869,96 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline Which which();
-  inline bool isNone();
-  inline  ::capnp::Void getNone();
-  inline void setNone( ::capnp::Void value = ::capnp::VOID);
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
 
-  inline bool isJson();
-  inline  ::capnp::Void getJson();
-  inline void setJson( ::capnp::Void value = ::capnp::VOID);
+#if !CAPNP_LITE
+class MimeTypes::Pipeline {
+public:
+  typedef MimeTypes Pipelines;
 
-  inline bool isXml();
-  inline  ::capnp::Void getXml();
-  inline void setXml( ::capnp::Void value = ::capnp::VOID);
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
 
-  inline bool isToml();
-  inline  ::capnp::Void getToml();
-  inline void setToml( ::capnp::Void value = ::capnp::VOID);
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class Blob::Reader {
+public:
+  typedef Blob Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasContentType() const;
+  inline  ::capnp::Text::Reader getContentType() const;
+
+  inline bool hasData() const;
+  inline  ::capnp::Data::Reader getData() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Blob::Builder {
+public:
+  typedef Blob Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasContentType();
+  inline  ::capnp::Text::Builder getContentType();
+  inline void setContentType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initContentType(unsigned int size);
+  inline void adoptContentType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownContentType();
+
+  inline bool hasData();
+  inline  ::capnp::Data::Builder getData();
+  inline void setData( ::capnp::Data::Reader value);
+  inline  ::capnp::Data::Builder initData(unsigned int size);
+  inline void adoptData(::capnp::Orphan< ::capnp::Data>&& value);
+  inline ::capnp::Orphan< ::capnp::Data> disownData();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -820,9 +970,9 @@ private:
 };
 
 #if !CAPNP_LITE
-class StructuredText::Structure::Pipeline {
+class Blob::Pipeline {
 public:
-  typedef Structure Pipelines;
+  typedef Blob Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -2308,146 +2458,86 @@ inline ::capnp::Orphan< ::capnp::Text> StructuredText::Builder::disownValue() {
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline typename StructuredText::Structure::Reader StructuredText::Reader::getStructure() const {
-  return typename StructuredText::Structure::Reader(_reader);
-}
-inline typename StructuredText::Structure::Builder StructuredText::Builder::getStructure() {
-  return typename StructuredText::Structure::Builder(_builder);
-}
-#if !CAPNP_LITE
-inline typename StructuredText::Structure::Pipeline StructuredText::Pipeline::getStructure() {
-  return typename StructuredText::Structure::Pipeline(_typeless.noop());
-}
-#endif  // !CAPNP_LITE
-inline typename StructuredText::Structure::Builder StructuredText::Builder::initStructure() {
-  _builder.setDataField< ::uint16_t>(::capnp::bounded<0>() * ::capnp::ELEMENTS, 0);
-  return typename StructuredText::Structure::Builder(_builder);
-}
 inline  ::mas::schema::common::StructuredText::Type StructuredText::Reader::getType() const {
   return _reader.getDataField< ::mas::schema::common::StructuredText::Type>(
-      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
 
 inline  ::mas::schema::common::StructuredText::Type StructuredText::Builder::getType() {
   return _builder.getDataField< ::mas::schema::common::StructuredText::Type>(
-      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
 inline void StructuredText::Builder::setType( ::mas::schema::common::StructuredText::Type value) {
   _builder.setDataField< ::mas::schema::common::StructuredText::Type>(
-      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
-}
-
-inline  ::mas::schema::common::StructuredText::Structure::Which StructuredText::Structure::Reader::which() const {
-  return _reader.getDataField<Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-inline  ::mas::schema::common::StructuredText::Structure::Which StructuredText::Structure::Builder::which() {
-  return _builder.getDataField<Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-
-inline bool StructuredText::Structure::Reader::isNone() const {
-  return which() == StructuredText::Structure::NONE;
-}
-inline bool StructuredText::Structure::Builder::isNone() {
-  return which() == StructuredText::Structure::NONE;
-}
-inline  ::capnp::Void StructuredText::Structure::Reader::getNone() const {
-  KJ_IREQUIRE((which() == StructuredText::Structure::NONE),
-              "Must check which() before get()ing a union member.");
-  return _reader.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-
-inline  ::capnp::Void StructuredText::Structure::Builder::getNone() {
-  KJ_IREQUIRE((which() == StructuredText::Structure::NONE),
-              "Must check which() before get()ing a union member.");
-  return _builder.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
-}
-inline void StructuredText::Structure::Builder::setNone( ::capnp::Void value) {
-  _builder.setDataField<StructuredText::Structure::Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::NONE);
-  _builder.setDataField< ::capnp::Void>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
-inline bool StructuredText::Structure::Reader::isJson() const {
-  return which() == StructuredText::Structure::JSON;
+inline bool Blob::Reader::hasContentType() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool StructuredText::Structure::Builder::isJson() {
-  return which() == StructuredText::Structure::JSON;
+inline bool Blob::Builder::hasContentType() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Void StructuredText::Structure::Reader::getJson() const {
-  KJ_IREQUIRE((which() == StructuredText::Structure::JSON),
-              "Must check which() before get()ing a union member.");
-  return _reader.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline  ::capnp::Text::Reader Blob::Reader::getContentType() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-
-inline  ::capnp::Void StructuredText::Structure::Builder::getJson() {
-  KJ_IREQUIRE((which() == StructuredText::Structure::JSON),
-              "Must check which() before get()ing a union member.");
-  return _builder.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline  ::capnp::Text::Builder Blob::Builder::getContentType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void StructuredText::Structure::Builder::setJson( ::capnp::Void value) {
-  _builder.setDataField<StructuredText::Structure::Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::JSON);
-  _builder.setDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+inline void Blob::Builder::setContentType( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-
-inline bool StructuredText::Structure::Reader::isXml() const {
-  return which() == StructuredText::Structure::XML;
+inline  ::capnp::Text::Builder Blob::Builder::initContentType(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline bool StructuredText::Structure::Builder::isXml() {
-  return which() == StructuredText::Structure::XML;
+inline void Blob::Builder::adoptContentType(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline  ::capnp::Void StructuredText::Structure::Reader::getXml() const {
-  KJ_IREQUIRE((which() == StructuredText::Structure::XML),
-              "Must check which() before get()ing a union member.");
-  return _reader.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline ::capnp::Orphan< ::capnp::Text> Blob::Builder::disownContentType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline  ::capnp::Void StructuredText::Structure::Builder::getXml() {
-  KJ_IREQUIRE((which() == StructuredText::Structure::XML),
-              "Must check which() before get()ing a union member.");
-  return _builder.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline bool Blob::Reader::hasData() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline void StructuredText::Structure::Builder::setXml( ::capnp::Void value) {
-  _builder.setDataField<StructuredText::Structure::Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::XML);
-  _builder.setDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+inline bool Blob::Builder::hasData() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-
-inline bool StructuredText::Structure::Reader::isToml() const {
-  return which() == StructuredText::Structure::TOML;
+inline  ::capnp::Data::Reader Blob::Reader::getData() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline bool StructuredText::Structure::Builder::isToml() {
-  return which() == StructuredText::Structure::TOML;
+inline  ::capnp::Data::Builder Blob::Builder::getData() {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Void StructuredText::Structure::Reader::getToml() const {
-  KJ_IREQUIRE((which() == StructuredText::Structure::TOML),
-              "Must check which() before get()ing a union member.");
-  return _reader.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline void Blob::Builder::setData( ::capnp::Data::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Data>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
-
-inline  ::capnp::Void StructuredText::Structure::Builder::getToml() {
-  KJ_IREQUIRE((which() == StructuredText::Structure::TOML),
-              "Must check which() before get()ing a union member.");
-  return _builder.getDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+inline  ::capnp::Data::Builder Blob::Builder::initData(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
-inline void StructuredText::Structure::Builder::setToml( ::capnp::Void value) {
-  _builder.setDataField<StructuredText::Structure::Which>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, StructuredText::Structure::TOML);
-  _builder.setDataField< ::capnp::Void>(
-      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+inline void Blob::Builder::adoptData(
+    ::capnp::Orphan< ::capnp::Data>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Data>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Data> Blob::Builder::disownData() {
+  return ::capnp::_::PointerHelpers< ::capnp::Data>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline  ::mas::schema::common::Value::Which Value::Reader::which() const {

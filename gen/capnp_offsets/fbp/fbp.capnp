@@ -4,10 +4,11 @@ $import "/capnp/c++.capnp".namespace("mas::schema::fbp");
 $import "/capnp/python.capnp".module("mas.schema.fbp");
 $import "/capnp/go.capnp".package("fbp");
 $import "/capnp/go.capnp".import("github.com/zalf-rpm/mas_capnproto_schemas/gen/go/fbp");
-struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 2 ptrs
+struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 3 ptrs
   attributes @0 :List(KV);  # ptr[0]
   type @2 :Type;  # bits[0, 16)
   content @1 :AnyPointer;  # ptr[1]
+  sysAttributes @3 :SysAttributes;  # ptr[2]
   struct KV @0x9e9e5391e0c499e6 {  # 0 bytes, 3 ptrs
     key @0 :Text;  # ptr[0]
     desc @1 :Text;  # ptr[1]
@@ -17,6 +18,19 @@ struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 2 ptrs
     standard @0;
     openBracket @1;
     closeBracket @2;
+  }
+  struct ChunkedData @0xd9377fa82178a561 {  # 8 bytes, 0 ptrs
+    chunkCount @0 :UInt64;  # bits[0, 64)
+  }
+  struct SysAttributes @0x9d36075bc8979d1b {  # 8 bytes, 2 ptrs
+    bracketType :group {
+      union {  # tag bits [0, 16)
+        standard @0 :Void;  # bits[0, 0), union tag = 0
+        chunkedContent @1 :ChunkedData;  # ptr[0], union tag = 1
+        chunkedIp @2 :ChunkedData;  # ptr[0], union tag = 2
+      }
+    }
+    contentType @3 :Text;  # ptr[1]
   }
 }
 struct IIP @0xf3705fb36d44a21f {  # 0 bytes, 1 ptrs

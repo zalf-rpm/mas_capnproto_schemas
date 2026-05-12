@@ -26,29 +26,9 @@ class IdInformationReader(_DynamicStructReader):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
     ) -> builders.IdInformationBuilder: ...
 
-class StructuredTextStructureReader(_DynamicStructReader):
-    @property
-    def none(self) -> None: ...
-    @property
-    def json(self) -> None: ...
-    @property
-    def xml(self) -> None: ...
-    @property
-    def toml(self) -> None: ...
-    @override
-    def which(self) -> Literal["none", "json", "xml", "toml"]: ...
-    @override
-    def as_builder(
-        self,
-        num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
-    ) -> builders.StructuredTextStructureBuilder: ...
-
 class StructuredTextReader(_DynamicStructReader):
     @property
     def value(self) -> str: ...
-    @property
-    def structure(self) -> StructuredTextStructureReader: ...
     @property
     def type(self) -> enums.StructuredTextTypeEnum: ...
     @override
@@ -57,6 +37,26 @@ class StructuredTextReader(_DynamicStructReader):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
     ) -> builders.StructuredTextBuilder: ...
+
+class MimeTypesReader(_DynamicStructReader):
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.MimeTypesBuilder: ...
+
+class BlobReader(_DynamicStructReader):
+    @property
+    def contentType(self) -> str: ...
+    @property
+    def data(self) -> bytes: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.BlobBuilder: ...
 
 class PairReader(_DynamicStructReader):
     @property

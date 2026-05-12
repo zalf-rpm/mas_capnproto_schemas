@@ -14,15 +14,7 @@ interface Identifiable @0xb2afd1cb599c48d5 {
 }
 struct StructuredText @0xed6c098b67cad454 {  # 8 bytes, 1 ptrs
   value @0 :Text;  # ptr[0]
-  type @5 :Type;  # bits[16, 32)
-  structure :group {
-    union {  # tag bits [0, 16)
-      none @1 :Void;  # bits[0, 0), union tag = 0
-      json @2 :Void;  # bits[0, 0), union tag = 1
-      xml @3 :Void;  # bits[0, 0), union tag = 2
-      toml @4 :Void;  # bits[0, 0), union tag = 3
-    }
-  }
+  type @1 :Type;  # bits[0, 16)
   enum Type @0x9eebc43e17b5974f {
     unstructured @0;
     json @1;
@@ -30,6 +22,55 @@ struct StructuredText @0xed6c098b67cad454 {  # 8 bytes, 1 ptrs
     toml @3;
     sturdyRef @4;
   }
+}
+struct MimeTypes @0xa2b2bec826cd860b {  # 0 bytes, 0 ptrs
+  const textPlain @0xa1fb63f567498202 :Text = "text/plain";
+  const textHtml @0xeabea137ffa10c15 :Text = "text/html";
+  const textCss @0xc35c5dfa12865f7c :Text = "text/css";
+  const textCsv @0xdb3c835eeaafc524 :Text = "text/csv";
+  const textJavascript @0xb770f661310ffd5d :Text = "text/javascript";
+  const textMarkdown @0xf58d4413623395b8 :Text = "text/markdown";
+  const textXml @0x9b0f84052edbc30a :Text = "text/xml";
+  const applicationJson @0xa727e0d037e26c2d :Text = "application/json";
+  const applicationXml @0x89904b7af536f230 :Text = "application/xml";
+  const applicationPdf @0xe2067bb8749f32f8 :Text = "application/pdf";
+  const applicationZip @0xbda515c77765b8c7 :Text = "application/zip";
+  const applicationGzip @0xfbecba511eb4d275 :Text = "application/gzip";
+  const applicationOctetStream @0xb6356d9a0671045d :Text = "application/octet-stream";
+  const applicationJavascript @0xa4fff2b2c27eb1aa :Text = "application/javascript";
+  const applicationWwwFormUrlencoded @0xf995d3ab16e271ee :Text = "application/x-www-form-urlencoded";
+  const multipartFormData @0xe67422806e9eecb5 :Text = "multipart/form-data";
+  const applicationVndApacheParquet @0x95cca6eb99e82455 :Text = "application/vnd.apache.parquet";
+  const imagePng @0x954d7d5f7e52aee7 :Text = "image/png";
+  const imageJpeg @0xa3bb3ab5ca7f522a :Text = "image/jpeg";
+  const imageGif @0xe437ea6ed9ab4e31 :Text = "image/gif";
+  const imageWebp @0x9446d647f76db683 :Text = "image/webp";
+  const imageSvgXml @0xfd19f3577d92b2e4 :Text = "image/svg+xml";
+  const imageBmp @0x878346a0cd2d946b :Text = "image/bmp";
+  const imageTiff @0xaa69086cb639c01e :Text = "image/tiff";
+  const imageXIcon @0x8115df9f9ef5c669 :Text = "image/x-icon";
+  const imageTiffApplicationGeotiff @0xb56ca4f1a1ce62fc :Text = "image/tiff; application=geotiff";
+  const imageTiffApplicationGeotiffCloudOptimized @0x856fd18c6d9660fd :Text = "image/tiff; application=geotiff; profile=cloud-optimized";
+  const audioMpeg @0xb9582bae43a84ae4 :Text = "audio/mpeg";
+  const audioMp4 @0xa3268f2a2adebfa1 :Text = "audio/mp4";
+  const audioOgg @0xdff6ea723d278fd9 :Text = "audio/ogg";
+  const audioWav @0x83f67481e7528a12 :Text = "audio/wav";
+  const audioWebm @0xffb7db5d8b8260c5 :Text = "audio/webm";
+  const audioAac @0x93d7bda9c4270d55 :Text = "audio/aac";
+  const videoMp4 @0x89128773fcfdfa42 :Text = "video/mp4";
+  const videoMpeg @0xd45602e908076a86 :Text = "video/mpeg";
+  const videoOgg @0xc5d6bde191c852d8 :Text = "video/ogg";
+  const videoWebm @0xe9034d1b15d7aaa9 :Text = "video/webm";
+  const videoQuicktime @0xce2ba2ab46a85910 :Text = "video/quicktime";
+  const videoXMsVideo @0xd43a69da0d30ee9d :Text = "video/x-msvideo";
+  const fontTtf @0xca9f97fd5c5b0a1c :Text = "font/ttf";
+  const fontOtf @0xfd19908e527bebe9 :Text = "font/otf";
+  const fontWoff @0xa40fb95abdef8710 :Text = "font/woff";
+  const fontWoff2 @0xf69a9b0bb16714de :Text = "font/woff2";
+}
+struct Blob @0xc7180e2ef517a317 {  # 0 bytes, 2 ptrs
+  contentType @0 :Text;  # ptr[0]
+  data @1 :Data;  # ptr[1]
 }
 struct Value @0xe17592335373b246 {  # 16 bytes, 1 ptrs
   union {  # tag bits [64, 80)

@@ -48,9 +48,19 @@ type _ComponentSchema = modules._ComponentStructModule._ComponentSchema
 
 type _IIPSchema = modules._IIPStructModule._IIPSchema
 
+type _IPChunkedDataSchema = (
+    modules._IPStructModule._ChunkedDataStructModule._ChunkedDataSchema
+)
+
 type _IPKVSchema = modules._IPStructModule._KVStructModule._KVSchema
 
 type _IPSchema = modules._IPStructModule._IPSchema
+
+type _IPSysAttributesSchema = (
+    modules._IPStructModule._SysAttributesStructModule._SysAttributesSchema
+)
+
+type _IPSysAttributesSysAttributesBracketTypeSchema = modules._IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema
 
 type _IPTypeEnumSchema = modules._IPStructModule._TypeEnumModule._TypeSchema
 

@@ -148,6 +148,294 @@ class _IPStructModule(_StructModule):
         def schema(self) -> schemas._IPTypeEnumSchema: ...
 
     Type: _TypeEnumModule
+    class _ChunkedDataStructModule(_StructModule):
+        class Reader(_DynamicStructReader): ...
+        class Builder(_DynamicStructBuilder): ...
+
+        class _ChunkedDataSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["chunkCount"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _IPStructModule._ChunkedDataStructModule._ChunkedDataSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._IPChunkedDataSchema: ...
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            chunkCount: int | None = None,
+            **kwargs: object,
+        ) -> builders.ChunkedDataBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[readers.ChunkedDataReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[readers.ChunkedDataReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ChunkedDataBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ChunkedDataReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ChunkedDataReader: ...
+
+    ChunkedData: _ChunkedDataStructModule
+    class _SysAttributesStructModule(_StructModule):
+        class _SysAttributesBracketTypeStructModule(_StructModule):
+            class Reader(_DynamicStructReader): ...
+            class Builder(_DynamicStructBuilder): ...
+
+            class _SysAttributesBracketTypeSchema(_StructSchema):
+                class _ChunkedContentField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._IPChunkedDataSchema: ...
+
+                class _ChunkedIpField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._IPChunkedDataSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["standard"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["chunkedContent"],
+                    ) -> _IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema._ChunkedContentField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["chunkedIp"],
+                    ) -> _IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema._ChunkedIpField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema._Fields: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> schemas._IPSysAttributesSysAttributesBracketTypeSchema: ...
+            @override
+            def new_message(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                standard: None | None = None,
+                chunkedContent: builders.ChunkedDataBuilder
+                | readers.ChunkedDataReader
+                | dict[str, Any]
+                | None = None,
+                chunkedIp: builders.ChunkedDataBuilder
+                | readers.ChunkedDataReader
+                | dict[str, Any]
+                | None = None,
+                **kwargs: object,
+            ) -> builders.SysAttributesBracketTypeBuilder: ...
+            @override
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> AbstractContextManager[readers.SysAttributesBracketTypeReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[False],
+            ) -> AbstractContextManager[readers.SysAttributesBracketTypeReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.SysAttributesBracketTypeBuilder]: ...
+            @override
+            def from_bytes_packed(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> _DynamicStructReader: ...
+            @override
+            def read(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.SysAttributesBracketTypeReader: ...
+            @override
+            def read_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.SysAttributesBracketTypeReader: ...
+
+        SysAttributesBracketType: _SysAttributesBracketTypeStructModule
+        class Reader(_DynamicStructReader): ...
+        class Builder(_DynamicStructBuilder): ...
+
+        class _SysAttributesSchema(_StructSchema):
+            class _BracketTypeField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> _StructSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["bracketType"],
+                ) -> _IPStructModule._SysAttributesStructModule._SysAttributesSchema._BracketTypeField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["contentType"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> (
+                _IPStructModule._SysAttributesStructModule._SysAttributesSchema._Fields
+            ): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._IPSysAttributesSchema: ...
+        @override
+        def new_message(
+            self,
+            num_first_segment_words: int | None = None,
+            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            bracketType: builders.SysAttributesBracketTypeBuilder
+            | readers.SysAttributesBracketTypeReader
+            | dict[str, Any]
+            | None = None,
+            contentType: str | None = None,
+            **kwargs: object,
+        ) -> builders.SysAttributesBuilder: ...
+        @override
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> AbstractContextManager[readers.SysAttributesReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[False],
+        ) -> AbstractContextManager[readers.SysAttributesReader]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            *,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.SysAttributesBuilder]: ...
+        @override
+        def from_bytes_packed(
+            self,
+            buf: bytes,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> _DynamicStructReader: ...
+        @override
+        def read(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.SysAttributesReader: ...
+        @override
+        def read_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.SysAttributesReader: ...
+
+    SysAttributes: _SysAttributesStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
@@ -169,6 +457,11 @@ class _IPStructModule(_StructModule):
             @override
             def schema(self) -> schemas._IPTypeEnumSchema: ...
 
+        class _SysAttributesField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> schemas._IPSysAttributesSchema: ...
+
         class _Fields(dict[str, _StructSchemaField]):
             @overload
             def __getitem__(
@@ -182,6 +475,11 @@ class _IPStructModule(_StructModule):
                 self,
                 key: Literal["type"],
             ) -> _IPStructModule._IPSchema._TypeField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["sysAttributes"],
+            ) -> _IPStructModule._IPSchema._SysAttributesField: ...
             @overload
             def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -203,6 +501,10 @@ class _IPStructModule(_StructModule):
         | None = None,
         content: common.AnyPointer | None = None,
         type: enums.IPTypeEnum | None = None,
+        sysAttributes: builders.SysAttributesBuilder
+        | readers.SysAttributesReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.IPBuilder: ...
     @override

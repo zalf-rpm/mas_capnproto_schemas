@@ -34,16 +34,69 @@ struct StructuredText {
     toml            @3;
     sturdyRef       @4;
   }
-  type @5 :Type = unstructured;
+  type @1 :Type = unstructured;
+}
 
-  structure :union {
-    # structural type
-    none    @1 :Void; # just normal text
-    json    @2 :Void; # it's JSON
-    xml     @3 :Void; # it's XML
-    toml    @4 :Void; # it's TOML
-  }
-  # deprecated, don't use anymore
+struct MimeTypes {
+  const textPlain :Text = "text/plain";
+  const textHtml :Text = "text/html";
+  const textCss :Text = "text/css";
+  const textCsv :Text = "text/csv";
+  const textJavascript :Text = "text/javascript";
+  const textMarkdown :Text = "text/markdown";
+  const textXml :Text = "text/xml";
+
+  const applicationJson :Text = "application/json";
+  const applicationXml :Text = "application/xml";
+  const applicationPdf :Text = "application/pdf";
+  const applicationZip :Text = "application/zip";
+  const applicationGzip :Text = "application/gzip";
+  const applicationOctetStream :Text = "application/octet-stream";
+  const applicationJavascript :Text = "application/javascript";
+  const applicationWwwFormUrlencoded :Text = "application/x-www-form-urlencoded";
+  const multipartFormData :Text = "multipart/form-data";
+
+  const applicationVndApacheParquet :Text = "application/vnd.apache.parquet";
+
+  const imagePng :Text = "image/png";
+  const imageJpeg :Text = "image/jpeg";
+  const imageGif :Text = "image/gif";
+  const imageWebp :Text = "image/webp";
+  const imageSvgXml :Text = "image/svg+xml";
+  const imageBmp :Text = "image/bmp";
+  const imageTiff :Text = "image/tiff";
+  const imageXIcon :Text = "image/x-icon";
+
+  # Full content types with parameters:
+  const imageTiffApplicationGeotiff :Text =
+      "image/tiff; application=geotiff";
+
+  const imageTiffApplicationGeotiffCloudOptimized :Text =
+      "image/tiff; application=geotiff; profile=cloud-optimized";
+
+  const audioMpeg :Text = "audio/mpeg";
+  const audioMp4 :Text = "audio/mp4";
+  const audioOgg :Text = "audio/ogg";
+  const audioWav :Text = "audio/wav";
+  const audioWebm :Text = "audio/webm";
+  const audioAac :Text = "audio/aac";
+
+  const videoMp4 :Text = "video/mp4";
+  const videoMpeg :Text = "video/mpeg";
+  const videoOgg :Text = "video/ogg";
+  const videoWebm :Text = "video/webm";
+  const videoQuicktime :Text = "video/quicktime";
+  const videoXMsVideo :Text = "video/x-msvideo";
+
+  const fontTtf :Text = "font/ttf";
+  const fontOtf :Text = "font/otf";
+  const fontWoff :Text = "font/woff";
+  const fontWoff2 :Text = "font/woff2";
+}
+
+struct Blob{
+  contentType @0 :Text;
+  data @1:Data;
 }
 
 struct Value {

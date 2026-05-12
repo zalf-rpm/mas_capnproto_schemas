@@ -33,6 +33,9 @@ enum class Type_f684cae29bdc484e: uint16_t {
   CLOSE_BRACKET,
 };
 CAPNP_DECLARE_ENUM(Type, f684cae29bdc484e);
+CAPNP_DECLARE_SCHEMA(d9377fa82178a561);
+CAPNP_DECLARE_SCHEMA(9d36075bc8979d1b);
+CAPNP_DECLARE_SCHEMA(feadc0acc2725760);
 CAPNP_DECLARE_SCHEMA(f3705fb36d44a21f);
 CAPNP_DECLARE_SCHEMA(9c62c32b2ff2b1e8);
 CAPNP_DECLARE_SCHEMA(a8d787cae7e0b243);
@@ -198,9 +201,11 @@ struct IP {
   struct KV;
   typedef ::capnp::schemas::Type_f684cae29bdc484e Type;
 
+  struct ChunkedData;
+  struct SysAttributes;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(af0a1dc4709a5ccf, 1, 2)
+    CAPNP_DECLARE_STRUCT_HEADER(af0a1dc4709a5ccf, 1, 3)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -216,6 +221,57 @@ struct IP::KV {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(9e9e5391e0c499e6, 0, 3)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct IP::ChunkedData {
+  ChunkedData() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(d9377fa82178a561, 1, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct IP::SysAttributes {
+  SysAttributes() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  struct BracketType;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(9d36075bc8979d1b, 1, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct IP::SysAttributes::BracketType {
+  BracketType() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  enum Which: uint16_t {
+    STANDARD,
+    CHUNKED_CONTENT,
+    CHUNKED_IP,
+  };
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(feadc0acc2725760, 1, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2014,6 +2070,9 @@ public:
 
   inline  ::mas::schema::fbp::IP::Type getType() const;
 
+  inline bool hasSysAttributes() const;
+  inline  ::mas::schema::fbp::IP::SysAttributes::Reader getSysAttributes() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -2056,6 +2115,13 @@ public:
   inline  ::mas::schema::fbp::IP::Type getType();
   inline void setType( ::mas::schema::fbp::IP::Type value);
 
+  inline bool hasSysAttributes();
+  inline  ::mas::schema::fbp::IP::SysAttributes::Builder getSysAttributes();
+  inline void setSysAttributes( ::mas::schema::fbp::IP::SysAttributes::Reader value);
+  inline  ::mas::schema::fbp::IP::SysAttributes::Builder initSysAttributes();
+  inline void adoptSysAttributes(::capnp::Orphan< ::mas::schema::fbp::IP::SysAttributes>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::IP::SysAttributes> disownSysAttributes();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -2074,6 +2140,7 @@ public:
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
+  inline  ::mas::schema::fbp::IP::SysAttributes::Pipeline getSysAttributes();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -2167,6 +2234,273 @@ private:
 class IP::KV::Pipeline {
 public:
   typedef KV Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class IP::ChunkedData::Reader {
+public:
+  typedef ChunkedData Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::uint64_t getChunkCount() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class IP::ChunkedData::Builder {
+public:
+  typedef ChunkedData Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::uint64_t getChunkCount();
+  inline void setChunkCount( ::uint64_t value);
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class IP::ChunkedData::Pipeline {
+public:
+  typedef ChunkedData Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class IP::SysAttributes::Reader {
+public:
+  typedef SysAttributes Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline typename BracketType::Reader getBracketType() const;
+
+  inline bool hasContentType() const;
+  inline  ::capnp::Text::Reader getContentType() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class IP::SysAttributes::Builder {
+public:
+  typedef SysAttributes Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline typename BracketType::Builder getBracketType();
+  inline typename BracketType::Builder initBracketType();
+
+  inline bool hasContentType();
+  inline  ::capnp::Text::Builder getContentType();
+  inline void setContentType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initContentType(unsigned int size);
+  inline void adoptContentType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownContentType();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class IP::SysAttributes::Pipeline {
+public:
+  typedef SysAttributes Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline typename BracketType::Pipeline getBracketType();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class IP::SysAttributes::BracketType::Reader {
+public:
+  typedef BracketType Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline Which which() const;
+  inline bool isStandard() const;
+  inline  ::capnp::Void getStandard() const;
+
+  inline bool isChunkedContent() const;
+  inline bool hasChunkedContent() const;
+  inline  ::mas::schema::fbp::IP::ChunkedData::Reader getChunkedContent() const;
+
+  inline bool isChunkedIp() const;
+  inline bool hasChunkedIp() const;
+  inline  ::mas::schema::fbp::IP::ChunkedData::Reader getChunkedIp() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class IP::SysAttributes::BracketType::Builder {
+public:
+  typedef BracketType Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline Which which();
+  inline bool isStandard();
+  inline  ::capnp::Void getStandard();
+  inline void setStandard( ::capnp::Void value = ::capnp::VOID);
+
+  inline bool isChunkedContent();
+  inline bool hasChunkedContent();
+  inline  ::mas::schema::fbp::IP::ChunkedData::Builder getChunkedContent();
+  inline void setChunkedContent( ::mas::schema::fbp::IP::ChunkedData::Reader value);
+  inline  ::mas::schema::fbp::IP::ChunkedData::Builder initChunkedContent();
+  inline void adoptChunkedContent(::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData> disownChunkedContent();
+
+  inline bool isChunkedIp();
+  inline bool hasChunkedIp();
+  inline  ::mas::schema::fbp::IP::ChunkedData::Builder getChunkedIp();
+  inline void setChunkedIp( ::mas::schema::fbp::IP::ChunkedData::Reader value);
+  inline  ::mas::schema::fbp::IP::ChunkedData::Builder initChunkedIp();
+  inline void adoptChunkedIp(::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData> disownChunkedIp();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class IP::SysAttributes::BracketType::Pipeline {
+public:
+  typedef BracketType Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -10506,6 +10840,45 @@ inline void IP::Builder::setType( ::mas::schema::fbp::IP::Type value) {
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
+inline bool IP::Reader::hasSysAttributes() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool IP::Builder::hasSysAttributes() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::IP::SysAttributes::Reader IP::Reader::getSysAttributes() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::IP::SysAttributes::Builder IP::Builder::getSysAttributes() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::fbp::IP::SysAttributes::Pipeline IP::Pipeline::getSysAttributes() {
+  return  ::mas::schema::fbp::IP::SysAttributes::Pipeline(_typeless.getPointerField(2));
+}
+#endif  // !CAPNP_LITE
+inline void IP::Builder::setSysAttributes( ::mas::schema::fbp::IP::SysAttributes::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::IP::SysAttributes::Builder IP::Builder::initSysAttributes() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline void IP::Builder::adoptSysAttributes(
+    ::capnp::Orphan< ::mas::schema::fbp::IP::SysAttributes>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::IP::SysAttributes> IP::Builder::disownSysAttributes() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::SysAttributes>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
 inline bool IP::KV::Reader::hasKey() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
@@ -10595,6 +10968,213 @@ inline ::capnp::AnyPointer::Builder IP::KV::Builder::initValue() {
       ::capnp::bounded<2>() * ::capnp::POINTERS));
   result.clear();
   return result;
+}
+
+inline  ::uint64_t IP::ChunkedData::Reader::getChunkCount() const {
+  return _reader.getDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::uint64_t IP::ChunkedData::Builder::getChunkCount() {
+  return _builder.getDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void IP::ChunkedData::Builder::setChunkCount( ::uint64_t value) {
+  _builder.setDataField< ::uint64_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline typename IP::SysAttributes::BracketType::Reader IP::SysAttributes::Reader::getBracketType() const {
+  return typename IP::SysAttributes::BracketType::Reader(_reader);
+}
+inline typename IP::SysAttributes::BracketType::Builder IP::SysAttributes::Builder::getBracketType() {
+  return typename IP::SysAttributes::BracketType::Builder(_builder);
+}
+#if !CAPNP_LITE
+inline typename IP::SysAttributes::BracketType::Pipeline IP::SysAttributes::Pipeline::getBracketType() {
+  return typename IP::SysAttributes::BracketType::Pipeline(_typeless.noop());
+}
+#endif  // !CAPNP_LITE
+inline typename IP::SysAttributes::BracketType::Builder IP::SysAttributes::Builder::initBracketType() {
+  _builder.setDataField< ::uint16_t>(::capnp::bounded<0>() * ::capnp::ELEMENTS, 0);
+  _builder.getPointerField(::capnp::bounded<0>() * ::capnp::POINTERS).clear();
+  return typename IP::SysAttributes::BracketType::Builder(_builder);
+}
+inline bool IP::SysAttributes::Reader::hasContentType() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool IP::SysAttributes::Builder::hasContentType() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader IP::SysAttributes::Reader::getContentType() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder IP::SysAttributes::Builder::getContentType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void IP::SysAttributes::Builder::setContentType( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder IP::SysAttributes::Builder::initContentType(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void IP::SysAttributes::Builder::adoptContentType(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> IP::SysAttributes::Builder::disownContentType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline  ::mas::schema::fbp::IP::SysAttributes::BracketType::Which IP::SysAttributes::BracketType::Reader::which() const {
+  return _reader.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline  ::mas::schema::fbp::IP::SysAttributes::BracketType::Which IP::SysAttributes::BracketType::Builder::which() {
+  return _builder.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool IP::SysAttributes::BracketType::Reader::isStandard() const {
+  return which() == IP::SysAttributes::BracketType::STANDARD;
+}
+inline bool IP::SysAttributes::BracketType::Builder::isStandard() {
+  return which() == IP::SysAttributes::BracketType::STANDARD;
+}
+inline  ::capnp::Void IP::SysAttributes::BracketType::Reader::getStandard() const {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::STANDARD),
+              "Must check which() before get()ing a union member.");
+  return _reader.getDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::capnp::Void IP::SysAttributes::BracketType::Builder::getStandard() {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::STANDARD),
+              "Must check which() before get()ing a union member.");
+  return _builder.getDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void IP::SysAttributes::BracketType::Builder::setStandard( ::capnp::Void value) {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::STANDARD);
+  _builder.setDataField< ::capnp::Void>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool IP::SysAttributes::BracketType::Reader::isChunkedContent() const {
+  return which() == IP::SysAttributes::BracketType::CHUNKED_CONTENT;
+}
+inline bool IP::SysAttributes::BracketType::Builder::isChunkedContent() {
+  return which() == IP::SysAttributes::BracketType::CHUNKED_CONTENT;
+}
+inline bool IP::SysAttributes::BracketType::Reader::hasChunkedContent() const {
+  if (which() != IP::SysAttributes::BracketType::CHUNKED_CONTENT) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool IP::SysAttributes::BracketType::Builder::hasChunkedContent() {
+  if (which() != IP::SysAttributes::BracketType::CHUNKED_CONTENT) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Reader IP::SysAttributes::BracketType::Reader::getChunkedContent() const {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_CONTENT),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Builder IP::SysAttributes::BracketType::Builder::getChunkedContent() {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_CONTENT),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void IP::SysAttributes::BracketType::Builder::setChunkedContent( ::mas::schema::fbp::IP::ChunkedData::Reader value) {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_CONTENT);
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Builder IP::SysAttributes::BracketType::Builder::initChunkedContent() {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_CONTENT);
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void IP::SysAttributes::BracketType::Builder::adoptChunkedContent(
+    ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData>&& value) {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_CONTENT);
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData> IP::SysAttributes::BracketType::Builder::disownChunkedContent() {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_CONTENT),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool IP::SysAttributes::BracketType::Reader::isChunkedIp() const {
+  return which() == IP::SysAttributes::BracketType::CHUNKED_IP;
+}
+inline bool IP::SysAttributes::BracketType::Builder::isChunkedIp() {
+  return which() == IP::SysAttributes::BracketType::CHUNKED_IP;
+}
+inline bool IP::SysAttributes::BracketType::Reader::hasChunkedIp() const {
+  if (which() != IP::SysAttributes::BracketType::CHUNKED_IP) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool IP::SysAttributes::BracketType::Builder::hasChunkedIp() {
+  if (which() != IP::SysAttributes::BracketType::CHUNKED_IP) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Reader IP::SysAttributes::BracketType::Reader::getChunkedIp() const {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_IP),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Builder IP::SysAttributes::BracketType::Builder::getChunkedIp() {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_IP),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void IP::SysAttributes::BracketType::Builder::setChunkedIp( ::mas::schema::fbp::IP::ChunkedData::Reader value) {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_IP);
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::fbp::IP::ChunkedData::Builder IP::SysAttributes::BracketType::Builder::initChunkedIp() {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_IP);
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void IP::SysAttributes::BracketType::Builder::adoptChunkedIp(
+    ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData>&& value) {
+  _builder.setDataField<IP::SysAttributes::BracketType::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, IP::SysAttributes::BracketType::CHUNKED_IP);
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::fbp::IP::ChunkedData> IP::SysAttributes::BracketType::Builder::disownChunkedIp() {
+  KJ_IREQUIRE((which() == IP::SysAttributes::BracketType::CHUNKED_IP),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::IP::ChunkedData>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline bool IIP::Reader::hasContent() const {

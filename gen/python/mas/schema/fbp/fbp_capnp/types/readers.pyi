@@ -33,6 +33,44 @@ class KVReader(_DynamicStructReader):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
     ) -> builders.KVBuilder: ...
 
+class ChunkedDataReader(_DynamicStructReader):
+    @property
+    def chunkCount(self) -> int: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.ChunkedDataBuilder: ...
+
+class SysAttributesBracketTypeReader(_DynamicStructReader):
+    @property
+    def standard(self) -> None: ...
+    @property
+    def chunkedContent(self) -> ChunkedDataReader: ...
+    @property
+    def chunkedIp(self) -> ChunkedDataReader: ...
+    @override
+    def which(self) -> Literal["standard", "chunkedContent", "chunkedIp"]: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.SysAttributesBracketTypeBuilder: ...
+
+class SysAttributesReader(_DynamicStructReader):
+    @property
+    def bracketType(self) -> SysAttributesBracketTypeReader: ...
+    @property
+    def contentType(self) -> str: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.SysAttributesBuilder: ...
+
 class IPReader(_DynamicStructReader):
     @property
     def attributes(self) -> KVListReader: ...
@@ -40,6 +78,8 @@ class IPReader(_DynamicStructReader):
     def content(self) -> _DynamicObjectReader: ...
     @property
     def type(self) -> enums.IPTypeEnum: ...
+    @property
+    def sysAttributes(self) -> SysAttributesReader: ...
     @override
     def as_builder(
         self,

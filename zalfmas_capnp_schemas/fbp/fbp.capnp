@@ -36,6 +36,20 @@ struct IP {
 
   content @1 :AnyPointer;
   # main content of IP
+
+  struct ChunkedData{
+    chunkCount @0 :UInt64;
+  }
+  struct SysAttributes{
+    bracketType : union {
+      standard @0:Void;
+      chunkedContent @1:ChunkedData;
+      chunkedIp @2:ChunkedData;
+    }
+    contentType @3:Text;
+  }
+  sysAttributes @3:SysAttributes;
+  # fixed systemlevel attributes
 }
 
 struct IIP {

@@ -146,101 +146,10 @@ class _StructuredTextStructModule(_StructModule):
         def schema(self) -> schemas._StructuredTextTypeEnumSchema: ...
 
     Type: _TypeEnumModule
-    class _StructuredTextStructureStructModule(_StructModule):
-        class Reader(_DynamicStructReader): ...
-        class Builder(_DynamicStructBuilder): ...
-
-        class _StructuredTextStructureSchema(_StructSchema):
-            class _Fields(dict[str, _StructSchemaField]):
-                @overload
-                def __getitem__(self, key: Literal["none"]) -> _StructSchemaField: ...
-                @overload
-                def __getitem__(self, key: Literal["json"]) -> _StructSchemaField: ...
-                @overload
-                def __getitem__(self, key: Literal["xml"]) -> _StructSchemaField: ...
-                @overload
-                def __getitem__(self, key: Literal["toml"]) -> _StructSchemaField: ...
-                @overload
-                def __getitem__(self, key: str) -> _StructSchemaField: ...
-
-            @property
-            @override
-            def fields(
-                self,
-            ) -> _StructuredTextStructModule._StructuredTextStructureStructModule._StructuredTextStructureSchema._Fields: ...
-
-        @property
-        @override
-        def schema(self) -> schemas._StructuredTextStructuredTextStructureSchema: ...
-        @override
-        def new_message(
-            self,
-            num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            none: None | None = None,
-            json: None | None = None,
-            xml: None | None = None,
-            toml: None | None = None,
-            **kwargs: object,
-        ) -> builders.StructuredTextStructureBuilder: ...
-        @override
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-        ) -> AbstractContextManager[readers.StructuredTextStructureReader]: ...
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
-        ) -> AbstractContextManager[readers.StructuredTextStructureReader]: ...
-        @overload
-        def from_bytes(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-            *,
-            builder: Literal[True],
-        ) -> AbstractContextManager[builders.StructuredTextStructureBuilder]: ...
-        @override
-        def from_bytes_packed(
-            self,
-            buf: bytes,
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
-        @override
-        def read(
-            self,
-            file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-        ) -> readers.StructuredTextStructureReader: ...
-        @override
-        def read_packed(
-            self,
-            file: IO[str] | IO[bytes],
-            traversal_limit_in_words: int | None = None,
-            nesting_limit: int | None = None,
-        ) -> readers.StructuredTextStructureReader: ...
-
-    StructuredTextStructure: _StructuredTextStructureStructModule
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
     class _StructuredTextSchema(_StructSchema):
-        class _StructureField(_StructSchemaField):
-            @property
-            @override
-            def schema(self) -> _StructSchema: ...
-
         class _TypeField(_StructSchemaField):
             @property
             @override
@@ -249,11 +158,6 @@ class _StructuredTextStructModule(_StructModule):
         class _Fields(dict[str, _StructSchemaField]):
             @overload
             def __getitem__(self, key: Literal["value"]) -> _StructSchemaField: ...
-            @overload
-            def __getitem__(
-                self,
-                key: Literal["structure"],
-            ) -> _StructuredTextStructModule._StructuredTextSchema._StructureField: ...
             @overload
             def __getitem__(
                 self,
@@ -277,10 +181,6 @@ class _StructuredTextStructModule(_StructModule):
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
         value: str | None = None,
-        structure: builders.StructuredTextStructureBuilder
-        | readers.StructuredTextStructureReader
-        | dict[str, Any]
-        | None = None,
         type: enums.StructuredTextTypeEnum | None = None,
         **kwargs: object,
     ) -> builders.StructuredTextBuilder: ...
@@ -331,6 +231,198 @@ class _StructuredTextStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.StructuredTextReader: ...
+
+class _MimeTypesStructModule(_StructModule):
+    textPlain: str
+    textHtml: str
+    textCss: str
+    textCsv: str
+    textJavascript: str
+    textMarkdown: str
+    textXml: str
+    applicationJson: str
+    applicationXml: str
+    applicationPdf: str
+    applicationZip: str
+    applicationGzip: str
+    applicationOctetStream: str
+    applicationJavascript: str
+    applicationWwwFormUrlencoded: str
+    multipartFormData: str
+    applicationVndApacheParquet: str
+    imagePng: str
+    imageJpeg: str
+    imageGif: str
+    imageWebp: str
+    imageSvgXml: str
+    imageBmp: str
+    imageTiff: str
+    imageXIcon: str
+    imageTiffApplicationGeotiff: str
+    imageTiffApplicationGeotiffCloudOptimized: str
+    audioMpeg: str
+    audioMp4: str
+    audioOgg: str
+    audioWav: str
+    audioWebm: str
+    audioAac: str
+    videoMp4: str
+    videoMpeg: str
+    videoOgg: str
+    videoWebm: str
+    videoQuicktime: str
+    videoXMsVideo: str
+    fontTtf: str
+    fontOtf: str
+    fontWoff: str
+    fontWoff2: str
+    class Reader(_DynamicStructReader): ...
+    class Builder(_DynamicStructBuilder): ...
+
+    class _MimeTypesSchema(_StructSchema):
+        class _Fields(dict[str, _StructSchemaField]): ...
+
+        @property
+        @override
+        def fields(self) -> _MimeTypesStructModule._MimeTypesSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._MimeTypesSchema: ...
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        **kwargs: object,
+    ) -> builders.MimeTypesBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[readers.MimeTypesReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[readers.MimeTypesReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.MimeTypesBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.MimeTypesReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.MimeTypesReader: ...
+
+class _BlobStructModule(_StructModule):
+    class Reader(_DynamicStructReader): ...
+    class Builder(_DynamicStructBuilder): ...
+
+    class _BlobSchema(_StructSchema):
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["contentType"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["data"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _BlobStructModule._BlobSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._BlobSchema: ...
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        contentType: str | None = None,
+        data: bytes | None = None,
+        **kwargs: object,
+    ) -> builders.BlobBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[readers.BlobReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[readers.BlobReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.BlobBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.BlobReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.BlobReader: ...
 
 class _PairStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...

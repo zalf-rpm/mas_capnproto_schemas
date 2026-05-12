@@ -24,6 +24,9 @@ namespace Mas.Schema.Fbp
             );
             Content = CapnpSerializable.Create<object>(reader.Content);
             TheType = reader.TheType;
+            TheSysAttributes = CapnpSerializable.Create<Mas.Schema.Fbp.IP.SysAttributes>(
+                reader.TheSysAttributes
+            );
             applyDefaults();
         }
 
@@ -32,6 +35,7 @@ namespace Mas.Schema.Fbp
             writer.Attributes.Init(Attributes, (_s1, _v1) => _v1?.serialize(_s1));
             writer.Content.SetObject(Content);
             writer.TheType = TheType;
+            TheSysAttributes?.serialize(writer.TheSysAttributes);
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -44,6 +48,7 @@ namespace Mas.Schema.Fbp
         public IReadOnlyList<Mas.Schema.Fbp.IP.KV> Attributes { get; set; }
         public object Content { get; set; }
         public Mas.Schema.Fbp.IP.Type TheType { get; set; } = Mas.Schema.Fbp.IP.Type.standard;
+        public Mas.Schema.Fbp.IP.SysAttributes TheSysAttributes { get; set; }
 
         public struct READER
         {
@@ -66,13 +71,16 @@ namespace Mas.Schema.Fbp
             public DeserializerState Content => ctx.StructReadPointer(1);
             public Mas.Schema.Fbp.IP.Type TheType =>
                 (Mas.Schema.Fbp.IP.Type)ctx.ReadDataUShort(0UL, (ushort)0);
+            public Mas.Schema.Fbp.IP.SysAttributes.READER TheSysAttributes =>
+                ctx.ReadStruct(2, Mas.Schema.Fbp.IP.SysAttributes.READER.create);
+            public bool HasTheSysAttributes => ctx.IsStructFieldNonNull(2);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 2);
+                this.SetStruct(1, 3);
             }
 
             public ListOfStructsSerializer<Mas.Schema.Fbp.IP.KV.WRITER> Attributes
@@ -89,6 +97,11 @@ namespace Mas.Schema.Fbp
             {
                 get => (Mas.Schema.Fbp.IP.Type)this.ReadDataUShort(0UL, (ushort)0);
                 set => this.WriteData(0UL, (ushort)value, (ushort)0);
+            }
+            public Mas.Schema.Fbp.IP.SysAttributes.WRITER TheSysAttributes
+            {
+                get => BuildPointer<Mas.Schema.Fbp.IP.SysAttributes.WRITER>(2);
+                set => Link(2, value);
             }
         }
 
@@ -181,6 +194,308 @@ namespace Mas.Schema.Fbp
             standard,
             openBracket,
             closeBracket,
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd9377fa82178a561UL)
+        ]
+        public class ChunkedData : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xd9377fa82178a561UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                ChunkCount = reader.ChunkCount;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.ChunkCount = ChunkCount;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public ulong ChunkCount { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public ulong ChunkCount => ctx.ReadDataULong(0UL, 0UL);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public ulong ChunkCount
+                {
+                    get => this.ReadDataULong(0UL, 0UL);
+                    set => this.WriteData(0UL, value, 0UL);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9d36075bc8979d1bUL)
+        ]
+        public class SysAttributes : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x9d36075bc8979d1bUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                BracketType = CapnpSerializable.Create<Mas.Schema.Fbp.IP.SysAttributes.bracketType>(
+                    reader.BracketType
+                );
+                ContentType = reader.ContentType;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                BracketType?.serialize(writer.BracketType);
+                writer.ContentType = ContentType;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public Mas.Schema.Fbp.IP.SysAttributes.bracketType BracketType { get; set; }
+            public string ContentType { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public bracketType.READER BracketType => new bracketType.READER(ctx);
+                public string ContentType => ctx.ReadText(1, null);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 2);
+                }
+
+                public bracketType.WRITER BracketType
+                {
+                    get => Rewrap<bracketType.WRITER>();
+                }
+                public string ContentType
+                {
+                    get => this.ReadText(1, null);
+                    set => this.WriteText(1, value, null);
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xfeadc0acc2725760UL)
+            ]
+            public class bracketType : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xfeadc0acc2725760UL;
+
+                public enum WHICH : ushort
+                {
+                    Standard = 0,
+                    ChunkedContent = 1,
+                    ChunkedIp = 2,
+                    undefined = 65535,
+                }
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    switch (reader.which)
+                    {
+                        case WHICH.Standard:
+                            which = reader.which;
+                            break;
+                        case WHICH.ChunkedContent:
+                            ChunkedContent =
+                                CapnpSerializable.Create<Mas.Schema.Fbp.IP.ChunkedData>(
+                                    reader.ChunkedContent
+                                );
+                            break;
+                        case WHICH.ChunkedIp:
+                            ChunkedIp = CapnpSerializable.Create<Mas.Schema.Fbp.IP.ChunkedData>(
+                                reader.ChunkedIp
+                            );
+                            break;
+                    }
+
+                    applyDefaults();
+                }
+
+                private WHICH _which = WHICH.undefined;
+                private object _content;
+                public WHICH which
+                {
+                    get => _which;
+                    set
+                    {
+                        if (value == _which)
+                            return;
+                        _which = value;
+                        switch (value)
+                        {
+                            case WHICH.Standard:
+                                break;
+                            case WHICH.ChunkedContent:
+                                _content = null;
+                                break;
+                            case WHICH.ChunkedIp:
+                                _content = null;
+                                break;
+                        }
+                    }
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.which = which;
+                    switch (which)
+                    {
+                        case WHICH.Standard:
+                            break;
+                        case WHICH.ChunkedContent:
+                            ChunkedContent?.serialize(writer.ChunkedContent);
+                            break;
+                        case WHICH.ChunkedIp:
+                            ChunkedIp?.serialize(writer.ChunkedIp);
+                            break;
+                    }
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public Mas.Schema.Fbp.IP.ChunkedData ChunkedContent
+                {
+                    get =>
+                        _which == WHICH.ChunkedContent
+                            ? (Mas.Schema.Fbp.IP.ChunkedData)_content
+                            : null;
+                    set
+                    {
+                        _which = WHICH.ChunkedContent;
+                        _content = value;
+                    }
+                }
+
+                public Mas.Schema.Fbp.IP.ChunkedData ChunkedIp
+                {
+                    get =>
+                        _which == WHICH.ChunkedIp ? (Mas.Schema.Fbp.IP.ChunkedData)_content : null;
+                    set
+                    {
+                        _which = WHICH.ChunkedIp;
+                        _content = value;
+                    }
+                }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public WHICH which => (WHICH)ctx.ReadDataUShort(0U, (ushort)0);
+                    public Mas.Schema.Fbp.IP.ChunkedData.READER ChunkedContent =>
+                        which == WHICH.ChunkedContent
+                            ? ctx.ReadStruct(0, Mas.Schema.Fbp.IP.ChunkedData.READER.create)
+                            : default;
+                    public bool HasChunkedContent => ctx.IsStructFieldNonNull(0);
+                    public Mas.Schema.Fbp.IP.ChunkedData.READER ChunkedIp =>
+                        which == WHICH.ChunkedIp
+                            ? ctx.ReadStruct(0, Mas.Schema.Fbp.IP.ChunkedData.READER.create)
+                            : default;
+                    public bool HasChunkedIp => ctx.IsStructFieldNonNull(0);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER() { }
+
+                    public WHICH which
+                    {
+                        get => (WHICH)this.ReadDataUShort(0U, (ushort)0);
+                        set => this.WriteData(0U, (ushort)value, (ushort)0);
+                    }
+                    public Mas.Schema.Fbp.IP.ChunkedData.WRITER ChunkedContent
+                    {
+                        get =>
+                            which == WHICH.ChunkedContent
+                                ? BuildPointer<Mas.Schema.Fbp.IP.ChunkedData.WRITER>(0)
+                                : default;
+                        set => Link(0, value);
+                    }
+                    public Mas.Schema.Fbp.IP.ChunkedData.WRITER ChunkedIp
+                    {
+                        get =>
+                            which == WHICH.ChunkedIp
+                                ? BuildPointer<Mas.Schema.Fbp.IP.ChunkedData.WRITER>(0)
+                                : default;
+                        set => Link(0, value);
+                    }
+                }
+            }
         }
     }
 

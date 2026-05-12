@@ -1678,6 +1678,11 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule,
+    ) -> fbp_capnp.types.readers.SysAttributesBracketTypeReader: ...
+    @overload
+    def as_struct(
+        self,
         schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
     ) -> management_capnp.types.readers.AvgSoilTempReader: ...
     @overload
@@ -1888,11 +1893,6 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
-        schema: common_capnp.types.modules._StructuredTextStructModule._StructuredTextStructureStructModule,
-    ) -> common_capnp.types.readers.StructuredTextStructureReader: ...
-    @overload
-    def as_struct(
-        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._MsgStructModule,
     ) -> fbp_capnp.types.readers.MsgReader: ...
     @overload
@@ -1913,8 +1913,18 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._IPStructModule._ChunkedDataStructModule,
+    ) -> fbp_capnp.types.readers.ChunkedDataReader: ...
+    @overload
+    def as_struct(
+        self,
         schema: fbp_capnp.types.modules._IPStructModule._KVStructModule,
     ) -> fbp_capnp.types.readers.KVReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IPStructModule._SysAttributesStructModule,
+    ) -> fbp_capnp.types.readers.SysAttributesReader: ...
     @overload
     def as_struct(
         self,
@@ -2390,8 +2400,18 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: common_capnp.types.modules._BlobStructModule,
+    ) -> common_capnp.types.readers.BlobReader: ...
+    @overload
+    def as_struct(
+        self,
         schema: common_capnp.types.modules._IdInformationStructModule,
     ) -> common_capnp.types.readers.IdInformationReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._MimeTypesStructModule,
+    ) -> common_capnp.types.readers.MimeTypesReader: ...
     @overload
     def as_struct(
         self,
@@ -3712,6 +3732,11 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule,
+    ) -> fbp_capnp.types.builders.SysAttributesBracketTypeBuilder: ...
+    @overload
+    def as_struct(
+        self,
         schema: management_capnp.types.modules._ParamsStructModule._AutomaticSowingStructModule._AvgSoilTempStructModule,
     ) -> management_capnp.types.builders.AvgSoilTempBuilder: ...
     @overload
@@ -3922,11 +3947,6 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
-        schema: common_capnp.types.modules._StructuredTextStructModule._StructuredTextStructureStructModule,
-    ) -> common_capnp.types.builders.StructuredTextStructureBuilder: ...
-    @overload
-    def as_struct(
-        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._MsgStructModule,
     ) -> fbp_capnp.types.builders.MsgBuilder: ...
     @overload
@@ -3947,8 +3967,18 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._IPStructModule._ChunkedDataStructModule,
+    ) -> fbp_capnp.types.builders.ChunkedDataBuilder: ...
+    @overload
+    def as_struct(
+        self,
         schema: fbp_capnp.types.modules._IPStructModule._KVStructModule,
     ) -> fbp_capnp.types.builders.KVBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._IPStructModule._SysAttributesStructModule,
+    ) -> fbp_capnp.types.builders.SysAttributesBuilder: ...
     @overload
     def as_struct(
         self,
@@ -4424,8 +4454,18 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
+        schema: common_capnp.types.modules._BlobStructModule,
+    ) -> common_capnp.types.builders.BlobBuilder: ...
+    @overload
+    def as_struct(
+        self,
         schema: common_capnp.types.modules._IdInformationStructModule,
     ) -> common_capnp.types.builders.IdInformationBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: common_capnp.types.modules._MimeTypesStructModule,
+    ) -> common_capnp.types.builders.MimeTypesBuilder: ...
     @overload
     def as_struct(
         self,

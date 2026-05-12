@@ -43,6 +43,76 @@ class KVBuilder(_DynamicStructBuilder):
     @override
     def as_reader(self) -> readers.KVReader: ...
 
+class ChunkedDataBuilder(_DynamicStructBuilder):
+    @property
+    def chunkCount(self) -> int: ...
+    @chunkCount.setter
+    def chunkCount(self, value: int) -> None: ...
+    @override
+    def as_reader(self) -> readers.ChunkedDataReader: ...
+
+class SysAttributesBracketTypeBuilder(_DynamicStructBuilder):
+    @property
+    def standard(self) -> None: ...
+    @standard.setter
+    def standard(self, value: None) -> None: ...
+    @property
+    def chunkedContent(self) -> ChunkedDataBuilder: ...
+    @chunkedContent.setter
+    def chunkedContent(
+        self,
+        value: ChunkedDataBuilder | readers.ChunkedDataReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def chunkedIp(self) -> ChunkedDataBuilder: ...
+    @chunkedIp.setter
+    def chunkedIp(
+        self,
+        value: ChunkedDataBuilder | readers.ChunkedDataReader | dict[str, Any],
+    ) -> None: ...
+    @override
+    def which(self) -> Literal["standard", "chunkedContent", "chunkedIp"]: ...
+    @override
+    @overload
+    def init(
+        self,
+        field: Literal["chunkedContent"],
+        size: int | None = None,
+    ) -> ChunkedDataBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["chunkedIp"],
+        size: int | None = None,
+    ) -> ChunkedDataBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+    @override
+    def as_reader(self) -> readers.SysAttributesBracketTypeReader: ...
+
+class SysAttributesBuilder(_DynamicStructBuilder):
+    @property
+    def bracketType(self) -> SysAttributesBracketTypeBuilder: ...
+    @bracketType.setter
+    def bracketType(
+        self,
+        value: SysAttributesBracketTypeBuilder
+        | readers.SysAttributesBracketTypeReader
+        | dict[str, Any],
+    ) -> None: ...
+    @property
+    def contentType(self) -> str: ...
+    @contentType.setter
+    def contentType(self, value: str) -> None: ...
+    @override
+    def init(
+        self,
+        field: Literal["bracketType"],
+        size: int | None = None,
+    ) -> SysAttributesBracketTypeBuilder: ...
+    @override
+    def as_reader(self) -> readers.SysAttributesReader: ...
+
 class IPBuilder(_DynamicStructBuilder):
     @property
     def attributes(self) -> KVListBuilder: ...
@@ -61,12 +131,28 @@ class IPBuilder(_DynamicStructBuilder):
     def type(self) -> enums.IPTypeEnum: ...
     @type.setter
     def type(self, value: enums.IPTypeEnum) -> None: ...
+    @property
+    def sysAttributes(self) -> SysAttributesBuilder: ...
+    @sysAttributes.setter
+    def sysAttributes(
+        self,
+        value: SysAttributesBuilder | readers.SysAttributesReader | dict[str, Any],
+    ) -> None: ...
     @override
+    @overload
+    def init(
+        self,
+        field: Literal["sysAttributes"],
+        size: int | None = None,
+    ) -> SysAttributesBuilder: ...
+    @overload
     def init(
         self,
         field: Literal["attributes"],
         size: int | None = None,
     ) -> KVListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.IPReader: ...
 
