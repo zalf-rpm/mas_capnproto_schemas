@@ -139,8 +139,8 @@ class ProcessStopResultTuple(NamedTuple):
 class StateResultTuple(NamedTuple):
     currentState: enums.ProcessStateEnum
 
-class LasterrorResultTuple(NamedTuple):
-    info: builders.ErrorInfoBuilder | readers.ErrorInfoReader | dict[str, Any]
+class LastrunResultTuple(NamedTuple):
+    info: builders.RunInfoBuilder | readers.RunInfoReader | dict[str, Any]
 
 class ActivityResultTuple(NamedTuple):
     currentActivity: (

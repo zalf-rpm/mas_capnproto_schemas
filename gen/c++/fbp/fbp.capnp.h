@@ -133,7 +133,6 @@ enum class State_e67044233be769a5: uint16_t {
   RUNNING,
   STOPPING,
   FAILED,
-  CLOSED,
 };
 CAPNP_DECLARE_ENUM(State, e67044233be769a5);
 CAPNP_DECLARE_SCHEMA(9c8fa975665cfafa);
@@ -152,9 +151,17 @@ CAPNP_DECLARE_SCHEMA(a04dcc23484983a6);
 CAPNP_DECLARE_SCHEMA(d14367d59e9147e9);
 CAPNP_DECLARE_SCHEMA(a3d8abb814bcf7d8);
 CAPNP_DECLARE_SCHEMA(9196131fddc17658);
-CAPNP_DECLARE_SCHEMA(aeb3bbc09f2b6b0a);
-CAPNP_DECLARE_SCHEMA(c41db6a21fa608e9);
-enum class Phase_c41db6a21fa608e9: uint16_t {
+CAPNP_DECLARE_SCHEMA(b85644f8ae2eb87f);
+CAPNP_DECLARE_SCHEMA(95d99bd09af8ff66);
+enum class Outcome_95d99bd09af8ff66: uint16_t {
+  NONE,
+  COMPLETED,
+  STOPPED,
+  FAILED,
+};
+CAPNP_DECLARE_ENUM(Outcome, 95d99bd09af8ff66);
+CAPNP_DECLARE_SCHEMA(8acbeab2dd78c711);
+enum class Phase_8acbeab2dd78c711: uint16_t {
   UNKNOWN,
   CONFIG,
   READ,
@@ -162,7 +169,7 @@ enum class Phase_c41db6a21fa608e9: uint16_t {
   WRITE,
   CLOSE,
 };
-CAPNP_DECLARE_ENUM(Phase, c41db6a21fa608e9);
+CAPNP_DECLARE_ENUM(Phase, 8acbeab2dd78c711);
 CAPNP_DECLARE_SCHEMA(f7ecea5ecff7797e);
 CAPNP_DECLARE_SCHEMA(cd9154730a050d21);
 CAPNP_DECLARE_SCHEMA(dc3bf3d87cee74a3);
@@ -1341,7 +1348,7 @@ struct Process {
 
   struct ActivityInfo;
   struct ActivityTransition;
-  struct ErrorInfo;
+  struct RunInfo;
   struct InPortsParams;
   struct InPortsResults;
   struct ConnectInPortParams;
@@ -1359,8 +1366,8 @@ struct Process {
   struct SetConfigEntryResults;
   struct StateParams;
   struct StateResults;
-  struct LastErrorParams;
-  struct LastErrorResults;
+  struct LastRunParams;
+  struct LastRunResults;
   struct ActivityParams;
   struct ActivityResults;
 
@@ -1711,17 +1718,19 @@ struct Process::ActivityTransition::ActivityChangedResults {
   };
 };
 
-struct Process::ErrorInfo {
-  ErrorInfo() = delete;
+struct Process::RunInfo {
+  RunInfo() = delete;
 
   class Reader;
   class Builder;
   class Pipeline;
-  typedef ::capnp::schemas::Phase_c41db6a21fa608e9 Phase;
+  typedef ::capnp::schemas::Outcome_95d99bd09af8ff66 Outcome;
+
+  typedef ::capnp::schemas::Phase_8acbeab2dd78c711 Phase;
 
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(aeb3bbc09f2b6b0a, 1, 8)
+    CAPNP_DECLARE_STRUCT_HEADER(b85644f8ae2eb87f, 1, 8)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1983,8 +1992,8 @@ struct Process::StateResults {
   };
 };
 
-struct Process::LastErrorParams {
-  LastErrorParams() = delete;
+struct Process::LastRunParams {
+  LastRunParams() = delete;
 
   class Reader;
   class Builder;
@@ -1998,8 +2007,8 @@ struct Process::LastErrorParams {
   };
 };
 
-struct Process::LastErrorResults {
-  LastErrorResults() = delete;
+struct Process::LastRunResults {
+  LastRunResults() = delete;
 
   class Reader;
   class Builder;
@@ -7330,7 +7339,7 @@ public:
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
   ::capnp::Request< ::mas::schema::fbp::Process::StateParams,  ::mas::schema::fbp::Process::StateResults> stateRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
-  ::capnp::Request< ::mas::schema::fbp::Process::LastErrorParams,  ::mas::schema::fbp::Process::LastErrorResults> lastErrorRequest(
+  ::capnp::Request< ::mas::schema::fbp::Process::LastRunParams,  ::mas::schema::fbp::Process::LastRunResults> lastRunRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
   ::capnp::Request< ::mas::schema::fbp::Process::ActivityParams,  ::mas::schema::fbp::Process::ActivityResults> activityRequest(
       ::kj::Maybe< ::capnp::MessageSize> sizeHint = nullptr);
@@ -7387,10 +7396,10 @@ protected:
   typedef  ::mas::schema::fbp::Process::StateResults StateResults;
   typedef ::capnp::CallContext<StateParams, StateResults> StateContext;
   virtual ::kj::Promise<void> state(StateContext context);
-  typedef  ::mas::schema::fbp::Process::LastErrorParams LastErrorParams;
-  typedef  ::mas::schema::fbp::Process::LastErrorResults LastErrorResults;
-  typedef ::capnp::CallContext<LastErrorParams, LastErrorResults> LastErrorContext;
-  virtual ::kj::Promise<void> lastError(LastErrorContext context);
+  typedef  ::mas::schema::fbp::Process::LastRunParams LastRunParams;
+  typedef  ::mas::schema::fbp::Process::LastRunResults LastRunResults;
+  typedef ::capnp::CallContext<LastRunParams, LastRunResults> LastRunContext;
+  virtual ::kj::Promise<void> lastRun(LastRunContext context);
   typedef  ::mas::schema::fbp::Process::ActivityParams ActivityParams;
   typedef  ::mas::schema::fbp::Process::ActivityResults ActivityResults;
   typedef ::capnp::CallContext<ActivityParams, ActivityResults> ActivityContext;
@@ -8935,9 +8944,9 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Process::ErrorInfo::Reader {
+class Process::RunInfo::Reader {
 public:
-  typedef ErrorInfo Reads;
+  typedef RunInfo Reads;
 
   Reader() = default;
   inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
@@ -8952,7 +8961,7 @@ public:
   }
 #endif  // !CAPNP_LITE
 
-  inline bool getHasError() const;
+  inline bool getHasRunInfo() const;
 
   inline bool hasProcessId() const;
   inline  ::capnp::Text::Reader getProcessId() const;
@@ -8960,13 +8969,15 @@ public:
   inline bool hasProcessName() const;
   inline  ::capnp::Text::Reader getProcessName() const;
 
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Phase getPhase() const;
+  inline  ::mas::schema::fbp::Process::RunInfo::Outcome getOutcome() const;
+
+  inline  ::mas::schema::fbp::Process::RunInfo::Phase getPhase() const;
 
   inline bool hasPort() const;
   inline  ::capnp::Text::Reader getPort() const;
 
-  inline bool hasErrorType() const;
-  inline  ::capnp::Text::Reader getErrorType() const;
+  inline bool hasDetailType() const;
+  inline  ::capnp::Text::Reader getDetailType() const;
 
   inline bool hasMessage() const;
   inline  ::capnp::Text::Reader getMessage() const;
@@ -8992,9 +9003,9 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Process::ErrorInfo::Builder {
+class Process::RunInfo::Builder {
 public:
-  typedef ErrorInfo Builds;
+  typedef RunInfo Builds;
 
   Builder() = delete;  // Deleted to discourage incorrect usage.
                        // You can explicitly initialize to nullptr instead.
@@ -9008,8 +9019,8 @@ public:
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
 
-  inline bool getHasError();
-  inline void setHasError(bool value);
+  inline bool getHasRunInfo();
+  inline void setHasRunInfo(bool value);
 
   inline bool hasProcessId();
   inline  ::capnp::Text::Builder getProcessId();
@@ -9025,8 +9036,11 @@ public:
   inline void adoptProcessName(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownProcessName();
 
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Phase getPhase();
-  inline void setPhase( ::mas::schema::fbp::Process::ErrorInfo::Phase value);
+  inline  ::mas::schema::fbp::Process::RunInfo::Outcome getOutcome();
+  inline void setOutcome( ::mas::schema::fbp::Process::RunInfo::Outcome value);
+
+  inline  ::mas::schema::fbp::Process::RunInfo::Phase getPhase();
+  inline void setPhase( ::mas::schema::fbp::Process::RunInfo::Phase value);
 
   inline bool hasPort();
   inline  ::capnp::Text::Builder getPort();
@@ -9035,12 +9049,12 @@ public:
   inline void adoptPort(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownPort();
 
-  inline bool hasErrorType();
-  inline  ::capnp::Text::Builder getErrorType();
-  inline void setErrorType( ::capnp::Text::Reader value);
-  inline  ::capnp::Text::Builder initErrorType(unsigned int size);
-  inline void adoptErrorType(::capnp::Orphan< ::capnp::Text>&& value);
-  inline ::capnp::Orphan< ::capnp::Text> disownErrorType();
+  inline bool hasDetailType();
+  inline  ::capnp::Text::Builder getDetailType();
+  inline void setDetailType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initDetailType(unsigned int size);
+  inline void adoptDetailType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownDetailType();
 
   inline bool hasMessage();
   inline  ::capnp::Text::Builder getMessage();
@@ -9081,9 +9095,9 @@ private:
 };
 
 #if !CAPNP_LITE
-class Process::ErrorInfo::Pipeline {
+class Process::RunInfo::Pipeline {
 public:
-  typedef ErrorInfo Pipelines;
+  typedef RunInfo Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -10446,9 +10460,9 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Process::LastErrorParams::Reader {
+class Process::LastRunParams::Reader {
 public:
-  typedef LastErrorParams Reads;
+  typedef LastRunParams Reads;
 
   Reader() = default;
   inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
@@ -10475,9 +10489,9 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Process::LastErrorParams::Builder {
+class Process::LastRunParams::Builder {
 public:
-  typedef LastErrorParams Builds;
+  typedef LastRunParams Builds;
 
   Builder() = delete;  // Deleted to discourage incorrect usage.
                        // You can explicitly initialize to nullptr instead.
@@ -10501,9 +10515,9 @@ private:
 };
 
 #if !CAPNP_LITE
-class Process::LastErrorParams::Pipeline {
+class Process::LastRunParams::Pipeline {
 public:
-  typedef LastErrorParams Pipelines;
+  typedef LastRunParams Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -10517,9 +10531,9 @@ private:
 };
 #endif  // !CAPNP_LITE
 
-class Process::LastErrorResults::Reader {
+class Process::LastRunResults::Reader {
 public:
-  typedef LastErrorResults Reads;
+  typedef LastRunResults Reads;
 
   Reader() = default;
   inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
@@ -10535,7 +10549,7 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasInfo() const;
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Reader getInfo() const;
+  inline  ::mas::schema::fbp::Process::RunInfo::Reader getInfo() const;
 
 private:
   ::capnp::_::StructReader _reader;
@@ -10549,9 +10563,9 @@ private:
   friend class ::capnp::Orphanage;
 };
 
-class Process::LastErrorResults::Builder {
+class Process::LastRunResults::Builder {
 public:
-  typedef LastErrorResults Builds;
+  typedef LastRunResults Builds;
 
   Builder() = delete;  // Deleted to discourage incorrect usage.
                        // You can explicitly initialize to nullptr instead.
@@ -10566,11 +10580,11 @@ public:
 #endif  // !CAPNP_LITE
 
   inline bool hasInfo();
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Builder getInfo();
-  inline void setInfo( ::mas::schema::fbp::Process::ErrorInfo::Reader value);
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Builder initInfo();
-  inline void adoptInfo(::capnp::Orphan< ::mas::schema::fbp::Process::ErrorInfo>&& value);
-  inline ::capnp::Orphan< ::mas::schema::fbp::Process::ErrorInfo> disownInfo();
+  inline  ::mas::schema::fbp::Process::RunInfo::Builder getInfo();
+  inline void setInfo( ::mas::schema::fbp::Process::RunInfo::Reader value);
+  inline  ::mas::schema::fbp::Process::RunInfo::Builder initInfo();
+  inline void adoptInfo(::capnp::Orphan< ::mas::schema::fbp::Process::RunInfo>&& value);
+  inline ::capnp::Orphan< ::mas::schema::fbp::Process::RunInfo> disownInfo();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -10582,15 +10596,15 @@ private:
 };
 
 #if !CAPNP_LITE
-class Process::LastErrorResults::Pipeline {
+class Process::LastRunResults::Pipeline {
 public:
-  typedef LastErrorResults Pipelines;
+  typedef LastRunResults Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
       : _typeless(kj::mv(typeless)) {}
 
-  inline  ::mas::schema::fbp::Process::ErrorInfo::Pipeline getInfo();
+  inline  ::mas::schema::fbp::Process::RunInfo::Pipeline getInfo();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -15502,306 +15516,320 @@ inline ::capnp::Orphan< ::mas::schema::fbp::Process::ActivityInfo> Process::Acti
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::getHasError() const {
+inline bool Process::RunInfo::Reader::getHasRunInfo() const {
   return _reader.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
 
-inline bool Process::ErrorInfo::Builder::getHasError() {
+inline bool Process::RunInfo::Builder::getHasRunInfo() {
   return _builder.getDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS);
 }
-inline void Process::ErrorInfo::Builder::setHasError(bool value) {
+inline void Process::RunInfo::Builder::setHasRunInfo(bool value) {
   _builder.setDataField<bool>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
-inline bool Process::ErrorInfo::Reader::hasProcessId() const {
+inline bool Process::RunInfo::Reader::hasProcessId() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasProcessId() {
+inline bool Process::RunInfo::Builder::hasProcessId() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getProcessId() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getProcessId() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getProcessId() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getProcessId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setProcessId( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setProcessId( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initProcessId(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initProcessId(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptProcessId(
+inline void Process::RunInfo::Builder::adoptProcessId(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownProcessId() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownProcessId() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasProcessName() const {
+inline bool Process::RunInfo::Reader::hasProcessName() const {
   return !_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasProcessName() {
+inline bool Process::RunInfo::Builder::hasProcessName() {
   return !_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getProcessName() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getProcessName() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getProcessName() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getProcessName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setProcessName( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setProcessName( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initProcessName(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initProcessName(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptProcessName(
+inline void Process::RunInfo::Builder::adoptProcessName(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownProcessName() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownProcessName() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
-inline  ::mas::schema::fbp::Process::ErrorInfo::Phase Process::ErrorInfo::Reader::getPhase() const {
-  return _reader.getDataField< ::mas::schema::fbp::Process::ErrorInfo::Phase>(
+inline  ::mas::schema::fbp::Process::RunInfo::Outcome Process::RunInfo::Reader::getOutcome() const {
+  return _reader.getDataField< ::mas::schema::fbp::Process::RunInfo::Outcome>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS);
 }
 
-inline  ::mas::schema::fbp::Process::ErrorInfo::Phase Process::ErrorInfo::Builder::getPhase() {
-  return _builder.getDataField< ::mas::schema::fbp::Process::ErrorInfo::Phase>(
+inline  ::mas::schema::fbp::Process::RunInfo::Outcome Process::RunInfo::Builder::getOutcome() {
+  return _builder.getDataField< ::mas::schema::fbp::Process::RunInfo::Outcome>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS);
 }
-inline void Process::ErrorInfo::Builder::setPhase( ::mas::schema::fbp::Process::ErrorInfo::Phase value) {
-  _builder.setDataField< ::mas::schema::fbp::Process::ErrorInfo::Phase>(
+inline void Process::RunInfo::Builder::setOutcome( ::mas::schema::fbp::Process::RunInfo::Outcome value) {
+  _builder.setDataField< ::mas::schema::fbp::Process::RunInfo::Outcome>(
       ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
 }
 
-inline bool Process::ErrorInfo::Reader::hasPort() const {
+inline  ::mas::schema::fbp::Process::RunInfo::Phase Process::RunInfo::Reader::getPhase() const {
+  return _reader.getDataField< ::mas::schema::fbp::Process::RunInfo::Phase>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::Process::RunInfo::Phase Process::RunInfo::Builder::getPhase() {
+  return _builder.getDataField< ::mas::schema::fbp::Process::RunInfo::Phase>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS);
+}
+inline void Process::RunInfo::Builder::setPhase( ::mas::schema::fbp::Process::RunInfo::Phase value) {
+  _builder.setDataField< ::mas::schema::fbp::Process::RunInfo::Phase>(
+      ::capnp::bounded<2>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Process::RunInfo::Reader::hasPort() const {
   return !_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasPort() {
+inline bool Process::RunInfo::Builder::hasPort() {
   return !_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getPort() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getPort() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getPort() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getPort() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setPort( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setPort( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initPort(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initPort(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptPort(
+inline void Process::RunInfo::Builder::adoptPort(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownPort() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownPort() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasErrorType() const {
+inline bool Process::RunInfo::Reader::hasDetailType() const {
   return !_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasErrorType() {
+inline bool Process::RunInfo::Builder::hasDetailType() {
   return !_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getErrorType() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getDetailType() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getErrorType() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getDetailType() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setErrorType( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setDetailType( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initErrorType(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initDetailType(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptErrorType(
+inline void Process::RunInfo::Builder::adoptDetailType(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownErrorType() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownDetailType() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasMessage() const {
+inline bool Process::RunInfo::Reader::hasMessage() const {
   return !_reader.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasMessage() {
+inline bool Process::RunInfo::Builder::hasMessage() {
   return !_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getMessage() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getMessage() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getMessage() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getMessage() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setMessage( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setMessage( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initMessage(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initMessage(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptMessage(
+inline void Process::RunInfo::Builder::adoptMessage(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownMessage() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownMessage() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<4>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasCauseType() const {
+inline bool Process::RunInfo::Reader::hasCauseType() const {
   return !_reader.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasCauseType() {
+inline bool Process::RunInfo::Builder::hasCauseType() {
   return !_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getCauseType() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getCauseType() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getCauseType() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getCauseType() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setCauseType( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setCauseType( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initCauseType(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initCauseType(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptCauseType(
+inline void Process::RunInfo::Builder::adoptCauseType(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownCauseType() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownCauseType() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<5>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasCauseMessage() const {
+inline bool Process::RunInfo::Reader::hasCauseMessage() const {
   return !_reader.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasCauseMessage() {
+inline bool Process::RunInfo::Builder::hasCauseMessage() {
   return !_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::Text::Reader Process::ErrorInfo::Reader::getCauseMessage() const {
+inline  ::capnp::Text::Reader Process::RunInfo::Reader::getCauseMessage() const {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::getCauseMessage() {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::getCauseMessage() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setCauseMessage( ::capnp::Text::Reader value) {
+inline void Process::RunInfo::Builder::setCauseMessage( ::capnp::Text::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::Text::Builder Process::ErrorInfo::Builder::initCauseMessage(unsigned int size) {
+inline  ::capnp::Text::Builder Process::RunInfo::Builder::initCauseMessage(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptCauseMessage(
+inline void Process::RunInfo::Builder::adoptCauseMessage(
     ::capnp::Orphan< ::capnp::Text>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::Text> Process::ErrorInfo::Builder::disownCauseMessage() {
+inline ::capnp::Orphan< ::capnp::Text> Process::RunInfo::Builder::disownCauseMessage() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
-inline bool Process::ErrorInfo::Reader::hasTraceback() const {
+inline bool Process::RunInfo::Reader::hasTraceback() const {
   return !_reader.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::ErrorInfo::Builder::hasTraceback() {
+inline bool Process::RunInfo::Builder::hasTraceback() {
   return !_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS).isNull();
 }
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader Process::ErrorInfo::Reader::getTraceback() const {
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader Process::RunInfo::Reader::getTraceback() const {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Process::ErrorInfo::Builder::getTraceback() {
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Process::RunInfo::Builder::getTraceback() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
-inline void Process::ErrorInfo::Builder::setTraceback( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
+inline void Process::RunInfo::Builder::setTraceback( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), value);
 }
-inline void Process::ErrorInfo::Builder::setTraceback(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
+inline void Process::RunInfo::Builder::setTraceback(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), value);
 }
-inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Process::ErrorInfo::Builder::initTraceback(unsigned int size) {
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder Process::RunInfo::Builder::initTraceback(unsigned int size) {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), size);
 }
-inline void Process::ErrorInfo::Builder::adoptTraceback(
+inline void Process::RunInfo::Builder::adoptTraceback(
     ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
   ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Process::ErrorInfo::Builder::disownTraceback() {
+inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> Process::RunInfo::Builder::disownTraceback() {
   return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
       ::capnp::bounded<7>() * ::capnp::POINTERS));
 }
@@ -16241,42 +16269,42 @@ inline void Process::StateResults::Builder::setCurrentState( ::mas::schema::fbp:
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 
-inline bool Process::LastErrorResults::Reader::hasInfo() const {
+inline bool Process::LastRunResults::Reader::hasInfo() const {
   return !_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline bool Process::LastErrorResults::Builder::hasInfo() {
+inline bool Process::LastRunResults::Builder::hasInfo() {
   return !_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
 }
-inline  ::mas::schema::fbp::Process::ErrorInfo::Reader Process::LastErrorResults::Reader::getInfo() const {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::get(_reader.getPointerField(
+inline  ::mas::schema::fbp::Process::RunInfo::Reader Process::LastRunResults::Reader::getInfo() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::get(_reader.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline  ::mas::schema::fbp::Process::ErrorInfo::Builder Process::LastErrorResults::Builder::getInfo() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::get(_builder.getPointerField(
+inline  ::mas::schema::fbp::Process::RunInfo::Builder Process::LastRunResults::Builder::getInfo() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::get(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 #if !CAPNP_LITE
-inline  ::mas::schema::fbp::Process::ErrorInfo::Pipeline Process::LastErrorResults::Pipeline::getInfo() {
-  return  ::mas::schema::fbp::Process::ErrorInfo::Pipeline(_typeless.getPointerField(0));
+inline  ::mas::schema::fbp::Process::RunInfo::Pipeline Process::LastRunResults::Pipeline::getInfo() {
+  return  ::mas::schema::fbp::Process::RunInfo::Pipeline(_typeless.getPointerField(0));
 }
 #endif  // !CAPNP_LITE
-inline void Process::LastErrorResults::Builder::setInfo( ::mas::schema::fbp::Process::ErrorInfo::Reader value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::set(_builder.getPointerField(
+inline void Process::LastRunResults::Builder::setInfo( ::mas::schema::fbp::Process::RunInfo::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::set(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), value);
 }
-inline  ::mas::schema::fbp::Process::ErrorInfo::Builder Process::LastErrorResults::Builder::initInfo() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::init(_builder.getPointerField(
+inline  ::mas::schema::fbp::Process::RunInfo::Builder Process::LastRunResults::Builder::initInfo() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::init(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
-inline void Process::LastErrorResults::Builder::adoptInfo(
-    ::capnp::Orphan< ::mas::schema::fbp::Process::ErrorInfo>&& value) {
-  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::adopt(_builder.getPointerField(
+inline void Process::LastRunResults::Builder::adoptInfo(
+    ::capnp::Orphan< ::mas::schema::fbp::Process::RunInfo>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::adopt(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
 }
-inline ::capnp::Orphan< ::mas::schema::fbp::Process::ErrorInfo> Process::LastErrorResults::Builder::disownInfo() {
-  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::ErrorInfo>::disown(_builder.getPointerField(
+inline ::capnp::Orphan< ::mas::schema::fbp::Process::RunInfo> Process::LastRunResults::Builder::disownInfo() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::fbp::Process::RunInfo>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 

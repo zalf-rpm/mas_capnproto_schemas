@@ -1943,8 +1943,8 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ErrorInfoStructModule,
-    ) -> fbp_capnp.types.readers.ErrorInfoReader: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._RunInfoStructModule,
+    ) -> fbp_capnp.types.readers.RunInfoReader: ...
     @overload
     def as_struct(
         self,
@@ -3997,8 +3997,8 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
-        schema: fbp_capnp.types.modules._ProcessInterfaceModule._ErrorInfoStructModule,
-    ) -> fbp_capnp.types.builders.ErrorInfoBuilder: ...
+        schema: fbp_capnp.types.modules._ProcessInterfaceModule._RunInfoStructModule,
+    ) -> fbp_capnp.types.builders.RunInfoBuilder: ...
     @overload
     def as_struct(
         self,

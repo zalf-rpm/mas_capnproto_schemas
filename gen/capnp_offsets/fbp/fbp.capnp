@@ -165,7 +165,7 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   start @5 () -> (started :Bool);
   stop @6 () -> (stopped :Bool);
   state @8 (transitionCallback :StateTransition) -> (currentState :State);
-  lastError @9 () -> (info :ErrorInfo);
+  lastRun @9 () -> (info :RunInfo);
   activity @10 (transitionCallback :ActivityTransition) -> (currentActivity :ActivityInfo);
   interface Factory @0xb01652ab8f1ac0d3 superclasses(import "/common/common.capnp".Identifiable) {
     create @0 () -> (out :ProcessHandle);
@@ -188,7 +188,6 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
     running @2;
     stopping @3;
     failed @4;
-    closed @5;
   }
   interface StateTransition @0x9c8fa975665cfafa {
     stateChanged @0 (old :State, new :State) -> ();
@@ -207,18 +206,25 @@ interface Process @0xbbad56943a039783 superclasses(import "/common/common.capnp"
   interface ActivityTransition @0xd14367d59e9147e9 {
     activityChanged @0 (old :ActivityInfo, new :ActivityInfo) -> ();
   }
-  struct ErrorInfo @0xaeb3bbc09f2b6b0a {  # 8 bytes, 8 ptrs
-    hasError @0 :Bool;  # bits[0, 1)
+  struct RunInfo @0xb85644f8ae2eb87f {  # 8 bytes, 8 ptrs
+    hasRunInfo @0 :Bool;  # bits[0, 1)
     processId @1 :Text;  # ptr[0]
     processName @2 :Text;  # ptr[1]
-    phase @3 :Phase;  # bits[16, 32)
-    port @4 :Text;  # ptr[2]
-    errorType @5 :Text;  # ptr[3]
-    message @6 :Text;  # ptr[4]
-    causeType @7 :Text;  # ptr[5]
-    causeMessage @8 :Text;  # ptr[6]
-    traceback @9 :List(Text);  # ptr[7]
-    enum Phase @0xc41db6a21fa608e9 {
+    outcome @3 :Outcome;  # bits[16, 32)
+    phase @4 :Phase;  # bits[32, 48)
+    port @5 :Text;  # ptr[2]
+    detailType @6 :Text;  # ptr[3]
+    message @7 :Text;  # ptr[4]
+    causeType @8 :Text;  # ptr[5]
+    causeMessage @9 :Text;  # ptr[6]
+    traceback @10 :List(Text);  # ptr[7]
+    enum Outcome @0x95d99bd09af8ff66 {
+      none @0;
+      completed @1;
+      stopped @2;
+      failed @3;
+    }
+    enum Phase @0x8acbeab2dd78c711 {
       unknown @0;
       config @1;
       read @2;

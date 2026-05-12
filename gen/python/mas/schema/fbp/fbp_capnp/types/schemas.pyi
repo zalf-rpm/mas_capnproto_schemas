@@ -88,20 +88,22 @@ type _ProcessDisconnectSchema = (
     modules._ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema
 )
 
-type _ProcessErrorInfoPhaseEnumSchema = (
-    modules._ProcessInterfaceModule._ErrorInfoStructModule._PhaseEnumModule._PhaseSchema
-)
-
-type _ProcessErrorInfoSchema = (
-    modules._ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema
-)
-
 type _ProcessFactorySchema = (
     modules._ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema
 )
 
 type _ProcessProcessHandleSchema = (
     modules._ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema
+)
+
+type _ProcessRunInfoOutcomeEnumSchema = modules._ProcessInterfaceModule._RunInfoStructModule._OutcomeEnumModule._OutcomeSchema
+
+type _ProcessRunInfoPhaseEnumSchema = (
+    modules._ProcessInterfaceModule._RunInfoStructModule._PhaseEnumModule._PhaseSchema
+)
+
+type _ProcessRunInfoSchema = (
+    modules._ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema
 )
 
 type _ProcessSchema = modules._ProcessInterfaceModule._ProcessSchema

@@ -118,8 +118,8 @@ class SetconfigentryResult(Awaitable[None], Protocol): ...
 class StateResult(Awaitable[StateResult], Protocol):
     currentState: enums.ProcessStateEnum
 
-class LasterrorResult(Awaitable[LasterrorResult], Protocol):
-    info: readers.ErrorInfoReader
+class LastrunResult(Awaitable[LastrunResult], Protocol):
+    info: readers.RunInfoReader
 
 class ActivityResult(Awaitable[ActivityResult], Protocol):
     currentActivity: readers.ActivityInfoReader

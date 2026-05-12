@@ -249,12 +249,12 @@ class StateCallContext(Protocol):
     @property
     def results(self) -> results_server.StateServerResult: ...
 
-class LasterrorParams(Protocol): ...
+class LastrunParams(Protocol): ...
 
-class LasterrorCallContext(Protocol):
-    params: LasterrorParams
+class LastrunCallContext(Protocol):
+    params: LastrunParams
     @property
-    def results(self) -> results_server.LasterrorServerResult: ...
+    def results(self) -> results_server.LastrunServerResult: ...
 
 class ActivityParams(Protocol):
     transitionCallback: clients.ActivityTransitionClient

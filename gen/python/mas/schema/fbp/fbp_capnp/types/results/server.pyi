@@ -310,20 +310,20 @@ class StateServerResult(_DynamicStructBuilder):
     @currentState.setter
     def currentState(self, value: enums.ProcessStateEnum) -> None: ...
 
-class LasterrorServerResult(_DynamicStructBuilder):
+class LastrunServerResult(_DynamicStructBuilder):
     @property
-    def info(self) -> builders.ErrorInfoBuilder: ...
+    def info(self) -> builders.RunInfoBuilder: ...
     @info.setter
     def info(
         self,
-        value: builders.ErrorInfoBuilder | readers.ErrorInfoReader | dict[str, Any],
+        value: builders.RunInfoBuilder | readers.RunInfoReader | dict[str, Any],
     ) -> None: ...
     @overload
     def init(
         self,
         field: Literal["info"],
         size: int | None = None,
-    ) -> builders.ErrorInfoBuilder: ...
+    ) -> builders.RunInfoBuilder: ...
     @overload
     def init(self, field: str, size: int | None = None) -> Any: ...
 

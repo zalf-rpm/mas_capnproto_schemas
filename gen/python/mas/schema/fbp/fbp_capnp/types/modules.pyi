@@ -3898,7 +3898,6 @@ class _ProcessInterfaceModule(
         running: int
         stopping: int
         failed: int
-        closed: int
 
         class _StateSchema(_EnumSchema): ...
 
@@ -4205,7 +4204,20 @@ class _ProcessInterfaceModule(
     type ActivityTransitionServer = (
         _ProcessInterfaceModule._ActivityTransitionInterfaceModule.Server
     )
-    class _ErrorInfoStructModule(_StructModule):
+    class _RunInfoStructModule(_StructModule):
+        class _OutcomeEnumModule(_EnumModule):
+            none: int
+            completed: int
+            stopped: int
+            failed: int
+
+            class _OutcomeSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ProcessRunInfoOutcomeEnumSchema: ...
+
+        Outcome: _OutcomeEnumModule
         class _PhaseEnumModule(_EnumModule):
             unknown: int
             config: int
@@ -4218,17 +4230,22 @@ class _ProcessInterfaceModule(
 
             @property
             @override
-            def schema(self) -> schemas._ProcessErrorInfoPhaseEnumSchema: ...
+            def schema(self) -> schemas._ProcessRunInfoPhaseEnumSchema: ...
 
         Phase: _PhaseEnumModule
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
-        class _ErrorInfoSchema(_StructSchema):
+        class _RunInfoSchema(_StructSchema):
+            class _OutcomeField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ProcessRunInfoOutcomeEnumSchema: ...
+
             class _PhaseField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> schemas._ProcessErrorInfoPhaseEnumSchema: ...
+                def schema(self) -> schemas._ProcessRunInfoPhaseEnumSchema: ...
 
             class _TracebackField(_StructSchemaField):
                 @property
@@ -4239,7 +4256,7 @@ class _ProcessInterfaceModule(
                 @overload
                 def __getitem__(
                     self,
-                    key: Literal["hasError"],
+                    key: Literal["hasRunInfo"],
                 ) -> _StructSchemaField: ...
                 @overload
                 def __getitem__(
@@ -4254,14 +4271,19 @@ class _ProcessInterfaceModule(
                 @overload
                 def __getitem__(
                     self,
+                    key: Literal["outcome"],
+                ) -> _ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema._OutcomeField: ...
+                @overload
+                def __getitem__(
+                    self,
                     key: Literal["phase"],
-                ) -> _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._PhaseField: ...
+                ) -> _ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema._PhaseField: ...
                 @overload
                 def __getitem__(self, key: Literal["port"]) -> _StructSchemaField: ...
                 @overload
                 def __getitem__(
                     self,
-                    key: Literal["errorType"],
+                    key: Literal["detailType"],
                 ) -> _StructSchemaField: ...
                 @overload
                 def __getitem__(
@@ -4282,7 +4304,7 @@ class _ProcessInterfaceModule(
                 def __getitem__(
                     self,
                     key: Literal["traceback"],
-                ) -> _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._TracebackField: ...
+                ) -> _ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema._TracebackField: ...
                 @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -4291,23 +4313,24 @@ class _ProcessInterfaceModule(
             def fields(
                 self,
             ) -> (
-                _ProcessInterfaceModule._ErrorInfoStructModule._ErrorInfoSchema._Fields
+                _ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema._Fields
             ): ...
 
         @property
         @override
-        def schema(self) -> schemas._ProcessErrorInfoSchema: ...
+        def schema(self) -> schemas._ProcessRunInfoSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
             allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            hasError: bool | None = None,
+            hasRunInfo: bool | None = None,
             processId: str | None = None,
             processName: str | None = None,
-            phase: enums.ProcessErrorInfoPhaseEnum | None = None,
+            outcome: enums.ProcessRunInfoOutcomeEnum | None = None,
+            phase: enums.ProcessRunInfoPhaseEnum | None = None,
             port: str | None = None,
-            errorType: str | None = None,
+            detailType: str | None = None,
             message: str | None = None,
             causeType: str | None = None,
             causeMessage: str | None = None,
@@ -4316,7 +4339,7 @@ class _ProcessInterfaceModule(
             | Sequence[str]
             | None = None,
             **kwargs: object,
-        ) -> builders.ErrorInfoBuilder: ...
+        ) -> builders.RunInfoBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -4324,7 +4347,7 @@ class _ProcessInterfaceModule(
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[readers.ErrorInfoReader]: ...
+        ) -> AbstractContextManager[readers.RunInfoReader]: ...
         @overload
         def from_bytes(
             self,
@@ -4333,7 +4356,7 @@ class _ProcessInterfaceModule(
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[readers.ErrorInfoReader]: ...
+        ) -> AbstractContextManager[readers.RunInfoReader]: ...
         @overload
         def from_bytes(
             self,
@@ -4342,7 +4365,7 @@ class _ProcessInterfaceModule(
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[builders.ErrorInfoBuilder]: ...
+        ) -> AbstractContextManager[builders.RunInfoBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -4356,16 +4379,16 @@ class _ProcessInterfaceModule(
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> readers.ErrorInfoReader: ...
+        ) -> readers.RunInfoReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> readers.ErrorInfoReader: ...
+        ) -> readers.RunInfoReader: ...
 
-    ErrorInfo: _ErrorInfoStructModule
+    RunInfo: _RunInfoStructModule
 
     class _ProcessSchema(_InterfaceSchema):
         class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
@@ -4933,27 +4956,27 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleStateResultSchema: ...
 
-        class _ProcessInterfaceModuleLastErrorParamSchema(_StructSchema):
+        class _ProcessInterfaceModuleLastRunParamSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]): ...
 
             @property
             @override
             def fields(
                 self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorParamSchema._Fields: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunParamSchema._Fields: ...
 
-        class _ProcessInterfaceModuleLastErrorResultSchema(_StructSchema):
+        class _ProcessInterfaceModuleLastRunResultSchema(_StructSchema):
             class _InfoField(_StructSchemaField):
                 @property
                 @override
-                def schema(self) -> schemas._ProcessErrorInfoSchema: ...
+                def schema(self) -> schemas._ProcessRunInfoSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
                 def __getitem__(
                     self,
                     key: Literal["info"],
-                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema._InfoField: ...
+                ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunResultSchema._InfoField: ...
                 @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -4961,19 +4984,19 @@ class _ProcessInterfaceModule(
             @override
             def fields(
                 self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema._Fields: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunResultSchema._Fields: ...
 
-        class _ProcessInterfaceModuleLastErrorMethod(_InterfaceMethod):
+        class _ProcessInterfaceModuleLastRunMethod(_InterfaceMethod):
             @property
             @override
             def param_type(
                 self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorParamSchema: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunParamSchema: ...
             @property
             @override
             def result_type(
                 self,
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorResultSchema: ...
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunResultSchema: ...
 
         class _ProcessInterfaceModuleActivityParamSchema(_StructSchema):
             class _TransitionCallbackField(_StructSchemaField):
@@ -5090,8 +5113,8 @@ class _ProcessInterfaceModule(
             @overload
             def __getitem__(
                 self,
-                key: Literal["lastError"],
-            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastErrorMethod: ...
+                key: Literal["lastRun"],
+            ) -> _ProcessInterfaceModule._ProcessSchema._ProcessInterfaceModuleLastRunMethod: ...
             @overload
             def __getitem__(
                 self,
@@ -5226,20 +5249,20 @@ class _ProcessInterfaceModule(
             self,
             context: contexts.StateCallContext,
         ) -> Awaitable[None]: ...
-        def lastError(
+        def lastRun(
             self,
-            _context: contexts.LasterrorCallContext,
+            _context: contexts.LastrunCallContext,
             **kwargs: object,
         ) -> Awaitable[
-            builders.ErrorInfoBuilder
-            | readers.ErrorInfoReader
+            builders.RunInfoBuilder
+            | readers.RunInfoReader
             | dict[str, Any]
-            | results_tuples.LasterrorResultTuple
+            | results_tuples.LastrunResultTuple
             | None
         ]: ...
-        def lastError_context(
+        def lastRun_context(
             self,
-            context: contexts.LasterrorCallContext,
+            context: contexts.LastrunCallContext,
         ) -> Awaitable[None]: ...
         def activity(
             self,

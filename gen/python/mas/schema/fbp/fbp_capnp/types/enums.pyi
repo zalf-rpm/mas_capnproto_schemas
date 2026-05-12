@@ -16,10 +16,12 @@ type ProcessActivityStateEnum = (
     int | Literal["none", "waitingInput", "processing", "waitingOutput", "closing"]
 )
 
-type ProcessErrorInfoPhaseEnum = (
+type ProcessRunInfoOutcomeEnum = int | Literal["none", "completed", "stopped", "failed"]
+
+type ProcessRunInfoPhaseEnum = (
     int | Literal["unknown", "config", "read", "run", "write", "close"]
 )
 
 type ProcessStateEnum = (
-    int | Literal["idle", "starting", "running", "stopping", "failed", "closed"]
+    int | Literal["idle", "starting", "running", "stopping", "failed"]
 )

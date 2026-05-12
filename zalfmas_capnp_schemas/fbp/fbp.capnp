@@ -329,7 +329,6 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
     running  @2; # actively processing or waiting for input
     stopping @3; # stop requested, shutdown not finished yet
     failed   @4; # last run ended unexpectedly
-    closed   @5; # process capability is shutting down or no longer valid to use
   }
 
   interface StateTransition {
@@ -337,7 +336,7 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   }
 
   enum ActivityState {
-    none          @0; # no active run activity; usually lifecycle state is idle, failed, or closed
+    none          @0; # no active run activity; usually lifecycle state is idle or failed
     waitingInput  @1; # run task is blocked waiting for input
     processing    @2; # run task is executing component logic
     waitingOutput @3; # run task is blocked writing output
@@ -353,17 +352,25 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
     activityChanged @0 (old :ActivityInfo, new :ActivityInfo);
   }
 
-  struct ErrorInfo {
-    hasError     @0 :Bool;
-    processId    @1 :Text;
-    processName  @2 :Text;
-    phase        @3 :Phase;
-    port         @4 :Text;
-    errorType    @5 :Text;
-    message      @6 :Text;
-    causeType    @7 :Text;
-    causeMessage @8 :Text;
-    traceback    @9 :List(Text);
+  struct RunInfo {
+    hasRunInfo    @0 :Bool;
+    processId     @1 :Text;
+    processName   @2 :Text;
+    outcome       @3 :Outcome = none;
+    phase         @4 :Phase = unknown;
+    port          @5 :Text;
+    detailType    @6 :Text;
+    message       @7 :Text;
+    causeType     @8 :Text;
+    causeMessage  @9 :Text;
+    traceback     @10 :List(Text);
+
+    enum Outcome {
+      none      @0; # nothing recorded yet / current run still in progress
+      completed @1; # run() returned normally
+      stopped   @2; # stop() was requested and the run exited cooperatively
+      failed    @3; # run() ended with an error
+    }
 
     enum Phase {
       unknown @0;
@@ -380,8 +387,8 @@ interface Process extends(Common.Identifiable, GatewayRegistrable) {
   # optionally ask for notifications if there's a state transition
   # callbacks emit only the states defined in State
 
-  lastError @9 () -> (info :ErrorInfo);
-  # returns the last error information
+  lastRun @9 () -> (info :RunInfo);
+  # returns information about how the last run ended
 
   activity @10 (transitionCallback :ActivityTransition) -> (currentActivity :ActivityInfo);
   # return current process activity and
