@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.63](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.62...v0.1.63) (2026-05-20)
+
+
+### Features
+
+* add activity state and flag for registering channels at gateway ([434f621](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/434f62109d4596d0f44f7728a6bbc3c34632b8ef))
+* add last error method for a failed process component ([4bcf62c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/4bcf62c984644d721a6db80cdcafc9dfc37adf55))
+* add sys attributs and blob type ([bee84d7](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/bee84d701189db29f6616023950c5ccc2029c63d))
+* extend last error with last run and removed useless closed state ([56b664f](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/56b664f12470c6ca3f6d4e03152b70a8dda40dfc))
+
 ## [0.1.62](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.61...v0.1.62) (2026-05-07)
 
 
