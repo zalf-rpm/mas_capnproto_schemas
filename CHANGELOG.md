@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.64](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.63...v0.1.64) (2026-05-22)
+
+
+### Features
+
+* added csv to StructuredText ([611c0dc](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/611c0dc8f8688886aae3f1ea11b5ea1270b509cc))
+* recompile capnp schemas ([#56](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/56)) ([7a2c42a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/7a2c42a61174725c8ea0b8725e9466fff4e96c15))
+
 ## [0.1.63](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.62...v0.1.63) (2026-05-20)
 
 
