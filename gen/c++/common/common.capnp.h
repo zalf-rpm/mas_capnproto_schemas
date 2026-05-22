@@ -32,6 +32,7 @@ enum class Type_9eebc43e17b5974f: uint16_t {
   XML,
   TOML,
   STURDY_REF,
+  CSV,
 };
 CAPNP_DECLARE_ENUM(Type, 9eebc43e17b5974f);
 CAPNP_DECLARE_SCHEMA(a2b2bec826cd860b);
