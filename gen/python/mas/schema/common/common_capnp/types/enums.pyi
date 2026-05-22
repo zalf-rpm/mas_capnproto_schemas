@@ -3,5 +3,5 @@
 from typing import Literal
 
 type StructuredTextTypeEnum = (
-    int | Literal["unstructured", "json", "xml", "toml", "sturdyRef"]
+    int | Literal["unstructured", "json", "xml", "toml", "sturdyRef", "csv"]
 )

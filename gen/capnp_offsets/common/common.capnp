@@ -21,6 +21,7 @@ struct StructuredText @0xed6c098b67cad454 {  # 8 bytes, 1 ptrs
     xml @2;
     toml @3;
     sturdyRef @4;
+    csv @5;
   }
 }
 struct MimeTypes @0xa2b2bec826cd860b {  # 0 bytes, 0 ptrs

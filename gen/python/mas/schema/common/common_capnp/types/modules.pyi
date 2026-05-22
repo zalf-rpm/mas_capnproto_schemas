@@ -138,6 +138,7 @@ class _StructuredTextStructModule(_StructModule):
         xml: int
         toml: int
         sturdyRef: int
+        csv: int
 
         class _TypeSchema(_EnumSchema): ...
 

@@ -297,6 +297,7 @@ namespace Mas.Schema.Common
             xml,
             toml,
             sturdyRef,
+            csv,
         }
     }
 
