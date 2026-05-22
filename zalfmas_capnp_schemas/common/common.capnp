@@ -33,6 +33,7 @@ struct StructuredText {
     xml             @2;
     toml            @3;
     sturdyRef       @4;
+    csv             @5;
   }
   type @1 :Type = unstructured;
 }
