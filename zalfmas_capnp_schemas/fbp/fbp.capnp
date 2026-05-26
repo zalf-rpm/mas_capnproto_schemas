@@ -20,9 +20,10 @@ struct IP {
   # an FBP information packet
 
   struct KV {
-    key   @0 :Text;
-    desc  @1 :Text; # optional human readable info on what value is
-    value   @2 :AnyPointer;  # would often be a Common.Value
+    key         @0 :Text;
+    desc        @1 :Text; # optional human readable info on what value is
+    value       @2 :AnyPointer;  # would often be a Common.Value
+    valueType   @3 :Text; # Cap'n Proto type id (@0xbf602c...) = path/file.capnp:Type
   }
   attributes @0 :List(KV);
   # key value pair attributes attached to IP additional to main content
