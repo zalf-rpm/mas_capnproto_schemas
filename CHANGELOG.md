@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.65](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.64...v0.1.65) (2026-05-27)
+
+
+### Features
+
+* added field for type of value ([0f6765c](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/0f6765cd98e2181547999bb20adcfadaa26ffced))
+* recompile capnp schemas ([#58](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/58)) ([39c8439](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/39c8439866efa1bc593d2042a2551050913332c9))
+
 ## [0.1.64](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.63...v0.1.64) (2026-05-22)
 
 
