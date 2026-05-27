@@ -1,6 +1,13 @@
 """This is an automatically generated stub for `climate.capnp`."""
 
+from collections.abc import Sequence
+
+from capnp.lib.capnp import _Schema
+
 from mas.schema.climate.climate_capnp import types as types
+
+def get_schema_by_id(schema_id: int) -> _Schema: ...
+def load_capnp_file(path: str, imports: Sequence[str] = ...) -> object: ...
 
 GCM: types.modules._GCMEnumModule
 RCM: types.modules._RCMEnumModule
@@ -40,5 +47,7 @@ __all__ = [
     "Service",
     "TimeSeries",
     "TimeSeriesData",
+    "get_schema_by_id",
+    "load_capnp_file",
     "types",
 ]

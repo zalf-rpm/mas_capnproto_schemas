@@ -3,34 +3,42 @@
 
 from __future__ import annotations
 
-import base64
-
-import capnp
-import schema_capnp
-from capnp.lib.capnp import _EnumModule, _StructModule
-
-capnp.remove_import_hook()
-
-# Embedded compiled schemas (base64-encoded)
-_SCHEMA_NODES = [
-    "EFBQBgb/mz9STtGPDLgAARoAAzEVAgERIUcRWWcAAv9tb2RlbC95aQNlbGRzdGF0L3lpZWxkc3RhdC5jYXBucABREAEB/w1+Io3EGOLPABEZSv2vkoZljX+kERlS/1TQ56A0VrWNABEZOv8ZvrSBH2gqkwARFTr/UmVzdWx0SWQAAAD/UmVzdElucHUAAXQ/UmVzdWx0P091dHB1dFEQAQL/LF+Av575xrkAUSgCAUFAAf9s+bDj/qNejABRPAIBQVQB/+AreSMQf6m+AFFQAgFBYAH/tUQOJgG2MOEAUVwCAUGIAQEMAAARAfL/bWFzOjpzY2gCZW1hOjptb2RlbDo6eWllbB9kc3RhdAAAAQwAABEB2v9tYXMuc2NoZQJtYS5tb2RlbC55aWVsZHN0A2F0AAABDAAAEQFS/3lpZWxkc3RhAAF0AAABDAAAMQEKAv9naXRodWIuYwdvbS96YWxmLXJwbS9tYXNfY2FwbnByb3RvX3NjaGVtYXMvZ2VuL2dvL21vZGVsL3lpZWxkc3RhdAAB",  # model/yieldstat/yieldstat.capnp
-    "EDVQBgb/DX4ijcQY4s8AESAC/5s/Uk7Rjwy4AAABM4QBjAMxFUoBESkHAAARJZcAAf9tb2RlbC95aQRlbGRzdGF0L3lpZWxkc3RhdC5jYXBucDpSZXN1bHRJZAAAUAEBURgBAgAAEUFqAAABARE9UgAAAQIROdoAAAEDET1yAAABBBE5cgAAAQURNXoAAP9wcmltYXJ5WQAPaWVsZP9kcnlNYXR0ZQABcv9jYXJib25JbgJBYm92ZUdyb3VuZEJpb21hA3Nz/3N1bUZlcnRpAB9saXplcv9zdW1JcnJpZwAfYXRpb27/cHJpbWFyeVkAP2llbGRDVQ==",  # model/yieldstat/yieldstat.capnp:ResultId
-    "EN5QBgb9r5KGZY1/pFEgAQP/mz9STtGPDLgABAcAADOOA7cFMRVSAREpBwAAMSXfAgAB/21vZGVsL3lpBGVsZHN0YXQveWllbGRzdGF0LmNhcG5wOlJlc3RJbnB1AXRQAQFRNAMEAAAEAQEBE10BYgAAU1wBAwFTaAECAREBARQBAQEBE2UBegAAU2QBAwFTcAECARECARQBAgEBE20BIgAAU2gBAwFTdAECAREDARQBAwEBE3EBIgAAU2wBAwFTeAECAREEAhQBBAEBE3UBIgAAU3ABAwFTfAECAREFAxQBBQEBE3kBIgAAU3QBAwFTgAECAREGBBQBBgEBE30BMgAAU3gBAwFThAECAREHBRQBBwEBE4EBOgAAU3wBAwFTiAECAREIBhQBCAEBE4UBGgAAU4ABAwFTjAECAREJBxQBCQEBE4kBIgAAU4QBAwFTkAECAREKEBQBCgEBE40BIgAAU4gBAwFTlAECARELERQBCwEBE5EBogAAU5QBAwFToAECAREMAhQBDAEBE50BogAAU6ABAwFTrAECAf91c2VEZXZUcgAHZW5kAQEAAgEBAAH/dXNlQ08ySW4AP2NyZWFzZQEBAAIFAQEAAQdkZ20BCwACAQsAAQdoZnQBBgACAQYAAQduZnQBBgACAQYAAQdzZnQBBgACAQYAAR9zbG9wZQEGAAIBBgABP3N0ZWlubwEGAAIBBgABA2F6AQYAAgEGAAEHa2x6AQYAAgEGAAEHc3R0AQYAAgEGAAH/Z2VybWFuRmUBZGVyYWxTdGEHdGVzAQIAAgUC/wAB/2dldERyeVllAWFyV2F0ZXJOB2VlZAEBAAIBAQAB",  # model/yieldstat/yieldstat.capnp:RestInput
-    "EEtQBgb/VNDnoDRWtY0AUSABAf+bP1JO0Y8MuAAFAgcAADO5Ba4GMRU6ARElFwAAETGvAAH/bW9kZWwveWkDZWxkc3RhdC95aWVsZHN0YXQuY2FwbnA6P1Jlc3VsdFEEAQH/wG8T8NRbNo0AEQFy/1Jlc3VsdFRvAB9WYWx1ZVEMAwQAAAQBAAARRUoAAFFEAwFRUAIBAQEUAQEBARFNSgAAUUwDAVFYAgERAgEUAQIAABFVOgAAUVADAVFsAgH/Y3VsdGl2YXIAAAABDAACAQwAAf9pc05vRGF0YQAAAAEBAAIBAQABP3ZhbHVlcwEOAAFQAwEBEP/AbxPw1Fs2jQAAAQEOAAE=",  # model/yieldstat/yieldstat.capnp:Result
-    "EDRQBgb/wG8T8NRbNo0AUScBAv9U0OegNFa1jQAEBwAAM80FJAYxFaoBES0HAAARKXcAAf9tb2RlbC95aQVlbGRzdGF0L3lpZWxkc3RhdC5jYXBucDpSZXN1bHQuUmVzdWx0VG9WD2FsdWVQAQFRCAMEAAAEAQAAESkaAABRJAMBUTACAREBARQBAQAAES0yAABRKAMBUTQCAQNpZAEP/w1+Io3EGOLPAAABAQ8AAR92YWx1ZQELAAIBCwAB",  # model/yieldstat/yieldstat.capnp:Result.ResultToValue
-    "EFlQBgb/Gb60gR9oKpMAUSABAf+bP1JO0Y8MuAAFAwcAADOwBpcHMRU6ARElFwAAETHnAAH/bW9kZWwveWkDZWxkc3RhdC95aWVsZHN0YXQuY2FwbnA6P091dHB1dFEEAQH/XjqMiDPFCKAAEQFq/1llYXJUb1JlAA9zdWx0URADBAAABAEAABFhGgAAUVwDAVFoAgEBARQBAQEBEWVSAABRZAMBUXACARECARQBAgAAEW06AABRaAMBUXQCAREDAhQBAwAAEXFCAABRbAMBUYgCAQNpZAEMAAIBDAAB/3J1bkZhaWxlAAFkAQEAAgEBAAE/cmVhc29uAQwAAgEMAAF/cmVzdWx0cwEOAAFQAwEBEP9eOoyIM8UIoAAAAQEOAAE=",  # model/yieldstat/yieldstat.capnp:Output
-    "EDRQBgb/XjqMiDPFCKAAUScBAf8ZvrSBH2gqkwAFAQcAADPEBhYHMRWiAREtBwAAESl3AAH/bW9kZWwveWkFZWxkc3RhdC95aWVsZHN0YXQuY2FwbnA6T3V0cHV0LlllYXJUb1Jlcwd1bHRQAQFRCAMEAAAEAQAAESkqAABRJAMBUTACAQEBFAEBAAARLToAAFEoAwFRNAIBD3llYXIBAwACAQMAAT9yZXN1bHQBEP9U0OegNFa1jQAAAQEQAAE=",  # model/yieldstat/yieldstat.capnp:Output.YearToResult
-]
-
 # Load schemas and build module structure
-# Use a shared loader stored on capnp module so capabilities work across schema modules
-if not hasattr(capnp, "_embedded_schema_loader"):
-    capnp._embedded_schema_loader = capnp.SchemaLoader()
-_loader = capnp._embedded_schema_loader
-for _schema_b64 in _SCHEMA_NODES:
-    _schema_data = base64.b64decode(_schema_b64)
-    _node_reader = schema_capnp.Node.from_bytes_packed(_schema_data)
-    _loader.load_dynamic(_node_reader)
+from importlib import import_module
+from typing import cast
+
+from capnp.lib.capnp import SchemaLoader, _EnumModule, _StructModule
+
+
+def _import_schema_bundle() -> object:
+    bundle_module_name = "_capnp_schema_bundle_65374570872b"
+    try:
+        return import_module(bundle_module_name)
+    except ModuleNotFoundError as error:
+        original_error = error
+        package_name = __package__
+
+    while package_name:
+        try:
+            return import_module(f"{package_name}.{bundle_module_name}")
+        except ModuleNotFoundError:
+            package_name = package_name.rpartition(".")[0]
+
+    raise original_error
+
+
+_schema_bundle = _import_schema_bundle()
+
+
+def get_schema_by_id(schema_id: int) -> object:
+    return cast("object", _schema_bundle.get_schema_by_id(schema_id))
+
+
+def load_capnp_file(path: str, imports: list[str] | tuple[str, ...] = ()) -> object:
+    return cast("object", _schema_bundle.load_capnp_file(path, imports))
+
+
+_loader: SchemaLoader = cast("SchemaLoader", _schema_bundle.get_schema_loader())
 
 # Build module structure inline
 
