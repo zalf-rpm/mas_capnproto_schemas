@@ -119,6 +119,7 @@ namespace Mas.Schema.Fbp
                 Key = reader.Key;
                 Desc = reader.Desc;
                 Value = CapnpSerializable.Create<object>(reader.Value);
+                ValueType = reader.ValueType;
                 applyDefaults();
             }
 
@@ -127,6 +128,7 @@ namespace Mas.Schema.Fbp
                 writer.Key = Key;
                 writer.Desc = Desc;
                 writer.Value.SetObject(Value);
+                writer.ValueType = ValueType;
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -139,6 +141,7 @@ namespace Mas.Schema.Fbp
             public string Key { get; set; }
             public string Desc { get; set; }
             public object Value { get; set; }
+            public string ValueType { get; set; }
 
             public struct READER
             {
@@ -158,13 +161,14 @@ namespace Mas.Schema.Fbp
                 public string Key => ctx.ReadText(0, null);
                 public string Desc => ctx.ReadText(1, null);
                 public DeserializerState Value => ctx.StructReadPointer(2);
+                public string ValueType => ctx.ReadText(3, null);
             }
 
             public class WRITER : SerializerState
             {
                 public WRITER()
                 {
-                    this.SetStruct(0, 3);
+                    this.SetStruct(0, 4);
                 }
 
                 public string Key
@@ -181,6 +185,11 @@ namespace Mas.Schema.Fbp
                 {
                     get => BuildPointer<DynamicSerializerState>(2);
                     set => Link(2, value);
+                }
+                public string ValueType
+                {
+                    get => this.ReadText(3, null);
+                    set => this.WriteText(3, value, null);
                 }
             }
         }

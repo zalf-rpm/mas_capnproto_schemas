@@ -9,10 +9,11 @@ struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 3 ptrs
   type @2 :Type;  # bits[0, 16)
   content @1 :AnyPointer;  # ptr[1]
   sysAttributes @3 :SysAttributes;  # ptr[2]
-  struct KV @0x9e9e5391e0c499e6 {  # 0 bytes, 3 ptrs
+  struct KV @0x9e9e5391e0c499e6 {  # 0 bytes, 4 ptrs
     key @0 :Text;  # ptr[0]
     desc @1 :Text;  # ptr[1]
     value @2 :AnyPointer;  # ptr[2]
+    valueType @3 :Text;  # ptr[3]
   }
   enum Type @0xf684cae29bdc484e {
     standard @0;

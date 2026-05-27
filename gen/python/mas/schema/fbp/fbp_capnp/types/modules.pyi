@@ -68,6 +68,11 @@ class _IPStructModule(_StructModule):
                 @overload
                 def __getitem__(self, key: Literal["value"]) -> _StructSchemaField: ...
                 @overload
+                def __getitem__(
+                    self,
+                    key: Literal["valueType"],
+                ) -> _StructSchemaField: ...
+                @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
             @property
@@ -85,6 +90,7 @@ class _IPStructModule(_StructModule):
             key: str | None = None,
             desc: str | None = None,
             value: common.AnyPointer | None = None,
+            valueType: str | None = None,
             **kwargs: object,
         ) -> builders.KVBuilder: ...
         @override

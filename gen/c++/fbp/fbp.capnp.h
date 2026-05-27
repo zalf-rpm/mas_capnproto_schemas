@@ -227,7 +227,7 @@ struct IP::KV {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(9e9e5391e0c499e6, 0, 3)
+    CAPNP_DECLARE_STRUCT_HEADER(9e9e5391e0c499e6, 0, 4)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2184,6 +2184,9 @@ public:
   inline bool hasValue() const;
   inline ::capnp::AnyPointer::Reader getValue() const;
 
+  inline bool hasValueType() const;
+  inline  ::capnp::Text::Reader getValueType() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -2229,6 +2232,13 @@ public:
   inline bool hasValue();
   inline ::capnp::AnyPointer::Builder getValue();
   inline ::capnp::AnyPointer::Builder initValue();
+
+  inline bool hasValueType();
+  inline  ::capnp::Text::Builder getValueType();
+  inline void setValueType( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initValueType(unsigned int size);
+  inline void adoptValueType(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownValueType();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -10982,6 +10992,40 @@ inline ::capnp::AnyPointer::Builder IP::KV::Builder::initValue() {
       ::capnp::bounded<2>() * ::capnp::POINTERS));
   result.clear();
   return result;
+}
+
+inline bool IP::KV::Reader::hasValueType() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline bool IP::KV::Builder::hasValueType() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader IP::KV::Reader::getValueType() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder IP::KV::Builder::getValueType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline void IP::KV::Builder::setValueType( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder IP::KV::Builder::initValueType(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+}
+inline void IP::KV::Builder::adoptValueType(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> IP::KV::Builder::disownValueType() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
 }
 
 inline  ::uint64_t IP::ChunkedData::Reader::getChunkCount() const {
