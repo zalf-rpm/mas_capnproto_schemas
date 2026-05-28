@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.66](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.65...v0.1.66) (2026-05-28)
+
+
+### Features
+
+* try completely bundled schemas not per file and expose some helpers on modules ([abad4a3](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/abad4a3da1dc9d3ada67358314b6323916d2692b))
+
+
+### Bug Fixes
+
+* include all the outputs to also get the generated bundle file ([3b69daf](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/3b69daf226592fda2ffae8c05b447b051dc8f987))
+
 ## [0.1.65](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.64...v0.1.65) (2026-05-27)
 
 
