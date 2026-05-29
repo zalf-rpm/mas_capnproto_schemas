@@ -2,3 +2,4 @@ __pycache__
 _cmake_debug
 dist
 .venv
+/.pixi/envs/default
