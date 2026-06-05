@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.67](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.66...v0.1.67) (2026-06-05)
+
+
+### Features
+
+* properly install pixi dependencies with dev group and so on ([b6b299a](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/b6b299abdc9a806b5afd104361a4d28cea2b22fb))
+* switch to hatchling allow python 3.14 and updte deps ([29d806d](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/29d806d6f31c07bc1f8c69d6f004cf209d6bf365))
+
 ## [0.1.66](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.65...v0.1.66) (2026-05-28)
 
 
