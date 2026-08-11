@@ -182,6 +182,8 @@ struct MonicaModelState {
 }
 
 struct CropModuleState {
+    cropParams                                  @233    :Params.CropParameters;
+    perennialCropParams                         @234    :Params.CropParameters;
     frostKillOn                                 @0      :Bool;
     speciesParams                               @228    :Params.SpeciesParameters;
     cultivarParams                              @229    :Params.CultivarParameters;
