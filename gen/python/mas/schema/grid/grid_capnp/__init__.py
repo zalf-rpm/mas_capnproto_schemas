@@ -11,7 +11,7 @@ from capnp.lib.capnp import SchemaLoader, _EnumModule, _InterfaceModule, _Struct
 
 
 def _import_schema_bundle() -> object:
-    bundle_module_name = "_capnp_schema_bundle_65374570872b"
+    bundle_module_name = "_capnp_schema_bundle_b45e9cb539b9"
     try:
         return import_module(bundle_module_name)
     except ModuleNotFoundError as error:

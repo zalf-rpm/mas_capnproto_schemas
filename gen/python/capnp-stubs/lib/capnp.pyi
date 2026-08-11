@@ -16,6 +16,7 @@ from capnp._internal import CapnpTypesModule as _CapnpTypesModule
 from capnp._internal import (
     Server as _Server,
 )
+
 from mas.schema.climate import climate_capnp
 from mas.schema.cluster import cluster_admin_service_capnp
 from mas.schema.common import common_capnp, date_capnp

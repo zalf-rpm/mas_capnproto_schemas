@@ -2081,12 +2081,12 @@ type CropModuleState capnp.Struct
 const CropModuleState_TypeID = 0x811d54ac7debc21e
 
 func NewCropModuleState(s *capnp.Segment) (CropModuleState, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 50})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 52})
 	return CropModuleState(st), err
 }
 
 func NewRootCropModuleState(s *capnp.Segment) (CropModuleState, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 50})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 52})
 	return CropModuleState(st), err
 }
 
@@ -2122,6 +2122,54 @@ func (s CropModuleState) Message() *capnp.Message {
 func (s CropModuleState) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
+func (s CropModuleState) CropParams() (CropParameters, error) {
+	p, err := capnp.Struct(s).Ptr(50)
+	return CropParameters(p.Struct()), err
+}
+
+func (s CropModuleState) HasCropParams() bool {
+	return capnp.Struct(s).HasPtr(50)
+}
+
+func (s CropModuleState) SetCropParams(v CropParameters) error {
+	return capnp.Struct(s).SetPtr(50, capnp.Struct(v).ToPtr())
+}
+
+// NewCropParams sets the cropParams field to a newly
+// allocated CropParameters struct, preferring placement in s's segment.
+func (s CropModuleState) NewCropParams() (CropParameters, error) {
+	ss, err := NewCropParameters(capnp.Struct(s).Segment())
+	if err != nil {
+		return CropParameters{}, err
+	}
+	err = capnp.Struct(s).SetPtr(50, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+func (s CropModuleState) PerennialCropParams() (CropParameters, error) {
+	p, err := capnp.Struct(s).Ptr(51)
+	return CropParameters(p.Struct()), err
+}
+
+func (s CropModuleState) HasPerennialCropParams() bool {
+	return capnp.Struct(s).HasPtr(51)
+}
+
+func (s CropModuleState) SetPerennialCropParams(v CropParameters) error {
+	return capnp.Struct(s).SetPtr(51, capnp.Struct(v).ToPtr())
+}
+
+// NewPerennialCropParams sets the perennialCropParams field to a newly
+// allocated CropParameters struct, preferring placement in s's segment.
+func (s CropModuleState) NewPerennialCropParams() (CropParameters, error) {
+	ss, err := NewCropParameters(capnp.Struct(s).Segment())
+	if err != nil {
+		return CropParameters{}, err
+	}
+	err = capnp.Struct(s).SetPtr(51, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
 func (s CropModuleState) FrostKillOn() bool {
 	return capnp.Struct(s).Bit(0)
 }
@@ -4746,7 +4794,7 @@ type CropModuleState_List = capnp.StructList[CropModuleState]
 
 // NewCropModuleState creates a new list of CropModuleState.
 func NewCropModuleState_List(s *capnp.Segment, sz int32) (CropModuleState_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 50}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 1248, PointerCount: 52}, sz)
 	return capnp.StructList[CropModuleState](l), err
 }
 
@@ -4756,6 +4804,12 @@ type CropModuleState_Future struct{ *capnp.Future }
 func (f CropModuleState_Future) Struct() (CropModuleState, error) {
 	p, err := f.Future.Ptr()
 	return CropModuleState(p.Struct()), err
+}
+func (p CropModuleState_Future) CropParams() CropParameters_Future {
+	return CropParameters_Future{Future: p.Future.Field(50, nil)}
+}
+func (p CropModuleState_Future) PerennialCropParams() CropParameters_Future {
+	return CropParameters_Future{Future: p.Future.Field(51, nil)}
 }
 func (p CropModuleState_Future) SpeciesParams() SpeciesParameters_Future {
 	return SpeciesParameters_Future{Future: p.Future.Field(47, nil)}

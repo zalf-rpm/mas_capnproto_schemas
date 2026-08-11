@@ -1935,6 +1935,12 @@ namespace Mas.Schema.Model.Monica
             IsWinterCrop = reader.IsWinterCrop;
             StemElongationEventFired = reader.StemElongationEventFired;
             Lt50m = reader.Lt50m;
+            CropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(
+                reader.CropParams
+            );
+            PerennialCropParams = CapnpSerializable.Create<Mas.Schema.Model.Monica.CropParameters>(
+                reader.PerennialCropParams
+            );
             applyDefaults();
         }
 
@@ -2187,6 +2193,8 @@ namespace Mas.Schema.Model.Monica
             writer.IsWinterCrop = IsWinterCrop;
             writer.StemElongationEventFired = StemElongationEventFired;
             writer.Lt50m = Lt50m;
+            CropParams?.serialize(writer.CropParams);
+            PerennialCropParams?.serialize(writer.PerennialCropParams);
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -2430,6 +2438,8 @@ namespace Mas.Schema.Model.Monica
         public bool IsWinterCrop { get; set; }
         public bool StemElongationEventFired { get; set; }
         public double Lt50m { get; set; } = -3;
+        public Mas.Schema.Model.Monica.CropParameters CropParams { get; set; }
+        public Mas.Schema.Model.Monica.CropParameters PerennialCropParams { get; set; }
 
         public struct READER
         {
@@ -2744,13 +2754,19 @@ namespace Mas.Schema.Model.Monica
             public bool IsWinterCrop => ctx.ReadDataBool(7285UL, false);
             public bool StemElongationEventFired => ctx.ReadDataBool(7286UL, false);
             public double Lt50m => ctx.ReadDataDouble(9920UL, -3);
+            public Mas.Schema.Model.Monica.CropParameters.READER CropParams =>
+                ctx.ReadStruct(50, Mas.Schema.Model.Monica.CropParameters.READER.create);
+            public bool HasCropParams => ctx.IsStructFieldNonNull(50);
+            public Mas.Schema.Model.Monica.CropParameters.READER PerennialCropParams =>
+                ctx.ReadStruct(51, Mas.Schema.Model.Monica.CropParameters.READER.create);
+            public bool HasPerennialCropParams => ctx.IsStructFieldNonNull(51);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(156, 50);
+                this.SetStruct(156, 52);
             }
 
             public bool FrostKillOn
@@ -3937,6 +3953,16 @@ namespace Mas.Schema.Model.Monica
             {
                 get => this.ReadDataDouble(9920UL, -3);
                 set => this.WriteData(9920UL, value, -3);
+            }
+            public Mas.Schema.Model.Monica.CropParameters.WRITER CropParams
+            {
+                get => BuildPointer<Mas.Schema.Model.Monica.CropParameters.WRITER>(50);
+                set => Link(50, value);
+            }
+            public Mas.Schema.Model.Monica.CropParameters.WRITER PerennialCropParams
+            {
+                get => BuildPointer<Mas.Schema.Model.Monica.CropParameters.WRITER>(51);
+                set => Link(51, value);
             }
         }
     }
