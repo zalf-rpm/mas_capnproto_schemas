@@ -448,6 +448,20 @@ class _CropModuleStateStructModule(_StructModule):
                 self,
             ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropResidueParametersSchema: ...
 
+        class _CropParamsField(_StructSchemaField):
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropParametersSchema: ...
+
+        class _PerennialCropParamsField(_StructSchemaField):
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _mas_schema_model_monica_monica_params_capnp_schemas._CropParametersSchema: ...
+
         class _Fields(dict[str, _StructSchemaField]):
             @overload
             def __getitem__(
@@ -1583,6 +1597,18 @@ class _CropModuleStateStructModule(_StructModule):
             @overload
             def __getitem__(self, key: Literal["lt50m"]) -> _StructSchemaField: ...
             @overload
+            def __getitem__(
+                self,
+                key: Literal["cropParams"],
+            ) -> (
+                _CropModuleStateStructModule._CropModuleStateSchema._CropParamsField
+            ): ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["perennialCropParams"],
+            ) -> _CropModuleStateStructModule._CropModuleStateSchema._PerennialCropParamsField: ...
+            @overload
             def __getitem__(self, key: str) -> _StructSchemaField: ...
 
         @property
@@ -1981,6 +2007,14 @@ class _CropModuleStateStructModule(_StructModule):
         isWinterCrop: bool | None = None,
         stemElongationEventFired: bool | None = None,
         lt50m: float | None = None,
+        cropParams: CropParametersBuilder
+        | CropParametersReader
+        | dict[str, Any]
+        | None = None,
+        perennialCropParams: CropParametersBuilder
+        | CropParametersReader
+        | dict[str, Any]
+        | None = None,
         **kwargs: object,
     ) -> builders.CropModuleStateBuilder: ...
     @override

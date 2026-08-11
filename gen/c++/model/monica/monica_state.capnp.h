@@ -195,7 +195,7 @@ struct CropModuleState {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(811d54ac7debc21e, 156, 50)
+    CAPNP_DECLARE_STRUCT_HEADER(811d54ac7debc21e, 156, 52)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -2241,6 +2241,12 @@ public:
 
   inline double getLt50m() const;
 
+  inline bool hasCropParams() const;
+  inline  ::mas::schema::model::monica::CropParameters::Reader getCropParams() const;
+
+  inline bool hasPerennialCropParams() const;
+  inline  ::mas::schema::model::monica::CropParameters::Reader getPerennialCropParams() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -3209,6 +3215,20 @@ public:
   inline double getLt50m();
   inline void setLt50m(double value);
 
+  inline bool hasCropParams();
+  inline  ::mas::schema::model::monica::CropParameters::Builder getCropParams();
+  inline void setCropParams( ::mas::schema::model::monica::CropParameters::Reader value);
+  inline  ::mas::schema::model::monica::CropParameters::Builder initCropParams();
+  inline void adoptCropParams(::capnp::Orphan< ::mas::schema::model::monica::CropParameters>&& value);
+  inline ::capnp::Orphan< ::mas::schema::model::monica::CropParameters> disownCropParams();
+
+  inline bool hasPerennialCropParams();
+  inline  ::mas::schema::model::monica::CropParameters::Builder getPerennialCropParams();
+  inline void setPerennialCropParams( ::mas::schema::model::monica::CropParameters::Reader value);
+  inline  ::mas::schema::model::monica::CropParameters::Builder initPerennialCropParams();
+  inline void adoptPerennialCropParams(::capnp::Orphan< ::mas::schema::model::monica::CropParameters>&& value);
+  inline ::capnp::Orphan< ::mas::schema::model::monica::CropParameters> disownPerennialCropParams();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -3234,6 +3254,8 @@ public:
   inline  ::mas::schema::model::monica::SpeciesParameters::Pipeline getSpeciesParams();
   inline  ::mas::schema::model::monica::CultivarParameters::Pipeline getCultivarParams();
   inline  ::mas::schema::model::monica::CropResidueParameters::Pipeline getResidueParams();
+  inline  ::mas::schema::model::monica::CropParameters::Pipeline getCropParams();
+  inline  ::mas::schema::model::monica::CropParameters::Pipeline getPerennialCropParams();
 private:
   ::capnp::AnyPointer::Pipeline _typeless;
   friend class ::capnp::PipelineHook;
@@ -11886,6 +11908,84 @@ inline double CropModuleState::Builder::getLt50m() {
 inline void CropModuleState::Builder::setLt50m(double value) {
   _builder.setDataField<double>(
       ::capnp::bounded<155>() * ::capnp::ELEMENTS, value, 13837309855095848960ull);
+}
+
+inline bool CropModuleState::Reader::hasCropParams() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS).isNull();
+}
+inline bool CropModuleState::Builder::hasCropParams() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::model::monica::CropParameters::Reader CropModuleState::Reader::getCropParams() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::get(_reader.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::model::monica::CropParameters::Builder CropModuleState::Builder::getCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::get(_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::model::monica::CropParameters::Pipeline CropModuleState::Pipeline::getCropParams() {
+  return  ::mas::schema::model::monica::CropParameters::Pipeline(_typeless.getPointerField(50));
+}
+#endif  // !CAPNP_LITE
+inline void CropModuleState::Builder::setCropParams( ::mas::schema::model::monica::CropParameters::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::set(_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::model::monica::CropParameters::Builder CropModuleState::Builder::initCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::init(_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS));
+}
+inline void CropModuleState::Builder::adoptCropParams(
+    ::capnp::Orphan< ::mas::schema::model::monica::CropParameters>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::adopt(_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::model::monica::CropParameters> CropModuleState::Builder::disownCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::disown(_builder.getPointerField(
+      ::capnp::bounded<50>() * ::capnp::POINTERS));
+}
+
+inline bool CropModuleState::Reader::hasPerennialCropParams() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS).isNull();
+}
+inline bool CropModuleState::Builder::hasPerennialCropParams() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS).isNull();
+}
+inline  ::mas::schema::model::monica::CropParameters::Reader CropModuleState::Reader::getPerennialCropParams() const {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::get(_reader.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS));
+}
+inline  ::mas::schema::model::monica::CropParameters::Builder CropModuleState::Builder::getPerennialCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::get(_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::mas::schema::model::monica::CropParameters::Pipeline CropModuleState::Pipeline::getPerennialCropParams() {
+  return  ::mas::schema::model::monica::CropParameters::Pipeline(_typeless.getPointerField(51));
+}
+#endif  // !CAPNP_LITE
+inline void CropModuleState::Builder::setPerennialCropParams( ::mas::schema::model::monica::CropParameters::Reader value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::set(_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS), value);
+}
+inline  ::mas::schema::model::monica::CropParameters::Builder CropModuleState::Builder::initPerennialCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::init(_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS));
+}
+inline void CropModuleState::Builder::adoptPerennialCropParams(
+    ::capnp::Orphan< ::mas::schema::model::monica::CropParameters>&& value) {
+  ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::adopt(_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::mas::schema::model::monica::CropParameters> CropModuleState::Builder::disownPerennialCropParams() {
+  return ::capnp::_::PointerHelpers< ::mas::schema::model::monica::CropParameters>::disown(_builder.getPointerField(
+      ::capnp::bounded<51>() * ::capnp::POINTERS));
 }
 
 inline double SnowModuleState::Reader::getSnowRetentionCapacityMax() const {
