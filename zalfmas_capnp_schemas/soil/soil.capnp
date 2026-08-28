@@ -45,7 +45,7 @@ enum PropertyName {
   permanentWiltingPoint             @11; # [vol%]
   saturation                        @12; # [vol%]
 
-  soilMoisture                      @13; # [%] initial soil moisture in this layer
+  soilMoisture                      @13; # [vol%] initial soil moisture in this layer
 
   soilWaterConductivityCoefficient  @14; # [] lambda value
 
