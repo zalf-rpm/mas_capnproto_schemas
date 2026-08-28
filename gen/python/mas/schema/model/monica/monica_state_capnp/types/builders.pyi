@@ -1220,6 +1220,20 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
     def lt50m(self) -> float: ...
     @lt50m.setter
     def lt50m(self, value: float) -> None: ...
+    @property
+    def cropParams(self) -> CropParametersBuilder: ...
+    @cropParams.setter
+    def cropParams(
+        self,
+        value: CropParametersBuilder | CropParametersReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def perennialCropParams(self) -> CropParametersBuilder: ...
+    @perennialCropParams.setter
+    def perennialCropParams(
+        self,
+        value: CropParametersBuilder | CropParametersReader | dict[str, Any],
+    ) -> None: ...
     @override
     @overload
     def init(
@@ -1263,6 +1277,18 @@ class CropModuleStateBuilder(_DynamicStructBuilder):
         field: Literal["residueParams"],
         size: int | None = None,
     ) -> CropResidueParametersBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["cropParams"],
+        size: int | None = None,
+    ) -> CropParametersBuilder: ...
+    @overload
+    def init(
+        self,
+        field: Literal["perennialCropParams"],
+        size: int | None = None,
+    ) -> CropParametersBuilder: ...
     @overload
     def init(
         self,

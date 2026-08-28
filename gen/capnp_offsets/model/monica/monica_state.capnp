@@ -133,7 +133,9 @@ struct MonicaModelState @0xab56969492d293b3 {  # 144 bytes, 15 ptrs
     value @1 :Float64;  # bits[64, 128)
   }
 }
-struct CropModuleState @0x811d54ac7debc21e {  # 1248 bytes, 50 ptrs
+struct CropModuleState @0x811d54ac7debc21e {  # 1248 bytes, 52 ptrs
+  cropParams @234 :import "/model/monica/monica_params.capnp".CropParameters;  # ptr[50]
+  perennialCropParams @235 :import "/model/monica/monica_params.capnp".CropParameters;  # ptr[51]
   frostKillOn @0 :Bool;  # bits[0, 1)
   speciesParams @228 :import "/model/monica/monica_params.capnp".SpeciesParameters;  # ptr[47]
   cultivarParams @229 :import "/model/monica/monica_params.capnp".CultivarParameters;  # ptr[48]
