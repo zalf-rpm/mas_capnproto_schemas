@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.69](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.68...v0.1.69) (2026-09-24)
+
+
+### Features
+
+* leased reads, observation and pause/step for channels ([#63](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/63)) ([84b1251](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/84b125134e63d3bb50d12f0a0bf652e9eded28ed))
+* recompile capnp schemas ([#65](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/65)) ([f0578d8](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/f0578d8ac8390627d613bc71fb0a67525294fd83))
+
 ## [0.1.68](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.67...v0.1.68) (2026-08-11)
 
 
