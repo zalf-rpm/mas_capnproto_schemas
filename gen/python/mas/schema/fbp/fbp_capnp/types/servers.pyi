@@ -12,6 +12,12 @@ DisconnectServer = modules._ProcessInterfaceModule._DisconnectInterfaceModule.Se
 
 FactoryServer = modules._ProcessInterfaceModule._FactoryInterfaceModule.Server
 
+LeaseServer = (
+    modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule.Server
+)
+
+ObserverServer = modules._ChannelInterfaceModule._ObserverInterfaceModule.Server
+
 ProcessHandleServer = (
     modules._ProcessInterfaceModule._ProcessHandleInterfaceModule.Server
 )
@@ -36,6 +42,6 @@ StoppedCallbackServer = (
     modules._RunnableInterfaceModule._StoppedCallbackInterfaceModule.Server
 )
 
-UnregisterServer = modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
+UnregisterServer = modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
 
 WriterServer = modules._ChannelInterfaceModule._WriterInterfaceModule.Server

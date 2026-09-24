@@ -159,7 +159,37 @@ class StatsReader(_DynamicStructReader):
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
     ) -> builders.StatsBuilder: ...
 
-class ParamsReader(_DynamicStructReader):
+class EventReader(_DynamicStructReader):
+    @property
+    def seqNo(self) -> int: ...
+    @property
+    def timestamp(self) -> str: ...
+    @property
+    def sizeInWords(self) -> int: ...
+    @property
+    def content(self) -> _DynamicObjectReader: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.EventBuilder: ...
+
+class ChannelObserverParamsReader(_DynamicStructReader):
+    @property
+    def everyNth(self) -> int: ...
+    @property
+    def withContent(self) -> bool: ...
+    @property
+    def gate(self) -> bool: ...
+    @override
+    def as_builder(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+    ) -> builders.ChannelObserverParamsBuilder: ...
+
+class StartChannelsServiceParamsReader(_DynamicStructReader):
     @property
     def name(self) -> str: ...
     @property
@@ -181,7 +211,7 @@ class ParamsReader(_DynamicStructReader):
         self,
         num_first_segment_words: int | None = None,
         allocate_seg_callable: Callable[[int], bytearray] | None = None,
-    ) -> builders.ParamsBuilder: ...
+    ) -> builders.StartChannelsServiceParamsBuilder: ...
 
 class NameAndSRReader(_DynamicStructReader):
     @property

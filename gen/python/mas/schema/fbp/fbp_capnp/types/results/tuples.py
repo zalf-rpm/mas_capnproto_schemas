@@ -10,6 +10,10 @@ class EndpointsResultTuple(NamedTuple):
     w: object
 
 
+class ObserveResultTuple(NamedTuple):
+    unregister: object
+
+
 class ReaderResultTuple(NamedTuple):
     r: object
 
@@ -18,8 +22,16 @@ class RegisterstatscallbackResultTuple(NamedTuple):
     unregisterCallback: object
 
 
+class StepResultTuple(NamedTuple):
+    delivered: object
+
+
 class WriterResultTuple(NamedTuple):
     w: object
+
+
+class ChannelObserverUnregisterUnregResultTuple(NamedTuple):
+    success: object
 
 
 class ReadResultTuple(NamedTuple):
@@ -34,7 +46,12 @@ class ReadifmsgResultTuple(NamedTuple):
     noMsg: object
 
 
-class UnregResultTuple(NamedTuple):
+class ReadleasedResultTuple(NamedTuple):
+    msg: object
+    lease: object
+
+
+class ChannelStatsCallbackUnregisterUnregResultTuple(NamedTuple):
     success: object
 
 
@@ -124,6 +141,8 @@ class StartChannelsServiceStartResultTuple(NamedTuple):
 __all__ = [
     "ActivityResultTuple",
     "AliveResultTuple",
+    "ChannelObserverUnregisterUnregResultTuple",
+    "ChannelStatsCallbackUnregisterUnregResultTuple",
     "ConfigentriesResultTuple",
     "ConnectinportResultTuple",
     "ConnectoutportResultTuple",
@@ -131,6 +150,7 @@ __all__ = [
     "EndpointsResultTuple",
     "InportsResultTuple",
     "LastrunResultTuple",
+    "ObserveResultTuple",
     "OutportsResultTuple",
     "ProcessFactoryCreateResultTuple",
     "ProcessHandleCloseResultTuple",
@@ -140,13 +160,14 @@ __all__ = [
     "ReadResultTuple",
     "ReaderResultTuple",
     "ReadifmsgResultTuple",
+    "ReadleasedResultTuple",
     "RegisterstatscallbackResultTuple",
     "RunnableFactoryCreateResultTuple",
     "RunnableStartResultTuple",
     "RunnableStopResultTuple",
     "StartChannelsServiceStartResultTuple",
     "StateResultTuple",
-    "UnregResultTuple",
+    "StepResultTuple",
     "WriteifspaceResultTuple",
     "WriterResultTuple",
 ]

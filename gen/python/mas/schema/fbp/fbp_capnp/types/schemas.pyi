@@ -8,6 +8,18 @@ type _ChannelCloseSemanticsEnumSchema = (
 
 type _ChannelMsgSchema = modules._ChannelInterfaceModule._MsgStructModule._MsgSchema
 
+type _ChannelObserverEventSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule._EventSchema
+
+type _ChannelObserverParamsSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule._ParamsSchema
+
+type _ChannelObserverSchema = (
+    modules._ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema
+)
+
+type _ChannelObserverUnregisterSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema
+
+type _ChannelReaderLeaseSchema = modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema
+
 type _ChannelReaderSchema = (
     modules._ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema
 )

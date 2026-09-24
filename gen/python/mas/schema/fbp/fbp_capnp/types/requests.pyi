@@ -17,6 +17,9 @@ from mas.schema.fbp.fbp_capnp.types import readers as readers
 from mas.schema.fbp.fbp_capnp.types.results import client as results_client
 from mas.schema.persistence.persistence_capnp.types.builders import SturdyRefBuilder
 
+class AckRequest(Protocol):
+    def send(self) -> results_client.AckResult: ...
+
 class ReadRequest(Protocol):
     def send(self) -> results_client.ReadResult: ...
 
@@ -25,6 +28,9 @@ class ReaderCloseRequest(Protocol):
 
 class ReadifmsgRequest(Protocol):
     def send(self) -> results_client.ReadifmsgResult: ...
+
+class ReadleasedRequest(Protocol):
+    def send(self) -> results_client.ReadleasedResult: ...
 
 class WriteRequest(Protocol):
     @property
@@ -47,8 +53,8 @@ class WriteifspaceRequest(Protocol):
     noMsg: None
     def send(self) -> results_client.WriteifspaceResult: ...
 
-class UnregRequest(Protocol):
-    def send(self) -> results_client.UnregResult: ...
+class ChannelStatsCallbackUnregisterUnregRequest(Protocol):
+    def send(self) -> results_client.ChannelStatsCallbackUnregisterUnregResult: ...
 
 class StatusRequest(Protocol):
     stats: builders.StatsBuilder
@@ -57,6 +63,17 @@ class StatusRequest(Protocol):
     @overload
     def init(self, name: str, size: int = ...) -> Any: ...
     def send(self) -> results_client.StatusResult: ...
+
+class ChannelObserverUnregisterUnregRequest(Protocol):
+    def send(self) -> results_client.ChannelObserverUnregisterUnregResult: ...
+
+class SawRequest(Protocol):
+    event: builders.EventBuilder
+    @overload
+    def init(self, name: Literal["event"]) -> builders.EventBuilder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.SawResult: ...
 
 class SetbuffersizeRequest(Protocol):
     size: int
@@ -86,6 +103,31 @@ class RegisterstatscallbackRequest(Protocol):
     )
     updateIntervalInMs: int
     def send(self) -> results_client.RegisterstatscallbackResult: ...
+
+class ObserveRequest(Protocol):
+    callback: (
+        clients.ObserverClient
+        | modules._ChannelInterfaceModule._ObserverInterfaceModule.Server
+    )
+    params: modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule.Builder
+    @overload
+    def init(
+        self,
+        name: Literal["params"],
+    ) -> modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule.Builder: ...
+    @overload
+    def init(self, name: str, size: int = ...) -> Any: ...
+    def send(self) -> results_client.ObserveResult: ...
+
+class PauseRequest(Protocol):
+    def send(self) -> results_client.PauseResult: ...
+
+class ResumeRequest(Protocol):
+    def send(self) -> results_client.ResumeResult: ...
+
+class StepRequest(Protocol):
+    count: int
+    def send(self) -> results_client.StepResult: ...
 
 class StartChannelsServiceStartRequest(Protocol):
     name: str
