@@ -11,7 +11,7 @@ from capnp.lib.capnp import SchemaLoader, _EnumModule, _InterfaceModule, _Struct
 
 
 def _import_schema_bundle() -> object:
-    bundle_module_name = "_capnp_schema_bundle_b45e9cb539b9"
+    bundle_module_name = "_capnp_schema_bundle_dda839d2776b"
     try:
         return import_module(bundle_module_name)
     except ModuleNotFoundError as error:
@@ -89,6 +89,10 @@ Channel.Reader = _InterfaceModule(
     Channel.schema.methods["reader"].result_type.fields["r"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Reader",
 )
+Channel.Reader.Lease = _InterfaceModule(
+    Channel.Reader.schema.methods["readLeased"].result_type.fields["lease"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Lease",
+)
 Channel.Writer = _InterfaceModule(
     Channel.schema.methods["writer"].result_type.fields["w"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Writer",
@@ -108,6 +112,22 @@ Channel.StatsCallback.Unregister = _InterfaceModule(
     .result_type.fields["unregisterCallback"]
     .schema,  # pyright: ignore[reportUnknownArgumentType]
     "Unregister",
+)
+Channel.Observer = _InterfaceModule(
+    Channel.schema.methods["observe"].param_type.fields["callback"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Observer",
+)
+Channel.Observer.Event = _StructModule(
+    Channel.Observer.schema.methods["saw"].param_type.fields["event"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Event",
+)
+Channel.Observer.Unregister = _InterfaceModule(
+    Channel.schema.methods["observe"].result_type.fields["unregister"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Unregister",
+)
+Channel.Observer.Params = _StructModule(
+    Channel.schema.methods["observe"].param_type.fields["params"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Params",
 )
 StartChannelsService = _InterfaceModule(
     _loader.get(0xD0CD6D829B810229).as_interface(),

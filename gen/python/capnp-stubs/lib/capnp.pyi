@@ -923,13 +923,28 @@ class _DynamicObjectReader:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule,
+    ) -> fbp_capnp.types.clients.ObserverClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelObserverUnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule,
+    ) -> fbp_capnp.types.clients.LeaseClient: ...
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
     ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
     @overload
     def as_interface(
         self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
-    ) -> fbp_capnp.types.clients.UnregisterClient: ...
+    ) -> fbp_capnp.types.clients.ChannelStatsCallbackUnregisterClient: ...
     @overload
     def as_interface(
         self,
@@ -1674,6 +1689,16 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule,
+    ) -> fbp_capnp.types.readers.EventReader: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule,
+    ) -> fbp_capnp.types.readers.ChannelObserverParamsReader: ...
+    @overload
+    def as_struct(
+        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
     ) -> fbp_capnp.types.readers.StatsReader: ...
     @overload
@@ -1950,7 +1975,7 @@ class _DynamicObjectReader:
     def as_struct(
         self,
         schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule._ParamsStructModule,
-    ) -> fbp_capnp.types.readers.ParamsReader: ...
+    ) -> fbp_capnp.types.readers.StartChannelsServiceParamsReader: ...
     @overload
     def as_struct(
         self,
@@ -2974,13 +2999,28 @@ class _DynamicObjectBuilder:
     @overload
     def as_interface(
         self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule,
+    ) -> fbp_capnp.types.clients.ObserverClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelObserverUnregisterClient: ...
+    @overload
+    def as_interface(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule,
+    ) -> fbp_capnp.types.clients.LeaseClient: ...
+    @overload
+    def as_interface(
+        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
     ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
     @overload
     def as_interface(
         self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
-    ) -> fbp_capnp.types.clients.UnregisterClient: ...
+    ) -> fbp_capnp.types.clients.ChannelStatsCallbackUnregisterClient: ...
     @overload
     def as_interface(
         self,
@@ -3728,6 +3768,16 @@ class _DynamicObjectBuilder:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule,
+    ) -> fbp_capnp.types.builders.EventBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule,
+    ) -> fbp_capnp.types.builders.ChannelObserverParamsBuilder: ...
+    @overload
+    def as_struct(
+        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule,
     ) -> fbp_capnp.types.builders.StatsBuilder: ...
     @overload
@@ -4004,7 +4054,7 @@ class _DynamicObjectBuilder:
     def as_struct(
         self,
         schema: fbp_capnp.types.modules._StartChannelsServiceInterfaceModule._ParamsStructModule,
-    ) -> fbp_capnp.types.builders.ParamsBuilder: ...
+    ) -> fbp_capnp.types.builders.StartChannelsServiceParamsBuilder: ...
     @overload
     def as_struct(
         self,
@@ -5446,13 +5496,28 @@ class _CapabilityClient:
     @overload
     def cast_as(
         self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule,
+    ) -> fbp_capnp.types.clients.ObserverClient: ...
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule,
+    ) -> fbp_capnp.types.clients.ChannelObserverUnregisterClient: ...
+    @overload
+    def cast_as(
+        self,
+        schema: fbp_capnp.types.modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule,
+    ) -> fbp_capnp.types.clients.LeaseClient: ...
+    @overload
+    def cast_as(
+        self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule,
     ) -> fbp_capnp.types.clients.StatsCallbackClient: ...
     @overload
     def cast_as(
         self,
         schema: fbp_capnp.types.modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule,
-    ) -> fbp_capnp.types.clients.UnregisterClient: ...
+    ) -> fbp_capnp.types.clients.ChannelStatsCallbackUnregisterClient: ...
     @overload
     def cast_as(
         self,

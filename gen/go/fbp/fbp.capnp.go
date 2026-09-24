@@ -836,6 +836,86 @@ func (c Channel) RegisterStatsCallback(ctx context.Context, params func(Channel_
 
 }
 
+func (c Channel) Observe(ctx context.Context, params func(Channel_observe_Params) error) (Channel_observe_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      7,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "observe",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 2}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_observe_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_observe_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel) Pause(ctx context.Context, params func(Channel_pause_Params) error) (Channel_pause_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      8,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "pause",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_pause_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_pause_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel) Resume(ctx context.Context, params func(Channel_resume_Params) error) (Channel_resume_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      9,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "resume",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_resume_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_resume_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel) Step(ctx context.Context, params func(Channel_step_Params) error) (Channel_step_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      10,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "step",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 8, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_step_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_step_Results_Future{Future: ans.Future()}, release
+
+}
+
 func (c Channel) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
@@ -963,6 +1043,14 @@ type Channel_Server interface {
 
 	RegisterStatsCallback(context.Context, Channel_registerStatsCallback) error
 
+	Observe(context.Context, Channel_observe) error
+
+	Pause(context.Context, Channel_pause) error
+
+	Resume(context.Context, Channel_resume) error
+
+	Step(context.Context, Channel_step) error
+
 	Info(context.Context, common.Identifiable_info) error
 
 	Save(context.Context, persistence.Persistent_save) error
@@ -984,7 +1072,7 @@ func Channel_ServerToClient(s Channel_Server) Channel {
 // This can be used to create a more complicated Server.
 func Channel_Methods(methods []server.Method, s Channel_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 9)
+		methods = make([]server.Method, 0, 13)
 	}
 
 	methods = append(methods, server.Method{
@@ -1068,6 +1156,54 @@ func Channel_Methods(methods []server.Method, s Channel_Server) []server.Method 
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
 			return s.RegisterStatsCallback(ctx, Channel_registerStatsCallback{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      7,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "observe",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Observe(ctx, Channel_observe{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      8,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "pause",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Pause(ctx, Channel_pause{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      9,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "resume",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Resume(ctx, Channel_resume{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x9c62c32b2ff2b1e8,
+			MethodID:      10,
+			InterfaceName: "fbp/fbp.capnp:Channel",
+			MethodName:    "step",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Step(ctx, Channel_step{call})
 		},
 	})
 
@@ -1215,6 +1351,74 @@ func (c Channel_registerStatsCallback) Args() Channel_registerStatsCallback_Para
 func (c Channel_registerStatsCallback) AllocResults() (Channel_registerStatsCallback_Results, error) {
 	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 1})
 	return Channel_registerStatsCallback_Results(r), err
+}
+
+// Channel_observe holds the state for a server call to Channel.observe.
+// See server.Call for documentation.
+type Channel_observe struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_observe) Args() Channel_observe_Params {
+	return Channel_observe_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_observe) AllocResults() (Channel_observe_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Channel_observe_Results(r), err
+}
+
+// Channel_pause holds the state for a server call to Channel.pause.
+// See server.Call for documentation.
+type Channel_pause struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_pause) Args() Channel_pause_Params {
+	return Channel_pause_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_pause) AllocResults() (Channel_pause_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_pause_Results(r), err
+}
+
+// Channel_resume holds the state for a server call to Channel.resume.
+// See server.Call for documentation.
+type Channel_resume struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_resume) Args() Channel_resume_Params {
+	return Channel_resume_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_resume) AllocResults() (Channel_resume_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_resume_Results(r), err
+}
+
+// Channel_step holds the state for a server call to Channel.step.
+// See server.Call for documentation.
+type Channel_step struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_step) Args() Channel_step_Params {
+	return Channel_step_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_step) AllocResults() (Channel_step_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_step_Results(r), err
 }
 
 // Channel_List is a list of Channel.
@@ -1676,6 +1880,26 @@ func (c Channel_Reader) ReadIfMsg(ctx context.Context, params func(Channel_Reade
 
 }
 
+func (c Channel_Reader) ReadLeased(ctx context.Context, params func(Channel_Reader_readLeased_Params) error) (Channel_Reader_readLeased_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x8bc69192f3bc97cc,
+			MethodID:      3,
+			InterfaceName: "fbp/fbp.capnp:Channel.Reader",
+			MethodName:    "readLeased",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_Reader_readLeased_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_Reader_readLeased_Results_Future{Future: ans.Future()}, release
+
+}
+
 func (c Channel_Reader) Info(ctx context.Context, params func(common.Identifiable_info_Params) error) (common.IdInformation_Future, capnp.ReleaseFunc) {
 
 	s := capnp.Send{
@@ -1795,6 +2019,8 @@ type Channel_Reader_Server interface {
 
 	ReadIfMsg(context.Context, Channel_Reader_readIfMsg) error
 
+	ReadLeased(context.Context, Channel_Reader_readLeased) error
+
 	Info(context.Context, common.Identifiable_info) error
 
 	Save(context.Context, persistence.Persistent_save) error
@@ -1816,7 +2042,7 @@ func Channel_Reader_ServerToClient(s Channel_Reader_Server) Channel_Reader {
 // This can be used to create a more complicated Server.
 func Channel_Reader_Methods(methods []server.Method, s Channel_Reader_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 5)
+		methods = make([]server.Method, 0, 6)
 	}
 
 	methods = append(methods, server.Method{
@@ -1852,6 +2078,18 @@ func Channel_Reader_Methods(methods []server.Method, s Channel_Reader_Server) []
 		},
 		Impl: func(ctx context.Context, call *server.Call) error {
 			return s.ReadIfMsg(ctx, Channel_Reader_readIfMsg{call})
+		},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x8bc69192f3bc97cc,
+			MethodID:      3,
+			InterfaceName: "fbp/fbp.capnp:Channel.Reader",
+			MethodName:    "readLeased",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.ReadLeased(ctx, Channel_Reader_readLeased{call})
 		},
 	})
 
@@ -1933,6 +2171,23 @@ func (c Channel_Reader_readIfMsg) AllocResults() (Channel_Msg, error) {
 	return Channel_Msg(r), err
 }
 
+// Channel_Reader_readLeased holds the state for a server call to Channel_Reader.readLeased.
+// See server.Call for documentation.
+type Channel_Reader_readLeased struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_Reader_readLeased) Args() Channel_Reader_readLeased_Params {
+	return Channel_Reader_readLeased_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_Reader_readLeased) AllocResults() (Channel_Reader_readLeased_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Channel_Reader_readLeased_Results(r), err
+}
+
 // Channel_Reader_List is a list of Channel_Reader.
 type Channel_Reader_List = capnp.CapList[Channel_Reader]
 
@@ -1940,6 +2195,297 @@ type Channel_Reader_List = capnp.CapList[Channel_Reader]
 func NewChannel_Reader_List(s *capnp.Segment, sz int32) (Channel_Reader_List, error) {
 	l, err := capnp.NewPointerList(s, sz)
 	return capnp.CapList[Channel_Reader](l), err
+}
+
+type Channel_Reader_Lease capnp.Client
+
+// Channel_Reader_Lease_TypeID is the unique identifier for the type Channel_Reader_Lease.
+const Channel_Reader_Lease_TypeID = 0xd3c75f69eade4246
+
+func (c Channel_Reader_Lease) Ack(ctx context.Context, params func(Channel_Reader_Lease_ack_Params) error) (Channel_Reader_Lease_ack_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0xd3c75f69eade4246,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Reader.Lease",
+			MethodName:    "ack",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_Reader_Lease_ack_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_Reader_Lease_ack_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel_Reader_Lease) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c Channel_Reader_Lease) String() string {
+	return "Channel_Reader_Lease(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c Channel_Reader_Lease) AddRef() Channel_Reader_Lease {
+	return Channel_Reader_Lease(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c Channel_Reader_Lease) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c Channel_Reader_Lease) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c Channel_Reader_Lease) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (Channel_Reader_Lease) DecodeFromPtr(p capnp.Ptr) Channel_Reader_Lease {
+	return Channel_Reader_Lease(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c Channel_Reader_Lease) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c Channel_Reader_Lease) IsSame(other Channel_Reader_Lease) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c Channel_Reader_Lease) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c Channel_Reader_Lease) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A Channel_Reader_Lease_Server is a Channel_Reader_Lease with a local implementation.
+type Channel_Reader_Lease_Server interface {
+	Ack(context.Context, Channel_Reader_Lease_ack) error
+}
+
+// Channel_Reader_Lease_NewServer creates a new Server from an implementation of Channel_Reader_Lease_Server.
+func Channel_Reader_Lease_NewServer(s Channel_Reader_Lease_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(Channel_Reader_Lease_Methods(nil, s), s, c)
+}
+
+// Channel_Reader_Lease_ServerToClient creates a new Client from an implementation of Channel_Reader_Lease_Server.
+// The caller is responsible for calling Release on the returned Client.
+func Channel_Reader_Lease_ServerToClient(s Channel_Reader_Lease_Server) Channel_Reader_Lease {
+	return Channel_Reader_Lease(capnp.NewClient(Channel_Reader_Lease_NewServer(s)))
+}
+
+// Channel_Reader_Lease_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func Channel_Reader_Lease_Methods(methods []server.Method, s Channel_Reader_Lease_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 1)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xd3c75f69eade4246,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Reader.Lease",
+			MethodName:    "ack",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Ack(ctx, Channel_Reader_Lease_ack{call})
+		},
+	})
+
+	return methods
+}
+
+// Channel_Reader_Lease_ack holds the state for a server call to Channel_Reader_Lease.ack.
+// See server.Call for documentation.
+type Channel_Reader_Lease_ack struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_Reader_Lease_ack) Args() Channel_Reader_Lease_ack_Params {
+	return Channel_Reader_Lease_ack_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_Reader_Lease_ack) AllocResults() (Channel_Reader_Lease_ack_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_Lease_ack_Results(r), err
+}
+
+// Channel_Reader_Lease_List is a list of Channel_Reader_Lease.
+type Channel_Reader_Lease_List = capnp.CapList[Channel_Reader_Lease]
+
+// NewChannel_Reader_Lease_List creates a new list of Channel_Reader_Lease.
+func NewChannel_Reader_Lease_List(s *capnp.Segment, sz int32) (Channel_Reader_Lease_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[Channel_Reader_Lease](l), err
+}
+
+type Channel_Reader_Lease_ack_Params capnp.Struct
+
+// Channel_Reader_Lease_ack_Params_TypeID is the unique identifier for the type Channel_Reader_Lease_ack_Params.
+const Channel_Reader_Lease_ack_Params_TypeID = 0xc32208de3b472a91
+
+func NewChannel_Reader_Lease_ack_Params(s *capnp.Segment) (Channel_Reader_Lease_ack_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_Lease_ack_Params(st), err
+}
+
+func NewRootChannel_Reader_Lease_ack_Params(s *capnp.Segment) (Channel_Reader_Lease_ack_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_Lease_ack_Params(st), err
+}
+
+func ReadRootChannel_Reader_Lease_ack_Params(msg *capnp.Message) (Channel_Reader_Lease_ack_Params, error) {
+	root, err := msg.Root()
+	return Channel_Reader_Lease_ack_Params(root.Struct()), err
+}
+
+func (s Channel_Reader_Lease_ack_Params) String() string {
+	str, _ := text.Marshal(0xc32208de3b472a91, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Reader_Lease_ack_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Reader_Lease_ack_Params) DecodeFromPtr(p capnp.Ptr) Channel_Reader_Lease_ack_Params {
+	return Channel_Reader_Lease_ack_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Reader_Lease_ack_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Reader_Lease_ack_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Reader_Lease_ack_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Reader_Lease_ack_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_Reader_Lease_ack_Params_List is a list of Channel_Reader_Lease_ack_Params.
+type Channel_Reader_Lease_ack_Params_List = capnp.StructList[Channel_Reader_Lease_ack_Params]
+
+// NewChannel_Reader_Lease_ack_Params creates a new list of Channel_Reader_Lease_ack_Params.
+func NewChannel_Reader_Lease_ack_Params_List(s *capnp.Segment, sz int32) (Channel_Reader_Lease_ack_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Reader_Lease_ack_Params](l), err
+}
+
+// Channel_Reader_Lease_ack_Params_Future is a wrapper for a Channel_Reader_Lease_ack_Params promised by a client call.
+type Channel_Reader_Lease_ack_Params_Future struct{ *capnp.Future }
+
+func (f Channel_Reader_Lease_ack_Params_Future) Struct() (Channel_Reader_Lease_ack_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Reader_Lease_ack_Params(p.Struct()), err
+}
+
+type Channel_Reader_Lease_ack_Results capnp.Struct
+
+// Channel_Reader_Lease_ack_Results_TypeID is the unique identifier for the type Channel_Reader_Lease_ack_Results.
+const Channel_Reader_Lease_ack_Results_TypeID = 0xcd8d5922547734b1
+
+func NewChannel_Reader_Lease_ack_Results(s *capnp.Segment) (Channel_Reader_Lease_ack_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_Lease_ack_Results(st), err
+}
+
+func NewRootChannel_Reader_Lease_ack_Results(s *capnp.Segment) (Channel_Reader_Lease_ack_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_Lease_ack_Results(st), err
+}
+
+func ReadRootChannel_Reader_Lease_ack_Results(msg *capnp.Message) (Channel_Reader_Lease_ack_Results, error) {
+	root, err := msg.Root()
+	return Channel_Reader_Lease_ack_Results(root.Struct()), err
+}
+
+func (s Channel_Reader_Lease_ack_Results) String() string {
+	str, _ := text.Marshal(0xcd8d5922547734b1, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Reader_Lease_ack_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Reader_Lease_ack_Results) DecodeFromPtr(p capnp.Ptr) Channel_Reader_Lease_ack_Results {
+	return Channel_Reader_Lease_ack_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Reader_Lease_ack_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Reader_Lease_ack_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Reader_Lease_ack_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Reader_Lease_ack_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_Reader_Lease_ack_Results_List is a list of Channel_Reader_Lease_ack_Results.
+type Channel_Reader_Lease_ack_Results_List = capnp.StructList[Channel_Reader_Lease_ack_Results]
+
+// NewChannel_Reader_Lease_ack_Results creates a new list of Channel_Reader_Lease_ack_Results.
+func NewChannel_Reader_Lease_ack_Results_List(s *capnp.Segment, sz int32) (Channel_Reader_Lease_ack_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Reader_Lease_ack_Results](l), err
+}
+
+// Channel_Reader_Lease_ack_Results_Future is a wrapper for a Channel_Reader_Lease_ack_Results promised by a client call.
+type Channel_Reader_Lease_ack_Results_Future struct{ *capnp.Future }
+
+func (f Channel_Reader_Lease_ack_Results_Future) Struct() (Channel_Reader_Lease_ack_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Reader_Lease_ack_Results(p.Struct()), err
 }
 
 type Channel_Reader_read_Params capnp.Struct
@@ -2200,6 +2746,183 @@ type Channel_Reader_readIfMsg_Params_Future struct{ *capnp.Future }
 func (f Channel_Reader_readIfMsg_Params_Future) Struct() (Channel_Reader_readIfMsg_Params, error) {
 	p, err := f.Future.Ptr()
 	return Channel_Reader_readIfMsg_Params(p.Struct()), err
+}
+
+type Channel_Reader_readLeased_Params capnp.Struct
+
+// Channel_Reader_readLeased_Params_TypeID is the unique identifier for the type Channel_Reader_readLeased_Params.
+const Channel_Reader_readLeased_Params_TypeID = 0xb4ae33a8f72f237b
+
+func NewChannel_Reader_readLeased_Params(s *capnp.Segment) (Channel_Reader_readLeased_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_readLeased_Params(st), err
+}
+
+func NewRootChannel_Reader_readLeased_Params(s *capnp.Segment) (Channel_Reader_readLeased_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Reader_readLeased_Params(st), err
+}
+
+func ReadRootChannel_Reader_readLeased_Params(msg *capnp.Message) (Channel_Reader_readLeased_Params, error) {
+	root, err := msg.Root()
+	return Channel_Reader_readLeased_Params(root.Struct()), err
+}
+
+func (s Channel_Reader_readLeased_Params) String() string {
+	str, _ := text.Marshal(0xb4ae33a8f72f237b, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Reader_readLeased_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Reader_readLeased_Params) DecodeFromPtr(p capnp.Ptr) Channel_Reader_readLeased_Params {
+	return Channel_Reader_readLeased_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Reader_readLeased_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Reader_readLeased_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Reader_readLeased_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Reader_readLeased_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_Reader_readLeased_Params_List is a list of Channel_Reader_readLeased_Params.
+type Channel_Reader_readLeased_Params_List = capnp.StructList[Channel_Reader_readLeased_Params]
+
+// NewChannel_Reader_readLeased_Params creates a new list of Channel_Reader_readLeased_Params.
+func NewChannel_Reader_readLeased_Params_List(s *capnp.Segment, sz int32) (Channel_Reader_readLeased_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Reader_readLeased_Params](l), err
+}
+
+// Channel_Reader_readLeased_Params_Future is a wrapper for a Channel_Reader_readLeased_Params promised by a client call.
+type Channel_Reader_readLeased_Params_Future struct{ *capnp.Future }
+
+func (f Channel_Reader_readLeased_Params_Future) Struct() (Channel_Reader_readLeased_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Reader_readLeased_Params(p.Struct()), err
+}
+
+type Channel_Reader_readLeased_Results capnp.Struct
+
+// Channel_Reader_readLeased_Results_TypeID is the unique identifier for the type Channel_Reader_readLeased_Results.
+const Channel_Reader_readLeased_Results_TypeID = 0xfbfb2c0f9f4e9bf0
+
+func NewChannel_Reader_readLeased_Results(s *capnp.Segment) (Channel_Reader_readLeased_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Channel_Reader_readLeased_Results(st), err
+}
+
+func NewRootChannel_Reader_readLeased_Results(s *capnp.Segment) (Channel_Reader_readLeased_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Channel_Reader_readLeased_Results(st), err
+}
+
+func ReadRootChannel_Reader_readLeased_Results(msg *capnp.Message) (Channel_Reader_readLeased_Results, error) {
+	root, err := msg.Root()
+	return Channel_Reader_readLeased_Results(root.Struct()), err
+}
+
+func (s Channel_Reader_readLeased_Results) String() string {
+	str, _ := text.Marshal(0xfbfb2c0f9f4e9bf0, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Reader_readLeased_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Reader_readLeased_Results) DecodeFromPtr(p capnp.Ptr) Channel_Reader_readLeased_Results {
+	return Channel_Reader_readLeased_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Reader_readLeased_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Reader_readLeased_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Reader_readLeased_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Reader_readLeased_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_Reader_readLeased_Results) Msg() (Channel_Msg, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return Channel_Msg(p.Struct()), err
+}
+
+func (s Channel_Reader_readLeased_Results) HasMsg() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Channel_Reader_readLeased_Results) SetMsg(v Channel_Msg) error {
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+}
+
+// NewMsg sets the msg field to a newly
+// allocated Channel_Msg struct, preferring placement in s's segment.
+func (s Channel_Reader_readLeased_Results) NewMsg() (Channel_Msg, error) {
+	ss, err := NewChannel_Msg(capnp.Struct(s).Segment())
+	if err != nil {
+		return Channel_Msg{}, err
+	}
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+func (s Channel_Reader_readLeased_Results) Lease() Channel_Reader_Lease {
+	p, _ := capnp.Struct(s).Ptr(1)
+	return Channel_Reader_Lease(p.Interface().Client())
+}
+
+func (s Channel_Reader_readLeased_Results) HasLease() bool {
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s Channel_Reader_readLeased_Results) SetLease(v Channel_Reader_Lease) error {
+	if !v.IsValid() {
+		return capnp.Struct(s).SetPtr(1, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
+	return capnp.Struct(s).SetPtr(1, in.ToPtr())
+}
+
+// Channel_Reader_readLeased_Results_List is a list of Channel_Reader_readLeased_Results.
+type Channel_Reader_readLeased_Results_List = capnp.StructList[Channel_Reader_readLeased_Results]
+
+// NewChannel_Reader_readLeased_Results creates a new list of Channel_Reader_readLeased_Results.
+func NewChannel_Reader_readLeased_Results_List(s *capnp.Segment, sz int32) (Channel_Reader_readLeased_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return capnp.StructList[Channel_Reader_readLeased_Results](l), err
+}
+
+// Channel_Reader_readLeased_Results_Future is a wrapper for a Channel_Reader_readLeased_Results promised by a client call.
+type Channel_Reader_readLeased_Results_Future struct{ *capnp.Future }
+
+func (f Channel_Reader_readLeased_Results_Future) Struct() (Channel_Reader_readLeased_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Reader_readLeased_Results(p.Struct()), err
+}
+func (p Channel_Reader_readLeased_Results_Future) Msg() Channel_Msg_Future {
+	return Channel_Msg_Future{Future: p.Future.Field(0, nil)}
+}
+func (p Channel_Reader_readLeased_Results_Future) Lease() Channel_Reader_Lease {
+	return Channel_Reader_Lease(p.Future.Field(1, nil).Client())
 }
 
 type Channel_Writer capnp.Client
@@ -3537,6 +4260,822 @@ func (f Channel_StatsCallback_status_Results_Future) Struct() (Channel_StatsCall
 	return Channel_StatsCallback_status_Results(p.Struct()), err
 }
 
+type Channel_Observer capnp.Client
+
+// Channel_Observer_TypeID is the unique identifier for the type Channel_Observer.
+const Channel_Observer_TypeID = 0x80a21757b0bfd776
+
+func (c Channel_Observer) Saw(ctx context.Context, params func(Channel_Observer_saw_Params) error) (Channel_Observer_saw_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x80a21757b0bfd776,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Observer",
+			MethodName:    "saw",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_Observer_saw_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_Observer_saw_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel_Observer) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c Channel_Observer) String() string {
+	return "Channel_Observer(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c Channel_Observer) AddRef() Channel_Observer {
+	return Channel_Observer(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c Channel_Observer) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c Channel_Observer) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c Channel_Observer) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer) DecodeFromPtr(p capnp.Ptr) Channel_Observer {
+	return Channel_Observer(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c Channel_Observer) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c Channel_Observer) IsSame(other Channel_Observer) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c Channel_Observer) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c Channel_Observer) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A Channel_Observer_Server is a Channel_Observer with a local implementation.
+type Channel_Observer_Server interface {
+	Saw(context.Context, Channel_Observer_saw) error
+}
+
+// Channel_Observer_NewServer creates a new Server from an implementation of Channel_Observer_Server.
+func Channel_Observer_NewServer(s Channel_Observer_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(Channel_Observer_Methods(nil, s), s, c)
+}
+
+// Channel_Observer_ServerToClient creates a new Client from an implementation of Channel_Observer_Server.
+// The caller is responsible for calling Release on the returned Client.
+func Channel_Observer_ServerToClient(s Channel_Observer_Server) Channel_Observer {
+	return Channel_Observer(capnp.NewClient(Channel_Observer_NewServer(s)))
+}
+
+// Channel_Observer_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func Channel_Observer_Methods(methods []server.Method, s Channel_Observer_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 1)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x80a21757b0bfd776,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Observer",
+			MethodName:    "saw",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Saw(ctx, Channel_Observer_saw{call})
+		},
+	})
+
+	return methods
+}
+
+// Channel_Observer_saw holds the state for a server call to Channel_Observer.saw.
+// See server.Call for documentation.
+type Channel_Observer_saw struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_Observer_saw) Args() Channel_Observer_saw_Params {
+	return Channel_Observer_saw_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_Observer_saw) AllocResults() (Channel_Observer_saw_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Observer_saw_Results(r), err
+}
+
+// Channel_Observer_List is a list of Channel_Observer.
+type Channel_Observer_List = capnp.CapList[Channel_Observer]
+
+// NewChannel_Observer_List creates a new list of Channel_Observer.
+func NewChannel_Observer_List(s *capnp.Segment, sz int32) (Channel_Observer_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[Channel_Observer](l), err
+}
+
+type Channel_Observer_Event capnp.Struct
+
+// Channel_Observer_Event_TypeID is the unique identifier for the type Channel_Observer_Event.
+const Channel_Observer_Event_TypeID = 0xd654246116b3daa5
+
+func NewChannel_Observer_Event(s *capnp.Segment) (Channel_Observer_Event, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 2})
+	return Channel_Observer_Event(st), err
+}
+
+func NewRootChannel_Observer_Event(s *capnp.Segment) (Channel_Observer_Event, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 2})
+	return Channel_Observer_Event(st), err
+}
+
+func ReadRootChannel_Observer_Event(msg *capnp.Message) (Channel_Observer_Event, error) {
+	root, err := msg.Root()
+	return Channel_Observer_Event(root.Struct()), err
+}
+
+func (s Channel_Observer_Event) String() string {
+	str, _ := text.Marshal(0xd654246116b3daa5, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_Event) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_Event) DecodeFromPtr(p capnp.Ptr) Channel_Observer_Event {
+	return Channel_Observer_Event(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_Event) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_Event) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_Event) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_Event) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_Observer_Event) SeqNo() uint64 {
+	return capnp.Struct(s).Uint64(0)
+}
+
+func (s Channel_Observer_Event) SetSeqNo(v uint64) {
+	capnp.Struct(s).SetUint64(0, v)
+}
+
+func (s Channel_Observer_Event) Timestamp() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s Channel_Observer_Event) HasTimestamp() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Channel_Observer_Event) TimestampBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s Channel_Observer_Event) SetTimestamp(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+func (s Channel_Observer_Event) SizeInWords() uint64 {
+	return capnp.Struct(s).Uint64(8)
+}
+
+func (s Channel_Observer_Event) SetSizeInWords(v uint64) {
+	capnp.Struct(s).SetUint64(8, v)
+}
+
+func (s Channel_Observer_Event) Content() (capnp.Ptr, error) {
+	return capnp.Struct(s).Ptr(1)
+}
+
+func (s Channel_Observer_Event) HasContent() bool {
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s Channel_Observer_Event) SetContent(v capnp.Ptr) error {
+	return capnp.Struct(s).SetPtr(1, v)
+}
+
+// Channel_Observer_Event_List is a list of Channel_Observer_Event.
+type Channel_Observer_Event_List = capnp.StructList[Channel_Observer_Event]
+
+// NewChannel_Observer_Event creates a new list of Channel_Observer_Event.
+func NewChannel_Observer_Event_List(s *capnp.Segment, sz int32) (Channel_Observer_Event_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 2}, sz)
+	return capnp.StructList[Channel_Observer_Event](l), err
+}
+
+// Channel_Observer_Event_Future is a wrapper for a Channel_Observer_Event promised by a client call.
+type Channel_Observer_Event_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_Event_Future) Struct() (Channel_Observer_Event, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_Event(p.Struct()), err
+}
+func (p Channel_Observer_Event_Future) Content() *capnp.Future {
+	return p.Future.Field(1, nil)
+}
+
+type Channel_Observer_Unregister capnp.Client
+
+// Channel_Observer_Unregister_TypeID is the unique identifier for the type Channel_Observer_Unregister.
+const Channel_Observer_Unregister_TypeID = 0x8971a9561a83228a
+
+func (c Channel_Observer_Unregister) Unreg(ctx context.Context, params func(Channel_Observer_Unregister_unreg_Params) error) (Channel_Observer_Unregister_unreg_Results_Future, capnp.ReleaseFunc) {
+
+	s := capnp.Send{
+		Method: capnp.Method{
+			InterfaceID:   0x8971a9561a83228a,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Observer.Unregister",
+			MethodName:    "unreg",
+		},
+	}
+	if params != nil {
+		s.ArgsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 0}
+		s.PlaceArgs = func(s capnp.Struct) error { return params(Channel_Observer_Unregister_unreg_Params(s)) }
+	}
+
+	ans, release := capnp.Client(c).SendCall(ctx, s)
+	return Channel_Observer_Unregister_unreg_Results_Future{Future: ans.Future()}, release
+
+}
+
+func (c Channel_Observer_Unregister) WaitStreaming() error {
+	return capnp.Client(c).WaitStreaming()
+}
+
+// String returns a string that identifies this capability for debugging
+// purposes.  Its format should not be depended on: in particular, it
+// should not be used to compare clients.  Use IsSame to compare clients
+// for equality.
+func (c Channel_Observer_Unregister) String() string {
+	return "Channel_Observer_Unregister(" + capnp.Client(c).String() + ")"
+}
+
+// AddRef creates a new Client that refers to the same capability as c.
+// If c is nil or has resolved to null, then AddRef returns nil.
+func (c Channel_Observer_Unregister) AddRef() Channel_Observer_Unregister {
+	return Channel_Observer_Unregister(capnp.Client(c).AddRef())
+}
+
+// Release releases a capability reference.  If this is the last
+// reference to the capability, then the underlying resources associated
+// with the capability will be released.
+//
+// Release will panic if c has already been released, but not if c is
+// nil or resolved to null.
+func (c Channel_Observer_Unregister) Release() {
+	capnp.Client(c).Release()
+}
+
+// Resolve blocks until the capability is fully resolved or the Context
+// expires.
+func (c Channel_Observer_Unregister) Resolve(ctx context.Context) error {
+	return capnp.Client(c).Resolve(ctx)
+}
+
+func (c Channel_Observer_Unregister) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Client(c).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_Unregister) DecodeFromPtr(p capnp.Ptr) Channel_Observer_Unregister {
+	return Channel_Observer_Unregister(capnp.Client{}.DecodeFromPtr(p))
+}
+
+// IsValid reports whether c is a valid reference to a capability.
+// A reference is invalid if it is nil, has resolved to null, or has
+// been released.
+func (c Channel_Observer_Unregister) IsValid() bool {
+	return capnp.Client(c).IsValid()
+}
+
+// IsSame reports whether c and other refer to a capability created by the
+// same call to NewClient.  This can return false negatives if c or other
+// are not fully resolved: use Resolve if this is an issue.  If either
+// c or other are released, then IsSame panics.
+func (c Channel_Observer_Unregister) IsSame(other Channel_Observer_Unregister) bool {
+	return capnp.Client(c).IsSame(capnp.Client(other))
+}
+
+// Update the flowcontrol.FlowLimiter used to manage flow control for
+// this client. This affects all future calls, but not calls already
+// waiting to send. Passing nil sets the value to flowcontrol.NopLimiter,
+// which is also the default.
+func (c Channel_Observer_Unregister) SetFlowLimiter(lim fc.FlowLimiter) {
+	capnp.Client(c).SetFlowLimiter(lim)
+}
+
+// Get the current flowcontrol.FlowLimiter used to manage flow control
+// for this client.
+func (c Channel_Observer_Unregister) GetFlowLimiter() fc.FlowLimiter {
+	return capnp.Client(c).GetFlowLimiter()
+}
+
+// A Channel_Observer_Unregister_Server is a Channel_Observer_Unregister with a local implementation.
+type Channel_Observer_Unregister_Server interface {
+	Unreg(context.Context, Channel_Observer_Unregister_unreg) error
+}
+
+// Channel_Observer_Unregister_NewServer creates a new Server from an implementation of Channel_Observer_Unregister_Server.
+func Channel_Observer_Unregister_NewServer(s Channel_Observer_Unregister_Server) *server.Server {
+	c, _ := s.(server.Shutdowner)
+	return server.New(Channel_Observer_Unregister_Methods(nil, s), s, c)
+}
+
+// Channel_Observer_Unregister_ServerToClient creates a new Client from an implementation of Channel_Observer_Unregister_Server.
+// The caller is responsible for calling Release on the returned Client.
+func Channel_Observer_Unregister_ServerToClient(s Channel_Observer_Unregister_Server) Channel_Observer_Unregister {
+	return Channel_Observer_Unregister(capnp.NewClient(Channel_Observer_Unregister_NewServer(s)))
+}
+
+// Channel_Observer_Unregister_Methods appends Methods to a slice that invoke the methods on s.
+// This can be used to create a more complicated Server.
+func Channel_Observer_Unregister_Methods(methods []server.Method, s Channel_Observer_Unregister_Server) []server.Method {
+	if cap(methods) == 0 {
+		methods = make([]server.Method, 0, 1)
+	}
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0x8971a9561a83228a,
+			MethodID:      0,
+			InterfaceName: "fbp/fbp.capnp:Channel.Observer.Unregister",
+			MethodName:    "unreg",
+		},
+		Impl: func(ctx context.Context, call *server.Call) error {
+			return s.Unreg(ctx, Channel_Observer_Unregister_unreg{call})
+		},
+	})
+
+	return methods
+}
+
+// Channel_Observer_Unregister_unreg holds the state for a server call to Channel_Observer_Unregister.unreg.
+// See server.Call for documentation.
+type Channel_Observer_Unregister_unreg struct {
+	*server.Call
+}
+
+// Args returns the call's arguments.
+func (c Channel_Observer_Unregister_unreg) Args() Channel_Observer_Unregister_unreg_Params {
+	return Channel_Observer_Unregister_unreg_Params(c.Call.Args())
+}
+
+// AllocResults allocates the results struct.
+func (c Channel_Observer_Unregister_unreg) AllocResults() (Channel_Observer_Unregister_unreg_Results, error) {
+	r, err := c.Call.AllocResults(capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_Observer_Unregister_unreg_Results(r), err
+}
+
+// Channel_Observer_Unregister_List is a list of Channel_Observer_Unregister.
+type Channel_Observer_Unregister_List = capnp.CapList[Channel_Observer_Unregister]
+
+// NewChannel_Observer_Unregister_List creates a new list of Channel_Observer_Unregister.
+func NewChannel_Observer_Unregister_List(s *capnp.Segment, sz int32) (Channel_Observer_Unregister_List, error) {
+	l, err := capnp.NewPointerList(s, sz)
+	return capnp.CapList[Channel_Observer_Unregister](l), err
+}
+
+type Channel_Observer_Unregister_unreg_Params capnp.Struct
+
+// Channel_Observer_Unregister_unreg_Params_TypeID is the unique identifier for the type Channel_Observer_Unregister_unreg_Params.
+const Channel_Observer_Unregister_unreg_Params_TypeID = 0xaa3c848f685bf750
+
+func NewChannel_Observer_Unregister_unreg_Params(s *capnp.Segment) (Channel_Observer_Unregister_unreg_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Observer_Unregister_unreg_Params(st), err
+}
+
+func NewRootChannel_Observer_Unregister_unreg_Params(s *capnp.Segment) (Channel_Observer_Unregister_unreg_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Observer_Unregister_unreg_Params(st), err
+}
+
+func ReadRootChannel_Observer_Unregister_unreg_Params(msg *capnp.Message) (Channel_Observer_Unregister_unreg_Params, error) {
+	root, err := msg.Root()
+	return Channel_Observer_Unregister_unreg_Params(root.Struct()), err
+}
+
+func (s Channel_Observer_Unregister_unreg_Params) String() string {
+	str, _ := text.Marshal(0xaa3c848f685bf750, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_Unregister_unreg_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_Unregister_unreg_Params) DecodeFromPtr(p capnp.Ptr) Channel_Observer_Unregister_unreg_Params {
+	return Channel_Observer_Unregister_unreg_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_Unregister_unreg_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_Unregister_unreg_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_Unregister_unreg_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_Unregister_unreg_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_Observer_Unregister_unreg_Params_List is a list of Channel_Observer_Unregister_unreg_Params.
+type Channel_Observer_Unregister_unreg_Params_List = capnp.StructList[Channel_Observer_Unregister_unreg_Params]
+
+// NewChannel_Observer_Unregister_unreg_Params creates a new list of Channel_Observer_Unregister_unreg_Params.
+func NewChannel_Observer_Unregister_unreg_Params_List(s *capnp.Segment, sz int32) (Channel_Observer_Unregister_unreg_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Observer_Unregister_unreg_Params](l), err
+}
+
+// Channel_Observer_Unregister_unreg_Params_Future is a wrapper for a Channel_Observer_Unregister_unreg_Params promised by a client call.
+type Channel_Observer_Unregister_unreg_Params_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_Unregister_unreg_Params_Future) Struct() (Channel_Observer_Unregister_unreg_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_Unregister_unreg_Params(p.Struct()), err
+}
+
+type Channel_Observer_Unregister_unreg_Results capnp.Struct
+
+// Channel_Observer_Unregister_unreg_Results_TypeID is the unique identifier for the type Channel_Observer_Unregister_unreg_Results.
+const Channel_Observer_Unregister_unreg_Results_TypeID = 0xbad4ea636557553a
+
+func NewChannel_Observer_Unregister_unreg_Results(s *capnp.Segment) (Channel_Observer_Unregister_unreg_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_Observer_Unregister_unreg_Results(st), err
+}
+
+func NewRootChannel_Observer_Unregister_unreg_Results(s *capnp.Segment) (Channel_Observer_Unregister_unreg_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_Observer_Unregister_unreg_Results(st), err
+}
+
+func ReadRootChannel_Observer_Unregister_unreg_Results(msg *capnp.Message) (Channel_Observer_Unregister_unreg_Results, error) {
+	root, err := msg.Root()
+	return Channel_Observer_Unregister_unreg_Results(root.Struct()), err
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) String() string {
+	str, _ := text.Marshal(0xbad4ea636557553a, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_Unregister_unreg_Results) DecodeFromPtr(p capnp.Ptr) Channel_Observer_Unregister_unreg_Results {
+	return Channel_Observer_Unregister_unreg_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_Unregister_unreg_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_Observer_Unregister_unreg_Results) Success() bool {
+	return capnp.Struct(s).Bit(0)
+}
+
+func (s Channel_Observer_Unregister_unreg_Results) SetSuccess(v bool) {
+	capnp.Struct(s).SetBit(0, v)
+}
+
+// Channel_Observer_Unregister_unreg_Results_List is a list of Channel_Observer_Unregister_unreg_Results.
+type Channel_Observer_Unregister_unreg_Results_List = capnp.StructList[Channel_Observer_Unregister_unreg_Results]
+
+// NewChannel_Observer_Unregister_unreg_Results creates a new list of Channel_Observer_Unregister_unreg_Results.
+func NewChannel_Observer_Unregister_unreg_Results_List(s *capnp.Segment, sz int32) (Channel_Observer_Unregister_unreg_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Observer_Unregister_unreg_Results](l), err
+}
+
+// Channel_Observer_Unregister_unreg_Results_Future is a wrapper for a Channel_Observer_Unregister_unreg_Results promised by a client call.
+type Channel_Observer_Unregister_unreg_Results_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_Unregister_unreg_Results_Future) Struct() (Channel_Observer_Unregister_unreg_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_Unregister_unreg_Results(p.Struct()), err
+}
+
+type Channel_Observer_Params capnp.Struct
+
+// Channel_Observer_Params_TypeID is the unique identifier for the type Channel_Observer_Params.
+const Channel_Observer_Params_TypeID = 0xaff4041af7455c7a
+
+func NewChannel_Observer_Params(s *capnp.Segment) (Channel_Observer_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_Observer_Params(st), err
+}
+
+func NewRootChannel_Observer_Params(s *capnp.Segment) (Channel_Observer_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_Observer_Params(st), err
+}
+
+func ReadRootChannel_Observer_Params(msg *capnp.Message) (Channel_Observer_Params, error) {
+	root, err := msg.Root()
+	return Channel_Observer_Params(root.Struct()), err
+}
+
+func (s Channel_Observer_Params) String() string {
+	str, _ := text.Marshal(0xaff4041af7455c7a, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_Params) DecodeFromPtr(p capnp.Ptr) Channel_Observer_Params {
+	return Channel_Observer_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_Observer_Params) EveryNth() uint32 {
+	return capnp.Struct(s).Uint32(0) ^ 1
+}
+
+func (s Channel_Observer_Params) SetEveryNth(v uint32) {
+	capnp.Struct(s).SetUint32(0, v^1)
+}
+
+func (s Channel_Observer_Params) WithContent() bool {
+	return capnp.Struct(s).Bit(32)
+}
+
+func (s Channel_Observer_Params) SetWithContent(v bool) {
+	capnp.Struct(s).SetBit(32, v)
+}
+
+func (s Channel_Observer_Params) Gate() bool {
+	return capnp.Struct(s).Bit(33)
+}
+
+func (s Channel_Observer_Params) SetGate(v bool) {
+	capnp.Struct(s).SetBit(33, v)
+}
+
+// Channel_Observer_Params_List is a list of Channel_Observer_Params.
+type Channel_Observer_Params_List = capnp.StructList[Channel_Observer_Params]
+
+// NewChannel_Observer_Params creates a new list of Channel_Observer_Params.
+func NewChannel_Observer_Params_List(s *capnp.Segment, sz int32) (Channel_Observer_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Observer_Params](l), err
+}
+
+// Channel_Observer_Params_Future is a wrapper for a Channel_Observer_Params promised by a client call.
+type Channel_Observer_Params_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_Params_Future) Struct() (Channel_Observer_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_Params(p.Struct()), err
+}
+
+type Channel_Observer_saw_Params capnp.Struct
+
+// Channel_Observer_saw_Params_TypeID is the unique identifier for the type Channel_Observer_saw_Params.
+const Channel_Observer_saw_Params_TypeID = 0xfcfe637d1facccf5
+
+func NewChannel_Observer_saw_Params(s *capnp.Segment) (Channel_Observer_saw_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Channel_Observer_saw_Params(st), err
+}
+
+func NewRootChannel_Observer_saw_Params(s *capnp.Segment) (Channel_Observer_saw_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Channel_Observer_saw_Params(st), err
+}
+
+func ReadRootChannel_Observer_saw_Params(msg *capnp.Message) (Channel_Observer_saw_Params, error) {
+	root, err := msg.Root()
+	return Channel_Observer_saw_Params(root.Struct()), err
+}
+
+func (s Channel_Observer_saw_Params) String() string {
+	str, _ := text.Marshal(0xfcfe637d1facccf5, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_saw_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_saw_Params) DecodeFromPtr(p capnp.Ptr) Channel_Observer_saw_Params {
+	return Channel_Observer_saw_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_saw_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_saw_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_saw_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_saw_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_Observer_saw_Params) Event() (Channel_Observer_Event, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return Channel_Observer_Event(p.Struct()), err
+}
+
+func (s Channel_Observer_saw_Params) HasEvent() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Channel_Observer_saw_Params) SetEvent(v Channel_Observer_Event) error {
+	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+}
+
+// NewEvent sets the event field to a newly
+// allocated Channel_Observer_Event struct, preferring placement in s's segment.
+func (s Channel_Observer_saw_Params) NewEvent() (Channel_Observer_Event, error) {
+	ss, err := NewChannel_Observer_Event(capnp.Struct(s).Segment())
+	if err != nil {
+		return Channel_Observer_Event{}, err
+	}
+	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+// Channel_Observer_saw_Params_List is a list of Channel_Observer_saw_Params.
+type Channel_Observer_saw_Params_List = capnp.StructList[Channel_Observer_saw_Params]
+
+// NewChannel_Observer_saw_Params creates a new list of Channel_Observer_saw_Params.
+func NewChannel_Observer_saw_Params_List(s *capnp.Segment, sz int32) (Channel_Observer_saw_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[Channel_Observer_saw_Params](l), err
+}
+
+// Channel_Observer_saw_Params_Future is a wrapper for a Channel_Observer_saw_Params promised by a client call.
+type Channel_Observer_saw_Params_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_saw_Params_Future) Struct() (Channel_Observer_saw_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_saw_Params(p.Struct()), err
+}
+func (p Channel_Observer_saw_Params_Future) Event() Channel_Observer_Event_Future {
+	return Channel_Observer_Event_Future{Future: p.Future.Field(0, nil)}
+}
+
+type Channel_Observer_saw_Results capnp.Struct
+
+// Channel_Observer_saw_Results_TypeID is the unique identifier for the type Channel_Observer_saw_Results.
+const Channel_Observer_saw_Results_TypeID = 0xb6bacfb230e8831a
+
+func NewChannel_Observer_saw_Results(s *capnp.Segment) (Channel_Observer_saw_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Observer_saw_Results(st), err
+}
+
+func NewRootChannel_Observer_saw_Results(s *capnp.Segment) (Channel_Observer_saw_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_Observer_saw_Results(st), err
+}
+
+func ReadRootChannel_Observer_saw_Results(msg *capnp.Message) (Channel_Observer_saw_Results, error) {
+	root, err := msg.Root()
+	return Channel_Observer_saw_Results(root.Struct()), err
+}
+
+func (s Channel_Observer_saw_Results) String() string {
+	str, _ := text.Marshal(0xb6bacfb230e8831a, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_Observer_saw_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_Observer_saw_Results) DecodeFromPtr(p capnp.Ptr) Channel_Observer_saw_Results {
+	return Channel_Observer_saw_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_Observer_saw_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_Observer_saw_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_Observer_saw_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_Observer_saw_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_Observer_saw_Results_List is a list of Channel_Observer_saw_Results.
+type Channel_Observer_saw_Results_List = capnp.StructList[Channel_Observer_saw_Results]
+
+// NewChannel_Observer_saw_Results creates a new list of Channel_Observer_saw_Results.
+func NewChannel_Observer_saw_Results_List(s *capnp.Segment, sz int32) (Channel_Observer_saw_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_Observer_saw_Results](l), err
+}
+
+// Channel_Observer_saw_Results_Future is a wrapper for a Channel_Observer_saw_Results promised by a client call.
+type Channel_Observer_saw_Results_Future struct{ *capnp.Future }
+
+func (f Channel_Observer_saw_Results_Future) Struct() (Channel_Observer_saw_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_Observer_saw_Results(p.Struct()), err
+}
+
 type Channel_setBufferSize_Params capnp.Struct
 
 // Channel_setBufferSize_Params_TypeID is the unique identifier for the type Channel_setBufferSize_Params.
@@ -4596,6 +6135,608 @@ func (f Channel_registerStatsCallback_Results_Future) Struct() (Channel_register
 }
 func (p Channel_registerStatsCallback_Results_Future) UnregisterCallback() Channel_StatsCallback_Unregister {
 	return Channel_StatsCallback_Unregister(p.Future.Field(0, nil).Client())
+}
+
+type Channel_observe_Params capnp.Struct
+
+// Channel_observe_Params_TypeID is the unique identifier for the type Channel_observe_Params.
+const Channel_observe_Params_TypeID = 0xd68d1dc402959a5e
+
+func NewChannel_observe_Params(s *capnp.Segment) (Channel_observe_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Channel_observe_Params(st), err
+}
+
+func NewRootChannel_observe_Params(s *capnp.Segment) (Channel_observe_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2})
+	return Channel_observe_Params(st), err
+}
+
+func ReadRootChannel_observe_Params(msg *capnp.Message) (Channel_observe_Params, error) {
+	root, err := msg.Root()
+	return Channel_observe_Params(root.Struct()), err
+}
+
+func (s Channel_observe_Params) String() string {
+	str, _ := text.Marshal(0xd68d1dc402959a5e, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_observe_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_observe_Params) DecodeFromPtr(p capnp.Ptr) Channel_observe_Params {
+	return Channel_observe_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_observe_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_observe_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_observe_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_observe_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_observe_Params) Callback() Channel_Observer {
+	p, _ := capnp.Struct(s).Ptr(0)
+	return Channel_Observer(p.Interface().Client())
+}
+
+func (s Channel_observe_Params) HasCallback() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Channel_observe_Params) SetCallback(v Channel_Observer) error {
+	if !v.IsValid() {
+		return capnp.Struct(s).SetPtr(0, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
+	return capnp.Struct(s).SetPtr(0, in.ToPtr())
+}
+
+func (s Channel_observe_Params) Params() (Channel_Observer_Params, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return Channel_Observer_Params(p.Struct()), err
+}
+
+func (s Channel_observe_Params) HasParams() bool {
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s Channel_observe_Params) SetParams(v Channel_Observer_Params) error {
+	return capnp.Struct(s).SetPtr(1, capnp.Struct(v).ToPtr())
+}
+
+// NewParams sets the params field to a newly
+// allocated Channel_Observer_Params struct, preferring placement in s's segment.
+func (s Channel_observe_Params) NewParams() (Channel_Observer_Params, error) {
+	ss, err := NewChannel_Observer_Params(capnp.Struct(s).Segment())
+	if err != nil {
+		return Channel_Observer_Params{}, err
+	}
+	err = capnp.Struct(s).SetPtr(1, capnp.Struct(ss).ToPtr())
+	return ss, err
+}
+
+// Channel_observe_Params_List is a list of Channel_observe_Params.
+type Channel_observe_Params_List = capnp.StructList[Channel_observe_Params]
+
+// NewChannel_observe_Params creates a new list of Channel_observe_Params.
+func NewChannel_observe_Params_List(s *capnp.Segment, sz int32) (Channel_observe_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 2}, sz)
+	return capnp.StructList[Channel_observe_Params](l), err
+}
+
+// Channel_observe_Params_Future is a wrapper for a Channel_observe_Params promised by a client call.
+type Channel_observe_Params_Future struct{ *capnp.Future }
+
+func (f Channel_observe_Params_Future) Struct() (Channel_observe_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_observe_Params(p.Struct()), err
+}
+func (p Channel_observe_Params_Future) Callback() Channel_Observer {
+	return Channel_Observer(p.Future.Field(0, nil).Client())
+}
+
+func (p Channel_observe_Params_Future) Params() Channel_Observer_Params_Future {
+	return Channel_Observer_Params_Future{Future: p.Future.Field(1, nil)}
+}
+
+type Channel_observe_Results capnp.Struct
+
+// Channel_observe_Results_TypeID is the unique identifier for the type Channel_observe_Results.
+const Channel_observe_Results_TypeID = 0xb7e9f64b5f2d8a82
+
+func NewChannel_observe_Results(s *capnp.Segment) (Channel_observe_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Channel_observe_Results(st), err
+}
+
+func NewRootChannel_observe_Results(s *capnp.Segment) (Channel_observe_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return Channel_observe_Results(st), err
+}
+
+func ReadRootChannel_observe_Results(msg *capnp.Message) (Channel_observe_Results, error) {
+	root, err := msg.Root()
+	return Channel_observe_Results(root.Struct()), err
+}
+
+func (s Channel_observe_Results) String() string {
+	str, _ := text.Marshal(0xb7e9f64b5f2d8a82, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_observe_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_observe_Results) DecodeFromPtr(p capnp.Ptr) Channel_observe_Results {
+	return Channel_observe_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_observe_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_observe_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_observe_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_observe_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_observe_Results) Unregister() Channel_Observer_Unregister {
+	p, _ := capnp.Struct(s).Ptr(0)
+	return Channel_Observer_Unregister(p.Interface().Client())
+}
+
+func (s Channel_observe_Results) HasUnregister() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Channel_observe_Results) SetUnregister(v Channel_Observer_Unregister) error {
+	if !v.IsValid() {
+		return capnp.Struct(s).SetPtr(0, capnp.Ptr{})
+	}
+	seg := s.Segment()
+	in := capnp.NewInterface(seg, seg.Message().CapTable().Add(capnp.Client(v)))
+	return capnp.Struct(s).SetPtr(0, in.ToPtr())
+}
+
+// Channel_observe_Results_List is a list of Channel_observe_Results.
+type Channel_observe_Results_List = capnp.StructList[Channel_observe_Results]
+
+// NewChannel_observe_Results creates a new list of Channel_observe_Results.
+func NewChannel_observe_Results_List(s *capnp.Segment, sz int32) (Channel_observe_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return capnp.StructList[Channel_observe_Results](l), err
+}
+
+// Channel_observe_Results_Future is a wrapper for a Channel_observe_Results promised by a client call.
+type Channel_observe_Results_Future struct{ *capnp.Future }
+
+func (f Channel_observe_Results_Future) Struct() (Channel_observe_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_observe_Results(p.Struct()), err
+}
+func (p Channel_observe_Results_Future) Unregister() Channel_Observer_Unregister {
+	return Channel_Observer_Unregister(p.Future.Field(0, nil).Client())
+}
+
+type Channel_pause_Params capnp.Struct
+
+// Channel_pause_Params_TypeID is the unique identifier for the type Channel_pause_Params.
+const Channel_pause_Params_TypeID = 0xcc3dcfe29343598e
+
+func NewChannel_pause_Params(s *capnp.Segment) (Channel_pause_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_pause_Params(st), err
+}
+
+func NewRootChannel_pause_Params(s *capnp.Segment) (Channel_pause_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_pause_Params(st), err
+}
+
+func ReadRootChannel_pause_Params(msg *capnp.Message) (Channel_pause_Params, error) {
+	root, err := msg.Root()
+	return Channel_pause_Params(root.Struct()), err
+}
+
+func (s Channel_pause_Params) String() string {
+	str, _ := text.Marshal(0xcc3dcfe29343598e, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_pause_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_pause_Params) DecodeFromPtr(p capnp.Ptr) Channel_pause_Params {
+	return Channel_pause_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_pause_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_pause_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_pause_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_pause_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_pause_Params_List is a list of Channel_pause_Params.
+type Channel_pause_Params_List = capnp.StructList[Channel_pause_Params]
+
+// NewChannel_pause_Params creates a new list of Channel_pause_Params.
+func NewChannel_pause_Params_List(s *capnp.Segment, sz int32) (Channel_pause_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_pause_Params](l), err
+}
+
+// Channel_pause_Params_Future is a wrapper for a Channel_pause_Params promised by a client call.
+type Channel_pause_Params_Future struct{ *capnp.Future }
+
+func (f Channel_pause_Params_Future) Struct() (Channel_pause_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_pause_Params(p.Struct()), err
+}
+
+type Channel_pause_Results capnp.Struct
+
+// Channel_pause_Results_TypeID is the unique identifier for the type Channel_pause_Results.
+const Channel_pause_Results_TypeID = 0xead3c6b77a5731d4
+
+func NewChannel_pause_Results(s *capnp.Segment) (Channel_pause_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_pause_Results(st), err
+}
+
+func NewRootChannel_pause_Results(s *capnp.Segment) (Channel_pause_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_pause_Results(st), err
+}
+
+func ReadRootChannel_pause_Results(msg *capnp.Message) (Channel_pause_Results, error) {
+	root, err := msg.Root()
+	return Channel_pause_Results(root.Struct()), err
+}
+
+func (s Channel_pause_Results) String() string {
+	str, _ := text.Marshal(0xead3c6b77a5731d4, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_pause_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_pause_Results) DecodeFromPtr(p capnp.Ptr) Channel_pause_Results {
+	return Channel_pause_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_pause_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_pause_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_pause_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_pause_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_pause_Results_List is a list of Channel_pause_Results.
+type Channel_pause_Results_List = capnp.StructList[Channel_pause_Results]
+
+// NewChannel_pause_Results creates a new list of Channel_pause_Results.
+func NewChannel_pause_Results_List(s *capnp.Segment, sz int32) (Channel_pause_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_pause_Results](l), err
+}
+
+// Channel_pause_Results_Future is a wrapper for a Channel_pause_Results promised by a client call.
+type Channel_pause_Results_Future struct{ *capnp.Future }
+
+func (f Channel_pause_Results_Future) Struct() (Channel_pause_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_pause_Results(p.Struct()), err
+}
+
+type Channel_resume_Params capnp.Struct
+
+// Channel_resume_Params_TypeID is the unique identifier for the type Channel_resume_Params.
+const Channel_resume_Params_TypeID = 0x97e51c58b05d81c6
+
+func NewChannel_resume_Params(s *capnp.Segment) (Channel_resume_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_resume_Params(st), err
+}
+
+func NewRootChannel_resume_Params(s *capnp.Segment) (Channel_resume_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_resume_Params(st), err
+}
+
+func ReadRootChannel_resume_Params(msg *capnp.Message) (Channel_resume_Params, error) {
+	root, err := msg.Root()
+	return Channel_resume_Params(root.Struct()), err
+}
+
+func (s Channel_resume_Params) String() string {
+	str, _ := text.Marshal(0x97e51c58b05d81c6, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_resume_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_resume_Params) DecodeFromPtr(p capnp.Ptr) Channel_resume_Params {
+	return Channel_resume_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_resume_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_resume_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_resume_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_resume_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_resume_Params_List is a list of Channel_resume_Params.
+type Channel_resume_Params_List = capnp.StructList[Channel_resume_Params]
+
+// NewChannel_resume_Params creates a new list of Channel_resume_Params.
+func NewChannel_resume_Params_List(s *capnp.Segment, sz int32) (Channel_resume_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_resume_Params](l), err
+}
+
+// Channel_resume_Params_Future is a wrapper for a Channel_resume_Params promised by a client call.
+type Channel_resume_Params_Future struct{ *capnp.Future }
+
+func (f Channel_resume_Params_Future) Struct() (Channel_resume_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_resume_Params(p.Struct()), err
+}
+
+type Channel_resume_Results capnp.Struct
+
+// Channel_resume_Results_TypeID is the unique identifier for the type Channel_resume_Results.
+const Channel_resume_Results_TypeID = 0xc8a7d42ef3443cc4
+
+func NewChannel_resume_Results(s *capnp.Segment) (Channel_resume_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_resume_Results(st), err
+}
+
+func NewRootChannel_resume_Results(s *capnp.Segment) (Channel_resume_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0})
+	return Channel_resume_Results(st), err
+}
+
+func ReadRootChannel_resume_Results(msg *capnp.Message) (Channel_resume_Results, error) {
+	root, err := msg.Root()
+	return Channel_resume_Results(root.Struct()), err
+}
+
+func (s Channel_resume_Results) String() string {
+	str, _ := text.Marshal(0xc8a7d42ef3443cc4, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_resume_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_resume_Results) DecodeFromPtr(p capnp.Ptr) Channel_resume_Results {
+	return Channel_resume_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_resume_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_resume_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_resume_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_resume_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+
+// Channel_resume_Results_List is a list of Channel_resume_Results.
+type Channel_resume_Results_List = capnp.StructList[Channel_resume_Results]
+
+// NewChannel_resume_Results creates a new list of Channel_resume_Results.
+func NewChannel_resume_Results_List(s *capnp.Segment, sz int32) (Channel_resume_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_resume_Results](l), err
+}
+
+// Channel_resume_Results_Future is a wrapper for a Channel_resume_Results promised by a client call.
+type Channel_resume_Results_Future struct{ *capnp.Future }
+
+func (f Channel_resume_Results_Future) Struct() (Channel_resume_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_resume_Results(p.Struct()), err
+}
+
+type Channel_step_Params capnp.Struct
+
+// Channel_step_Params_TypeID is the unique identifier for the type Channel_step_Params.
+const Channel_step_Params_TypeID = 0x9d1e350032b7b2b7
+
+func NewChannel_step_Params(s *capnp.Segment) (Channel_step_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_step_Params(st), err
+}
+
+func NewRootChannel_step_Params(s *capnp.Segment) (Channel_step_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_step_Params(st), err
+}
+
+func ReadRootChannel_step_Params(msg *capnp.Message) (Channel_step_Params, error) {
+	root, err := msg.Root()
+	return Channel_step_Params(root.Struct()), err
+}
+
+func (s Channel_step_Params) String() string {
+	str, _ := text.Marshal(0x9d1e350032b7b2b7, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_step_Params) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_step_Params) DecodeFromPtr(p capnp.Ptr) Channel_step_Params {
+	return Channel_step_Params(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_step_Params) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_step_Params) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_step_Params) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_step_Params) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_step_Params) Count() uint64 {
+	return capnp.Struct(s).Uint64(0) ^ 1
+}
+
+func (s Channel_step_Params) SetCount(v uint64) {
+	capnp.Struct(s).SetUint64(0, v^1)
+}
+
+// Channel_step_Params_List is a list of Channel_step_Params.
+type Channel_step_Params_List = capnp.StructList[Channel_step_Params]
+
+// NewChannel_step_Params creates a new list of Channel_step_Params.
+func NewChannel_step_Params_List(s *capnp.Segment, sz int32) (Channel_step_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_step_Params](l), err
+}
+
+// Channel_step_Params_Future is a wrapper for a Channel_step_Params promised by a client call.
+type Channel_step_Params_Future struct{ *capnp.Future }
+
+func (f Channel_step_Params_Future) Struct() (Channel_step_Params, error) {
+	p, err := f.Future.Ptr()
+	return Channel_step_Params(p.Struct()), err
+}
+
+type Channel_step_Results capnp.Struct
+
+// Channel_step_Results_TypeID is the unique identifier for the type Channel_step_Results.
+const Channel_step_Results_TypeID = 0xa3e43df57374baba
+
+func NewChannel_step_Results(s *capnp.Segment) (Channel_step_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_step_Results(st), err
+}
+
+func NewRootChannel_step_Results(s *capnp.Segment) (Channel_step_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0})
+	return Channel_step_Results(st), err
+}
+
+func ReadRootChannel_step_Results(msg *capnp.Message) (Channel_step_Results, error) {
+	root, err := msg.Root()
+	return Channel_step_Results(root.Struct()), err
+}
+
+func (s Channel_step_Results) String() string {
+	str, _ := text.Marshal(0xa3e43df57374baba, capnp.Struct(s))
+	return str
+}
+
+func (s Channel_step_Results) EncodeAsPtr(seg *capnp.Segment) capnp.Ptr {
+	return capnp.Struct(s).EncodeAsPtr(seg)
+}
+
+func (Channel_step_Results) DecodeFromPtr(p capnp.Ptr) Channel_step_Results {
+	return Channel_step_Results(capnp.Struct{}.DecodeFromPtr(p))
+}
+
+func (s Channel_step_Results) ToPtr() capnp.Ptr {
+	return capnp.Struct(s).ToPtr()
+}
+func (s Channel_step_Results) IsValid() bool {
+	return capnp.Struct(s).IsValid()
+}
+
+func (s Channel_step_Results) Message() *capnp.Message {
+	return capnp.Struct(s).Message()
+}
+
+func (s Channel_step_Results) Segment() *capnp.Segment {
+	return capnp.Struct(s).Segment()
+}
+func (s Channel_step_Results) Delivered() uint64 {
+	return capnp.Struct(s).Uint64(0)
+}
+
+func (s Channel_step_Results) SetDelivered(v uint64) {
+	capnp.Struct(s).SetUint64(0, v)
+}
+
+// Channel_step_Results_List is a list of Channel_step_Results.
+type Channel_step_Results_List = capnp.StructList[Channel_step_Results]
+
+// NewChannel_step_Results creates a new list of Channel_step_Results.
+func NewChannel_step_Results_List(s *capnp.Segment, sz int32) (Channel_step_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 0}, sz)
+	return capnp.StructList[Channel_step_Results](l), err
+}
+
+// Channel_step_Results_Future is a wrapper for a Channel_step_Results promised by a client call.
+type Channel_step_Results_Future struct{ *capnp.Future }
+
+func (f Channel_step_Results_Future) Struct() (Channel_step_Results, error) {
+	p, err := f.Future.Ptr()
+	return Channel_step_Results(p.Struct()), err
 }
 
 type StartChannelsService capnp.Client
@@ -12167,477 +14308,548 @@ func (p Process_activity_Results_Future) CurrentActivity() Process_ActivityInfo_
 	return Process_ActivityInfo_Future{Future: p.Future.Field(0, nil)}
 }
 
-const schema_bf602c4868dbb22f = "x\xda\xc4|\x0bx\x14U\x9e\xef\xff_\x95\xa6\x08\x0b" +
-	"t\x0e\x15\xe4\xb1\xc4\x1e\x10G\xc8B\x94Dg\x86\x8c" +
-	"|I'D\x08k\x86T\x1a\x14Q\xeeR\xe9\xae\x84" +
-	"\x86\xa4\xbb\xed\xae\x06\xc3\x88\x910(\x02q $\xc3" +
-	"C\x92\x80\x0e\x0e\xce\x8c\xe3\x80\xb8WG]\x85+\xa2" +
-	"\"\xb3Fe\x15Gf\xc0\xbd:\xea\xea\x8e\xe8f}" +
-	"\x8cR\xf7;\xa7\xeaTU:\xdd!xw\xef\xfd\xe6" +
-	"\xfb\xc6\xce\xa9S\xe7\xf1\x7f\xfe\xfe\x8f\xe2\xaa\xa5\xd3K" +
-	"\xb3f\x8c\x98\xf3\x15\x08\x81\xa5\x7f\xe3\x19bt\x1fY" +
-	"\xfb\xc6\xb8Uy-@.A\x80,\x09\xa0({M" +
-	">B\x96!eE/\xbb\xe2\x8bq\xf7\x00\xb9D0" +
-	"\xd6m\x17\x8b\xdbox\xf8I\x00,:w\xfb$\x94" +
-	"q\x8d\x04 \x7fs{3\xa01\xbb\xf4\xe5\xee\x87&" +
-	"\xbe{\x0f\x90<\xb6F\x0e\x16\xcdZ\x13\xa7kT\x8c" +
-	"\xfe\xb7\xc7\x9e\xbb\xbaj#(c\x11\x8d\xfd\xafOz" +
-	"\xe8\xa1\xbf\x9c\xf9\x08*\x04I\x00(\x9a\xbaf\x14\xca" +
-	"3\xd9B\xd7\xacy\x04\xd0 \xc7n;}\xf0\xc3\xe3" +
-	"\x1b\x81\\*\x18\xcd\x8f\x17\xfc\xe6\x8b\xd97<N\xb7" +
-	"<\xbdf\x12\xca\x1f\xb3\x99\x1f\xac\xd9\x0eh\xbc\xbc\xfd" +
-	"\xa9\xcf\xda\xb6>\xbf\x09\xc8%\xa2\xf1\xfe\x81O\xaf\xfc" +
-	"\xbb\xffU\xbb\x1b\x00rP\x9e~\xc7\x87\xf2\xcc;$" +
-	"y\xe6\x1d>y\xc9\x1d\xc7\xe4[\x9b\xaf\x000\x1aw" +
-	"gO\xd9}K\xef& W\xf23\x86\x9b\xdfA\xc8" +
-	"z\xe6\xd3\xd1Wt\xed\x9e\xb8\x99\\\x8a\x00\x1e\xa4\x04" +
-	"X\xd2\xbc\x1c\x01\xe5ps\x09\xa0\x11\xdc\xfb\xeb};" +
-	">\xfdz3\x90\xc9\xe6\x84\x1c,\xba\xa7\xb9\x8dN\xd8" +
-	"\xc9&\x04\xce.\xfb\xee\x9a\x92\xb9\xf7\x02\xf1\xd9+\x9c" +
-	"h\x8e\xd3\x09\xa7\xd8\x84E+\x0f\x9f\xf6\xc9?\xdb\x0a" +
-	"d*'\xf1\x97\xcd\xc3\x04\xc826\x9c\xb8\xe9\xd9\x13" +
-	"\xd9=[]\xc4?\xd7\xbc\x98\x12\xaeH^\xb9\xfa\x87" +
-	"\x97\xe6\xb4\x81r\x09\xf2\xf3\x9e\xa6\x8fP\xfe\x80-\xfa" +
-	"\x82\x7f\xf3\xb9\xd0\x87S\xda]4\xcf\xbe\xb3\x86\xbez" +
-	"\xff_\x17\xb5>\xf4\xc4\xca\x0eP.C\xc1\x98*\xac" +
-	"\xbd\xaf\xa5\xf1\xc4+\xe0\x11\xe9\xf2\xbd\xcd5(g\xdf" +
-	"I\x7fz\xee<\x86\x80\xc6\xeeY\xe40>\xfcf\x87" +
-	"{\xa7\xec\x96\xf1t'\xd2Bw\xaa3\xbe\xd8\xf5\xca" +
-	"}\xa7:\xfa1efK!\xca\x95-\x94)\x15-" +
-	"\xf5\x80\xc6\x86\x0d\x05\xd3'\xb4\xfd\xf0>\xf3:&%" +
-	"\x1a[\x0a\xe9RI\xb6\x94\xcd(2R4\xae<\xf8" +
-	"\x87es\xa7-}\xc6\xe4Zg\xcbAy_K=" +
-	"=b\xcb1\x94g\xad\xbfB\xaeZ\xef5\xbe\xfa\xea" +
-	"\x96\xba\xe4C?\xdd\xcd\xf8\xec\x16B\xff\xfaB\x94\x95" +
-	"\xf5t\xf3\xaa\xf5s\xe4&\xfa\xcb\xf8\xdb\xce\xed/\xdc" +
-	",}\xaf\x13\x14\x82h\xfc\xf3-\xbbb\xcf\xe5\x0d{" +
-	"\x04<\x02\x9d\xa6\xae\xffJnd/\x84\xd7\xaf\x024" +
-	"\x86\xdf\xb6\xed\xc7G\xef\xbd\xb9\x0b\xc8\x18zZF\x9e" +
-	"\x03\xeb'\xd1\xd3>\xb1\x9eJ\xe3{;\x9f;\xb35" +
-	"\xd0\xd5\x05\x84\xb8\x17\xa3l\x92\x97\xdcu\xbf\xac\xdd\xc5" +
-	"\x96\xbd\xeb\xcf\x80\xc6\x89\xf6ek\xce\x8d.\xe8\xb6\xa8" +
-	"h\xde}\xe6\xdd\xb5t\xb5\x8a\xbb\xe9v\x0f\xae\xab\x9c" +
-	"{\xd9\xcbU{\xd8\x0c\xe7*\xe6\xcc\x87\xee\x1e\x8f\xf2" +
-	"\x13w\xd3\xf5\x1ec\xb3\x13O7}u\xdfs\xed\x0f" +
-	"\xb8II6\x14\xd3\xe5\xc6m\xa0\xa4|\xf3\xf3\xa7r" +
-	"\x1f\xff\xd5\x9b\x0f\x98B\xc5nXT\xb9A\x10\x00\xe5" +
-	"%\x1b\xe8\x0a{\x87\xbe\xba'\xf6\xe0W}Vxb" +
-	"\x03c\xc6a\xb6\xc23Kn\xdb\xb5\xfb7\x05?\x07" +
-	"e2\x8a\xc6\xdf\xb4\x8d\x1e;\xac\xfc\x9a\xb7-\x09?" +
-	"\xbb\xa1\x06\xe5\xde\x0dL\"7\xdcH\xe5\xe4\\\xd9\x95" +
-	"\x95\xd3\xde\xdb\xb6\xcf$\x17\x93Um\xe3x*p\x8f" +
-	"\xfe\xe2t\xd5_\x9f~e?\xdd\xc9u1v\xa4\xaa" +
-	"\x8d\xa3P^\xb2\x91^\xec\xa6\x8d\xf4X\xe5\x07\xcf\xfc" +
-	"\xf9\xa5\xbb\xdf\xd8\xcf\xacJ\x1f\xc5-zlc>\xca" +
-	"G\xd9\xdc\xc3\x1b\xbf\x0fhtn~r\xc2K\xfb\xc5" +
-	"\xdf\x98\xaa\xc7$\xf3\xe8\xc6]tK\x9b\x1b\xcaHD" +
-	"G\x92\x18\x13\xe5\xc76n\x94\x9f\xde8\x07@>\xb7" +
-	"\x91\xf2\xe6\xb5g\xc7\xff\xf4W5\x97\xfc6U\x86\xe4" +
-	"\xd3\x9b>\x95?\xd8D_yw\xd3\x1cy\xc4\xe61" +
-	"\x00\xc6\x83\x1f\xbd\xf8\xf2\x8b\xc65\x07l\xb2\xe5`\xd1" +
-	"7\x9b\xf2)\xd9<\x9b)\xd9\xa6/Z\x93\xbf\xe4/" +
-	"\xa1G\xfbrz3\xb3\x18\x15\x9b\xe9\x15\xc7\xb7\x04\x9e" +
-	"\xd9;\xf4\xfc\xa3.\xd5|h3\xd3\xea;n\xd9\xd1" +
-	"U\x1f\xf8\xf1!\xf7\xe2\x1d\x9b\xd9\xe2\x9dl\xf1\xd3\xc5" +
-	"\x8b*\x1e\xfb\xde\x8eCne\xec\xd9\xbc\x8bN8\xcb" +
-	"&`\xce\x0d[?zA\xf9G\xca4\xce\x86\xd1\xad" +
-	"\xcc\x1a]\xdeJ'\x0c;R^\x1c?\xf6\xe5?\xba" +
-	"\xd9^\xd1\xca\xd4\xb9\x8aM\xb058E\x0e\x87R:" +
-	"$[?\x95\xd7\xb6^\x01P\xd4\xd1\x1a\x15\x00\x8dS" +
-	"=\xb7\xbf\xb1\xea\x9e\xaf\x9f\x002\xd9%#\x8c]3" +
-	"\xb7\xacF\xb9j\x0b}\xadr\xcb\x1cy'\xfdeT" +
-	"_:\xeb\xad\xd6\x1do\xff\xceu\xf7\xb5[\x98Y\xb2" +
-	"w\xea\xab\xfb(7n9('\xb7\xfc\x82:\x9e\xad" +
-	"\xc7\x04\xf9T\x1b5\xd7\xef\xbe\xf4\xd2\xca\xef\x7fY\xf1" +
-	"\x14g=@QO\xdbF\x84\xac\xcf?\x99\x9f|\xed" +
-	"\x92\xf7\x9eN]\xe5p\xdb\xef\xe4\x17\xe9\xab\xf2\xd9\xb6" +
-	"\xbb\xe5\x19\xdb(/\xb3\xcf.\xfb\xd7\xab\xf3\xd4\x7f\xe2" +
-	"\xe65\x07\x8b&n\x9bD\x0f\xb3\xef\xef6\xfda\xe7" +
-	"\x92\xa2g\xdd\xd6s\xdb<\xfadH\xe1\xf1\x92\xc5\x91" +
-	"\xaf\x9fu\xbd\xd3\xdbv?}2e\xd3\xf5\xab\x0e\xbf" +
-	"7\xf2\x88\xc3\xf8\x1c,z\xb7\x8d1\xa7\xb7\x8d2>" +
-	"~\xa2\xe7\xe1\xa9SZ\x8f\x98\xde\xee\xb7\x0f\x8e^\xb6" +
-	"\xc6\x18\xf3\x86%\x95\xb7n\xfbP^C\x8f%\xdf\xb3" +
-	"\x8dJ\xe5\xbdC\x7f\xb5\xa5\xf0\xd0\x17Gl\xbf\x02P" +
-	"\xa4\xb6\xdfOW\xbb\xb5\x9d2j\xad\xd0s\xcfO\xcb" +
-	"'<\x0fJ\x9e-\x0b[\xdb\x19\xab\xf7\xb2\x09\xd5\x87" +
-	"\xae\xab9\xb6|\xfb\xf3@\xc6\x0a\xcen\x80E\x87\xdb" +
-	"\x0bQ\xeei\xa7\xbb\x9eh\xa7\x0e\xfa\xf4\x8d\xab\x7f[" +
-	"x\xf7\xd2\x17\\~\xc6\xd3\xb1\x9c^\xaaf\xd8\xa6\xb2" +
-	"\x03\xdbt\xf7\x93s\xed\x85\xf4\xc9\x8b\x8b\xee=\xbb\xf5" +
-	"m\xe1\xb8\x8bD\xa7\xda\x99\x14\x0f\x19\xfbt\xf3k\xd7" +
-	">x\x1c\xc8\x18\x91\xb3\x03\xb0\xe8h{1\xca'\xd9" +
-	"\xae=\xeds\xe4/\xe9/\xe3\x7f\x06e\xef\xbf\xec\x92" +
-	"^v\x91\xf3l;c\xc1\xf0dp\xfe\x9c\x93\x85'" +
-	"\xdc\xba\xf0\xa2y\xffS\xecz\x13Gx\x86%\x16l" +
-	"=\xe1\x96\xe4\xd1\x1d\xcc\x80\xe5u\xd0\x09\x93;r?" +
-	"z|r\xf7\xef]'\xac\xea`'\xb4\x9d^\x8a\x94" +
-	"\x14\xcd\xec\x18\x8fre\x07\xe5\x82\xd21Gn\xa2\xbf" +
-	"\x8c\x0f\xe6l\xed:Y_\xde\xd3\xcf\xc7\x84;\xe6\xa1" +
-	"\xbc\xa6\x83\xde\xa8\xa9c\x8e\xbc\x8f\xfe2\xe6\xf7\x8e?" +
-	"P~\xd3#=@\xae\xe0\x14k\xed8Hw}\xe0" +
-	"\xf1\xbf\x9d\xb7\xa2\xf9H\x8f[7\xd7t0\x86\xb5\xb2" +
-	"\x03\x7f4\xbf\xe9\xd6'o\xfcc\x8f\x8b\xd8\x0fw0" +
-	"\x13\xba\xecf\xff\x0b\xef\x04\xa6\xbd\xea\x12\xf7\x8e\x0ef" +
-	"\xe9\xdeL\x94o\xbdcm\xc9\xab.\x02\xae\xef(\xa6" +
-	"O\x16\x1c\xdds\xdf\x96'o~\xcd\xb5Zc\xc7(" +
-	"\xfa\xa4\xe0\x97\xaf<\xf5\x1f\xa3\x1e;i\xaa\xb8md" +
-	"+P\x12sP^\xd8\xf1\xaa\xac\xb2K-\xe9\xa0n" +
-	"\xce\x96\x9c\x14[\xea\xa1Sz;\x8e\xc8\xdftP\x83" +
-	"0\xfag\xcc\x0d\xfc\xfe\xee\xc0U\x8f\xff\xf8\xda7m" +
-	"\x0bE\xb7\xdd\xce\xbcfr;\xbd\xa4\xba\xef\xb6\x89\xfb" +
-	"\x9b\xbf\x7f*\xc5\x073\xaf\xb9s\xfb\x87\xf2\xbe\xed\xf4" +
-	"\xd7^6wK\xc5\x8dk\xa6\xe6\xfc\xf8\x140\xf0\xc5" +
-	"\xd6:\xba\xbd\x96^\xe1\xdf\xcev\xca/\xaf\xec\xf9\x03" +
-	"(\x13\xedm\x0elg\xd2q\x98\xbdj\xdb\xa2~\x00" +
-	"\xb0\xe8\xdd\xed\x93P\xee\xddNm\xc1\x88\x1ds\xe4%" +
-	";(\xdb\x1e\xd0\xff\xfd\xf67?\xfb\xe1\xdb\x9641" +
-	"\xe7T\xb1\x83\x01*e\x07U\xde\xa9\xdf\xfdl\xf8\xb6" +
-	"I9\xa7]|=\xb0\xe3w\xf4,\xa1J\xbc\xf7\xd9" +
-	"\x91\xd3\xff\xd8O>\xf6\xee\x18\x86\xf2\x01\xba\xbc\xfc\xf0" +
-	"\x8e9\xf2)\xb6\xd1\xf0\x03\xef\xccz!y\xd3\x1f\x81" +
-	"\\fotx\xc7F\xbaQ\x0f\xdd\xe8/\xcf\xac{" +
-	"@~\xf5\xfd?)c\xec\x8b\xf9w2\xfaU\xee\xa4" +
-	"\x17{\xbe\xf0\xe91\x09\xcf\xb3g\xdc\x07\x0d\xefd@" +
-	"\"\xb9\x93\x1e\xf4\xf5\xa9\xffRt]\xce\xcf\xcf\xa6X" +
-	"\x99\x85\x1e\x09E\xc4\xa2\x93;\x05\xa6C;)o\xa7" +
-	"T\x8fi\xbe\xec\x817\xfe\x95r\xcb\xe5n=C\xa8" +
-	"\x1c%w\x8dBy\xfd.\xba\xc1\xda]\x0c\x0b>\x97" +
-	"\xf5V\xe8\xf4\x8b\xd2{.a\xf3t\x9a\x063\xfc\xe7" +
-	"\x1f^6;\xf6^j0 \x7f\xbc\xfb\x1d\xf9\xcb\xdd" +
-	"LTvSS3_\xad\xdf\xbf\xb6\xfd\xae\xf7\xfa\x11" +
-	"kF\xe7$\x94\xfd\x9dt\xe6\xac\xcec\xf2c\xf4\x97" +
-	"\xd1~l}\xdc\xfbq\xef{n\x1d\xef\xecd\x97}" +
-	"\xa8\x93R\xe3\xcc\xd8/\x1f\xbdj\xe1/\xdfwO8" +
-	"\xd5\xc9p\xd0Y6\xc1\x8e)\xc8H\xb7\xf02\xc4\xe7" +
-	"\xe9:\"\x8f\xe8\xa2\xca>\xae\x8bR\xaeS\\7z" +
-	"\xc6\x06\xe5\xdf\xdd\xb2\xbb\xb3\x8b\xf9\xc6\xbd]t1m" +
-	"\xc2\xc8\xbb\x16\x1e\xbf\xe6/&\x94g\xcf\x0fw1;" +
-	"9\xbb\xe4f\xbd\xab\xb0\xfb\x13 \x13m\xd5\xedb\x0a" +
-	"\xfaH\xa0\xe5\xdaG\xee9\xf9\x09\x90\xef\xf2'\x9d]" +
-	"o\xd1'\xadW\xae\x13\xffic\xe99P\xaet\x0c" +
-	"x\xd7\x87t\xbb}l\xbb\xc6\x07\xaeZ\xf7\xbd\x9f\xce" +
-	"\xfb\x0c\\\xb2p\xb4\x8b\xc1\x81\x13l\x82\xef\xfe\xd9\x8d" +
-	"\x8f\xfeC\xec\xb3\x94\xcbQ*\xc8\x1fw\xb5\xc9\xbd]" +
-	"\xf4\xd796\xf7\xc9\xed\xad\xbeWQ\xff\xcc\x96\x9b\x1c" +
-	",\"\xdde\x0c1v\xd3\xdb\x17>z\xf2\xd21\x07" +
-	"\x83\xbd\xee\xdbwv3\xc9\xdb\xd7MWH\xee\xfc\xe5" +
-	"\x90CU\xe1\xde\xbev]>\xda\xfd\x95\xdc\xd3\xcd\x9c" +
-	"I\xf7\x1c\xb9\xb7\x9b\x9a\xcc\xc9\xb5{\xc6&V\xb7\xf6" +
-	"\x02\xc9\x13\x1c\xb7\x07X\xf4nw!\xca\xbdl\xf6\xb9" +
-	"n\x8a\xe1\xbes\xf5\xc4\xed\xe3\x97\x8f\xfbOP\xbek" +
-	"\xef\xfae\xf7\xabt\xd7\x11{\xe8\xb1~4\xf7\xed\xfb" +
-	"\xdey\xe9'\xff\x09\x84\x08\x8e\xb9\xa0\xe1\xd7\x9e\x83\xf2" +
-	"\xad{\xe8J\x8d{\xe6\x03\x1aw4}\xfe\xcf\xff\xe3" +
-	"\xc3\x8f>w\xd9\xbb\xd6=,R\xed>\xb6\xff\x90\xfc" +
-	"\xfc\xf9\xcf\xd3\x04\x83\xc9=\x1f\xcak\xf7H\xf2\xda=" +
-	">y\xdf\x9ec\xf2\x13{)\xbaX\xb9n\xd1-\x7f" +
-	"\x1d}\xe6\x0b\x97\xb9=\xb0\x97\xa2\x0b\xe3\xb2i\xb7\x9e" +
-	"99t\xf9y\x97\x06\xec\xdd\xcb,\xd2\xd2\x1b\xe3G" +
-	"~\xfd\xec\xc3\xe7A\xf1!:\x91\xc6BAB\x91\x1e" +
-	"e/\xb3%;\xf7>\x02\xc6\xb7\xf8\xdfO\x8c\xba\xda" +
-	"\xd8\x95u\xb5\xb1\x021\xa8\xc6\"\xb1\xe2\xeax4\xa8" +
-	"%\x12\x05\x0djB\xafIF&W\xab\xde\xb8\xda\x98" +
-	"\xc84\xcd\x1f\xd4\xc3+\xc3zS@\x97T]\xabF" +
-	"TrQ\x00 \xd7\xe4\x03 \x92\xe9\xcb\x01P S" +
-	"\x17\x03\xa0H.\x8f\x03`\x16\x99X\x06\xe0\x8dD#" +
-	"\x9a\xb1J\x0d\xeb\xe1H}%x#\xb1\xa4n\xc4\xcc" +
-	"E\xc3 F\xea\xf9\xb3\xf9\xe0K\xea\xb1\xa4\xde\x1cl" +
-	"\x88&\xc2\x91z\xfb Y\xe6A\xca\x97\xa9\x91\x88\xd6" +
-	"PP\xa3\xa9!-^\x10\xd7\xd4Pe]U\xa2~" +
-	"r\xb5OM{\xf0h\\\xaf\x8c\xd4E\x13\x05?R" +
-	"\x1b5\x7f$\x14\xc0\x1az\xec\xe1b\x16@\x16\x02\x90" +
-	"\x8a|\x00\xa5TD\xe5z\x01\xf3\xd000\x97\x0a\x10" +
-	"\xa9\x1c\x0f\xa0\xcc\x16Q\xa9\x160O8O\x87\xe9E" +
-	"\xab&\x01(sETB\x02z#j\xa3\x86\xc3A" +
-	"\xc0\xe1\x80b\"\x8e9F\xd5\x1f\xd7\xe5]\xb1\xacq" +
-	"\x03\xa5F\x0e\xa0\x94\x88'p$`\xb5\x88)\x0fG" +
-	"\xd2\x887=\x8dk\x92\x11z\xe2\x82\xeae\x92\x9a`" +
-	"4\x1e\xcb\xb6\xf6\x971\x1a\xcf,f4\x9e\x91\xcfh" +
-	"<u\x92I\xe3B\x00\xf4\x90q\x85\x00\xcd\xc9\xc8\x8a" +
-	"HtU\xa4$\x18\x8d\xd4\x85\xeb\xbd\x94DR<\x19" +
-	"\xf1\xad\x8a\x87u\xcdG\xe9\xaa\xd9[\x0b\xa9T\xf5R" +
-	"\xb2\xd2=\xb3P0~\xbf\xf5\xdc\xf9\xa6_\x84>\x05" +
-	"%K@\x7f.\xe2p\x00\x82\x8b\x0d:\x9d2\x00D" +
-	"-\x0e\xa0\x0c\x17=\x006\xd6E\x0e\x0b\x88\x92O\x14" +
-	"\x9f\xbf\x01\xfd\xb7#i\x95P\xb0\x93\x09\xc8C\x17\xb2" +
-	"\xb6\x10\xc0\x7f;\xfa7#\xe9\x94\xd0I\xf18\x8bl" +
-	"\xad\x01\xf0oA\xff\x1e$\x07$v\x19\xf3h\x9d_" +
-	"o6~\x16\xfb\xb5y\xb4\xe1\x08\"A\x1f\xfd\xed(" +
-	"&cc\xba\xc1R4\xa9p1o\x18\\\xd2\x00\xeb" +
-	"/\xe6=e(\xa2qr\xee\xee\x9b\x8e\xf7<r\x10" +
-	"\x00\x0c\xed\xf8\xf7\xde\xde\xf3\xd6/\x0e\xd3\xdf\x9c\x0bC" +
-	"\xfar!\xa0\xabz\xa2\\mh\xa8U\x83+\x0a\x16" +
-	"F\xe2Z}8\xa1k\xf1\x82$\xfd9\xb9Z\x8dK" +
-	"nI\xcf\xea+>\xd7\xa9A=\x1ao*\x08\xc65" +
-	"U\xd7&\xd7h\x09o\xb2AO(Y\xb6\xc4\x8f\xa0" +
-	"2<TD%W@)\x9a\xd4\x918\xee\x94J\x98" +
-	"K4=\x03\x9d,\xa1\xabz2A\xcf\xa36b\x9f" +
-	"\x0d\x0a\xad\x0d\xa6\x08\xe8\xa3\xb3\x12\x98\xe3\xe4\x01(Y" +
-	"\xd2R\x8bjL\xea\xadj\x92\x91\x88Z\xdb\xa0\xf5\xbf" +
-	"\x96/q\xc1k9\xde\xa5\xcf\xa5\xa4\xf46mA\\" +
-	"\x8d$\xc2z8\x1a)P\xad!z\xefz-D\x89" +
-	"H7s\xb1,\x85\xe8\xa6\xaeUD\xf4xX3)" +
-	"\"\xf6\xe7\x10\xa7bB\xd3\xcb\x92uuZ<\x10^" +
-	"\xad\xf1\xc9\xfc\"\x88dD\xbes\x11o\"\xbcZ\xc3" +
-	"l\x100\x9b\x92\xe8\x02\xe6\x90\x895gH\xea\xdc\x80" +
-	"\xae\xc6u\xeb\x85D@\x8b\xaf\x0c\x07\xb5\x02k.\xd5" +
-	"\xf8\xef\xd8\x94\xec\xa1\x07xYD\xe5M\x01\x91\xdaC" +
-	"Drr9\x80\xf2\xba\x88\xca\x19\x01\x89@\xad!\"" +
-	"9]\x0b\xa0\xbc-\xa2\xf2\xbe\x80D\x14r)2$" +
-	"\xef\xd2\xc1\xff-\xa2\xf2\x89\x80$\x0bs1\x0b\x80|" +
-	"\xbc\x18@\xf9H\xc4\xc0P\x14\x90x\x84\\\xf4P\xe4" +
-	"\x84\x8b\x01\x02Y(b\xe0;t|\x88\x98\x8bC\x10" +
-	"\xe5<6>\x81\x8eO\xa1\xe3Ri.J\x88\xf2\xe5" +
-	"\xd8\x06\x10\x98B\xc7\xaf\xc6\x14\x03lD\xa2\xf3\xeb\xe8" +
-	"\xf5\xc0K/\x88\x12\x08\x1e\x09\xadqf\xad$-\x9e" +
-	"2|c<\xac\xa7\x0c\xc7\x19%\x03q\x10u\xdbt" +
-	"\xd3\x1d\xa8\xc1f\x164\xc3\xb3Z\x8b\xa3 \xae\xd6\xdc" +
-	"\xab\x99\xaa\x8b~}\x8e\xaak\xabTlB\x04\x01\xb1" +
-	"\xbf\xf9\xe7\xactx\x98\"\x15\xbb\x00\x94\x1c\x11\x95\x09" +
-	"\x022oy]4^\x81\x8d1\xbd\x89\x0a\x93\xa8\xc5" +
-	"\xe9\xc2\x9et+\xa7:\x96\xf9I\x9f\x1e\x8c62\xd7" +
-	"\x92\xc3\\\xcbT\xd3}O\xaca\xae%\xaf\x8c\xb9\x96" +
-	"\xd1\xc5\xdco\x07\xa3\x8d\xb1\x06M\xd7\x00C\xcd\x09=" +
-	"\x1a\x8bi\xa1\x92:5\xdc\xa0\x852m\xc5\x15\x88\xbb" +
-	"e\xb7\x9a\xba\xef\xa1[:\x87\xd1\x88iV\xc4\xe0\x0a" +
-	"$N\xa8\x9c\xa2\xb9\xc8I\xe5c\xb4b\x91\x89\x93\xe9" +
-	"\x9b\xba\xda\x09I\xc9\xd4INTB.\xafue\xf2" +
-	"//v!\xb9\x89\xc5\xae\x10//n\x94S\xea\x07" +
-	"\xb4F(Q#z8\x98\x90\xaa\x12\xf5\x06\xd3\x9cd" +
-	"\xac\x12\xa4H]\xb4\xc4\xd4\xb5\x92\x1b\x990\x18\xdc$" +
-	"\x82\x8f\x19Ee\x82\xe8A\xb4\xf3\xea\xc8\x81\x1e\xe9\x89" +
-	"\x03\xf8_A\xff\x19$\xe7\xa8/\xe41\x10\xf2L " +
-	"y\xb7\x18\xc0\x7f\x06\xfd\x9f\xa0\x8c(\xa1h\xe7\x95\x90" +
-	"\xe7\xf3H/\x9d\xf2\x09\x96!\xca\x04%t\xc2v\xe4" +
-	"\xb0\\\xf6`\x0d@y\x16by.S\x18\x09=v" +
-	"\xba\x0fy\xd6I\x1e\x87\x07\x01\xca' \x96OC\x94" +
-	"g\xa1\x84C\xec\x0c=\xf2d\x8a<\x03\x0b\x01\xe8\x8c" +
-	"\xf2k\x11\xe5*\x1a\x0f\xd8\xe9)\xe4\x89\x15\xd9\xcf\xd6" +
-	"\x9a\x8dX\xbe\x00Q\xd6P2\xb8\x81\x03\x1f3q\x17" +
-	"\xe3/KL\xfd\xbb\xa8WL\xb5\xbc(o\xaeEB" +
-	"\xb1h8\xa2\x03&.\xea\xbd\x84\xa6\xfb\x93z\xb4\x1c" +
-	"-1Q}LJ\xfe\xdb\xb1\x87eE\xb8\xb0\x99\xb2" +
-	"\xf6_\x85C\xfcYHp\x14\xde\x90I\x99\xe9\xae\x1a" +
-	"\xf3\x8e>\xe6\x1e\x19<d\x98\x8fG]\xc8\xa3SB" +
-	"\x96\x83@\xb2%\x83z}\xad|\x99\x0a^\xea@K" +
-	"\xb1\x1a1\x15tVV\x17\x04\x9a\x12~]\x8f\x97\x84" +
-	"k\x93\xba\xc6\x9c\xd0Pj'\x10\x9d0\x88L\xad\x05" +
-	"\x81P/$\x02\x90\xd1\xd4\xb7\xe4\x8a\xa8|G@\xa3" +
-	"6\xae\x06Wh\xfa\x02\x90\x9ab\xd4HEt-b" +
-	"\xfde;\x85\x94+\xd9p\"AU\x9aC)w4" +
-	"\xd0f\xe1\xfb\x05\x02\xb2]\xe9\xa0B\xfd\xe1\xf5\"*" +
-	"\x8b\xa8\xef\x13\xccH`a\x0d\x80\xb2@De\xa9\x80" +
-	"F\xcc\x0a30aZ\x87\x00\xa6\x89\x06\xfa\xba+\xcb" +
-	"\x90\x96\x03\xd6\"q\x92\x9d\xe9-^e\xb5T\xf0\xf7" +
-	"70\x83m\x1fU\xa5x\xe7\x16\x11\x95e\xae\xa3j" +
-	"\xf4\xa8KET\x1a\\G\x0dS<\x16\x12Q\x89Q" +
-	"7-\x9a\xa4l\xa4\xe7o\x10Q\xb9M@i\x85\xd6" +
-	"\xc4\x0f\xe6\x0di\x89 \xff\xc3\xb7RmHj8\x0a" +
-	"\x04\x1c\x05h\xb0\xbf\x164\xc5\x00\xfbS\xb8?\"\x8a" +
-	"hA\xbd2B#0\x06\xa0$\x0a\xd7\x86\xda\xc7\x9f" +
-	"J\xf7\x9f\"\xa2r\xb5\x052\x00\xc8\x0c\x8a\x12\xae\x12" +
-	"Q\xb9V@\xc3Z\x81z\x1d\xdbg\x86\xc2\x096\x0c" +
-	"b\x90\xc2V;e\x96B\xb5\x0cQkeD\xac\x8b" +
-	"\xdaRf\x9e\x82\x92f\xb2\x88\xcaU\xce)\xa6\xe7;" +
-	"'c\xf0UC\xafS\xa6\x06D/\xa0\x97r<\x93" +
-	"\x94\xf1}\xa3I\x9d\xde>1\xb9\xa6D\xeb\x87V9" +
-	"F\x9e,\xa0\x8f.\xe6\x0a\x14]\x99\x8e>\x81\xe2\xc5" +
-	"\x03W\x06\xef\x12\xe0\xbe\xf0$\xe7\xc2\xb6\xd4L\x9f\xe4" +
-	"\xdcX\x8a6\x840\xc7\xa9#Z\x91lD[\xd5\x7f" +
-	"\xf4B\xd9\x84t(\xdd\x0dn\xc3Ter\xdc\xd5\xde" +
-	"t1@\xfa\xe8\x83\xfee\x02\xd7\xb1\xf6\xe2;)\xb6" +
-	"\xd8-\xa2\xb2\xdfu\xb9}tp\xbf\x88\xca!\x8e\\" +
-	"\x01\xc8\x81\xd5\x00\xcaoET\x9e\xe2\xc8\x15\x80<\xf1" +
-	"K\x00\xe5)\x11\x95\x17\x04\xc4,\x13\xb8\x1e\xa5b\xfa" +
-	"\x9c\x88\xca+\x14\xb7\"\xc3\xad\xe4\x04]\xf2\x15\x11\x95" +
-	"\xb7\x05\x0bH\xaaa\x1d\xc3\x91z\x06\x0aD\x13O\xa2" +
-	"\x04}\x1f2\xd3\x90\xfa\xb02\x96\xa8\x84\x92\x88\x92\xd4" +
-	"\x92\x16\xce\x074\xf4\xa8\xae6\xfc(:\x1f\xe9\xe3\x1a" +
-	"-\xa8y\xc3+\xb5\x90\xf38\xdc\xa8%t\xb5\x110" +
-	"f\x8b`2\x16Ru\xad2\x82\xba\x16_\xa96T" +
-	"F\xc4\xaa\x04\x0e\x05\x01\x87\x0eh\x05\xa3\xb1~\xd1J" +
-	"\x0a/\xcb\xed\xd0\x06\x9bRt'\xff\x02\xa2\xd4\xc7\xe0" +
-	"I+\xd5\x06\xcc1\xae;\x98\x08\x14\xb5%\xcff\x90" +
-	" \xcek\x8e\xc3\xd4\x88\x97:X\xb61c\x1c\x99\xc4" +
-	"\x94={<\x80TW\x1b\x13#\xd1\x8b\x0aVY$" +
-	"'\xea\x89\xfe\x06\x96\xa2RtW\xe3\xc7\x8dw%\x0d" +
-	"G\xe7;\x15\x07Bj\x9d\xc4\x1c!q\xf1\xefo\xf0" +
-	".\xa0.\xa8|Y2\xb2B\x0b\xcd\x06I\xd5U\xc3" +
-	"rna\xf01\xef\xe6\xb6\xdc\x8b-#}\xbb%\x91" +
-	"t\xb0\xa9\x0c@\xd1ET\xee4-\x11\x8d\xaf\xd6P" +
-	"\x0a\xdf&\xa2\xf2\x13\x97\x94\xae\x8d\x03(w\x8a\xa8l" +
-	"\x16\xd0P\xe9\x0e\xb5I\x1dD\xcde@\xecK\x98\x06" +
-	"\xa4\xd9\xf2\x8d\xdc\x8e{u\xea\"\xbd\xce\xf5L\x9bf" +
-	"$\xfa\x9e\x18s\x9ck\xa6pKH\xcd9\xf8Xt" +
-	"\xee \x03^rA\xb3\xed\x056\x13R\x0c\x02\xf1H" +
-	"%f\x00_\x8aJV\x0a\"\xc9 \x09& L\x9b" +
-	"\xc7\x18\xe5\xa4\x190\x8e\xc4\xc1\xf8\x99S\x0c\xe4\x82\x1e" +
-	"k\xbei\xb4\x9d\x0d\xff\xdf\xb8\xac\x81\x02\xfa~B\x9b" +
-	"B\"\x13\x00_\x90D\xab\x908\x91\xcf\xe0H\xe4\xe9" +
-	"\x97\xb9`\xf0\xd7VN\xaa\x9b\xa9\xb1*\xddv\xbc\xb3" +
-	"\xad\x18L\xa0\xd7\x89\xd22\xef\xeb\xed\xbf/g\x8d\xf5" +
-	"\xdf\xb9j$\xd4\xa0\xb9\x89\xa2\xf7\xcd;\x15;\xbe\xa5" +
-	"\x84\xcd\x0ae\x8a\xb6\xf9\xca\xcc\xbd\xa7\xbb\xc1 \xa2T" +
-	"\xbbi(\x85\x95Bj\xd8\xedcq7\x83\xe0N\x97" +
-	"Sv\x99\xab\x0f\xcdS\xd8<?\xc9\x82r_\xf52" +
-	"5\xa1)\xd3\xf8I\xe4\xcbY.d2\x8a\x18\xb8\x0a" +
-	"m\xb9\x93\xa7\xd38/0\x8d\x0e\xff\x00\x1d\xc7&_" +
-	"\x83\xb5\x00\x81\xab\xe9x)\x1d\x17\x91ee\xe4YX" +
-	"\x06\x10\xf8\x01\x1d\x9fM\xc7\xb3\x84\\\xccB\x94\xfd4" +
-	"\xc6\x0b\\K\xc7\xe7\xbaS3\x15\x98\x0f\x10(\xa5\xe3" +
-	"\xd7\xdb\xa9\x19\x00\xb9\x92\x1dg.\x1d_\xc0R3Y" +
-	"\xb9\xacN\xa4\xb0\xf5\xaf\xa7\xe3\x8b\xe8\xf8PO.\x0e" +
-	"\x05\x90\x17\xb2s.\xa0\xe3K\xe9x\xf6\x90\\\xcc\x06" +
-	"\x90\x97\xe0r\x80\xc0-t|\x19\x1d\x1f&\xe5\xe20" +
-	"\x00Yc\xf3Ct\xfcN\x14\xd0X\xa6&X\xde\x02" +
-	"\xc4\xba\xa8\xcdL\xabrPI\xf5\x8c;@k\xecG" +
-	" \xb9\x9cNs\xd4\xa4*z\x1d\xca\x9b\xc6\xce\x17\xa3" +
-	"tF\xaf\xc3\x84t\xc0.\xa4\xe9j\xb8aA\x13\x88" +
-	"NL\xd1\xdc\xa8%\x12j\xbd\x83\x80\x83j2\x91\x8a" +
-	"\x8a\xd9X\x95\x96\x00o\x9f\xa9z\\\x0dj\xb5j\x10" +
-	"pEj\x02iP\xa0ga$\xae\x95\x98\xc1\xa0c" +
-	"ky\xcf!\xf2J !\x85\x00\xfe\xe1\xe8\x9f\x80d" +
-	"\xba\xe4ci\xe3\x8b\x09\x16\xdd\xc1Z\xcaq\xcc\xacG" +
-	"\x86D#r\xc1\xf71V(S\xd0\xdd\x15UY\xe6" +
-	"\xaa\xdaV\xc4]\xf5\xee\x8a\xc5\xae\xe6\xae\x8aZW\x15" +
-	"\xb8\xa2\xd0\xd5\x9a\xe7oq5\x8b\xfa\xe3\x0e\x18%\xfe" +
-	"\xe5\xae\xee\x0a\xff.\x07P\x92\x8a\xb2f+slp" +
-	"#\x02>fF\x8c\xd9.\xc3lp\x94\x03\x92\x1eo" +
-	"\xf2\xb1\x88\xd7\xe0q\xaf`\xa1k\xe0\x80\xdbz\xce\xff" +
-	"\x04/Uo\xfbO\xe4x\\\x8cF\x9a\xad\x9c\x9b2" +
-	"\x8dq\x8a\xd7\x16\x917\x9d0\xb5\x11\xe4\x0a\x94\x10\xed" +
-	"\xde\x01\xe4]~\xf2L\x8c\x83 \xcf@\x09\x05\xbb\x85" +
-	"\x06y\xcf\x9e|9\xce\x03A\xcec\xb9\"^\xceG" +
-	"\xde7&\x13\\\x0d\x82\x9c\xcd\xd2D\xbc\x01\x14y!" +
-	"\x9c|\x13\x07\x81\xf4J8\xc4\xee\x16A^\xb8%\x1f" +
-	"\x14\x82@NK(\xd9\xbd\x1f\xc8K\xda\xa4'\x1f\x04" +
-	"rTB\x8f\xcd1\xe4]?\xe4\x89\xd5 \x90\x03\x12" +
-	"\x0e\xb5\xbb\xc3\x90\xb7q\x90}t\xcd\x9d\x12f\xdb\x9d" +
-	"\xc0\xc8;\x07Ik\x19\x08d\xad\x84\xc3\xec\xceN\xe4" +
-	"\xf5x\x92\x9c\x07\x02i\x94\x9a\xc3,\x8eL\x94\xda>" +
-	"\xb6\x12|l\xa8\x14\x0d\x1ef1\xdf\xc2\x9f\xcf\x87\x12" +
-	"s\xd8\x1c2\x99\xebc\xf9\xf9R\x16\xd5\xd1'^\x0a" +
-	"\x80\xcd\xb4\x0e\x13\x00(a@\xb7\xa9\xd4\x8a\xfbJ\xb1" +
-	"\xd9\x0aeJ\xd1\xe0\xb1\x15\xa4\xcd\xa7\xb4.\xfd\xfe\x9f" +
-	"\xae\x9c\x14hq#\x99\x01\xbd\x98\xda\x10^\xa9\xf1\x00" +
-	"\x0dRu\xa8&Ybbt\xb6\x91S2\xcf.s" +
-	"\xf5EyZl\xe1\x0eX\xd9\x04\xb4,\x05\xf5\x83T" +
-	"\xe2x\xf7)\xf2&\x002\x83r\xe2r*o\xbc\xd5" +
-	"\x12\x9fY\xf7\x80\x0c\xaf\xbe\xff'2\x8erw\x84\x94" +
-	"B\x9e\xc1\"5\x0b\x86d\xa8O\xa5\xa9\xdc\xf6\xbf\xfd" +
-	"\xa0\xf0\x06O&dz\x8b\xa7\xcb\xfa\x98N\xdb\xc7\xbb" +
-	"\xe0\xdc<\x0b\xce\xcdu\xe0\\\xc5.'\xffc\x049" +
-	"1)*r\xb7%\x0e\x04\x9d\x06\x15\x88\xf1\xbak\xb4" +
-	"1\x16\x8dh\x11\xbd\xc0KE\x95\x11\xda\xe9y\xc0y" +
-	"\x06\x1d\xa5\xa1\x0504b\xc7\x0f\xf9\xe92?\xb5N" +
-	"\x92\x07E3~h\xa4\x13\x97\x89\xa8\xe8V6\x88\xc6" +
-	"\x0f\xb7\xe6;\x89\x9f\xbe)\xa9\xb4)4\x1e,\xd8\xe7" +
-	"\xb2\xfc\xa4;M48\x89\xb7<\xb4\x93\x0cr\xc1\xad" +
-	"2\x07\xb95[\xf3\x90\xb8\x1b{\x06\x82\xa5\x96Sb" +
-	"\xf2WY\x17\x88\xa9\xc1\xf4\xf0\xd0\xbdI\"\x19d\x9b" +
-	"d\xaa\xc6\xd8\x9c\xe1\xbf|\x8c\x11\xae\x96\x87y\xecT" +
-	"3&\x99-\x0ff\xcddb>+\xc7\x8f+\x030" +
-	"\x12\xba\x1a\x09\xa9\xf1\x10\x00H\xe1p\xac9\x91\xac\xad" +
-	"k\x88\xae\xf2\xae\x0ck\xab\xf8\x1d3\xc5\"\xdc \x99" +
-	"\xe6\xc8F\xf6\x17L4\xa5vA\x0c\xe4\xbd3E\x15" +
-	"vv\x80\xdb\x14\xb5\xc4T\x03\x07q\xf0\xe6D\xe4\xdd" +
-	"l\x84\x94\xb1\xe8\x8e\x97\x87\xfab\x88\xb4\x15\xaeo\xa7" +
-	"\xc5\xe9d\x87C\xf5\xab\x044\x92V\xb5\x1c\xb5\xb8\x1b" +
-	"\xaa\xdb\xfd\xc5\x83\x0b{R\xc8k9\x9f\xb4\xe9\xaco" +
-	"\x91\xc6\xcb\xca,\xbd\x19\x99\xd2\xbfx+\x065f/" +
-	"\xec\xef0\x08\x16\x97T\xf3j\x1b\xe5\x12\x7f\x82\xbcW" +
-	"\x90\xe2B\xca%n\xdf3\x1a\xf6\xac\x0b%\x1a\x01\x1c" +
-	"a\xe0\x9f\x08 \xff\x00\x85\x90\x16\xb3\x08\xc0=&Z" +
-	"\xe9\xc8\x14h\xe9\xc9$ov\xca\x86\xfd\xddO\xa8\x07" +
-	"\xe1V\xd3i\x7f\xa1\xa3\xfd>6k\x10\xb1\xa1Y#" +
-	"\xe8\x93\x1e\x1b\x94\x89\xcb\x90S\xe3,\xe7\xe5\xa7\xc4d" +
-	"\x8bc\x99\x8f`%\xe8\xdc0;\xa5i\xa7*\x81\xf5" +
-	"VK\xd3p\xc30\xab\x18\x85NO\xd3\x08<oX" +
-	"-M\xf9NK\xd3\x08\xe1\x1b\xc3\xeah*t<\x1e" +
-	"O\xf7\xbb\xdby\x01X\xca(\x14\x8dh0\xc4\x17\x89" +
-	"V%\xeaaHFG\x06\x0c\xaf8-\xe3\xd9qG" +
-	"\x0dHv\xbe\xc1'\x82iNM\xb7\xe7J\xe0\xd2#" +
-	"\xb6\x8b\xa8\xecq\\r'\x1d\xdb!\xa2\xf2sW\xfe" +
-	"vo\x99\x95\xe9}\xdc\x95\x19{\x8c:\xf4CV\xae" +
-	"6K4\x13\xb8'\xe2\xaef\x06\x0f\xba\x1a[\xc9\xc9" +
-	"2\x10x\x0e\xfa\xb5\xb7\xc4\xf3\xc7\xef8\xfe:\xaf\xd5" +
-	"X^\xcf\xbe\x89\xe9\xf58\x0e\xcd\xac\xe4.0\x9ay" +
-	"RH\xabS\x93\x0dz9\xf8\x98\x91\xc7\x1cc\xc1\xeb" +
-	"/\xd5o\xcan\xf8\xd8\xda\xbe\xb9\xce\xc2u\x03\xa6-" +
-	"\xd2\x19\xc3\xe5\xac!\x0b\x95\xb1\x14\xbf$\xe3q-\xa2" +
-	"\x07\xc0k\x151\xec\xc0\xcaJ\xf8\xf5\xaf\xc8Y)L" +
-	"\xeflUWM\x15\xb7W^\xec^\x99N+\x8f&" +
-	"A\x8c\xe8vZzp\x0dI\xa9\xf00E\x9fxT" +
-	"\x16\xd4\x0bB\xf6\xcf\x0b\xde\xd4N\xb2y\x83z\xe6\xa4" +
-	"O\xff\x98ZR\x83+\x98\xc4\xda\xddI$\xbb\xd0\xf5" +
-	"5\x8ag1\x8b\xf5\x12\x06\xef\xc2\x02Q\x8b[v\x8f" +
-	"\x7f\xb1\x87\xfc\xfb!B\x8a]aw\x89\x99q\xfe\xbf" +
-	"\x8c\xbb\xd3\x97\xd3\xd2`\xd9\xb4\xb9\xf8\x1a\x00e\x9a\x88" +
-	"\xca\x0f\x84~\xc5\xc7d<\xd4T\xa3\x01\xd6\xf5\xafS" +
-	"^\xb4\x81\xe6\xe5\xadL\xd2\xea\xf0\xd4\xed7x\xaf3" +
-	"\xf2&|B\x16\x9b~\xc3\x9d2M\xeb2\xd2\xb62" +
-	"\x99\xe6\xdan\xd5r\x13g\xb9\x05\xf4g\xbb\x88\xe3\xa7" +
-	"\x14\xbb\xd6D\xffF\x82wxx#uQ\x97v\xdb" +
-	"-$\xa6\xe2\xb2\x80\x08\x89\xb1\xb2\xad\xe0\xb2E\xa1\x7f" +
-	"8\x91\xa1\xee\xd8\xb7\xber!\xb8\x9b\x09\x89\x0e\x9c\x9e" +
-	"\xe6\xa5\xeb\xfff\x11\xe8\x07\x87-\xc3\x04\x96\xbb1\xeb" +
-	"a}{h\xcf\x1bY,WH*\xe79\xae%O" +
-	"\xf8\xc60S\x85D)s\xca\xe9\xac\xc1\x08\x86\x18q" +
-	"\x8bdf\xa8e\xc7\xbb&}]\x11\x81\x9dNJO" +
-	"y\x97\x863~F\xea0\x9a\xd2\xdb\xb6\xd8)\xdd\x11" +
-	"\xcc2\xa9tj5\x80\xf2\xa6\x88\xca\x17\x02\xa2U4" +
-	"\xef\xa5\x94\xfb\x0f\x11k\xd0jc\xa3\x1e\xe6\x1b:\xf8" +
-	"\xb5\x88\x81\xb1,'*0\x17#\x8ff9\xcb\\\x9e" +
-	"\xa2e%v\x0f\xcb\xd1\x96\xf1v\xb5\x10\xcb\xad\x9at" +
-	"\x91U6\xcer\x9f\x9bY\x0e\xd5c\xe6P\xefa\xe3" +
-	"?\xa1\xe3\x87PH\xe9)\xe3V6\x98\xd2\xa14\xf8" +
-	"\xe4z\xd0$N\x00\xb0&\x0d\xc7\xad\xc6\xb7\x1a\xc0\x01" +
-	"Z\x96\xad\x0e\xb8\x01'5[\xfb q\x83\x884\x07" +
-	"\xa3vp\x0c\xc5\xa0\xc8\x16JE\x1d\x94\xf1\xe6\xa1\xec" +
-	"\xbd\x06U\xe2\xa1G0\xcf\xe9zo\x10u\x8f\x91\x99" +
-	"\xc5\xc9\xaaA\xa5\xba.!\xb5O&}S\xfc\xbc>" +
-	"\x11\xe2<\x16!\xe6\x15\x03x\xc3\xa1\x06\xcd4=\xe1" +
-	"H=\x004S-\x08G\xea\xcd\xde\x10s\xec\x02\x8d" +
-	"v\x0e\xfc\x94B\x0d\x9a\x09\x03\xa9q\xe5_z!\xff" +
-	"\xfe\x8fj\x9d@*$D\xfb\xb3\x04\xe4_y\x92\x99" +
-	"4.\x98.\xa1`\x7f\x10\x89\xfc+32\x91>\x1b" +
-	"-q\x1d\xe4\x0dL\xa5\x16\x88\xbe\x90\xd7r\xb5\xc5\xa6" +
-	"3\x84\xc5N\xf8d5\xac;re\xe7\x84\x07\xee\x97" +
-	"\xb7{\x0d\xd3uY\xb4\xf4\x87C~\xe4\x89\xbc\x01\x1a" +
-	"\x1a\x84\x94\xcf\x07\x80\xc5J\xf6\xbf3@\xb0\xc6\xe0\x1f" +
-	"\x14\x00\xd6\xb8\xadp\x99e\x85K]Vx\xd6<\xcb" +
-	"\xd7,\x12\xd2@H{\xd5\x81 d\xea\xa4\x81\x02\x06" +
-	"\x1eDf\xf48\xa6\xdf\xce\xe4q2\xf5\\\xa7~\x1b" +
-	"2(\xe4\x96\x1a\x09\x0d\xc9\xd4[f6\xb0\xf0\xbe1" +
-	"\xa7\xed\xda\x1d\x0c_\\\xa3|\xbaz\xe8E\xa4\x80R" +
-	"z\xc5\xbe\xedj\xbc\xc1\xa0\x12\xabS\x00\xb5\xfb\xed\x94" +
-	"\x0a}\xa6\\\x81\x138r\x9c\xe3\x16\xbdQ\x96\xe8\xf5" +
-	"\x819\xa3,\xd1\xbb\xe5\xa2\x8a\xe4\xdf\xa6X\x9c6|" +
-	"\xbe \xfa\xa1\xb3\xd2\xc8\xa2\x90*\x8b%jJ\x8b\x01" +
-	"\xff\x8a\x0e\xf9\xbf\x8cq\xf1-\x066\xaa\xa1\xfaF\xff" +
-	"\xcfI\xf2Y\xdd&f\x92oDa\xdf|\x9eO\x8d" +
-	"\xc7\xd5\xa6o%\xd3\xfck\x89\x8b\xed\xc8\xea\x17\xbc\xb1" +
-	"\x8e\xac\xcc!\x9d\xdd\xd7\xe2+\xe0W\x1a\xce\xae\x94g" +
-	"^i\\-\xf3J\xa3\x97\xf7\xbd\x99\x11\x8di\x91\xb2" +
-	"\xb8\x1a\x04i\x85\xa6\x9b`\xa3,\xae\x827H\xff\xbc" +
-	"@~,\xd5@\x08\xa9\x89.oX\x1f\xdc\xd7E\xac" +
-	"1\xdf\xfdu\x11o\xecF\xfe56Q\x0aS\xbe." +
-	"\xe2\xff&\x00\xf2O\xca\xfb}]d/\xc2\xbfy'" +
-	"[\x97\xbb\xbe.2\xbf\x90\xfa\xff\xf3y\x11\xcf]\x83" +
-	"7\xa6\x06\xb5\xff\xf2/\x8c\x06\xd1O\xd1\xaf\x163\xe0" +
-	"W+\xfd\xb2\xb7Y\xa9M\xbdfOo\x01o\xd2m" +
-	"\x12cZ\x9f\x14\xd5<W2\xcaNQU\xadvB" +
-	"\x03'E\xd5\xa7\xd5\xd6\x11V\xc9LCh\xa1r(" +
-	"\xb1\xccg\x8e\xd3\xa5e9tkJ%`\xac\xff\xd3" +
-	"\xff\x13\x00\x00\xff\xff\xf5\xb8\x8ad"
+const schema_bf602c4868dbb22f = "x\xda\xc4|\x09x\x14U\xb6\xff9Ui\x8a\xf0\xc0" +
+	"NQD\x96gl\x890B\x1eDHd|D\xfd" +
+	"B'D\x08c$\x95\x80 \xe2\x1b+\xdd\x95\xa41" +
+	"\xe9n\xba\xab\x83A\x99\x18\xc0A\x84\x80ayH\x12" +
+	"\x90e\x02\x81\xd1Q\x10\xc7\xfd\xa9<\x157fDe" +
+	"\\F\x1c\xf1\x89\xa3<\xe7\xb92\xee\xd4\xff\xbb\xb7\xea" +
+	"VUz\xc9\xe2\x7f\xde\xff\xff\xf9}\xd2\xb9u\xeb." +
+	"\xe7\x9c{\x96\xdf9\xb7&m\x9b4-m\xf1\x90&" +
+	"D\xe0*\x0f\xfd\x93k\x80\xde\xf0\xc6\x93\xf7\xcf\x1b\xbe" +
+	"\xebV\x10\xcf\xe5\xf5\x8f\x0e|q\xf1\xbf\xfcgU\x07" +
+	"\x00d\xa0\xd4y\xebw\xd2\x81[/\x05\x90\x8e\xdf:" +
+	"C\x1a\xdb,\x00\xe8w\x1fn~c\xe4\x92\xac\xe5 " +
+	"\x9e\x8b\x00i\x02@\xfe\x90\xe6\x1c\x844]H\x0b]" +
+	"x\xd17#W\x83x.\xa7\xaf\xd8\xc2\x17l\xba\xe6" +
+	"\xde\xc7\x000\xff\xcc\xad\xd9(\xb9\xc8\xdb\x1267\x01" +
+	"\xeawd\xaf\x18u\xcd\xbe\xc5\xabA\xf4\xf0\xf6\xfcd" +
+	"\xca|os\x05Jsi_\xb9y\x86\xb4\x93\xce9" +
+	"}\xda\xcbw\xef\x1b}j5\x88Yt\xce\x0c\xcc_" +
+	"\xdd\x1c!s\x96d\xfe\xf7\x83\xcf\\Rv\x07\xc8#" +
+	"\x10\xf5\xae\xd7\xb3\xf7\xed\xfb\xf4\xbdO\xa0\x84\x138\x80" +
+	"\xfcX\xf3P\x94n\xa3\x8357\xdf\x07\xa8\x8bGn" +
+	":q\xf0\xf4Kw\x80x>\xa77=\x9c\xfb\xbbo" +
+	"\xa6_\xf30Y\xe2\xf8\xe5\xd9(M]NzNY" +
+	"\xbe\x05P\x7fy\xcb\xe3_nh}nM\x12\xaa4" +
+	".?-\xdd\xb6|\xb8\xd4\xba\xdc\x93\xff\xe0r\x01\xa5" +
+	"+V^\x04\xa0\xd7w\xa4\x8f\xebXxf\x0d\x88\x17" +
+	"\xb3ENY\xf9>B\xda\x93_d^\xb4\xbdc\xf4" +
+	"Z\xf1|\x04p!\xa1\xd8\xf8\x95\x8b\x10P\x9a\xb2\xb2" +
+	"\x10P\xf7\xed\xbc\xa7\xf3\xae/~X\x0b\xe2\x18\xa3C" +
+	"\x06\xe6\xcf]\xb9\x81tPi\x87\xca\x93\xb5?[V" +
+	"8s\x1d\x88\x1ek\x84\xad+#\xa4C'\xed0\xbf" +
+	"\xe1\xe9\x13\x1e\xe9\xdf[A\x1c\xcfx\xf2\xec\xcaA\x1c" +
+	"\xa4\xe9\xb7\x1f\xbd\xf6\xa9\xa3\xe9\xc7Z\x1d\xdczb\xe5" +
+	"\x02B\xb9|\xa9a\xe9e\xe7gl\x00\xf9\\d\xeb" +
+	"\xddG\x1e\xa1\xf4 \x1d\xf4y\xef\xda\xcf\xfd\xa7\xc7m" +
+	"r\x10\xfd\xf8\xca\x0a\xf2\xea\xae\xef\xe7\xb7\xec{\xa4a" +
+	"3\xc8\x17\"\xa7\x8f\xe7\x9a\xdb\x97\xd7\x1f}\x05\\<" +
+	"\x19\xfe\xe9\x95\x15(\x1d_I~\x1e[y\x04\x01\xf5" +
+	"\x8e+\xc4\xa7\xf1\xde77;g:\xfe\xebQd\xa6" +
+	"\x13\xbf&3U\xeb\xdf\xb4\xbd\xd2\xfe\xd6\xe6\x04\xae\xb8" +
+	"V\xe5\xa1\x94\xb9\x8apE\\U\x03\xa8?\xd7|\xfd" +
+	"\xfd\xf3\xcf;\xb5\x85m'\x03\xf3\xa7\xae\xca&k\xba" +
+	"\xfd\xf6\xdc\x89\xe7m\xb8\xac\xddxb\xd0h\xf4\xaa<" +
+	"2\xc9\xf8Ud\x12\x8b\x87\xe29\xbc~\xf1\xc1?\xd7" +
+	"\xce\x9cp\xc3\x93\x06C\xe5U\x07\xa5kW-\x01\xc8" +
+	"\x7fd\xd5\x11N\xf2\xae\xb9H\x92\xd7\xb8\xf5\xef\xbe[" +
+	"X\x1d\xdb\xb7\xbe\x83\x8a\x80S\x9eK\xd6\xe4\xa14w" +
+	"\x0d\x95\xd153\xa4e\xe4\xd7\xa7\x0f\x1d|(o\xca" +
+	"\xf9\xdb\x1c{T\xd7\x0c%\xd3\xd7\xaf!\xd3\xff\xf3\xb6" +
+	"-\xcf_'\xfc|\x1b\xc8\"\xa2\xfe\xc7\x85m\xe1g" +
+	"\xb2\x06\xdd\x07.\x8e\x8c\xd2\xb2\xe6;i+\x1do\xf3" +
+	"\x9a%\x80\xfa\xe0\x9b6\xde\xfc\xec\xba\xeb\xb6\x838\x9c" +
+	"l\x86\xd2\xf5\xc4\x9al2\xda\xa95D\x8e?\xdc\xfa" +
+	"\xcc{\xad\x95\xdb\xb7\x83(:\x07#\xfc\x95V\xaf\xdd" +
+	"%\xb5\xae\xa5\xc3\xae\xfd+\xa0~tS\xed\xb2\xcf3" +
+	"s\xef6\xc9o\x90Fm\xa9\"\xa3-n!\xd3\xed" +
+	"YQ:\xf3\xc2\x97\xcbv\xd0\x1e\xf6N\x8d\x9e\xc7[" +
+	"F\xa1t\xaa\x85\x8cw\x92\xf6\x8e>\xd1\xf8]\xfb3" +
+	"\x9bv;)}\xc5\xba\x022\\\xc9:\xb2\xd57\xbf" +
+	"~|\xd8\xc3\xbf}s\xb7!\x8dt\x87\xf9\xb1u\x1c" +
+	"\x07(\xad^GFx\xf4Q-z\xe6\x8a\x0fv;" +
+	"\x05\xe2\xd4:*\x10\x7f\xa3#\xec\x1c\xf8\xea\x8e\xf0\x9e" +
+	"\xef\xbaM!\xae\xa7\xcc\x1c\xb9\x9etx\xf2\xfa\x9b\xda" +
+	":~\x97\xfb\x1b\x90\xc7 \xaf\xff\xd3\x86\xcc\x11\x83\x8a" +
+	"\xa7\xbcc\x9e\x9d\xa9\xeb+P*[O^*]?" +
+	"\x8fH\xe0\xe7E\x17\x97N\xf8pc\xa7AO\xe3\x14" +
+	"\xdc9\x8a\x88\xcd\x03{O\x94}\xff\xc4+]d&" +
+	"\xc7\xce\xe9\x9a;\xef\x1c\x8a\xd2\x83w\x92\x9d\x1f\xb8\x93" +
+	"\xac\xbb\xf8\xe0{\x7f}q\xd5\x1b]T\xc1u\xd3\x09" +
+	"\xf9CZsP\xcaj%}G\xb6^\x0a\xa8\x97\x7f" +
+	"}]\xed\xfa\x95\x97\xef\x071\x87m1\xab\xf5Q2" +
+	"\xe5\xb6\xb5\x8f\x9d\xf7b\x17\xff;\xe3\xb8\xd3'CZ" +
+	"\xdb\xc8\x13\x8b\x91\xf29\x88\xb6\x8cR\xfeK?\xdey" +
+	"\x87\xe4j\x9d\x01 Mm%l]\xba\xb0\xe4\xebQ" +
+	"i_\xdd\x07\xb2\x07\xd1V\xa2t\xbc\xb1\x1b\xf2P\x9a" +
+	"\xb2\x81\xbc6y\x03\x91\x97\xd7\x9e\x1a\xb5\xfe\xb7\x15\xe7" +
+	"\xde\x1f/\xca\xd2\xb1\x0d_H'h\xc7\xb76\xcc\x90" +
+	"p\xe3p\x00}\xcf'/\xbc\xfc\x82>\xe5\x80E\xfd" +
+	"\x0c\xcc\xff|C\x0e\xa1\xfe\xb7\x1b\x08\xf5'\xce_\x96" +
+	"s\xfd\xa7\xfe\x07\xbaI\xd4\xc4\x8dT\xa5M\xddH(" +
+	"5jy\xe5\x93;\x07\x9e}\xc0\xa1;\xb6m\xa4j" +
+	"\xe7W\x0b\xef\xda^Sy\xf3!\xe7\xe0\xab7\xd2\xc1" +
+	"[7\x92\xc1O\x14\xcc/y\xf0\xe7w\x1dr\x0a\xc7" +
+	"\xb3\x1b\xdbH\x87\xe3\xb4\xc3\xcd\x17^\xfcuW\xfe\xef" +
+	"\x0e9\xc6N\xdf\xb4\x94\x8c\x8d\x19\xd7\xb4~\xf2\xbc\xfc" +
+	"{\"\x15\x8c\xcfg6RE\xea\xdaD^\x1d\xb5\xe2" +
+	"\xa3I\x07\xff\xf8\xe8\xef\x0dEj\x90j\x13]\xd6\xa0" +
+	"\xc3\xc5\x05\x91#\xdf\xfe\xbe\x9b\xc4m\xa2\"9\x92\xbe" +
+	"\xba\xfc\x8e\x89\xbf\xfc\xc5\xdf?~\xc8\xb9n\xef&*" +
+	"\x92\xa5\xb4\x83\xa5\xb7\xe2\x0e\xd1@j}6}!\xb5" +
+	"l\xba\x08 \x7f\xe7\xa6\x10\x07\xa8\xbfu\xec\x967\x96" +
+	"\xac\xfe\xe1\x11\x10\xc78\xe4\x97\x8aR\xc9\x96\xa5(]" +
+	"\xbb\x85\xbc6w\xcb\x0c\xa9\x93\xfc\xd2\x0b\xe6\xceS}" +
+	"\xa7_\x7f\x14\xe4\x1c\x8b*-[\x0e\x93\xe9\xb7m!" +
+	"\xd3\x97\x9f\x7f\xc5\xdb-w\xbd\xf3\xa8\x83*Ol\xa1" +
+	"\xda\xdaZJw\xc5\x87\xd2\xbe-\x07\xa5\x03[\xf6\x02" +
+	"\xe4\x97\xdcu\x84\x932\xdb\x88\x15;\xf5\xe2\x8b\x0d\x97" +
+	"~[\xf28\x93Nb\xde\xdb\xee@H\xfb\xfa\xb3\xd9" +
+	"\xb1\xd7\xce\xfd\xf0\x89\xf8Q~\xdc\xfa\xa8\xe4\"\xafJ" +
+	"Ym\xab\xa4\xfa6\"A\xe9'k\xff\xeb\x92,\xe5" +
+	"?\x1cj\xfa\xfa6\xaa\xa6;\xffe\xcd\x9f\xb7^\x9f" +
+	"\xff\x94c\x99%m\xb3\xc8\x93\x01y/\x15.\x08\xfe" +
+	"\xf0\x94\xe3\x9d\xc9m\xbb\xc8\x93qk\xaeZ\xf2\xf4\x87" +
+	"\xe7\x1c\xb6\xc5-\x03\xf3G\xb7Q\x91\x98\xdcF\xc4-" +
+	"r\xf4\xd8\xbd\xe3\xc7\xb5\x1c6\xbc\x80\xfb\xf7d\xd6." +
+	"\xd3\x87\xbfa\x1e\x9c{\xdbNK\x8f\x90eI\xcf\xb6" +
+	"\x91\x83\xb3n\xe0o\xef\xcc;\xf4\xcda\xcb\xdc\x02\xe4" +
+	"ok\xdfEF\xbb\xb7\x9d\x90\xb25g\xc6e\xef\x0e" +
+	"\xcc\xfeO\x10/d+9\xdaN\xbd\x8df\xee\xd8\xea" +
+	"\xf5\xc5\xe7=\x07r\x96\xc5\x85G\xda\xa9\x80\xbd@_" +
+	"-?te\xc5\x91E[\x9e\x03q\x04g\xaf\x030" +
+	"\xff\xe3\xf6<\x94\xbem'\xeb9\xd3N\\\xa0\x13\xf3" +
+	"\x96\xde\x9f\xb7\xea\x86\xe7\x1d\x86yb\xc7\"2I\xc5" +
+	"\xa05E\x076j\xce'#;\xf2\xc8\x93g.\x9f" +
+	"\xfee\xee\xeb{\x9fw\x90\x08;\xa8\xeb\xf5\xc2\xfcu" +
+	"'[\xdf\xe1^r\x90\xf5\xe3v*\xd8\x03F<\xd1" +
+	"\xf4\xda\xe5{^\x02q8\xcfX\x08\x98\x7f\xbc\xbd\x00" +
+	"\xa5St='\xdbgH\xe9\x1dD\xc8\x1e\xf2I\xee" +
+	"?\xb5\x09/;\xc6\xff\xbc\x9d\xb2m\xdd\xb5\xc5\x1b\xdf" +
+	"\xff\xe3\x15\xce'o\xb5S\x05:8\xe6\x9b=\xe3x" +
+	"\xdeQ\xe7\xb9x\xda\xa0\xe61J\x92\x03\x97,\x99\x93" +
+	"}m\xcbQ\x075\x87t\xd0\xe3:z\x88kPt" +
+	"N\xebQ\xe7\x99\xfb\xb6\x9d\x1e)\xec \xaf\x8e\xd9<" +
+	"\xec\x93\x87\xc7\xdc\xfd\x07\xc7\xae&w\xd0]Y>G" +
+	"\x9c4\xe6gu\x8cBib\x07\xe1\xf6\x94\x8e\x19\xd2" +
+	"\xf5\xe4\x97\xfe\xf1\x8c\xd6\xed\xc7k\x8a\x8f%\x18\xf2\xb2" +
+	"\x8eY()d\xef\xd2\xf5\x1d3\xa4\xd5\x94\x0a\xb3\xcf" +
+	"\x8c:P|\xed}\xc7@\xbc\x88\xd1\x7fq\xc7A2" +
+	"\xeb\xee\x87\xffy\xd6\x8dM\x87\x8f9\xf5\x8b\xd2A\xd9" +
+	"\xbf\x98.\xf8\x93\xd9\x8d\x8b\x1f\x9b\xf7\xee1\x07\xebZ" +
+	";(\x99j\xaf\xf3>\xff~\xe5\x84W\x1d\xc7\xaa\xb1" +
+	"\x83*\xfd7\xa3\xc5\xad\xbfj.|\xd5A\xda@G" +
+	"\x01y2\xe7\xd9\x1d\xedw>v\xddk\x8e\xd1\xe4\x8e" +
+	"\xa1\xe4\xc9\x95E\xef\x9e\x0e\xfc\xf2\xc8k f\xf1\xb6" +
+	"\xa7J\xb5\xc7TB\x80R\xba\xa5\x92\x8e\x19\xd2f\xba" +
+	"\xa5\xdc\xfd\xaf<\xfe\xd5\xd0\x07\x8f\x1b\xba\xc9\xb2\\%" +
+	"(\xf0\x19(-\xebx\xd5\xd8\xbat[\x071\x16\x9d" +
+	"o?p\xae2f\xce\x9f\x88e\xe1l\xcb\xe2\xe2\xa8" +
+	"\x11\xdb\x96\x83\xd2\xc4m\xa4\xf7\xf8m\xe48\xfd[\xdb" +
+	"f\xee\x99\xac\x96?\x99\\\xa4\x9d\\\xdb\xa9B\x1f\xb2" +
+	"\x9d\x1cN\xeb\x18\xc4Y5\x17\xf5w\xb6\x1f\x96\xb6m" +
+	"'\x8a\xf1\xc1\xed\xd4T\xffaU\xe5\xa4\x87o\xbe\xfc" +
+	"MK\xfd\x13\x05\xb4\x83\xba>\x99;\x08\x8d\x95\xce\x9b" +
+	"Fw5]\xfaV\x9c#E]\x9f\xa9;NK%" +
+	";\xc8//\xed{g\xc9\xbce\xe33n~\x0b\xa8" +
+	"\xebM\xc7RwT\x11\x0a\xfe\xf7\xc9m\xd2\xcb\x0d\xc7" +
+	"\xfe\x0c\xf2hk\x1ay\x07\x15[\x85\xbej\xe9\xe4\x04" +
+	"\xff?\xff\xb6\x1d\xd9(m\xdeAT\xde\xbd;fH" +
+	"?\x92\x09\xf5\xdd\xda\xff\xdc\xf2\xe6\x97\x97\xbdc\x91\x01" +
+	" \xff\xd4\x0e\xeaN\x7f\xbe\x83\x90a\xfc\xcf\xbe\x1c\xbc" +
+	"1;\xe3\x84C\xac\xe4\x9d\xd4!\xf0\x97\xe2\xba\xa7\xce" +
+	"\x99\xf8n\x82xzw\x0eBI\xdeI\xf6S\xb6s" +
+	"\x86\xd4H~\xe9\x83\x0f\xbc\x7f\xc5\xf3\xb1k\xdf5\xce" +
+	"\x931\x91\xb2\xf3\x0e*\x84;\x97\x00~\xfa\xe4\x8a\xdd" +
+	"\xd2\xab\x1f\xfdE\x1enm\xec\xe4NJ\xbf\x8fw\x92" +
+	"\x8d=\x97\xf7\xc4\xf0\xa8\xeb\xa9\xf7\x9c\x0bM\xdfE\xbd" +
+	"\xc1\xcc]d\xa1\xaf\x8f\xffS\xfe\x95\x19\xbf9\x19\xa7" +
+	"L\xe7\xba\x04\xe4\x11\xf3c\xbb8\xd2\xb7q\x17\x11\x95" +
+	"q\xe5\xc3\x9b.\xdc\xfd\xc6\x7f\x11n9\\\"\xd7\x00" +
+	"\"\x05\x99\xbb\x87\xa24v7\xf5\xc4w\xd3H\xe0\x99" +
+	"\xb4\xb7\xfd'^\x10>t\xc8zg\xa7a\x17\x02\x7f" +
+	"\xbd\xec\xc2\xe9\xe1\x0f\xe3cG\xa9\xa5\xf3}ik'" +
+	"\x15\x95N\xa27g+5]\xcd\x9b~\xfda\x02\xb1" +
+	"\x8euf\xa3t\x92\xf6<\xd1yD\x9a\xbb\x87\x10k" +
+	"\xd3\x91\xdb\"\xee\xbf\x9d\xf9\xb0\x9b\xaf\xba\x87n\xb6t" +
+	"\x0f\xa1\xc6{#\xbe}`\xd2\xdc\xfd\x1f9;4\xee" +
+	"\xa1\xcel3\xed\xf0\xfa\xe4yK\x1fz\xee\xb5\xd3\xce" +
+	"%\xef\xa1K\xb6\x82M\xf1\x1c\xa7X\x1b\x0e\xfd\x9e\xc3" +
+	"\xd2\xe6=D\x0b\xed\xdcCh\xba\x8d_\x919\xf9v" +
+	"\xf9\x7f\x9cR=z/u/\xc6\xef%\xd3\xa8\xe7\x9d" +
+	"\xf3\xeb\xb9/M\xf9\x94y&\xc4w\xddK\xcd\xc1\xf4" +
+	"\xc2\xeb\xb4\xedyw\x7f\x06\xe2h\xf6d\xca^\xaa9" +
+	"\xee\xab\\~\xf9}\xab\x8f\x7f\x06\xe2\xcf\xd8\x93\xb1{" +
+	"\xdf&OZ.^\xc1\xff\xc7\x1d\xd3>\x07\xf9b\xcb" +
+	"N\x8d\xdc{\x9aL7\x91NW\xbf{\xd2\x8a\x9f\xaf" +
+	"\x9f\xf5%8\xa4\xa4l/=\xb4si\x07\xcf\xae\xe9" +
+	"\xf5\x0f\xfc2\xfce\xdc\xe6\x08}\xa4\xd8\xde\x0d\xd2\xb2" +
+	"\xbd\xe4W#\xed\xfb\xd8\x96\x16\xcf\xab\xa8}\xe9\xd4\x00" +
+	"[\xf7\x16\x91\xc1v\xee%\xbb\xcf{\xe0\xf8\xf9\xc3\x0f" +
+	"\xfa\xce8w?\xb6\x8b\xca\xe4\xc4.2Bl\xeb\xfe" +
+	"\x01\x87\xca\x02g\xba\x1b)\xa9\xac\xeb;\xe9\xda.\xea" +
+	"\x08u\xcd\x90\x96u\x11]>\xa6j\xc7\x88\xe8\xd2\x96" +
+	"3 fq\xb6\xdd\x07\xcc\xaf\xef\xcaCi\x19\xed\xdd" +
+	"\xd8E<\xf0\x0b.\x19\xbde\xd4\xa2\x91\x7f\x07\xf9g" +
+	"\xd6\xac\xcd]\xaf\x92Y7w\x91e]=\xf3\x9d\xf6" +
+	"\xf7_\\\xf9w\x10E\xceV$\xe4\xc0v\x1d\x94\xbe" +
+	"\xa5#\x9d\xe9\x9a\x0d\xa8\xff\xaa\xf1\xeb?\xfe\xdb\xe9O" +
+	"\xbev(\xe2\xcc}\xd4\xee\xde}\xa4\xeb\x90\xf4\xdc\xd9" +
+	"\xaf\x93\xa0\x04?v\x9d\x96\xd2\xf7\x09R\xfa>\x8f4" +
+	"q\xdf\x11\xc9\xbb\x9f\xb8W\x0d+\xe6/\xfc>\xf3\xbd" +
+	"o\x1cv`\xea~\xe2^\xe9\x9f\xb5_}\xb7{\xc2" +
+	"\xf7\xdf\x1b\xc6\xce\xa0\xe2\xf8\xfd\xcb)L\xb0\x9f,\xf7" +
+	"\xcc\xcb\xf7x\x96\xf9\xce\xfe`\xa1\x00\xc4\xf9\xd8_A" +
+	":<\xbb\x9fP\xf1\xc2\x09\x8b\xdf;>p\xd1Y\x87" +
+	"\xa8~\xbb\x9fj\xbb\x1b\xe6E\x0e\xdf\xf3\xd4\xbdg\x8d" +
+	"X\xc1\x0aE\xe7r\x02\xf2DO\xed7\xf4\xd4\xfe\xfb" +
+	"@\xff\x09\xff\xad\xd4\xab\xab\xc2\x17WW\x85s9\x9f" +
+	"\x12\x0e\x86\x0b\x8ak\x95`P\xad\xcb\x9d]U\x18U" +
+	"#\x0djD\x1e\x8c\x0e\xb3\"\x8ay\x0e\x04h\xc8\x02" +
+	";\x94\x11\x87\x14xJ\x1a\xd4\xa0\xa6\xcf\x0dF\xd4\x9a" +
+	"@T\x03^\x8d\x14\x96+\x11\xa5>*\xa7\xf1.\x00" +
+	"\x8b\x0c\xc8\x9cyQ\xcc\x06\xf0\x0eF\xefy(N\x14" +
+	"\x84\xa8\xb2DD\x8f\x9c\xc69\x0c\x1d\xe1\x7f\xd2\xc6i" +
+	"X\x8eh-\x9f7\x96_\x1e\x09\xf9\xd4h4\xb7N" +
+	"\x89j\x15\xb1\xe0\x98r\xc5M\xe6O\xd5\xcd\xeb\xd3\x02" +
+	"\x0d\x01\xad\xb1R\x13\x14M-G\x94\x87!\x07 N" +
+	"\xc9\x01@\x14'.\x02@N\x1c\xbf\x00\x00yql" +
+	"\x04\x00\xd3\xc4\xd1E\x00\xee`(\xa8\xeaK\x94\x80\x16" +
+	"\x08\xd6\x94\x82;\x18\x8eiz\xd8\x184\x00|\xb0\x86" +
+	"=\x9b\x0d\x9e\x98\x16\x8eiM\xbe\xbaP4\x10\xac\xb1" +
+	"\x16\x92\x16On\x83\xda\xb9\x8cx*F\xc8r\x0c\xba" +
+	"\xb1\x80\x14Y(!\x8ay\x0e\xbayb\xe4\xa5\x9fJ" +
+	"\xb9\xb8\x95T\xa8\x8a_\x8d\xe4FT\xc5_Z]\x16" +
+	"\xad\x19S\xeeQ\x92\x920\x14\xd1J\x83\xd5\xa1h\xee" +
+	"\xd5J\xbd\xea\x0d\xfa+\xb1\x82\xacx0\x9f\x06\x90F" +
+	"\xa6.\xc9\x01\x90\xa7\xf1(_\xc5a\x16\xea:\x0e\xa3" +
+	"+*\x1d\x05 O\xe7Q.\xe70\x8b;K\x9a\x09" +
+	"\xc9\xcb\xb2\x01\xe4\x99<\xca~\x0e\xddA\xa5^\xc5\xc1" +
+	"\xc0\xe1`@>\x1a\xc1\x0c\xbd\xec\xdd\x15Y\x17\xd5\xd6" +
+	"\xdfN\xf8\x92\x01(D#Q<\x07\xb0\x9c\xc7\xb8\x87" +
+	"\xe7@J\xa1\xa8\x88\x05\xc9\x8as\xcbk\x05%J\xb9" +
+	"=\x82N\xed-\xa2\xdc\x9eZ@\xb9=9\x87r{" +
+	"|\xb6\xc1\xed<\x00t\x89#\xf3\x00\x9ab\xc1\x1b\x83" +
+	"\xa1%\xc1B_(X\x1d\xa8q\x13\x12\x09\x91X\xd0" +
+	"\xb3$\x12\xd0T\x0f\xe1\xb0\x9a\xea8U\xa8nBV" +
+	"9\x0d\xd1\xe1\x01b\x9e\xe7*U\x89\xaar\x1ar\xfa" +
+	"\x1fZ??\xdb\xb8\xd7\xff\x05\x10\x86y\x87!\x0e&" +
+	"\xec[\xa0\x93!\x08S\xc8q\x02\x903\xa8D\xb0X" +
+	"\x0c\x99{(.\xce\x11\x17{\xbck\xd1\xdb\x81\xe2\xbd" +
+	"\x02\xf2\x16\x06\x88,\xa0\x17w\x12\xa1\xe9@\xef=(" +
+	">! gA\xb3\xf6 \x07*\x00\xbc\xf7\xa3\xf7)" +
+	"\x14\x8f\x09h\xc7\xeb\xc84\x9c\xf8\xec\x02\xf1\x05\x8f\xf7" +
+	"\x03\xf4~\x85\x92\x0b\x05J\x04c\xf9\xdb~X\xab\xff" +
+	"{\xf8\x1ec\xf9\x83\x11\xf8\xfe\x08\xa4A\xbd\xfe\xbc\xa1" +
+	"3\x09\x05\xac\xe9\xf7{\x84\xea\xc0\xab\xff\x88\x95\xcb\x03" +
+	"\x11\xf5\xe33;\xae}\xe9\xd8}\x07\x01@W_\xfa" +
+	"\xf9;;\xde\xde\xfb4\xf9\xcd\xa4a@wi\xa8\xd4" +
+	"\x14-Z\xac\xd4\xd5U)\xbe\x1b\xed#\x1f\xc9\xa5\x07" +
+	"yL\xb9\x12\x11\x9c'.\xad\xbb\x18_\xa9\xf8\xb4P" +
+	"\xa41\xd7\x17Q\x15M\x1dS\xa1F\xdd\xb1:\x8d\xe8" +
+	"Xv\xf2\x86\x90\xb34\x90Gy\x18\x87B(\xa6\xa1" +
+	"h\xfb^D\xd2\x1dG\xc4\xd5\xd3\xca\xa2\x9a\xa2\xc5\xa2" +
+	"c\xa8\x0e\xc7n\x13\xe4\x99\x13\x8c\xe3\xd0CzE1" +
+	"\xc3\x06\xf6\x08Y\x92R\x8b\x9c\xdc\xf8]U\xc4\x82A" +
+	"\xa5\xaaNM\xdc\x96'\xda\xeb\xb6l\x87\xa3\xdb\xa6\x84" +
+	"\xe4Z~ND\x09F\x03Z \x14\xccU\xcc&\xb2" +
+	"\xef\x1a\xd5O\x88H&s\xb0,\x8e\xe8\xc6\x99/\x09" +
+	"j\x91\x80jP\x84O\xe4\x10\xa3bT\xd5\x8ab\xd5" +
+	"\xd5j\xa42\xb0Te\x9d\xd9F\x10\xc5!9\xf6F" +
+	"\xdc\xd1\xc0R\x15\xd3\x81\xc3tB\xa2^\xd42=&" +
+	"\x8c!\xf1}+5%\xa2\x99/D+\xd5HC\xc0" +
+	"\xa7\xe6\x9a}\x89\xb6\xbb\xc0\xa2\xe41\xb2\x80\x97y\x94" +
+	"\xdf\xe4\x10\x89^F\x14\x8f/\x02\x90_\xe7Q~\x8f" +
+	"C\x91#Z\x19Q<Q\x05 \xbf\xc3\xa3\xfc\x11\x87" +
+	"\"\xcf\x0d#a\x84x\x8a4~\xc0\xa3\xfc\x19\x87b" +
+	"\x1a\x0e\xc34\x00\xf1o\x0b\x00\xe4Ox\xac\x1c\x88\x1c" +
+	"\x8a.n\x18\xba\x00$\x17.\x00\xa8LC\x1e+/" +
+	" \xed\x03\xf8a8\x00Q\xca\xa2\xed\xe7\x91\xf6q\xa4" +
+	"]\x986\x0c\x05Di,n\x00\xa8\x1cG\xda/\xc1" +
+	"8C\xa0\x07C\xb3\xab\xc9\xf6\xc0M6\x88\x02p." +
+	"\x01\xcdv\xaa!\x055\x12\xd7</\x12\xd0\xe2\x9a#" +
+	"\x94\x92\x95\x11\xe05\xcb\x84\x90\x19\x88\xe1\xa0\x9a<\xc5" +
+	"\xb3*\x93\xa3\xc0/U\x9d\xa3\x19G\x17\xbd\xda\x0cE" +
+	"S\x97(\xd8\x88\x08\x1cb\xa2\x19b\xac\xb4y\x18'" +
+	"\x15mT\xbd\xa3|\x1e\x87\xd4\x7f\xb82\x14)\xc1\xfa" +
+	"\xb0\xd6H\x84\x89W#d`W\xb2\x91\xe3\x0d\xdc\xec" +
+	"\x98G\xf3\x85\xea\xa9\x89\xcb\xa0&n\xbc\xe1\xd0\x8c\xae" +
+	"\xa0&.\xab\x88\x9a\xb8\xcc\x02\xe6\xc9\xf8B\xf5\xe1:" +
+	"US\x01\xfdMQ-\x14\x0e\xab\xfe\xc2j%P\xa7" +
+	"\xfaSm\"\xa2Fc\xf5j\x82\xaa\x8a[\x10;f" +
+	"\xcc\x89p\x1ef\xe7n5\xf3db(h(\x1f\xde" +
+	"w#\x8a6\xf8\x13w\xbe\x91\xad\xc5C\x17#\x9f\x87" +
+	"N\x80\x7f\xf2R\x1b4\x11'g\xdb\x81\xae8\xb1\xca" +
+	"\x91\x1b\x9cX\xe0\x08\x01\xc6\x178P\x83\xb1\x11Gb" +
+	"u\xec,\xbd\x980\xacR\xad\x87B%\xa8\x05|Q" +
+	"\xa1,Z\xa3\xd3\xc3\x16\x0b\x97\x82\x10\xac\x0e\x15\x1a\xc7" +
+	"\xb3p\x1e\x95\x1f\x9diQ\xf0P=\xaa3\xef\x0e\x00" +
+	"\xe4\x09\xbc\x0b]V\x06\x0f\x99\xe3/\xc9\x18\x01(." +
+	"G,\xbe\x01QZ\x8c\x02\x0e\xb0bnd\xb0\xbe\xa4" +
+	"b\x01\x00\xe9Q\x1cF\x94\x9aQ@\xc1Bl\x91\xe1" +
+	"\xf3R\x8c\xf6\x0a#\x16\xdf\x8a(\xb5\xa2\x80\x03-\xac" +
+	"\x0aY\xc8'\xdd\x86\x15\x00\xc5+\x11\x8b7!J\x9d" +
+	"(`\xba\x85\xe0#\x83t\xa5\xadx\x10\xa0\xb8\x03\xb1" +
+	"\xf8\x1eD\xe9\x09\x14p\x90\x95\x15D\x86:J\x070" +
+	"\x0f\x80\xf4(~\x1cQ:\x8a\x02\xda\xd8/2\x9cQ" +
+	"z\x9a\x8e\xf5\x0cb\xf1\xeb\x88\xd2)\x12\x91Z\x18\x14" +
+	"2\x94^z\x0b\x8b\x00H\x8f\xe2\x0f\x10\xa53D/" +
+	"X &\xb2\x98^\xfa\x98\xce\xf8\x01b\xf1W\x88\x92" +
+	"\x8b#\x0e\x0dK1\"C[\xa5o)%\xbeB," +
+	"N\xe3P\xca$A\x13\xcb\xf6\xd9\xa9,)\x9d\xcb\x01" +
+	" =\x8a\x87q(\x8d\xe5\x04\x9dip\xf0P\x1d\xde" +
+	"\x1f\x87\xa0\xd0P0\xfdz\xc5\xd0;\xfdrc\xd4\xa0" +
+	"?\x1c\x0a\x045\xc0h\xbf\xde\x8b\xaa\x9a7\xa6\x85\x8a" +
+	"\xd1\x14j\xc5Ce\xfa\x7f\xddY3\xd5$;\x1a\xc6" +
+	"\xc9\xe8\xcf\x18M!\xe3\x14\xf5k\xa5a%\x16\xed/" +
+	"\xf7\x88b\xeb\xcf+\xee\xa8\xa6\x86\xffQ.\xa37\x0d" +
+	"E\x1c\x8a\xd7\xa4\xd2\xa8\x84~*ud<\xd4\x93\xb1" +
+	"\x83D\x86\x99 \xc3\x96Dq\x11pb\xba\xa0\x13\x07" +
+	"M-\xaeU\xc0M|\x9d\xa4q\xb3\xe5\xb9hj8" +
+	"\xde\xdf#\xa6)\xcfvX<\xbeP,\xa8%\xf1X" +
+	"\xcc\x90\xa7\xb4<\xb7\xb21\xea\xd5\xb4Ha\xa0*\xa6" +
+	"\xa9\xd4\xf5\x18H\x86B\xb4\xd1\x0cq|\x15p\"\xf1" +
+	"=x\x001\x93x\x14\xc3x\x94/\xe0P\xaf\x8a(" +
+	"\xbe\x1bUm\x0e\x08\x8dab\x9a\x82\x9a\x1a4\xff\xb2" +
+	"\\\x81\xb8\xe5[Nd\x94hef\x95\x9c\xb1\xe8\x06" +
+	"3\xba\x9c\xc3!\x9d\x954\xca\xc4\x0b\xba\x8aGy>" +
+	"\xf1x8#\x0e\x9d[\x01 \xcf\xe1Q\xbe\x81C=" +
+	"l\x06\xb9\x185\x14|%&\x89E\xbb;)\xa6\xf9" +
+	",\x06\xacB\xd1N\xe1$\xb7`\xa5\xe5B\xee/\xae" +
+	"\xa1f\xdaZ\xaaB\xbc\xdc\x85<\xca\xb5\x8e\xa5\xaad" +
+	"\xa97\xf0(\xd79\x96\x1a \\\xf1\xf3(\x87\x89s" +
+	"\xc6\x1b\xa4\xac'\xeb\xaf\xe3Q\xbe\x89C\xe1F\xb5\x91" +
+	"-\xcc\xedW\xa3>\xf6\x87\xa7A\xa9\x8b\xa98\x148" +
+	"\x1c\x0a\xa8\xd3\xbf\xe64\x86\x01\x13)\x9c\xe8\x07\x07U" +
+	"\x9fV\x1a$\xf1?u\x9b\x05\xe2\xa4\x0f\xb4\x96?\x9e" +
+	"\xcc?\x8eG\xf9\x12\xd3\xb5\x04\x10'\x13\xdfp\x12\x8f" +
+	"\xf2\xe5\x1c\xea\xe6\x08\xc4\xd7\xb0<%\x7f J\x9b\x81" +
+	"\xf7\x91`\xc5B\xd5\xe3\xa8\x96\x02\xbd)\x0d\xf2\xd5!" +
+	"K\xca\x8cU\x10\xd2\x8c\xe1Q\x9ed\xafbb\x8e\xbd" +
+	"2\x1a\xb4\xa8\xe8\xb6\x0b\x9f\x00\xd1\x0d\xe8&\x1cO%" +
+	"el\xdePL#\xbb\x8f\x8e\xa9(T\x13b\x14v" +
+	"R\xc6p\xe8!\x839`\x0a\x07\xe4\xd9\x0d\xa6\xe8\x7f" +
+	"\xb8b\xa0j\xe0\xdcp\xb6\xbdaKj&f\xdb;" +
+	"\x16Bu~\xcc\xb0\xebEL\x1c%\xa8.Il\xed" +
+	"Q;\xd0P\x89\xef\xbei\xc2\xf3\xc1<\xca#8\xd4" +
+	"\xfdj]\xa0A\x8dP\xfeR%\x01\xbd\xa2t\xc9b" +
+	"=g\x88\x14 G0\xc3Y^\x94,\x92L\x1e\xc3" +
+	"\x92\xbf\x8c\xf0g\x845\xf8V\xe2{v\xf0(w9" +
+	"\x88\xd5I\x1a\xbbx\x94\x0f\xb1\xf8\x07@<\xb0\x14@" +
+	"\xbe\x9fG\xf9q\x16\xff\x00\x88\x8f\xec\x07\x90\x1f\xe7Q" +
+	"~\x9eCL3\xc2\x9fg\x09\x09\x9e\xe1Q~\x85D" +
+	"?H\xa3\x1f\xf1(\x19\xf2\x15\x1e\xe5w83\x1cQ" +
+	"\x02\x1a\x06\x825\xd4O\xe4\x8d\xa8\x04\x05\xe8\xfe\x90\xaa" +
+	"\x9a\xf8\x87\xa5\xe1h)\x14\x06\xe5\x98\x1aS-\xb2j" +
+	"!M\xa9\xbb:4\x1b\xc9\xe3\x0a\xd5\xa7\xba\x03\x0d\xaa" +
+	"Mu-P\xafF5\xa5\x1e0l\x89t,\xecW" +
+	"4\xb54\x88\x9a\x1aiP\xeaJ\x83|Y\x14\x07\x02" +
+	"\x87\x03{\xd4\xaa\xa1pB\xcc\x1b\xc7\xcbb+@\xc6" +
+	"\xc6\xb8\xb3\x98\xd3\x8bhvS\xa0B\x83R\x87\x19\xfa" +
+	"\x95\x07\xa3\x95\xf9\x1bb'{\x91H\xe6\x9a+A7" +
+	"\xf1b\xe8\xc4\x94qb6U\x1e\xe9\xa3\x00\x84\xea\xaa" +
+	"0\x1f\x0c\xa5\x82<\x12\xa1W\x86\xc3\x98\xe0u\xbf\xb0" +
+	"\x12v:\x125=\x09w\xd0Y\xfe5r\x94#\x8d" +
+	"\x91\x99cgGE\xb1\xca\x06\xfaE1\xc2\xff\xe2\x1a" +
+	"\xf7\x1cb\x0b\x8bkc\xc1\x1bU\xfft\x10\x14M\xd1" +
+	"M+\x1b\x00\x0f5\xb3N\x13\xb2\xc0\xb4\x16\xb7\x98\xa2" +
+	"L\x1a\x1b\x8b\x00d\x8dG\xf9VC%\x92\xf0~\x19" +
+	"a\xcdM<\xca+\x1d\xe2\xdd\x1c\x01\x90o\xe5Q^" +
+	"\xcb\xa1\xae\x90\x19\xaab\x1a\xf0\xaaC\x93Y\x9b04" +
+	"Y\x93i\xa4\x99Aqk\xc4V\xbb\xed\xed\x19\xcaU" +
+	"\x8fv_1f\xd8\xdb\xec\x99\xcd\x16\x8f\xcc8\xd2\x01" +
+	"4#\x8a%\xb3lDY\xc4\x0b\x0c8\xa3\xac\xcai" +
+	"\xdcG\x1b\xfb\x9dK\xf6[\xce\xa3\xbc\x90C]mP" +
+	"#\x8dWk\xb5\x00@N\x808\x90X\xa2%\x01\xad" +
+	"\xb68\x14\xd4@ \xfb1\xed\x93\xbb\x86\x18\x8b\xf8\xb0" +
+	"\x9e\x8b\x87\xe5<\x14\xc0\xb2=2\x96\xc2F\xa3\x88\x14" +
+	"\xd6\x8ab\x01p\xa2K(40\xaeiH\xf1`\xa7" +
+	"'\x982\xda&\xdeGR\xa8o\xa8\x8d\xc4a\x04E" +
+	"gIA*\x14N\xec\xd5\xbc\xcf6,\x9c=\xe1\xff" +
+	"\x1b\xfb\xde\x13\xe6\x95p\xb0\xe2Hd\x84P\xbd\x92h" +
+	"\x09\x8av\xd8\xdf7\x12\xb9\x12\xc0=\x1a@Y\x9a\x87" +
+	"(\x9ex8\x87L;\xca\x9e\x96\xf7E\xd1mC\x14" +
+	"\xa9\xe7uC_\x1234i\xe0O\xa5\x9f\x18/\xcd" +
+	"\x7fg*A\x7f\x9d\xea\xa4\xa2\xd6\x1d\xcb-\xb0-m" +
+	"!\xed\xe5O\x10\xf5T\xd9\xaa\xa8\xb2$%c\xd82" +
+	"\xa8\xa7\x95\x8c>}\x00\x80\xac2\xde\xe4\x8e [\x8f" +
+	"\x19\x19&\xf5#\x16\x98\xae\xc9\x04\x0e\xf5\x98#3\x89" +
+	"\xa2\x9d\xc8\xec\x9b\x1cp\xf1`\x9b\x87\xa2m4\x9a\xb3" +
+	"\xcb\xa0\xd3\x8b\x1c\x95\xea\xae\xbc\xa6\xd91\x0a\xc5y\xca" +
+	"k\x95\xa8*O`\x0b\x93\xc6R\x04t\x0c\xf2X9" +
+	"\x09\xad\xa3$M\xc4\x0a\x80\xca\x09\xa4\xf9_\xd1vD" +
+	"\xa4)X\x05Py\x09i\x9fF\xday\xa4X\xact" +
+	"\x05\x16\x01T\xfe+i\x9fN\xda\xd3\xb8a\x98\x86(" +
+	"y1\x0f\xa0\xf2r\xd2>\xd3\x09\xc8\x96`\x0e@\xe5" +
+	"4\xd2~\x95\x05\xc8\x02H\xa5t93I\xfb\x1c\x0a" +
+	"\xc8\xa6\x0d\xa3\x05\x032\x1d\xff*\xd2>\x9f\xb4\x0ft" +
+	"\x0d\xc3\x81\x00\xd2\\\xba\xce9\xa4\xfd\x06\xd2\x9e>`" +
+	"\x18\xa6\x03H\xd7\xe3\"\x80\xca\x85\xa4\xbd\x96\xb4\x0f\x12" +
+	"\x86\xe1 \x00I\xa5\xfd\xfd\xa4\xfdV\xe4P\xafU\xa2" +
+	"\x14\xad\x04\xbe:d\x89\x9b\x99A-%\xaa\x839," +
+	"f\xdb\xd5 8\x9c\x84\xa6\x90AUt\xdb\x947l" +
+	"\x8c'L\xe8\x8cn\x9b\x09\xc9\x1c{\xbf\xaa)\x81\xba" +
+	"9\x8d\xc0\xdb1eS\xbd\x1a\x8d*5v\x04\xe4S" +
+	"b\xd1\xf8\xa8\x88\xb6\x95\xa9Qpw\xeb\xaaE\x14\x9f" +
+	"Z\xa5\xf8\x00o\x8c\x87\x8d\xfb\xe4\xa4\x12\xd7\xa3\xd0\xf0" +
+	"=l\xf3\xc1.% +\x09\xf9Gf}\x07\xf4\xd5" +
+	"\x09b\x99\x11\xe7\x99*\xb25FS4\xe6#\xfc\xe9" +
+	"Me\x18\xc8h\x8a\xfc\x05\xb2\x93\xe5\xa1\xbc\x96\xc7\xa1" +
+	"\xb3\xec\xb9\xb4\xc8Q9T\x12q\xd4\\\x95,p\x14" +
+	"\x81\x97T9*\x91J\xf2\x1cW\x00\xbc\xcb\x1d\xf7[" +
+	"\xbc\x11;\xda\x11\xbd\x8b\x1c\x05\x86\xde6;\xc2\x10K" +
+	"\x8a\x9a\xcc\x84\x94\xce\xf4(x\xa8&\xd5\xa7;\x8c\x99" +
+	"\xce\xdc^\x10\xb4H\xa3\x87\xa23:\xc3h83|" +
+	"\x03\x16\xd1\x99\xcf\xd9\x9f\xe0&\xfa\xc3\xfa\x13Y\xc0\xc7" +
+	"\x87\x82M&\x94/O\xa0\xa2\xc0\xaaX\x90\xd5]\xd2" +
+	"s\xc9I%\x14\x1ce\xf5k\xc8\xae\x0bHS1\x02" +
+	"\x9c4\x19\x05\xe4\xac\x9aTd\xc5\xff\xd2X\x9c\x05\x9c" +
+	"\x94\x85\x02\xf2VI\x19\xb2\xc2pI\xc4\xa5\xc0I\xe9" +
+	"\x14\xc2eWP\x90\x15c\x89?F\x80\x13\xcf\x088" +
+	"\xc0*\x98DV\"$~\x9c\x07\x9cxB@\xc1*" +
+	"\x7fDV<%\x1e\xcb\x01N|V@\x97\xc51d" +
+	"e\xb4\xe2#K\x81\x13\x0f\x088\xd0*\xe5FVJ" +
+	"(v\x921\xb7\x0a\x98n]^Bv\xc3@l)" +
+	"\x02Nl\x16p\x90u\x83\x04YM\x98\x18\x9b\x05\x9c" +
+	"X/4\x05(P\x11\x9df\xf9%\xa5\xe0\xa1M\xd3" +
+	"Pgq<\xd5\xff\xec\xf9l(4\x9a\x8d&\x83\xb9" +
+	"\x1e\x9a\xf6\x9bFa\x03\xf2\xc4M\"\"\x03L\xa5\x02" +
+	"\x00\x854\xf2i\x9cf\x02\x0b\xd3\xb0\xc9\x8cm\xa7\xa1" +
+	"\xce\x82wH\x8a\xfd\xb5\xdcp\xe9_.\xce\xae\\\xee" +
+	"\xf4\xfez4\xe4\x0a\x09\xaf\x19\x02\x00\xf1g\xa8\"V" +
+	"h\x04mt\"\xbb8+\xbd\xc8QN\xecZn\x09" +
+	"w\xa5\x09W\xa1\xa9\x8a\xc8\xc1&\x12\xc7\xae\xb1 +" +
+	"7\x13'\x13N\x8c%\xf2\xc6\xaed\xe0\x93+vK" +
+	"\xf0\xeaG\x7f\x11G\x12\xee\x0e\x11\xe2\xc8\xd3W\xef\xd6" +
+	"t\xddR\xa4\xbd\x93\xf8?\x89\xbb\xef\x93\x8f\xc6\xd0\xaa" +
+	"To1\xcd\xd7M7[\x9e\x8b\xc3\x05\x9ee\xba\xc0" +
+	"3m\x17\xb8\xa4\xcd\x06\x18u\x1f#&\xf1 \x9cW" +
+	"\x04zr3\xfa\x14\x99\xb3\xb2\x92P}8\x14T\x83" +
+	"Z\xae\x9b\x88*%\xb4]]\x87\xb3t\xd2JBF" +
+	"\xa0>\x96\x15\x17\xe6$\x83\x16\xabl\x14\x11y#N" +
+	"\xaa'\x1dky\x945\x13n$q\xe1\xe2\x1c\x1bY" +
+	"\xec\x8ey&\xc5hY\x10h\xad\xcb4\xc4N\x1c\xb2" +
+	"o\x12o\xba\x006\xda\x98\xc2\x14\x99\xfdPt\x16\x97" +
+	"\xf6!\xc0\xa0\xeet.\xe5\xb5\xa7\xc7\x88\xdf4bT" +
+	"^K\xab+\xc3\x8a/\xb9G\xdd\x17\xfb\xc8\xc7s\x92" +
+	"\xfd\xf2P\xc69j\xd1f\xd1]L\xce6j\xd1\x8c" +
+	"\xd4\xed\xe8\x1cZ\x9d4\xb2\x08@\x8fjJ\xd0\xafD" +
+	"\xfc\x00 \x04\x02\xe1\xa6h\xac\xaa\xba.\xb4\xc4\xdd\x10" +
+	"P\x970\x9a\xa4\x8a\xf7\x98\x023\xd4\x97\x15=\xf5\x8a" +
+	"|\xa6(\x0a\x8b\xcb\x0e'\x0c\xd7\x93S\x90*\x8e\xb0" +
+	"P(\xa6\xaa\x94B\xe3t\xd9\x9e\x12+\xfbGV\xa8" +
+	"-\x8aE4\xd0f\xc9\xec\x1es\x1e\xf6\xf4B]\xea" +
+	"\xf8\x92f\x92\x12@\xb0>i\x90dr\xcb\x82\x9fI" +
+	"\x8e\xb0\x04\xd5\x883\xf8\xb1\xee\x19\xf5+\x92O)\xdb" +
+	"\x0c\xacN\xc5[\xd3R&\x0d\xa2~\x02\xa8\x9d\x96\xfa" +
+	"\xe8\xa4dub\x01\x0b\xefS\xa9r\xb3\xae\xad\x8aX" +
+	"\xd0\xbd\xa6\x94=AV\\O\xbcd\xc2{f\x8cR" +
+	"Z\xa1\xb4\xde`w\x00[\xc4\xd8\xc5Hd\xf7uE" +
+	"q\xb9\x91]c\xe6\x1dMp>\xce\xd1v\xa5\x92b" +
+	"\x0b7\xa4\x7f\xa7R==\xf9\x00\xc9T\x8f3QG" +
+	"{\xa5R<\x8e\xf0\xdc\xc8\x98%\x93\xeb\x9e\xf5q\x0a" +
+	"D\x98\xb1\x9ce\xa8\xa3\x09@E\xc2\x12B\xe1\x84\x98" +
+	"\x80O%\xce\xbcQ\xbai\xb0\x85\xdd\xf7BvU)" +
+	"\xae\xa2\xb8\x9f9f'\xe3\xe2*8\xcb\xa2Xc\xc2" +
+	"\x8e\x83u\xddH*\xe6\xd9\x05\xaeC\xf0\xacn\xd6\xb7" +
+	"\xe6\xd8h\xe4\x10\xeeG\xdd,o\xcd\xb3\xfd\x03\x96}" +
+	"s\xde\xe7\x01\xa0\xc0\xa9?\x14Ta\x80'\x18*\x8b" +
+	"\xd6\xc0\x80^\xe1\xd0\x12w\x83\x1a\xd4\xe2\xf2\x87y\xb6" +
+	"\x91\xb7l|\x85#S\xc8r\x1b\xf5U\xb6=7\xf0" +
+	"\x04\x001FlW\xd8\x80\x8e=Qu\xf1\xd5\xa1\x1e" +
+	"\xd3\x09\xd1\xc0R\xb548/\x04B\xc4\x1fe=m" +
+	"88q\x87\xbdA8f\xc1v\x0ao\xcbrZJ" +
+	"\x0aL\xd2\xdf\x90\xe0n9\xbeI\xd0\x83\xda,\x0cS" +
+	"\x91\xc4\x0c\xbb\x82\xbdoe\x8b\xf1\x1e\x18PG\xdb\xbe" +
+	"<\x98\x1e\xb1U\xa2\x98\x9e\xa3\xb3\x8e`\xd8u\xc3_" +
+	"s\xa4\xa2\x88\xb4l\xe2Q\xdeask\x1bi\xbb\x8b" +
+	"G\xf97\x0en\xed,2sV\x0f;\xa0\xfa\x07\x09" +
+	"m\x0e\x99Y\xa74\xdeHE\x1d\x8d8\x8a\xfb\\\xe8" +
+	"\xb8\x15$\x1e/\x02\x8ee\xd3^{\x9b?\xfb\xd2\xaf" +
+	"^z\x9de\xb1Mw\xcd\xda\x89\xe1\xae\xb1\x00*\xb5" +
+	"\xc2wDQ\xa9;\xf9\xd5j%V\xa7\x15\x83\x87z" +
+	"\x1b\x98\xa1\xcfy\xfd\xc5\x9a5\xe9u\x7f3\xa7o\xaa" +
+	"6\x03\x92\x1eQ\xc4d\x96t\x91#\xf7\xe8\x8bE\"" +
+	"jP\xab\x04\xb7\x99\xde\xb5\x10\x013\x03\x91X\xab`" +
+	"\xe6T\xdc\xd3\x15M1\xf4J\x02tHG&\xdd\x8a" +
+	"C1\xe0Y\xedCj\x10=\xae\x925>\xae\x89\xd3" +
+	"\xad\x0cN\xf0i\xb9~\xebg\xaf;\xb5\x10u\xb7O" +
+	"K\x02\xd8\xf2\xa9\xd0&\xa2\x11\xa9\xc4Z\xd5\xbabz" +
+	"\x9e\xe3J\xb3k\x01\x05)\xa2\xddnq\x98\xca\x96}" +
+	"\xec\x02\xd95xQ,p(\xdbB#\x05\xf6\x7fy" +
+	"\x0f!y\xa1A\x92 ,iV\xb1\x82V\xd8\xa1\xfc" +
+	"\xaf\\BYF,\xe2o\xacP\x01\xab\x13+8\xfa" +
+	"m\xac{\xf3\xa5l\x9e:}\x08v\x1d\x0c\xd9\x0dF" +
+	"Q\\`\xf8\x10\xce\xfcHR\xf7!ii\xafa\xba" +
+	"\xad\xd2e'q\x16\x99:s\xba\x838^B\xb1\xcb" +
+	"\x0dE\xaaGY\xf9\xa2;X\x1dr\x9cn\xabX\xd2" +
+	"8\xb84\x92'JuC\xee\x85\xf3\xfd\xbf<\x9a\x02" +
+	"\x88\xef\x9e)\xee-N\xeb\x052L\x91\x8bbE=" +
+	"\xff\xcb\"\x90\x10\x97\x99\x8a\x09L\xcbod\xf6\xbb\xdf" +
+	"m9\xab\xa7Q\x14],\x9de[\xf9,\xeeG\xdd" +
+	"\x00\xd1E\xb9\xc8\xceE\xd2\x82[\x18\xa0GL\x92\x19" +
+	"F\xcb\x02j\x0c\xfa:BY\x0b\x07\xed9\x05\xc2\xca" +
+	"Q\x83\xd5\x18\x8a\xab\xf5^`\x17!\x88\x98fP\xe9" +
+	"\xad\xa5\x00\xf2\x9b<\xca\xdfp\x88f9\xd1\x19B\xb9" +
+	"\xafx\xac@\xb3\xac\x9bX\x98\x1fI\xe3\x0f<V\x8e" +
+	"\xa0\xd9\x02\x8e\x9a\x18)\x93\xa2\xf9\xc3X\xf2\x82\x16\x1f" +
+	"\xb9h\xf6\xa2\x88\x95o\xfbi\xd6\xc1\xa0\x8b\xa4\xd0v" +
+	"\x9a\x15XK\xb3\x0b.#\xbb\xb0\x9a\xb6\xaf$\xed\x87" +
+	"\x90\x8b\xab\xb1fZ\xd6\x17W~\xdb\xf7L\x9a\xcf " +
+	"N%`E\x12\x8e\x9b\x85\xe0\x15\x80=\\%2+" +
+	"\xc2{\xec\xd4d\xce\x83\xa2\xd3\xdbI\xb20\xa2\x07\x87" +
+	"\x93x\x04\xe9@\xf1\xee\x11a\xbc\xb1(k\xae>\xe5" +
+	"s\xc9\x12\x8cu:\xde\xebC\x92\xf3\x9c\xd4\xe2d&" +
+	"\x9c\xe3M\x17\x17_\x8c\x98\xfc\xda\xdc\xacnP\xc5," +
+	"\x0aUd\x15\x00\xb8\x03\xfe:\xd5P=\x81`\x0d\x00" +
+	"4\x91S\x10\x08\xd6\x18UsF[\x8a\xc2\xf3\xc4P" +
+	"D\xf0\xd7\xa9\x86GN\x94+\xbb\xa5\x8f\xec\x1b\x11\xe4" +
+	"\xd4qb\x89\x80h\xdd\xdcD\xf6\x95\x11q*\x89\x11" +
+	"'\x0a\xc8Y\x1f\xcd@\xf6\x85\x00q4y\x96)\xb0" +
+	"3\xc8\xea]\xa7\x99\x01UoV\xcbqM$\x99\"" +
+	",\xb0Ci\xf3\"\x99-WV2\xa3\xe7{lV" +
+	"U}\xb2\xfa\xb3\xe5\x89\xee\x90\x17\x19\x02\xdd\xf7R/" +
+	"\x03\xeeH\x00E\xb8\xb8\xcb\x7f@\xa3k\xebK^\"" +
+	"V\xe8\xec: `\x85SW\x17\x99\xbaz\x9aCW" +
+	"_1\xcb\xb4H\xf3\xb9$\x8e\xa65jO\x8ef|" +
+	"\xa7\x9eB\xccd\x95k\xdd\xec\x92a\xddS\xd9\xa5T" +
+	"7\x95\xe2\xef\x98\xf6\xc9\xbf\x8b\x8f\x9d\x07\xa4*\xf35" +
+	"\x0a\x00Y\x09\xaf}Y\xc9\x09\x9f\xf4\xefzY\xb2\x12" +
+	"\x89~ \x96q\xb5\xb6?u4V\x17U\x8a\xe5q" +
+	"n\xb7\xf3\xed\xb8\xc2\xa2T\xe8\x92\x0d5X\xe9J\x87" +
+	"\xe8\x0d5E\xaf\x9b34\xd4\x14\xbd\x85\xfd\xaa\x9b\xf9" +
+	")\xf5#I\x01\x97^}$\xd2+\x89,r\xf1\xb2" +
+	"X\xa8\xc4U\x1d\xb1\xcf\x11 \xfb\xf4\\\xff\xab\x8e," +
+	"\xdf\x87\x9c7\xf2?\x1b\x936\xab\xeb\x0cLzH^" +
+	"w\xf8\xd9\xa3D\"J\xe3O\x92iVs\xde\xdf\x8a" +
+	"\xd6\x84\x10\x8fV\xb4\xa6\x0e\xfc\xacr<O.\xdb\xd2" +
+	"`\xba\xa5,cK#\xab\xa8\xed\xca\\\xd4}gz" +
+	"(\xac\x06\x8b\"\x8a\x0f\x84\x1bU\xcdpI\x8a\"\x0a" +
+	"\xb8}\xe4\xcf^\x10\xd5x\x05\xc1\xc5C\xa3\xee\x00K" +
+	"\xfc\xf7r\x0f\x98^g3\xee\x01\x1bV\x8f]tB" +
+	"\xf6\xbd\x1dQ\xce\x13e\x8f\xb7\x0e\xbd\xb7\xa0\xd8B\x0c" +
+	"\x1c\xfb\xba\x14\xb2\x0f\x0d\x89\xcdy\x00\xde[\xd0\xbb\x16" +
+	"\xc5m\xc4<Z\x83\xb0o$\x89\xad\x8b\x00\xbcw\xa2" +
+	"w\x07\x8a\x07\x04\xe3~\xf3\xff\x9fK\xbe,\xd5\x02\xee" +
+	"\xb0\xe2S\xff\xe1\xf7r\xfbP1\xd5[\xaa1\xb1," +
+	"+\x99\x0a\xcaN\xa6\x82\xf2l\x15$\xd4Gk0\xc3" +
+	"\xbe\xb7\xd6#\x16\xe5\xa9#\x13\xa1h\xdf$\xffI\x19" +
+	"\x82nU\\\xbd\xdc\xf1U\x1b\x88\x16\xce\xb0?\x04\xd1" +
+	"\xaf;\xbe\xc9\xef\xc5&8\x17i\xf1\x17H\x8c\xfb#" +
+	"\xb9\xecBH#\x1fV\xbb\xe1\xaf\x8e\xbaO\x1b\x7f-" +
+	"[j\x07[6\xfe\xda\xedZ\x87}\xb0\x05\x03\xd8Q" +
+	"\xfd\xc5Ph\x9a\x9a\x0c\xbb\x10\xd7t\x91\xcc.\xa5\x80" +
+	"\xe1\xc4\xa7\xff'\x00\x00\xff\xff\x19\x9bT\xd0"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_bf602c4868dbb22f,
 		Nodes: []uint64{
+			0x80a21757b0bfd776,
 			0x821d7719d781c29f,
 			0x8919f827236f0407,
+			0x8971a9561a83228a,
 			0x89e521a99fcc4044,
 			0x8a4d34c4b5eb1545,
 			0x8acbeab2dd78c711,
@@ -12653,9 +14865,11 @@ func RegisterSchema(reg *schemas.Registry) {
 			0x9576b9a98d58fba2,
 			0x95d8ad01c1113d9c,
 			0x95d99bd09af8ff66,
+			0x97e51c58b05d81c6,
 			0x9b3b921c2d2e8888,
 			0x9c62c32b2ff2b1e8,
 			0x9c8fa975665cfafa,
+			0x9d1e350032b7b2b7,
 			0x9d36075bc8979d1b,
 			0x9e5b8ec57b93780c,
 			0x9e9e5391e0c499e6,
@@ -12663,23 +14877,30 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xa04dcc23484983a6,
 			0xa394c49bfa79bd73,
 			0xa3d8abb814bcf7d8,
+			0xa3e43df57374baba,
 			0xa3faa670a0d208a1,
 			0xa42eae9c9a785dbf,
 			0xa593e62c492f42f1,
 			0xa8d0bdfb4ddda7b3,
 			0xa8d787cae7e0b243,
+			0xaa3c848f685bf750,
 			0xae03a8ca1cbb8c9d,
 			0xaf0a1dc4709a5ccf,
+			0xaff4041af7455c7a,
 			0xb01652ab8f1ac0d3,
 			0xb135ffc9ccc9eca6,
 			0xb364ef5d2a7d582d,
 			0xb3fe08a1bf53821a,
 			0xb47b53679e985c7e,
 			0xb49836b545583add,
+			0xb4ae33a8f72f237b,
 			0xb651c8ec91561001,
+			0xb6bacfb230e8831a,
 			0xb6f9c7723a43c20a,
+			0xb7e9f64b5f2d8a82,
 			0xb85644f8ae2eb87f,
 			0xb9fc8977d77cd1d9,
+			0xbad4ea636557553a,
 			0xbadc988dda3d1e50,
 			0xbbad56943a039783,
 			0xbc45f93776cacae5,
@@ -12690,14 +14911,18 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xc20ee6c1774c8b28,
 			0xc28d2829add1cd72,
 			0xc2f8b43290ab088e,
+			0xc32208de3b472a91,
 			0xc61c438f89d10281,
 			0xc6976ac75246b450,
 			0xc8608732b07a57dd,
 			0xc87493b1428b0a52,
+			0xc8a7d42ef3443cc4,
 			0xcb02dc91e18e58c9,
 			0xcba63cd37fbd1806,
 			0xcc079ad60f1363b7,
+			0xcc3dcfe29343598e,
 			0xcd32d5474f63750c,
+			0xcd8d5922547734b1,
 			0xcd9154730a050d21,
 			0xce9f24b8ec149524,
 			0xd0cd6d829b810229,
@@ -12708,7 +14933,10 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xd22c53e2c8415b68,
 			0xd23f817e914373d8,
 			0xd35bbb909ba0c554,
+			0xd3c75f69eade4246,
 			0xd5b512f4bcd0aa2e,
+			0xd654246116b3daa5,
+			0xd68d1dc402959a5e,
 			0xd717ff7d6815a6b0,
 			0xd83c7bb8305387ce,
 			0xd9377fa82178a561,
@@ -12728,6 +14956,7 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xe6869481a867614f,
 			0xe6f5ed0f7285c794,
 			0xe8aa5530b3f918e0,
+			0xead3c6b77a5731d4,
 			0xece0efa9a922d4a8,
 			0xee5188311583039d,
 			0xef35cb55860e1c65,
@@ -12745,6 +14974,8 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xf7ecea5ecff7797e,
 			0xf7fec613b4a8c79f,
 			0xf8e015fb5c588376,
+			0xfbfb2c0f9f4e9bf0,
+			0xfcfe637d1facccf5,
 			0xfe6a08d5e0712c23,
 			0xfeadc0acc2725760,
 		},

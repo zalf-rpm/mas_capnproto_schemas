@@ -734,6 +734,77 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         _IdentifiableInterfaceModule,
         _PersistentInterfaceModule,
     ):
+        class _LeaseInterfaceModule(_InterfaceModule):
+            class _LeaseSchema(_InterfaceSchema):
+                class _LeaseInterfaceModuleAckParamSchema(_StructSchema):
+                    class _Fields(dict[str, _StructSchemaField]): ...
+
+                    @property
+                    @override
+                    def fields(
+                        self,
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._LeaseInterfaceModuleAckParamSchema._Fields: ...
+
+                class _LeaseInterfaceModuleAckResultSchema(_StructSchema):
+                    class _Fields(dict[str, _StructSchemaField]): ...
+
+                    @property
+                    @override
+                    def fields(
+                        self,
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._LeaseInterfaceModuleAckResultSchema._Fields: ...
+
+                class _LeaseInterfaceModuleAckMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._LeaseInterfaceModuleAckParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._LeaseInterfaceModuleAckResultSchema: ...
+
+                class _Methods(dict[str, _InterfaceMethod]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["ack"],
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._LeaseInterfaceModuleAckMethod: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+                @property
+                @override
+                def methods(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._Methods: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ChannelReaderLeaseSchema: ...
+            @override
+            def _new_client(
+                self,
+                server: _DynamicCapabilityServer,
+            ) -> clients.LeaseClient: ...
+            class Server(_DynamicCapabilityServer):
+                def ack(
+                    self,
+                    _context: contexts.AckCallContext,
+                    **kwargs: object,
+                ) -> Awaitable[None]: ...
+                def ack_context(
+                    self,
+                    context: contexts.AckCallContext,
+                ) -> Awaitable[None]: ...
+
+        Lease: _LeaseInterfaceModule
+        type LeaseServer = (
+            _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule.Server
+        )
+
         class _ReaderSchema(_InterfaceSchema):
             class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
                 class _Fields(dict[str, _StructSchemaField]): ...
@@ -973,6 +1044,58 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgResultSchema: ...
 
+            class _ReaderInterfaceModuleReadLeasedParamSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedParamSchema._Fields: ...
+
+            class _ReaderInterfaceModuleReadLeasedResultSchema(_StructSchema):
+                class _MsgField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ChannelMsgSchema: ...
+
+                class _LeaseField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ChannelReaderLeaseSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["msg"],
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedResultSchema._MsgField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["lease"],
+                    ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedResultSchema._LeaseField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedResultSchema._Fields: ...
+
+            class _ReaderInterfaceModuleReadLeasedMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedResultSchema: ...
+
             class _Methods(dict[str, _InterfaceMethod]):
                 @overload
                 def __getitem__(
@@ -999,6 +1122,11 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                     key: Literal["readIfMsg"],
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadIfMsgMethod: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["readLeased"],
+                ) -> _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._ReaderInterfaceModuleReadLeasedMethod: ...
                 @overload
                 def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -1048,6 +1176,15 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def readIfMsg_context(
                 self,
                 context: contexts.ReadifmsgCallContext,
+            ) -> Awaitable[None]: ...
+            def readLeased(
+                self,
+                _context: contexts.ReadleasedCallContext,
+                **kwargs: object,
+            ) -> Awaitable[results_tuples.ReadleasedResultTuple | None]: ...
+            def readLeased_context(
+                self,
+                context: contexts.ReadleasedCallContext,
             ) -> Awaitable[None]: ...
 
     Reader: _ReaderInterfaceModule
@@ -1759,16 +1896,20 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             def _new_client(
                 self,
                 server: _DynamicCapabilityServer,
-            ) -> clients.UnregisterClient: ...
+            ) -> clients.ChannelStatsCallbackUnregisterClient: ...
             class Server(_DynamicCapabilityServer):
                 def unreg(
                     self,
-                    _context: contexts.UnregCallContext,
+                    _context: contexts.ChannelStatsCallbackUnregisterUnregCallContext,
                     **kwargs: object,
-                ) -> Awaitable[bool | results_tuples.UnregResultTuple | None]: ...
+                ) -> Awaitable[
+                    bool
+                    | results_tuples.ChannelStatsCallbackUnregisterUnregResultTuple
+                    | None
+                ]: ...
                 def unreg_context(
                     self,
-                    context: contexts.UnregCallContext,
+                    context: contexts.ChannelStatsCallbackUnregisterUnregCallContext,
                 ) -> Awaitable[None]: ...
 
         Unregister: _UnregisterInterfaceModule
@@ -1856,6 +1997,357 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
     type StatsCallbackServer = (
         _ChannelInterfaceModule._StatsCallbackInterfaceModule.Server
     )
+    class _ObserverInterfaceModule(_InterfaceModule):
+        class _EventStructModule(_StructModule):
+            class Reader(_DynamicStructReader): ...
+            class Builder(_DynamicStructBuilder): ...
+
+            class _EventSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["seqNo"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["timestamp"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["sizeInWords"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["content"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule._EventSchema._Fields: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ChannelObserverEventSchema: ...
+            @override
+            def new_message(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                seqNo: int | None = None,
+                timestamp: str | None = None,
+                sizeInWords: int | None = None,
+                content: common.AnyPointer | None = None,
+                **kwargs: object,
+            ) -> builders.EventBuilder: ...
+            @override
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> AbstractContextManager[readers.EventReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[False],
+            ) -> AbstractContextManager[readers.EventReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.EventBuilder]: ...
+            @override
+            def from_bytes_packed(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> _DynamicStructReader: ...
+            @override
+            def read(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.EventReader: ...
+            @override
+            def read_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.EventReader: ...
+
+        Event: _EventStructModule
+        class _UnregisterInterfaceModule(_InterfaceModule):
+            class _UnregisterSchema(_InterfaceSchema):
+                class _UnregisterInterfaceModuleUnregParamSchema(_StructSchema):
+                    class _Fields(dict[str, _StructSchemaField]): ...
+
+                    @property
+                    @override
+                    def fields(
+                        self,
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregParamSchema._Fields: ...
+
+                class _UnregisterInterfaceModuleUnregResultSchema(_StructSchema):
+                    class _Fields(dict[str, _StructSchemaField]):
+                        @overload
+                        def __getitem__(
+                            self,
+                            key: Literal["success"],
+                        ) -> _StructSchemaField: ...
+                        @overload
+                        def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                    @property
+                    @override
+                    def fields(
+                        self,
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregResultSchema._Fields: ...
+
+                class _UnregisterInterfaceModuleUnregMethod(_InterfaceMethod):
+                    @property
+                    @override
+                    def param_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregParamSchema: ...
+                    @property
+                    @override
+                    def result_type(
+                        self,
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregResultSchema: ...
+
+                class _Methods(dict[str, _InterfaceMethod]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["unreg"],
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._UnregisterInterfaceModuleUnregMethod: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+                @property
+                @override
+                def methods(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._Methods: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ChannelObserverUnregisterSchema: ...
+            @override
+            def _new_client(
+                self,
+                server: _DynamicCapabilityServer,
+            ) -> clients.ChannelObserverUnregisterClient: ...
+            class Server(_DynamicCapabilityServer):
+                def unreg(
+                    self,
+                    _context: contexts.ChannelObserverUnregisterUnregCallContext,
+                    **kwargs: object,
+                ) -> Awaitable[
+                    bool
+                    | results_tuples.ChannelObserverUnregisterUnregResultTuple
+                    | None
+                ]: ...
+                def unreg_context(
+                    self,
+                    context: contexts.ChannelObserverUnregisterUnregCallContext,
+                ) -> Awaitable[None]: ...
+
+        Unregister: _UnregisterInterfaceModule
+        type UnregisterServer = _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
+        class _ParamsStructModule(_StructModule):
+            class Reader(_DynamicStructReader): ...
+            class Builder(_DynamicStructBuilder): ...
+
+            class _ParamsSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["everyNth"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["withContent"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["gate"],
+                    ) -> _StructSchemaField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule._ParamsSchema._Fields: ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ChannelObserverParamsSchema: ...
+            @override
+            def new_message(
+                self,
+                num_first_segment_words: int | None = None,
+                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                everyNth: int | None = None,
+                withContent: bool | None = None,
+                gate: bool | None = None,
+                **kwargs: object,
+            ) -> builders.ChannelObserverParamsBuilder: ...
+            @override
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> AbstractContextManager[readers.ChannelObserverParamsReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[False],
+            ) -> AbstractContextManager[readers.ChannelObserverParamsReader]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                *,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.ChannelObserverParamsBuilder]: ...
+            @override
+            def from_bytes_packed(
+                self,
+                buf: bytes,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> _DynamicStructReader: ...
+            @override
+            def read(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.ChannelObserverParamsReader: ...
+            @override
+            def read_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.ChannelObserverParamsReader: ...
+
+        Params: _ParamsStructModule
+
+        class _ObserverSchema(_InterfaceSchema):
+            class _ObserverInterfaceModuleSawParamSchema(_StructSchema):
+                class _EventField(_StructSchemaField):
+                    @property
+                    @override
+                    def schema(self) -> schemas._ChannelObserverEventSchema: ...
+
+                class _Fields(dict[str, _StructSchemaField]):
+                    @overload
+                    def __getitem__(
+                        self,
+                        key: Literal["event"],
+                    ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawParamSchema._EventField: ...
+                    @overload
+                    def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawParamSchema._Fields: ...
+
+            class _ObserverInterfaceModuleSawResultSchema(_StructSchema):
+                class _Fields(dict[str, _StructSchemaField]): ...
+
+                @property
+                @override
+                def fields(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawResultSchema._Fields: ...
+
+            class _ObserverInterfaceModuleSawMethod(_InterfaceMethod):
+                @property
+                @override
+                def param_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawParamSchema: ...
+                @property
+                @override
+                def result_type(
+                    self,
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawResultSchema: ...
+
+            class _Methods(dict[str, _InterfaceMethod]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["saw"],
+                ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._ObserverInterfaceModuleSawMethod: ...
+                @overload
+                def __getitem__(self, key: str) -> _InterfaceMethod: ...
+
+            @property
+            @override
+            def methods(
+                self,
+            ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._Methods: ...
+
+        @property
+        @override
+        def schema(self) -> schemas._ChannelObserverSchema: ...
+        @override
+        def _new_client(
+            self,
+            server: _DynamicCapabilityServer,
+        ) -> clients.ObserverClient: ...
+        class Server(_DynamicCapabilityServer):
+            def saw(
+                self,
+                event: readers.EventReader,
+                _context: contexts.SawCallContext,
+                **kwargs: object,
+            ) -> Awaitable[None]: ...
+            def saw_context(
+                self,
+                context: contexts.SawCallContext,
+            ) -> Awaitable[None]: ...
+
+    Observer: _ObserverInterfaceModule
+    type ObserverServer = _ChannelInterfaceModule._ObserverInterfaceModule.Server
 
     class _ChannelSchema(_InterfaceSchema):
         class _IdentifiableInterfaceModuleInfoParamSchema(_StructSchema):
@@ -2281,6 +2773,171 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackResultSchema: ...
 
+        class _ChannelInterfaceModuleObserveParamSchema(_StructSchema):
+            class _CallbackField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ChannelObserverSchema: ...
+
+            class _ParamsField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ChannelObserverParamsSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["callback"],
+                ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveParamSchema._CallbackField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["params"],
+                ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveParamSchema._ParamsField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveParamSchema._Fields: ...
+
+        class _ChannelInterfaceModuleObserveResultSchema(_StructSchema):
+            class _UnregisterField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ChannelObserverUnregisterSchema: ...
+
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["unregister"],
+                ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveResultSchema._UnregisterField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleObserveMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveResultSchema: ...
+
+        class _ChannelInterfaceModulePauseParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModulePauseParamSchema._Fields: ...
+
+        class _ChannelInterfaceModulePauseResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModulePauseResultSchema._Fields: ...
+
+        class _ChannelInterfaceModulePauseMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModulePauseParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModulePauseResultSchema: ...
+
+        class _ChannelInterfaceModuleResumeParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleResumeParamSchema._Fields: ...
+
+        class _ChannelInterfaceModuleResumeResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]): ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleResumeResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleResumeMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleResumeParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleResumeResultSchema: ...
+
+        class _ChannelInterfaceModuleStepParamSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(self, key: Literal["count"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleStepParamSchema._Fields: ...
+
+        class _ChannelInterfaceModuleStepResultSchema(_StructSchema):
+            class _Fields(dict[str, _StructSchemaField]):
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["delivered"],
+                ) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+            @property
+            @override
+            def fields(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleStepResultSchema._Fields: ...
+
+        class _ChannelInterfaceModuleStepMethod(_InterfaceMethod):
+            @property
+            @override
+            def param_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleStepParamSchema: ...
+            @property
+            @override
+            def result_type(
+                self,
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleStepResultSchema: ...
+
         class _Methods(dict[str, _InterfaceMethod]):
             @overload
             def __getitem__(
@@ -2327,6 +2984,28 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
                 key: Literal["registerStatsCallback"],
             ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleRegisterStatsCallbackMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["observe"],
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleObserveMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["pause"],
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModulePauseMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["resume"],
+            ) -> _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleResumeMethod: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["step"],
+            ) -> (
+                _ChannelInterfaceModule._ChannelSchema._ChannelInterfaceModuleStepMethod
+            ): ...
             @overload
             def __getitem__(self, key: str) -> _InterfaceMethod: ...
 
@@ -2421,13 +3100,57 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             **kwargs: object,
         ) -> Awaitable[
             _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
-            | clients.UnregisterClient
+            | clients.ChannelStatsCallbackUnregisterClient
             | results_tuples.RegisterstatscallbackResultTuple
             | None
         ]: ...
         def registerStatsCallback_context(
             self,
             context: contexts.RegisterstatscallbackCallContext,
+        ) -> Awaitable[None]: ...
+        def observe(
+            self,
+            callback: clients.ObserverClient,
+            params: _ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule.Reader,
+            _context: contexts.ObserveCallContext,
+            **kwargs: object,
+        ) -> Awaitable[
+            _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
+            | clients.ChannelObserverUnregisterClient
+            | results_tuples.ObserveResultTuple
+            | None
+        ]: ...
+        def observe_context(
+            self,
+            context: contexts.ObserveCallContext,
+        ) -> Awaitable[None]: ...
+        def pause(
+            self,
+            _context: contexts.PauseCallContext,
+            **kwargs: object,
+        ) -> Awaitable[None]: ...
+        def pause_context(
+            self,
+            context: contexts.PauseCallContext,
+        ) -> Awaitable[None]: ...
+        def resume(
+            self,
+            _context: contexts.ResumeCallContext,
+            **kwargs: object,
+        ) -> Awaitable[None]: ...
+        def resume_context(
+            self,
+            context: contexts.ResumeCallContext,
+        ) -> Awaitable[None]: ...
+        def step(
+            self,
+            count: int,
+            _context: contexts.StepCallContext,
+            **kwargs: object,
+        ) -> Awaitable[int | results_tuples.StepResultTuple | None]: ...
+        def step_context(
+            self,
+            context: contexts.StepCallContext,
         ) -> Awaitable[None]: ...
 
 class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
@@ -2516,7 +3239,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             bufferSize: int | None = None,
             registerAtGateway: bool | None = None,
             **kwargs: object,
-        ) -> builders.ParamsBuilder: ...
+        ) -> builders.StartChannelsServiceParamsBuilder: ...
         @override
         @overload
         def from_bytes(
@@ -2524,7 +3247,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             buf: bytes,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> AbstractContextManager[readers.ParamsReader]: ...
+        ) -> AbstractContextManager[readers.StartChannelsServiceParamsReader]: ...
         @overload
         def from_bytes(
             self,
@@ -2533,7 +3256,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[False],
-        ) -> AbstractContextManager[readers.ParamsReader]: ...
+        ) -> AbstractContextManager[readers.StartChannelsServiceParamsReader]: ...
         @overload
         def from_bytes(
             self,
@@ -2542,7 +3265,7 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
-        ) -> AbstractContextManager[builders.ParamsBuilder]: ...
+        ) -> AbstractContextManager[builders.StartChannelsServiceParamsBuilder]: ...
         @override
         def from_bytes_packed(
             self,
@@ -2556,14 +3279,14 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> readers.ParamsReader: ...
+        ) -> readers.StartChannelsServiceParamsReader: ...
         @override
         def read_packed(
             self,
             file: IO[str] | IO[bytes],
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> readers.ParamsReader: ...
+        ) -> readers.StartChannelsServiceParamsReader: ...
 
     Params: _ParamsStructModule
 

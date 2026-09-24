@@ -601,6 +601,14 @@ namespace Mas.Schema.Fbp
             uint updateIntervalInMs,
             CancellationToken cancellationToken_ = default
         );
+        Task<Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister> Observe(
+            Mas.Schema.Fbp.Channel<TV>.IObserver callback,
+            Mas.Schema.Fbp.Channel<TV>.Observer.Params @params,
+            CancellationToken cancellationToken_ = default
+        );
+        Task Pause(CancellationToken cancellationToken_ = default);
+        Task Resume(CancellationToken cancellationToken_ = default);
+        Task<ulong> Step(ulong count, CancellationToken cancellationToken_ = default);
     }
 
     [
@@ -812,6 +820,102 @@ namespace Mas.Schema.Fbp
             );
         }
 
+        public Task<Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister> Observe(
+            Mas.Schema.Fbp.Channel<TV>.IObserver callback,
+            Mas.Schema.Fbp.Channel<TV>.Observer.Params @params,
+            CancellationToken cancellationToken_ = default
+        )
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Params_Observe.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Channel<TV>.Params_Observe()
+            {
+                Callback = callback,
+                Params = @params,
+            };
+            arg_?.serialize(in_);
+            return Impatient.MakePipelineAware(
+                Call(
+                    11268783807889846760UL,
+                    7,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ),
+                d_ =>
+                {
+                    using (d_)
+                    {
+                        var r_ =
+                            CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Result_Observe>(d_);
+                        return (r_.Unregister);
+                    }
+                }
+            );
+        }
+
+        public async Task Pause(CancellationToken cancellationToken_ = default)
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Params_Pause.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Channel<TV>.Params_Pause() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    11268783807889846760UL,
+                    8,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Result_Pause>(d_);
+                return;
+            }
+        }
+
+        public async Task Resume(CancellationToken cancellationToken_ = default)
+        {
+            var in_ =
+                SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Params_Resume.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Channel<TV>.Params_Resume() { };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    11268783807889846760UL,
+                    9,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Result_Resume>(d_);
+                return;
+            }
+        }
+
+        public async Task<ulong> Step(ulong count, CancellationToken cancellationToken_ = default)
+        {
+            var in_ = SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Params_Step.WRITER>();
+            var arg_ = new Mas.Schema.Fbp.Channel<TV>.Params_Step() { Count = count };
+            arg_?.serialize(in_);
+            using (
+                var d_ = await Call(
+                    11268783807889846760UL,
+                    10,
+                    in_.Rewrap<DynamicSerializerState>(),
+                    false,
+                    cancellationToken_
+                ).WhenReturned
+            )
+            {
+                var r_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Result_Step>(d_);
+                return (r_.Delivered);
+            }
+        }
+
         public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(
             Mas.Schema.Persistence.Persistent.SaveParams arg_,
             CancellationToken cancellationToken_ = default
@@ -877,7 +981,11 @@ namespace Mas.Schema.Fbp
                 Endpoints,
                 SetAutoCloseSemantics,
                 Close,
-                RegisterStatsCallback
+                RegisterStatsCallback,
+                Observe,
+                Pause,
+                Resume,
+                Step
             );
         }
 
@@ -1020,6 +1128,84 @@ namespace Mas.Schema.Fbp
                         var r_ = new Mas.Schema.Fbp.Channel<TV>.Result_RegisterStatsCallback
                         {
                             UnregisterCallback = unregisterCallback,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        Task<AnswerOrCounterquestion> Observe(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Params_Observe>(d_);
+                return Impatient.MaybeTailCall(
+                    Impl.Observe(in_.Callback, in_.Params, cancellationToken_),
+                    unregister =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Result_Observe.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Channel<TV>.Result_Observe
+                        {
+                            Unregister = unregister,
+                        };
+                        r_.serialize(s_);
+                        return s_;
+                    }
+                );
+            }
+        }
+
+        async Task<AnswerOrCounterquestion> Pause(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                await Impl.Pause(cancellationToken_);
+                var s_ =
+                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Result_Pause.WRITER>();
+                return s_;
+            }
+        }
+
+        async Task<AnswerOrCounterquestion> Resume(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                await Impl.Resume(cancellationToken_);
+                var s_ =
+                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Result_Resume.WRITER>();
+                return s_;
+            }
+        }
+
+        Task<AnswerOrCounterquestion> Step(
+            DeserializerState d_,
+            CancellationToken cancellationToken_
+        )
+        {
+            using (d_)
+            {
+                var in_ = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Params_Step>(d_);
+                return Impatient.MaybeTailCall(
+                    Impl.Step(in_.Count, cancellationToken_),
+                    delivered =>
+                    {
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Result_Step.WRITER>();
+                        var r_ = new Mas.Schema.Fbp.Channel<TV>.Result_Step
+                        {
+                            Delivered = delivered,
                         };
                         r_.serialize(s_);
                         return s_;
@@ -1342,6 +1528,10 @@ namespace Mas.Schema.Fbp
             Task<Mas.Schema.Fbp.Channel<TV>.Msg> ReadIfMsg(
                 CancellationToken cancellationToken_ = default
             );
+            Task<(
+                Mas.Schema.Fbp.Channel<TV>.Msg,
+                Mas.Schema.Fbp.Channel<TV>.Reader.ILease
+            )> ReadLeased(CancellationToken cancellationToken_ = default);
         }
 
         [
@@ -1428,6 +1618,37 @@ namespace Mas.Schema.Fbp
                 );
             }
 
+            public Task<(
+                Mas.Schema.Fbp.Channel<TV>.Msg,
+                Mas.Schema.Fbp.Channel<TV>.Reader.ILease
+            )> ReadLeased(CancellationToken cancellationToken_ = default)
+            {
+                var in_ =
+                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Reader.Params_ReadLeased.WRITER>();
+                var arg_ = new Mas.Schema.Fbp.Channel<TV>.Reader.Params_ReadLeased() { };
+                arg_?.serialize(in_);
+                return Impatient.MakePipelineAware(
+                    Call(
+                        10071897677001168844UL,
+                        3,
+                        in_.Rewrap<DynamicSerializerState>(),
+                        false,
+                        cancellationToken_
+                    ),
+                    d_ =>
+                    {
+                        using (d_)
+                        {
+                            var r_ =
+                                CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Reader.Result_ReadLeased>(
+                                    d_
+                                );
+                            return (r_.Msg, r_.Lease);
+                        }
+                    }
+                );
+            }
+
             public async Task<Mas.Schema.Persistence.Persistent.SaveResults> Save(
                 Mas.Schema.Persistence.Persistent.SaveParams arg_,
                 CancellationToken cancellationToken_ = default
@@ -1484,7 +1705,7 @@ namespace Mas.Schema.Fbp
         {
             public Reader_Skeleton()
             {
-                SetMethodTable(Read, Close, ReadIfMsg);
+                SetMethodTable(Read, Close, ReadIfMsg, ReadLeased);
             }
 
             public override ulong InterfaceId => 10071897677001168844UL;
@@ -1542,10 +1763,208 @@ namespace Mas.Schema.Fbp
                     );
                 }
             }
+
+            Task<AnswerOrCounterquestion> ReadLeased(
+                DeserializerState d_,
+                CancellationToken cancellationToken_
+            )
+            {
+                using (d_)
+                {
+                    return Impatient.MaybeTailCall(
+                        Impl.ReadLeased(cancellationToken_),
+                        (msg, lease) =>
+                        {
+                            var s_ =
+                                SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Reader.Result_ReadLeased.WRITER>();
+                            var r_ = new Mas.Schema.Fbp.Channel<TV>.Reader.Result_ReadLeased
+                            {
+                                Msg = msg,
+                                Lease = lease,
+                            };
+                            r_.serialize(s_);
+                            return s_;
+                        }
+                    );
+                }
+            }
         }
 
         public static class Reader
         {
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xd3c75f69eade4246UL),
+                Proxy(typeof(Mas.Schema.Fbp.Channel<>.Reader.Lease_Proxy)),
+                Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Reader.Lease_Skeleton))
+            ]
+            public interface ILease : IDisposable
+            {
+                Task Ack(CancellationToken cancellationToken_ = default);
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xd3c75f69eade4246UL)
+            ]
+            public class Lease_Proxy : Proxy, ILease
+            {
+                public async Task Ack(CancellationToken cancellationToken_ = default)
+                {
+                    var in_ =
+                        SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Reader.Lease.Params_Ack.WRITER>();
+                    var arg_ = new Mas.Schema.Fbp.Channel<TV>.Reader.Lease.Params_Ack() { };
+                    arg_?.serialize(in_);
+                    using (
+                        var d_ = await Call(
+                            15260270770884854342UL,
+                            0,
+                            in_.Rewrap<DynamicSerializerState>(),
+                            false,
+                            cancellationToken_
+                        ).WhenReturned
+                    )
+                    {
+                        var r_ =
+                            CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Reader.Lease.Result_Ack>(
+                                d_
+                            );
+                        return;
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xd3c75f69eade4246UL)
+            ]
+            public class Lease_Skeleton : Skeleton<ILease>
+            {
+                public Lease_Skeleton()
+                {
+                    SetMethodTable(Ack);
+                }
+
+                public override ulong InterfaceId => 15260270770884854342UL;
+
+                async Task<AnswerOrCounterquestion> Ack(
+                    DeserializerState d_,
+                    CancellationToken cancellationToken_
+                )
+                {
+                    using (d_)
+                    {
+                        await Impl.Ack(cancellationToken_);
+                        var s_ =
+                            SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Reader.Lease.Result_Ack.WRITER>();
+                        return s_;
+                    }
+                }
+            }
+
+            public static class Lease
+            {
+                [
+                    System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                    TypeId(0xc32208de3b472a91UL)
+                ]
+                public class Params_Ack : ICapnpSerializable
+                {
+                    public const UInt64 typeId = 0xc32208de3b472a91UL;
+
+                    void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                    {
+                        var reader = READER.create(arg_);
+                        applyDefaults();
+                    }
+
+                    public void serialize(WRITER writer) { }
+
+                    void ICapnpSerializable.Serialize(SerializerState arg_)
+                    {
+                        serialize(arg_.Rewrap<WRITER>());
+                    }
+
+                    public void applyDefaults() { }
+
+                    public struct READER
+                    {
+                        readonly DeserializerState ctx;
+
+                        public READER(DeserializerState ctx)
+                        {
+                            this.ctx = ctx;
+                        }
+
+                        public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                        public static implicit operator DeserializerState(READER reader) =>
+                            reader.ctx;
+
+                        public static implicit operator READER(DeserializerState ctx) =>
+                            new READER(ctx);
+                    }
+
+                    public class WRITER : SerializerState
+                    {
+                        public WRITER()
+                        {
+                            this.SetStruct(0, 0);
+                        }
+                    }
+                }
+
+                [
+                    System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                    TypeId(0xcd8d5922547734b1UL)
+                ]
+                public class Result_Ack : ICapnpSerializable
+                {
+                    public const UInt64 typeId = 0xcd8d5922547734b1UL;
+
+                    void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                    {
+                        var reader = READER.create(arg_);
+                        applyDefaults();
+                    }
+
+                    public void serialize(WRITER writer) { }
+
+                    void ICapnpSerializable.Serialize(SerializerState arg_)
+                    {
+                        serialize(arg_.Rewrap<WRITER>());
+                    }
+
+                    public void applyDefaults() { }
+
+                    public struct READER
+                    {
+                        readonly DeserializerState ctx;
+
+                        public READER(DeserializerState ctx)
+                        {
+                            this.ctx = ctx;
+                        }
+
+                        public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                        public static implicit operator DeserializerState(READER reader) =>
+                            reader.ctx;
+
+                        public static implicit operator READER(DeserializerState ctx) =>
+                            new READER(ctx);
+                    }
+
+                    public class WRITER : SerializerState
+                    {
+                        public WRITER()
+                        {
+                            this.SetStruct(0, 0);
+                        }
+                    }
+                }
+            }
+
             [
                 System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
                 TypeId(0xc0335d99db8b2ba5UL)
@@ -1738,6 +2157,130 @@ namespace Mas.Schema.Fbp
                     public WRITER()
                     {
                         this.SetStruct(0, 0);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xb4ae33a8f72f237bUL)
+            ]
+            public class Params_ReadLeased : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xb4ae33a8f72f237bUL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer) { }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 0);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xfbfb2c0f9f4e9bf0UL)
+            ]
+            public class Result_ReadLeased : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xfbfb2c0f9f4e9bf0UL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Msg = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Msg>(reader.Msg);
+                    Lease = reader.Lease;
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    Msg?.serialize(writer.Msg);
+                    writer.Lease = Lease;
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public Mas.Schema.Fbp.Channel<TV>.Msg Msg { get; set; }
+                public Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Fbp.Channel<TV>.Msg.READER Msg =>
+                        ctx.ReadStruct(0, Mas.Schema.Fbp.Channel<TV>.Msg.READER.create);
+                    public bool HasMsg => ctx.IsStructFieldNonNull(0);
+                    public Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease =>
+                        ctx.ReadCap<Mas.Schema.Fbp.Channel<TV>.Reader.ILease>(1);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 2);
+                    }
+
+                    public Mas.Schema.Fbp.Channel<TV>.Msg.WRITER Msg
+                    {
+                        get => BuildPointer<Mas.Schema.Fbp.Channel<TV>.Msg.WRITER>(0);
+                        set => Link(0, value);
+                    }
+                    public Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease
+                    {
+                        get => ReadCap<Mas.Schema.Fbp.Channel<TV>.Reader.ILease>(1);
+                        set => LinkObject(1, value);
                     }
                 }
             }
@@ -2693,6 +3236,575 @@ namespace Mas.Schema.Fbp
 
         [
             System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x80a21757b0bfd776UL),
+            Proxy(typeof(Mas.Schema.Fbp.Channel<>.Observer_Proxy)),
+            Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Observer_Skeleton))
+        ]
+        public interface IObserver : IDisposable
+        {
+            Task Saw(
+                Mas.Schema.Fbp.Channel<TV>.Observer.Event @event,
+                CancellationToken cancellationToken_ = default
+            );
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x80a21757b0bfd776UL)
+        ]
+        public class Observer_Proxy : Proxy, IObserver
+        {
+            public async Task Saw(
+                Mas.Schema.Fbp.Channel<TV>.Observer.Event @event,
+                CancellationToken cancellationToken_ = default
+            )
+            {
+                var in_ =
+                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Observer.Params_Saw.WRITER>();
+                var arg_ = new Mas.Schema.Fbp.Channel<TV>.Observer.Params_Saw() { Event = @event };
+                arg_?.serialize(in_);
+                using (
+                    var d_ = await Call(
+                        9268996648476858230UL,
+                        0,
+                        in_.Rewrap<DynamicSerializerState>(),
+                        false,
+                        cancellationToken_
+                    ).WhenReturned
+                )
+                {
+                    var r_ =
+                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Observer.Result_Saw>(
+                            d_
+                        );
+                    return;
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x80a21757b0bfd776UL)
+        ]
+        public class Observer_Skeleton : Skeleton<IObserver>
+        {
+            public Observer_Skeleton()
+            {
+                SetMethodTable(Saw);
+            }
+
+            public override ulong InterfaceId => 9268996648476858230UL;
+
+            async Task<AnswerOrCounterquestion> Saw(
+                DeserializerState d_,
+                CancellationToken cancellationToken_
+            )
+            {
+                using (d_)
+                {
+                    var in_ =
+                        CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Observer.Params_Saw>(
+                            d_
+                        );
+                    await Impl.Saw(in_.Event, cancellationToken_);
+                    var s_ =
+                        SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Observer.Result_Saw.WRITER>();
+                    return s_;
+                }
+            }
+        }
+
+        public static class Observer
+        {
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xd654246116b3daa5UL)
+            ]
+            public class Event : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xd654246116b3daa5UL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    SeqNo = reader.SeqNo;
+                    Timestamp = reader.Timestamp;
+                    SizeInWords = reader.SizeInWords;
+                    Content = CapnpSerializable.Create<TV>(reader.Content);
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.SeqNo = SeqNo;
+                    writer.Timestamp = Timestamp;
+                    writer.SizeInWords = SizeInWords;
+                    writer.Content.SetObject(Content);
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public ulong SeqNo { get; set; }
+                public string Timestamp { get; set; }
+                public ulong SizeInWords { get; set; }
+                public TV Content { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public ulong SeqNo => ctx.ReadDataULong(0UL, 0UL);
+                    public string Timestamp => ctx.ReadText(0, null);
+                    public ulong SizeInWords => ctx.ReadDataULong(64UL, 0UL);
+                    public DeserializerState Content => ctx.StructReadPointer(1);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(2, 2);
+                    }
+
+                    public ulong SeqNo
+                    {
+                        get => this.ReadDataULong(0UL, 0UL);
+                        set => this.WriteData(0UL, value, 0UL);
+                    }
+                    public string Timestamp
+                    {
+                        get => this.ReadText(0, null);
+                        set => this.WriteText(0, value, null);
+                    }
+                    public ulong SizeInWords
+                    {
+                        get => this.ReadDataULong(64UL, 0UL);
+                        set => this.WriteData(64UL, value, 0UL);
+                    }
+                    public DynamicSerializerState Content
+                    {
+                        get => BuildPointer<DynamicSerializerState>(1);
+                        set => Link(1, value);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x8971a9561a83228aUL),
+                Proxy(typeof(Mas.Schema.Fbp.Channel<>.Observer.Unregister_Proxy)),
+                Skeleton(typeof(Mas.Schema.Fbp.Channel<>.Observer.Unregister_Skeleton))
+            ]
+            public interface IUnregister : IDisposable
+            {
+                Task<bool> Unreg(CancellationToken cancellationToken_ = default);
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x8971a9561a83228aUL)
+            ]
+            public class Unregister_Proxy : Proxy, IUnregister
+            {
+                public async Task<bool> Unreg(CancellationToken cancellationToken_ = default)
+                {
+                    var in_ =
+                        SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Observer.Unregister.Params_Unreg.WRITER>();
+                    var arg_ = new Mas.Schema.Fbp.Channel<TV>.Observer.Unregister.Params_Unreg()
+                    { };
+                    arg_?.serialize(in_);
+                    using (
+                        var d_ = await Call(
+                            9903883242841514634UL,
+                            0,
+                            in_.Rewrap<DynamicSerializerState>(),
+                            false,
+                            cancellationToken_
+                        ).WhenReturned
+                    )
+                    {
+                        var r_ =
+                            CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Observer.Unregister.Result_Unreg>(
+                                d_
+                            );
+                        return (r_.Success);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0x8971a9561a83228aUL)
+            ]
+            public class Unregister_Skeleton : Skeleton<IUnregister>
+            {
+                public Unregister_Skeleton()
+                {
+                    SetMethodTable(Unreg);
+                }
+
+                public override ulong InterfaceId => 9903883242841514634UL;
+
+                Task<AnswerOrCounterquestion> Unreg(
+                    DeserializerState d_,
+                    CancellationToken cancellationToken_
+                )
+                {
+                    using (d_)
+                    {
+                        return Impatient.MaybeTailCall(
+                            Impl.Unreg(cancellationToken_),
+                            success =>
+                            {
+                                var s_ =
+                                    SerializerState.CreateForRpc<Mas.Schema.Fbp.Channel<TV>.Observer.Unregister.Result_Unreg.WRITER>();
+                                var r_ =
+                                    new Mas.Schema.Fbp.Channel<TV>.Observer.Unregister.Result_Unreg
+                                    {
+                                        Success = success,
+                                    };
+                                r_.serialize(s_);
+                                return s_;
+                            }
+                        );
+                    }
+                }
+            }
+
+            public static class Unregister
+            {
+                [
+                    System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                    TypeId(0xaa3c848f685bf750UL)
+                ]
+                public class Params_Unreg : ICapnpSerializable
+                {
+                    public const UInt64 typeId = 0xaa3c848f685bf750UL;
+
+                    void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                    {
+                        var reader = READER.create(arg_);
+                        applyDefaults();
+                    }
+
+                    public void serialize(WRITER writer) { }
+
+                    void ICapnpSerializable.Serialize(SerializerState arg_)
+                    {
+                        serialize(arg_.Rewrap<WRITER>());
+                    }
+
+                    public void applyDefaults() { }
+
+                    public struct READER
+                    {
+                        readonly DeserializerState ctx;
+
+                        public READER(DeserializerState ctx)
+                        {
+                            this.ctx = ctx;
+                        }
+
+                        public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                        public static implicit operator DeserializerState(READER reader) =>
+                            reader.ctx;
+
+                        public static implicit operator READER(DeserializerState ctx) =>
+                            new READER(ctx);
+                    }
+
+                    public class WRITER : SerializerState
+                    {
+                        public WRITER()
+                        {
+                            this.SetStruct(0, 0);
+                        }
+                    }
+                }
+
+                [
+                    System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                    TypeId(0xbad4ea636557553aUL)
+                ]
+                public class Result_Unreg : ICapnpSerializable
+                {
+                    public const UInt64 typeId = 0xbad4ea636557553aUL;
+
+                    void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                    {
+                        var reader = READER.create(arg_);
+                        Success = reader.Success;
+                        applyDefaults();
+                    }
+
+                    public void serialize(WRITER writer)
+                    {
+                        writer.Success = Success;
+                    }
+
+                    void ICapnpSerializable.Serialize(SerializerState arg_)
+                    {
+                        serialize(arg_.Rewrap<WRITER>());
+                    }
+
+                    public void applyDefaults() { }
+
+                    public bool Success { get; set; }
+
+                    public struct READER
+                    {
+                        readonly DeserializerState ctx;
+
+                        public READER(DeserializerState ctx)
+                        {
+                            this.ctx = ctx;
+                        }
+
+                        public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                        public static implicit operator DeserializerState(READER reader) =>
+                            reader.ctx;
+
+                        public static implicit operator READER(DeserializerState ctx) =>
+                            new READER(ctx);
+
+                        public bool Success => ctx.ReadDataBool(0UL, false);
+                    }
+
+                    public class WRITER : SerializerState
+                    {
+                        public WRITER()
+                        {
+                            this.SetStruct(1, 0);
+                        }
+
+                        public bool Success
+                        {
+                            get => this.ReadDataBool(0UL, false);
+                            set => this.WriteData(0UL, value, false);
+                        }
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xaff4041af7455c7aUL)
+            ]
+            public class Params : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xaff4041af7455c7aUL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    EveryNth = reader.EveryNth;
+                    WithContent = reader.WithContent;
+                    Gate = reader.Gate;
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    writer.EveryNth = EveryNth;
+                    writer.WithContent = WithContent;
+                    writer.Gate = Gate;
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public uint EveryNth { get; set; } = 1U;
+                public bool WithContent { get; set; } = false;
+                public bool Gate { get; set; } = false;
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public uint EveryNth => ctx.ReadDataUInt(0UL, 1U);
+                    public bool WithContent => ctx.ReadDataBool(32UL, false);
+                    public bool Gate => ctx.ReadDataBool(33UL, false);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(1, 0);
+                    }
+
+                    public uint EveryNth
+                    {
+                        get => this.ReadDataUInt(0UL, 1U);
+                        set => this.WriteData(0UL, value, 1U);
+                    }
+                    public bool WithContent
+                    {
+                        get => this.ReadDataBool(32UL, false);
+                        set => this.WriteData(32UL, value, false);
+                    }
+                    public bool Gate
+                    {
+                        get => this.ReadDataBool(33UL, false);
+                        set => this.WriteData(33UL, value, false);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xfcfe637d1facccf5UL)
+            ]
+            public class Params_Saw : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xfcfe637d1facccf5UL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    Event = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Observer.Event>(
+                        reader.Event
+                    );
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer)
+                {
+                    Event?.serialize(writer.Event);
+                }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public Mas.Schema.Fbp.Channel<TV>.Observer.Event Event { get; set; }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+
+                    public Mas.Schema.Fbp.Channel<TV>.Observer.Event.READER Event =>
+                        ctx.ReadStruct(0, Mas.Schema.Fbp.Channel<TV>.Observer.Event.READER.create);
+                    public bool HasEvent => ctx.IsStructFieldNonNull(0);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 1);
+                    }
+
+                    public Mas.Schema.Fbp.Channel<TV>.Observer.Event.WRITER Event
+                    {
+                        get => BuildPointer<Mas.Schema.Fbp.Channel<TV>.Observer.Event.WRITER>(0);
+                        set => Link(0, value);
+                    }
+                }
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xb6bacfb230e8831aUL)
+            ]
+            public class Result_Saw : ICapnpSerializable
+            {
+                public const UInt64 typeId = 0xb6bacfb230e8831aUL;
+
+                void ICapnpSerializable.Deserialize(DeserializerState arg_)
+                {
+                    var reader = READER.create(arg_);
+                    applyDefaults();
+                }
+
+                public void serialize(WRITER writer) { }
+
+                void ICapnpSerializable.Serialize(SerializerState arg_)
+                {
+                    serialize(arg_.Rewrap<WRITER>());
+                }
+
+                public void applyDefaults() { }
+
+                public struct READER
+                {
+                    readonly DeserializerState ctx;
+
+                    public READER(DeserializerState ctx)
+                    {
+                        this.ctx = ctx;
+                    }
+
+                    public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                    public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                    public static implicit operator READER(DeserializerState ctx) =>
+                        new READER(ctx);
+                }
+
+                public class WRITER : SerializerState
+                {
+                    public WRITER()
+                    {
+                        this.SetStruct(0, 0);
+                    }
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
             TypeId(0x92101e3b7a761333UL)
         ]
         public class Params_SetBufferSize : ICapnpSerializable
@@ -3498,6 +4610,461 @@ namespace Mas.Schema.Fbp
                 {
                     get => ReadCap<Mas.Schema.Fbp.Channel<TV>.StatsCallback.IUnregister>(0);
                     set => LinkObject(0, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd68d1dc402959a5eUL)
+        ]
+        public class Params_Observe : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xd68d1dc402959a5eUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Callback = reader.Callback;
+                Params = CapnpSerializable.Create<Mas.Schema.Fbp.Channel<TV>.Observer.Params>(
+                    reader.Params
+                );
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Callback = Callback;
+                Params?.serialize(writer.Params);
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public Mas.Schema.Fbp.Channel<TV>.IObserver Callback { get; set; }
+            public Mas.Schema.Fbp.Channel<TV>.Observer.Params Params { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public Mas.Schema.Fbp.Channel<TV>.IObserver Callback =>
+                    ctx.ReadCap<Mas.Schema.Fbp.Channel<TV>.IObserver>(0);
+                public Mas.Schema.Fbp.Channel<TV>.Observer.Params.READER Params =>
+                    ctx.ReadStruct(1, Mas.Schema.Fbp.Channel<TV>.Observer.Params.READER.create);
+                public bool HasParams => ctx.IsStructFieldNonNull(1);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 2);
+                }
+
+                public Mas.Schema.Fbp.Channel<TV>.IObserver Callback
+                {
+                    get => ReadCap<Mas.Schema.Fbp.Channel<TV>.IObserver>(0);
+                    set => LinkObject(0, value);
+                }
+                public Mas.Schema.Fbp.Channel<TV>.Observer.Params.WRITER Params
+                {
+                    get => BuildPointer<Mas.Schema.Fbp.Channel<TV>.Observer.Params.WRITER>(1);
+                    set => Link(1, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xb7e9f64b5f2d8a82UL)
+        ]
+        public class Result_Observe : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xb7e9f64b5f2d8a82UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Unregister = reader.Unregister;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Unregister = Unregister;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister Unregister { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister Unregister =>
+                    ctx.ReadCap<Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister>(0);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 1);
+                }
+
+                public Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister Unregister
+                {
+                    get => ReadCap<Mas.Schema.Fbp.Channel<TV>.Observer.IUnregister>(0);
+                    set => LinkObject(0, value);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xcc3dcfe29343598eUL)
+        ]
+        public class Params_Pause : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xcc3dcfe29343598eUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xead3c6b77a5731d4UL)
+        ]
+        public class Result_Pause : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xead3c6b77a5731d4UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x97e51c58b05d81c6UL)
+        ]
+        public class Params_Resume : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x97e51c58b05d81c6UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xc8a7d42ef3443cc4UL)
+        ]
+        public class Result_Resume : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xc8a7d42ef3443cc4UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer) { }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(0, 0);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0x9d1e350032b7b2b7UL)
+        ]
+        public class Params_Step : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0x9d1e350032b7b2b7UL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Count = reader.Count;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Count = Count;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public ulong Count { get; set; } = 1UL;
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public ulong Count => ctx.ReadDataULong(0UL, 1UL);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public ulong Count
+                {
+                    get => this.ReadDataULong(0UL, 1UL);
+                    set => this.WriteData(0UL, value, 1UL);
+                }
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xa3e43df57374babaUL)
+        ]
+        public class Result_Step : ICapnpSerializable
+        {
+            public const UInt64 typeId = 0xa3e43df57374babaUL;
+
+            void ICapnpSerializable.Deserialize(DeserializerState arg_)
+            {
+                var reader = READER.create(arg_);
+                Delivered = reader.Delivered;
+                applyDefaults();
+            }
+
+            public void serialize(WRITER writer)
+            {
+                writer.Delivered = Delivered;
+            }
+
+            void ICapnpSerializable.Serialize(SerializerState arg_)
+            {
+                serialize(arg_.Rewrap<WRITER>());
+            }
+
+            public void applyDefaults() { }
+
+            public ulong Delivered { get; set; }
+
+            public struct READER
+            {
+                readonly DeserializerState ctx;
+
+                public READER(DeserializerState ctx)
+                {
+                    this.ctx = ctx;
+                }
+
+                public static READER create(DeserializerState ctx) => new READER(ctx);
+
+                public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+                public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+                public ulong Delivered => ctx.ReadDataULong(0UL, 0UL);
+            }
+
+            public class WRITER : SerializerState
+            {
+                public WRITER()
+                {
+                    this.SetStruct(1, 0);
+                }
+
+                public ulong Delivered
+                {
+                    get => this.ReadDataULong(0UL, 0UL);
+                    set => this.WriteData(0UL, value, 0UL);
                 }
             }
         }
@@ -6327,13 +7894,13 @@ namespace Mas.Schema.Fbp
                 {
                     return Impatient.MaybeTailCall(
                         Impl.Close(cancellationToken_),
-                        closed =>
+                        @closed =>
                         {
                             var s_ =
                                 SerializerState.CreateForRpc<Mas.Schema.Fbp.Process.ProcessHandle.Result_Close.WRITER>();
                             var r_ = new Mas.Schema.Fbp.Process.ProcessHandle.Result_Close
                             {
-                                Closed = closed,
+                                Closed = @closed,
                             };
                             r_.serialize(s_);
                             return s_;
@@ -9000,6 +10567,27 @@ namespace Mas.Schema.Fbp
                     Impatient.Access(
                         task,
                         Path_mas_schema_fbp_StartChannelsService_start_Stop,
+                        AwaitProxy()
+                    )
+                );
+        }
+
+        static readonly MemberAccessPath Path_mas_schema_fbp_Channel_Reader_readLeased_Lease =
+            new MemberAccessPath(1U);
+
+        public static Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease(
+            this Task<(
+                Mas.Schema.Fbp.Channel<TV>.Msg,
+                Mas.Schema.Fbp.Channel<TV>.Reader.ILease
+            )> task
+        )
+        {
+            async Task<IDisposable> AwaitProxy() => (await task).Item2;
+            return (Mas.Schema.Fbp.Channel<TV>.Reader.ILease)
+                CapabilityReflection.CreateProxy<Mas.Schema.Fbp.Channel<TV>.Reader.ILease>(
+                    Impatient.Access(
+                        task,
+                        Path_mas_schema_fbp_Channel_Reader_readLeased_Lease,
                         AwaitProxy()
                     )
                 );
