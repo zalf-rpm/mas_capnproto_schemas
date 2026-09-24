@@ -38,6 +38,10 @@ struct IIP @0xf3705fb36d44a21f {  # 0 bytes, 1 ptrs
   content @0 :AnyPointer;  # ptr[0]
 }
 interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
+  observe @7 (callback :Observer, params :Observer.Params) -> (unregister :Observer.Unregister);
+  pause @8 () -> ();
+  resume @9 () -> ();
+  step @10 (count :UInt64 = 1) -> (delivered :UInt64);
   registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
   setBufferSize @0 (size :UInt64 = 1) -> ();
   reader @1 () -> (r :Reader);
@@ -68,8 +72,12 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
   }
   interface Reader @0x8bc69192f3bc97cc superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanReader") {
     read @0 () -> Msg $import "/capnp/c++.capnp".allowCancellation(void);
+    readLeased @3 () -> (msg :Msg, lease :Lease) $import "/capnp/c++.capnp".allowCancellation(void);
     readIfMsg @2 () -> Msg;
     close @1 () -> ();
+    interface Lease @0xd3c75f69eade4246 {
+      ack @0 () -> ();
+    }
   }
   interface Writer @0xf7fec613b4a8c79f superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanWriter") {
     write @0 Msg -> () $import "/capnp/c++.capnp".allowCancellation(void);
@@ -88,6 +96,23 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
     }
     interface Unregister @0xb9fc8977d77cd1d9 {
       unreg @0 () -> (success :Bool);
+    }
+  }
+  interface Observer @0x80a21757b0bfd776 {
+    saw @0 (event :Event) -> ();
+    struct Event @0xd654246116b3daa5 {  # 16 bytes, 2 ptrs
+      seqNo @0 :UInt64;  # bits[0, 64)
+      timestamp @1 :Text;  # ptr[0]
+      sizeInWords @2 :UInt64;  # bits[64, 128)
+      content @3 :V;  # ptr[1]
+    }
+    interface Unregister @0x8971a9561a83228a {
+      unreg @0 () -> (success :Bool);
+    }
+    struct Params @0xaff4041af7455c7a {  # 8 bytes, 0 ptrs
+      everyNth @0 :UInt32 = 1;  # bits[0, 32)
+      withContent @1 :Bool;  # bits[32, 33)
+      gate @2 :Bool;  # bits[33, 34)
     }
   }
 }

@@ -105,6 +105,30 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
   interface Reader extends(Common.Identifiable, Persistent) $Cxx.name("ChanReader") {
     read          @0 () -> Msg $Cxx.allowCancellation;
     # read blocking until message is available
+    #
+    # This hands the message over for good: the channel lets go of it as soon as the response is
+    # on its way, so the message exists only inside this call. A caller which cancels the call or
+    # discards its response destroys the message - silently, because the writer upstream has long
+    # been told that its write succeeded and no one is in a position to notice the loss.
+    # Use readLeased if the reader cannot rule that out.
+
+    readLeased    @3 () -> (msg :Msg, lease :Lease) $Cxx.allowCancellation;
+    # read blocking until a message is available, but keep the message owed to the channel until
+    # the lease is acknowledged
+    #
+    # If the lease is released without acknowledging it - the call was canceled, the client died,
+    # the connection broke - the message goes back to the front of the channel and is delivered
+    # again, to this or to another reader. A reader may hold only one unacknowledged lease at a
+    # time, so that a returning message keeps its place in the queue.
+
+    interface Lease {
+      ack @0 ();
+      # confirm that the message arrived
+      #
+      # Acknowledge as early as possible, ideally before processing the message: everything
+      # between receiving and acknowledging is a window in which a dying reader causes the
+      # message to be delivered a second time.
+    }
 
     readIfMsg     @2 () -> Msg;
     # read non blocking if there is a message available
@@ -141,6 +165,69 @@ interface Channel(V) extends(Common.Identifiable, Persistent) {
 
     status @0 (stats :Stats);
   }
+
+  interface Observer {
+    # sees what travels through the channel, without being part of the flow
+
+    struct Event {
+      seqNo       @0 :UInt64;
+      # number of this message since the channel was created, counted from 1; gaps mean that
+      # messages were skipped because of everyNth or because a best effort observer was too slow
+
+      timestamp   @1 :Text;
+
+      sizeInWords @2 :UInt64;
+      # size of the message as it arrived at the channel
+
+      content     @3 :V;
+      # the message content, only set if the observer asked for it
+    }
+
+    saw @0 (event :Event);
+    # called for a message the channel accepted from a writer
+    #
+    # For a gating observer the channel waits for this call to return before the message may be
+    # delivered to a reader, which is what stepping through a flow needs: hold the call and the
+    # message is held with it. For a best effort observer the channel does not wait and skips
+    # messages while a previous call is still on its way.
+
+    interface Unregister {
+      unreg @0 () -> (success :Bool);
+    }
+
+    struct Params {
+      everyNth    @0 :UInt32 = 1;
+      # observe only every nth message, 1 meaning every message
+
+      withContent @1 :Bool = false;
+      # include the message content in the event, which means copying every observed message
+
+      gate        @2 :Bool = false;
+      # make the channel wait for saw() to return before the message is delivered
+      #
+      # A gating observer sits in the data path and can hold up the flow indefinitely, which is
+      # the point for a debugger, but means a hung observer stalls the channel. Best effort
+      # observers (the default) can never slow the channel down.
+    }
+  }
+
+  observe @7 (callback :Observer, params :Observer.Params) -> (unregister :Observer.Unregister);
+  # watch the messages travelling through this channel
+
+  pause  @8 ();
+  # stop delivering messages to readers
+  #
+  # Writers keep filling the buffer and block once it is full, so a paused channel back-pressures
+  # its upstream by itself. Reads issued while paused wait, they do not return empty.
+
+  resume @9 ();
+  # deliver freely again, dropping any step credits left over
+
+  step   @10 (count :UInt64 = 1) -> (delivered :UInt64);
+  # allow count more messages to be delivered and stay paused
+  #
+  # Returns how many of them could be delivered right away; the rest stay as credit and are used
+  # up by the next reads. Stepping a channel which is not paused pauses it first.
 
   registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
   # register a callback to receive status information every "updateIntervalInMs" milliseconds
