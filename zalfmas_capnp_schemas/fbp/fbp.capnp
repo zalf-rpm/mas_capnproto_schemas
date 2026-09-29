@@ -58,6 +58,38 @@ struct IIP {
   # might often be a Common.Value or common.StructuredText
 }
 
+struct LogMessage {
+  # a log record emitted by a running process, carried as the content of an IP on a port whose
+  # role is 'log'
+  #
+  # Sending logs as ordinary IPs keeps log transport language neutral: every component already
+  # knows how to write a Cap'n Proto struct to a channel, whereas agreeing on log routing across
+  # Python, C++ and Go logging frameworks does not generalise. It also means the ordinary FBP
+  # components can filter, format and write the log stream.
+  #
+  # Writers must never block on a log port: use Channel.Writer.writeIfSpace and drop the record if
+  # there is no room, so that a slow or stalled log consumer can never stall the flow it observes.
+  # The local logger stays in use alongside the port, since records emitted before the port is
+  # connected or after it closes would otherwise be lost.
+
+  enum Level {
+    debug     @0;
+    info      @1;
+    warning   @2;
+    error     @3;
+    critical  @4;
+  }
+
+  level       @0 :Level;
+  timestamp   @1 :Text;        # ISO 8601
+  processId   @2 :Text;        # disambiguates instances of a node with parallelProcesses > 1
+  processName @3 :Text;
+  logger      @4 :Text;        # emitting logger or module name
+  message     @5 :Text;
+  attributes  @6 :List(IP.KV); # structured fields accompanying the message
+  traceback   @7 :List(Text);  # same convention as Process.RunInfo.traceback
+}
+
 interface Channel(V) extends(Common.Identifiable, Persistent) {
   # a potentially buffered channel to transport values of type V
 
@@ -301,7 +333,20 @@ struct Component {
     struct Port {
         enum PortType {
             standard  @0; # standard port
-            array     @1; # array port (only an out port can be an array port)
+            array     @1; # array port (in or out)
+        }
+
+        enum PortRole {
+            # what kind of port this is, so tooling can treat whole classes of them alike:
+            # render config/log ports apart from the component's own contract, auto-wire every
+            # log port to a collector, or every error port to a dead-letter sink
+
+            data     @0; # normal dataflow, part of the component's contract
+            config   @1; # runtime-owned configuration input, conventionally named 'conf'
+            log      @2; # runtime-owned log output, conventionally named 'log'
+            error    @3; # optional output for IPs whose processing failed, conventionally 'err'
+            reject   @4; # optional output for IPs a predicate rejected, conventionally 'rej'
+            control  @5; # optional trigger/reset/gate-style signal port
         }
 
         name        @0 :Text;
@@ -315,6 +360,13 @@ struct Component {
 
         type        @2 :PortType = standard;
         # port type
+
+        role        @4 :PortRole = data;
+        # the port's role, see PortRole
+
+        required    @5 :Bool = false;
+        # whether the component needs this port connected to work, so a flow that leaves it
+        # unconnected can be reported before it is started
     }
 
     info          @0 :Common.IdInformation; # id, name and description of this FBP component
