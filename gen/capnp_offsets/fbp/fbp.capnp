@@ -37,6 +37,23 @@ struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 3 ptrs
 struct IIP @0xf3705fb36d44a21f {  # 0 bytes, 1 ptrs
   content @0 :AnyPointer;  # ptr[0]
 }
+struct LogMessage @0xdf6f09e80adf0ac2 {  # 8 bytes, 7 ptrs
+  level @0 :Level;  # bits[0, 16)
+  timestamp @1 :Text;  # ptr[0]
+  processId @2 :Text;  # ptr[1]
+  processName @3 :Text;  # ptr[2]
+  logger @4 :Text;  # ptr[3]
+  message @5 :Text;  # ptr[4]
+  attributes @6 :List(IP.KV);  # ptr[5]
+  traceback @7 :List(Text);  # ptr[6]
+  enum Level @0xd4bcd93642fbf011 {
+    debug @0;
+    info @1;
+    warning @2;
+    error @3;
+    critical @4;
+  }
+}
 interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
   observe @7 (callback :Observer, params :Observer.Params) -> (unregister :Observer.Unregister);
   pause @8 () -> ();
@@ -165,9 +182,19 @@ struct Component @0xd717ff7d6815a6b0 {  # 8 bytes, 5 ptrs
     contentType @1 :Text;  # ptr[1]
     desc @3 :Text;  # ptr[2]
     type @2 :PortType;  # bits[0, 16)
+    role @4 :PortRole;  # bits[16, 32)
+    required @5 :Bool;  # bits[32, 33)
     enum PortType @0xf58d7a7318a06224 {
       standard @0;
       array @1;
+    }
+    enum PortRole @0xb8f4f30572b798c6 {
+      data @0;
+      config @1;
+      log @2;
+      error @3;
+      reject @4;
+      control @5;
     }
   }
 }

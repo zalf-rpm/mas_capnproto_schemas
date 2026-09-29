@@ -2551,6 +2551,11 @@ class _DynamicObjectReader:
     @overload
     def as_struct(
         self,
+        schema: fbp_capnp.types.modules._LogMessageStructModule,
+    ) -> fbp_capnp.types.readers.LogMessageReader: ...
+    @overload
+    def as_struct(
+        self,
         schema: fbp_capnp.types.modules._PortInfosStructModule,
     ) -> fbp_capnp.types.readers.PortInfosReader: ...
     @overload
@@ -4627,6 +4632,11 @@ class _DynamicObjectBuilder:
         self,
         schema: fbp_capnp.types.modules._IPStructModule,
     ) -> fbp_capnp.types.builders.IPBuilder: ...
+    @overload
+    def as_struct(
+        self,
+        schema: fbp_capnp.types.modules._LogMessageStructModule,
+    ) -> fbp_capnp.types.builders.LogMessageBuilder: ...
     @overload
     def as_struct(
         self,

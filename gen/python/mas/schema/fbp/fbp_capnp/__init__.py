@@ -11,7 +11,7 @@ from capnp.lib.capnp import SchemaLoader, _EnumModule, _InterfaceModule, _Struct
 
 
 def _import_schema_bundle() -> object:
-    bundle_module_name = "_capnp_schema_bundle_dda839d2776b"
+    bundle_module_name = "_capnp_schema_bundle_594b8b9e7273"
     try:
         return import_module(bundle_module_name)
     except ModuleNotFoundError as error:
@@ -65,6 +65,14 @@ IP.SysAttributes = _StructModule(
 IIP = _StructModule(
     _loader.get(0xF3705FB36D44A21F).as_struct(),
     "IIP",
+)
+LogMessage = _StructModule(
+    _loader.get(0xDF6F09E80ADF0AC2).as_struct(),
+    "LogMessage",
+)
+LogMessage.Level = _EnumModule(
+    LogMessage.schema.fields["level"].schema,
+    "Level",
 )
 Channel = _InterfaceModule(
     _loader.get(0x9C62C32B2FF2B1E8).as_interface(),
@@ -160,6 +168,10 @@ Component.Port = _StructModule(
 Component.Port.PortType = _EnumModule(
     Component.Port.schema.fields["type"].schema,
     "PortType",
+)
+Component.Port.PortRole = _EnumModule(
+    Component.Port.schema.fields["role"].schema,
+    "PortRole",
 )
 Runnable = _InterfaceModule(
     _loader.get(0xBDE616D300754FF0).as_interface(),

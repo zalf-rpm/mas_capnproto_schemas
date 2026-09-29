@@ -635,6 +635,155 @@ class _IIPStructModule(_StructModule):
         nesting_limit: int | None = None,
     ) -> readers.IIPReader: ...
 
+class _LogMessageStructModule(_StructModule):
+    class _LevelEnumModule(_EnumModule):
+        debug: int
+        info: int
+        warning: int
+        error: int
+        critical: int
+
+        class _LevelSchema(_EnumSchema): ...
+
+        @property
+        @override
+        def schema(self) -> schemas._LogMessageLevelEnumSchema: ...
+
+    Level: _LevelEnumModule
+    class Reader(_DynamicStructReader): ...
+    class Builder(_DynamicStructBuilder): ...
+
+    class _LogMessageSchema(_StructSchema):
+        class _LevelField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> schemas._LogMessageLevelEnumSchema: ...
+
+        class _AttributesField(_StructSchemaField):
+            class _Schema(_ListSchema):
+                @property
+                @override
+                def elementType(self) -> schemas._IPKVSchema: ...
+
+            @property
+            @override
+            def schema(
+                self,
+            ) -> _LogMessageStructModule._LogMessageSchema._AttributesField._Schema: ...
+
+        class _TracebackField(_StructSchemaField):
+            @property
+            @override
+            def schema(self) -> _ListSchema: ...
+
+        class _Fields(dict[str, _StructSchemaField]):
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["level"],
+            ) -> _LogMessageStructModule._LogMessageSchema._LevelField: ...
+            @overload
+            def __getitem__(self, key: Literal["timestamp"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["processId"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["processName"],
+            ) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["logger"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(self, key: Literal["message"]) -> _StructSchemaField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["attributes"],
+            ) -> _LogMessageStructModule._LogMessageSchema._AttributesField: ...
+            @overload
+            def __getitem__(
+                self,
+                key: Literal["traceback"],
+            ) -> _LogMessageStructModule._LogMessageSchema._TracebackField: ...
+            @overload
+            def __getitem__(self, key: str) -> _StructSchemaField: ...
+
+        @property
+        @override
+        def fields(self) -> _LogMessageStructModule._LogMessageSchema._Fields: ...
+
+    @property
+    @override
+    def schema(self) -> schemas._LogMessageSchema: ...
+    @override
+    def new_message(
+        self,
+        num_first_segment_words: int | None = None,
+        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        level: enums.LogMessageLevelEnum | None = None,
+        timestamp: str | None = None,
+        processId: str | None = None,
+        processName: str | None = None,
+        logger: str | None = None,
+        message: str | None = None,
+        attributes: builders.KVListBuilder
+        | readers.KVListReader
+        | Sequence[readers.KVReader | builders.KVBuilder | dict[str, Any]]
+        | None = None,
+        traceback: builders.TextListBuilder
+        | readers.TextListReader
+        | Sequence[str]
+        | None = None,
+        **kwargs: object,
+    ) -> builders.LogMessageBuilder: ...
+    @override
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> AbstractContextManager[readers.LogMessageReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[False],
+    ) -> AbstractContextManager[readers.LogMessageReader]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        *,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.LogMessageBuilder]: ...
+    @override
+    def from_bytes_packed(
+        self,
+        buf: bytes,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> _DynamicStructReader: ...
+    @override
+    def read(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.LogMessageReader: ...
+    @override
+    def read_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.LogMessageReader: ...
+
 class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
     class _CloseSemanticsEnumModule(_EnumModule):
         fbp: int
@@ -6037,6 +6186,21 @@ class _ComponentStructModule(_StructModule):
             def schema(self) -> schemas._ComponentPortPortTypeEnumSchema: ...
 
         PortType: _PortTypeEnumModule
+        class _PortRoleEnumModule(_EnumModule):
+            data: int
+            config: int
+            log: int
+            error: int
+            reject: int
+            control: int
+
+            class _PortRoleSchema(_EnumSchema): ...
+
+            @property
+            @override
+            def schema(self) -> schemas._ComponentPortPortRoleEnumSchema: ...
+
+        PortRole: _PortRoleEnumModule
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
@@ -6045,6 +6209,11 @@ class _ComponentStructModule(_StructModule):
                 @property
                 @override
                 def schema(self) -> schemas._ComponentPortPortTypeEnumSchema: ...
+
+            class _RoleField(_StructSchemaField):
+                @property
+                @override
+                def schema(self) -> schemas._ComponentPortPortRoleEnumSchema: ...
 
             class _Fields(dict[str, _StructSchemaField]):
                 @overload
@@ -6063,6 +6232,18 @@ class _ComponentStructModule(_StructModule):
                 ): ...
                 @overload
                 def __getitem__(self, key: Literal["desc"]) -> _StructSchemaField: ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["role"],
+                ) -> (
+                    _ComponentStructModule._PortStructModule._PortSchema._RoleField
+                ): ...
+                @overload
+                def __getitem__(
+                    self,
+                    key: Literal["required"],
+                ) -> _StructSchemaField: ...
                 @overload
                 def __getitem__(self, key: str) -> _StructSchemaField: ...
 
@@ -6084,6 +6265,8 @@ class _ComponentStructModule(_StructModule):
             contentType: str | None = None,
             type: enums.ComponentPortPortTypeEnum | None = None,
             desc: str | None = None,
+            role: enums.ComponentPortPortRoleEnum | None = None,
+            required: bool | None = None,
             **kwargs: object,
         ) -> builders.PortBuilder: ...
         @override

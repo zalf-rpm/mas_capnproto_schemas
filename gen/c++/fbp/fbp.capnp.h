@@ -37,6 +37,16 @@ CAPNP_DECLARE_SCHEMA(d9377fa82178a561);
 CAPNP_DECLARE_SCHEMA(9d36075bc8979d1b);
 CAPNP_DECLARE_SCHEMA(feadc0acc2725760);
 CAPNP_DECLARE_SCHEMA(f3705fb36d44a21f);
+CAPNP_DECLARE_SCHEMA(df6f09e80adf0ac2);
+CAPNP_DECLARE_SCHEMA(d4bcd93642fbf011);
+enum class Level_d4bcd93642fbf011: uint16_t {
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR,
+  CRITICAL,
+};
+CAPNP_DECLARE_ENUM(Level, d4bcd93642fbf011);
 CAPNP_DECLARE_SCHEMA(9c62c32b2ff2b1e8);
 CAPNP_DECLARE_SCHEMA(a8d787cae7e0b243);
 enum class CloseSemantics_a8d787cae7e0b243: uint16_t {
@@ -120,6 +130,16 @@ enum class PortType_f58d7a7318a06224: uint16_t {
   ARRAY,
 };
 CAPNP_DECLARE_ENUM(PortType, f58d7a7318a06224);
+CAPNP_DECLARE_SCHEMA(b8f4f30572b798c6);
+enum class PortRole_b8f4f30572b798c6: uint16_t {
+  DATA,
+  CONFIG,
+  LOG,
+  ERROR,
+  REJECT,
+  CONTROL,
+};
+CAPNP_DECLARE_ENUM(PortRole, b8f4f30572b798c6);
 CAPNP_DECLARE_SCHEMA(e1a4104633d629d4);
 CAPNP_DECLARE_SCHEMA(bde616d300754ff0);
 CAPNP_DECLARE_SCHEMA(f5694db406aa9975);
@@ -315,6 +335,23 @@ struct IIP {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(f3705fb36d44a21f, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct LogMessage {
+  LogMessage() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  typedef ::capnp::schemas::Level_d4bcd93642fbf011 Level;
+
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(df6f09e80adf0ac2, 1, 7)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1572,6 +1609,8 @@ struct Component::Port {
   class Builder;
   class Pipeline;
   typedef ::capnp::schemas::PortType_f58d7a7318a06224 PortType;
+
+  typedef ::capnp::schemas::PortRole_b8f4f30572b798c6 PortRole;
 
 
   struct _capnpPrivate {
@@ -3052,6 +3091,153 @@ private:
 class IIP::Pipeline {
 public:
   typedef IIP Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class LogMessage::Reader {
+public:
+  typedef LogMessage Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::LogMessage::Level getLevel() const;
+
+  inline bool hasTimestamp() const;
+  inline  ::capnp::Text::Reader getTimestamp() const;
+
+  inline bool hasProcessId() const;
+  inline  ::capnp::Text::Reader getProcessId() const;
+
+  inline bool hasProcessName() const;
+  inline  ::capnp::Text::Reader getProcessName() const;
+
+  inline bool hasLogger() const;
+  inline  ::capnp::Text::Reader getLogger() const;
+
+  inline bool hasMessage() const;
+  inline  ::capnp::Text::Reader getMessage() const;
+
+  inline bool hasAttributes() const;
+  inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Reader getAttributes() const;
+
+  inline bool hasTraceback() const;
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader getTraceback() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class LogMessage::Builder {
+public:
+  typedef LogMessage Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline  ::mas::schema::fbp::LogMessage::Level getLevel();
+  inline void setLevel( ::mas::schema::fbp::LogMessage::Level value);
+
+  inline bool hasTimestamp();
+  inline  ::capnp::Text::Builder getTimestamp();
+  inline void setTimestamp( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initTimestamp(unsigned int size);
+  inline void adoptTimestamp(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownTimestamp();
+
+  inline bool hasProcessId();
+  inline  ::capnp::Text::Builder getProcessId();
+  inline void setProcessId( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initProcessId(unsigned int size);
+  inline void adoptProcessId(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownProcessId();
+
+  inline bool hasProcessName();
+  inline  ::capnp::Text::Builder getProcessName();
+  inline void setProcessName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initProcessName(unsigned int size);
+  inline void adoptProcessName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownProcessName();
+
+  inline bool hasLogger();
+  inline  ::capnp::Text::Builder getLogger();
+  inline void setLogger( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initLogger(unsigned int size);
+  inline void adoptLogger(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownLogger();
+
+  inline bool hasMessage();
+  inline  ::capnp::Text::Builder getMessage();
+  inline void setMessage( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initMessage(unsigned int size);
+  inline void adoptMessage(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownMessage();
+
+  inline bool hasAttributes();
+  inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Builder getAttributes();
+  inline void setAttributes( ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Reader value);
+  inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Builder initAttributes(unsigned int size);
+  inline void adoptAttributes(::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>> disownAttributes();
+
+  inline bool hasTraceback();
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder getTraceback();
+  inline void setTraceback( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value);
+  inline void setTraceback(::kj::ArrayPtr<const  ::capnp::Text::Reader> value);
+  inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder initTraceback(unsigned int size);
+  inline void adoptTraceback(::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value);
+  inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> disownTraceback();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class LogMessage::Pipeline {
+public:
+  typedef LogMessage Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -8638,6 +8824,10 @@ public:
   inline bool hasDesc() const;
   inline  ::capnp::Text::Reader getDesc() const;
 
+  inline  ::mas::schema::fbp::Component::Port::PortRole getRole() const;
+
+  inline bool getRequired() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -8689,6 +8879,12 @@ public:
   inline  ::capnp::Text::Builder initDesc(unsigned int size);
   inline void adoptDesc(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownDesc();
+
+  inline  ::mas::schema::fbp::Component::Port::PortRole getRole();
+  inline void setRole( ::mas::schema::fbp::Component::Port::PortRole value);
+
+  inline bool getRequired();
+  inline void setRequired(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -13572,6 +13768,262 @@ inline ::capnp::AnyPointer::Builder IIP::Builder::initContent() {
       ::capnp::bounded<0>() * ::capnp::POINTERS));
   result.clear();
   return result;
+}
+
+inline  ::mas::schema::fbp::LogMessage::Level LogMessage::Reader::getLevel() const {
+  return _reader.getDataField< ::mas::schema::fbp::LogMessage::Level>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::LogMessage::Level LogMessage::Builder::getLevel() {
+  return _builder.getDataField< ::mas::schema::fbp::LogMessage::Level>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void LogMessage::Builder::setLevel( ::mas::schema::fbp::LogMessage::Level value) {
+  _builder.setDataField< ::mas::schema::fbp::LogMessage::Level>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool LogMessage::Reader::hasTimestamp() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasTimestamp() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader LogMessage::Reader::getTimestamp() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::getTimestamp() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setTimestamp( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::initTimestamp(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptTimestamp(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> LogMessage::Builder::disownTimestamp() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasProcessId() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasProcessId() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader LogMessage::Reader::getProcessId() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::getProcessId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setProcessId( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::initProcessId(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptProcessId(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> LogMessage::Builder::disownProcessId() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasProcessName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasProcessName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader LogMessage::Reader::getProcessName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::getProcessName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setProcessName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::initProcessName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptProcessName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> LogMessage::Builder::disownProcessName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasLogger() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasLogger() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader LogMessage::Reader::getLogger() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::getLogger() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setLogger( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::initLogger(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptLogger(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> LogMessage::Builder::disownLogger() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<3>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasMessage() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasMessage() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader LogMessage::Reader::getMessage() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::getMessage() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setMessage( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder LogMessage::Builder::initMessage(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptMessage(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> LogMessage::Builder::disownMessage() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<4>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasAttributes() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasAttributes() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Reader LogMessage::Reader::getAttributes() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::get(_reader.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Builder LogMessage::Builder::getAttributes() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::get(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setAttributes( ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::set(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>::Builder LogMessage::Builder::initAttributes(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::init(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptAttributes(
+    ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>> LogMessage::Builder::disownAttributes() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::mas::schema::fbp::IP::KV,  ::capnp::Kind::STRUCT>>::disown(_builder.getPointerField(
+      ::capnp::bounded<5>() * ::capnp::POINTERS));
+}
+
+inline bool LogMessage::Reader::hasTraceback() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline bool LogMessage::Builder::hasTraceback() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader LogMessage::Reader::getTraceback() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_reader.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder LogMessage::Builder::getTraceback() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::get(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
+}
+inline void LogMessage::Builder::setTraceback( ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+}
+inline void LogMessage::Builder::setTraceback(::kj::ArrayPtr<const  ::capnp::Text::Reader> value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::set(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>::Builder LogMessage::Builder::initTraceback(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::init(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), size);
+}
+inline void LogMessage::Builder::adoptTraceback(
+    ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>> LogMessage::Builder::disownTraceback() {
+  return ::capnp::_::PointerHelpers< ::capnp::List< ::capnp::Text,  ::capnp::Kind::BLOB>>::disown(_builder.getPointerField(
+      ::capnp::bounded<6>() * ::capnp::POINTERS));
 }
 
 #if !CAPNP_LITE
@@ -18461,6 +18913,34 @@ inline void Component::Port::Builder::adoptDesc(
 inline ::capnp::Orphan< ::capnp::Text> Component::Port::Builder::disownDesc() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<2>() * ::capnp::POINTERS));
+}
+
+inline  ::mas::schema::fbp::Component::Port::PortRole Component::Port::Reader::getRole() const {
+  return _reader.getDataField< ::mas::schema::fbp::Component::Port::PortRole>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+
+inline  ::mas::schema::fbp::Component::Port::PortRole Component::Port::Builder::getRole() {
+  return _builder.getDataField< ::mas::schema::fbp::Component::Port::PortRole>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+inline void Component::Port::Builder::setRole( ::mas::schema::fbp::Component::Port::PortRole value) {
+  _builder.setDataField< ::mas::schema::fbp::Component::Port::PortRole>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool Component::Port::Reader::getRequired() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<32>() * ::capnp::ELEMENTS);
+}
+
+inline bool Component::Port::Builder::getRequired() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<32>() * ::capnp::ELEMENTS);
+}
+inline void Component::Port::Builder::setRequired(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<32>() * ::capnp::ELEMENTS, value);
 }
 
 inline  ::mas::schema::fbp::Component::Factory::Which Component::Factory::Reader::which() const {

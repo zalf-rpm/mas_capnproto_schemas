@@ -572,6 +572,150 @@ namespace Mas.Schema.Fbp
 
     [
         System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+        TypeId(0xdf6f09e80adf0ac2UL)
+    ]
+    public class LogMessage : ICapnpSerializable
+    {
+        public const UInt64 typeId = 0xdf6f09e80adf0ac2UL;
+
+        void ICapnpSerializable.Deserialize(DeserializerState arg_)
+        {
+            var reader = READER.create(arg_);
+            TheLevel = reader.TheLevel;
+            Timestamp = reader.Timestamp;
+            ProcessId = reader.ProcessId;
+            ProcessName = reader.ProcessName;
+            Logger = reader.Logger;
+            Message = reader.Message;
+            Attributes = reader.Attributes?.ToReadOnlyList(_ =>
+                CapnpSerializable.Create<Mas.Schema.Fbp.IP.KV>(_)
+            );
+            Traceback = reader.Traceback;
+            applyDefaults();
+        }
+
+        public void serialize(WRITER writer)
+        {
+            writer.TheLevel = TheLevel;
+            writer.Timestamp = Timestamp;
+            writer.ProcessId = ProcessId;
+            writer.ProcessName = ProcessName;
+            writer.Logger = Logger;
+            writer.Message = Message;
+            writer.Attributes.Init(Attributes, (_s1, _v1) => _v1?.serialize(_s1));
+            writer.Traceback.Init(Traceback);
+        }
+
+        void ICapnpSerializable.Serialize(SerializerState arg_)
+        {
+            serialize(arg_.Rewrap<WRITER>());
+        }
+
+        public void applyDefaults() { }
+
+        public Mas.Schema.Fbp.LogMessage.Level TheLevel { get; set; }
+        public string Timestamp { get; set; }
+        public string ProcessId { get; set; }
+        public string ProcessName { get; set; }
+        public string Logger { get; set; }
+        public string Message { get; set; }
+        public IReadOnlyList<Mas.Schema.Fbp.IP.KV> Attributes { get; set; }
+        public IReadOnlyList<string> Traceback { get; set; }
+
+        public struct READER
+        {
+            readonly DeserializerState ctx;
+
+            public READER(DeserializerState ctx)
+            {
+                this.ctx = ctx;
+            }
+
+            public static READER create(DeserializerState ctx) => new READER(ctx);
+
+            public static implicit operator DeserializerState(READER reader) => reader.ctx;
+
+            public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
+
+            public Mas.Schema.Fbp.LogMessage.Level TheLevel =>
+                (Mas.Schema.Fbp.LogMessage.Level)ctx.ReadDataUShort(0UL, (ushort)0);
+            public string Timestamp => ctx.ReadText(0, null);
+            public string ProcessId => ctx.ReadText(1, null);
+            public string ProcessName => ctx.ReadText(2, null);
+            public string Logger => ctx.ReadText(3, null);
+            public string Message => ctx.ReadText(4, null);
+            public IReadOnlyList<Mas.Schema.Fbp.IP.KV.READER> Attributes =>
+                ctx.ReadList(5).Cast(Mas.Schema.Fbp.IP.KV.READER.create);
+            public bool HasAttributes => ctx.IsStructFieldNonNull(5);
+            public IReadOnlyList<string> Traceback => ctx.ReadList(6).CastText2();
+            public bool HasTraceback => ctx.IsStructFieldNonNull(6);
+        }
+
+        public class WRITER : SerializerState
+        {
+            public WRITER()
+            {
+                this.SetStruct(1, 7);
+            }
+
+            public Mas.Schema.Fbp.LogMessage.Level TheLevel
+            {
+                get => (Mas.Schema.Fbp.LogMessage.Level)this.ReadDataUShort(0UL, (ushort)0);
+                set => this.WriteData(0UL, (ushort)value, (ushort)0);
+            }
+            public string Timestamp
+            {
+                get => this.ReadText(0, null);
+                set => this.WriteText(0, value, null);
+            }
+            public string ProcessId
+            {
+                get => this.ReadText(1, null);
+                set => this.WriteText(1, value, null);
+            }
+            public string ProcessName
+            {
+                get => this.ReadText(2, null);
+                set => this.WriteText(2, value, null);
+            }
+            public string Logger
+            {
+                get => this.ReadText(3, null);
+                set => this.WriteText(3, value, null);
+            }
+            public string Message
+            {
+                get => this.ReadText(4, null);
+                set => this.WriteText(4, value, null);
+            }
+            public ListOfStructsSerializer<Mas.Schema.Fbp.IP.KV.WRITER> Attributes
+            {
+                get => BuildPointer<ListOfStructsSerializer<Mas.Schema.Fbp.IP.KV.WRITER>>(5);
+                set => Link(5, value);
+            }
+            public ListOfTextSerializer Traceback
+            {
+                get => BuildPointer<ListOfTextSerializer>(6);
+                set => Link(6, value);
+            }
+        }
+
+        [
+            System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+            TypeId(0xd4bcd93642fbf011UL)
+        ]
+        public enum Level : ushort
+        {
+            debug,
+            info,
+            warning,
+            error,
+            critical,
+        }
+    }
+
+    [
+        System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
         TypeId(0x9c62c32b2ff2b1e8UL),
         Proxy(typeof(Mas.Schema.Fbp.Channel_Proxy<>)),
         Skeleton(typeof(Mas.Schema.Fbp.Channel_Skeleton<>))
@@ -5963,6 +6107,8 @@ namespace Mas.Schema.Fbp
                 ContentType = reader.ContentType;
                 Type = reader.Type;
                 Desc = reader.Desc;
+                Role = reader.Role;
+                Required = reader.Required;
                 applyDefaults();
             }
 
@@ -5972,6 +6118,8 @@ namespace Mas.Schema.Fbp
                 writer.ContentType = ContentType;
                 writer.Type = Type;
                 writer.Desc = Desc;
+                writer.Role = Role;
+                writer.Required = Required;
             }
 
             void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -5986,6 +6134,9 @@ namespace Mas.Schema.Fbp
             public Mas.Schema.Fbp.Component.Port.PortType Type { get; set; } =
                 Mas.Schema.Fbp.Component.Port.PortType.standard;
             public string Desc { get; set; }
+            public Mas.Schema.Fbp.Component.Port.PortRole Role { get; set; } =
+                Mas.Schema.Fbp.Component.Port.PortRole.data;
+            public bool Required { get; set; } = false;
 
             public struct READER
             {
@@ -6007,6 +6158,9 @@ namespace Mas.Schema.Fbp
                 public Mas.Schema.Fbp.Component.Port.PortType Type =>
                     (Mas.Schema.Fbp.Component.Port.PortType)ctx.ReadDataUShort(0UL, (ushort)0);
                 public string Desc => ctx.ReadText(2, null);
+                public Mas.Schema.Fbp.Component.Port.PortRole Role =>
+                    (Mas.Schema.Fbp.Component.Port.PortRole)ctx.ReadDataUShort(16UL, (ushort)0);
+                public bool Required => ctx.ReadDataBool(32UL, false);
             }
 
             public class WRITER : SerializerState
@@ -6037,6 +6191,18 @@ namespace Mas.Schema.Fbp
                     get => this.ReadText(2, null);
                     set => this.WriteText(2, value, null);
                 }
+                public Mas.Schema.Fbp.Component.Port.PortRole Role
+                {
+                    get =>
+                        (Mas.Schema.Fbp.Component.Port.PortRole)
+                            this.ReadDataUShort(16UL, (ushort)0);
+                    set => this.WriteData(16UL, (ushort)value, (ushort)0);
+                }
+                public bool Required
+                {
+                    get => this.ReadDataBool(32UL, false);
+                    set => this.WriteData(32UL, value, false);
+                }
             }
 
             [
@@ -6047,6 +6213,20 @@ namespace Mas.Schema.Fbp
             {
                 standard,
                 array,
+            }
+
+            [
+                System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"),
+                TypeId(0xb8f4f30572b798c6UL)
+            ]
+            public enum PortRole : ushort
+            {
+                data,
+                config,
+                log,
+                error,
+                reject,
+                control,
             }
         }
     }

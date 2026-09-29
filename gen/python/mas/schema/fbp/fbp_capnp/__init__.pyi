@@ -11,6 +11,7 @@ def load_capnp_file(path: str, imports: Sequence[str] = ...) -> object: ...
 
 IP: types.modules._IPStructModule
 IIP: types.modules._IIPStructModule
+LogMessage: types.modules._LogMessageStructModule
 Channel: types.modules._ChannelInterfaceModule
 StartChannelsService: types.modules._StartChannelsServiceInterfaceModule
 PortInfos: types.modules._PortInfosStructModule
@@ -23,6 +24,7 @@ __all__ = [
     "IP",
     "Channel",
     "Component",
+    "LogMessage",
     "PortInfos",
     "Process",
     "Runnable",
