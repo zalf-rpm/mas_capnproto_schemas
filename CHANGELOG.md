@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.70](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.69...v0.1.70) (2026-09-29)
+
+
+### Features
+
+* **fbp:** add port roles and requiredness, and a LogMessage struct ([25bdc0e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/25bdc0e9e3671a938f54b6d9c029a5aaef7be2fe))
+* recompile capnp schemas ([#67](https://github.com/zalf-rpm/mas_capnproto_schemas/issues/67)) ([c054817](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/c05481749b474d6ca40a02942ac640d12a5c75ae))
+
 ## [0.1.69](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.68...v0.1.69) (2026-09-24)
 
 
