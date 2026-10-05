@@ -10755,12 +10755,13 @@ namespace Mas.Schema.Fbp
         static readonly MemberAccessPath Path_mas_schema_fbp_Channel_Reader_readLeased_Lease =
             new MemberAccessPath(1U);
 
-        public static Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease(
+        public static Mas.Schema.Fbp.Channel<TV>.Reader.ILease Lease<TV>(
             this Task<(
                 Mas.Schema.Fbp.Channel<TV>.Msg,
                 Mas.Schema.Fbp.Channel<TV>.Reader.ILease
             )> task
         )
+            where TV : class
         {
             async Task<IDisposable> AwaitProxy() => (await task).Item2;
             return (Mas.Schema.Fbp.Channel<TV>.Reader.ILease)
