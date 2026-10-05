@@ -5,9 +5,15 @@ from typing import Protocol
 from mas.schema.fbp.fbp_capnp.types import builders as builders
 from mas.schema.fbp.fbp_capnp.types import clients as clients
 from mas.schema.fbp.fbp_capnp.types import enums as enums
+from mas.schema.fbp.fbp_capnp.types import modules as modules
 from mas.schema.fbp.fbp_capnp.types import readers as readers
 from mas.schema.fbp.fbp_capnp.types.results import server as results_server
 from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
+
+class AckParams(Protocol): ...
+
+class AckCallContext(Protocol):
+    params: AckParams
 
 class ReadParams(Protocol): ...
 
@@ -28,6 +34,13 @@ class ReadifmsgCallContext(Protocol):
     @property
     def results(self) -> builders.MsgBuilder: ...
 
+class ReadleasedParams(Protocol): ...
+
+class ReadleasedCallContext(Protocol):
+    params: ReadleasedParams
+    @property
+    def results(self) -> results_server.ReadleasedServerResult: ...
+
 class WriteCallContext(Protocol):
     params: readers.MsgReader
 
@@ -41,18 +54,33 @@ class WriteifspaceCallContext(Protocol):
     @property
     def results(self) -> results_server.WriteifspaceServerResult: ...
 
-class UnregParams(Protocol): ...
+class ChannelStatsCallbackUnregisterUnregParams(Protocol): ...
 
-class UnregCallContext(Protocol):
-    params: UnregParams
+class ChannelStatsCallbackUnregisterUnregCallContext(Protocol):
+    params: ChannelStatsCallbackUnregisterUnregParams
     @property
-    def results(self) -> results_server.UnregServerResult: ...
+    def results(
+        self,
+    ) -> results_server.ChannelStatsCallbackUnregisterUnregServerResult: ...
 
 class StatusParams(Protocol):
     stats: readers.StatsReader
 
 class StatusCallContext(Protocol):
     params: StatusParams
+
+class ChannelObserverUnregisterUnregParams(Protocol): ...
+
+class ChannelObserverUnregisterUnregCallContext(Protocol):
+    params: ChannelObserverUnregisterUnregParams
+    @property
+    def results(self) -> results_server.ChannelObserverUnregisterUnregServerResult: ...
+
+class SawParams(Protocol):
+    event: readers.EventReader
+
+class SawCallContext(Protocol):
+    params: SawParams
 
 class SetbuffersizeParams(Protocol):
     size: int
@@ -102,8 +130,35 @@ class RegisterstatscallbackCallContext(Protocol):
     @property
     def results(self) -> results_server.RegisterstatscallbackServerResult: ...
 
+class ObserveParams(Protocol):
+    callback: clients.ObserverClient
+    params: modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule.Reader
+
+class ObserveCallContext(Protocol):
+    params: ObserveParams
+    @property
+    def results(self) -> results_server.ObserveServerResult: ...
+
+class PauseParams(Protocol): ...
+
+class PauseCallContext(Protocol):
+    params: PauseParams
+
+class ResumeParams(Protocol): ...
+
+class ResumeCallContext(Protocol):
+    params: ResumeParams
+
+class StepParams(Protocol):
+    count: int
+
+class StepCallContext(Protocol):
+    params: StepParams
+    @property
+    def results(self) -> results_server.StepServerResult: ...
+
 class StartChannelsServiceStartCallContext(Protocol):
-    params: readers.ParamsReader
+    params: modules._StartChannelsServiceInterfaceModule._ParamsStructModule.Reader
     @property
     def results(self) -> results_server.StartChannelsServiceStartServerResult: ...
 

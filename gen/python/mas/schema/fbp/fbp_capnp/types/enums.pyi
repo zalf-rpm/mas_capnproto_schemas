@@ -8,9 +8,17 @@ type ComponentComponentTypeEnum = (
     int | Literal["standard", "iip", "subflow", "view", "process"]
 )
 
+type ComponentPortPortRoleEnum = (
+    int | Literal["data", "config", "log", "error", "reject", "control"]
+)
+
 type ComponentPortPortTypeEnum = int | Literal["standard", "array"]
 
 type IPTypeEnum = int | Literal["standard", "openBracket", "closeBracket"]
+
+type LogMessageLevelEnum = (
+    int | Literal["debug", "info", "warning", "error", "critical"]
+)
 
 type ProcessActivityStateEnum = (
     int | Literal["none", "waitingInput", "processing", "waitingOutput", "closing"]

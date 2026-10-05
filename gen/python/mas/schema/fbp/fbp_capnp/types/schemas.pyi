@@ -8,6 +8,18 @@ type _ChannelCloseSemanticsEnumSchema = (
 
 type _ChannelMsgSchema = modules._ChannelInterfaceModule._MsgStructModule._MsgSchema
 
+type _ChannelObserverEventSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule._EventSchema
+
+type _ChannelObserverParamsSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule._ParamsSchema
+
+type _ChannelObserverSchema = (
+    modules._ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema
+)
+
+type _ChannelObserverUnregisterSchema = modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema
+
+type _ChannelReaderLeaseSchema = modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema
+
 type _ChannelReaderSchema = (
     modules._ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema
 )
@@ -38,6 +50,10 @@ type _ComponentComponentTypeEnumSchema = (
     modules._ComponentStructModule._ComponentTypeEnumModule._ComponentTypeSchema
 )
 
+type _ComponentPortPortRoleEnumSchema = (
+    modules._ComponentStructModule._PortStructModule._PortRoleEnumModule._PortRoleSchema
+)
+
 type _ComponentPortPortTypeEnumSchema = (
     modules._ComponentStructModule._PortStructModule._PortTypeEnumModule._PortTypeSchema
 )
@@ -63,6 +79,12 @@ type _IPSysAttributesSchema = (
 type _IPSysAttributesSysAttributesBracketTypeSchema = modules._IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema
 
 type _IPTypeEnumSchema = modules._IPStructModule._TypeEnumModule._TypeSchema
+
+type _LogMessageLevelEnumSchema = (
+    modules._LogMessageStructModule._LevelEnumModule._LevelSchema
+)
+
+type _LogMessageSchema = modules._LogMessageStructModule._LogMessageSchema
 
 type _PortInfosNameAndSRSchema = (
     modules._PortInfosStructModule._NameAndSRStructModule._NameAndSRSchema

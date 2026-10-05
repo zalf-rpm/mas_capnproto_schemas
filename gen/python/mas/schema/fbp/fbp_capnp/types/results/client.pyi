@@ -12,6 +12,8 @@ from mas.schema.fbp.fbp_capnp.types import enums as enums
 from mas.schema.fbp.fbp_capnp.types import readers as readers
 from mas.schema.service.service_capnp.types.clients import StoppableClient
 
+class AckResult(Awaitable[None], Protocol): ...
+
 class ReadResult(Awaitable[ReadResult], Protocol):
     value: _DynamicObjectReader
     done: None
@@ -26,16 +28,31 @@ class ReadifmsgResult(Awaitable[ReadifmsgResult], Protocol):
     noMsg: None
     def which(self) -> Literal["value", "done", "noMsg"]: ...
 
+class ReadleasedResult(Awaitable[ReadleasedResult], Protocol):
+    msg: readers.MsgReader
+    lease: clients.LeaseClient
+
 class WriteResult(Awaitable[None], Protocol): ...
 class WriterCloseResult(Awaitable[None], Protocol): ...
 
 class WriteifspaceResult(Awaitable[WriteifspaceResult], Protocol):
     success: bool
 
-class UnregResult(Awaitable[UnregResult], Protocol):
+class ChannelStatsCallbackUnregisterUnregResult(
+    Awaitable[ChannelStatsCallbackUnregisterUnregResult],
+    Protocol,
+):
     success: bool
 
 class StatusResult(Awaitable[None], Protocol): ...
+
+class ChannelObserverUnregisterUnregResult(
+    Awaitable[ChannelObserverUnregisterUnregResult],
+    Protocol,
+):
+    success: bool
+
+class SawResult(Awaitable[None], Protocol): ...
 class SetbuffersizeResult(Awaitable[None], Protocol): ...
 
 class ReaderResult(Awaitable[ReaderResult], Protocol):
@@ -52,7 +69,16 @@ class SetautoclosesemanticsResult(Awaitable[None], Protocol): ...
 class ChannelCloseResult(Awaitable[None], Protocol): ...
 
 class RegisterstatscallbackResult(Awaitable[RegisterstatscallbackResult], Protocol):
-    unregisterCallback: clients.UnregisterClient
+    unregisterCallback: clients.ChannelStatsCallbackUnregisterClient
+
+class ObserveResult(Awaitable[ObserveResult], Protocol):
+    unregister: clients.ChannelObserverUnregisterClient
+
+class PauseResult(Awaitable[None], Protocol): ...
+class ResumeResult(Awaitable[None], Protocol): ...
+
+class StepResult(Awaitable[StepResult], Protocol):
+    delivered: int
 
 class StartChannelsServiceStartResult(
     Awaitable[StartChannelsServiceStartResult],

@@ -15,13 +15,49 @@ from mas.schema.fbp.fbp_capnp.types import readers as readers
 from mas.schema.service.service_capnp.types.clients import StoppableClient
 from mas.schema.service.service_capnp.types.modules import _StoppableInterfaceModule
 
+class ReadleasedServerResult(_DynamicStructBuilder):
+    @property
+    def msg(self) -> builders.MsgBuilder: ...
+    @msg.setter
+    def msg(
+        self,
+        value: builders.MsgBuilder | readers.MsgReader | dict[str, Any],
+    ) -> None: ...
+    @property
+    def lease(
+        self,
+    ) -> (
+        modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule.Server
+        | clients.LeaseClient
+    ): ...
+    @lease.setter
+    def lease(
+        self,
+        value: modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule.Server
+        | clients.LeaseClient,
+    ) -> None: ...
+    @overload
+    def init(
+        self,
+        field: Literal["msg"],
+        size: int | None = None,
+    ) -> builders.MsgBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
+
 class WriteifspaceServerResult(_DynamicStructBuilder):
     @property
     def success(self) -> bool: ...
     @success.setter
     def success(self, value: bool) -> None: ...
 
-class UnregServerResult(_DynamicStructBuilder):
+class ChannelStatsCallbackUnregisterUnregServerResult(_DynamicStructBuilder):
+    @property
+    def success(self) -> bool: ...
+    @success.setter
+    def success(self, value: bool) -> None: ...
+
+class ChannelObserverUnregisterUnregServerResult(_DynamicStructBuilder):
     @property
     def success(self) -> bool: ...
     @success.setter
@@ -91,14 +127,35 @@ class RegisterstatscallbackServerResult(_DynamicStructBuilder):
         self,
     ) -> (
         modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
-        | clients.UnregisterClient
+        | clients.ChannelStatsCallbackUnregisterClient
     ): ...
     @unregisterCallback.setter
     def unregisterCallback(
         self,
         value: modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
-        | clients.UnregisterClient,
+        | clients.ChannelStatsCallbackUnregisterClient,
     ) -> None: ...
+
+class ObserveServerResult(_DynamicStructBuilder):
+    @property
+    def unregister(
+        self,
+    ) -> (
+        modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
+        | clients.ChannelObserverUnregisterClient
+    ): ...
+    @unregister.setter
+    def unregister(
+        self,
+        value: modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
+        | clients.ChannelObserverUnregisterClient,
+    ) -> None: ...
+
+class StepServerResult(_DynamicStructBuilder):
+    @property
+    def delivered(self) -> int: ...
+    @delivered.setter
+    def delivered(self, value: int) -> None: ...
 
 class StartChannelsServiceStartServerResult(_DynamicStructBuilder):
     @property

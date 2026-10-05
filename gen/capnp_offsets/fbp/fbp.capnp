@@ -37,7 +37,28 @@ struct IP @0xaf0a1dc4709a5ccf {  # 8 bytes, 3 ptrs
 struct IIP @0xf3705fb36d44a21f {  # 0 bytes, 1 ptrs
   content @0 :AnyPointer;  # ptr[0]
 }
+struct LogMessage @0xdf6f09e80adf0ac2 {  # 8 bytes, 7 ptrs
+  level @0 :Level;  # bits[0, 16)
+  timestamp @1 :Text;  # ptr[0]
+  processId @2 :Text;  # ptr[1]
+  processName @3 :Text;  # ptr[2]
+  logger @4 :Text;  # ptr[3]
+  message @5 :Text;  # ptr[4]
+  attributes @6 :List(IP.KV);  # ptr[5]
+  traceback @7 :List(Text);  # ptr[6]
+  enum Level @0xd4bcd93642fbf011 {
+    debug @0;
+    info @1;
+    warning @2;
+    error @3;
+    critical @4;
+  }
+}
 interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) {
+  observe @7 (callback :Observer, params :Observer.Params) -> (unregister :Observer.Unregister);
+  pause @8 () -> ();
+  resume @9 () -> ();
+  step @10 (count :UInt64 = 1) -> (delivered :UInt64);
   registerStatsCallback @6 (callback :StatsCallback, updateIntervalInMs :UInt32) -> (unregisterCallback :StatsCallback.Unregister);
   setBufferSize @0 (size :UInt64 = 1) -> ();
   reader @1 () -> (r :Reader);
@@ -68,8 +89,12 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
   }
   interface Reader @0x8bc69192f3bc97cc superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanReader") {
     read @0 () -> Msg $import "/capnp/c++.capnp".allowCancellation(void);
+    readLeased @3 () -> (msg :Msg, lease :Lease) $import "/capnp/c++.capnp".allowCancellation(void);
     readIfMsg @2 () -> Msg;
     close @1 () -> ();
+    interface Lease @0xd3c75f69eade4246 {
+      ack @0 () -> ();
+    }
   }
   interface Writer @0xf7fec613b4a8c79f superclasses(import "/common/common.capnp".Identifiable, import "/persistence/persistence.capnp".Persistent) $import "/capnp/c++.capnp".name("ChanWriter") {
     write @0 Msg -> () $import "/capnp/c++.capnp".allowCancellation(void);
@@ -88,6 +113,23 @@ interface Channel @0x9c62c32b2ff2b1e8 (V) superclasses(import "/common/common.ca
     }
     interface Unregister @0xb9fc8977d77cd1d9 {
       unreg @0 () -> (success :Bool);
+    }
+  }
+  interface Observer @0x80a21757b0bfd776 {
+    saw @0 (event :Event) -> ();
+    struct Event @0xd654246116b3daa5 {  # 16 bytes, 2 ptrs
+      seqNo @0 :UInt64;  # bits[0, 64)
+      timestamp @1 :Text;  # ptr[0]
+      sizeInWords @2 :UInt64;  # bits[64, 128)
+      content @3 :V;  # ptr[1]
+    }
+    interface Unregister @0x8971a9561a83228a {
+      unreg @0 () -> (success :Bool);
+    }
+    struct Params @0xaff4041af7455c7a {  # 8 bytes, 0 ptrs
+      everyNth @0 :UInt32 = 1;  # bits[0, 32)
+      withContent @1 :Bool;  # bits[32, 33)
+      gate @2 :Bool;  # bits[33, 34)
     }
   }
 }
@@ -140,9 +182,19 @@ struct Component @0xd717ff7d6815a6b0 {  # 8 bytes, 5 ptrs
     contentType @1 :Text;  # ptr[1]
     desc @3 :Text;  # ptr[2]
     type @2 :PortType;  # bits[0, 16)
+    role @4 :PortRole;  # bits[16, 32)
+    required @5 :Bool;  # bits[32, 33)
     enum PortType @0xf58d7a7318a06224 {
       standard @0;
       array @1;
+    }
+    enum PortRole @0xb8f4f30572b798c6 {
+      data @0;
+      config @1;
+      log @2;
+      error @3;
+      reject @4;
+      control @5;
     }
   }
 }

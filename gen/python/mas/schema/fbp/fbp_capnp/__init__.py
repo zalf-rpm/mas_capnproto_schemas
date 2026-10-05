@@ -11,7 +11,7 @@ from capnp.lib.capnp import SchemaLoader, _EnumModule, _InterfaceModule, _Struct
 
 
 def _import_schema_bundle() -> object:
-    bundle_module_name = "_capnp_schema_bundle_b45e9cb539b9"
+    bundle_module_name = "_capnp_schema_bundle_594b8b9e7273"
     try:
         return import_module(bundle_module_name)
     except ModuleNotFoundError as error:
@@ -66,6 +66,14 @@ IIP = _StructModule(
     _loader.get(0xF3705FB36D44A21F).as_struct(),
     "IIP",
 )
+LogMessage = _StructModule(
+    _loader.get(0xDF6F09E80ADF0AC2).as_struct(),
+    "LogMessage",
+)
+LogMessage.Level = _EnumModule(
+    LogMessage.schema.fields["level"].schema,
+    "Level",
+)
 Channel = _InterfaceModule(
     _loader.get(0x9C62C32B2FF2B1E8).as_interface(),
     "Channel",
@@ -89,6 +97,10 @@ Channel.Reader = _InterfaceModule(
     Channel.schema.methods["reader"].result_type.fields["r"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Reader",
 )
+Channel.Reader.Lease = _InterfaceModule(
+    Channel.Reader.schema.methods["readLeased"].result_type.fields["lease"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Lease",
+)
 Channel.Writer = _InterfaceModule(
     Channel.schema.methods["writer"].result_type.fields["w"].schema,  # pyright: ignore[reportUnknownArgumentType]
     "Writer",
@@ -108,6 +120,22 @@ Channel.StatsCallback.Unregister = _InterfaceModule(
     .result_type.fields["unregisterCallback"]
     .schema,  # pyright: ignore[reportUnknownArgumentType]
     "Unregister",
+)
+Channel.Observer = _InterfaceModule(
+    Channel.schema.methods["observe"].param_type.fields["callback"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Observer",
+)
+Channel.Observer.Event = _StructModule(
+    Channel.Observer.schema.methods["saw"].param_type.fields["event"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Event",
+)
+Channel.Observer.Unregister = _InterfaceModule(
+    Channel.schema.methods["observe"].result_type.fields["unregister"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Unregister",
+)
+Channel.Observer.Params = _StructModule(
+    Channel.schema.methods["observe"].param_type.fields["params"].schema,  # pyright: ignore[reportUnknownArgumentType]
+    "Params",
 )
 StartChannelsService = _InterfaceModule(
     _loader.get(0xD0CD6D829B810229).as_interface(),
@@ -140,6 +168,10 @@ Component.Port = _StructModule(
 Component.Port.PortType = _EnumModule(
     Component.Port.schema.fields["type"].schema,
     "PortType",
+)
+Component.Port.PortRole = _EnumModule(
+    Component.Port.schema.fields["role"].schema,
+    "PortRole",
 )
 Runnable = _InterfaceModule(
     _loader.get(0xBDE616D300754FF0).as_interface(),

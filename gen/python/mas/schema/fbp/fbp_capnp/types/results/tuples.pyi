@@ -22,10 +22,20 @@ class ReadifmsgResultTuple(NamedTuple):
     done: None
     noMsg: None
 
+class ReadleasedResultTuple(NamedTuple):
+    msg: builders.MsgBuilder | readers.MsgReader | dict[str, Any]
+    lease: (
+        modules._ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule.Server
+        | clients.LeaseClient
+    )
+
 class WriteifspaceResultTuple(NamedTuple):
     success: bool
 
-class UnregResultTuple(NamedTuple):
+class ChannelStatsCallbackUnregisterUnregResultTuple(NamedTuple):
+    success: bool
+
+class ChannelObserverUnregisterUnregResultTuple(NamedTuple):
     success: bool
 
 class ReaderResultTuple(NamedTuple):
@@ -53,8 +63,17 @@ class EndpointsResultTuple(NamedTuple):
 class RegisterstatscallbackResultTuple(NamedTuple):
     unregisterCallback: (
         modules._ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule.Server
-        | clients.UnregisterClient
+        | clients.ChannelStatsCallbackUnregisterClient
     )
+
+class ObserveResultTuple(NamedTuple):
+    unregister: (
+        modules._ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule.Server
+        | clients.ChannelObserverUnregisterClient
+    )
+
+class StepResultTuple(NamedTuple):
+    delivered: int
 
 class StartChannelsServiceStartResultTuple(NamedTuple):
     startupInfos: (
