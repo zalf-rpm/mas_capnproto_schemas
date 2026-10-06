@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.71](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.70...v0.1.71) (2026-10-06)
+
+
+### Bug Fixes
+
+* **csharp:** regenerate fbp.capnp.cs with generic-aware pipelining extensions ([c098272](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/c0982728f1907569c64ae37a64f44e06b37f138a))
+
 ## [0.1.70](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.69...v0.1.70) (2026-09-29)
 
 
