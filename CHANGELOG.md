@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.72](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.71...v0.1.72) (2026-10-19)
+
+
+### Features
+
+* recompile capnp schemas ([009470e](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/009470e00bf6aced86ea487af714c72aaf5c9854))
+
+
+### Bug Fixes
+
+* **csharp:** restore packages.lock.json deleted by schema recompilation ([9ffe458](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/9ffe45892496f032369cd43f8cbb47014580c91b))
+* preserve C# packages.lock.json during schema recompilation ([e068f9b](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/e068f9bbdf69b4d54c6a4681ec726d6d0cf150fe))
+
 ## [0.1.71](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.70...v0.1.71) (2026-10-19)
 
 
