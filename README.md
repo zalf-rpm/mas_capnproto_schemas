@@ -10,7 +10,7 @@ docker build -t capnp-gen .
 
 Optional build arguments:
 
-- CAPNP_VERSION (default 1.2.0)
+- CAPNP_VERSION (default 1.5.0)
 - JOBS (parallel make jobs, default 6)
 - CAPNPC_GO_PKG (Go plugin module path)
 - CAPNPC_GO_VERSION (default v3.1.0-alpha.2)
@@ -18,7 +18,7 @@ Optional build arguments:
 Example:
 
 ```bash
-docker build --build-arg CAPNP_VERSION=1.2.0 --build-arg JOBS=12 -t capnp-gen .
+docker build --build-arg CAPNP_VERSION=1.5.0 --build-arg JOBS=12 -t capnp-gen .
 ```
 
 ## Basic usage

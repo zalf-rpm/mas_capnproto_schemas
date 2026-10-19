@@ -9,7 +9,7 @@ on:
       capnp_version:
         description: "Override CAPNP_VERSION build arg"
         required: false
-        default: "1.4.0"
+        default: "1.5.0"
       capnpc_go_version:
         description: "Override CAPNPC_GO_VERSION build arg"
         required: false
