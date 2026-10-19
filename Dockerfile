@@ -3,7 +3,7 @@
 ############################
 FROM debian:13 AS capnp-builder
 
-ARG CAPNP_VERSION=1.2.0
+ARG CAPNP_VERSION=1.4.0
 ARG JOBS=6
 # Go plugin (capnpc-go) version/pkg (kept configurable, but pinned by default)
 ARG CAPNPC_GO_PKG=capnproto.org/go/capnp/v3/capnpc-go
@@ -38,7 +38,7 @@ RUN git clone -b master https://github.com/zalf-rpm/capnproto-dotnetcore.git && 
 # Stage 2: runtime (minimal) #
 #############################
 FROM debian:13 AS capnp-runtime
-ARG CAPNP_VERSION=1.2.0
+ARG CAPNP_VERSION=1.4.0
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /workspace
 
