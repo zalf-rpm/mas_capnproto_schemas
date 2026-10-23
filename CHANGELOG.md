@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.73](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.72...v0.1.73) (2026-10-23)
+
+
+### Features
+
+* improve stub generator and regenerate stubs for python ([c85c0d8](https://github.com/zalf-rpm/mas_capnproto_schemas/commit/c85c0d8e0f815faafe5d9d88c84ba5336349c8e0))
+
 ## [0.1.72](https://github.com/zalf-rpm/mas_capnproto_schemas/compare/v0.1.71...v0.1.72) (2026-10-19)
 
 
