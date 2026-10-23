@@ -1,7 +1,7 @@
 """Reader helper types for `grid.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -9,6 +9,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.geo.geo_capnp.types.readers import LatLonCoordReader
 from mas.schema.grid.grid_capnp.types import builders as builders
+from mas.schema.grid.grid_capnp.types import common as common
 from mas.schema.grid.grid_capnp.types import lists as lists
 
 class ValueReader(_DynamicStructReader):
@@ -20,13 +21,14 @@ class ValueReader(_DynamicStructReader):
     def ui(self) -> int: ...
     @property
     def no(self) -> bool: ...
+    @property
     @override
-    def which(self) -> Literal["f", "i", "ui", "no"]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ValueBuilder: ...
 
 class ResolutionReader(_DynamicStructReader):
@@ -34,13 +36,14 @@ class ResolutionReader(_DynamicStructReader):
     def meter(self) -> int: ...
     @property
     def degree(self) -> float: ...
+    @property
     @override
-    def which(self) -> Literal["meter", "degree"]: ...
+    def which(self) -> common._ResolutionWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ResolutionBuilder: ...
 
 class RowColReader(_DynamicStructReader):
@@ -52,7 +55,7 @@ class RowColReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RowColBuilder: ...
 
 class AggregationPartReader(_DynamicStructReader):
@@ -68,7 +71,7 @@ class AggregationPartReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AggregationPartBuilder: ...
 
 class LocationReader(_DynamicStructReader):
@@ -82,7 +85,7 @@ class LocationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LocationBuilder: ...
 
 type AggregationPartListReader = lists._AggregationPartList.Reader

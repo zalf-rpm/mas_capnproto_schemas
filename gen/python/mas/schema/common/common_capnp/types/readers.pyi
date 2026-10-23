@@ -1,7 +1,7 @@
 """Reader helper types for `common.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -9,6 +9,7 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.common.common_capnp.types import builders as builders
+from mas.schema.common.common_capnp.types import common as common
 from mas.schema.common.common_capnp.types import enums as enums
 from mas.schema.common.common_capnp.types import lists as lists
 
@@ -23,19 +24,19 @@ class IdInformationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.IdInformationBuilder: ...
 
 class StructuredTextReader(_DynamicStructReader):
     @property
     def value(self) -> str: ...
     @property
-    def type(self) -> enums.StructuredTextTypeEnum: ...
+    def type(self) -> enums.StructuredTextTypeValue: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.StructuredTextBuilder: ...
 
 class MimeTypesReader(_DynamicStructReader):
@@ -43,7 +44,7 @@ class MimeTypesReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MimeTypesBuilder: ...
 
 class BlobReader(_DynamicStructReader):
@@ -55,7 +56,7 @@ class BlobReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.BlobBuilder: ...
 
 class PairReader(_DynamicStructReader):
@@ -67,7 +68,7 @@ class PairReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PairBuilder: ...
 
 class ValueReader(_DynamicStructReader):
@@ -133,47 +134,14 @@ class ValueReader(_DynamicStructReader):
     def lpair(self) -> PairListReader: ...
     @property
     def lv(self) -> ValueListReader: ...
+    @property
     @override
-    def which(
-        self,
-    ) -> Literal[
-        "f64",
-        "f32",
-        "i64",
-        "i32",
-        "i16",
-        "i8",
-        "ui64",
-        "ui32",
-        "ui16",
-        "ui8",
-        "b",
-        "t",
-        "d",
-        "p",
-        "cap",
-        "lf64",
-        "lf32",
-        "li64",
-        "li32",
-        "li16",
-        "li8",
-        "lui64",
-        "lui32",
-        "lui16",
-        "lui8",
-        "lb",
-        "lt",
-        "ld",
-        "lcap",
-        "lpair",
-        "lv",
-    ]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ValueBuilder: ...
 
 type AnyPointerListReader = lists._AnyPointerList.Reader

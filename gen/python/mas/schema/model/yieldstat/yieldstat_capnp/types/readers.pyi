@@ -1,7 +1,7 @@
 """Reader helper types for `yieldstat.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -42,19 +42,19 @@ class RestInputReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RestInputBuilder: ...
 
 class ResultToValueReader(_DynamicStructReader):
     @property
-    def id(self) -> enums.ResultIdEnum: ...
+    def id(self) -> enums.ResultIdValue: ...
     @property
     def value(self) -> float: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ResultToValueBuilder: ...
 
 class ResultReader(_DynamicStructReader):
@@ -68,7 +68,7 @@ class ResultReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ResultBuilder: ...
 
 class YearToResultReader(_DynamicStructReader):
@@ -80,7 +80,7 @@ class YearToResultReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.YearToResultBuilder: ...
 
 class OutputReader(_DynamicStructReader):
@@ -96,7 +96,7 @@ class OutputReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.OutputBuilder: ...
 
 type ResultToValueListReader = lists._ResultToValueList.Reader

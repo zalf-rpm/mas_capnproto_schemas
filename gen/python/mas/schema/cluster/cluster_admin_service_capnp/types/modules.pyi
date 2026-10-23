@@ -1,10 +1,11 @@
 """Module helper types for `cluster_admin_service.capnp`."""
 
-from collections.abc import Awaitable, Callable, Sequence
+from collections.abc import Awaitable, Callable, Iterator, Sequence
 from contextlib import AbstractContextManager
-from typing import IO, Literal, overload, override
+from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _AsyncIoStream,
     _DynamicCapabilityServer,
     _DynamicObjectReader,
     _DynamicStructBuilder,
@@ -85,9 +86,6 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._UnregisterInterfaceModule._UnregisterSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterUnregisterSchema: ...
         @override
         def _new_client(
             self,
@@ -293,9 +291,6 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._AdminMasterInterfaceModule._AdminMasterSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterAdminMasterSchema: ...
         @override
         def _new_client(
             self,
@@ -797,9 +792,6 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._ModelInstanceFactoryInterfaceModule._ModelInstanceFactorySchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterModelInstanceFactorySchema: ...
         @override
         def _new_client(
             self,
@@ -995,9 +987,6 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._ValueHolderInterfaceModule._ValueHolderSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterValueHolderSchema: ...
         @override
         def _new_client(
             self,
@@ -1150,9 +1139,6 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._UserMasterInterfaceModule._UserMasterSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterUserMasterSchema: ...
         @override
         def _new_client(
             self,
@@ -1509,9 +1495,6 @@ class _ClusterStructModule(_StructModule):
                 _ClusterStructModule._RuntimeInterfaceModule._RuntimeSchema._Methods
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterRuntimeSchema: ...
         @override
         def _new_client(
             self,
@@ -1607,51 +1590,68 @@ class _ClusterStructModule(_StructModule):
                 self,
             ) -> _ClusterStructModule._ZmqPipelineAddressesStructModule._ZmqPipelineAddressesSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ClusterZmqPipelineAddressesSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             input: str | None = None,
             output: str | None = None,
+            **kwargs: object,
+        ) -> builders.ZmqPipelineAddressesBuilder: ...
+        @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
             **kwargs: object,
         ) -> builders.ZmqPipelineAddressesBuilder: ...
         @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.ZmqPipelineAddressesReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.ZmqPipelineAddressesReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.ZmqPipelineAddressesBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ZmqPipelineAddressesBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.ZmqPipelineAddressesReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ZmqPipelineAddressesReader: ...
         @override
         def read(
             self,
@@ -1666,6 +1666,43 @@ class _ClusterStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.ZmqPipelineAddressesReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ZmqPipelineAddressesReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ZmqPipelineAddressesReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ZmqPipelineAddressesReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ZmqPipelineAddressesReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ZmqPipelineAddressesReader]: ...
 
     ZmqPipelineAddresses: _ZmqPipelineAddressesStructModule
     class Reader(_DynamicStructReader): ...
@@ -1678,49 +1715,66 @@ class _ClusterStructModule(_StructModule):
         @override
         def fields(self) -> _ClusterStructModule._ClusterSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ClusterSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
+        **kwargs: object,
+    ) -> builders.ClusterBuilder: ...
+    @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
         **kwargs: object,
     ) -> builders.ClusterBuilder: ...
     @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.ClusterReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.ClusterReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.ClusterBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.ClusterBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.ClusterReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.ClusterReader: ...
     @override
     def read(
         self,
@@ -1735,3 +1789,40 @@ class _ClusterStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.ClusterReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.ClusterReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.ClusterReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.ClusterReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.ClusterReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.ClusterReader]: ...

@@ -30,7 +30,9 @@ from mas.schema.model.monica.monica_params_capnp.types.builders import (
     SpeciesParametersBuilder,
     YieldComponentBuilder,
 )
-from mas.schema.model.monica.monica_params_capnp.types.modules import _VocStructModule
+from mas.schema.model.monica.monica_params_capnp.types.modules import (
+    _VocStructModule,
+)
 from mas.schema.model.monica.monica_params_capnp.types.readers import (
     AutomaticHarvestParametersReader,
     CropModuleParametersReader,
@@ -49,6 +51,7 @@ from mas.schema.model.monica.monica_params_capnp.types.readers import (
     SpeciesParametersReader,
     YieldComponentReader,
 )
+from mas.schema.model.monica.monica_state_capnp.types import common as common
 from mas.schema.model.monica.monica_state_capnp.types import lists as lists
 from mas.schema.model.monica.monica_state_capnp.types import readers as readers
 
@@ -109,11 +112,14 @@ class DelayedNMinApplicationParamsBuilder(_DynamicStructBuilder):
     @topDressingDelay.setter
     def topDressingDelay(self, value: float) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["fp"],
         size: int | None = None,
     ) -> _ParamsStructModule._MineralFertilizationStructModule._ParametersStructModule.Builder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.DelayedNMinApplicationParamsReader: ...
 
@@ -2092,11 +2098,14 @@ class FrostModuleStateBuilder(_DynamicStructBuilder):
     @ptTimeStep.setter
     def ptTimeStep(self, value: float) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["lambdaRedux"],
         size: int | None = None,
     ) -> Float64ListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.FrostModuleStateReader: ...
 
@@ -3519,11 +3528,14 @@ class RuntimeStateBuilder(_DynamicStructBuilder):
         | dict[str, Any],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["modelState"],
         size: int | None = None,
     ) -> MonicaModelStateBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.RuntimeStateReader: ...
 
@@ -3680,8 +3692,9 @@ class ICDataBuilder(_DynamicStructBuilder):
     def lait(self) -> float: ...
     @lait.setter
     def lait(self, value: float) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["noCrop", "height", "lait"]: ...
+    def which(self) -> common._ICDataWhich: ...
     @override
     def as_reader(self) -> readers.ICDataReader: ...
 

@@ -94,9 +94,6 @@ class _DWLABImportInterfaceModule(_InterfaceModule):
             self,
         ) -> _DWLABImportInterfaceModule._DWLABImportSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._DWLABImportSchema: ...
     @override
     def _new_client(
         self,

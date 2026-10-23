@@ -167,38 +167,9 @@ class ValueBuilder(_DynamicStructBuilder):
     def anyValue(self) -> _DynamicObjectBuilder: ...
     @anyValue.setter
     def anyValue(self, value: common.AnyStruct | dict[str, Any]) -> None: ...
+    @property
     @override
-    def which(
-        self,
-    ) -> Literal[
-        "boolValue",
-        "boolListValue",
-        "int8Value",
-        "int8ListValue",
-        "int16Value",
-        "int16ListValue",
-        "int32Value",
-        "int32ListValue",
-        "int64Value",
-        "int64ListValue",
-        "uint8Value",
-        "uint8ListValue",
-        "uint16Value",
-        "uint16ListValue",
-        "uint32Value",
-        "uint32ListValue",
-        "uint64Value",
-        "uint64ListValue",
-        "float32Value",
-        "float32ListValue",
-        "float64Value",
-        "float64ListValue",
-        "textValue",
-        "textListValue",
-        "dataValue",
-        "dataListValue",
-        "anyValue",
-    ]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     @overload
     def init(

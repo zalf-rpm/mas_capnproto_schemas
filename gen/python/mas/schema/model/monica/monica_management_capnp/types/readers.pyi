@@ -1,18 +1,19 @@
 """Reader helper types for `monica_management.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
     _DynamicStructReader,
 )
 
-from mas.schema.climate.climate_capnp.types.enums import ElementEnum
+from mas.schema.climate.climate_capnp.types.enums import ElementValue
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.crop.crop_capnp.types.clients import CropClient
 from mas.schema.model.monica.monica_management_capnp.types import builders as builders
+from mas.schema.model.monica.monica_management_capnp.types import common as common
 from mas.schema.model.monica.monica_management_capnp.types import enums as enums
 from mas.schema.model.monica.monica_management_capnp.types import lists as lists
 from mas.schema.model.monica.monica_management_capnp.types import modules as modules
@@ -32,21 +33,22 @@ class ILRDatesReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ILRDatesBuilder: ...
 
 class TypeReader(_DynamicStructReader):
     @property
-    def external(self) -> enums.EventExternalTypeEnum: ...
+    def external(self) -> enums.EventExternalTypeValue: ...
     @property
-    def internal(self) -> enums.EventPhenoStageEnum: ...
+    def internal(self) -> enums.EventPhenoStageValue: ...
+    @property
     @override
-    def which(self) -> Literal["external", "internal"]: ...
+    def which(self) -> common._TypeWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.TypeBuilder: ...
 
 class EventAtReader(_DynamicStructReader):
@@ -56,7 +58,7 @@ class EventAtReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EventAtBuilder: ...
 
 class EventBetweenReader(_DynamicStructReader):
@@ -68,7 +70,7 @@ class EventBetweenReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EventBetweenBuilder: ...
 
 class EventAfterReader(_DynamicStructReader):
@@ -80,12 +82,12 @@ class EventAfterReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EventAfterBuilder: ...
 
 class EventReader(_DynamicStructReader):
     @property
-    def type(self) -> enums.EventExternalTypeEnum: ...
+    def type(self) -> enums.EventExternalTypeValue: ...
     @property
     def info(self) -> IdInformationReader: ...
     @property
@@ -98,25 +100,26 @@ class EventReader(_DynamicStructReader):
     def params(self) -> _DynamicObjectReader: ...
     @property
     def runAtStartOfDay(self) -> bool: ...
+    @property
     @override
-    def which(self) -> Literal["at", "between", "after"]: ...
+    def which(self) -> common._EventWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EventBuilder: ...
 
 class KVReader(_DynamicStructReader):
     @property
-    def key(self) -> ElementEnum: ...
+    def key(self) -> ElementValue: ...
     @property
     def value(self) -> float: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.KVBuilder: ...
 
 class DailyWeatherReader(_DynamicStructReader):
@@ -126,7 +129,7 @@ class DailyWeatherReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.DailyWeatherBuilder: ...
 
 class SowingReader(_DynamicStructReader):
@@ -140,7 +143,7 @@ class SowingReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SowingBuilder: ...
 
 class AvgSoilTempReader(_DynamicStructReader):
@@ -154,7 +157,7 @@ class AvgSoilTempReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AvgSoilTempBuilder: ...
 
 class AutomaticSowingReader(_DynamicStructReader):
@@ -182,7 +185,7 @@ class AutomaticSowingReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AutomaticSowingBuilder: ...
 
 class OptCarbonMgmtDataReader(_DynamicStructReader):
@@ -191,7 +194,7 @@ class OptCarbonMgmtDataReader(_DynamicStructReader):
     @property
     def cropImpactOnHumusBalance(self) -> float: ...
     @property
-    def cropUsage(self) -> enums.ParamsHarvestCropUsageEnum: ...
+    def cropUsage(self) -> enums.ParamsHarvestCropUsageValue: ...
     @property
     def residueHeq(self) -> float: ...
     @property
@@ -202,7 +205,7 @@ class OptCarbonMgmtDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.OptCarbonMgmtDataBuilder: ...
 
 class HarvestReader(_DynamicStructReader):
@@ -214,7 +217,7 @@ class HarvestReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.HarvestBuilder: ...
 
 class AutomaticHarvestReader(_DynamicStructReader):
@@ -227,32 +230,32 @@ class AutomaticHarvestReader(_DynamicStructReader):
     @property
     def maxCurrentDayPrecipSum(self) -> float: ...
     @property
-    def harvestTime(self) -> enums.EventPhenoStageEnum: ...
+    def harvestTime(self) -> enums.EventPhenoStageValue: ...
     @property
     def harvest(self) -> HarvestReader: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AutomaticHarvestBuilder: ...
 
 class SpecReader(_DynamicStructReader):
     @property
-    def organ(self) -> enums.PlantOrganEnum: ...
+    def organ(self) -> enums.PlantOrganValue: ...
     @property
     def value(self) -> float: ...
     @property
-    def unit(self) -> enums.ParamsCuttingUnitEnum: ...
+    def unit(self) -> enums.ParamsCuttingUnitValue: ...
     @property
-    def cutOrLeft(self) -> enums.ParamsCuttingCLEnum: ...
+    def cutOrLeft(self) -> enums.ParamsCuttingCLValue: ...
     @property
     def exportPercentage(self) -> float: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SpecBuilder: ...
 
 class CuttingReader(_DynamicStructReader):
@@ -264,7 +267,7 @@ class CuttingReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CuttingBuilder: ...
 
 class ParamsMineralFertilizationParametersReader(_DynamicStructReader):
@@ -282,7 +285,7 @@ class ParamsMineralFertilizationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ParamsMineralFertilizationParametersBuilder: ...
 
 class MineralFertilizationReader(_DynamicStructReader):
@@ -296,7 +299,7 @@ class MineralFertilizationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MineralFertilizationBuilder: ...
 
 class NDemandFertilizationReader(_DynamicStructReader):
@@ -314,7 +317,7 @@ class NDemandFertilizationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.NDemandFertilizationBuilder: ...
 
 class OrganicMatterParametersReader(_DynamicStructReader):
@@ -348,7 +351,7 @@ class OrganicMatterParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.OrganicMatterParametersBuilder: ...
 
 class ParamsOrganicFertilizationParametersReader(_DynamicStructReader):
@@ -362,7 +365,7 @@ class ParamsOrganicFertilizationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ParamsOrganicFertilizationParametersBuilder: ...
 
 class OrganicFertilizationReader(_DynamicStructReader):
@@ -378,7 +381,7 @@ class OrganicFertilizationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.OrganicFertilizationBuilder: ...
 
 class TillageReader(_DynamicStructReader):
@@ -388,7 +391,7 @@ class TillageReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.TillageBuilder: ...
 
 class ParamsIrrigationParametersReader(_DynamicStructReader):
@@ -400,7 +403,7 @@ class ParamsIrrigationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ParamsIrrigationParametersBuilder: ...
 
 class IrrigationReader(_DynamicStructReader):
@@ -414,7 +417,7 @@ class IrrigationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.IrrigationBuilder: ...
 
 class SaveStateReader(_DynamicStructReader):
@@ -426,7 +429,7 @@ class SaveStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SaveStateBuilder: ...
 
 class ParamsReader(_DynamicStructReader):
@@ -434,7 +437,7 @@ class ParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ParamsBuilder: ...
 
 type EventListReader = lists._EventList.Reader

@@ -1,7 +1,7 @@
 """Builder helper types for `service.capnp`."""
 
 from collections.abc import Sequence
-from typing import Any, Literal, override
+from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicObjectBuilder,
@@ -35,11 +35,14 @@ class CreateParamsBuilder(_DynamicStructBuilder):
     @msgPayload.setter
     def msgPayload(self, value: common.AnyPointer) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["interfaceNameToRegistrySR"],
         size: int | None = None,
     ) -> PairListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.CreateParamsReader: ...
 
@@ -62,11 +65,14 @@ class AccessInfoBuilder(_DynamicStructBuilder):
     @error.setter
     def error(self, value: str) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["serviceCaps"],
         size: int | None = None,
     ) -> IdentifiableClientListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.AccessInfoReader: ...
 

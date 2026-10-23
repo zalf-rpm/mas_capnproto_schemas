@@ -1,6 +1,6 @@
 """Builder helper types for `registry.capnp`."""
 
-from typing import Any, Literal, override
+from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
@@ -8,9 +8,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
-from mas.schema.persistence.persistence_capnp.types.builders import (
-    VatIdBuilder,
-)
+from mas.schema.persistence.persistence_capnp.types.builders import VatIdBuilder
 from mas.schema.persistence.persistence_capnp.types.clients import RestorerClient
 from mas.schema.persistence.persistence_capnp.types.modules import (
     _RestorerInterfaceModule,
@@ -55,11 +53,14 @@ class CrossDomainRestoreBuilder(_DynamicStructBuilder):
         value: RestorerClient | _RestorerInterfaceModule.Server,
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["vatId"],
         size: int | None = None,
     ) -> VatIdBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.CrossDomainRestoreReader: ...
 
@@ -89,11 +90,14 @@ class RegParamsBuilder(_DynamicStructBuilder):
         | dict[str, Any],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["xDomain"],
         size: int | None = None,
     ) -> CrossDomainRestoreBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.RegParamsReader: ...
 

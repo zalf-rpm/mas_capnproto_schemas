@@ -1,7 +1,7 @@
 """Reader helper types for `service.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -22,7 +22,7 @@ class CreateParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CreateParamsBuilder: ...
 
 class AccessInfoReader(_DynamicStructReader):
@@ -36,7 +36,7 @@ class AccessInfoReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AccessInfoBuilder: ...
 
 type IdInformationListReader = lists._IdInformationList.Reader

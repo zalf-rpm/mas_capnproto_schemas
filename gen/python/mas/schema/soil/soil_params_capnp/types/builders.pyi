@@ -1,7 +1,7 @@
 """Builder helper types for `soil_params.capnp`."""
 
 from collections.abc import Sequence
-from typing import Any, Literal, override
+from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
@@ -50,11 +50,14 @@ class SoilCharacteristicDataBuilder(_DynamicStructBuilder):
         ],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["list"],
         size: int | None = None,
     ) -> DataListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.SoilCharacteristicDataReader: ...
 
@@ -97,11 +100,14 @@ class SoilCharacteristicModifierBuilder(_DynamicStructBuilder):
         ],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["list"],
         size: int | None = None,
     ) -> DataListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.SoilCharacteristicModifierReader: ...
 
@@ -136,11 +142,14 @@ class CapillaryRiseRateBuilder(_DynamicStructBuilder):
         ],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["list"],
         size: int | None = None,
     ) -> DataListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.CapillaryRiseRateReader: ...
 

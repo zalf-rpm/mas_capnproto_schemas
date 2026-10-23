@@ -1,10 +1,11 @@
 """Module helper types for `agmip.capnp`."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _AsyncIoStream,
     _DynamicStructBuilder,
     _DynamicStructReader,
     _InterfaceSchema,
@@ -112,14 +113,11 @@ class _FieldExperimentDataTemplateStructModule(_StructModule):
             self,
         ) -> _FieldExperimentDataTemplateStructModule._FieldExperimentDataTemplateSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._FieldExperimentDataTemplateSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         soilProfile: ProfileClient | _ProfileInterfaceModule.Server | None = None,
         soil: StructuredTextBuilder
         | StructuredTextReader
@@ -141,38 +139,58 @@ class _FieldExperimentDataTemplateStructModule(_StructModule):
         **kwargs: object,
     ) -> builders.FieldExperimentDataTemplateBuilder: ...
     @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
+        **kwargs: object,
+    ) -> builders.FieldExperimentDataTemplateBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.FieldExperimentDataTemplateReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.FieldExperimentDataTemplateReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.FieldExperimentDataTemplateBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.FieldExperimentDataTemplateBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.FieldExperimentDataTemplateReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.FieldExperimentDataTemplateReader: ...
     @override
     def read(
         self,
@@ -187,3 +205,40 @@ class _FieldExperimentDataTemplateStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.FieldExperimentDataTemplateReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.FieldExperimentDataTemplateReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.FieldExperimentDataTemplateReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.FieldExperimentDataTemplateReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.FieldExperimentDataTemplateReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.FieldExperimentDataTemplateReader]: ...

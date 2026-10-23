@@ -1,7 +1,7 @@
 """Reader helper types for `geo.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -9,13 +9,14 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.geo.geo_capnp.types import builders as builders
+from mas.schema.geo.geo_capnp.types import common as common
 
 class EPSGReader(_DynamicStructReader):
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EPSGBuilder: ...
 
 class UTMCoordReader(_DynamicStructReader):
@@ -31,7 +32,7 @@ class UTMCoordReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.UTMCoordBuilder: ...
 
 class LatLonCoordReader(_DynamicStructReader):
@@ -43,7 +44,7 @@ class LatLonCoordReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LatLonCoordBuilder: ...
 
 class GKCoordReader(_DynamicStructReader):
@@ -57,7 +58,7 @@ class GKCoordReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.GKCoordBuilder: ...
 
 class Point2DReader(_DynamicStructReader):
@@ -69,7 +70,7 @@ class Point2DReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.Point2DBuilder: ...
 
 class RowColReader(_DynamicStructReader):
@@ -81,7 +82,7 @@ class RowColReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RowColBuilder: ...
 
 class CoordReader(_DynamicStructReader):
@@ -95,13 +96,14 @@ class CoordReader(_DynamicStructReader):
     def p2D(self) -> Point2DReader: ...
     @property
     def rowcol(self) -> RowColReader: ...
+    @property
     @override
-    def which(self) -> Literal["gk", "latlon", "utm", "p2D", "rowcol"]: ...
+    def which(self) -> common._CoordWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CoordBuilder: ...
 
 class RectBoundsReader(_DynamicStructReader):
@@ -113,5 +115,5 @@ class RectBoundsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RectBoundsBuilder: ...

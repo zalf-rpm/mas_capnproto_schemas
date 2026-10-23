@@ -1,13 +1,13 @@
 """Reader helper types for `monica_params.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
 )
 
-from mas.schema.climate.climate_capnp.types.enums import RCPEnum
+from mas.schema.climate.climate_capnp.types.enums import RCPValue
 from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.model.monica.monica_management_capnp.types.modules import (
     _ParamsStructModule,
@@ -131,7 +131,7 @@ class SpeciesParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SpeciesParametersBuilder: ...
 
 class YieldComponentReader(_DynamicStructReader):
@@ -145,7 +145,7 @@ class YieldComponentReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.YieldComponentBuilder: ...
 
 class CultivarParametersReader(_DynamicStructReader):
@@ -231,7 +231,7 @@ class CultivarParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CultivarParametersBuilder: ...
 
 class CropParametersReader(_DynamicStructReader):
@@ -243,7 +243,7 @@ class CropParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropParametersBuilder: ...
 
 class CropResidueParametersReader(_DynamicStructReader):
@@ -259,7 +259,7 @@ class CropResidueParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropResidueParametersBuilder: ...
 
 class CropSpecReader(_DynamicStructReader):
@@ -271,19 +271,19 @@ class CropSpecReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropSpecBuilder: ...
 
 class AutomaticHarvestParametersReader(_DynamicStructReader):
     @property
-    def harvestTime(self) -> enums.AutomaticHarvestParametersHarvestTimeEnum: ...
+    def harvestTime(self) -> enums.AutomaticHarvestParametersHarvestTimeValue: ...
     @property
     def latestHarvestDOY(self) -> int: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AutomaticHarvestParametersBuilder: ...
 
 class NMinCropParametersReader(_DynamicStructReader):
@@ -297,7 +297,7 @@ class NMinCropParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.NMinCropParametersBuilder: ...
 
 class NMinApplicationParametersReader(_DynamicStructReader):
@@ -311,7 +311,7 @@ class NMinApplicationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.NMinApplicationParametersBuilder: ...
 
 class SoilParametersReader(_DynamicStructReader):
@@ -353,7 +353,7 @@ class SoilParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilParametersBuilder: ...
 
 class AutomaticIrrigationParametersReader(_DynamicStructReader):
@@ -369,7 +369,7 @@ class AutomaticIrrigationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AutomaticIrrigationParametersBuilder: ...
 
 class SiteParametersReader(_DynamicStructReader):
@@ -399,7 +399,7 @@ class SiteParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SiteParametersBuilder: ...
 
 class YearToValueReader(_DynamicStructReader):
@@ -411,7 +411,7 @@ class YearToValueReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.YearToValueBuilder: ...
 
 class EnvironmentParametersReader(_DynamicStructReader):
@@ -438,12 +438,12 @@ class EnvironmentParametersReader(_DynamicStructReader):
     @property
     def minGroundwaterDepthMonth(self) -> int: ...
     @property
-    def rcp(self) -> RCPEnum: ...
+    def rcp(self) -> RCPValue: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EnvironmentParametersBuilder: ...
 
 class DateToValueReader(_DynamicStructReader):
@@ -455,7 +455,7 @@ class DateToValueReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.DateToValueBuilder: ...
 
 class MeasuredGroundwaterTableInformationReader(_DynamicStructReader):
@@ -467,7 +467,7 @@ class MeasuredGroundwaterTableInformationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MeasuredGroundwaterTableInformationBuilder: ...
 
 class SimulationParametersReader(_DynamicStructReader):
@@ -513,7 +513,7 @@ class SimulationParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SimulationParametersBuilder: ...
 
 class CropModuleParametersReader(_DynamicStructReader):
@@ -565,7 +565,7 @@ class CropModuleParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropModuleParametersBuilder: ...
 
 class SoilMoistureModuleParametersReader(_DynamicStructReader):
@@ -621,7 +621,7 @@ class SoilMoistureModuleParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilMoistureModuleParametersBuilder: ...
 
 class SticsParametersReader(_DynamicStructReader):
@@ -707,7 +707,7 @@ class SticsParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SticsParametersBuilder: ...
 
 class SoilOrganicModuleParametersReader(_DynamicStructReader):
@@ -789,7 +789,7 @@ class SoilOrganicModuleParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilOrganicModuleParametersBuilder: ...
 
 class SoilTemperatureModuleParametersReader(_DynamicStructReader):
@@ -823,7 +823,7 @@ class SoilTemperatureModuleParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilTemperatureModuleParametersBuilder: ...
 
 class SoilTransportModuleParametersReader(_DynamicStructReader):
@@ -839,7 +839,7 @@ class SoilTransportModuleParametersReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilTransportModuleParametersBuilder: ...
 
 class SpeciesIdToEmissionReader(_DynamicStructReader):
@@ -851,7 +851,7 @@ class SpeciesIdToEmissionReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SpeciesIdToEmissionBuilder: ...
 
 class EmissionsReader(_DynamicStructReader):
@@ -867,7 +867,7 @@ class EmissionsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EmissionsBuilder: ...
 
 class SpeciesDataReader(_DynamicStructReader):
@@ -935,7 +935,7 @@ class SpeciesDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SpeciesDataBuilder: ...
 
 class CPDataReader(_DynamicStructReader):
@@ -963,7 +963,7 @@ class CPDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CPDataBuilder: ...
 
 class MicroClimateDataReader(_DynamicStructReader):
@@ -989,7 +989,7 @@ class MicroClimateDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MicroClimateDataBuilder: ...
 
 class PhotosynthTReader(_DynamicStructReader):
@@ -1003,7 +1003,7 @@ class PhotosynthTReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PhotosynthTBuilder: ...
 
 class FoliageTReader(_DynamicStructReader):
@@ -1017,7 +1017,7 @@ class FoliageTReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.FoliageTBuilder: ...
 
 class EnzymeActivityTReader(_DynamicStructReader):
@@ -1029,7 +1029,7 @@ class EnzymeActivityTReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EnzymeActivityTBuilder: ...
 
 class LeafEmissionTReader(_DynamicStructReader):
@@ -1045,7 +1045,7 @@ class LeafEmissionTReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LeafEmissionTBuilder: ...
 
 class LeafEmissionsReader(_DynamicStructReader):
@@ -1057,7 +1057,7 @@ class LeafEmissionsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LeafEmissionsBuilder: ...
 
 class VocReader(_DynamicStructReader):
@@ -1065,7 +1065,7 @@ class VocReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.VocBuilder: ...
 
 type BoolListReader = lists._BoolList.Reader

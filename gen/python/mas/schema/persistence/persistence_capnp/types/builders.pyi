@@ -7,6 +7,7 @@ from capnp.lib.capnp import (
 )
 
 from mas.schema.persistence.persistence_capnp.types import clients as clients
+from mas.schema.persistence.persistence_capnp.types import common as common
 from mas.schema.persistence.persistence_capnp.types import modules as modules
 from mas.schema.persistence.persistence_capnp.types import readers as readers
 
@@ -58,14 +59,18 @@ class AddressBuilder(_DynamicStructBuilder):
     def host(self) -> str: ...
     @host.setter
     def host(self, value: str) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["ip6", "host"]: ...
+    def which(self) -> common._AddressWhich: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["ip6"],
         size: int | None = None,
     ) -> AddressIp6Builder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.AddressReader: ...
 
@@ -115,8 +120,9 @@ class TokenBuilder(_DynamicStructBuilder):
     def data(self) -> bytes: ...
     @data.setter
     def data(self, value: bytes) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["text", "data"]: ...
+    def which(self) -> common._TokenWhich: ...
     @override
     def as_reader(self) -> readers.TokenReader: ...
 
@@ -162,11 +168,14 @@ class SaveParamsBuilder(_DynamicStructBuilder):
         value: OwnerBuilder | readers.OwnerReader | dict[str, Any],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["sealFor"],
         size: int | None = None,
     ) -> OwnerBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.SaveParamsReader: ...
 
@@ -280,10 +289,13 @@ class RegResultsBuilder(_DynamicStructBuilder):
     @secsHeartbeatInterval.setter
     def secsHeartbeatInterval(self, value: int) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["sturdyRef"],
         size: int | None = None,
     ) -> SturdyRefBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.RegResultsReader: ...

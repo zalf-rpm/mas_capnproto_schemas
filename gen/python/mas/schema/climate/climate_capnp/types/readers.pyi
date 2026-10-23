@@ -1,7 +1,8 @@
 """Reader helper types for `climate.capnp`."""
 
+import builtins
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -10,6 +11,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.climate.climate_capnp.types import builders as builders
 from mas.schema.climate.climate_capnp.types import clients as clients
+from mas.schema.climate.climate_capnp.types import common as common
 from mas.schema.climate.climate_capnp.types import enums as enums
 from mas.schema.climate.climate_capnp.types import lists as lists
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
@@ -29,40 +31,41 @@ class EnsembleMemberReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EnsembleMemberBuilder: ...
 
 class ValueReader(_DynamicStructReader):
     @property
     def text(self) -> str: ...
     @property
-    def float(self) -> float: ...
+    def float(self) -> builtins.float: ...
     @property
     def int(self) -> int: ...
     @property
-    def bool(self) -> bool: ...
+    def bool(self) -> builtins.bool: ...
     @property
     def date(self) -> DateReader: ...
+    @property
     @override
-    def which(self) -> Literal["text", "float", "int", "bool", "date"]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ValueBuilder: ...
 
 class EntryReader(_DynamicStructReader):
     @property
-    def gcm(self) -> enums.GCMEnum: ...
+    def gcm(self) -> enums.GCMValue: ...
     @property
-    def rcm(self) -> enums.RCMEnum: ...
+    def rcm(self) -> enums.RCMValue: ...
     @property
     def historical(self) -> None: ...
     @property
-    def rcp(self) -> enums.RCPEnum: ...
+    def rcp(self) -> enums.RCPValue: ...
     @property
-    def ssp(self) -> enums.SSPEnum: ...
+    def ssp(self) -> enums.SSPValue: ...
     @property
     def ensMem(self) -> EnsembleMemberReader: ...
     @property
@@ -77,28 +80,14 @@ class EntryReader(_DynamicStructReader):
     def picontrol(self) -> None: ...
     @property
     def description(self) -> str: ...
+    @property
     @override
-    def which(
-        self,
-    ) -> Literal[
-        "gcm",
-        "rcm",
-        "historical",
-        "rcp",
-        "ssp",
-        "ensMem",
-        "version",
-        "start",
-        "end",
-        "co2",
-        "picontrol",
-        "description",
-    ]: ...
+    def which(self) -> common._EntryWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EntryBuilder: ...
 
 class MetadataReader(_DynamicStructReader):
@@ -110,7 +99,7 @@ class MetadataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MetadataBuilder: ...
 
 class KVReader(_DynamicStructReader):
@@ -122,7 +111,7 @@ class KVReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.KVBuilder: ...
 
 class LocationReader(_DynamicStructReader):
@@ -140,7 +129,7 @@ class LocationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LocationBuilder: ...
 
 class MetaPlusDataReader(_DynamicStructReader):
@@ -152,7 +141,7 @@ class MetaPlusDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MetaPlusDataBuilder: ...
 
 class TimeSeriesDataReader(_DynamicStructReader):
@@ -167,12 +156,12 @@ class TimeSeriesDataReader(_DynamicStructReader):
     @property
     def endDate(self) -> DateReader: ...
     @property
-    def resolution(self) -> enums.TimeSeriesResolutionEnum: ...
+    def resolution(self) -> enums.TimeSeriesResolutionValue: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.TimeSeriesDataBuilder: ...
 
 class CSVConfigReader(_DynamicStructReader):
@@ -188,21 +177,21 @@ class CSVConfigReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CSVConfigBuilder: ...
 
 class AlteredReader(_DynamicStructReader):
     @property
-    def element(self) -> enums.ElementEnum: ...
+    def element(self) -> enums.ElementValue: ...
     @property
     def value(self) -> float: ...
     @property
-    def type(self) -> enums.AlterTimeSeriesWrapperAlterTypeEnum: ...
+    def type(self) -> enums.AlterTimeSeriesWrapperAlterTypeValue: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AlteredBuilder: ...
 
 type AlteredListReader = lists._AlteredList.Reader

@@ -121,9 +121,6 @@ class _ModamWrapperServiceInterfaceModule(_InterfaceModule):
             _ModamWrapperServiceInterfaceModule._ModamWrapperServiceSchema._Methods
         ): ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ModamWrapperServiceSchema: ...
     @override
     def _new_client(
         self,

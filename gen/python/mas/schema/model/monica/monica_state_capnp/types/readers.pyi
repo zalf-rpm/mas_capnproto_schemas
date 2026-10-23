@@ -1,7 +1,7 @@
 """Reader helper types for `monica_state.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -11,7 +11,9 @@ from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.model.monica.monica_management_capnp.types.modules import (
     _ParamsStructModule,
 )
-from mas.schema.model.monica.monica_params_capnp.types.modules import _VocStructModule
+from mas.schema.model.monica.monica_params_capnp.types.modules import (
+    _VocStructModule,
+)
 from mas.schema.model.monica.monica_params_capnp.types.readers import (
     AutomaticHarvestParametersReader,
     CropModuleParametersReader,
@@ -30,6 +32,7 @@ from mas.schema.model.monica.monica_params_capnp.types.readers import (
     SpeciesParametersReader,
 )
 from mas.schema.model.monica.monica_state_capnp.types import builders as builders
+from mas.schema.model.monica.monica_state_capnp.types import common as common
 from mas.schema.model.monica.monica_state_capnp.types import lists as lists
 
 class MaybeBoolReader(_DynamicStructReader):
@@ -39,7 +42,7 @@ class MaybeBoolReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MaybeBoolBuilder: ...
 
 class ACDToValueReader(_DynamicStructReader):
@@ -51,7 +54,7 @@ class ACDToValueReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ACDToValueBuilder: ...
 
 class DelayedNMinApplicationParamsReader(_DynamicStructReader):
@@ -75,7 +78,7 @@ class DelayedNMinApplicationParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.DelayedNMinApplicationParamsBuilder: ...
 
 class CropModuleStateReader(_DynamicStructReader):
@@ -557,7 +560,7 @@ class CropModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropModuleStateBuilder: ...
 
 class AOMPropertiesReader(_DynamicStructReader):
@@ -607,7 +610,7 @@ class AOMPropertiesReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AOMPropertiesBuilder: ...
 
 class SoilLayerStateReader(_DynamicStructReader):
@@ -645,7 +648,7 @@ class SoilLayerStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilLayerStateBuilder: ...
 
 class SoilColumnStateReader(_DynamicStructReader):
@@ -687,7 +690,7 @@ class SoilColumnStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilColumnStateBuilder: ...
 
 class SoilTemperatureModuleStateReader(_DynamicStructReader):
@@ -733,7 +736,7 @@ class SoilTemperatureModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilTemperatureModuleStateBuilder: ...
 
 class FrostModuleStateReader(_DynamicStructReader):
@@ -761,7 +764,7 @@ class FrostModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.FrostModuleStateBuilder: ...
 
 class SnowModuleStateReader(_DynamicStructReader):
@@ -809,7 +812,7 @@ class SnowModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SnowModuleStateBuilder: ...
 
 class SoilMoistureModuleStateReader(_DynamicStructReader):
@@ -947,7 +950,7 @@ class SoilMoistureModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilMoistureModuleStateBuilder: ...
 
 class SoilOrganicModuleStateReader(_DynamicStructReader):
@@ -1037,7 +1040,7 @@ class SoilOrganicModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilOrganicModuleStateBuilder: ...
 
 class SoilTransportModuleStateReader(_DynamicStructReader):
@@ -1081,7 +1084,7 @@ class SoilTransportModuleStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilTransportModuleStateBuilder: ...
 
 class MonicaModelStateReader(_DynamicStructReader):
@@ -1159,7 +1162,7 @@ class MonicaModelStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MonicaModelStateBuilder: ...
 
 class RuntimeStateReader(_DynamicStructReader):
@@ -1169,7 +1172,7 @@ class RuntimeStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RuntimeStateBuilder: ...
 
 class CropStateReader(_DynamicStructReader):
@@ -1203,7 +1206,7 @@ class CropStateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CropStateBuilder: ...
 
 class ICDataReader(_DynamicStructReader):
@@ -1213,13 +1216,14 @@ class ICDataReader(_DynamicStructReader):
     def height(self) -> float: ...
     @property
     def lait(self) -> float: ...
+    @property
     @override
-    def which(self) -> Literal["noCrop", "height", "lait"]: ...
+    def which(self) -> common._ICDataWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ICDataBuilder: ...
 
 type ACDToValueListListReader = lists._ACDToValueListList.Reader

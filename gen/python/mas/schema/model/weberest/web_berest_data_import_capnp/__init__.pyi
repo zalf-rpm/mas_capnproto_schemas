@@ -1,13 +1,14 @@
 """This is an automatically generated stub for `web_berest_data_import.capnp`."""
 
 from collections.abc import Sequence
+from types import ModuleType as _ModuleType
 
 from capnp.lib.capnp import _Schema
 
 from mas.schema.model.weberest.web_berest_data_import_capnp import types as types
 
 def get_schema_by_id(schema_id: int) -> _Schema: ...
-def load_capnp_file(path: str, imports: Sequence[str] = ...) -> object: ...
+def load_capnp_file(path: str, imports: Sequence[str] = ...) -> _ModuleType: ...
 
 DWLABImport: types.modules._DWLABImportInterfaceModule
 

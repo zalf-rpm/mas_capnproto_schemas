@@ -1,10 +1,11 @@
 """Module helper types for `fbp.capnp`."""
 
-from collections.abc import Awaitable, Callable, Sequence
+from collections.abc import Awaitable, Callable, Iterator, Sequence
 from contextlib import AbstractContextManager
 from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _AsyncIoStream,
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -27,9 +28,7 @@ from mas.schema.common.common_capnp.types.builders import (
     StructuredTextBuilder,
     ValueBuilder,
 )
-from mas.schema.common.common_capnp.types.modules import (
-    _IdentifiableInterfaceModule,
-)
+from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import (
     IdInformationReader,
     StructuredTextReader,
@@ -79,14 +78,11 @@ class _IPStructModule(_StructModule):
             @override
             def fields(self) -> _IPStructModule._KVStructModule._KVSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._IPKVSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             key: str | None = None,
             desc: str | None = None,
             value: common.AnyPointer | None = None,
@@ -94,38 +90,58 @@ class _IPStructModule(_StructModule):
             **kwargs: object,
         ) -> builders.KVBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.KVBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.KVReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.KVReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.KVBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.KVBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.KVReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.KVReader: ...
         @override
         def read(
             self,
@@ -140,6 +156,43 @@ class _IPStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.KVReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.KVReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.KVReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.KVReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.KVReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.KVReader]: ...
 
     KV: _KVStructModule
     class _TypeEnumModule(_EnumModule):
@@ -148,10 +201,6 @@ class _IPStructModule(_StructModule):
         closeBracket: int
 
         class _TypeSchema(_EnumSchema): ...
-
-        @property
-        @override
-        def schema(self) -> schemas._IPTypeEnumSchema: ...
 
     Type: _TypeEnumModule
     class _ChunkedDataStructModule(_StructModule):
@@ -176,50 +225,67 @@ class _IPStructModule(_StructModule):
                 _IPStructModule._ChunkedDataStructModule._ChunkedDataSchema._Fields
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._IPChunkedDataSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             chunkCount: int | None = None,
+            **kwargs: object,
+        ) -> builders.ChunkedDataBuilder: ...
+        @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
             **kwargs: object,
         ) -> builders.ChunkedDataBuilder: ...
         @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.ChunkedDataReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.ChunkedDataReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.ChunkedDataBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ChunkedDataBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.ChunkedDataReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ChunkedDataReader: ...
         @override
         def read(
             self,
@@ -234,12 +300,56 @@ class _IPStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.ChunkedDataReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ChunkedDataReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ChunkedDataReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ChunkedDataReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ChunkedDataReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ChunkedDataReader]: ...
 
     ChunkedData: _ChunkedDataStructModule
     class _SysAttributesStructModule(_StructModule):
         class _SysAttributesBracketTypeStructModule(_StructModule):
-            class Reader(_DynamicStructReader): ...
-            class Builder(_DynamicStructBuilder): ...
+            class Reader(_DynamicStructReader):
+                @property
+                @override
+                def which(self) -> common._SysAttributesBracketTypeWhich: ...
+
+            class Builder(_DynamicStructBuilder):
+                @property
+                @override
+                def which(self) -> common._SysAttributesBracketTypeWhich: ...
 
             class _SysAttributesBracketTypeSchema(_StructSchema):
                 class _ChunkedContentField(_StructSchemaField):
@@ -277,16 +387,11 @@ class _IPStructModule(_StructModule):
                     self,
                 ) -> _IPStructModule._SysAttributesStructModule._SysAttributesBracketTypeStructModule._SysAttributesBracketTypeSchema._Fields: ...
 
-            @property
-            @override
-            def schema(
-                self,
-            ) -> schemas._IPSysAttributesSysAttributesBracketTypeSchema: ...
             @override
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                allocate_seg_callable: Callable[[int], Any] | None = None,
                 standard: None | None = None,
                 chunkedContent: builders.ChunkedDataBuilder
                 | readers.ChunkedDataReader
@@ -299,38 +404,58 @@ class _IPStructModule(_StructModule):
                 **kwargs: object,
             ) -> builders.SysAttributesBracketTypeBuilder: ...
             @override
+            def __call__(
+                self,
+                num_first_segment_words: int | None = None,
+                **kwargs: object,
+            ) -> builders.SysAttributesBracketTypeBuilder: ...
+            @override
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> AbstractContextManager[readers.SysAttributesBracketTypeReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-                *,
-                builder: Literal[False],
+                builder: Literal[False] = False,
             ) -> AbstractContextManager[readers.SysAttributesBracketTypeReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
             ) -> AbstractContextManager[builders.SysAttributesBracketTypeBuilder]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None,
+                nesting_limit: int | None,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.SysAttributesBracketTypeBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _DynamicStructReader: ...
+            ) -> readers.SysAttributesBracketTypeReader: ...
+            @override
+            def from_segments(
+                self,
+                segments: Sequence[Any],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.SysAttributesBracketTypeReader: ...
             @override
             def read(
                 self,
@@ -345,8 +470,45 @@ class _IPStructModule(_StructModule):
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> readers.SysAttributesBracketTypeReader: ...
+            @override
+            async def read_async(
+                self,
+                stream: _AsyncIoStream,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.SysAttributesBracketTypeReader | None: ...
+            @override
+            def read_multiple(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.SysAttributesBracketTypeReader]: ...
+            @override
+            def read_multiple_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.SysAttributesBracketTypeReader]: ...
+            @override
+            def read_multiple_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.SysAttributesBracketTypeReader]: ...
+            @override
+            def read_multiple_bytes_packed(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.SysAttributesBracketTypeReader]: ...
 
-        SysAttributesBracketType: _SysAttributesBracketTypeStructModule
+        BracketType: type[common._SysAttributesBracketTypeModuleWhich]
         class Reader(_DynamicStructReader): ...
         class Builder(_DynamicStructBuilder): ...
 
@@ -378,14 +540,11 @@ class _IPStructModule(_StructModule):
                 _IPStructModule._SysAttributesStructModule._SysAttributesSchema._Fields
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._IPSysAttributesSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             bracketType: builders.SysAttributesBracketTypeBuilder
             | readers.SysAttributesBracketTypeReader
             | dict[str, Any]
@@ -394,38 +553,58 @@ class _IPStructModule(_StructModule):
             **kwargs: object,
         ) -> builders.SysAttributesBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.SysAttributesBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.SysAttributesReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.SysAttributesReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.SysAttributesBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.SysAttributesBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.SysAttributesReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.SysAttributesReader: ...
         @override
         def read(
             self,
@@ -440,6 +619,43 @@ class _IPStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.SysAttributesReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.SysAttributesReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.SysAttributesReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.SysAttributesReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.SysAttributesReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.SysAttributesReader]: ...
 
     SysAttributes: _SysAttributesStructModule
     class Reader(_DynamicStructReader): ...
@@ -493,20 +709,17 @@ class _IPStructModule(_StructModule):
         @override
         def fields(self) -> _IPStructModule._IPSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._IPSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         attributes: builders.KVListBuilder
         | readers.KVListReader
         | Sequence[readers.KVReader | builders.KVBuilder | dict[str, Any]]
         | None = None,
         content: common.AnyPointer | None = None,
-        type: enums.IPTypeEnum | None = None,
+        type: enums.IPTypeValue | enums.IPTypeEnum | None = None,
         sysAttributes: builders.SysAttributesBuilder
         | readers.SysAttributesReader
         | dict[str, Any]
@@ -514,38 +727,58 @@ class _IPStructModule(_StructModule):
         **kwargs: object,
     ) -> builders.IPBuilder: ...
     @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
+        **kwargs: object,
+    ) -> builders.IPBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.IPReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.IPReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.IPBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.IPBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.IPReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.IPReader: ...
     @override
     def read(
         self,
@@ -560,6 +793,43 @@ class _IPStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.IPReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.IPReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.IPReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.IPReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.IPReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.IPReader]: ...
 
 class _IIPStructModule(_StructModule):
     class Reader(_DynamicStructReader): ...
@@ -576,50 +846,67 @@ class _IIPStructModule(_StructModule):
         @override
         def fields(self) -> _IIPStructModule._IIPSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._IIPSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         content: common.AnyPointer | None = None,
+        **kwargs: object,
+    ) -> builders.IIPBuilder: ...
+    @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
         **kwargs: object,
     ) -> builders.IIPBuilder: ...
     @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.IIPReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.IIPReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.IIPBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.IIPBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.IIPReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.IIPReader: ...
     @override
     def read(
         self,
@@ -634,6 +921,43 @@ class _IIPStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.IIPReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.IIPReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.IIPReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.IIPReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.IIPReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.IIPReader]: ...
 
 class _LogMessageStructModule(_StructModule):
     class _LevelEnumModule(_EnumModule):
@@ -644,10 +968,6 @@ class _LogMessageStructModule(_StructModule):
         critical: int
 
         class _LevelSchema(_EnumSchema): ...
-
-        @property
-        @override
-        def schema(self) -> schemas._LogMessageLevelEnumSchema: ...
 
     Level: _LevelEnumModule
     class Reader(_DynamicStructReader): ...
@@ -712,15 +1032,12 @@ class _LogMessageStructModule(_StructModule):
         @override
         def fields(self) -> _LogMessageStructModule._LogMessageSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._LogMessageSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
-        level: enums.LogMessageLevelEnum | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
+        level: enums.LogMessageLevelValue | enums.LogMessageLevelEnum | None = None,
         timestamp: str | None = None,
         processId: str | None = None,
         processName: str | None = None,
@@ -737,38 +1054,58 @@ class _LogMessageStructModule(_StructModule):
         **kwargs: object,
     ) -> builders.LogMessageBuilder: ...
     @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
+        **kwargs: object,
+    ) -> builders.LogMessageBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.LogMessageReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.LogMessageReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.LogMessageBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.LogMessageBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.LogMessageReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.LogMessageReader: ...
     @override
     def read(
         self,
@@ -783,6 +1120,43 @@ class _LogMessageStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.LogMessageReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.LogMessageReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.LogMessageReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.LogMessageReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.LogMessageReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.LogMessageReader]: ...
 
 class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceModule):
     class _CloseSemanticsEnumModule(_EnumModule):
@@ -791,14 +1165,18 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
 
         class _CloseSemanticsSchema(_EnumSchema): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelCloseSemanticsEnumSchema: ...
-
     CloseSemantics: _CloseSemanticsEnumModule
     class _MsgStructModule(_StructModule):
-        class Reader(_DynamicStructReader): ...
-        class Builder(_DynamicStructBuilder): ...
+        Union: type[common._MsgModuleWhich]
+        class Reader(_DynamicStructReader):
+            @property
+            @override
+            def which(self) -> common._MsgWhich: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            @override
+            def which(self) -> common._MsgWhich: ...
 
         class _MsgSchema(_StructSchema):
             class _Fields(dict[str, _StructSchemaField]):
@@ -817,52 +1195,69 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._MsgStructModule._MsgSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelMsgSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             value: common.AnyPointer | None = None,
             done: None | None = None,
             noMsg: None | None = None,
             **kwargs: object,
         ) -> builders.MsgBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.MsgBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.MsgReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.MsgReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.MsgBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.MsgBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.MsgReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.MsgReader: ...
         @override
         def read(
             self,
@@ -877,6 +1272,43 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.MsgReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.MsgReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.MsgReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.MsgReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.MsgReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.MsgReader]: ...
 
     Msg: _MsgStructModule
     class _ReaderInterfaceModule(
@@ -930,9 +1362,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ReaderInterfaceModule._LeaseInterfaceModule._LeaseSchema._Methods: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelReaderLeaseSchema: ...
             @override
             def _new_client(
                 self,
@@ -1287,9 +1716,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 _ChannelInterfaceModule._ReaderInterfaceModule._ReaderSchema._Methods
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelReaderSchema: ...
         @override
         def _new_client(
             self,
@@ -1625,9 +2051,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 _ChannelInterfaceModule._WriterInterfaceModule._WriterSchema._Methods
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelWriterSchema: ...
         @override
         def _new_client(
             self,
@@ -1783,16 +2206,15 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._StartupInfoStructModule._StartupInfoSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelStartupInfoSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             bufferSize: int | None = None,
-            closeSemantics: enums.ChannelCloseSemanticsEnum | None = None,
+            closeSemantics: enums.ChannelCloseSemanticsValue
+            | enums.ChannelCloseSemanticsEnum
+            | None = None,
             channelSR: SturdyRefBuilder
             | SturdyRefReader
             | dict[str, Any]
@@ -1825,38 +2247,58 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             **kwargs: object,
         ) -> builders.StartupInfoBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.StartupInfoBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.StartupInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.StartupInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.StartupInfoBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.StartupInfoBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.StartupInfoReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.StartupInfoReader: ...
         @override
         def read(
             self,
@@ -1871,6 +2313,43 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.StartupInfoReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.StartupInfoReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.StartupInfoReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.StartupInfoReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.StartupInfoReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.StartupInfoReader]: ...
 
     StartupInfo: _StartupInfoStructModule
     class _StatsCallbackInterfaceModule(_InterfaceModule):
@@ -1919,14 +2398,11 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsStructModule._StatsSchema._Fields: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelStatsCallbackStatsSchema: ...
             @override
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                allocate_seg_callable: Callable[[int], Any] | None = None,
                 noOfWaitingWriters: int | None = None,
                 noOfWaitingReaders: int | None = None,
                 noOfIpsInQueue: int | None = None,
@@ -1936,38 +2412,58 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 **kwargs: object,
             ) -> builders.StatsBuilder: ...
             @override
+            def __call__(
+                self,
+                num_first_segment_words: int | None = None,
+                **kwargs: object,
+            ) -> builders.StatsBuilder: ...
+            @override
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> AbstractContextManager[readers.StatsReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-                *,
-                builder: Literal[False],
+                builder: Literal[False] = False,
             ) -> AbstractContextManager[readers.StatsReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
             ) -> AbstractContextManager[builders.StatsBuilder]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None,
+                nesting_limit: int | None,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.StatsBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _DynamicStructReader: ...
+            ) -> readers.StatsReader: ...
+            @override
+            def from_segments(
+                self,
+                segments: Sequence[Any],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.StatsReader: ...
             @override
             def read(
                 self,
@@ -1982,6 +2478,43 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> readers.StatsReader: ...
+            @override
+            async def read_async(
+                self,
+                stream: _AsyncIoStream,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.StatsReader | None: ...
+            @override
+            def read_multiple(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.StatsReader]: ...
+            @override
+            def read_multiple_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.StatsReader]: ...
+            @override
+            def read_multiple_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.StatsReader]: ...
+            @override
+            def read_multiple_bytes_packed(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.StatsReader]: ...
 
         Stats: _StatsStructModule
         class _UnregisterInterfaceModule(_InterfaceModule):
@@ -2038,9 +2571,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._Methods: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelStatsCallbackUnregisterSchema: ...
             @override
             def _new_client(
                 self,
@@ -2122,9 +2652,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._StatsCallbackInterfaceModule._StatsCallbackSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelStatsCallbackSchema: ...
         @override
         def _new_client(
             self,
@@ -2182,14 +2709,11 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ObserverInterfaceModule._EventStructModule._EventSchema._Fields: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelObserverEventSchema: ...
             @override
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                allocate_seg_callable: Callable[[int], Any] | None = None,
                 seqNo: int | None = None,
                 timestamp: str | None = None,
                 sizeInWords: int | None = None,
@@ -2197,38 +2721,58 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 **kwargs: object,
             ) -> builders.EventBuilder: ...
             @override
+            def __call__(
+                self,
+                num_first_segment_words: int | None = None,
+                **kwargs: object,
+            ) -> builders.EventBuilder: ...
+            @override
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> AbstractContextManager[readers.EventReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-                *,
-                builder: Literal[False],
+                builder: Literal[False] = False,
             ) -> AbstractContextManager[readers.EventReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
             ) -> AbstractContextManager[builders.EventBuilder]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None,
+                nesting_limit: int | None,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.EventBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _DynamicStructReader: ...
+            ) -> readers.EventReader: ...
+            @override
+            def from_segments(
+                self,
+                segments: Sequence[Any],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.EventReader: ...
             @override
             def read(
                 self,
@@ -2243,6 +2787,43 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> readers.EventReader: ...
+            @override
+            async def read_async(
+                self,
+                stream: _AsyncIoStream,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.EventReader | None: ...
+            @override
+            def read_multiple(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.EventReader]: ...
+            @override
+            def read_multiple_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.EventReader]: ...
+            @override
+            def read_multiple_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.EventReader]: ...
+            @override
+            def read_multiple_bytes_packed(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.EventReader]: ...
 
         Event: _EventStructModule
         class _UnregisterInterfaceModule(_InterfaceModule):
@@ -2299,9 +2880,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ObserverInterfaceModule._UnregisterInterfaceModule._UnregisterSchema._Methods: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelObserverUnregisterSchema: ...
             @override
             def _new_client(
                 self,
@@ -2354,52 +2932,69 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                     self,
                 ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ParamsStructModule._ParamsSchema._Fields: ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ChannelObserverParamsSchema: ...
             @override
             def new_message(
                 self,
                 num_first_segment_words: int | None = None,
-                allocate_seg_callable: Callable[[int], bytearray] | None = None,
+                allocate_seg_callable: Callable[[int], Any] | None = None,
                 everyNth: int | None = None,
                 withContent: bool | None = None,
                 gate: bool | None = None,
                 **kwargs: object,
             ) -> builders.ChannelObserverParamsBuilder: ...
             @override
+            def __call__(
+                self,
+                num_first_segment_words: int | None = None,
+                **kwargs: object,
+            ) -> builders.ChannelObserverParamsBuilder: ...
+            @override
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> AbstractContextManager[readers.ChannelObserverParamsReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-                *,
-                builder: Literal[False],
+                builder: Literal[False] = False,
             ) -> AbstractContextManager[readers.ChannelObserverParamsReader]: ...
             @overload
             def from_bytes(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
                 *,
                 builder: Literal[True],
             ) -> AbstractContextManager[builders.ChannelObserverParamsBuilder]: ...
+            @overload
+            def from_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None,
+                nesting_limit: int | None,
+                builder: Literal[True],
+            ) -> AbstractContextManager[builders.ChannelObserverParamsBuilder]: ...
             @override
             def from_bytes_packed(
                 self,
-                buf: bytes,
+                buf: Any,
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
-            ) -> _DynamicStructReader: ...
+            ) -> readers.ChannelObserverParamsReader: ...
+            @override
+            def from_segments(
+                self,
+                segments: Sequence[Any],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.ChannelObserverParamsReader: ...
             @override
             def read(
                 self,
@@ -2414,6 +3009,43 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 traversal_limit_in_words: int | None = None,
                 nesting_limit: int | None = None,
             ) -> readers.ChannelObserverParamsReader: ...
+            @override
+            async def read_async(
+                self,
+                stream: _AsyncIoStream,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> readers.ChannelObserverParamsReader | None: ...
+            @override
+            def read_multiple(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.ChannelObserverParamsReader]: ...
+            @override
+            def read_multiple_packed(
+                self,
+                file: IO[str] | IO[bytes],
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+                skip_copy: bool = False,
+            ) -> Iterator[readers.ChannelObserverParamsReader]: ...
+            @override
+            def read_multiple_bytes(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.ChannelObserverParamsReader]: ...
+            @override
+            def read_multiple_bytes_packed(
+                self,
+                buf: Any,
+                traversal_limit_in_words: int | None = None,
+                nesting_limit: int | None = None,
+            ) -> Iterator[readers.ChannelObserverParamsReader]: ...
 
         Params: _ParamsStructModule
 
@@ -2475,9 +3107,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
                 self,
             ) -> _ChannelInterfaceModule._ObserverInterfaceModule._ObserverSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ChannelObserverSchema: ...
         @override
         def _new_client(
             self,
@@ -3162,9 +3791,6 @@ class _ChannelInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterface
         @override
         def methods(self) -> _ChannelInterfaceModule._ChannelSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ChannelSchema: ...
     @override
     def _new_client(
         self,
@@ -3365,14 +3991,11 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _StartChannelsServiceInterfaceModule._ParamsStructModule._ParamsSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._StartChannelsServiceParamsSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             name: str | None = None,
             noOfChannels: int | None = None,
             noOfReaders: int | None = None,
@@ -3390,38 +4013,58 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             **kwargs: object,
         ) -> builders.StartChannelsServiceParamsBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.StartChannelsServiceParamsBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.StartChannelsServiceParamsReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.StartChannelsServiceParamsReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.StartChannelsServiceParamsBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.StartChannelsServiceParamsBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.StartChannelsServiceParamsReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.StartChannelsServiceParamsReader: ...
         @override
         def read(
             self,
@@ -3436,6 +4079,43 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.StartChannelsServiceParamsReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.StartChannelsServiceParamsReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.StartChannelsServiceParamsReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.StartChannelsServiceParamsReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.StartChannelsServiceParamsReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.StartChannelsServiceParamsReader]: ...
 
     Params: _ParamsStructModule
 
@@ -3611,9 +4291,6 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
             _StartChannelsServiceInterfaceModule._StartChannelsServiceSchema._Methods
         ): ...
 
-    @property
-    @override
-    def schema(self) -> schemas._StartChannelsServiceSchema: ...
     @override
     def _new_client(
         self,
@@ -3640,8 +4317,15 @@ class _StartChannelsServiceInterfaceModule(_IdentifiableInterfaceModule):
 
 class _PortInfosStructModule(_StructModule):
     class _NameAndSRStructModule(_StructModule):
-        class Reader(_DynamicStructReader): ...
-        class Builder(_DynamicStructBuilder): ...
+        class Reader(_DynamicStructReader):
+            @property
+            @override
+            def which(self) -> common._NameAndSRWhich: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            @override
+            def which(self) -> common._NameAndSRWhich: ...
 
         class _NameAndSRSchema(_StructSchema):
             class _SrField(_StructSchemaField):
@@ -3691,14 +4375,11 @@ class _PortInfosStructModule(_StructModule):
                 _PortInfosStructModule._NameAndSRStructModule._NameAndSRSchema._Fields
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._PortInfosNameAndSRSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             name: str | None = None,
             sr: SturdyRefBuilder | SturdyRefReader | dict[str, Any] | None = None,
             srs: builders.SturdyRefListBuilder
@@ -3708,38 +4389,58 @@ class _PortInfosStructModule(_StructModule):
             **kwargs: object,
         ) -> builders.NameAndSRBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.NameAndSRBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.NameAndSRReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.NameAndSRReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.NameAndSRBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.NameAndSRBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.NameAndSRReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.NameAndSRReader: ...
         @override
         def read(
             self,
@@ -3754,6 +4455,43 @@ class _PortInfosStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.NameAndSRReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.NameAndSRReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.NameAndSRReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.NameAndSRReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.NameAndSRReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.NameAndSRReader]: ...
 
     NameAndSR: _NameAndSRStructModule
     class Reader(_DynamicStructReader): ...
@@ -3802,14 +4540,11 @@ class _PortInfosStructModule(_StructModule):
         @override
         def fields(self) -> _PortInfosStructModule._PortInfosSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._PortInfosSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         inPorts: builders.NameAndSRListBuilder
         | readers.NameAndSRListReader
         | Sequence[readers.NameAndSRReader | builders.NameAndSRBuilder | dict[str, Any]]
@@ -3821,38 +4556,58 @@ class _PortInfosStructModule(_StructModule):
         **kwargs: object,
     ) -> builders.PortInfosBuilder: ...
     @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
+        **kwargs: object,
+    ) -> builders.PortInfosBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.PortInfosReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.PortInfosReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.PortInfosBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.PortInfosBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.PortInfosReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.PortInfosReader: ...
     @override
     def read(
         self,
@@ -3867,6 +4622,43 @@ class _PortInfosStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.PortInfosReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.PortInfosReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.PortInfosReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.PortInfosReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.PortInfosReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.PortInfosReader]: ...
 
 class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
     class _FactoryInterfaceModule(_IdentifiableInterfaceModule):
@@ -3979,9 +4771,6 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                 _RunnableInterfaceModule._FactoryInterfaceModule._FactorySchema._Methods
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._RunnableFactorySchema: ...
         @override
         def _new_client(
             self,
@@ -4052,9 +4841,6 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
                 self,
             ) -> _RunnableInterfaceModule._StoppedCallbackInterfaceModule._StoppedCallbackSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._RunnableStoppedCallbackSchema: ...
         @override
         def _new_client(
             self,
@@ -4243,9 +5029,6 @@ class _RunnableInterfaceModule(_IdentifiableInterfaceModule):
         @override
         def methods(self) -> _RunnableInterfaceModule._RunnableSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._RunnableSchema: ...
     @override
     def _new_client(
         self,
@@ -4388,9 +5171,6 @@ class _ProcessInterfaceModule(
                 _ProcessInterfaceModule._FactoryInterfaceModule._FactorySchema._Methods
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessFactorySchema: ...
         @override
         def _new_client(
             self,
@@ -4555,9 +5335,6 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ProcessHandleInterfaceModule._ProcessHandleSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessProcessHandleSchema: ...
         @override
         def _new_client(
             self,
@@ -4659,9 +5436,6 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._DisconnectInterfaceModule._DisconnectSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessDisconnectSchema: ...
         @override
         def _new_client(
             self,
@@ -4709,51 +5483,68 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ConfigEntryStructModule._ConfigEntrySchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessConfigEntrySchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             name: str | None = None,
             val: ValueBuilder | ValueReader | dict[str, Any] | None = None,
+            **kwargs: object,
+        ) -> builders.ConfigEntryBuilder: ...
+        @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
             **kwargs: object,
         ) -> builders.ConfigEntryBuilder: ...
         @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.ConfigEntryReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.ConfigEntryReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.ConfigEntryBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ConfigEntryBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.ConfigEntryReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ConfigEntryReader: ...
         @override
         def read(
             self,
@@ -4768,6 +5559,43 @@ class _ProcessInterfaceModule(
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.ConfigEntryReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ConfigEntryReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ConfigEntryReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ConfigEntryReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ConfigEntryReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ConfigEntryReader]: ...
 
     ConfigEntry: _ConfigEntryStructModule
     class _StateEnumModule(_EnumModule):
@@ -4778,10 +5606,6 @@ class _ProcessInterfaceModule(
         failed: int
 
         class _StateSchema(_EnumSchema): ...
-
-        @property
-        @override
-        def schema(self) -> schemas._ProcessStateEnumSchema: ...
 
     State: _StateEnumModule
     class _StateTransitionInterfaceModule(_InterfaceModule):
@@ -4855,9 +5679,6 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._StateTransitionInterfaceModule._StateTransitionSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessStateTransitionSchema: ...
         @override
         def _new_client(
             self,
@@ -4889,10 +5710,6 @@ class _ProcessInterfaceModule(
 
         class _ActivityStateSchema(_EnumSchema): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessActivityStateEnumSchema: ...
-
     ActivityState: _ActivityStateEnumModule
     class _ActivityInfoStructModule(_StructModule):
         class Reader(_DynamicStructReader): ...
@@ -4921,51 +5738,70 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ActivityInfoStructModule._ActivityInfoSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessActivityInfoSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
-            state: enums.ProcessActivityStateEnum | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
+            state: enums.ProcessActivityStateValue
+            | enums.ProcessActivityStateEnum
+            | None = None,
             port: str | None = None,
+            **kwargs: object,
+        ) -> builders.ActivityInfoBuilder: ...
+        @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
             **kwargs: object,
         ) -> builders.ActivityInfoBuilder: ...
         @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.ActivityInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.ActivityInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.ActivityInfoBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ActivityInfoBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.ActivityInfoReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ActivityInfoReader: ...
         @override
         def read(
             self,
@@ -4980,6 +5816,43 @@ class _ProcessInterfaceModule(
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.ActivityInfoReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ActivityInfoReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ActivityInfoReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ActivityInfoReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ActivityInfoReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ActivityInfoReader]: ...
 
     ActivityInfo: _ActivityInfoStructModule
     class _ActivityTransitionInterfaceModule(_InterfaceModule):
@@ -5057,9 +5930,6 @@ class _ProcessInterfaceModule(
                 self,
             ) -> _ProcessInterfaceModule._ActivityTransitionInterfaceModule._ActivityTransitionSchema._Methods: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessActivityTransitionSchema: ...
         @override
         def _new_client(
             self,
@@ -5091,10 +5961,6 @@ class _ProcessInterfaceModule(
 
             class _OutcomeSchema(_EnumSchema): ...
 
-            @property
-            @override
-            def schema(self) -> schemas._ProcessRunInfoOutcomeEnumSchema: ...
-
         Outcome: _OutcomeEnumModule
         class _PhaseEnumModule(_EnumModule):
             unknown: int
@@ -5105,10 +5971,6 @@ class _ProcessInterfaceModule(
             close: int
 
             class _PhaseSchema(_EnumSchema): ...
-
-            @property
-            @override
-            def schema(self) -> schemas._ProcessRunInfoPhaseEnumSchema: ...
 
         Phase: _PhaseEnumModule
         class Reader(_DynamicStructReader): ...
@@ -5194,19 +6056,20 @@ class _ProcessInterfaceModule(
                 _ProcessInterfaceModule._RunInfoStructModule._RunInfoSchema._Fields
             ): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ProcessRunInfoSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             hasRunInfo: bool | None = None,
             processId: str | None = None,
             processName: str | None = None,
-            outcome: enums.ProcessRunInfoOutcomeEnum | None = None,
-            phase: enums.ProcessRunInfoPhaseEnum | None = None,
+            outcome: enums.ProcessRunInfoOutcomeValue
+            | enums.ProcessRunInfoOutcomeEnum
+            | None = None,
+            phase: enums.ProcessRunInfoPhaseValue
+            | enums.ProcessRunInfoPhaseEnum
+            | None = None,
             port: str | None = None,
             detailType: str | None = None,
             message: str | None = None,
@@ -5219,38 +6082,58 @@ class _ProcessInterfaceModule(
             **kwargs: object,
         ) -> builders.RunInfoBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.RunInfoBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.RunInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.RunInfoReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.RunInfoBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.RunInfoBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.RunInfoReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.RunInfoReader: ...
         @override
         def read(
             self,
@@ -5265,6 +6148,43 @@ class _ProcessInterfaceModule(
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.RunInfoReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.RunInfoReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.RunInfoReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.RunInfoReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.RunInfoReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.RunInfoReader]: ...
 
     RunInfo: _RunInfoStructModule
 
@@ -6005,9 +6925,6 @@ class _ProcessInterfaceModule(
         @override
         def methods(self) -> _ProcessInterfaceModule._ProcessSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ProcessSchema: ...
     @override
     def _new_client(
         self,
@@ -6169,10 +7086,6 @@ class _ComponentStructModule(_StructModule):
 
         class _ComponentTypeSchema(_EnumSchema): ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ComponentComponentTypeEnumSchema: ...
-
     ComponentType: _ComponentTypeEnumModule
     class _PortStructModule(_StructModule):
         class _PortTypeEnumModule(_EnumModule):
@@ -6180,10 +7093,6 @@ class _ComponentStructModule(_StructModule):
             array: int
 
             class _PortTypeSchema(_EnumSchema): ...
-
-            @property
-            @override
-            def schema(self) -> schemas._ComponentPortPortTypeEnumSchema: ...
 
         PortType: _PortTypeEnumModule
         class _PortRoleEnumModule(_EnumModule):
@@ -6195,10 +7104,6 @@ class _ComponentStructModule(_StructModule):
             control: int
 
             class _PortRoleSchema(_EnumSchema): ...
-
-            @property
-            @override
-            def schema(self) -> schemas._ComponentPortPortRoleEnumSchema: ...
 
         PortRole: _PortRoleEnumModule
         class Reader(_DynamicStructReader): ...
@@ -6253,55 +7158,76 @@ class _ComponentStructModule(_StructModule):
                 self,
             ) -> _ComponentStructModule._PortStructModule._PortSchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ComponentPortSchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             name: str | None = None,
             contentType: str | None = None,
-            type: enums.ComponentPortPortTypeEnum | None = None,
+            type: enums.ComponentPortPortTypeValue
+            | enums.ComponentPortPortTypeEnum
+            | None = None,
             desc: str | None = None,
-            role: enums.ComponentPortPortRoleEnum | None = None,
+            role: enums.ComponentPortPortRoleValue
+            | enums.ComponentPortPortRoleEnum
+            | None = None,
             required: bool | None = None,
+            **kwargs: object,
+        ) -> builders.PortBuilder: ...
+        @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
             **kwargs: object,
         ) -> builders.PortBuilder: ...
         @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.PortReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.PortReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.PortBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.PortBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.PortReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.PortReader: ...
         @override
         def read(
             self,
@@ -6316,11 +7242,55 @@ class _ComponentStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.PortReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.PortReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.PortReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.PortReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.PortReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.PortReader]: ...
 
     Port: _PortStructModule
     class _ComponentFactoryStructModule(_StructModule):
-        class Reader(_DynamicStructReader): ...
-        class Builder(_DynamicStructBuilder): ...
+        class Reader(_DynamicStructReader):
+            @property
+            @override
+            def which(self) -> common._ComponentFactoryWhich: ...
+
+        class Builder(_DynamicStructBuilder):
+            @property
+            @override
+            def which(self) -> common._ComponentFactoryWhich: ...
 
         class _ComponentFactorySchema(_StructSchema):
             class _RunnableField(_StructSchemaField):
@@ -6355,14 +7325,11 @@ class _ComponentStructModule(_StructModule):
                 self,
             ) -> _ComponentStructModule._ComponentFactoryStructModule._ComponentFactorySchema._Fields: ...
 
-        @property
-        @override
-        def schema(self) -> schemas._ComponentComponentFactorySchema: ...
         @override
         def new_message(
             self,
             num_first_segment_words: int | None = None,
-            allocate_seg_callable: Callable[[int], bytearray] | None = None,
+            allocate_seg_callable: Callable[[int], Any] | None = None,
             none: None | None = None,
             runnable: clients.RunnableFactoryClient
             | _RunnableInterfaceModule._FactoryInterfaceModule.Server
@@ -6373,38 +7340,58 @@ class _ComponentStructModule(_StructModule):
             **kwargs: object,
         ) -> builders.ComponentFactoryBuilder: ...
         @override
+        def __call__(
+            self,
+            num_first_segment_words: int | None = None,
+            **kwargs: object,
+        ) -> builders.ComponentFactoryBuilder: ...
+        @override
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> AbstractContextManager[readers.ComponentFactoryReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-            *,
-            builder: Literal[False],
+            builder: Literal[False] = False,
         ) -> AbstractContextManager[readers.ComponentFactoryReader]: ...
         @overload
         def from_bytes(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
             *,
             builder: Literal[True],
         ) -> AbstractContextManager[builders.ComponentFactoryBuilder]: ...
+        @overload
+        def from_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None,
+            nesting_limit: int | None,
+            builder: Literal[True],
+        ) -> AbstractContextManager[builders.ComponentFactoryBuilder]: ...
         @override
         def from_bytes_packed(
             self,
-            buf: bytes,
+            buf: Any,
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
-        ) -> _DynamicStructReader: ...
+        ) -> readers.ComponentFactoryReader: ...
+        @override
+        def from_segments(
+            self,
+            segments: Sequence[Any],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ComponentFactoryReader: ...
         @override
         def read(
             self,
@@ -6419,8 +7406,45 @@ class _ComponentStructModule(_StructModule):
             traversal_limit_in_words: int | None = None,
             nesting_limit: int | None = None,
         ) -> readers.ComponentFactoryReader: ...
+        @override
+        async def read_async(
+            self,
+            stream: _AsyncIoStream,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> readers.ComponentFactoryReader | None: ...
+        @override
+        def read_multiple(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ComponentFactoryReader]: ...
+        @override
+        def read_multiple_packed(
+            self,
+            file: IO[str] | IO[bytes],
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+            skip_copy: bool = False,
+        ) -> Iterator[readers.ComponentFactoryReader]: ...
+        @override
+        def read_multiple_bytes(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ComponentFactoryReader]: ...
+        @override
+        def read_multiple_bytes_packed(
+            self,
+            buf: Any,
+            traversal_limit_in_words: int | None = None,
+            nesting_limit: int | None = None,
+        ) -> Iterator[readers.ComponentFactoryReader]: ...
 
-    ComponentFactory: _ComponentFactoryStructModule
+    Factory: type[common._ComponentFactoryModuleWhich]
     class Reader(_DynamicStructReader): ...
     class Builder(_DynamicStructBuilder): ...
 
@@ -6511,16 +7535,15 @@ class _ComponentStructModule(_StructModule):
         @override
         def fields(self) -> _ComponentStructModule._ComponentSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ComponentSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         info: IdInformationBuilder | IdInformationReader | dict[str, Any] | None = None,
-        type: enums.ComponentComponentTypeEnum | None = None,
+        type: enums.ComponentComponentTypeValue
+        | enums.ComponentComponentTypeEnum
+        | None = None,
         inPorts: builders.PortListBuilder
         | readers.PortListReader
         | Sequence[readers.PortReader | builders.PortBuilder | dict[str, Any]]
@@ -6540,38 +7563,58 @@ class _ComponentStructModule(_StructModule):
         **kwargs: object,
     ) -> builders.ComponentBuilder: ...
     @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
+        **kwargs: object,
+    ) -> builders.ComponentBuilder: ...
+    @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.ComponentReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.ComponentReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.ComponentBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.ComponentBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.ComponentReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.ComponentReader: ...
     @override
     def read(
         self,
@@ -6586,3 +7629,40 @@ class _ComponentStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.ComponentReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.ComponentReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.ComponentReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.ComponentReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.ComponentReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.ComponentReader]: ...

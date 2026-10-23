@@ -1,7 +1,7 @@
 """Reader helper types for `soil_params.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -25,7 +25,7 @@ class SoilCharacteristicDataDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilCharacteristicDataDataBuilder: ...
 
 class SoilCharacteristicDataReader(_DynamicStructReader):
@@ -35,7 +35,7 @@ class SoilCharacteristicDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilCharacteristicDataBuilder: ...
 
 class SoilCharacteristicModifierDataReader(_DynamicStructReader):
@@ -53,7 +53,7 @@ class SoilCharacteristicModifierDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilCharacteristicModifierDataBuilder: ...
 
 class SoilCharacteristicModifierReader(_DynamicStructReader):
@@ -63,7 +63,7 @@ class SoilCharacteristicModifierReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilCharacteristicModifierBuilder: ...
 
 class CapillaryRiseRateDataReader(_DynamicStructReader):
@@ -77,7 +77,7 @@ class CapillaryRiseRateDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CapillaryRiseRateDataBuilder: ...
 
 class CapillaryRiseRateReader(_DynamicStructReader):
@@ -87,7 +87,7 @@ class CapillaryRiseRateReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CapillaryRiseRateBuilder: ...
 
 type DataListReader = lists._DataList.Reader

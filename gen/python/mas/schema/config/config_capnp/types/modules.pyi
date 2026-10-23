@@ -71,9 +71,6 @@ class _ServiceInterfaceModule(_InterfaceModule):
         @override
         def methods(self) -> _ServiceInterfaceModule._ServiceSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ServiceSchema: ...
     @override
     def _new_client(
         self,

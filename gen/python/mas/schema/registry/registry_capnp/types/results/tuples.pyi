@@ -7,9 +7,7 @@ from mas.schema.common.common_capnp.types.builders import IdInformationBuilder
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.common.common_capnp.types.modules import _IdentifiableInterfaceModule
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
-from mas.schema.persistence.persistence_capnp.types.builders import (
-    SturdyRefBuilder,
-)
+from mas.schema.persistence.persistence_capnp.types.builders import SturdyRefBuilder
 from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import clients as clients

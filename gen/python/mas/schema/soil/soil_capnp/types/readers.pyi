@@ -1,19 +1,20 @@
 """Reader helper types for `soil.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
 )
 
 from mas.schema.soil.soil_capnp.types import builders as builders
+from mas.schema.soil.soil_capnp.types import common as common
 from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import lists as lists
 
 class PropertyReader(_DynamicStructReader):
     @property
-    def name(self) -> enums.PropertyNameEnum: ...
+    def name(self) -> enums.PropertyNameValue: ...
     @property
     def f32Value(self) -> float: ...
     @property
@@ -22,13 +23,14 @@ class PropertyReader(_DynamicStructReader):
     def type(self) -> str: ...
     @property
     def unset(self) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
+    def which(self) -> common._PropertyWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PropertyBuilder: ...
 
 class LayerReader(_DynamicStructReader):
@@ -42,7 +44,7 @@ class LayerReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LayerBuilder: ...
 
 class ResultReader(_DynamicStructReader):
@@ -56,7 +58,7 @@ class ResultReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ResultBuilder: ...
 
 class QueryReader(_DynamicStructReader):
@@ -70,7 +72,7 @@ class QueryReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.QueryBuilder: ...
 
 class ProfileDataReader(_DynamicStructReader):
@@ -82,7 +84,7 @@ class ProfileDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ProfileDataBuilder: ...
 
 type LayerListReader = lists._LayerList.Reader

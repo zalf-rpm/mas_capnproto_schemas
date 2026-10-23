@@ -1,7 +1,7 @@
 """Reader helper types for `storage.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -11,6 +11,7 @@ from capnp.lib.capnp import (
 from mas.schema.common.common_capnp.types.readers import IdInformationReader
 from mas.schema.storage.storage_capnp.types import builders as builders
 from mas.schema.storage.storage_capnp.types import clients as clients
+from mas.schema.storage.storage_capnp.types import common as common
 from mas.schema.storage.storage_capnp.types import lists as lists
 
 class ValueReader(_DynamicStructReader):
@@ -68,43 +69,14 @@ class ValueReader(_DynamicStructReader):
     def dataListValue(self) -> DataListReader: ...
     @property
     def anyValue(self) -> _DynamicObjectReader: ...
+    @property
     @override
-    def which(
-        self,
-    ) -> Literal[
-        "boolValue",
-        "boolListValue",
-        "int8Value",
-        "int8ListValue",
-        "int16Value",
-        "int16ListValue",
-        "int32Value",
-        "int32ListValue",
-        "int64Value",
-        "int64ListValue",
-        "uint8Value",
-        "uint8ListValue",
-        "uint16Value",
-        "uint16ListValue",
-        "uint32Value",
-        "uint32ListValue",
-        "uint64Value",
-        "uint64ListValue",
-        "float32Value",
-        "float32ListValue",
-        "float64Value",
-        "float64ListValue",
-        "textValue",
-        "textListValue",
-        "dataValue",
-        "dataListValue",
-        "anyValue",
-    ]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ValueBuilder: ...
 
 class KeyAndEntryReader(_DynamicStructReader):
@@ -116,7 +88,7 @@ class KeyAndEntryReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.KeyAndEntryBuilder: ...
 
 class InfoAndContainerReader(_DynamicStructReader):
@@ -130,7 +102,7 @@ class InfoAndContainerReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.InfoAndContainerBuilder: ...
 
 class ImportExportDataReader(_DynamicStructReader):
@@ -144,7 +116,7 @@ class ImportExportDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ImportExportDataBuilder: ...
 
 type BoolListReader = lists._BoolList.Reader

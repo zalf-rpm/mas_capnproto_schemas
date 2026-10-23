@@ -1,7 +1,7 @@
 """Reader helper types for `registry.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -9,9 +9,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.common.common_capnp.types.clients import IdentifiableClient
 from mas.schema.persistence.persistence_capnp.types.clients import RestorerClient
-from mas.schema.persistence.persistence_capnp.types.readers import (
-    VatIdReader,
-)
+from mas.schema.persistence.persistence_capnp.types.readers import VatIdReader
 from mas.schema.registry.registry_capnp.types import builders as builders
 from mas.schema.registry.registry_capnp.types import lists as lists
 
@@ -28,7 +26,7 @@ class EntryReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EntryBuilder: ...
 
 class CrossDomainRestoreReader(_DynamicStructReader):
@@ -40,7 +38,7 @@ class CrossDomainRestoreReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CrossDomainRestoreBuilder: ...
 
 class RegParamsReader(_DynamicStructReader):
@@ -56,7 +54,7 @@ class RegParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RegParamsBuilder: ...
 
 type EntryListReader = lists._EntryList.Reader

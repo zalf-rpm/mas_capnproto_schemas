@@ -1,7 +1,7 @@
 """Reader helper types for `model.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -23,19 +23,19 @@ class XYResultReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.XYResultBuilder: ...
 
 class StatReader(_DynamicStructReader):
     @property
-    def type(self) -> enums.StatTypeEnum: ...
+    def type(self) -> enums.StatTypeValue: ...
     @property
     def vs(self) -> Float64ListReader: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.StatBuilder: ...
 
 class XYPlusResultReader(_DynamicStructReader):
@@ -47,7 +47,7 @@ class XYPlusResultReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.XYPlusResultBuilder: ...
 
 class EnvReader(_DynamicStructReader):
@@ -63,7 +63,7 @@ class EnvReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EnvBuilder: ...
 
 type EventListReader = lists._EventList.Reader

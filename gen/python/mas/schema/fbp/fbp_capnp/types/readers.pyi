@@ -1,7 +1,7 @@
 """Reader helper types for `fbp.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicObjectReader,
@@ -15,6 +15,7 @@ from mas.schema.common.common_capnp.types.readers import (
 )
 from mas.schema.fbp.fbp_capnp.types import builders as builders
 from mas.schema.fbp.fbp_capnp.types import clients as clients
+from mas.schema.fbp.fbp_capnp.types import common as common
 from mas.schema.fbp.fbp_capnp.types import enums as enums
 from mas.schema.fbp.fbp_capnp.types import lists as lists
 from mas.schema.persistence.persistence_capnp.types.readers import SturdyRefReader
@@ -32,7 +33,7 @@ class KVReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.KVBuilder: ...
 
 class ChunkedDataReader(_DynamicStructReader):
@@ -42,7 +43,7 @@ class ChunkedDataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ChunkedDataBuilder: ...
 
 class SysAttributesBracketTypeReader(_DynamicStructReader):
@@ -52,13 +53,14 @@ class SysAttributesBracketTypeReader(_DynamicStructReader):
     def chunkedContent(self) -> ChunkedDataReader: ...
     @property
     def chunkedIp(self) -> ChunkedDataReader: ...
+    @property
     @override
-    def which(self) -> Literal["standard", "chunkedContent", "chunkedIp"]: ...
+    def which(self) -> common._SysAttributesBracketTypeWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SysAttributesBracketTypeBuilder: ...
 
 class SysAttributesReader(_DynamicStructReader):
@@ -70,7 +72,7 @@ class SysAttributesReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SysAttributesBuilder: ...
 
 class IPReader(_DynamicStructReader):
@@ -79,14 +81,14 @@ class IPReader(_DynamicStructReader):
     @property
     def content(self) -> _DynamicObjectReader: ...
     @property
-    def type(self) -> enums.IPTypeEnum: ...
+    def type(self) -> enums.IPTypeValue: ...
     @property
     def sysAttributes(self) -> SysAttributesReader: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.IPBuilder: ...
 
 class IIPReader(_DynamicStructReader):
@@ -96,12 +98,12 @@ class IIPReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.IIPBuilder: ...
 
 class LogMessageReader(_DynamicStructReader):
     @property
-    def level(self) -> enums.LogMessageLevelEnum: ...
+    def level(self) -> enums.LogMessageLevelValue: ...
     @property
     def timestamp(self) -> str: ...
     @property
@@ -120,7 +122,7 @@ class LogMessageReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.LogMessageBuilder: ...
 
 class MsgReader(_DynamicStructReader):
@@ -130,20 +132,21 @@ class MsgReader(_DynamicStructReader):
     def done(self) -> None: ...
     @property
     def noMsg(self) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["value", "done", "noMsg"]: ...
+    def which(self) -> common._MsgWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MsgBuilder: ...
 
 class StartupInfoReader(_DynamicStructReader):
     @property
     def bufferSize(self) -> int: ...
     @property
-    def closeSemantics(self) -> enums.ChannelCloseSemanticsEnum: ...
+    def closeSemantics(self) -> enums.ChannelCloseSemanticsValue: ...
     @property
     def channelSR(self) -> SturdyRefReader: ...
     @property
@@ -160,7 +163,7 @@ class StartupInfoReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.StartupInfoBuilder: ...
 
 class StatsReader(_DynamicStructReader):
@@ -180,7 +183,7 @@ class StatsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.StatsBuilder: ...
 
 class EventReader(_DynamicStructReader):
@@ -196,7 +199,7 @@ class EventReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EventBuilder: ...
 
 class ChannelObserverParamsReader(_DynamicStructReader):
@@ -210,7 +213,7 @@ class ChannelObserverParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ChannelObserverParamsBuilder: ...
 
 class StartChannelsServiceParamsReader(_DynamicStructReader):
@@ -234,7 +237,7 @@ class StartChannelsServiceParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.StartChannelsServiceParamsBuilder: ...
 
 class NameAndSRReader(_DynamicStructReader):
@@ -244,13 +247,14 @@ class NameAndSRReader(_DynamicStructReader):
     def sr(self) -> SturdyRefReader: ...
     @property
     def srs(self) -> SturdyRefListReader: ...
+    @property
     @override
-    def which(self) -> Literal["sr", "srs"]: ...
+    def which(self) -> common._NameAndSRWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.NameAndSRBuilder: ...
 
 class PortInfosReader(_DynamicStructReader):
@@ -262,7 +266,7 @@ class PortInfosReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PortInfosBuilder: ...
 
 class PortReader(_DynamicStructReader):
@@ -271,18 +275,18 @@ class PortReader(_DynamicStructReader):
     @property
     def contentType(self) -> str: ...
     @property
-    def type(self) -> enums.ComponentPortPortTypeEnum: ...
+    def type(self) -> enums.ComponentPortPortTypeValue: ...
     @property
     def desc(self) -> str: ...
     @property
-    def role(self) -> enums.ComponentPortPortRoleEnum: ...
+    def role(self) -> enums.ComponentPortPortRoleValue: ...
     @property
     def required(self) -> bool: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PortBuilder: ...
 
 class ConfigEntryReader(_DynamicStructReader):
@@ -294,19 +298,19 @@ class ConfigEntryReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ConfigEntryBuilder: ...
 
 class ActivityInfoReader(_DynamicStructReader):
     @property
-    def state(self) -> enums.ProcessActivityStateEnum: ...
+    def state(self) -> enums.ProcessActivityStateValue: ...
     @property
     def port(self) -> str: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ActivityInfoBuilder: ...
 
 class RunInfoReader(_DynamicStructReader):
@@ -317,9 +321,9 @@ class RunInfoReader(_DynamicStructReader):
     @property
     def processName(self) -> str: ...
     @property
-    def outcome(self) -> enums.ProcessRunInfoOutcomeEnum: ...
+    def outcome(self) -> enums.ProcessRunInfoOutcomeValue: ...
     @property
-    def phase(self) -> enums.ProcessRunInfoPhaseEnum: ...
+    def phase(self) -> enums.ProcessRunInfoPhaseValue: ...
     @property
     def port(self) -> str: ...
     @property
@@ -336,7 +340,7 @@ class RunInfoReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RunInfoBuilder: ...
 
 class ComponentFactoryReader(_DynamicStructReader):
@@ -346,20 +350,21 @@ class ComponentFactoryReader(_DynamicStructReader):
     def runnable(self) -> clients.RunnableFactoryClient: ...
     @property
     def process(self) -> clients.ProcessFactoryClient: ...
+    @property
     @override
-    def which(self) -> Literal["none", "runnable", "process"]: ...
+    def which(self) -> common._ComponentFactoryWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ComponentFactoryBuilder: ...
 
 class ComponentReader(_DynamicStructReader):
     @property
     def info(self) -> IdInformationReader: ...
     @property
-    def type(self) -> enums.ComponentComponentTypeEnum: ...
+    def type(self) -> enums.ComponentComponentTypeValue: ...
     @property
     def inPorts(self) -> PortListReader: ...
     @property
@@ -372,7 +377,7 @@ class ComponentReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ComponentBuilder: ...
 
 type ConfigEntryListReader = lists._ConfigEntryList.Reader

@@ -17,9 +17,8 @@ class _DataList:
         @override
         def __getitem__(
             self,
-            key: int,
+            index: int,
         ) -> modules._SoilCharacteristicDataStructModule._DataStructModule.Reader: ...
-        @override
         def __iter__(
             self,
         ) -> Iterator[
@@ -32,17 +31,16 @@ class _DataList:
         @override
         def __getitem__(
             self,
-            key: int,
+            index: int,
         ) -> modules._SoilCharacteristicDataStructModule._DataStructModule.Builder: ...
         @override
         def __setitem__(
             self,
-            key: int,
+            index: int,
             value: modules._SoilCharacteristicDataStructModule._DataStructModule.Reader
             | modules._SoilCharacteristicDataStructModule._DataStructModule.Builder
             | dict[str, Any],
         ) -> None: ...
-        @override
         def __iter__(
             self,
         ) -> Iterator[

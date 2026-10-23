@@ -1,7 +1,7 @@
 """Reader helper types for `persistence.capnp`."""
 
 from collections.abc import Callable
-from typing import Literal, override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -9,6 +9,7 @@ from capnp.lib.capnp import (
 
 from mas.schema.persistence.persistence_capnp.types import builders as builders
 from mas.schema.persistence.persistence_capnp.types import clients as clients
+from mas.schema.persistence.persistence_capnp.types import common as common
 
 class VatIdReader(_DynamicStructReader):
     @property
@@ -23,7 +24,7 @@ class VatIdReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.VatIdBuilder: ...
 
 class AddressIp6Reader(_DynamicStructReader):
@@ -35,7 +36,7 @@ class AddressIp6Reader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AddressIp6Builder: ...
 
 class AddressReader(_DynamicStructReader):
@@ -45,13 +46,14 @@ class AddressReader(_DynamicStructReader):
     def port(self) -> int: ...
     @property
     def host(self) -> str: ...
+    @property
     @override
-    def which(self) -> Literal["ip6", "host"]: ...
+    def which(self) -> common._AddressWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.AddressBuilder: ...
 
 class VatPathReader(_DynamicStructReader):
@@ -63,7 +65,7 @@ class VatPathReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.VatPathBuilder: ...
 
 class OwnerReader(_DynamicStructReader):
@@ -73,7 +75,7 @@ class OwnerReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.OwnerBuilder: ...
 
 class TokenReader(_DynamicStructReader):
@@ -81,13 +83,14 @@ class TokenReader(_DynamicStructReader):
     def text(self) -> str: ...
     @property
     def data(self) -> bytes: ...
+    @property
     @override
-    def which(self) -> Literal["text", "data"]: ...
+    def which(self) -> common._TokenWhich: ...
     @override
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.TokenBuilder: ...
 
 class SturdyRefReader(_DynamicStructReader):
@@ -99,7 +102,7 @@ class SturdyRefReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SturdyRefBuilder: ...
 
 class SaveParamsReader(_DynamicStructReader):
@@ -109,7 +112,7 @@ class SaveParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SaveParamsBuilder: ...
 
 class SaveResultsReader(_DynamicStructReader):
@@ -121,7 +124,7 @@ class SaveResultsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SaveResultsBuilder: ...
 
 class RestoreParamsReader(_DynamicStructReader):
@@ -133,7 +136,7 @@ class RestoreParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RestoreParamsBuilder: ...
 
 class RegisterParamsReader(_DynamicStructReader):
@@ -151,7 +154,7 @@ class RegisterParamsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RegisterParamsBuilder: ...
 
 class RegResultsReader(_DynamicStructReader):
@@ -165,5 +168,5 @@ class RegResultsReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.RegResultsBuilder: ...

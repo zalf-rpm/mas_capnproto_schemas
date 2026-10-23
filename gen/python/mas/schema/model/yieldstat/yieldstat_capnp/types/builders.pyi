@@ -1,7 +1,7 @@
 """Builder helper types for `yieldstat.capnp`."""
 
 from collections.abc import Sequence
-from typing import Any, Literal, override
+from typing import Any, Literal, overload, override
 
 from capnp.lib.capnp import (
     _DynamicStructBuilder,
@@ -69,9 +69,9 @@ class RestInputBuilder(_DynamicStructBuilder):
 
 class ResultToValueBuilder(_DynamicStructBuilder):
     @property
-    def id(self) -> enums.ResultIdEnum: ...
+    def id(self) -> enums.ResultIdValue: ...
     @id.setter
-    def id(self, value: enums.ResultIdEnum) -> None: ...
+    def id(self, value: enums.ResultIdValue | enums.ResultIdEnum) -> None: ...
     @property
     def value(self) -> float: ...
     @value.setter
@@ -98,11 +98,14 @@ class ResultBuilder(_DynamicStructBuilder):
         | Sequence[readers.ResultToValueReader | ResultToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["values"],
         size: int | None = None,
     ) -> ResultToValueListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.ResultReader: ...
 
@@ -119,11 +122,14 @@ class YearToResultBuilder(_DynamicStructBuilder):
         value: ResultBuilder | readers.ResultReader | dict[str, Any],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["result"],
         size: int | None = None,
     ) -> ResultBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.YearToResultReader: ...
 
@@ -150,11 +156,14 @@ class OutputBuilder(_DynamicStructBuilder):
         | Sequence[readers.YearToResultReader | YearToResultBuilder | dict[str, Any]],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["results"],
         size: int | None = None,
     ) -> YearToResultListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.OutputReader: ...
 

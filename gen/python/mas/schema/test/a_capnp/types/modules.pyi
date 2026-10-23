@@ -74,9 +74,6 @@ class _AInterfaceModule(_InterfaceModule):
         @override
         def methods(self) -> _AInterfaceModule._ASchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ASchema: ...
     @override
     def _new_client(self, server: _DynamicCapabilityServer) -> clients.AClient: ...
     class Server(_DynamicCapabilityServer):

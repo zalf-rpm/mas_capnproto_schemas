@@ -7,7 +7,7 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
-from mas.schema.climate.climate_capnp.types.enums import RCPEnum
+from mas.schema.climate.climate_capnp.types.enums import RCPEnum, RCPValue
 from mas.schema.common.date_capnp.types.builders import DateBuilder
 from mas.schema.common.date_capnp.types.readers import DateReader
 from mas.schema.model.monica.monica_management_capnp.types.modules import (
@@ -695,11 +695,14 @@ class CropResidueParametersBuilder(_DynamicStructBuilder):
     @residueType.setter
     def residueType(self, value: str) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["params"],
         size: int | None = None,
     ) -> _ParamsStructModule._OrganicFertilizationStructModule._OrganicMatterParametersStructModule.Builder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.CropResidueParametersReader: ...
 
@@ -740,11 +743,12 @@ class CropSpecBuilder(_DynamicStructBuilder):
 
 class AutomaticHarvestParametersBuilder(_DynamicStructBuilder):
     @property
-    def harvestTime(self) -> enums.AutomaticHarvestParametersHarvestTimeEnum: ...
+    def harvestTime(self) -> enums.AutomaticHarvestParametersHarvestTimeValue: ...
     @harvestTime.setter
     def harvestTime(
         self,
-        value: enums.AutomaticHarvestParametersHarvestTimeEnum,
+        value: enums.AutomaticHarvestParametersHarvestTimeValue
+        | enums.AutomaticHarvestParametersHarvestTimeEnum,
     ) -> None: ...
     @property
     def latestHarvestDOY(self) -> int: ...
@@ -880,6 +884,7 @@ class AutomaticIrrigationParametersBuilder(_DynamicStructBuilder):
     @threshold.setter
     def threshold(self, value: float) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["params"],
@@ -887,6 +892,8 @@ class AutomaticIrrigationParametersBuilder(_DynamicStructBuilder):
     ) -> (
         _ParamsStructModule._IrrigationStructModule._ParametersStructModule.Builder
     ): ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.AutomaticIrrigationParametersReader: ...
 
@@ -943,11 +950,14 @@ class SiteParametersBuilder(_DynamicStructBuilder):
         ],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["soilParameters"],
         size: int | None = None,
     ) -> SoilParametersListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.SiteParametersReader: ...
 
@@ -1019,9 +1029,9 @@ class EnvironmentParametersBuilder(_DynamicStructBuilder):
     @minGroundwaterDepthMonth.setter
     def minGroundwaterDepthMonth(self, value: int) -> None: ...
     @property
-    def rcp(self) -> RCPEnum: ...
+    def rcp(self) -> RCPValue: ...
     @rcp.setter
-    def rcp(self, value: RCPEnum) -> None: ...
+    def rcp(self, value: RCPValue | RCPEnum) -> None: ...
     @override
     @overload
     def init(
@@ -1050,7 +1060,10 @@ class DateToValueBuilder(_DynamicStructBuilder):
     @value.setter
     def value(self, value: float) -> None: ...
     @override
+    @overload
     def init(self, field: Literal["date"], size: int | None = None) -> DateBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.DateToValueReader: ...
 
@@ -1069,11 +1082,14 @@ class MeasuredGroundwaterTableInformationBuilder(_DynamicStructBuilder):
         | Sequence[readers.DateToValueReader | DateToValueBuilder | dict[str, Any]],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["groundwaterInfo"],
         size: int | None = None,
     ) -> DateToValueListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.MeasuredGroundwaterTableInformationReader: ...
 
@@ -1714,11 +1730,14 @@ class SoilOrganicModuleParametersBuilder(_DynamicStructBuilder):
         value: SticsParametersBuilder | readers.SticsParametersReader | dict[str, Any],
     ) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["sticsParams"],
         size: int | None = None,
     ) -> SticsParametersBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.SoilOrganicModuleParametersReader: ...
 

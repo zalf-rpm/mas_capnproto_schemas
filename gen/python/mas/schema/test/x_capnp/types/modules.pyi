@@ -1,10 +1,11 @@
 """Module helper types for `x.capnp`."""
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Iterator, Sequence
 from contextlib import AbstractContextManager
-from typing import IO, Literal, overload, override
+from typing import IO, Any, Literal, overload, override
 
 from capnp.lib.capnp import (
+    _AsyncIoStream,
     _DynamicCapabilityServer,
     _DynamicStructBuilder,
     _DynamicStructReader,
@@ -76,9 +77,6 @@ class _XInterfaceModule(_InterfaceModule):
         @override
         def methods(self) -> _XInterfaceModule._XSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._XSchema: ...
     @override
     def _new_client(self, server: _DynamicCapabilityServer) -> clients.XClient: ...
     class Server(_DynamicCapabilityServer):
@@ -113,50 +111,67 @@ class _SStructModule(_StructModule):
         @override
         def fields(self) -> _SStructModule._SSchema._Fields: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._SSchema: ...
     @override
     def new_message(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
         c: clients.XClient | _XInterfaceModule.Server | None = None,
+        **kwargs: object,
+    ) -> builders.SBuilder: ...
+    @override
+    def __call__(
+        self,
+        num_first_segment_words: int | None = None,
         **kwargs: object,
     ) -> builders.SBuilder: ...
     @override
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> AbstractContextManager[readers.SReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-        *,
-        builder: Literal[False],
+        builder: Literal[False] = False,
     ) -> AbstractContextManager[readers.SReader]: ...
     @overload
     def from_bytes(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
         *,
         builder: Literal[True],
     ) -> AbstractContextManager[builders.SBuilder]: ...
+    @overload
+    def from_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None,
+        nesting_limit: int | None,
+        builder: Literal[True],
+    ) -> AbstractContextManager[builders.SBuilder]: ...
     @override
     def from_bytes_packed(
         self,
-        buf: bytes,
+        buf: Any,
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
-    ) -> _DynamicStructReader: ...
+    ) -> readers.SReader: ...
+    @override
+    def from_segments(
+        self,
+        segments: Sequence[Any],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.SReader: ...
     @override
     def read(
         self,
@@ -171,6 +186,43 @@ class _SStructModule(_StructModule):
         traversal_limit_in_words: int | None = None,
         nesting_limit: int | None = None,
     ) -> readers.SReader: ...
+    @override
+    async def read_async(
+        self,
+        stream: _AsyncIoStream,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> readers.SReader | None: ...
+    @override
+    def read_multiple(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.SReader]: ...
+    @override
+    def read_multiple_packed(
+        self,
+        file: IO[str] | IO[bytes],
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+        skip_copy: bool = False,
+    ) -> Iterator[readers.SReader]: ...
+    @override
+    def read_multiple_bytes(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.SReader]: ...
+    @override
+    def read_multiple_bytes_packed(
+        self,
+        buf: Any,
+        traversal_limit_in_words: int | None = None,
+        nesting_limit: int | None = None,
+    ) -> Iterator[readers.SReader]: ...
 
 class _YInterfaceModule(_InterfaceModule):
     class _YSchema(_InterfaceSchema):
@@ -221,9 +273,6 @@ class _YInterfaceModule(_InterfaceModule):
         @override
         def methods(self) -> _YInterfaceModule._YSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._YSchema: ...
     @override
     def _new_client(self, server: _DynamicCapabilityServer) -> clients.YClient: ...
     class Server(_DynamicCapabilityServer):
@@ -288,9 +337,6 @@ class _ZInterfaceModule(_InterfaceModule):
         @override
         def methods(self) -> _ZInterfaceModule._ZSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ZSchema: ...
     @override
     def _new_client(self, server: _DynamicCapabilityServer) -> clients.ZClient: ...
     class Server(_DynamicCapabilityServer):

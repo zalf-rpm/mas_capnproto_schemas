@@ -1,6 +1,85 @@
 """Enum helper aliases for `climate.capnp`."""
 
-from typing import Literal
+from typing import Literal, override
+
+from capnp.lib.capnp import _DynamicEnum
+
+class GCMValue(_DynamicEnum):
+    @override
+    def __str__(
+        self,
+    ) -> Literal[
+        "cccmaCanEsm2",
+        "ichecEcEarth",
+        "ipslIpslCm5AMr",
+        "mirocMiroc5",
+        "mpiMMpiEsmLr",
+        "gfdlEsm4",
+        "ipslCm6aLr",
+        "mpiEsm12Hr",
+        "mriEsm20",
+        "ukesm10Ll",
+        "gswp3W5E5",
+        "mohcHadGem2Es",
+    ]: ...
+
+class RCMValue(_DynamicEnum):
+    @override
+    def __str__(
+        self,
+    ) -> Literal[
+        "clmcomCclm4817",
+        "gericsRemo2015",
+        "knmiRacmo22E",
+        "smhiRca4",
+        "clmcomBtuCclm4817",
+        "mpiCscRemo2009",
+        "uhohWrf361H",
+    ]: ...
+
+class SSPValue(_DynamicEnum):
+    @override
+    def __str__(self) -> Literal["ssp1", "ssp2", "ssp3", "ssp4", "ssp5"]: ...
+
+class RCPValue(_DynamicEnum):
+    @override
+    def __str__(
+        self,
+    ) -> Literal["rcp19", "rcp26", "rcp34", "rcp45", "rcp60", "rcp70", "rcp85"]: ...
+
+class TimeSeriesResolutionValue(_DynamicEnum):
+    @override
+    def __str__(self) -> Literal["daily", "hourly"]: ...
+
+class ElementValue(_DynamicEnum):
+    @override
+    def __str__(
+        self,
+    ) -> Literal[
+        "tmin",
+        "tavg",
+        "tmax",
+        "precip",
+        "globrad",
+        "wind",
+        "sunhours",
+        "cloudamount",
+        "relhumid",
+        "airpress",
+        "vaporpress",
+        "co2",
+        "o3",
+        "et0",
+        "dewpointTemp",
+        "specificHumidity",
+        "snowfallFlux",
+        "surfaceDownwellingLongwaveRadiation",
+        "potET",
+    ]: ...
+
+class AlterTimeSeriesWrapperAlterTypeValue(_DynamicEnum):
+    @override
+    def __str__(self) -> Literal["add", "mul"]: ...
 
 type AlterTimeSeriesWrapperAlterTypeEnum = int | Literal["add", "mul"]
 

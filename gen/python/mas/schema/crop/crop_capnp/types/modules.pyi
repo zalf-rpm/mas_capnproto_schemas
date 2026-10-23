@@ -320,9 +320,6 @@ class _CropInterfaceModule(_IdentifiableInterfaceModule, _PersistentInterfaceMod
         @override
         def methods(self) -> _CropInterfaceModule._CropSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._CropSchema: ...
     @override
     def _new_client(self, server: _DynamicCapabilityServer) -> clients.CropClient: ...
     class Server(
@@ -603,9 +600,6 @@ class _ServiceInterfaceModule(_RegistryInterfaceModule):
         @override
         def methods(self) -> _ServiceInterfaceModule._ServiceSchema._Methods: ...
 
-    @property
-    @override
-    def schema(self) -> schemas._ServiceSchema: ...
     @override
     def _new_client(
         self,

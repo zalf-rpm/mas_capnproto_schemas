@@ -35,9 +35,12 @@ class StructuredTextBuilder(_DynamicStructBuilder):
     @value.setter
     def value(self, value: str) -> None: ...
     @property
-    def type(self) -> enums.StructuredTextTypeEnum: ...
+    def type(self) -> enums.StructuredTextTypeValue: ...
     @type.setter
-    def type(self, value: enums.StructuredTextTypeEnum) -> None: ...
+    def type(
+        self,
+        value: enums.StructuredTextTypeValue | enums.StructuredTextTypeEnum,
+    ) -> None: ...
     @override
     def as_reader(self) -> readers.StructuredTextReader: ...
 
@@ -248,42 +251,9 @@ class ValueBuilder(_DynamicStructBuilder):
         | readers.ValueListReader
         | Sequence[readers.ValueReader | ValueBuilder | dict[str, Any]],
     ) -> None: ...
+    @property
     @override
-    def which(
-        self,
-    ) -> Literal[
-        "f64",
-        "f32",
-        "i64",
-        "i32",
-        "i16",
-        "i8",
-        "ui64",
-        "ui32",
-        "ui16",
-        "ui8",
-        "b",
-        "t",
-        "d",
-        "p",
-        "cap",
-        "lf64",
-        "lf32",
-        "li64",
-        "li32",
-        "li16",
-        "li8",
-        "lui64",
-        "lui32",
-        "lui16",
-        "lui8",
-        "lb",
-        "lt",
-        "ld",
-        "lcap",
-        "lpair",
-        "lv",
-    ]: ...
+    def which(self) -> common._ValueWhich: ...
     @override
     @overload
     def init(

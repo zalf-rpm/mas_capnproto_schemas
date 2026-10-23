@@ -7,15 +7,16 @@ from capnp.lib.capnp import (
     _DynamicStructBuilder,
 )
 
+from mas.schema.soil.soil_capnp.types import common as common
 from mas.schema.soil.soil_capnp.types import enums as enums
 from mas.schema.soil.soil_capnp.types import lists as lists
 from mas.schema.soil.soil_capnp.types import readers as readers
 
 class PropertyBuilder(_DynamicStructBuilder):
     @property
-    def name(self) -> enums.PropertyNameEnum: ...
+    def name(self) -> enums.PropertyNameValue: ...
     @name.setter
-    def name(self, value: enums.PropertyNameEnum) -> None: ...
+    def name(self, value: enums.PropertyNameValue | enums.PropertyNameEnum) -> None: ...
     @property
     def f32Value(self) -> float: ...
     @f32Value.setter
@@ -32,8 +33,9 @@ class PropertyBuilder(_DynamicStructBuilder):
     def unset(self) -> None: ...
     @unset.setter
     def unset(self, value: None) -> None: ...
+    @property
     @override
-    def which(self) -> Literal["f32Value", "bValue", "type", "unset"]: ...
+    def which(self) -> common._PropertyWhich: ...
     @override
     def as_reader(self) -> readers.PropertyReader: ...
 
@@ -56,11 +58,14 @@ class LayerBuilder(_DynamicStructBuilder):
     @description.setter
     def description(self, value: str) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["properties"],
         size: int | None = None,
     ) -> PropertyListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.LayerReader: ...
 
@@ -161,11 +166,14 @@ class ProfileDataBuilder(_DynamicStructBuilder):
     @percentageOfArea.setter
     def percentageOfArea(self, value: float) -> None: ...
     @override
+    @overload
     def init(
         self,
         field: Literal["layers"],
         size: int | None = None,
     ) -> LayerListBuilder: ...
+    @overload
+    def init(self, field: str, size: int | None = None) -> Any: ...
     @override
     def as_reader(self) -> readers.ProfileDataReader: ...
 

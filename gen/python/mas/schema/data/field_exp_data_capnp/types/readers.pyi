@@ -1,7 +1,7 @@
 """Reader helper types for `field_exp_data.capnp`."""
 
 from collections.abc import Callable
-from typing import override
+from typing import Any, override
 
 from capnp.lib.capnp import (
     _DynamicStructReader,
@@ -53,7 +53,7 @@ class WeatherStationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.WeatherStationBuilder: ...
 
 class SoilMetadataReader(_DynamicStructReader):
@@ -99,7 +99,7 @@ class SoilMetadataReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.SoilMetadataBuilder: ...
 
 class FieldReader(_DynamicStructReader):
@@ -131,7 +131,7 @@ class FieldReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.FieldBuilder: ...
 
 class CultivarReader(_DynamicStructReader):
@@ -161,7 +161,7 @@ class CultivarReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.CultivarBuilder: ...
 
 class PlotReader(_DynamicStructReader):
@@ -197,7 +197,7 @@ class PlotReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PlotBuilder: ...
 
 class ResidueReader(_DynamicStructReader):
@@ -223,7 +223,7 @@ class ResidueReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ResidueBuilder: ...
 
 class InitialConditionsLayerReader(_DynamicStructReader):
@@ -253,7 +253,7 @@ class InitialConditionsLayerReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.InitialConditionsLayerBuilder: ...
 
 class PlantingEventReader(_DynamicStructReader):
@@ -285,7 +285,7 @@ class PlantingEventReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.PlantingEventBuilder: ...
 
 class HarvestEventReader(_DynamicStructReader):
@@ -307,7 +307,7 @@ class HarvestEventReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.HarvestEventBuilder: ...
 
 class IrrigationEventReader(_DynamicStructReader):
@@ -331,7 +331,7 @@ class IrrigationEventReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.IrrigationEventBuilder: ...
 
 class FertilizerEventReader(_DynamicStructReader):
@@ -359,7 +359,7 @@ class FertilizerEventReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.FertilizerEventBuilder: ...
 
 class EnvironmentModificationReader(_DynamicStructReader):
@@ -379,7 +379,7 @@ class EnvironmentModificationReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.EnvironmentModificationBuilder: ...
 
 class TreatmentReader(_DynamicStructReader):
@@ -445,7 +445,7 @@ class TreatmentReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.TreatmentBuilder: ...
 
 class ExperimentDescriptionReader(_DynamicStructReader):
@@ -489,7 +489,7 @@ class ExperimentDescriptionReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.ExperimentDescriptionBuilder: ...
 
 class MixedTypeReader(_DynamicStructReader):
@@ -509,7 +509,7 @@ class MixedTypeReader(_DynamicStructReader):
     def as_builder(
         self,
         num_first_segment_words: int | None = None,
-        allocate_seg_callable: Callable[[int], bytearray] | None = None,
+        allocate_seg_callable: Callable[[int], Any] | None = None,
     ) -> builders.MixedTypeBuilder: ...
 
 type EnvironmentModificationListReader = lists._EnvironmentModificationList.Reader
